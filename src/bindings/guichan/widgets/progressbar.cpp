@@ -45,6 +45,7 @@ ProgressBar::ProgressBar(float progress,
     mRed(red), mGreen(green), mBlue(blue),
     mRedToGo(red), mGreenToGo(green), mBlueToGo(blue)
 {
+    mProgressToGo = mProgress = 0.0f;
     setProgress(progress);
     setWidth(width);
     setHeight(height);
@@ -102,6 +103,10 @@ void ProgressBar::logic()
     if (mGreenToGo < mGreen) mGreen--;
     if (mBlueToGo > mBlue) mBlue++;
     if (mBlueToGo < mBlue) mBlue--;
+
+    // Smoothly showing the progressbar changes.
+    if (mProgressToGo > mProgress) mProgress = mProgress + 0.005f;
+    if (mProgressToGo < mProgress) mProgress = mProgress - 0.005f;
 }
 
 void ProgressBar::draw(gcn::Graphics *graphics)
@@ -146,9 +151,9 @@ void ProgressBar::draw(gcn::Graphics *graphics)
 
 void ProgressBar::setProgress(float progress)
 {
-    if (progress < 0.0f) mProgress = 0.0;
-    else if (progress > 1.0f) mProgress = 1.0;
-    else mProgress = progress;
+    if (progress < 0.0f) mProgressToGo = 0.0;
+    else if (progress > 1.0f) mProgressToGo = 1.0;
+    else mProgressToGo = progress;
 }
 
 void ProgressBar::setColor(Uint8 red, Uint8 green, Uint8 blue)

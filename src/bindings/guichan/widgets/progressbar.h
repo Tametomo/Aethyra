@@ -104,7 +104,7 @@ class ProgressBar : public gcn::Widget
         { return mText; }
 
     private:
-        float mProgress;
+        float mProgress, mProgressToGo;
         Uint8 mRed, mGreen, mBlue;
         Uint8 mRedToGo, mGreenToGo, mBlueToGo;
         std::string mText;
