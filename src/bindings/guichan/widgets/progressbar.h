@@ -103,10 +103,29 @@ class ProgressBar : public gcn::Widget
         const std::string &text() const
         { return mText; }
 
+        /**
+         * Set wether the progress is moved smoothly
+         */
+        void
+        setSmoothProgress(bool smoothProgress)
+        { mSmoothProgress = smoothProgress; }
+
+        /**
+         * Set wether the color changing is made smoothly
+         */
+        void
+        setSmoothColorChange(bool smoothColorChange)
+        { mSmoothColorChange = smoothColorChange; }
+
+
     private:
         float mProgress, mProgressToGo;
+        bool mSmoothProgress;
+
         Uint8 mRed, mGreen, mBlue;
         Uint8 mRedToGo, mGreenToGo, mBlueToGo;
+        bool mSmoothColorChange;
+
         std::string mText;
         bool mUpdated;
 
