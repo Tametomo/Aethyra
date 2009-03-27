@@ -112,8 +112,7 @@ void NpcIntegerDialog::action(const gcn::ActionEvent &event)
         setVisible(false);
         NPC::mTalking = false;
 
-        MessageOut outMsg(mNetwork);
-        outMsg.writeInt16(CMSG_NPC_INT_RESPONSE);
+        MessageOut outMsg(CMSG_NPC_INT_RESPONSE);
         outMsg.writeInt32(current_npc);
         outMsg.writeInt32(mValueField->getValue());
 

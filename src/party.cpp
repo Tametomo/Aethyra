@@ -32,10 +32,9 @@
 #include "utils/gettext.h"
 #include "utils/strprintf.h"
 
-Party::Party(ChatWindow *chat, Network *network) :
+Party::Party(ChatWindow *chat) :
     mChat(chat),
-    mNetwork(network),
-    mInviteListener(network, &mInParty)
+    mInviteListener(&mInParty)
 {
 }
 
@@ -56,8 +55,7 @@ void Party::respond(const std::string &command, const std::string &args)
         mChat->chatLog(_("Not yet implemented!"), BY_SERVER);
         return;
         /*
-        MessageOut outMsg(mNetwork);
-        outMsg.writeInt16(CMSG_PARTY_SETTINGS);
+        MessageOut outMsg(CMSG_PARTY_SETTINGS);
         outMsg.writeInt16(0); // Experience
         outMsg.writeInt16(0); // Item
         */
@@ -72,16 +70,14 @@ void Party::create(const std::string &party)
         mChat->chatLog(_("Party name is missing."), BY_SERVER);
         return;
     }
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(CMSG_PARTY_CREATE);
+    MessageOut outMsg(CMSG_PARTY_CREATE);
     outMsg.writeString(party.substr(0, 23), 24);
     mCreating = true;
 }
 
 void Party::leave(const std::string &args)
 {
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(CMSG_PARTY_LEAVE);
+    MessageOut outMsg(CMSG_PARTY_LEAVE);
     mChat->chatLog(_("Left party."), BY_SERVER);
     mInParty = false;
 }
@@ -137,8 +133,7 @@ void Party::invitedAsk(const std::string &nick, int gender,
 
 void Party::InviteListener::action(const gcn::ActionEvent &event)
 {
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(CMSG_PARTY_INVITED);
+    MessageOut outMsg(CMSG_PARTY_INVITED);
     outMsg.writeInt32(player_node->getId());
     bool accept = event.getId() == "yes";
     outMsg.writeInt32(accept ? 1 : 0);

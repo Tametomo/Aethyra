@@ -190,7 +190,7 @@ int get_elapsed_time(int start_time)
 void createGuiWindows(Network *network)
 {
     // Create dialogs
-    chatWindow = new ChatWindow(network);
+    chatWindow = new ChatWindow();
     menuWindow = new MenuWindow();
     statusWindow = new StatusWindow(player_node);
     miniStatusWindow = new MiniStatusWindow();
@@ -331,8 +331,7 @@ Game::Game(Network *network):
      * packet is handled by the older version, but its response
      * is ignored by the client
      */
-    MessageOut msg(mNetwork);
-    msg.writeInt16(CMSG_CLIENT_PING);
+    MessageOut msg(CMSG_CLIENT_PING);
     msg.writeInt32(tick_time);
 
     engine->changeMap(map_path);

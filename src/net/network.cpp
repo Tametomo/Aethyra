@@ -91,6 +91,8 @@ int networkThread(void *data)
     return 0;
 }
 
+Network *Network::mInstance = 0;
+
 Network::Network():
     mSocket(0),
     mAddress(), mPort(0),
@@ -102,6 +104,7 @@ Network::Network():
     mWorkerThread(0)
 {
     mMutex = SDL_CreateMutex();
+    mInstance = this;
 }
 
 Network::~Network()
@@ -112,6 +115,7 @@ Network::~Network()
         disconnect();
 
     SDL_DestroyMutex(mMutex);
+    mInstance = 0;
 
     delete[] mInBuffer;
     delete[] mOutBuffer;
@@ -420,7 +424,12 @@ void Network::receive()
     SDLNet_FreeSocketSet(set);
 }
 
-void Network::setError(const std::string& error)
+Network *Network::instance()
+{
+    return mInstance;
+}
+
+void Network::setError(const std::string &error)
 {
     logger->log("Network error: %s", error.c_str());
     mError = error;

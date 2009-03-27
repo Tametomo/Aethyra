@@ -94,8 +94,7 @@ void BuySellDialog::action(const gcn::ActionEvent &event)
         return;
     }
 
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(CMSG_NPC_BUY_SELL_REQUEST);
+    MessageOut outMsg(CMSG_NPC_BUY_SELL_REQUEST);
     outMsg.writeInt32(current_npc);
     outMsg.writeInt8(action);
 }

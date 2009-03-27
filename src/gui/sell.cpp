@@ -177,15 +177,14 @@ void SellDialog::action(const gcn::ActionEvent &event)
             && mAmountItems <= mMaxItems)
     {
         // Attempt sell
-        MessageOut outMsg(mNetwork);
-
-        ShopItem* item = mShopItems->at(selectedItem);
+        ShopItem *item = mShopItems->at(selectedItem);
         int sellCount;
         mPlayerMoney +=
             mAmountItems * mShopItems->at(selectedItem)->getPrice();
         mMaxItems -= mAmountItems;
-        while (mAmountItems > 0) {
-            outMsg.writeInt16(CMSG_NPC_SELL_REQUEST);
+        while (mAmountItems > 0)
+        {
+            MessageOut outMsg(CMSG_NPC_SELL_REQUEST);
             outMsg.writeInt16(8);
             outMsg.writeInt16(item->getCurrentInvIndex());
             // This order is important, item->getCurrentInvIndex() would return
@@ -252,10 +251,9 @@ void SellDialog::updateButtonsAndLabels()
             (strprintf(_("Effect: %s"), info.getEffect().c_str()));
 
         mMaxItems = mShopItems->at(selectedItem)->getQuantity();
+
         if (mAmountItems > mMaxItems)
-        {
             mAmountItems = mMaxItems;
-        }
 
         income = mAmountItems * mShopItems->at(selectedItem)->getPrice();
     }

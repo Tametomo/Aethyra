@@ -32,7 +32,6 @@
 #include "window.h"
 
 class BrowserBox;
-class Network;
 class Recorder;
 class Party;
 class ScrollArea;
@@ -112,7 +111,7 @@ class ChatWindow : public Window, public gcn::ActionListener,
         /**
          * Constructor.
          */
-        ChatWindow(Network *network);
+        ChatWindow();
 
         /**
          * Destructor: used to write back values to the config file
@@ -217,8 +216,6 @@ class ChatWindow : public Window, public gcn::ActionListener,
         void help(const std::string &msg1, const std::string &msg2);
 
     private:
-
-        Network *mNetwork;
         bool mTmpVisible;
 
         void whisper(const std::string &nick, std::string msg);

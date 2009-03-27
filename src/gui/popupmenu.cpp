@@ -249,8 +249,7 @@ void PopupMenu::handleLink(const std::string& link)
     else if (link == "party-invite" && being &&
              being->getType() == Being::PLAYER)
     {
-        MessageOut outMsg(player_node->getNetwork());
-        outMsg.writeInt16(CMSG_PARTY_INVITE);
+        MessageOut outMsg(CMSG_PARTY_INVITE);
         outMsg.writeInt32(being->getId());
     }
 

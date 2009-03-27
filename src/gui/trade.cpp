@@ -197,8 +197,7 @@ void TradeWindow::tradeItem(Item *item, int quantity)
     //       function. Detect the actual server version, and re-enable this
     //       for that version only.
     //addItem(item->getId(), true, quantity, item->isEquipment());
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(CMSG_TRADE_ITEM_ADD_REQUEST);
+    MessageOut outMsg(CMSG_TRADE_ITEM_ADD_REQUEST);
     outMsg.writeInt16(item->getInvIndex());
     outMsg.writeInt32(quantity);
 }
@@ -251,8 +250,7 @@ void TradeWindow::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "cancel")
     {
-        MessageOut outMsg(mNetwork);
-        outMsg.writeInt16(CMSG_TRADE_CANCEL_REQUEST);
+        MessageOut outMsg(CMSG_TRADE_CANCEL_REQUEST);
     }
     else if (event.getId() == "ok")
     {
@@ -262,8 +260,7 @@ void TradeWindow::action(const gcn::ActionEvent &event)
         {
             mMoneyField->setText(toString(tempInt));
 
-            MessageOut outMsg(mNetwork);
-            outMsg.writeInt16(CMSG_TRADE_ITEM_ADD_REQUEST);
+            MessageOut outMsg(CMSG_TRADE_ITEM_ADD_REQUEST);
             outMsg.writeInt16(0);
             outMsg.writeInt32(tempInt);
         }
@@ -272,18 +269,15 @@ void TradeWindow::action(const gcn::ActionEvent &event)
             mMoneyField->setText("");
         }
         mMoneyField->setEnabled(false);
-        MessageOut outMsg(mNetwork);
-        outMsg.writeInt16(CMSG_TRADE_ADD_COMPLETE);
+        MessageOut outMsg(CMSG_TRADE_ADD_COMPLETE);
     }
     else if (event.getId() == "trade")
     {
-        MessageOut outMsg(mNetwork);
-        outMsg.writeInt16(CMSG_TRADE_OK);
+        MessageOut outMsg(CMSG_TRADE_OK);
     }
 }
 
 void TradeWindow::close()
 {
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(CMSG_TRADE_CANCEL_REQUEST);
+    MessageOut outMsg(CMSG_TRADE_CANCEL_REQUEST);
 }

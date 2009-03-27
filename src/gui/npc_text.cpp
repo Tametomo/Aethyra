@@ -99,15 +99,13 @@ void NpcTextDialog::action(const gcn::ActionEvent &event)
 
 void NpcTextDialog::nextDialog(int npcID)
 {
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(CMSG_NPC_NEXT_REQUEST);
+    MessageOut outMsg(CMSG_NPC_NEXT_REQUEST);
     outMsg.writeInt32(npcID);
 }
 
 void NpcTextDialog::closeDialog(int npcID)
 {
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(CMSG_NPC_CLOSE);
+    MessageOut outMsg(CMSG_NPC_CLOSE);
     outMsg.writeInt32(npcID);
 }
 

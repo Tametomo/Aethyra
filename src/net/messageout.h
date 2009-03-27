@@ -41,7 +41,7 @@ class MessageOut
         /**
          * Constructor.
          */
-        MessageOut(Network *network);
+        MessageOut(short id);
 
         void writeInt8(Sint8 value);          /**< Writes a byte. */
         void writeInt16(Sint16 value);        /**< Writes a short. */

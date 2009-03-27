@@ -28,13 +28,14 @@
 #include "messageout.h"
 #include "network.h"
 
-MessageOut::MessageOut(Network *network):
-    mNetwork(network),
+MessageOut::MessageOut(short id):
     mData(0),
     mDataSize(0),
     mPos(0)
 {
+    mNetwork = Network::instance();
     mData = mNetwork->mOutBuffer + mNetwork->mOutSize;
+    writeInt16(id);
 }
 
 void MessageOut::writeInt8(Sint8 value)

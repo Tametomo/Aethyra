@@ -202,8 +202,7 @@ void CharSelectDialog::updatePlayerInfo()
 void CharSelectDialog::attemptCharDelete()
 {
     // Request character deletion
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(0x0068);
+    MessageOut outMsg(0x0068);
     outMsg.writeInt32(mCharInfo->getEntry()->mCharId);
     outMsg.writeString("a@a.com", 40);
     mCharInfo->lock();
@@ -212,8 +211,7 @@ void CharSelectDialog::attemptCharDelete()
 void CharSelectDialog::attemptCharSelect()
 {
     // Request character selection
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(0x0066);
+    MessageOut outMsg(0x0066);
     outMsg.writeInt8(mCharInfo->getPos());
     mCharInfo->lock();
 }
@@ -356,8 +354,7 @@ void CharCreateDialog::unlock()
 void CharCreateDialog::attemptCharCreate()
 {
     // Send character infos
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(0x0067);
+    MessageOut outMsg(0x0067);
     outMsg.writeString(getName(), 24);
     outMsg.writeInt8(5);
     outMsg.writeInt8(5);

@@ -49,8 +49,8 @@
 #include "../utils/strprintf.h"
 #include "../utils/stringutils.h"
 
-ChatWindow::ChatWindow(Network * network):
-Window(""), mNetwork(network), mTmpVisible(false)
+ChatWindow::ChatWindow():
+Window(""), mTmpVisible(false)
 {
     setWindowName(_("Chat"));
 
@@ -94,7 +94,7 @@ Window(""), mNetwork(network), mTmpVisible(false)
     mPartyPrefix = (partyPrefix.empty() ? '$' : partyPrefix.at(0));
     mReturnToggles = config.getValue("ReturnToggles", "0") == "1";
     mRecorder = new Recorder(this);
-    mParty = new Party(this, mNetwork);
+    mParty = new Party(this);
 
     // If the player had @assert on in the last session, ask the server to
     // run the @assert command for the player again. Convenience for GMs.
@@ -385,8 +385,7 @@ void ChatWindow::whisper(const std::string &nick, std::string msg)
     if (tempNick.compare(playerName) == 0 || msg.empty())
         return;
 
-    MessageOut outMsg(mNetwork);
-    outMsg.writeInt16(CMSG_CHAT_WHISPER);
+    MessageOut outMsg(CMSG_CHAT_WHISPER);
     outMsg.writeInt16(msg.length() + 28);
     outMsg.writeString(recvnick, 24);
     outMsg.writeString(msg, msg.length());
@@ -418,9 +417,8 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
             chatLog(_("Trying to send a blank party message."), BY_SERVER);
             return;
         }
-        MessageOut outMsg(mNetwork);
 
-        outMsg.writeInt16(CMSG_PARTY_MESSAGE);
+        MessageOut outMsg(CMSG_PARTY_MESSAGE);
         outMsg.writeInt16(length + 4);
         outMsg.writeString(msg, length);
         return;
@@ -431,8 +429,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
     {
         msg = nick + " : " + msg;
 
-        MessageOut outMsg(mNetwork);
-        outMsg.writeInt16(CMSG_CHAT_MESSAGE);
+        MessageOut outMsg(CMSG_CHAT_MESSAGE);
         // Added + 1 in order to let eAthena parse admin commands correctly
         outMsg.writeInt16(msg.length() + 4 + 1);
         outMsg.writeString(msg, msg.length() + 1);
@@ -457,8 +454,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
 
     if (command == "announce")
     {
-        MessageOut outMsg(mNetwork);
-        outMsg.writeInt16(0x0099);
+        MessageOut outMsg(0x0099);
         outMsg.writeInt16(msg.length() + 4);
         outMsg.writeString(msg, msg.length());
     }
@@ -495,8 +491,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
     }
     else if (command == "who")
     {
-        MessageOut outMsg(mNetwork);
-        outMsg.writeInt16(0x00c1);
+        MessageOut outMsg(0x00c1);
     }
     else if (command == "clear")
         mTextOutput->clearRows();
@@ -563,10 +558,9 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
          * This will eventually be replaced by a GUI, so
          * we don't need to get too sophisticated
          */
-        MessageOut outMsg(mNetwork);
         if (msg == "heal")
         {
-            outMsg.writeInt16(0x03f3);
+            MessageOut outMsg(0x03f3);
             outMsg.writeInt16(0x01);
             outMsg.writeInt32(0);
             outMsg.writeInt8(0);
@@ -575,7 +569,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
         }
         else if (msg == "gather")
         {
-            outMsg.writeInt16(0x03f3);
+            MessageOut outMsg(0x03f3);
             outMsg.writeInt16(0x02);
             outMsg.writeInt32(0);
             outMsg.writeInt8(0);
