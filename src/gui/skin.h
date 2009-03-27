@@ -1,5 +1,6 @@
 /*
- *  Aethyra
+ *  Gui Skinning
+ *  Copyright (C) 2008 The Legend of Mazzeroth Development Team
  *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra.
@@ -42,27 +43,27 @@ class Skin
          * name if a dialog for skin selection for a specific window type is
          * done.
          */
-        std::string getName() { return mName; }
+        std::string getName() const { return mName; }
 
         /**
          * Returns the skin's xml file path.
          */
-        std::string getFilePath() { return mFilePath; }
+        std::string getFilePath() const { return mFilePath; }
 
         /**
          * Returns the background skin.
          */
-        ImageRect getBorder() { return border; }
+        ImageRect getBorder() const { return border; }
 
         /**
          * Returns the image used by a close button for this skin.
          */
-        Image* getCloseImage() { return closeImage; }
+        Image* getCloseImage() const { return closeImage; }
 
         /**
          * Returns the number of instances which use this skin.
          */
-        int getNumberOfInstances() { return instances; }
+        int getNumberOfInstances() const { return instances; }
 
         /**
          * Returns the minimum width which can be used with this skin.

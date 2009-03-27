@@ -1,5 +1,6 @@
 /*
- *  Aethyra
+ *  Gui Skinning
+ *  Copyright (C) 2008 The Legend of Mazzeroth Development Team
  *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra.
@@ -158,7 +159,7 @@ Skin* SkinLoader::load(const std::string &filename,
         {
             // Iterate through <part>'s
             // LEEOR / TODO:
-            // We need to make provisions to load in a CloseButton image. For 
+            // We need to make provisions to load in a CloseButton image. For
             // now it can just be hard-coded.
             for_each_xml_child_node(partNode, widgetNode)
             {
