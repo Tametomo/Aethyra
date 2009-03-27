@@ -70,7 +70,7 @@ LocalPlayer::LocalPlayer(Uint32 id, Uint16 job, Map *map):
     mStatPoint(0), mSkillPoint(0),
     mStatsPointsToAttribute(0),
     mEquipment(new Equipment()),
-    mXp(0), mNetwork(0),
+    mXp(0),
     mTarget(NULL), mPickUpTarget(NULL),
     mTrading(false), mGoingToTarget(false),
     mTargetTime(-1), mLastAction(-1),

@@ -47,9 +47,8 @@
 #include "../utils/strprintf.h"
 #include "../utils/stringutils.h"
 
-TradeWindow::TradeWindow(Network *network):
+TradeWindow::TradeWindow():
     Window("Trade"),
-    mNetwork(network),
     mMyInventory(new Inventory(INVENTORY_SIZE, 2)),
     mPartnerInventory(new Inventory(INVENTORY_SIZE, 2))
 {

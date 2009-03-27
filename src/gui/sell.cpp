@@ -38,10 +38,10 @@
 #include "../utils/gettext.h"
 #include "../utils/strprintf.h"
 
-SellDialog::SellDialog(Network *network):
+SellDialog::SellDialog():
     Window("Sell"),
-    mNetwork(network),
-    mMaxItems(0), mAmountItems(0)
+    mMaxItems(0),
+    mAmountItems(0)
 {
     setWindowName(_("Sell"));
     setResizable(true);

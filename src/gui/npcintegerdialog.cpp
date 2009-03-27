@@ -33,8 +33,8 @@
 
 #include "../utils/gettext.h"
 
-NpcIntegerDialog::NpcIntegerDialog(Network *network):
-    Window(_("NPC Number Request")), mNetwork(network)
+NpcIntegerDialog::NpcIntegerDialog():
+    Window(_("NPC Number Request"))
 {
     mValueField = new IntTextField();
     setWindowName("NPCInput");

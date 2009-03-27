@@ -187,33 +187,33 @@ int get_elapsed_time(int start_time)
 /**
  * Create all the various globally accessible gui windows
  */
-void createGuiWindows(Network *network)
+void createGuiWindows()
 {
     // Create dialogs
     chatWindow = new ChatWindow();
     menuWindow = new MenuWindow();
     statusWindow = new StatusWindow(player_node);
     miniStatusWindow = new MiniStatusWindow();
-    buyDialog = new BuyDialog(network);
-    sellDialog = new SellDialog(network);
-    buySellDialog = new BuySellDialog(network);
+    buyDialog = new BuyDialog();
+    sellDialog = new SellDialog();
+    buySellDialog = new BuySellDialog();
     inventoryWindow = new InventoryWindow();
     emoteWindow = new EmoteWindow();
-    npcTextDialog = new NpcTextDialog(network);
-    npcIntegerDialog = new NpcIntegerDialog(network);
-    npcListDialog = new NpcListDialog(network);
-    npcStringDialog = new NpcStringDialog(network);
+    npcTextDialog = new NpcTextDialog();
+    npcIntegerDialog = new NpcIntegerDialog();
+    npcListDialog = new NpcListDialog();
+    npcStringDialog = new NpcStringDialog();
     skillDialog = new SkillDialog();
     minimap = new Minimap();
     equipmentWindow = new EquipmentWindow();
-    tradeWindow = new TradeWindow(network);
+    tradeWindow = new TradeWindow();
     helpWindow = new HelpWindow();
     debugWindow = new DebugWindow();
     itemShortcutWindow = new ShortcutWindow("ItemShortcut",
                                             new ItemShortcutContainer);
     emoteShortcutWindow = new ShortcutWindow("emoteShortcut",
                                              new EmoteShortcutContainer);
-    storageWindow = new StorageWindow(network);
+    storageWindow = new StorageWindow();
 
     // Set initial window visibility
     chatWindow->setVisible((bool) config.getValue(
@@ -242,7 +242,7 @@ void createGuiWindows(Network *network)
 /**
  * Destroy all the globally accessible gui windows
  */
-void destroyGuiWindows()
+static void destroyGuiWindows()
 {
     logger->setChatWindow(NULL);
     delete chatWindow;
@@ -282,10 +282,10 @@ Game::Game(Network *network):
     mSkillHandler(new SkillHandler()),
     mTradeHandler(new TradeHandler())
 {
-    createGuiWindows(network);
-    engine = new Engine(network);
+    createGuiWindows();
+    engine = new Engine();
 
-    beingManager = new BeingManager(network);
+    beingManager = new BeingManager();
     floorItemManager = new FloorItemManager();
     effectManager = new EffectManager();
 
@@ -303,7 +303,6 @@ Game::Game(Network *network):
 
     // Initialize beings
     beingManager->setPlayer(player_node);
-    player_node->setNetwork(network);
 
     Joystick::init();
     // TODO: The user should be able to choose which one to use

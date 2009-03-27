@@ -31,7 +31,6 @@
 #include "window.h"
 
 class Item;
-class Network;
 class ShopItems;
 class ShopListBox;
 
@@ -48,7 +47,7 @@ class SellDialog : public Window, gcn::ActionListener, gcn::SelectionListener
          *
          * @see Window::Window
          */
-        SellDialog(Network *network);
+        SellDialog();
 
         /**
          * Destructor
@@ -97,7 +96,6 @@ class SellDialog : public Window, gcn::ActionListener, gcn::SelectionListener
          */
         void updateButtonsAndLabels();
 
-        Network *mNetwork;
         gcn::Button *mSellButton;
         gcn::Button *mQuitButton;
         gcn::Button *mAddMaxButton;

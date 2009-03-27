@@ -26,7 +26,6 @@
 #include <string>
 
 class Map;
-class Network;
 
 /**
  * Game engine. Actually hardly does anything anymore except keeping track of
@@ -38,7 +37,7 @@ class Engine
         /**
          * Constructor.
          */
-        Engine(Network *network);
+        Engine();
 
         /**
          * Destructor.
@@ -64,7 +63,6 @@ class Engine
 
     private:
         Map *mCurrentMap;
-        Network *mNetwork;
         std::string mMapName;
 };
 

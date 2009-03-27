@@ -42,7 +42,7 @@ class Party
         void createResponse(bool ok);
         void inviteResponse(const std::string &nick, int status);
         void invitedAsk(const std::string &nick, int gender,
-                const std::string &partyName);
+                        const std::string &partyName);
         void leftResponse(const std::string &nick);
         void receiveChat(Being *being, const std::string &msg);
 

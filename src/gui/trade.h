@@ -35,7 +35,6 @@
 class Inventory;
 class Item;
 class ItemContainer;
-class Network;
 class ScrollArea;
 
 /**
@@ -49,7 +48,7 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
         /**
          * Constructor.
          */
-        TradeWindow(Network *network);
+        TradeWindow();
 
         /**
          * Destructor.
@@ -114,8 +113,6 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
         void close();
 
     private:
-        Network *mNetwork;
-
         typedef const std::auto_ptr<Inventory> InventoryPtr;
         InventoryPtr mMyInventory;
         InventoryPtr mPartnerInventory;

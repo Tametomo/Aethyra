@@ -37,8 +37,6 @@
 class MessageHandler;
 class MessageIn;
 
-class Network;
-
 class Network
 {
     public:

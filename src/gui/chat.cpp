@@ -50,7 +50,8 @@
 #include "../utils/stringutils.h"
 
 ChatWindow::ChatWindow():
-Window(""), mTmpVisible(false)
+    Window(_("Chat")),
+    mTmpVisible(false)
 {
     setWindowName(_("Chat"));
 

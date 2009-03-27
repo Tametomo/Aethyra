@@ -149,9 +149,8 @@ void Party::leftResponse(const std::string &nick)
 void Party::receiveChat(Being *being, const std::string &msg)
 {
     if (!being)
-    {
         return;
-    }
+
     if (being->getType() != Being::PLAYER)
     {
         mChat->chatLog(_("Party chat received, but being is not a player"),

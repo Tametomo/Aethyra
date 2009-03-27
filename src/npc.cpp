@@ -40,8 +40,8 @@ int current_npc = 0;
 static const int NAME_X_OFFSET = 15;
 static const int NAME_Y_OFFSET = 30;
 
-NPC::NPC(int id, Uint16 job, Map *map, Network *network):
-    Player(id, job, map), mNetwork(network)
+NPC::NPC(int id, int job, Map *map):
+    Player(id, job, map)
 {
     NPCInfo info = NPCDB::get(job);
 
@@ -110,10 +110,11 @@ Being::Type NPC::getType() const
 
 void NPC::talk()
 {
-    if (mTalking || !mNetwork)
+    if (mTalking)
         return;
 
     mTalking = true;
+
     MessageOut outMsg(CMSG_NPC_TALK);
     outMsg.writeInt32(mId);
     outMsg.writeInt8(0);

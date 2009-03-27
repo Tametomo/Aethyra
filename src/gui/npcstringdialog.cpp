@@ -33,8 +33,8 @@
 
 #include "../utils/gettext.h"
 
-NpcStringDialog::NpcStringDialog(Network *network):
-    Window(_("NPC Text Request")), mNetwork(network)
+NpcStringDialog::NpcStringDialog():
+    Window(_("NPC Text Request"))
 {
     setWindowName("NPCInput");
     mValueField = new TextField("");

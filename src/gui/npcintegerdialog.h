@@ -27,7 +27,6 @@
 
 #include "window.h"
 
-class Network;
 class IntTextField;
 
 /**
@@ -43,7 +42,7 @@ class NpcIntegerDialog : public Window, public gcn::ActionListener
          *
          * @see Window::Window
          */
-        NpcIntegerDialog(Network *network);
+        NpcIntegerDialog();
 
         /**
          * Called when receiving actions from the widgets.
@@ -79,7 +78,6 @@ class NpcIntegerDialog : public Window, public gcn::ActionListener
         void requestFocus();
 
     private:
-        Network *mNetwork;
         gcn::Button *mDecButton;
         gcn::Button *mIncButton;
         IntTextField *mValueField;

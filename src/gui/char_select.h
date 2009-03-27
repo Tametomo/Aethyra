@@ -47,9 +47,7 @@ class CharSelectDialog : public Window, public gcn::ActionListener
         /**
          * Constructor.
          */
-        CharSelectDialog(Network *network,
-                         LockedArray<LocalPlayer*> *charInfo,
-                         Gender gender);
+        CharSelectDialog(LockedArray<LocalPlayer*> *charInfo, Gender gender);
 
         void action(const gcn::ActionEvent &event);
 
@@ -60,7 +58,6 @@ class CharSelectDialog : public Window, public gcn::ActionListener
         bool selectByName(const std::string &name);
 
     private:
-        Network *mNetwork;
         LockedArray<LocalPlayer*> *mCharInfo;
 
         gcn::Button *mSelectButton;
@@ -101,8 +98,7 @@ class CharCreateDialog : public Window, public gcn::ActionListener
         /**
          * Constructor.
          */
-        CharCreateDialog(Window *parent, int slot, Network *network,
-                         Gender gender);
+        CharCreateDialog(Window *parent, int slot, Gender gender);
 
         /**
          * Destructor.
@@ -127,7 +123,6 @@ class CharCreateDialog : public Window, public gcn::ActionListener
          */
         void attemptCharCreate();
 
-        Network *mNetwork;
         gcn::TextField *mNameField;
         gcn::Label *mNameLabel;
         gcn::Button *mNextHairColorButton;

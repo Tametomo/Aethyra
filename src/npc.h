@@ -25,14 +25,13 @@
 
 #include "player.h"
 
-class Network;
 class Graphics;
 class Text;
 
 class NPC : public Player
 {
     public:
-        NPC(int id, Uint16 job, Map *map, Network *network);
+        NPC(int id, int job, Map *map);
 
         ~NPC();
 
@@ -46,9 +45,8 @@ class NPC : public Player
 
         static bool mTalking;
 
-    protected:
-        Network *mNetwork;
         void updateCoords();
+
     private:
         Text *mName;
 };

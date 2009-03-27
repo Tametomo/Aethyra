@@ -42,9 +42,8 @@
 
 #include "utils/stringutils.h"
 
-Engine::Engine(Network *network):
-    mCurrentMap(NULL),
-    mNetwork(network)
+Engine::Engine():
+    mCurrentMap(NULL)
 {
 }
 

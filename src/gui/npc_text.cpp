@@ -34,8 +34,8 @@
 
 #include "../utils/gettext.h"
 
-NpcTextDialog::NpcTextDialog(Network *network):
-    Window("NPC"), mNetwork(network)
+NpcTextDialog::NpcTextDialog():
+     Window(_("NPC"))
 {
     setWindowName(_("NPC"));
     setResizable(true);

@@ -79,11 +79,12 @@ void CharDeleteConfirm::action(const gcn::ActionEvent &event)
     ConfirmDialog::action(event);
 }
 
-CharSelectDialog::CharSelectDialog(Network *network,
-                                   LockedArray<LocalPlayer*> *charInfo,
+CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
                                    Gender gender):
-    Window(_("Select Character")), mNetwork(network),
-    mCharInfo(charInfo), mGender(gender), mCharSelected(false)
+    Window(_("Select Character")),
+    mCharInfo(charInfo),
+    mGender(gender),
+    mCharSelected(false)
 {
     // Control that shows the Player
     mPlayerBox = new PlayerBox;
@@ -155,8 +156,7 @@ void CharSelectDialog::action(const gcn::ActionEvent &event)
         {
             // Start new character dialog
             CharCreateDialog *charCreateDialog =
-                new CharCreateDialog(this, mCharInfo->getPos(),
-                                     mNetwork, mGender);
+                new CharCreateDialog(this, mCharInfo->getPos(), mGender);
             charServerHandler.setCharCreateDialog(charCreateDialog);
         }
     }
@@ -244,16 +244,17 @@ bool CharSelectDialog::selectByName(const std::string &name)
     return false;
 }
 
-CharCreateDialog::CharCreateDialog(Window *parent, int slot, Network *network,
-                                   Gender gender):
-    Window(_("Create Character"), true, parent), mNetwork(network), mSlot(slot)
+CharCreateDialog::CharCreateDialog(Window *parent, int slot, Gender gender):
+    Window(_("Create Character"), true, parent),
+    mSlot(slot)
 {
     mPlayer = new Player(0, 0, NULL);
     mPlayer->setGender(gender);
 
     int numberOfHairColors = ColorDB::size();
 
-    mPlayer->setHairStyle(rand() % mPlayer->getNumOfHairstyles(), rand() % numberOfHairColors);
+    mPlayer->setHairStyle(rand() % mPlayer->getNumOfHairstyles(),
+                          rand() % numberOfHairColors);
 
     mNameField = new TextField("");
     mNameLabel = new Label(_("Name:"));

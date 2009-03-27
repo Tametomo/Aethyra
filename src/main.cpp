@@ -292,7 +292,8 @@ static void init_engine(const Options &options)
 
     // Initialize SDL
     logger->log("Initializing SDL...");
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
+    {
         std::cerr << _("Could not initialize SDL: ") <<
             SDL_GetError() << std::endl;
         exit(1);
@@ -304,7 +305,8 @@ static void init_engine(const Options &options)
 
     ResourceManager *resman = ResourceManager::getInstance();
 
-    if (!resman->setWriteDir(homeDir)) {
+    if (!resman->setWriteDir(homeDir))
+    {
         std::cout << homeDir
                   << _(" couldn't be set as home directory! Exiting.")
                   << std::endl;
@@ -315,9 +317,9 @@ static void init_engine(const Options &options)
     resman->addToSearchPath(homeDir, false);
 
     // Add the main data directories to our PhysicsFS search path
-    if (!options.dataPath.empty()) {
+    if (!options.dataPath.empty())
         resman->addToSearchPath(options.dataPath, true);
-    }
+
     resman->addToSearchPath("data", true);
 #if defined __APPLE__
     CFBundleRef mainBundle = CFBundleGetMainBundle();
@@ -367,14 +369,18 @@ static void init_engine(const Options &options)
     configFile = fopen(configPath.c_str(), "r");
 
     // If we can't read it, it doesn't exist !
-    if (configFile == NULL) {
+    if (configFile == NULL)
+    {
         // We reopen the file in write mode and we create it
         configFile = fopen(configPath.c_str(), "wt");
     }
-    if (configFile == NULL) {
+    if (configFile == NULL)
+    {
         std::cout << "Can't create " << configPath << ". "
             "Using Defaults." << std::endl;
-    } else {
+    }
+    else
+    {
         fclose(configFile);
         config.init(configPath);
     }
@@ -444,9 +450,9 @@ static void init_engine(const Options &options)
             sound.init();
 
         sound.setSfxVolume((int) config.getValue("sfxVolume",
-                    defaultSfxVolume));
+                                                 defaultSfxVolume));
         sound.setMusicVolume((int) config.getValue("musicVolume",
-                    defaultMusicVolume));
+                                                   defaultMusicVolume));
     }
     catch (const char *err)
     {
@@ -601,8 +607,8 @@ static void loadUpdates()
         std::stringstream line(lines[i]);
         std::string filename;
         line >> filename;
-        resman->addToSearchPath(homeDir + "/" + updatesDir + "/"
-                                + filename, false);
+        resman->addToSearchPath(homeDir + "/" + updatesDir + "/" + filename,
+                                false);
     }
 }
 
@@ -801,14 +807,16 @@ int main(int argc, char *argv[])
     sound.playMusic("Magick - Real.ogg");
 
     loginData.username = options.username;
-    if (loginData.username.empty()) {
-        if (config.getValue("remember", 0)) {
+
+    if (loginData.username.empty())
+    {
+        if (config.getValue("remember", 0))
             loginData.username = config.getValue("username", "");
-        }
     }
-    if (!options.password.empty()) {
+
+    if (!options.password.empty())
         loginData.password = options.password;
-    }
+
     loginData.hostname = config.getValue("host", "www.aethyra.org");
     loginData.port = (short)config.getValue("port", 21001);
     loginData.remember = config.getValue("remember", 0);
@@ -1003,9 +1011,10 @@ int main(int argc, char *argv[])
                     break;
                 case CHAR_SELECT_STATE:
                     logger->log("State: CHAR_SELECT");
-                    currentDialog = new CharSelectDialog(network, &charInfo,
+                    currentDialog = new CharSelectDialog(&charInfo,
                                                         (loginData.sex == 0) ?
-                                                         GENDER_FEMALE : GENDER_MALE);
+                                                         GENDER_FEMALE :
+                                                         GENDER_MALE);
                     positionDialog(currentDialog, screenWidth, screenHeight);
 
                     if (((CharSelectDialog*) currentDialog)->

@@ -38,9 +38,12 @@
 #include "../utils/gettext.h"
 #include "../utils/strprintf.h"
 
-BuyDialog::BuyDialog(Network *network):
-    Window("Buy"), mNetwork(network),
-    mMoney(0), mAmountItems(0), mMaxItems(0)
+
+BuyDialog::BuyDialog():
+    Window(_("Buy")),
+    mMoney(0),
+    mAmountItems(0),
+    mMaxItems(0)
 {
     setWindowName(_("Buy"));
     setResizable(true);

@@ -36,7 +36,6 @@ class ImageSet;
 class Inventory;
 class Item;
 class Map;
-class Network;
 
 /**
  * The local player character.
@@ -60,8 +59,6 @@ class LocalPlayer : public Player
         ~LocalPlayer();
 
         virtual void setName(const std::string &name);
-        void setNetwork(Network *network) { mNetwork = network; }
-        Network *getNetwork() {return mNetwork; }
         virtual void logic();
 
         /**
@@ -244,7 +241,6 @@ class LocalPlayer : public Player
 
         int mXp;            /**< Experience points. */
 
-        Network *mNetwork;
         Being *mTarget;
         FloorItem *mPickUpTarget;
 
