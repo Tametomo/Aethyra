@@ -19,6 +19,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
 #include <cassert>
 
 #include "configuration.h"
@@ -76,8 +77,8 @@ LocalPlayer::LocalPlayer(Uint32 id, Uint16 job, Map *map):
     mTargetTime(-1), mLastAction(-1),
     mLastTarget(-1), mWalkingDir(0),
     mDestX(0), mDestY(0),
-    mInventory(new Inventory(INVENTORY_SIZE, 2)),
-    mStorage(new Inventory(STORAGE_SIZE, 1))
+    mInventory(new Inventory(INVENTORY_SIZE)),
+    mStorage(new Inventory(STORAGE_SIZE))
 {
     // Variable to keep the local player from doing certain actions before a map
     // is initialized. e.g. drawing a player's name using the TextManager, since
@@ -254,7 +255,7 @@ void LocalPlayer::nextStep()
 void LocalPlayer::equipItem(Item *item)
 {
     MessageOut outMsg(CMSG_PLAYER_EQUIP);
-    outMsg.writeInt16(item->getInvIndex());
+    outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
     outMsg.writeInt16(0);
 }
 
@@ -264,7 +265,7 @@ void LocalPlayer::unequipItem(Item *item)
         return;
 
     MessageOut outMsg(CMSG_PLAYER_UNEQUIP);
-    outMsg.writeInt16(item->getInvIndex());
+    outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
 
     // Tidy equipment directly to avoid weapon still shown bug, for instance
     mEquipment->removeEquipment(item->getInvIndex());
@@ -273,7 +274,7 @@ void LocalPlayer::unequipItem(Item *item)
 void LocalPlayer::useItem(Item *item)
 {
     MessageOut outMsg(CMSG_PLAYER_INVENTORY_USE);
-    outMsg.writeInt16(item->getInvIndex());
+    outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
     outMsg.writeInt32(item->getId());
     // Note: id is dest of item, usually player_node->account_ID ??
 }
@@ -282,7 +283,7 @@ void LocalPlayer::dropItem(Item *item, int quantity)
 {
     // TODO: Fix wrong coordinates of drops, serverside?
     MessageOut outMsg(CMSG_PLAYER_INVENTORY_DROP);
-    outMsg.writeInt16(item->getInvIndex());
+    outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
     outMsg.writeInt16(quantity);
 }
 
@@ -659,13 +660,10 @@ void LocalPlayer::loadTargetCursor(std::string filename, int width, int height,
     assert(size > -1);
     assert(size < 3);
 
-    ImageSet* currentImageSet;
-    SimpleAnimation* currentCursor;
-
     ResourceManager *resman = ResourceManager::getInstance();
 
-    currentImageSet = resman->getImageSet(filename, width, height);
-    Animation *anim = new Animation();
+    ImageSet *currentImageSet = resman->getImageSet(filename, width, height);
+    Animation *anim = new Animation;
 
     for (unsigned int i = 0; i < currentImageSet->size(); ++i)
     {
@@ -674,7 +672,7 @@ void LocalPlayer::loadTargetCursor(std::string filename, int width, int height,
                       (16 - (currentImageSet->getHeight() / 2)));
     }
 
-    currentCursor = new SimpleAnimation(anim);
+    SimpleAnimation *currentCursor = new SimpleAnimation(anim);
 
     const int index = outRange ? 1 : 0;
 

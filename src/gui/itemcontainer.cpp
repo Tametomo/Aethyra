@@ -45,11 +45,10 @@ const int ItemContainer::gridHeight = 42; // item icon height + 10
 
 static const int NO_ITEM = -1;
 
-ItemContainer::ItemContainer(Inventory *inventory, int offset):
+ItemContainer::ItemContainer(Inventory *inventory):
     mInventory(inventory),
     mSelectedItemIndex(NO_ITEM),
-    mLastSelectedItemId(NO_ITEM),
-    mOffset(offset)
+    mLastSelectedItemId(NO_ITEM)
 {
     mItemPopup = new ItemPopup();
     mItemPopup->setOpaque(false);
@@ -59,7 +58,7 @@ ItemContainer::ItemContainer(Inventory *inventory, int offset):
     mSelImg = resman->getImage("graphics/gui/selection.png");
     if (!mSelImg) logger->error("Unable to load selection.png");
 
-    mMaxItems = mInventory->getLastUsedSlot() - (mOffset - 1); // Count from 0, usage from 2
+    mMaxItems = mInventory->getLastUsedSlot(); // Count from 0, usage from 2
 
     addMouseListener(this);
     addWidgetListener(this);
@@ -78,7 +77,7 @@ void ItemContainer::logic()
 
     gcn::Widget::logic();
 
-    int i = mInventory->getLastUsedSlot() - (mOffset - 1); // Count from 0, usage from 2
+    int i = mInventory->getLastUsedSlot();
 
     if (i != mMaxItems)
     {
@@ -98,20 +97,15 @@ void ItemContainer::draw(gcn::Graphics *graphics)
     if (columns < 1)
         columns = 1;
 
-    /*
-     * mOffset is used to compensate for some weirdness that eAthena inherited
-     * from Ragnarok Online.  Inventory slots and cart slots are +2 from their
-     * actual index, while storage slots are +1.
-     */
-    for (int i = mOffset; i < mInventory->getSize(); i++)
+    for (int i = 0; i < mInventory->getSize(); i++)
     {
         Item *item = mInventory->getItem(i);
 
         if (!item || item->getQuantity() <= 0)
             continue;
 
-        int itemX = ((i - mOffset) % columns) * gridWidth;
-        int itemY = ((i - mOffset) / columns) * gridHeight;
+        int itemX = (i % columns) * gridWidth;
+        int itemY = (i / columns) * gridHeight;
 
         // Draw selection image below selected item
         if (mSelectedItemIndex == i)
@@ -145,7 +139,7 @@ void ItemContainer::recalculateHeight()
     if (cols < 1)
         cols = 1;
 
-    const int rows = (mMaxItems / cols) + (mMaxItems % cols > 0 ? 1 : 0);
+    const int rows = ((mMaxItems + 1) / cols) + ((mMaxItems + 1) % cols > 0 ? 1 : 0);
     const int height = rows * gridHeight + 8;
 
     if (height != getHeight())
@@ -179,7 +173,7 @@ void ItemContainer::refindSelectedItem()
         // Otherwise ensure the invariant: we must point to an item of the specified last ID,
         // or nowhere at all.
 
-        for (int i = 0; i <= mMaxItems + 1; i++)
+        for (int i = 0; i < mMaxItems; i++)
             if (mInventory->getItem(i) &&
                 mInventory->getItem(i)->getId() == mLastSelectedItemId)
             {
@@ -195,12 +189,7 @@ void ItemContainer::setSelectedItemIndex(int index)
 {
     int newSelectedItemIndex;
 
-    /*
-     * mOffset is used to compensate for some weirdness that eAthena inherited from
-     * Ragnarok Online.  Inventory slots and cart slots are +2 from their actual index,
-     * while storage slots are +1.
-     */
-    if (index < 0 || index > mMaxItems + mOffset || mInventory->getItem(index) == NULL)
+    if (index < 0 || index > mMaxItems || mInventory->getItem(index) == NULL)
         newSelectedItemIndex = NO_ITEM;
     else
         newSelectedItemIndex = index;
@@ -238,7 +227,7 @@ void ItemContainer::mousePressed(gcn::MouseEvent &event)
         int columns = getWidth() / gridWidth;
         int mx = event.getX();
         int my = event.getY();
-        int index = mx / gridWidth + ((my / gridHeight) * columns) + mOffset;
+        int index = mx / gridWidth + ((my / gridHeight) * columns);
 
         itemShortcut->setItemSelected(-1);
         setSelectedItemIndex(index);
@@ -277,7 +266,7 @@ void ItemContainer::mouseExited(gcn::MouseEvent &event)
 int ItemContainer::getSlotIndex(const int posX, const int posY) const
 {
     int columns = getWidth() / gridWidth;
-    int index = posX / gridWidth + ((posY / gridHeight) * columns) + mOffset;
+    int index = posX / gridWidth + ((posY / gridHeight) * columns);
 
     return (index);
 }

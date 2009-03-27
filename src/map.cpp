@@ -49,7 +49,9 @@ struct Location
     /**
      * Constructor.
      */
-    Location(int px, int py, MetaTile *ptile):x(px),y(py),tile(ptile) {};
+    Location(int px, int py, MetaTile *ptile):
+        x(px), y(py), tile(ptile)
+    {}
 
     /**
      * Comparison operator.

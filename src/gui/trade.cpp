@@ -49,8 +49,8 @@
 
 TradeWindow::TradeWindow():
     Window("Trade"),
-    mMyInventory(new Inventory(INVENTORY_SIZE, 2)),
-    mPartnerInventory(new Inventory(INVENTORY_SIZE, 2))
+    mMyInventory(new Inventory(INVENTORY_SIZE)),
+    mPartnerInventory(new Inventory(INVENTORY_SIZE))
 {
     setWindowName(_("Trade"));
     setDefaultSize(342, 209, ImageRect::CENTER);
@@ -67,13 +67,13 @@ TradeWindow::TradeWindow():
     mAddButton = new Button(_("Add"), "add", this);
     mOkButton = new Button(longestName, "ok", this);
 
-    mMyItemContainer = new ItemContainer(mMyInventory.get(), 2);
+    mMyItemContainer = new ItemContainer(mMyInventory.get());
     mMyItemContainer->setWidth(160);
     mMyItemContainer->addSelectionListener(this);
 
     mMyScroll = new ScrollArea(mMyItemContainer);
 
-    mPartnerItemContainer = new ItemContainer(mPartnerInventory.get(), 2);
+    mPartnerItemContainer = new ItemContainer(mPartnerInventory.get());
     mPartnerItemContainer->setWidth(160);
     mPartnerItemContainer->addSelectionListener(this);
 
@@ -197,7 +197,7 @@ void TradeWindow::tradeItem(Item *item, int quantity)
     //       for that version only.
     //addItem(item->getId(), true, quantity, item->isEquipment());
     MessageOut outMsg(CMSG_TRADE_ITEM_ADD_REQUEST);
-    outMsg.writeInt16(item->getInvIndex());
+    outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
     outMsg.writeInt32(quantity);
 }
 
@@ -226,7 +226,7 @@ void TradeWindow::action(const gcn::ActionEvent &event)
         if (!item)
             return;
 
-        if (mMyInventory->getFreeSlot() < 1)
+        if (mMyInventory->getFreeSlot() < 0)
             return;
 
         if (mMyInventory->contains(item))

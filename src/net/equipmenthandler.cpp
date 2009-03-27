@@ -34,6 +34,8 @@
 
 #include "../utils/gettext.h"
 
+enum { debugEquipment = 1 };
+
 EquipmentHandler::EquipmentHandler()
 {
     static const Uint16 _messages[] = {
@@ -64,7 +66,7 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
 
             for (int loop = 0; loop < itemCount; loop++)
             {
-                index = msg->readInt16();
+                index = msg->readInt16() - INVENTORY_OFFSET;
                 itemId = msg->readInt16();
                 msg->readInt8();  // type
                 msg->readInt8();  // identify flag
@@ -73,6 +75,11 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
                 msg->readInt8();  // attribute
                 msg->readInt8();  // refine
                 msg->skip(8);     // card
+
+                if (debugEquipment)
+                {
+                    logger->log("Index: %d, ID: %d", index, itemId);
+                }
 
                 inventory->setItem(index, itemId, 1, true);
 
@@ -92,21 +99,21 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
             break;
 
         case SMSG_PLAYER_EQUIP:
-            index = msg->readInt16();
+            index = msg->readInt16() - INVENTORY_OFFSET;
             equipPoint = msg->readInt16();
             type = msg->readInt8();
 
             logger->log("Equipping: %i %i %i", index, equipPoint, type);
 
-            if (!type) {
+            if (!type)
+            {
                 chatWindow->chatLog(_("Unable to equip."), BY_SERVER);
                 break;
             }
 
-            if (!equipPoint) {
-                // No point given, no point in searching
+            // No point in searching when no point given
+            if (!equipPoint)
                 break;
-            }
 
             /*
              * An item may occupy more than 1 slot.  If so, it's
@@ -114,41 +121,49 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
              */
             mask = 1;
             position = 0;
-            while (!(equipPoint & mask)) {
+            while (!(equipPoint & mask))
+            {
                 mask <<= 1;
                 position++;
             }
-            logger->log("Position %i", position);
 
-            item = player_node->getInventory()->getItem(player_node->mEquipment->getEquipment(position));
+            if (debugEquipment)
+            {
+                logger->log("Equipping: %i %i %i at position %i",
+                            index, equipPoint, type, position);
+            }
+
+            item = inventory->getItem(player_node->mEquipment->getEquipment(position));
 
             // Unequip any existing equipped item in this position
-            if (item) {
+            if (item)
                 item->setEquipped(false);
-            }
 
             item = inventory->getItem(index);
             player_node->mEquipment->setEquipment(position, index);
             break;
 
         case SMSG_PLAYER_UNEQUIP:
-            index = msg->readInt16();
+            index = msg->readInt16() - INVENTORY_OFFSET;
             equipPoint = msg->readInt16();
             type = msg->readInt8();
 
-            if (!type) {
+            if (!type)
+            {
                 chatWindow->chatLog(_("Unable to unequip."), BY_SERVER);
                 break;
             }
 
-            if (!equipPoint) {
+            if (!equipPoint)
+            {
                 // No point given, no point in searching
                 break;
             }
 
             mask = 1;
             position = 0;
-            while (!(equipPoint & mask)) {
+            while (!(equipPoint & mask))
+            {
                 mask <<= 1;
                 position++;
             }
@@ -159,14 +174,20 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
 
             item->setEquipped(false);
 
-            if (equipPoint & 0x8000) {    // Arrows
+            if (equipPoint & 0x8000)
+            {    // Arrows
                 player_node->mEquipment->setArrows(0);
             }
-            else {
+            else
+            {
                 player_node->mEquipment->removeEquipment(position);
             }
-            logger->log("Unequipping: %i %i(%i) %i",
-                    index, equipPoint, type, position);
+
+            if (debugEquipment)
+            {
+                logger->log("Unequipping: %i %i(%i) %i",
+                            index, equipPoint, type, position);
+            }
             break;
 
         case SMSG_PLAYER_ATTACK_RANGE:
@@ -179,9 +200,12 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
             if (index <= 1)
                 break;
 
+            index -= INVENTORY_OFFSET;
+
             item = inventory->getItem(index);
 
-            if (item) {
+            if (item)
+            {
                 item->setEquipped(true);
                 player_node->mEquipment->setArrows(index);
                 logger->log("Arrows equipped: %i", index);

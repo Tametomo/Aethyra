@@ -51,7 +51,7 @@ class ItemContainer : public gcn::Widget,
         /**
          * Constructor. Initializes the graphic.
          */
-        ItemContainer(Inventory *inventory, int offset);
+        ItemContainer(Inventory *inventory);
 
         /**
          * Destructor.

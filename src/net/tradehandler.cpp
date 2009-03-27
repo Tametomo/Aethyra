@@ -149,9 +149,12 @@ void TradeHandler::handleMessage(MessageIn *msg)
                 msg->skip(8);     // card (4 shorts)
 
                 // TODO: handle also identified, etc
-                if (type == 0) {
+                if (type == 0)
+                {
                     tradeWindow->addMoney(amount);
-                } else {
+                }
+                else
+                {
                     tradeWindow->addItem(type, false, amount, false);
                 }
             }
@@ -161,7 +164,7 @@ void TradeHandler::handleMessage(MessageIn *msg)
             // Trade: New Item add response (was 0x00ea, now 01b1)
             {
                 const int index = msg->readInt16();
-                Item *item = player_node->getInventory()->getItem(index);
+                Item *item = player_node->getInventory()->getItem(index - INVENTORY_OFFSET);
                 if (!item)
                 {
                     tradeWindow->receivedOk(true);
@@ -178,13 +181,13 @@ void TradeHandler::handleMessage(MessageIn *msg)
                             player_node->unequipItem(item);
                         }
                         tradeWindow->addItem(item->getId(), true, quantity,
-                                item->isEquipment());
+                                             item->isEquipment());
                         item->increaseQuantity(-quantity);
                         break;
                     case 1:
                         // Add item failed - player overweighted
                         chatWindow->chatLog(_("Failed adding item. Trade partner is over weighted."),
-                                BY_SERVER);
+                                            BY_SERVER);
                         break;
                     case 2:
                          // Add item failed - player has no free slot

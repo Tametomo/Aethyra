@@ -70,7 +70,7 @@ InventoryWindow::InventoryWindow(int invSize):
     mUseButton = new Button(longestUseString, "use", this);
     mDropButton = new Button(_("Drop"), "drop", this);
 
-    mItems = new ItemContainer(player_node->getInventory(), 2);
+    mItems = new ItemContainer(player_node->getInventory());
     mItems->addSelectionListener(this);
 
     mInvenScroll = new ScrollArea(mItems);

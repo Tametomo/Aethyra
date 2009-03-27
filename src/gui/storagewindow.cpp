@@ -64,7 +64,7 @@ StorageWindow::StorageWindow(int invSize):
     mStoreButton = new Button(_("Store"), "store", this);
     mRetrieveButton = new Button(_("Retrieve"), "retrieve", this);
 
-    mItems = new ItemContainer(player_node->getStorage(), 1);
+    mItems = new ItemContainer(player_node->getStorage());
     mItems->addSelectionListener(this);
 
     mInvenScroll = new ScrollArea(mItems);
@@ -75,6 +75,7 @@ StorageWindow::StorageWindow(int invSize):
     mSlotsLabel = new Label(_("Slots: "));
 
     mSlotsBar = new ProgressBar(1.0f, 100, 20, 225, 200, 25);
+    mSlotsBar->setText(strprintf("%d/%d", mUsedSlots, mMaxSlots));
 
     setMinHeight(130);
     setMinWidth(mSlotsLabel->getWidth());
@@ -103,7 +104,7 @@ void StorageWindow::logic()
 
     Window::logic();
 
-    const int usedSlots = player_node->getInventory()->getNumberOfSlotsUsed();
+    const int usedSlots = player_node->getStorage()->getNumberOfSlotsUsed();
 
     if (mUsedSlots != usedSlots)
     {
@@ -185,17 +186,17 @@ Item* StorageWindow::getSelectedItem() const
     return mItems->getSelectedItem();
 }
 
-void StorageWindow::addStore(Item* item, int ammount)
+void StorageWindow::addStore(Item *item, int ammount)
 {
     MessageOut outMsg(CMSG_MOVE_TO_STORAGE);
-    outMsg.writeInt16(item->getInvIndex());
+    outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
     outMsg.writeInt32(ammount);
 }
 
-void StorageWindow::removeStore(Item* item, int ammount)
+void StorageWindow::removeStore(Item *item, int ammount)
 {
     MessageOut outMsg(CSMG_MOVE_FROM_STORAGE);
-    outMsg.writeInt16(item->getInvIndex());
+    outMsg.writeInt16(item->getInvIndex() + STORAGE_OFFSET);
     outMsg.writeInt32(ammount);
 }
 

@@ -28,7 +28,7 @@
 Equipment::Equipment():
     mArrows(0)
 {
-    std::fill_n(mEquipment, EQUIPMENT_SIZE, 0);
+    std::fill_n(mEquipment, EQUIPMENT_SIZE, -1);
 }
 
 void Equipment::setEquipment(int index, int inventoryIndex)
@@ -38,3 +38,10 @@ void Equipment::setEquipment(int index, int inventoryIndex)
     if (item)
         item->setEquipped(true);
 }
+
+void Equipment::removeEquipment(int index)
+{
+     if (index >= 0 && index < EQUIPMENT_SIZE)
+         mEquipment[index] = -1;
+}
+
