@@ -58,7 +58,8 @@ EmoteContainer::EmoteContainer():
     }
 
     mSelImg = resman->getImage("graphics/gui/selection.png");
-    if (!mSelImg) logger->error(_("Unable to load selection.png"));
+    if (!mSelImg)
+        logger->error(_("Unable to load selection.png"));
 
     mSelImg->setAlpha(config.getValue("guialpha", 0.8));
 
@@ -90,18 +91,18 @@ void EmoteContainer::draw(gcn::Graphics *graphics)
 
     for (int i = 0; i < mMaxEmote ; i++)
     {
-        int emoteX = ((i) % columns) * gridWidth;
-        int emoteY = ((i) / columns) * gridHeight;
-
-        // Draw emote icon
-        mEmoteImg[i]->draw(static_cast<Graphics*>(graphics), emoteX, emoteY);
+        const int emoteX = ((i) % columns) * gridWidth;
+        const int emoteY = ((i) / columns) * gridHeight;
 
         // Draw selection image below selected item
         if (mSelectedEmoteIndex == i)
         {
             static_cast<Graphics*>(graphics)->drawImage(
-                    mSelImg, emoteX, emoteY);
+                    mSelImg, emoteX, emoteY + 8);
         }
+
+        // Draw emote icon
+        mEmoteImg[i]->draw(static_cast<Graphics*>(graphics), emoteX, emoteY);
     }
 }
 
