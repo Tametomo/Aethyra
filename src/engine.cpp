@@ -34,9 +34,6 @@
 #include "gui/minimap.h"
 #include "gui/viewport.h"
 
-#include "net/messageout.h"
-#include "net/protocol.h"
-
 #include "resources/mapreader.h"
 #include "resources/resourcemanager.h"
 
@@ -52,7 +49,7 @@ Engine::~Engine()
     delete mCurrentMap;
 }
 
-void Engine::changeMap(const std::string &mapPath)
+bool Engine::changeMap(const std::string &mapPath)
 {
     // Clean up floor items, beings and particles
     floorItemManager->clear();
@@ -68,7 +65,7 @@ void Engine::changeMap(const std::string &mapPath)
     mMapName = mapPath;
 
     // Store full map path in global var
-    map_path = "maps/" + mapPath.substr(0, mapPath.rfind(".")) + ".tmx";
+    map_path = "maps/" + mapPath + ".tmx";
     ResourceManager *resman = ResourceManager::getInstance();
     if (!resman->exists(map_path))
         map_path += ".gz";
@@ -130,8 +127,7 @@ void Engine::changeMap(const std::string &mapPath)
 
     mCurrentMap = newMap;
 
-    // Send "map loaded"
-    MessageOut outMsg(CMSG_MAP_LOADED);
+    return true;
 }
 
 void Engine::logic()

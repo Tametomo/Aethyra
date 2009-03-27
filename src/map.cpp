@@ -198,9 +198,7 @@ void Map::initializeOverlays()
 {
     ResourceManager *resman = ResourceManager::getInstance();
 
-    for (int i = 0;
-         hasProperty("overlay" + toString(i) + "image");
-         i++)
+    for (int i = 0; hasProperty("overlay" + toString(i) + "image"); i++)
     {
         const std::string name = "overlay" + toString(i);
 
@@ -242,8 +240,7 @@ void Map::update()
 {
     //update animated tiles
     for (std::map<int, TileAnimation*>::iterator iAni = mTileAnimations.begin();
-         iAni != mTileAnimations.end();
-         iAni++)
+         iAni != mTileAnimations.end(); iAni++)
     {
         iAni->second->update();
     }
@@ -412,9 +409,7 @@ Path Map::findPath(int startX, int startY, int destX, int destY)
         // If the tile is already on the closed list, this means it has already
         // been processed with a shorter path to the start point (lower G cost)
         if (curr.tile->whichList == mOnClosedList)
-        {
             continue;
-        }
 
         // Put the current tile on the closed list
         curr.tile->whichList = mOnClosedList;
@@ -440,7 +435,7 @@ Path Map::findPath(int startX, int startY, int destX, int destY)
                 // Skip if the tile is on the closed list or collides unless
                 // its the destination tile
                 if (newTile->whichList == mOnClosedList ||
-                        (tileCollides(x, y) && !(x == destX && y == destY)))
+                   (tileCollides(x, y) && !(x == destX && y == destY)))
                 {
                     continue;
                 }
@@ -454,9 +449,7 @@ Path Map::findPath(int startX, int startY, int destX, int destY)
                     MetaTile *t2 = getMetaTile(curr.x + dx, curr.y);
 
                     if (!(t1->walkable && t2->walkable))
-                    {
                         continue;
-                    }
                 }
 
                 // Calculate G cost for this route, 10 for moving straight and
@@ -484,12 +477,14 @@ Path Map::findPath(int startX, int startY, int destX, int destY)
                     newTile->Gcost = Gcost;
                     newTile->Fcost = Gcost + newTile->Hcost;
 
-                    if (x != destX || y != destY) {
+                    if (x != destX || y != destY)
+                    {
                         // Add this tile to the open list
                         newTile->whichList = mOnOpenList;
                         openList.push(Location(x, y, newTile));
                     }
-                    else {
+                    else
+                    {
                         // Target location was found
                         foundPath = true;
                     }
@@ -554,9 +549,7 @@ void Map::initializeParticleEffects(Particle* particleEngine)
     if (config.getValue("particleeffects", 1))
     {
         for (std::list<ParticleEffectData>::iterator i = particleEffects.begin();
-             i != particleEffects.end();
-             i++
-            )
+             i != particleEffects.end(); i++)
         {
             particleEngine->addEffect(i->file, i->x, i->y);
         }

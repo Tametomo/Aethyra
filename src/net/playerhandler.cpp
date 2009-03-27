@@ -21,6 +21,7 @@
  */
 
 #include "messagein.h"
+#include "messageout.h"
 #include "playerhandler.h"
 #include "protocol.h"
 
@@ -190,7 +191,9 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                 nearby = (engine->getCurrentMapName() == mapPath);
 
                 // Switch the actual map, deleting the previous one if necessary
-                engine->changeMap(mapPath);
+                mapPath = mapPath.substr(0, mapPath.rfind("."));
+                if (engine->changeMap(mapPath))
+                    MessageOut outMsg(CMSG_MAP_LOADED);
 
                 current_npc = 0;
 
@@ -277,14 +280,16 @@ void PlayerHandler::handleMessage(MessageIn *msg)
             break;
 
         case SMSG_PLAYER_STAT_UPDATE_2:
-            switch (msg->readInt16()) {
+            switch (msg->readInt16())
+            {
                 case 0x0001:
                     player_node->setXp(msg->readInt32());
                     break;
                 case 0x0002:
                     player_node->mJobXp = msg->readInt32();
                     break;
-                case 0x0014: {
+                case 0x0014:
+                    {
                         Uint32 curGp = player_node->mGp;
                         player_node->mGp = msg->readInt32();
                         if (player_node->mGp > curGp)
@@ -309,7 +314,8 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                 int bonus = msg->readInt32();
                 int total = base + bonus;
 
-                switch (type) {
+                switch (type)
+                {
                     case 0x000d: player_node->mAttr[LocalPlayer::STR] = total;
                                  break;
                     case 0x000e: player_node->mAttr[LocalPlayer::AGI] = total;
@@ -335,7 +341,8 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                 if (fail != 1)
                     break;
 
-                switch (type) {
+                switch (type)
+                {
                     case 0x000d: player_node->mAttr[LocalPlayer::STR] = value;
                                  break;
                     case 0x000e: player_node->mAttr[LocalPlayer::AGI] = value;
@@ -383,7 +390,8 @@ void PlayerHandler::handleMessage(MessageIn *msg)
             break;
 
         case SMSG_PLAYER_STAT_UPDATE_6:
-            switch (msg->readInt16()) {
+            switch (msg->readInt16())
+            {
                 case 0x0020:
                     player_node->mAttrUp[LocalPlayer::STR] = msg->readInt8();
                     break;
@@ -409,7 +417,8 @@ void PlayerHandler::handleMessage(MessageIn *msg)
             {
                 int type = msg->readInt16();
 
-                switch (type) {
+                switch (type)
+                {
                     case 0:
                         chatWindow->chatLog(_("Equip arrows first"),
                                              BY_SERVER);

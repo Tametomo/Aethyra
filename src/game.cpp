@@ -333,7 +333,9 @@ Game::Game(Network *network):
     MessageOut msg(CMSG_CLIENT_PING);
     msg.writeInt32(tick_time);
 
+    map_path = map_path.substr(0, map_path.rfind("."));
     engine->changeMap(map_path);
+    MessageOut outMsg(CMSG_MAP_LOADED);
 
     setupWindow->setInGame(true);
 }
