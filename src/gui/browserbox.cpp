@@ -245,9 +245,6 @@ void BrowserBox::mouseMoved(gcn::MouseEvent &event)
 
 void BrowserBox::draw(gcn::Graphics *graphics)
 {
-    if (!isVisible())
-        return;
-
     if (mOpaque)
     {
         graphics->setColor(guiPalette->getColor(Palette::BACKGROUND));

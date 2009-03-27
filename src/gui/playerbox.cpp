@@ -79,9 +79,6 @@ PlayerBox::~PlayerBox()
 
 void PlayerBox::draw(gcn::Graphics *graphics)
 {
-    if (!isVisible())
-        return;
-
     if (mPlayer)
     {
         // Draw character

@@ -101,9 +101,6 @@ EquipmentWindow::~EquipmentWindow()
 
 void EquipmentWindow::draw(gcn::Graphics *graphics)
 {
-    if (!isVisible())
-        return;
-
     // Draw window graphics
     Window::draw(graphics);
 
