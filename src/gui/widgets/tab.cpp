@@ -36,7 +36,7 @@
 #include "../../utils/dtor.h"
 
 int Tab::mInstances = 0;
-float Tab::mAlpha = config.getValue("guialpha", 0.8);
+float Tab::mAlpha = 1.0;
 
 enum {
     TAB_STANDARD,    // 0

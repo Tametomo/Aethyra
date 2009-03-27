@@ -35,7 +35,7 @@
 #include "../utils/dtor.h"
 
 int Button::mInstances = 0;
-float Button::mAlpha = config.getValue("guialpha", 0.8);
+float Button::mAlpha = 1.0;
 
 enum{
     BUTTON_STANDARD,    // 0
