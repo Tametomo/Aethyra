@@ -34,7 +34,7 @@
 #include "../utils/gettext.h"
 
 NpcIntegerDialog::NpcIntegerDialog():
-    Window(_("NPC Number Request"))
+    Window(_("NPC Input"))
 {
     mValueField = new IntTextField();
     setWindowName("NPCInput");

@@ -50,10 +50,10 @@
 #include "../utils/stringutils.h"
 
 ChatWindow::ChatWindow():
-    Window(_("Chat")),
+    Window(""),
     mTmpVisible(false)
 {
-    setWindowName(_("Chat"));
+    setWindowName("Chat");
 
     setResizable(true);
     setDefaultSize(600, 123, ImageRect::LOWER_LEFT);

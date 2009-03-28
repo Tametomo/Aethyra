@@ -39,11 +39,11 @@
 #include "../utils/strprintf.h"
 
 SellDialog::SellDialog():
-    Window("Sell"),
+    Window(_("Sell")),
     mMaxItems(0),
     mAmountItems(0)
 {
-    setWindowName(_("Sell"));
+    setWindowName("Sell");
     setResizable(true);
     setCloseButton(true);
     setMinWidth(260);

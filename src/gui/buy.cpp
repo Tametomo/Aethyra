@@ -45,7 +45,7 @@ BuyDialog::BuyDialog():
     mAmountItems(0),
     mMaxItems(0)
 {
-    setWindowName(_("Buy"));
+    setWindowName("Buy");
     setResizable(true);
     setCloseButton(true);
     setMinWidth(260);

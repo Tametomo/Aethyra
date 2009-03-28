@@ -38,7 +38,7 @@ StatusWindow::StatusWindow(LocalPlayer *player):
     Window(player->getName()),
     mPlayer(player)
 {
-    setWindowName(_("Status"));
+    setWindowName("Status");
     setCloseButton(true);
     setDefaultSize(400, 345, ImageRect::CENTER);
 

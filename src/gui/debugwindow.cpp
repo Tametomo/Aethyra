@@ -31,10 +31,11 @@
 #include "../particle.h"
 #include "../map.h"
 
+#include "../utils/gettext.h"
 #include "../utils/stringutils.h"
 
 DebugWindow::DebugWindow():
-    Window("Debug")
+    Window(_("Debug"))
 {
     setWindowName("Debug");
 

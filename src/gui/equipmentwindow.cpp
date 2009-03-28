@@ -63,6 +63,7 @@ EquipmentWindow::EquipmentWindow():
     Window(_("Equipment")),
     mSelected(-1)
 {
+    setWindowName("Equipment");
     mItemPopup = new ItemPopup();
     mItemPopup->setOpaque(false);
 

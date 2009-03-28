@@ -37,7 +37,7 @@
 NpcTextDialog::NpcTextDialog():
      Window(_("NPC"))
 {
-    setWindowName(_("NPC"));
+    setWindowName("NPC");
     setResizable(true);
 
     setMinWidth(200);

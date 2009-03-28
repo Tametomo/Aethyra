@@ -48,11 +48,11 @@
 #include "../utils/stringutils.h"
 
 TradeWindow::TradeWindow():
-    Window("Trade"),
+    Window(_("Trade")),
     mMyInventory(new Inventory(INVENTORY_SIZE)),
     mPartnerInventory(new Inventory(INVENTORY_SIZE))
 {
-    setWindowName(_("Trade"));
+    setWindowName("Trade");
     setDefaultSize(342, 209, ImageRect::CENTER);
     setResizable(true);
     setCloseButton(true);

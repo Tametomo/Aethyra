@@ -31,7 +31,7 @@
 #include "../utils/gettext.h"
 
 ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
-        Window *parent):
+                             Window *parent):
     Window(title, true, parent)
 {
     mTextBox = new TextBox();

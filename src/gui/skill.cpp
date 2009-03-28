@@ -132,7 +132,7 @@ SkillDialog::SkillDialog():
     mTable->setActionEventId("skill");
     mTable->addActionListener(this);
 
-    setWindowName(_("Skills"));
+    setWindowName("Skills");
     setCloseButton(true);
     setDefaultSize(255, 260, ImageRect::CENTER);
 

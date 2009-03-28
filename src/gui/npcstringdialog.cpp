@@ -34,7 +34,7 @@
 #include "../utils/gettext.h"
 
 NpcStringDialog::NpcStringDialog():
-    Window(_("NPC Text Request"))
+    Window(_("NPC Input"))
 {
     setWindowName("NPCInput");
     mValueField = new TextField("");
