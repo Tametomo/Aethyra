@@ -22,8 +22,9 @@
 #ifndef TEXT_RENDERER_H
 #define TEXT_RENDERER_H
 
-#include "graphics.h"
 #include "palette.h"
+
+#include "../graphics.h"
 
 /**
  * Class for text rendering. Used by the TextParticle, the Text and FlashText

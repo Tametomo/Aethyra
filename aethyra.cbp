@@ -12,28 +12,40 @@
 				<Option compiler="gcc" />
 				<Option projectResourceIncludeDirsRelation="0" />
 				<Compiler>
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-Os" />
+					<Add option="-O3" />
+					<Add option="-O2" />
+					<Add option="-O1" />
+					<Add option="-O" />
+					<Add option="-Wmain" />
+					<Add option="-W" />
 					<Add option="-Wall" />
 					<Add option="-DUSE_OPENGL" />
 					<Add option="-DNOGDI" />
+					<Add option="-DWIN32" />
 				</Compiler>
 				<Linker>
+					<Add option="-s" />
+					<Add option="--enable-auto-import" />
+					<Add option="-Wl,-u,_WinMain@16" />
 					<Add library="guichan" />
 					<Add library="guichan_sdl" />
-					<Add library="guichan_opengl" />
-					<Add library="wsock32" />
+					<Add library="SDLmain" />
+					<Add library="SDL.dll" />
 					<Add library="SDL_image" />
 					<Add library="SDL_mixer" />
 					<Add library="SDL_net" />
 					<Add library="SDL_ttf" />
 					<Add library="mingw32" />
-					<Add library="SDLmain" />
-					<Add library="SDL.dll" />
-					<Add library="xml2.dll" />
 					<Add library="opengl32" />
-					<Add library="png12.dll" />
-					<Add library="z.dll" />
 					<Add library="physfs" />
+					<Add library="wsock32" />
+					<Add library="png12.dll" />
 					<Add library="curl.dll" />
+					<Add library="xml2.dll" />
+					<Add library="z.dll" />
+					<Add directory="LinuxXcompileBuildSupport\lib" />
 				</Linker>
 			</Target>
 			<Target title="unix">
@@ -69,22 +81,25 @@
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-fexpensive-optimizations" />
+			<Add option="-Os" />
 			<Add option="-O3" />
 			<Add option="-O2" />
 			<Add option="-O1" />
 			<Add option="-O" />
+			<Add option="-Wmain" />
 			<Add option="-W" />
 			<Add option="-Wall" />
-			<Add directory="..\aethyra\builds\windows\LinuxXcompileBuildSupport\include\SDL" />
-			<Add directory="..\aethyra\builds\windows\LinuxXcompileBuildSupport\include" />
+			<Add directory="src\" />
+			<Add directory="LinuxXcompileBuildSupport\include\libxml2" />
+			<Add directory="LinuxXcompileBuildSupport\include\SDL" />
+			<Add directory="LinuxXcompileBuildSupport\include" />
 		</Compiler>
 		<Linker>
 			<Add option="-s" />
-			<Add directory="..\aethyra\builds\windows\LinuxXcompileBuildSupport\dll" />
 		</Linker>
 		<Unit filename="src\SDLMain.h" />
 		<Unit filename="src\aethyra.rc">
-			<Option compilerVar="WINDRES" />
+			<Option compilerVar="CPP" />
 			<Option target="default" />
 		</Unit>
 		<Unit filename="src\animatedsprite.cpp" />
@@ -205,10 +220,10 @@
 		<Unit filename="src\gui\progressbar.h" />
 		<Unit filename="src\gui\radiobutton.cpp" />
 		<Unit filename="src\gui\radiobutton.h" />
-		<Unit filename="src\gui\register.cpp" />
-		<Unit filename="src\gui\register.h" />
 		<Unit filename="src\gui\recorder.cpp" />
 		<Unit filename="src\gui\recorder.h" />
+		<Unit filename="src\gui\register.cpp" />
+		<Unit filename="src\gui\register.h" />
 		<Unit filename="src\gui\scrollarea.cpp" />
 		<Unit filename="src\gui\scrollarea.h" />
 		<Unit filename="src\gui\sdlinput.cpp" />

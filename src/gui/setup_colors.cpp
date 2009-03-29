@@ -401,7 +401,7 @@ void Setup_Colors::updateColor()
 
     Palette::ColorType type = guiPalette->getColorTypeAt(mSelected);
     Palette::GradientType grad =
-            static_cast<Palette::GradientType>(mGradTypeSlider->getValue());
+            (Palette::GradientType) (mGradTypeSlider->getValue());
     guiPalette->setGradient(type, grad);
 
     if (grad == Palette::STATIC)
