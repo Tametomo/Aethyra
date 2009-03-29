@@ -729,13 +729,13 @@ static void initInternationalization()
 #ifdef WIN32
     putenv(("LANG=" + std::string(_nl_locale_name_default())).c_str());
     // mingw doesn't like LOCALEDIR to be defined for some reason
-    bindtextdomain("tmw", "translations/");
+    bindtextdomain("aethyra", "translations/");
 #else
-    bindtextdomain("tmw", LOCALEDIR);
+    bindtextdomain("aethyra", LOCALEDIR);
 #endif
     setlocale(LC_MESSAGES, "");
-    bind_textdomain_codeset("tmw", "UTF-8");
-    textdomain("tmw");
+    bind_textdomain_codeset("aethyra", "UTF-8");
+    textdomain("aethyra");
 #endif
 }
 

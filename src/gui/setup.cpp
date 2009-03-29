@@ -62,7 +62,7 @@ Setup::Setup():
     setContentSize(width, height);
 
     static const char *buttonNames[] = {
-        _("Apply"), _("Cancel"), _("Reset Windows"), 0
+        N_("Apply"), N_("Cancel"), N_("Reset Windows"), 0
     };
     int x = width;
     for (const char **curBtn = buttonNames; *curBtn; ++curBtn)
@@ -73,7 +73,7 @@ Setup::Setup():
         add(btn);
 
         // Store this button, as it needs to be enabled/disabled
-        if (!strcmp(*curBtn, _("Reset Windows")))
+        if (!strcmp(*curBtn, "Reset Windows"))
             mResetWindows = btn;
     }
 
@@ -120,17 +120,17 @@ Setup::~Setup()
 
 void Setup::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == _("Apply"))
+    if (event.getId() == "Apply")
     {
         setVisible(false);
         for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTab::apply));
     }
-    else if (event.getId() == _("Cancel"))
+    else if (event.getId() == "Cancel")
     {
         setVisible(false);
         for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTab::cancel));
     }
-    else if (event.getId() == _("Reset Windows"))
+    else if (event.getId() == "Reset Windows")
     {
         // Bail out if this action happens to be activated before the windows
         // are created (though it should be disabled then)
