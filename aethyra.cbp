@@ -18,12 +18,12 @@
 					<Add option="-O2" />
 					<Add option="-O1" />
 					<Add option="-O" />
-					<Add option="-Wmain" />
 					<Add option="-W" />
 					<Add option="-Wall" />
 					<Add option="-DUSE_OPENGL" />
 					<Add option="-DNOGDI" />
 					<Add option="-DWIN32" />
+					<Add option="-DENABLE_NLS" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -45,6 +45,9 @@
 					<Add library="curl.dll" />
 					<Add library="xml2.dll" />
 					<Add library="z.dll" />
+					<Add library="intl" />
+					<Add library="ws2_32" />
+					<Add library="winmm" />
 					<Add directory="LinuxXcompileBuildSupport\lib" />
 				</Linker>
 			</Target>
@@ -86,11 +89,8 @@
 			<Add option="-O2" />
 			<Add option="-O1" />
 			<Add option="-O" />
-			<Add option="-Wmain" />
 			<Add option="-W" />
 			<Add option="-Wall" />
-			<Add directory="src\" />
-			<Add directory="LinuxXcompileBuildSupport\include\libxml2" />
 			<Add directory="LinuxXcompileBuildSupport\include\SDL" />
 			<Add directory="LinuxXcompileBuildSupport\include" />
 		</Compiler>

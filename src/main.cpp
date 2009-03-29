@@ -723,6 +723,8 @@ static void mapLogin(Network *network, LoginData *loginData)
 
 } // namespace
 
+extern "C" char const *_nl_locale_name_default(void);
+
 static void initInternationalization()
 {
 #if ENABLE_NLS
@@ -738,8 +740,6 @@ static void initInternationalization()
     textdomain("aethyra");
 #endif
 }
-
-extern "C" char const *_nl_locale_name_default(void);
 
 /** Main */
 int main(int argc, char *argv[])
