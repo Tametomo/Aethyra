@@ -2,7 +2,7 @@
 ##1                                 AETHYRA
 ##1               ==========================================
 
-           ##2Version:##6 Aethyra 0.0.29              ##2Date:##12 February 2008
+           ##2Version:##6 Aethyra 0.0.29.1              ##2Date:##29 March 2009
  
 ##2                    Website: http://www.aethyra.org
  
