@@ -278,17 +278,20 @@ Game::Game(Network *network):
 
 Game::~Game()
 {
-    delete player_node;
     destroyGuiWindows();
 
     delete beingManager;
-    delete floorItemManager;
-    delete particleEngine;
-    delete engine;
-    delete viewport;
-
     beingManager = NULL;
+    delete floorItemManager;
     floorItemManager = NULL;
+    delete player_node;
+    player_node = NULL;
+    delete particleEngine;
+    particleEngine = NULL;
+    delete engine;
+    engine = NULL;
+    delete viewport;
+    viewport = NULL;
 }
 
 void Game::logic() const
