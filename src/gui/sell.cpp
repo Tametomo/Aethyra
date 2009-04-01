@@ -186,7 +186,7 @@ void SellDialog::action(const gcn::ActionEvent &event)
         {
             MessageOut outMsg(CMSG_NPC_SELL_REQUEST);
             outMsg.writeInt16(8);
-            outMsg.writeInt16(item->getCurrentInvIndex());
+            outMsg.writeInt16(item->getCurrentInvIndex() + INVENTORY_OFFSET);
             // This order is important, item->getCurrentInvIndex() would return
             // the inventory index of the next Duplicate otherwise.
             sellCount = item->sellCurrentDuplicate(mAmountItems);
