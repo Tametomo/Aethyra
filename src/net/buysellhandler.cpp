@@ -98,7 +98,7 @@ void BuySellHandler::handleMessage(MessageIn *msg)
                     int value = msg->readInt32();
                     msg->readInt32();  // OCvalue
 
-                    Item *item = player_node->getInventory()->getItem(index);
+                    Item *item = player_node->getInventory()->getItem(index - INVENTORY_OFFSET);
 
                     if (item && !(item->isEquipped()))
                         sellDialog->addItem(item, value);
