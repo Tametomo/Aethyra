@@ -29,24 +29,25 @@
 
 #include "../bindings/guichan/widgets/window.h"
 
-class SetupTabHandler;
+class SetupTabContainer;
 
 /**
- * The setup dialog.
+ * The setup dialog. Displays several tabs for configuring different aspects
+ * of the game.
+ *
+ * @see Setup_Audio
+ * @see Setup_Colors
+ * @see Setup_Joystick
+ * @see Setup_Keyboard
+ * @see Setup_Players
+ * @see Setup_Video
  *
  * \ingroup GUI
  */
 class Setup : public Window, public gcn::ActionListener
 {
     public:
-        /**
-         * Constructor.
-         */
         Setup();
-
-        /**
-         * Destructor.
-         */
         ~Setup();
 
         /**
@@ -60,7 +61,7 @@ class Setup : public Window, public gcn::ActionListener
         void setInGame(bool inGame);
 
     private:
-        std::list<SetupTabHandler*> mTabs;
+        std::list<SetupTabContainer*> mTabs;
         gcn::Button* mResetWindows;
 };
 

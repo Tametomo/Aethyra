@@ -1,9 +1,8 @@
 /*
- *  Aethyra
- *  Copyright (C) 2004  The Mana World Development Team
+ *  The Mana World
+ *  Copyright (C) 2009  The Mana World Development Team
  *
- *  This file is part of Aethyra based on original code
- *  from The Mana World.
+ *  This file is part of Aethyra based on original code from The Mana World.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,16 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GUI_SETUPTAB_H
-#define GUI_SETUPTAB_H
+#include "setuptabcontainer.h"
 
-#include "../widgets/container.h"
-
-class SetupTabHandler : public Container
+SetupTabContainer::SetupTabContainer()
 {
-    public:
-        virtual void apply() = 0;
-        virtual void cancel() = 0;
-};
-
-#endif
+    setOpaque(false);
+}

@@ -46,7 +46,7 @@ Setup_Audio::Setup_Audio():
     mSfxSlider(new Slider(0, 128)),
     mMusicSlider(new Slider(0, 128))
 {
-    setOpaque(false);
+    setName(_("Audio"));
 
     gcn::Label *sfxLabel = new Label(_("Sfx volume"));
     gcn::Label *musicLabel = new Label(_("Music volume"));

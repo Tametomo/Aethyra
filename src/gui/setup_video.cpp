@@ -92,7 +92,7 @@ Setup_Video::Setup_Video():
     mPickupParticleCheckBox(new CheckBox(_("as particle"),
                            mPickupParticleEnabled))
 {
-    setOpaque(false);
+    setName(_("Video"));
 
     ScrollArea *scrollArea = new ScrollArea(mModeList);
     scrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);

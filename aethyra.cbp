@@ -129,7 +129,6 @@
 		<Unit filename="src\bindings\guichan\handlers\itemlinkhandler.cpp" />
 		<Unit filename="src\bindings\guichan\handlers\itemlinkhandler.h" />
 		<Unit filename="src\bindings\guichan\handlers\linkhandler.h" />
-		<Unit filename="src\bindings\guichan\handlers\setuptab.h" />
 		<Unit filename="src\bindings\guichan\models\ignorechoiceslistmodel.h" />
 		<Unit filename="src\bindings\guichan\models\keylistmodel.h" />
 		<Unit filename="src\bindings\guichan\models\modelistmodel.cpp" />
@@ -189,6 +188,8 @@
 		<Unit filename="src\bindings\guichan\widgets\radiobutton.h" />
 		<Unit filename="src\bindings\guichan\widgets\resizegrip.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\resizegrip.h" />
+		<Unit filename="src\bindings\guichan\widgets\setuptabcontainer.cpp" />
+		<Unit filename="src\bindings\guichan\widgets\setuptabcontainer.h" />
 		<Unit filename="src\bindings\guichan\widgets\scrollarea.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\scrollarea.h" />
 		<Unit filename="src\bindings\guichan\widgets\shoplistbox.cpp" />

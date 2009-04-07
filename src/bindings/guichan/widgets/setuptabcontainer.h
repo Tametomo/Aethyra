@@ -20,30 +20,37 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GUI_SETUP_JOYSTICK_H
-#define GUI_SETUP_JOYSTICK_H
+#ifndef GUI_SETUPTAB_H
+#define GUI_SETUPTAB_H
 
-#include <guichan/actionlistener.hpp>
+#include "container.h"
 
-#include "../bindings/guichan/guichanfwd.h"
-
-#include "../bindings/guichan/widgets/setuptabcontainer.h"
-
-class Setup_Joystick : public SetupTabContainer, public gcn::ActionListener
+class SetupTabContainer : public Container
 {
     public:
-        Setup_Joystick();
+        SetupTabContainer();
 
-        void apply();
-        void cancel();
+        const std::string &getName() const { return mName; }
 
-        void action(const gcn::ActionEvent &event);
+        /**
+         * Called when the Apply button is pressed in the setup window.
+         */
+        virtual void apply() = 0;
+
+        /**
+         * Called when the Cancel button is pressed in the setup window.
+         */
+        virtual void cancel() = 0;
+
+    protected:
+        /**
+         * Sets the name displayed on the tab. Should be set in the
+         * constructor of a subclass.
+         */
+        void setName(const std::string &name) { mName = name; }
 
     private:
-        gcn::Label *mCalibrateLabel;
-        gcn::Button *mCalibrateButton;
-        bool mOriginalJoystickEnabled;
-        gcn::CheckBox *mJoystickEnabled;
+        std::string mName;
 };
 
 #endif

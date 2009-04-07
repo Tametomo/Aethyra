@@ -80,31 +80,19 @@ Setup::Setup():
     TabbedArea *panel = new TabbedArea;
     panel->setDimension(gcn::Rectangle(5, 5, width - 10, height - 40));
 
-    SetupTabHandler *tab;
+    mTabs.push_back(new Setup_Video());
+    mTabs.push_back(new Setup_Audio());
+    mTabs.push_back(new Setup_Joystick());
+    mTabs.push_back(new Setup_Keyboard());
+    mTabs.push_back(new Setup_Colors());
+    mTabs.push_back(new Setup_Players());
 
-    tab = new Setup_Video();
-    panel->addTab(_("Video"), tab);
-    mTabs.push_back(tab);
-
-    tab = new Setup_Audio();
-    panel->addTab(_("Audio"), tab);
-    mTabs.push_back(tab);
-
-    tab = new Setup_Joystick();
-    panel->addTab(_("Joystick"), tab);
-    mTabs.push_back(tab);
-
-    tab = new Setup_Keyboard();
-    panel->addTab(_("Keyboard"), tab);
-    mTabs.push_back(tab);
-
-    tab = new Setup_Colors();
-    panel->addTab(_("Colors"), tab);
-    mTabs.push_back(tab);
-
-    tab = new Setup_Players();
-    panel->addTab(_("Players"), tab);
-    mTabs.push_back(tab);
+    for (std::list<SetupTabContainer*>::iterator i = mTabs.begin(),
+         i_end = mTabs.end(); i != i_end; ++i)
+    {
+        SetupTabContainer *tab = *i;
+        panel->addTab(tab->getName(), tab);
+    }
 
     add(panel);
 
@@ -123,12 +111,12 @@ void Setup::action(const gcn::ActionEvent &event)
     if (event.getId() == "Apply")
     {
         setVisible(false);
-        for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTabHandler::apply));
+        for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTabContainer::apply));
     }
     else if (event.getId() == "Cancel")
     {
         setVisible(false);
-        for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTabHandler::cancel));
+        for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTabContainer::cancel));
     }
     else if (event.getId() == "Reset Windows")
     {

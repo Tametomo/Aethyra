@@ -76,7 +76,6 @@ SET(SRCS
     bindings/guichan/handlers/itemlinkhandler.cpp
     bindings/guichan/handlers/itemlinkhandler.h
     bindings/guichan/handlers/linkhandler.h
-    bindings/guichan/handlers/setuptabhandler.h
     bindings/guichan/models/ignorechoiceslistmodel.h
     bindings/guichan/models/keylistmodel.h
     bindings/guichan/models/modelistmodel.cpp
@@ -138,6 +137,8 @@ SET(SRCS
     bindings/guichan/widgets/resizegrip.h
     bindings/guichan/widgets/scrollarea.cpp
     bindings/guichan/widgets/scrollarea.h
+    bindings/guichan/widgets/setuptabcontainer.cpp
+    bindings/guichan/widgets/setuptabcontainer.h
     bindings/guichan/widgets/shoplistbox.cpp
     bindings/guichan/widgets/shoplistbox.h
     bindings/guichan/widgets/shortcutcontainer.cpp
