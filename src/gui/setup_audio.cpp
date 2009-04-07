@@ -24,7 +24,9 @@
 #include "setup_audio.h"
 
 #include "../configuration.h"
+#include "../engine.h"
 #include "../log.h"
+#include "../map.h"
 
 #include "../bindings/guichan/layouthelper.h"
 
@@ -90,6 +92,8 @@ void Setup_Audio::apply()
             new OkDialog("Sound Engine", err);
             logger->log("Warning: %s", err);
         }
+	Map *currentMap = engine->getCurrentMap();
+	sound.playMusic(currentMap->getProperty("music"), -1);
     }
     else
     {
