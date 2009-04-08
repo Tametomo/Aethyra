@@ -25,18 +25,20 @@
 
 #include <guichan/font.hpp>
 
-#include "button.h"
 #include "equipmentwindow.h"
 #include "itempopup.h"
-#include "palette.h"
-#include "playerbox.h"
 #include "viewport.h"
 
 #include "../equipment.h"
-#include "../graphics.h"
 #include "../inventory.h"
 #include "../item.h"
 #include "../localplayer.h"
+
+#include "../bindings/guichan/graphics.h"
+#include "../bindings/guichan/palette.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/playerbox.h"
 
 #include "../resources/iteminfo.h"
 #include "../resources/resourcemanager.h"

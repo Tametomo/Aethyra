@@ -23,8 +23,8 @@
 #ifndef POPUP_MENU_H
 #define POPUP_MENU_H
 
-#include "linkhandler.h"
-#include "window.h"
+#include "../bindings/guichan/handlers/linkhandler.h"
+#include "../bindings/guichan/widgets/window.h"
 
 class Being;
 class BrowserBox;

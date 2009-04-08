@@ -23,8 +23,9 @@
 #ifndef _TEXTPARTICLE_H
 #define _TEXTPARTICLE_H
 
-#include "guichanfwd.h"
 #include "particle.h"
+
+#include "bindings/guichan/guichanfwd.h"
 
 class TextParticle : public Particle
 {

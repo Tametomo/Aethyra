@@ -22,22 +22,25 @@
 
 #include <guichan/focushandler.hpp>
 
-#include "browserbox.h"
 #include "chat.h"
-#include "chatinput.h"
-#include "itemlinkhandler.h"
 #include "recorder.h"
-#include "scrollarea.h"
-#include "sdlinput.h"
-#include "windowcontainer.h"
-
-#include "widgets/layout.h"
 
 #include "../beingmanager.h"
 #include "../configuration.h"
 #include "../game.h"
 #include "../localplayer.h"
 #include "../party.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/handlers/itemlinkhandler.h"
+
+#include "../bindings/guichan/sdl/sdlinput.h"
+
+#include "../bindings/guichan/widgets/browserbox.h"
+#include "../bindings/guichan/widgets/chatinput.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../net/messageout.h"
 #include "../net/protocol.h"

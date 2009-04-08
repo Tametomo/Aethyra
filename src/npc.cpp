@@ -24,10 +24,11 @@
 #include "beingmanager.h"
 #include "npc.h"
 #include "particle.h"
-#include "text.h"
+
+#include "bindings/guichan/palette.h"
+#include "bindings/guichan/text.h"
 
 #include "gui/npc_text.h"
-#include "gui/palette.h"
 
 #include "net/messageout.h"
 #include "net/protocol.h"

@@ -32,10 +32,11 @@
 #include <bitset>
 
 #include "particlecontainer.h"
-#include "position.h"
 #include "sprite.h"
 
 #include "resources/spritedef.h"
+
+#include "utils/position.h"
 
 #define FIRST_IGNORE_EMOTE 14
 #define STATUS_EFFECTS 32

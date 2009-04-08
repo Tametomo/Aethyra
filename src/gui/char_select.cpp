@@ -24,19 +24,20 @@
 
 #include <guichan/font.hpp>
 
-#include "button.h"
 #include "char_select.h"
 #include "confirm_dialog.h"
-#include "label.h"
 #include "ok_dialog.h"
-#include "playerbox.h"
-#include "textfield.h"
-
-#include "widgets/layout.h"
 
 #include "../game.h"
 #include "../localplayer.h"
 #include "../main.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/playerbox.h"
+#include "../bindings/guichan/widgets/textfield.h"
 
 #include "../net/charserverhandler.h"
 #include "../net/messageout.h"

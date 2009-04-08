@@ -28,7 +28,7 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/keylistener.hpp>
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 class LoginData;
 class OkDialog;

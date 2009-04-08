@@ -26,13 +26,14 @@
 #include "../beingmanager.h"
 #include "../configuration.h"
 #include "../flooritemmanager.h"
-#include "../graphics.h"
-#include "../keyboardconfig.h"
 #include "../localplayer.h"
 #include "../map.h"
 #include "../monster.h"
 #include "../npc.h"
-#include "../textmanager.h"
+
+#include "../bindings/guichan/graphics.h"
+#include "../bindings/guichan/keyboardconfig.h"
+#include "../bindings/guichan/textmanager.h"
 
 #include "../resources/monsterinfo.h"
 #include "../resources/resourcemanager.h"

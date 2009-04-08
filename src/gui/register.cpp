@@ -20,22 +20,23 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "login.h"
+#include "ok_dialog.h"
+#include "register.h"
+
 #include "../configuration.h"
 #include "../log.h"
 #include "../logindata.h"
 #include "../main.h"
 
-#include "button.h"
-#include "checkbox.h"
-#include "label.h"
-#include "login.h"
-#include "ok_dialog.h"
-#include "passwordfield.h"
-#include "radiobutton.h"
-#include "register.h"
-#include "textfield.h"
+#include "../bindings/guichan/layout.h"
 
-#include "widgets/layout.h"
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/checkbox.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/passwordfield.h"
+#include "../bindings/guichan/widgets/radiobutton.h"
+#include "../bindings/guichan/widgets/textfield.h"
 
 #include "../utils/gettext.h"
 #include "../utils/strprintf.h"

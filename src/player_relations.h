@@ -59,7 +59,6 @@ struct PlayerRelation
     relation mRelation; // bitmask for all of the above
 };
 
-
 /**
  * Ignore strategy: describes how we should handle ignores.
  */

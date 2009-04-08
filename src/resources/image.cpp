@@ -26,7 +26,8 @@
 #include "image.h"
 
 #include "../log.h"
-#include "../position.h"
+
+#include "../utils/position.h"
 
 #ifdef USE_OPENGL
 bool Image::mUseOpenGL = false;

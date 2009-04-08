@@ -21,9 +21,10 @@
  */
 
 #include "floor_item.h"
-#include "graphics.h"
 #include "item.h"
 #include "map.h"
+
+#include "bindings/guichan/graphics.h"
 
 #include "resources/image.h"
 

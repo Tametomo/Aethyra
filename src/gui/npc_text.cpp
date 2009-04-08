@@ -20,14 +20,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
 #include "npc_text.h"
-#include "scrollarea.h"
-#include "textbox.h"
-
-#include "widgets/layout.h"
 
 #include "../npc.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/textbox.h"
 
 #include "../net/messageout.h"
 #include "../net/protocol.h"

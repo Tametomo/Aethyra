@@ -21,8 +21,9 @@
  */
 
 #include "animatedsprite.h"
-#include "graphics.h"
 #include "log.h"
+
+#include "bindings/guichan/graphics.h"
 
 #include "resources/action.h"
 #include "resources/animation.h"

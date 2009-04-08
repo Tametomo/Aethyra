@@ -25,12 +25,13 @@
 #include "beingmanager.h"
 #include "configuration.h"
 #include "game.h"
-#include "graphics.h"
 #include "map.h"
 #include "particle.h"
 #include "simpleanimation.h"
 #include "sprite.h"
 #include "tileset.h"
+
+#include "bindings/guichan/graphics.h"
 
 #include "resources/ambientoverlay.h"
 #include "resources/image.h"

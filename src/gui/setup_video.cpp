@@ -20,90 +20,35 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <SDL.h>
 #include <string>
-#include <vector>
 
 #include <guichan/key.hpp>
-#include <guichan/listmodel.hpp>
 
-#include "checkbox.h"
-#include "label.h"
-#include "listbox.h"
 #include "ok_dialog.h"
-#include "scrollarea.h"
 #include "setup_video.h"
-#include "slider.h"
-#include "textfield.h"
-
-#include "widgets/layouthelper.h"
 
 #include "../configuration.h"
-#include "../graphics.h"
 #include "../localplayer.h"
 #include "../log.h"
 #include "../main.h"
 #include "../particle.h"
 
+#include "../bindings/guichan/graphics.h"
+#include "../bindings/guichan/layouthelper.h"
+
+#include "../bindings/guichan/models/modelistmodel.h"
+
+#include "../bindings/guichan/widgets/checkbox.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/listbox.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/slider.h"
+#include "../bindings/guichan/widgets/textfield.h"
+
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
 
 extern Graphics *graphics;
-
-/**
- * The list model for mode list.
- *
- * \ingroup Interface
- */
-class ModeListModel : public gcn::ListModel
-{
-    public:
-        /**
-         * Constructor.
-         */
-        ModeListModel();
-
-        /**
-         * Destructor.
-         */
-        virtual ~ModeListModel() { }
-
-        /**
-         * Returns the number of elements in container.
-         */
-        int getNumberOfElements() { return mVideoModes.size(); }
-
-        /**
-         * Returns element from container.
-         */
-        std::string getElementAt(int i) { return mVideoModes[i]; }
-
-    private:
-        std::vector<std::string> mVideoModes;
-};
-
-ModeListModel::ModeListModel()
-{
-    /* Get available fullscreen/hardware modes */
-    SDL_Rect **modes = SDL_ListModes(NULL, SDL_FULLSCREEN | SDL_HWSURFACE);
-
-    /* Check which modes are available */
-    if (modes == (SDL_Rect **)0)
-        logger->log("No modes available");
-    else if (modes == (SDL_Rect **)-1)
-        logger->log("All resolutions available");
-    else 
-    {
-        //logger->log("Available Modes");
-        for (int i = 0; modes[i]; ++i)
-        {
-            const std::string modeString =
-                toString((int)modes[i]->w) + "x" + toString((int)modes[i]->h);
-            //logger->log(modeString.c_str());
-            mVideoModes.push_back(modeString);
-        }
-    }
-}
 
 Setup_Video::Setup_Video():
     mFullScreenEnabled(config.getValue("screen", false)),

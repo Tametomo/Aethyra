@@ -25,9 +25,10 @@
 #include "being.h"
 #include "beingmanager.h"
 #include "configuration.h"
-#include "graphics.h"
 #include "player.h"
 #include "player_relations.h"
+
+#include "bindings/guichan/graphics.h"
 
 #include "utils/dtor.h"
 

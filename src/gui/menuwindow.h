@@ -23,7 +23,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "popup.h"
+#include "../bindings/guichan/widgets/popup.h"
 
 /**
  * The Button Menu.

@@ -26,7 +26,7 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/listmodel.hpp>
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 class LoginData;
 class ServerListModel;
@@ -36,7 +36,8 @@ class ServerListModel;
  *
  * \ingroup Interface
  */
-class ServerSelectDialog : public Window, public gcn::ActionListener {
+class ServerSelectDialog : public Window, public gcn::ActionListener
+{
     public:
         /**
          * Constructor

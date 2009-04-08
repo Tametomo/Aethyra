@@ -24,12 +24,13 @@
 
 #include <guichan/widgets/label.hpp>
 
-#include "gui.h"
-#include "scrollarea.h"
 #include "speechbubble.h"
-#include "textbox.h"
 
-#include "../graphics.h"
+#include "../bindings/guichan/gui.h"
+#include "../bindings/guichan/graphics.h"
+
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/textbox.h"
 
 #include "../utils/gettext.h"
 

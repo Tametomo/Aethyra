@@ -20,7 +20,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
 #include "setup.h"
 #include "setup_audio.h"
 #include "setup_colors.h"
@@ -29,7 +28,8 @@
 #include "setup_players.h"
 #include "setup_video.h"
 
-#include "widgets/tabbedarea.h"
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/tabbedarea.h"
 
 #include "../utils/dtor.h"
 #include "../utils/gettext.h"

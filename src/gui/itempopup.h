@@ -24,7 +24,7 @@
 #ifndef ITEMPOPUP_H
 #define ITEMPOPUP_H
 
-#include "popup.h"
+#include "../bindings/guichan/widgets/popup.h"
 
 class ItemInfo;
 class ScrollArea;

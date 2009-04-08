@@ -22,21 +22,20 @@
 #include <string>
 #include <cmath>
 
-#include <guichan/listmodel.hpp>
-#include <guichan/widgets/slider.hpp>
-
-#include "browserbox.h"
-#include "gui.h"
-#include "itemlinkhandler.h"
-#include "label.h"
-#include "listbox.h"
-#include "palette.h"
-#include "scrollarea.h"
 #include "setup_colors.h"
-#include "slider.h"
-#include "textfield.h"
 
-#include "widgets/layouthelper.h"
+#include "../bindings/guichan/gui.h"
+#include "../bindings/guichan/layouthelper.h"
+#include "../bindings/guichan/palette.h"
+
+#include "../bindings/guichan/handlers/itemlinkhandler.h"
+
+#include "../bindings/guichan/widgets/browserbox.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/listbox.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/slider.h"
+#include "../bindings/guichan/widgets/textfield.h"
 
 #include "../configuration.h"
 

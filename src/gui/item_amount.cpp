@@ -20,17 +20,18 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
 #include "item_amount.h"
-#include "label.h"
-#include "slider.h"
 #include "storagewindow.h"
 #include "trade.h"
 
-#include "widgets/layout.h"
-
 #include "../item.h"
 #include "../localplayer.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/slider.h"
 
 #include "../utils/gettext.h"
 #include "../utils/strprintf.h"

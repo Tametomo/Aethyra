@@ -27,18 +27,19 @@
 
 #include <curl/curl.h>
 
-#include "browserbox.h"
-#include "button.h"
-#include "label.h"
-#include "progressbar.h"
-#include "scrollarea.h"
 #include "updatewindow.h"
-
-#include "widgets/layout.h"
 
 #include "../configuration.h"
 #include "../log.h"
 #include "../main.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/browserbox.h"
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/progressbar.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
 
 #include "../resources/resourcemanager.h"
 

@@ -23,7 +23,7 @@
 #ifndef MINIMAP_H
 #define MINIMAP_H
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 class Image;
 

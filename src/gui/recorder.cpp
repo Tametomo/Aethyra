@@ -21,12 +21,13 @@
 
 #include <physfs.h>
 
-#include "button.h"
 #include "chat.h"
 #include "recorder.h"
-#include "windowcontainer.h"
 
-#include "widgets/layout.h"
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../utils/stringutils.h"
 

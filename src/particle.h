@@ -26,9 +26,11 @@
 #include <list>
 #include <string>
 
-#include "guichanfwd.h"
 #include "sprite.h"
-#include "vector.h"
+
+#include "bindings/guichan/guichanfwd.h"
+
+#include "utils/vector.h"
 
 class Map;
 class Particle;
@@ -107,15 +109,15 @@ class Particle : public Sprite
          * Creates a standalone text particle.
          */
         Particle *addTextSplashEffect(const std::string &text, int x, int y,
-                const gcn::Color *color, gcn::Font *font,
-                bool outline = false);
+                                      const gcn::Color *color, gcn::Font *font,
+                                      bool outline = false);
 
         /**
          * Creates a standalone text particle.
          */
-        Particle *addTextRiseFadeOutEffect(const std::string &text,
-                int x, int y, const gcn::Color *color, gcn::Font *font,
-                bool outline = false);
+        Particle *addTextRiseFadeOutEffect(const std::string &text, int x,
+                                           int y, const gcn::Color *color,
+                                           gcn::Font *font, bool outline = false);
 
         /**
          * Adds an emitter to the particle.

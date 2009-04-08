@@ -23,7 +23,7 @@
 #include "ambientoverlay.h"
 #include "image.h"
 
-#include "../graphics.h"
+#include "../bindings/guichan/graphics.h"
 
 AmbientOverlay::AmbientOverlay(Image *img, float parallax,
                                float speedX, float speedY):

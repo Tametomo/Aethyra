@@ -20,15 +20,17 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
-#include "checkbox.h"
-#include "label.h"
 #include "setup_joystick.h"
 
-#include "widgets/layouthelper.h"
-
 #include "../configuration.h"
-#include "../joystick.h"
+
+#include "../bindings/guichan/layouthelper.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/checkbox.h"
+#include "../bindings/guichan/widgets/label.h"
+
+#include "../bindings/sdl/joystick.h"
 
 #include "../utils/gettext.h"
 
@@ -62,9 +64,7 @@ Setup_Joystick::Setup_Joystick():
 void Setup_Joystick::action(const gcn::ActionEvent &event)
 {
     if (!joystick)
-    {
         return;
-    }
 
     if (event.getSource() == mJoystickEnabled)
     {
@@ -91,9 +91,8 @@ void Setup_Joystick::action(const gcn::ActionEvent &event)
 void Setup_Joystick::cancel()
 {
     if (joystick)
-    {
         joystick->setEnabled(mOriginalJoystickEnabled);
-    }
+
     mJoystickEnabled->setSelected(mOriginalJoystickEnabled);
 }
 

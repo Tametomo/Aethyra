@@ -22,12 +22,13 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "button.h"
 #include "connection.h"
-#include "label.h"
-#include "progressbar.h"
 
 #include "../main.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/progressbar.h"
 
 #include "../utils/gettext.h"
 

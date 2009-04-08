@@ -25,10 +25,11 @@
 
 #include <guichan/mouselistener.hpp>
 
-#include "windowcontainer.h"
+#include "../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../configlistener.h"
-#include "../position.h"
+
+#include "../utils/position.h"
 
 class FloorItem;
 class Graphics;

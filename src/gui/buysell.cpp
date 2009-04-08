@@ -20,10 +20,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
 #include "buysell.h"
 
 #include "../npc.h"
+
+#include "../bindings/guichan/widgets/button.h"
 
 #include "../net/messageout.h"
 #include "../net/protocol.h"

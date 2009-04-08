@@ -22,51 +22,20 @@
 
 #include <SDL_keyboard.h>
 
-#include <guichan/widgets/label.hpp>
-#include <guichan/listmodel.hpp>
-
-#include "button.h"
-#include "listbox.h"
 #include "ok_dialog.h"
-#include "scrollarea.h"
 #include "setup_keyboard.h"
 
-#include "widgets/layouthelper.h"
+#include "../bindings/guichan/keyboardconfig.h"
+#include "../bindings/guichan/layouthelper.h"
 
-#include "../keyboardconfig.h"
+#include "../bindings/guichan/models/keylistmodel.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/listbox.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
-
-/**
- * The list model for key function list.
- *
- * \ingroup Interface
- */
-class KeyListModel : public gcn::ListModel
-{
-    public:
-        /**
-         * Returns the number of elements in container.
-         */
-        int getNumberOfElements() { return keyboard.KEY_TOTAL; }
-
-        /**
-         * Returns element from container.
-         */
-        std::string getElementAt(int i) { return mKeyFunctions[i]; }
-
-        /**
-         * Sets element from container.
-         */
-        void setElementAt(int i, std::string caption)
-        {
-            mKeyFunctions[i] = caption;
-        }
-
-    private:
-        std::string mKeyFunctions[KeyboardConfig::KEY_TOTAL];
-};
 
 Setup_Keyboard::Setup_Keyboard():
     mKeyListModel(new KeyListModel()),
@@ -160,8 +129,7 @@ void Setup_Keyboard::action(const gcn::ActionEvent &event)
 void Setup_Keyboard::refreshAssignedKey(int index)
 {
     std::string caption;
-    char *temp = SDL_GetKeyName(
-        (SDLKey) keyboard.getKeyValue(index));
+    char *temp = SDL_GetKeyName((SDLKey) keyboard.getKeyValue(index));
     caption = keyboard.getKeyCaption(index) + ": " + toString(temp);
     mKeyListModel->setElementAt(index, caption);
 }

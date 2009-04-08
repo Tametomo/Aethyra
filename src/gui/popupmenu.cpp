@@ -22,7 +22,6 @@
 
 #include <cassert>
 
-#include "browserbox.h"
 #include "chat.h"
 #include "inventorywindow.h"
 #include "item_amount.h"
@@ -31,11 +30,14 @@
 #include "../being.h"
 #include "../beingmanager.h"
 #include "../floor_item.h"
-#include "../graphics.h"
 #include "../item.h"
 #include "../localplayer.h"
 #include "../npc.h"
 #include "../player_relations.h"
+
+#include "../bindings/guichan/graphics.h"
+
+#include "../bindings/guichan/widgets/browserbox.h"
 
 #include "../net/messageout.h"
 #include "../net/protocol.h"

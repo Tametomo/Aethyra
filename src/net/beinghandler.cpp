@@ -29,12 +29,13 @@
 
 #include "../being.h"
 #include "../beingmanager.h"
-#include "../effectmanager.h"
 #include "../game.h"
 #include "../localplayer.h"
 #include "../log.h"
 #include "../npc.h"
 #include "../player_relations.h"
+
+#include "../resources/effectdb.h"
 
 const int EMOTION_TIME = 150;    /**< Duration of emotion icon */
 

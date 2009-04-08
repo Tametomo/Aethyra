@@ -33,7 +33,6 @@
 #include "../gui/buy.h"
 #include "../gui/buysell.h"
 #include "../gui/chat.h"
-#include "../gui/gui.h"
 #include "../gui/npc_text.h"
 #include "../gui/npcintegerdialog.h"
 #include "../gui/npclistdialog.h"

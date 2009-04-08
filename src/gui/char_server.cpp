@@ -20,14 +20,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
 #include "char_server.h"
-#include "listbox.h"
-#include "scrollarea.h"
 
 #include "../logindata.h"
 #include "../main.h"
 #include "../serverinfo.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/listbox.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

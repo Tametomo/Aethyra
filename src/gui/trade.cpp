@@ -24,21 +24,22 @@
 
 #include <guichan/font.hpp>
 
-#include "button.h"
 #include "chat.h"
 #include "inventorywindow.h"
 #include "item_amount.h"
-#include "itemcontainer.h"
-#include "label.h"
-#include "scrollarea.h"
-#include "textfield.h"
 #include "trade.h"
-
-#include "widgets/layout.h"
 
 #include "../inventory.h"
 #include "../item.h"
 #include "../localplayer.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/itemcontainer.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/textfield.h"
 
 #include "../net/messageout.h"
 #include "../net/protocol.h"

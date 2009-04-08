@@ -29,12 +29,12 @@
 #include <guichan/widgets/label.hpp>
 #include <guichan/widgets/listbox.hpp>
 
-#include "setuptab.h"
-#include "textfield.h"
+#include "../bindings/guichan/guichanfwd.h"
 
-#include "../guichanfwd.h"
+#include "../bindings/guichan/handlers/setuptab.h"
 
-#include "widgets/textpreview.h"
+#include "../bindings/guichan/widgets/textfield.h"
+#include "../bindings/guichan/widgets/textpreview.h"
 
 class BrowserBox;
 

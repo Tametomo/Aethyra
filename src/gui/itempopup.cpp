@@ -25,13 +25,14 @@
 
 #include <guichan/widgets/label.hpp>
 
-#include "gui.h"
 #include "itempopup.h"
-#include "palette.h"
-#include "scrollarea.h"
-#include "textbox.h"
 
-#include "../graphics.h"
+#include "../bindings/guichan/graphics.h"
+#include "../bindings/guichan/gui.h"
+#include "../bindings/guichan/palette.h"
+
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/textbox.h"
 
 #include "../resources/iteminfo.h"
 

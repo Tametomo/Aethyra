@@ -20,13 +20,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "gui.h"
 #include "ministatus.h"
-#include "progressbar.h"
 
 #include "../configuration.h"
-#include "../graphics.h"
 #include "../localplayer.h"
+
+#include "../bindings/guichan/gui.h"
+#include "../bindings/guichan/graphics.h"
+
+#include "../bindings/guichan/widgets/progressbar.h"
 
 #include "../utils/stringutils.h"
 

@@ -36,32 +36,37 @@
 #include "configuration.h"
 #include "emoteshortcut.h"
 #include "game.h"
-#include "graphics.h"
 #include "itemshortcut.h"
-#include "keyboardconfig.h"
 #include "localplayer.h"
-#include "lockedarray.h"
 #include "log.h"
 #include "logindata.h"
 #include "main.h"
-#ifdef USE_OPENGL
-#include "openglgraphics.h"
-#endif
 #include "player_relations.h"
 #include "serverinfo.h"
-#include "sound.h"
 
-#include "gui/button.h"
+#include "bindings/guichan/graphics.h"
+#include "bindings/guichan/gui.h"
+#include "bindings/guichan/keyboardconfig.h"
+#include "bindings/guichan/palette.h"
+
+#ifdef USE_OPENGL
+#include "bindings/guichan/opengl/openglgraphics.h"
+#endif
+
+#include "bindings/guichan/sdl/sdlgraphics.h"
+#include "bindings/guichan/sdl/sdlinput.h"
+
+#include "bindings/guichan/widgets/button.h"
+#include "bindings/guichan/widgets/label.h"
+#include "bindings/guichan/widgets/progressbar.h"
+
+#include "bindings/sdl/sound.h"
+
 #include "gui/char_server.h"
 #include "gui/char_select.h"
-#include "gui/gui.h"
-#include "gui/label.h"
 #include "gui/login.h"
 #include "gui/ok_dialog.h"
-#include "gui/palette.h"
-#include "gui/progressbar.h"
 #include "gui/register.h"
-#include "gui/sdlinput.h"
 #include "gui/setup.h"
 #include "gui/updatewindow.h"
 
@@ -78,8 +83,10 @@
 #include "resources/monsterdb.h"
 #include "resources/npcdb.h"
 #include "resources/resourcemanager.h"
+#include "resources/skilldb.h"
 
 #include "utils/gettext.h"
+#include "utils/lockedarray.h"
 #include "utils/stringutils.h"
 
 #ifdef __APPLE__
@@ -410,10 +417,13 @@ static void init_engine(const Options &options)
     Image::setLoadAsOpenGL(useOpenGL);
 
     // Create the graphics context
-    graphics = useOpenGL ? new OpenGLGraphics() : new Graphics();
+    if (useOpenGL)
+        graphics = new OpenGLGraphics();
+    else
+        graphics = new SDLGraphics();
 #else
     // Create the graphics context
-    graphics = new Graphics();
+    graphics = new SDLGraphics();
 #endif
 
     const int width = (int) config.getValue("screenwidth", defaultScreenWidth);
@@ -492,6 +502,7 @@ static void exit_engine()
     ItemDB::unload();
     MonsterDB::unload();
     NPCDB::unload();
+    SkillDB::unload();
 
     ResourceManager::deleteInstance();
     delete logger;
@@ -951,6 +962,7 @@ int main(int argc, char *argv[])
                         false);
 
                     // Load XML databases
+                    SkillDB::load();
                     ColorDB::load();
                     ItemDB::load();
                     MonsterDB::load();

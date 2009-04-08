@@ -26,8 +26,9 @@
 #include <list>
 #include <vector>
 
-#include "position.h"
 #include "properties.h"
+
+#include "utils/position.h"
 
 class Animation;
 class AmbientOverlay;

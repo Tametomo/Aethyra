@@ -22,11 +22,13 @@
 
 #include <guichan/font.hpp>
 
-#include "button.h"
 #include "confirm_dialog.h"
-#include "gui.h"
-#include "scrollarea.h"
-#include "textbox.h"
+
+#include "../bindings/guichan/gui.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/textbox.h"
 
 #include "../utils/gettext.h"
 

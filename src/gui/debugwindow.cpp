@@ -21,15 +21,16 @@
  */
 
 #include "debugwindow.h"
-#include "label.h"
 #include "viewport.h"
-
-#include "widgets/layout.h"
 
 #include "../engine.h"
 #include "../game.h"
 #include "../particle.h"
 #include "../map.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/label.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

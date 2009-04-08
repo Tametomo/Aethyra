@@ -27,8 +27,9 @@
 #include "../being.h"
 #include "../beingmanager.h"
 #include "../configuration.h"
-#include "../graphics.h"
 #include "../localplayer.h"
+
+#include "../bindings/guichan/graphics.h"
 
 #include "../resources/image.h"
 

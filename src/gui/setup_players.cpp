@@ -23,34 +23,41 @@
 #include <string>
 #include <vector>
 
-#include "button.h"
-#include "checkbox.h"
-#include "label.h"
-#include "listbox.h"
 #include "ok_dialog.h"
-#include "scrollarea.h"
 #include "setup_players.h"
-#include "table.h"
-
-#include "widgets/dropdown.h"
-#include "widgets/layouthelper.h"
 
 #include "../configuration.h"
-#include "../log.h"
+
+#include "../bindings/guichan/layouthelper.h"
+
+#include "../bindings/guichan/models/ignorechoiceslistmodel.h"
+#include "../bindings/guichan/models/playertablemodel.h"
+#include "../bindings/guichan/models/statictablemodel.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/checkbox.h"
+#include "../bindings/guichan/widgets/dropdown.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/listbox.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/table.h"
 
 #include "../utils/gettext.h"
 
 #define COLUMNS_NR 2 // name plus listbox
+
 #define NAME_COLUMN 0
 #define RELATION_CHOICE_COLUMN 1
 
-#define ROW_HEIGHT 12
-// The following column widths really shouldn't be hardcoded but should scale with the size of the widget... except
-// that, right now, the widget doesn't exactly scale either.
+// The following column widths really shouldn't be hardcoded but should scale
+// with the size of the widget... except that, right now, the widget doesn't
+// exactly scale either.
 #define NAME_COLUMN_WIDTH 230
 #define RELATION_CHOICE_COLUMN_WIDTH 80
 
-#define WIDGET_AT(row, column) (((row) * COLUMNS_NR) + column)
+#define ACTION_DELETE "delete"
+#define ACTION_TABLE "table"
+#define ACTION_STRATEGY "strategy"
 
 static const char *table_titles[COLUMNS_NR] =
 {
@@ -58,171 +65,11 @@ static const char *table_titles[COLUMNS_NR] =
     N_("Relation")
 };
 
-static const char *RELATION_NAMES[PlayerRelation::RELATIONS_NR] =
-{
-    N_("Neutral"),
-    N_("Friend"),
-    N_("Disregarded"),
-    N_("Ignored")
-};
-
-class PlayerRelationListModel : public gcn::ListModel
-{
-public:
-    virtual ~PlayerRelationListModel(void) { }
-
-    virtual int getNumberOfElements(void)
-    {
-        return PlayerRelation::RELATIONS_NR;
-    }
-
-    virtual std::string getElementAt(int i)
-    {
-        if (i >= getNumberOfElements() || i < 0)
-            return "";
-        return gettext(RELATION_NAMES[i]);
-    }
-};
-
-class PlayerTableModel : public TableModel
-{
-public:
-    PlayerTableModel(void) :
-        mPlayers(NULL)
-    {
-        playerRelationsUpdated();
-    }
-
-    virtual ~PlayerTableModel(void)
-    {
-        freeWidgets();
-        if (mPlayers)
-            delete mPlayers;
-    }
-
-    virtual int getRows(void)
-    {
-        return mPlayers->size();
-    }
-
-    virtual int getColumns(void)
-    {
-        return COLUMNS_NR;
-    }
-
-    virtual int getRowHeight(void)
-    {
-        return ROW_HEIGHT;
-    }
-
-    virtual int getColumnWidth(int index)
-    {
-        if (index == NAME_COLUMN)
-            return NAME_COLUMN_WIDTH;
-        else
-            return RELATION_CHOICE_COLUMN_WIDTH;
-    }
-
-    virtual void playerRelationsUpdated(void)
-    {
-        signalBeforeUpdate();
-
-        freeWidgets();
-        std::vector<std::string> *player_names = player_relations.getPlayers();
-        if (mPlayers)
-            delete mPlayers;
-        mPlayers = player_names;
-
-        // set up widgets
-        for (unsigned int r = 0; r < player_names->size(); ++r)
-        {
-            std::string name = (*player_names)[r];
-            gcn::Widget *widget = new Label(name);
-            mWidgets.push_back(widget);
-            gcn::ListModel *playerRelation = new PlayerRelationListModel();
-
-            gcn::DropDown *choicebox = new DropDown(playerRelation,
-                                                    new ScrollArea(),
-                                                    new ListBox(playerRelation),
-                                                    false);
-            choicebox->setSelected(player_relations.getRelation(name));
-            mWidgets.push_back(choicebox);
-        }
-
-        signalAfterUpdate();
-    }
-
-    virtual void updateModelInRow(int row)
-    {
-        gcn::DropDown *choicebox = dynamic_cast<gcn::DropDown *>(
-                                   getElementAt(row, RELATION_CHOICE_COLUMN));
-        player_relations.setRelation(getPlayerAt(row),
-                                   static_cast<PlayerRelation::relation>(
-                                   choicebox->getSelected()));
-    }
-
-
-    virtual gcn::Widget *getElementAt(int row, int column)
-    {
-        return mWidgets[WIDGET_AT(row, column)];
-    }
-
-    virtual void freeWidgets(void)
-    {
-        if (mPlayers)
-            delete mPlayers;
-        mPlayers = NULL;
-
-        for (std::vector<gcn::Widget *>::const_iterator it = mWidgets.begin();
-             it != mWidgets.end(); it++)
-        {
-            delete *it;
-        }
-
-        mWidgets.clear();
-    }
-
-    std::string getPlayerAt(int index)
-    {
-        return (*mPlayers)[index];
-    }
-
-protected:
-    std::vector<std::string> *mPlayers;
-    std::vector<gcn::Widget *> mWidgets;
-};
-
-/**
- * Class for choosing one of the various `what to do when ignoring a player' options
- */
-class IgnoreChoicesListModel : public gcn::ListModel
-{
-public:
-    virtual ~IgnoreChoicesListModel(void) { }
-
-    virtual int getNumberOfElements(void)
-    {
-        return player_relations.getPlayerIgnoreStrategies()->size();
-    }
-
-    virtual std::string getElementAt(int i)
-    {
-        if (i >= getNumberOfElements())
-            return _("???");
-
-        return (*player_relations.getPlayerIgnoreStrategies())[i]->mDescription;
-    }
-};
-
-#define ACTION_DELETE "delete"
-#define ACTION_TABLE "table"
-#define ACTION_STRATEGY "strategy"
-
 Setup_Players::Setup_Players():
     mPlayerTableTitleModel(new StaticTableModel(1, COLUMNS_NR)),
     mPlayerTableModel(new PlayerTableModel()),
-    mPlayerTable(new GuiTable(mPlayerTableModel)),
-    mPlayerTitleTable(new GuiTable(mPlayerTableTitleModel)),
+    mPlayerTable(new Table(mPlayerTableModel)),
+    mPlayerTitleTable(new Table(mPlayerTableTitleModel)),
     mPlayerScrollArea(new ScrollArea(mPlayerTable)),
     mPersistIgnores(new CheckBox(_("Save player list"),
                 player_relations.getPersistIgnores())),
@@ -299,7 +146,6 @@ Setup_Players::~Setup_Players(void)
     player_relations.removeListener(this);
 }
 
-
 void Setup_Players::reset()
 {
     // We now have to search through the list of ignore choices to find the
@@ -335,17 +181,13 @@ void Setup_Players::apply()
                                        PlayerRelation::WHISPER : 0));
 }
 
-void Setup_Players::cancel()
-{
-}
-
 void Setup_Players::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == ACTION_TABLE)
     {
         // temporarily eliminate ourselves: we are fully aware of this change,
-        // so there is no need for asynchronous updates.  (In fact, thouse
-        // might destroy the widet that triggered them, which would be rather
+        // so there is no need for asynchronous updates.  (In fact, those
+        // might destroy the widget that triggered them, which would be rather
         // embarrassing.)
         player_relations.removeListener(this);
 

@@ -28,7 +28,7 @@
 #include <string>
 #include <vector>
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 #include "../utils/mutex.h"
 

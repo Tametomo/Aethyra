@@ -25,10 +25,10 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 #include "../being.h"
-#include "../lockedarray.h"
+#include "../utils/lockedarray.h"
 
 class LocalPlayer;
 class Network;

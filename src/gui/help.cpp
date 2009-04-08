@@ -20,12 +20,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
-#include "browserbox.h"
 #include "help.h"
-#include "scrollarea.h"
 
-#include "widgets/layout.h"
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/browserbox.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
 
 #include "../resources/resourcemanager.h"
 

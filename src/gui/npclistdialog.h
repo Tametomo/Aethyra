@@ -28,7 +28,7 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/listmodel.hpp>
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 /**
  * The npc list dialog.

@@ -26,7 +26,7 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 #include "../inventory.h"
 

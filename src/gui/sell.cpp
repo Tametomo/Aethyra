@@ -20,17 +20,19 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
-#include "label.h"
-#include "scrollarea.h"
 #include "sell.h"
-#include "shop.h"
-#include "shoplistbox.h"
-#include "slider.h"
-
-#include "widgets/layout.h"
 
 #include "../npc.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/models/shoplistmodel.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/shoplistbox.h"
+#include "../bindings/guichan/widgets/slider.h"
 
 #include "../net/messageout.h"
 #include "../net/protocol.h"
@@ -50,10 +52,10 @@ SellDialog::SellDialog():
     setMinHeight(230);
     setDefaultSize(260, 230, ImageRect::CENTER);
 
-    // Create a ShopItems instance, that is aware of duplicate entries.
-    mShopItems = new ShopItems(true);
+    // Create a ShopListModel instance, that is aware of duplicate entries.
+    mShopListModel = new ShopListModel(true);
 
-    mShopItemList = new ShopListBox(mShopItems, mShopItems);
+    mShopItemList = new ShopListBox(mShopListModel, mShopListModel);
     mScrollArea = new ScrollArea(mShopItemList);
     mScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
 
@@ -108,12 +110,12 @@ SellDialog::SellDialog():
 
 SellDialog::~SellDialog()
 {
-    delete mShopItems;
+    delete mShopListModel;
 }
 
 void SellDialog::reset()
 {
-    mShopItems->clear();
+    mShopListModel->clear();
     mSlider->setValue(0);
 
     // Reset previous selected item to prevent failing asserts
@@ -127,7 +129,7 @@ void SellDialog::addItem(const Item *item, int price)
     if (!item)
         return;
 
-    mShopItems->addItem(item->getInvIndex(), item->getId(),
+    mShopListModel->addItem(item->getInvIndex(), item->getId(),
                         item->getQuantity(), price);
 
     mShopItemList->adjustSize();
@@ -145,7 +147,7 @@ void SellDialog::action(const gcn::ActionEvent &event)
 
     // The following actions require a valid item selection
     if (selectedItem == -1 ||
-            selectedItem >= (int) mShopItems->getNumberOfElements())
+            selectedItem >= (int) mShopListModel->getNumberOfElements())
     {
         return;
     }
@@ -177,10 +179,10 @@ void SellDialog::action(const gcn::ActionEvent &event)
             && mAmountItems <= mMaxItems)
     {
         // Attempt sell
-        ShopItem *item = mShopItems->at(selectedItem);
+        ShopItem *item = mShopListModel->at(selectedItem);
         int sellCount;
         mPlayerMoney +=
-            mAmountItems * mShopItems->at(selectedItem)->getPrice();
+            mAmountItems * mShopListModel->at(selectedItem)->getPrice();
         mMaxItems -= mAmountItems;
         while (mAmountItems > 0)
         {
@@ -195,7 +197,7 @@ void SellDialog::action(const gcn::ActionEvent &event)
         }
 
         mPlayerMoney +=
-            mAmountItems * mShopItems->at(selectedItem)->getPrice();
+            mAmountItems * mShopListModel->at(selectedItem)->getPrice();
         mAmountItems = 1;
         mSlider->setValue(0);
 
@@ -203,8 +205,8 @@ void SellDialog::action(const gcn::ActionEvent &event)
         {
             // All were sold
             mShopItemList->setSelected(-1);
-            delete mShopItems->at(selectedItem);
-            mShopItems->erase(selectedItem);
+            delete mShopListModel->at(selectedItem);
+            mShopListModel->erase(selectedItem);
 
             gcn::Rectangle scroll;
             scroll.y = mShopItemList->getRowHeight() * (selectedItem + 1);
@@ -244,18 +246,18 @@ void SellDialog::updateButtonsAndLabels()
 
     if (selectedItem > -1)
     {
-        const ItemInfo &info = mShopItems->at(selectedItem)->getInfo();
+        const ItemInfo &info = mShopListModel->at(selectedItem)->getInfo();
         mItemDescLabel->setCaption
             (strprintf(_("Description: %s"), info.getDescription().c_str()));
         mItemEffectLabel->setCaption
             (strprintf(_("Effect: %s"), info.getEffect().c_str()));
 
-        mMaxItems = mShopItems->at(selectedItem)->getQuantity();
+        mMaxItems = mShopListModel->at(selectedItem)->getQuantity();
 
         if (mAmountItems > mMaxItems)
             mAmountItems = mMaxItems;
 
-        income = mAmountItems * mShopItems->at(selectedItem)->getPrice();
+        income = mAmountItems * mShopListModel->at(selectedItem)->getPrice();
     }
     else
     {

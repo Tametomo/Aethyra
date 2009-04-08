@@ -20,17 +20,19 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "checkbox.h"
-#include "label.h"
 #include "ok_dialog.h"
 #include "setup_audio.h"
-#include "slider.h"
-
-#include "widgets/layouthelper.h"
 
 #include "../configuration.h"
 #include "../log.h"
-#include "../sound.h"
+
+#include "../bindings/guichan/layouthelper.h"
+
+#include "../bindings/guichan/widgets/checkbox.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/slider.h"
+
+#include "../bindings/sdl/sound.h"
 
 #include "../utils/gettext.h"
 

@@ -20,17 +20,19 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
 #include "buy.h"
-#include "label.h"
-#include "scrollarea.h"
-#include "shop.h"
-#include "shoplistbox.h"
-#include "slider.h"
-
-#include "widgets/layout.h"
 
 #include "../npc.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/models/shoplistmodel.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/shoplistbox.h"
+#include "../bindings/guichan/widgets/slider.h"
 
 #include "../net/messageout.h"
 #include "../net/protocol.h"
@@ -52,9 +54,9 @@ BuyDialog::BuyDialog():
     setMinHeight(230);
     setDefaultSize(260, 230, ImageRect::CENTER);
 
-    mShopItems = new ShopItems;
+    mShopListModel = new ShopListModel;
 
-    mShopItemList = new ShopListBox(mShopItems, mShopItems);
+    mShopItemList = new ShopListBox(mShopListModel, mShopListModel);
     mScrollArea = new ScrollArea(mShopItemList);
     mScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
 
@@ -107,7 +109,7 @@ BuyDialog::BuyDialog():
 
 BuyDialog::~BuyDialog()
 {
-    delete mShopItems;
+    delete mShopListModel;
 }
 
 void BuyDialog::setMoney(int amount)
@@ -120,7 +122,7 @@ void BuyDialog::setMoney(int amount)
 
 void BuyDialog::reset()
 {
-    mShopItems->clear();
+    mShopListModel->clear();
     mShopItemList->adjustSize();
 
     // Reset previous selected items to prevent failing asserts
@@ -132,7 +134,7 @@ void BuyDialog::reset()
 
 void BuyDialog::addItem(int id, int price)
 {
-    mShopItems->addItem(id, price);
+    mShopListModel->addItem(id, price);
     mShopItemList->adjustSize();
 }
 
@@ -148,7 +150,7 @@ void BuyDialog::action(const gcn::ActionEvent &event)
 
     // The following actions require a valid selection
     if (selectedItem < 0 ||
-            selectedItem >= (int) mShopItems->getNumberOfElements())
+            selectedItem >= (int) mShopListModel->getNumberOfElements())
     {
         return;
     }
@@ -185,12 +187,12 @@ void BuyDialog::action(const gcn::ActionEvent &event)
         MessageOut outMsg(CMSG_NPC_BUY_REQUEST);
         outMsg.writeInt16(8);
         outMsg.writeInt16(mAmountItems);
-        outMsg.writeInt16(mShopItems->at(selectedItem)->getId());
+        outMsg.writeInt16(mShopListModel->at(selectedItem)->getId());
 
         // Update money and adjust the max number of items that can be bought
         mMaxItems -= mAmountItems;
         setMoney(mMoney -
-                mAmountItems * mShopItems->at(selectedItem)->getPrice());
+                mAmountItems * mShopListModel->at(selectedItem)->getPrice());
 
         // Reset selection
         mAmountItems = 1;
@@ -216,14 +218,14 @@ void BuyDialog::updateButtonsAndLabels()
 
     if (selectedItem > -1)
     {
-        const ItemInfo &info = mShopItems->at(selectedItem)->getInfo();
+        const ItemInfo &info = mShopListModel->at(selectedItem)->getInfo();
 
         mItemDescLabel->setCaption
             (strprintf(_("Description: %s"), info.getDescription().c_str()));
         mItemEffectLabel->setCaption
             (strprintf(_("Effect: %s"), info.getEffect().c_str()));
 
-        int itemPrice = mShopItems->at(selectedItem)->getPrice();
+        int itemPrice = mShopListModel->at(selectedItem)->getPrice();
 
         // Calculate how many the player can afford
         mMaxItems = mMoney / itemPrice;

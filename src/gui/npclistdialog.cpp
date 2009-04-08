@@ -22,14 +22,15 @@
 
 #include <sstream>
 
-#include "button.h"
-#include "listbox.h"
 #include "npclistdialog.h"
-#include "scrollarea.h"
-
-#include "widgets/layout.h"
 
 #include "../npc.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/listbox.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
 
 #include "../net/messageout.h"
 #include "../net/protocol.h"

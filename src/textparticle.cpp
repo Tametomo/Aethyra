@@ -24,7 +24,7 @@
 
 #include "textparticle.h"
 
-#include "gui/textrenderer.h"
+#include "bindings/guichan/textrenderer.h"
 
 TextParticle::TextParticle(Map *map, const std::string &text,
                            const gcn::Color* color,

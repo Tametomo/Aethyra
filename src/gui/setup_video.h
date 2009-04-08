@@ -26,7 +26,9 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/keylistener.hpp>
 
-#include "setuptab.h"
+#include "../bindings/guichan/handlers/setuptab.h"
+
+class ModeListModel;
 
 class Setup_Video : public SetupTab, public gcn::ActionListener,
                     public gcn::KeyListener
@@ -59,7 +61,7 @@ class Setup_Video : public SetupTab, public gcn::ActionListener,
         int mFps;
         int mSpeechMode;
 
-        class ModeListModel *mModeListModel;
+        ModeListModel *mModeListModel;
 
         gcn::Label *speechLabel;
         gcn::Label *alphaLabel;

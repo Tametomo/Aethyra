@@ -25,10 +25,11 @@
 #include "localplayer.h"
 #include "monster.h"
 #include "particle.h"
-#include "sound.h"
-#include "text.h"
 
-#include "gui/palette.h"
+#include "bindings/guichan/palette.h"
+#include "bindings/guichan/text.h"
+
+#include "bindings/sdl/sound.h"
 
 #include "resources/monsterdb.h"
 #include "resources/monsterinfo.h"

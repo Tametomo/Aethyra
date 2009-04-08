@@ -21,8 +21,9 @@
  */
 
 #include "animationparticle.h"
-#include "graphics.h"
 #include "simpleanimation.h"
+
+#include "bindings/guichan/graphics.h"
 
 AnimationParticle::AnimationParticle(Map *map, Animation *animation):
     ImageParticle(map, NULL),

@@ -19,13 +19,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
-#include "gui.h"
 #include "emotewindow.h"
-#include "emotecontainer.h"
-#include "scrollarea.h"
 
-#include "widgets/layout.h"
+#include "../bindings/guichan/gui.h"
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/emotecontainer.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
 
 #include "../localplayer.h"
 

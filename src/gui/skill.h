@@ -27,15 +27,15 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 struct SKILL {
-    short id;      /**< Index into "skill_db" array */
-    short lv, sp;
+    short id, lv, sp;
 };
 
-class GuiTable;
-class SkillGuiTableModel;
+class Table;
+class ScrollArea;
+class SkillTableModel;
 
 /**
  * The skill dialog.
@@ -69,9 +69,9 @@ class SkillDialog : public Window, public gcn::ActionListener
         const std::vector<SKILL*>& getSkills(void) const { return mSkillList; }
 
     private:
-        GuiTable *mTable;
+        Table *mTable;
         ScrollArea *skillScrollArea;
-        SkillGuiTableModel *mTableModel;
+        SkillTableModel *mTableModel;
         gcn::Label *mPointsLabel;
         gcn::Button *mIncButton;
         gcn::Button *mUseButton;

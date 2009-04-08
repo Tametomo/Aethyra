@@ -20,15 +20,16 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
-#include "label.h"
-#include "progressbar.h"
 #include "status.h"
-#include "windowcontainer.h"
-
-#include "widgets/layout.h"
 
 #include "../localplayer.h"
+
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/progressbar.h"
+#include "../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/strprintf.h"

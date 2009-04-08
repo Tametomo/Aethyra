@@ -30,7 +30,7 @@
 #include <guichan/keylistener.hpp>
 #include <guichan/listmodel.hpp>
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 class DropDown;
 class LoginData;

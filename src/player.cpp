@@ -25,9 +25,9 @@
 #include "localplayer.h"
 #include "particle.h"
 #include "player.h"
-#include "text.h"
 
-#include "gui/palette.h"
+#include "bindings/guichan/palette.h"
+#include "bindings/guichan/text.h"
 
 #include "resources/colordb.h"
 #include "resources/itemdb.h"

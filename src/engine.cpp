@@ -28,9 +28,11 @@
 #include "log.h"
 #include "map.h"
 #include "particle.h"
-#include "sound.h"
 
-#include "gui/gui.h"
+#include "bindings/guichan/gui.h"
+
+#include "bindings/sdl/sound.h"
+
 #include "gui/minimap.h"
 #include "gui/viewport.h"
 

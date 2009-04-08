@@ -25,16 +25,15 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "setuptab.h"
+#include "../bindings/guichan/handlers/setuptab.h"
 
 #include "../player_relations.h"
 
-class GuiTable;
+class Table;
 class PlayerTableModel;
 class StaticTableModel;
 
-class Setup_Players : public SetupTab,
-                      public gcn::ActionListener,
+class Setup_Players : public SetupTab, public gcn::ActionListener,
                       public PlayerRelationsListener
 {
 public:
@@ -42,7 +41,7 @@ public:
     virtual ~Setup_Players();
 
     void apply();
-    void cancel();
+    void cancel() {};
 
     void reset();
 
@@ -53,8 +52,8 @@ public:
 private:
     StaticTableModel *mPlayerTableTitleModel;
     PlayerTableModel *mPlayerTableModel;
-    GuiTable *mPlayerTable;
-    GuiTable *mPlayerTitleTable;
+    Table *mPlayerTable;
+    Table *mPlayerTitleTable;
     gcn::ScrollArea *mPlayerScrollArea;
 
     gcn::CheckBox *mPersistIgnores;

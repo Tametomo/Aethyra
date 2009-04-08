@@ -26,13 +26,11 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
-#include <SDL_types.h>
-
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 class Item;
-class ShopItems;
 class ShopListBox;
+class ShopListModel;
 
 /**
  * The sell dialog.
@@ -109,7 +107,7 @@ class SellDialog : public Window, gcn::ActionListener, gcn::SelectionListener
         gcn::Label *mQuantityLabel;
         gcn::Slider *mSlider;
 
-        ShopItems *mShopItems;
+        ShopListModel *mShopListModel;
         int mPlayerMoney;
 
         int mMaxItems;

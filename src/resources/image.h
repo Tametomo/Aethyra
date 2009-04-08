@@ -50,7 +50,7 @@ class SDL_Surface;
  */
 class Image : public Resource
 {
-    friend class Graphics;
+    friend class SDLGraphics;
 #ifdef USE_OPENGL
     friend class OpenGLGraphics;
 #endif

@@ -23,7 +23,7 @@
 #ifndef MINISTATUS_H
 #define MINISTATUS_H
 
-#include "popup.h"
+#include "../bindings/guichan/widgets/popup.h"
 
 class ProgressBar;
 

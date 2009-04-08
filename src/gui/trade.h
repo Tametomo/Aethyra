@@ -28,9 +28,7 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
-#include "window.h"
-
-#include "../guichanfwd.h"
+#include "../bindings/guichan/widgets/window.h"
 
 class Inventory;
 class Item;

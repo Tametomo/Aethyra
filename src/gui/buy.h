@@ -28,10 +28,10 @@
 
 #include <SDL_types.h>
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
-class ShopItems;
 class ShopListBox;
+class ShopListModel;
 class ListBox;
 
 /**
@@ -118,7 +118,7 @@ class BuyDialog : public Window, public gcn::ActionListener,
         gcn::Label *mQuantityLabel;
         gcn::Slider *mSlider;
 
-        ShopItems *mShopItems;
+        ShopListModel *mShopListModel;
 
         Uint32 mMoney;
         Uint32 mAmountItems;

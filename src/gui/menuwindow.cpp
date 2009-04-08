@@ -24,11 +24,12 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "button.h"
 #include "menuwindow.h"
-#include "window.h"
 
-#include "../graphics.h"
+#include "../bindings/guichan/graphics.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/window.h"
 
 #include "../utils/gettext.h"
 

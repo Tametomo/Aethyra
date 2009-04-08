@@ -20,30 +20,28 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "button.h"
-#include "checkbox.h"
-#include "label.h"
-#include "listbox.h"
 #include "login.h"
 #include "ok_dialog.h"
-#include "passwordfield.h"
-#include "scrollarea.h"
-#include "textfield.h"
-
-#include "widgets/dropdown.h"
-#include "widgets/layout.h"
 
 #include "../main.h"
 #include "../logindata.h"
 #include "../configuration.h"
 
+#include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/checkbox.h"
+#include "../bindings/guichan/widgets/dropdown.h"
+#include "../bindings/guichan/widgets/label.h"
+#include "../bindings/guichan/widgets/listbox.h"
+#include "../bindings/guichan/widgets/passwordfield.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/textfield.h"
+
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
 
 static const int MAX_SERVER_LIST_SIZE = 5;
-static const int LOGIN_DIALOG_WIDTH = 220;
-static const int LOGIN_DIALOG_HEIGHT = 140;
-static const int FIELD_WIDTH = LOGIN_DIALOG_WIDTH - 70;
 
 LoginDialog::LoginDialog(LoginData *loginData):
     Window(_("Login")), mLoginData(loginData)

@@ -27,9 +27,7 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "window.h"
-
-#include "../guichanfwd.h"
+#include "../bindings/guichan/widgets/window.h"
 
 class SetupTab;
 

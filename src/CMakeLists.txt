@@ -49,79 +49,149 @@ MARK_AS_ADVANCED(SDL_INCLUDE_DIR)
 MARK_AS_ADVANCED(SDL_LIBRARY)
 
 SET(SRCS
-    gui/widgets/dropdown.cpp
-    gui/widgets/dropdown.h
-    gui/widgets/resizegrip.cpp
-    gui/widgets/resizegrip.h
-    gui/widgets/layout.cpp
-    gui/widgets/layout.h
-    gui/widgets/layouthelper.cpp
-    gui/widgets/layouthelper.h
-    gui/widgets/tab.cpp
-    gui/widgets/tab.h
-    gui/widgets/tabbedarea.cpp
-    gui/widgets/tabbedarea.h
-    gui/widgets/textpreview.cpp
-    gui/widgets/textpreview.h
-    gui/browserbox.cpp
-    gui/browserbox.h
-    gui/button.cpp
-    gui/button.h
+    bindings/guichan/graphics.cpp
+    bindings/guichan/graphics.h
+    bindings/guichan/guichanfwd.h
+    bindings/guichan/gui.cpp
+    bindings/guichan/gui.h
+    bindings/guichan/keyboardconfig.cpp
+    bindings/guichan/keyboardconfig.h
+    bindings/guichan/layout.cpp
+    bindings/guichan/layout.h
+    bindings/guichan/layouthelper.cpp
+    bindings/guichan/layouthelper.h
+    bindings/guichan/palette.cpp
+    bindings/guichan/palette.h
+    bindings/guichan/skin.cpp
+    bindings/guichan/skin.h
+    bindings/guichan/text.cpp
+    bindings/guichan/text.h
+    bindings/guichan/textmanager.cpp
+    bindings/guichan/textmanager.h
+    bindings/guichan/textrenderer.h
+    bindings/guichan/truetypefont.cpp
+    bindings/guichan/truetypefont.h
+    bindings/guichan/handlers/focushandler.cpp
+    bindings/guichan/handlers/focushandler.h
+    bindings/guichan/handlers/itemlinkhandler.cpp
+    bindings/guichan/handlers/itemlinkhandler.h
+    bindings/guichan/handlers/linkhandler.h
+    bindings/guichan/handlers/setuptab.h
+    bindings/guichan/models/ignorechoiceslistmodel.h
+    bindings/guichan/models/keylistmodel.h
+    bindings/guichan/models/modelistmodel.cpp
+    bindings/guichan/models/modelistmodel.h
+    bindings/guichan/models/playerrelationlistmodel.h
+    bindings/guichan/models/playertablemodel.cpp
+    bindings/guichan/models/playertablemodel.h
+    bindings/guichan/models/shoplistmodel.cpp
+    bindings/guichan/models/shoplistmodel.h
+    bindings/guichan/models/skilltablemodel.cpp
+    bindings/guichan/models/skilltablemodel.h
+    bindings/guichan/models/statictablemodel.cpp
+    bindings/guichan/models/statictablemodel.h
+    bindings/guichan/models/tablemodel.cpp
+    bindings/guichan/models/tablemodel.h
+    bindings/guichan/opengl/openglgraphics.cpp
+    bindings/guichan/opengl/openglgraphics.h
+    bindings/guichan/sdl/sdlgraphics.cpp
+    bindings/guichan/sdl/sdlgraphics.h
+    bindings/guichan/sdl/sdlinput.cpp
+    bindings/guichan/sdl/sdlinput.h
+    bindings/guichan/widgets/browserbox.cpp
+    bindings/guichan/widgets/browserbox.h
+    bindings/guichan/widgets/button.cpp
+    bindings/guichan/widgets/button.h
+    bindings/guichan/widgets/chatinput.cpp
+    bindings/guichan/widgets/chatinput.h
+    bindings/guichan/widgets/checkbox.cpp
+    bindings/guichan/widgets/checkbox.h
+    bindings/guichan/widgets/dropdown.cpp
+    bindings/guichan/widgets/dropdown.h
+    bindings/guichan/widgets/emotecontainer.cpp
+    bindings/guichan/widgets/emotecontainer.h
+    bindings/guichan/widgets/emoteshortcutcontainer.cpp
+    bindings/guichan/widgets/emoteshortcutcontainer.h
+    bindings/guichan/widgets/gccontainer.cpp
+    bindings/guichan/widgets/gccontainer.h
+    bindings/guichan/widgets/inttextfield.h
+    bindings/guichan/widgets/inttextfield.cpp
+    bindings/guichan/widgets/itemcontainer.cpp
+    bindings/guichan/widgets/itemcontainer.h
+    bindings/guichan/widgets/itemshortcutcontainer.cpp
+    bindings/guichan/widgets/itemshortcutcontainer.h
+    bindings/guichan/widgets/label.cpp
+    bindings/guichan/widgets/label.h
+    bindings/guichan/widgets/listbox.cpp
+    bindings/guichan/widgets/listbox.h
+    bindings/guichan/widgets/passwordfield.cpp
+    bindings/guichan/widgets/passwordfield.h
+    bindings/guichan/widgets/playerbox.cpp
+    bindings/guichan/widgets/playerbox.h
+    bindings/guichan/widgets/popup.cpp
+    bindings/guichan/widgets/popup.h
+    bindings/guichan/widgets/progressbar.cpp
+    bindings/guichan/widgets/progressbar.h
+    bindings/guichan/widgets/radiobutton.cpp
+    bindings/guichan/widgets/radiobutton.h
+    bindings/guichan/widgets/resizegrip.cpp
+    bindings/guichan/widgets/resizegrip.h
+    bindings/guichan/widgets/scrollarea.cpp
+    bindings/guichan/widgets/scrollarea.h
+    bindings/guichan/widgets/shoplistbox.cpp
+    bindings/guichan/widgets/shoplistbox.h
+    bindings/guichan/widgets/shortcutcontainer.cpp
+    bindings/guichan/widgets/shortcutcontainer.h
+    bindings/guichan/widgets/slider.cpp
+    bindings/guichan/widgets/slider.h
+    bindings/guichan/widgets/tab.cpp
+    bindings/guichan/widgets/tab.h
+    bindings/guichan/widgets/tabbedarea.cpp
+    bindings/guichan/widgets/tabbedarea.h
+    bindings/guichan/widgets/table.cpp
+    bindings/guichan/widgets/table.h
+    bindings/guichan/widgets/textbox.cpp
+    bindings/guichan/widgets/textbox.h
+    bindings/guichan/widgets/textfield.cpp
+    bindings/guichan/widgets/textfield.h
+    bindings/guichan/widgets/textpreview.cpp
+    bindings/guichan/widgets/textpreview.h
+    bindings/guichan/widgets/window.cpp
+    bindings/guichan/widgets/window.h
+    bindings/guichan/widgets/windowcontainer.cpp
+    bindings/guichan/widgets/windowcontainer.h
+    bindings/sdl/joystick.cpp
+    bindings/sdl/joystick.h
+    bindings/sdl/sound.cpp
+    bindings/sdl/sound.h
     gui/buy.cpp
     gui/buy.h
     gui/buysell.cpp
     gui/buysell.h
-    gui/char_server.cpp
-    gui/char_server.h
     gui/char_select.cpp
     gui/char_select.h
+    gui/char_server.cpp
+    gui/char_server.h
     gui/chat.cpp
     gui/chat.h
-    gui/chatinput.cpp
-    gui/chatinput.h
-    gui/checkbox.cpp
-    gui/checkbox.h
     gui/confirm_dialog.cpp
     gui/confirm_dialog.h
     gui/connection.cpp
     gui/connection.h
     gui/debugwindow.cpp
     gui/debugwindow.h
-    gui/emotecontainer.cpp
-    gui/emotecontainer.h
-    gui/emoteshortcutcontainer.cpp
-    gui/emoteshortcutcontainer.h
     gui/emotewindow.cpp
     gui/emotewindow.h
     gui/equipmentwindow.cpp
     gui/equipmentwindow.h
-    gui/focushandler.cpp
-    gui/focushandler.h
-    gui/gccontainer.cpp
-    gui/gccontainer.h
-    gui/gui.cpp
-    gui/gui.h
     gui/help.cpp
     gui/help.h
-    gui/inttextfield.cpp
-    gui/inttextfield.h
     gui/inventorywindow.cpp
     gui/inventorywindow.h
-    gui/itemcontainer.cpp
-    gui/itemcontainer.h
-    gui/itemlinkhandler.cpp
-    gui/itemlinkhandler.h
     gui/itempopup.cpp
     gui/itempopup.h
-    gui/itemshortcutcontainer.cpp
-    gui/itemshortcutcontainer.h
     gui/item_amount.cpp
     gui/item_amount.h
-    gui/label.cpp
-    gui/label.h
-    gui/linkhandler.h
-    gui/listbox.cpp
-    gui/listbox.h
     gui/login.cpp
     gui/login.h
     gui/menuwindow.cpp
@@ -140,28 +210,12 @@ SET(SRCS
     gui/npc_text.h
     gui/ok_dialog.cpp
     gui/ok_dialog.h
-    gui/palette.cpp
-    gui/palette.h
-    gui/passwordfield.cpp
-    gui/passwordfield.h
-    gui/playerbox.cpp
-    gui/playerbox.h
-    gui/popup.cpp
-    gui/popup.h
     gui/popupmenu.cpp
     gui/popupmenu.h
-    gui/progressbar.cpp
-    gui/progressbar.h
-    gui/radiobutton.cpp
-    gui/radiobutton.h
     gui/recorder.cpp
     gui/recorder.h
     gui/register.cpp
     gui/register.h
-    gui/scrollarea.cpp
-    gui/scrollarea.h
-    gui/sdlinput.cpp
-    gui/sdlinput.h
     gui/sell.cpp
     gui/sell.h
     gui/setup.cpp
@@ -176,50 +230,24 @@ SET(SRCS
     gui/setup_keyboard.h
     gui/setup_players.cpp
     gui/setup_players.h
-    gui/setuptab.h
     gui/setup_video.cpp
     gui/setup_video.h
-    gui/shop.cpp
-    gui/shop.h
-    gui/shoplistbox.cpp
-    gui/shoplistbox.h
     gui/shortcutwindow.cpp
     gui/shortcutwindow.h
-    gui/shortcutcontainer.cpp
-    gui/shortcutcontainer.h
     gui/skill.cpp
     gui/skill.h
-    gui/skin.cpp
-    gui/skin.h
-    gui/slider.cpp
-    gui/slider.h
     gui/speechbubble.cpp
     gui/speechbubble.h
     gui/status.cpp
     gui/status.h
     gui/storagewindow.cpp
     gui/storagewindow.h
-    gui/table.cpp
-    gui/table.h
-    gui/table_model.cpp
-    gui/table_model.h
-    gui/textbox.cpp
-    gui/textbox.h
-    gui/textfield.cpp
-    gui/textfield.h
-    gui/textrenderer.h
     gui/trade.cpp
     gui/trade.h
-    gui/truetypefont.cpp
-    gui/truetypefont.h
     gui/updatewindow.h
     gui/updatewindow.cpp
     gui/viewport.cpp
     gui/viewport.h
-    gui/window.cpp
-    gui/window.h
-    gui/windowcontainer.cpp
-    gui/windowcontainer.h
     net/beinghandler.h
     net/beinghandler.cpp
     net/buysellhandler.h
@@ -268,6 +296,8 @@ SET(SRCS
     resources/colordb.h
     resources/dye.cpp
     resources/dye.h
+    resources/effectdb.cpp
+    resources/effectdb.h
     resources/emotedb.cpp
     resources/emotedb.h
     resources/image.cpp
@@ -280,8 +310,8 @@ SET(SRCS
     resources/imagewriter.h
     resources/itemdb.cpp
     resources/itemdb.h
-    resources/iteminfo.cpp
     resources/iteminfo.h
+    resources/iteminfo.cpp
     resources/mapreader.cpp
     resources/mapreader.h
     resources/monsterdb.cpp
@@ -296,10 +326,12 @@ SET(SRCS
     resources/resource.h
     resources/resourcemanager.cpp
     resources/resourcemanager.h
+    resources/skilldb.cpp
+    resources/skilldb.h
     resources/soundeffect.cpp
     resources/soundeffect.h
-    resources/spritedef.h
     resources/spritedef.cpp
+    resources/spritedef.h
     utils/base64.cpp
     utils/base64.h
     utils/dtor.h
@@ -309,8 +341,13 @@ SET(SRCS
     utils/stringutils.h
     utils/strprintf.cpp
     utils/strprintf.h
+    utils/mutex.h
+    utils/position.cpp
+    utils/position.h
     utils/xml.cpp
     utils/xml.h
+    utils/vector.cpp
+    utils/vector.h
     animatedsprite.cpp
     animatedsprite.h
     animationparticle.cpp
@@ -322,8 +359,6 @@ SET(SRCS
     configlistener.h
     configuration.cpp
     configuration.h
-    effectmanager.cpp
-    effectmanager.h
     emoteshortcut.cpp
     emoteshortcut.h
     engine.cpp
@@ -336,9 +371,6 @@ SET(SRCS
     flooritemmanager.h
     game.cpp
     game.h
-    graphics.cpp
-    graphics.h
-    guichanfwd.h
     imageparticle.cpp
     imageparticle.h
     inventory.cpp
@@ -347,10 +379,6 @@ SET(SRCS
     item.h
     itemshortcut.cpp
     itemshortcut.h
-    joystick.cpp
-    joystick.h
-    keyboardconfig.cpp
-    keyboardconfig.h
     localplayer.cpp
     localplayer.h
     lockedarray.h
@@ -365,8 +393,6 @@ SET(SRCS
     monster.h
     npc.cpp
     npc.h
-    openglgraphics.cpp
-    openglgraphics.h
     particle.cpp
     particle.h
     particlecontainer.cpp
@@ -380,26 +406,16 @@ SET(SRCS
     player.h
     player_relations.cpp
     player_relations.h
-    position.cpp
-    position.h
     properties.h
     serverinfo.h
     shopitem.cpp
     shopitem.h
     simpleanimation.cpp
     simpleanimation.h
-    sound.cpp
-    sound.h
     sprite.h
-    text.cpp
-    text.h
-    textmanager.cpp
-    textmanager.h
     textparticle.cpp
     textparticle.h
     tileset.h
-    vector.cpp
-    vector.h
     )
 
 ADD_EXECUTABLE(aethyra ${SRCS})

@@ -25,7 +25,7 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 class LocalPlayer;
 class ProgressBar;

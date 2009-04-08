@@ -25,7 +25,7 @@
 
 #include "messagehandler.h"
 
-#include "../lockedarray.h"
+#include "../utils/lockedarray.h"
 
 class CharCreateDialog;
 class LocalPlayer;

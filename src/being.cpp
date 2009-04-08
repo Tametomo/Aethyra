@@ -26,29 +26,29 @@
 #include "animatedsprite.h"
 #include "being.h"
 #include "configuration.h"
-#include "effectmanager.h"
 #include "game.h"
-#include "graphics.h"
 #include "localplayer.h"
 #include "log.h"
 #include "map.h"
 #include "particle.h"
 #include "simpleanimation.h"
-#include "sound.h"
-#include "text.h"
+
+#include "bindings/guichan/graphics.h"
+#include "bindings/guichan/gui.h"
+#include "bindings/guichan/palette.h"
+#include "bindings/guichan/text.h"
+
+#include "bindings/sdl/sound.h"
 
 #include "gui/speechbubble.h"
 
 #include "resources/colordb.h"
 #include "resources/emotedb.h"
+#include "resources/effectdb.h"
 #include "resources/image.h"
 #include "resources/itemdb.h"
 #include "resources/iteminfo.h"
 #include "resources/resourcemanager.h"
-
-#include "gui/gui.h"
-#include "gui/palette.h"
-#include "gui/speechbubble.h"
 
 #include "utils/dtor.h"
 #include "utils/gettext.h"

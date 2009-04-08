@@ -26,7 +26,6 @@
 #include "equipment.h"
 #include "floor_item.h"
 #include "game.h"
-#include "graphics.h"
 #include "inventory.h"
 #include "item.h"
 #include "localplayer.h"
@@ -34,11 +33,14 @@
 #include "monster.h"
 #include "particle.h"
 #include "simpleanimation.h"
-#include "sound.h"
-#include "text.h"
 
-#include "gui/gui.h"
-#include "gui/palette.h"
+#include "bindings/guichan/graphics.h"
+#include "bindings/guichan/gui.h"
+#include "bindings/guichan/palette.h"
+#include "bindings/guichan/text.h"
+
+#include "bindings/sdl/sound.h"
+
 #include "gui/storagewindow.h"
 
 #include "net/messageout.h"

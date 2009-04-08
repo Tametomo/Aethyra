@@ -23,7 +23,7 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "window.h"
+#include "../bindings/guichan/widgets/window.h"
 
 class ProgressBar;
 
