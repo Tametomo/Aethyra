@@ -29,8 +29,8 @@
 #include "bindings/guichan/palette.h"
 #include "bindings/guichan/text.h"
 
-#include "resources/colordb.h"
-#include "resources/itemdb.h"
+#include "resources/db/colordb.h"
+#include "resources/db/itemdb.h"
 
 #include "utils/strprintf.h"
 

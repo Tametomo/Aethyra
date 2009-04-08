@@ -76,14 +76,16 @@
 #include "net/messageout.h"
 #include "net/network.h"
 
-#include "resources/colordb.h"
-#include "resources/emotedb.h"
 #include "resources/image.h"
-#include "resources/itemdb.h"
-#include "resources/monsterdb.h"
-#include "resources/npcdb.h"
 #include "resources/resourcemanager.h"
-#include "resources/skilldb.h"
+
+#include "resources/db/colordb.h"
+#include "resources/db/effectdb.h"
+#include "resources/db/emotedb.h"
+#include "resources/db/itemdb.h"
+#include "resources/db/monsterdb.h"
+#include "resources/db/npcdb.h"
+#include "resources/db/skilldb.h"
 
 #include "utils/gettext.h"
 #include "utils/lockedarray.h"
@@ -503,6 +505,7 @@ static void exit_engine()
     MonsterDB::unload();
     NPCDB::unload();
     SkillDB::unload();
+    EffectDB::unload();
 
     ResourceManager::deleteInstance();
     delete logger;
@@ -962,6 +965,7 @@ int main(int argc, char *argv[])
                         false);
 
                     // Load XML databases
+                    EffectDB::load();
                     SkillDB::load();
                     ColorDB::load();
                     ItemDB::load();

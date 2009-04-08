@@ -36,7 +36,7 @@
 #include "../gui/chat.h"
 #include "../gui/storagewindow.h"
 
-#include "../resources/iteminfo.h"
+#include "../resources/db/iteminfo.h"
 
 #include "../utils/gettext.h"
 #include "../utils/strprintf.h"

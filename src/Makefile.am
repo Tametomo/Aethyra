@@ -244,14 +244,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      resources/ambientoverlay.h \
 	      resources/animation.cpp \
 	      resources/animation.h \
-	      resources/colordb.cpp \
-	      resources/colordb.h \
 	      resources/dye.cpp \
 	      resources/dye.h \
-	      resources/effectdb.cpp \
-	      resources/effectdb.h \
-	      resources/emotedb.cpp \
-	      resources/emotedb.h \
 	      resources/image.cpp \
 	      resources/image.h \
 	      resources/imageloader.cpp \
@@ -260,30 +254,36 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      resources/imageset.cpp \
 	      resources/imagewriter.cpp \
 	      resources/imagewriter.h \
-	      resources/itemdb.cpp \
-	      resources/itemdb.h \
-	      resources/iteminfo.h \
-	      resources/iteminfo.cpp \
 	      resources/mapreader.cpp \
 	      resources/mapreader.h \
-	      resources/monsterdb.cpp \
-	      resources/monsterdb.h \
-	      resources/monsterinfo.cpp \
-	      resources/monsterinfo.h \
 	      resources/music.cpp \
 	      resources/music.h \
-	      resources/npcdb.cpp \
-	      resources/npcdb.h \
 	      resources/resource.cpp \
 	      resources/resource.h \
 	      resources/resourcemanager.cpp \
 	      resources/resourcemanager.h \
-	      resources/skilldb.cpp \
-	      resources/skilldb.h \
 	      resources/soundeffect.cpp \
 	      resources/soundeffect.h \
 	      resources/spritedef.cpp \
 	      resources/spritedef.h \
+	      resources/db/colordb.cpp \
+	      resources/db/colordb.h \
+	      resources/db/effectdb.cpp \
+	      resources/db/effectdb.h \
+	      resources/db/emotedb.cpp \
+	      resources/db/emotedb.h \
+	      resources/db/itemdb.cpp \
+	      resources/db/itemdb.h \
+	      resources/db/iteminfo.h \
+	      resources/db/iteminfo.cpp \
+	      resources/db/monsterdb.cpp \
+	      resources/db/monsterdb.h \
+	      resources/db/monsterinfo.cpp \
+	      resources/db/monsterinfo.h \
+	      resources/db/npcdb.cpp \
+	      resources/db/npcdb.h \
+	      resources/db/skilldb.cpp \
+	      resources/db/skilldb.h \
 	      utils/base64.cpp \
 	      utils/base64.h \
 	      utils/dtor.h \

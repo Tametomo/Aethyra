@@ -22,11 +22,10 @@
 
 #include "monsterinfo.h"
 
-#include "../utils/dtor.h"
+#include "../../utils/dtor.h"
 
 MonsterInfo::MonsterInfo()
 {
-
 }
 
 MonsterInfo::~MonsterInfo()
@@ -39,9 +38,7 @@ MonsterInfo::~MonsterInfo()
 void MonsterInfo::addSound(MonsterSoundEvent event, std::string filename)
 {
     if (mSounds.find(event) == mSounds.end())
-    {
         mSounds[event] = new std::vector<std::string>;
-    }
 
     mSounds[event]->push_back("sfx/" + filename);
 }
@@ -54,13 +51,9 @@ std::string MonsterInfo::getSound(MonsterSoundEvent event) const
     i = mSounds.find(event);
 
     if (i == mSounds.end())
-    {
         return "";
-    }
     else
-    {
         return i->second->at(rand()%i->second->size());
-    }
 }
 
 void MonsterInfo::addParticleEffect(std::string filename)

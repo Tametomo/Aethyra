@@ -28,8 +28,8 @@
 #include "../../../gui/itempopup.h"
 #include "../../../gui/viewport.h"
 
-#include "../../../resources/iteminfo.h"
-#include "../../../resources/itemdb.h"
+#include "../../../resources/db/iteminfo.h"
+#include "../../../resources/db/itemdb.h"
 
 ItemLinkHandler::ItemLinkHandler()
 {

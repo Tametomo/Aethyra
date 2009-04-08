@@ -22,10 +22,10 @@
 
 #include "npcdb.h"
 
-#include "../log.h"
+#include "../../log.h"
 
-#include "../utils/gettext.h"
-#include "../utils/xml.h"
+#include "../../utils/gettext.h"
+#include "../../utils/xml.h"
 
 namespace
 {
@@ -50,9 +50,7 @@ void NPCDB::load()
     xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "npcs"))
-    {
         logger->error(_("NPC Database: Error while loading npcs.xml!"));
-    }
 
     //iterate <npc>s
     for_each_xml_child_node(npcNode, rootNode)
@@ -92,9 +90,7 @@ void NPCDB::load()
 
 void NPCDB::unload()
 {
-    for (   NPCInfosIterator i = mNPCInfos.begin();
-            i != mNPCInfos.end();
-            i++)
+    for (NPCInfosIterator i = mNPCInfos.begin(); i != mNPCInfos.end(); i++)
     {
         while (!i->second->sprites.empty())
         {

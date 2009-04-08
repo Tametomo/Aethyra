@@ -29,7 +29,7 @@
 
 #include "../../../gui/skill.h"
 
-#include "../../../resources/skilldb.h"
+#include "../../../resources/db/skilldb.h"
 
 SkillTableModel::SkillTableModel(SkillDialog *dialog) :
     StaticTableModel(0, 3)

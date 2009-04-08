@@ -23,9 +23,9 @@
 
 #include "colordb.h"
 
-#include "../log.h"
+#include "../../log.h"
 
-#include "../utils/xml.h"
+#include "../../utils/xml.h"
 
 #define HAIR_COLOR_FILE "colors.xml"
 #define TMW_COLOR_FILE "hair.xml"
@@ -78,8 +78,8 @@ void ColorDB::load()
                 logger->log("ColorDB: Redefinition of dye ID %d", id);
             }
 
-            TMWHair ? mColors[id] = XML::getProperty(node, "value", "#FFFFFF") :
-                      mColors[id] = XML::getProperty(node, "dye", "#FFFFFF");
+            mColors[id] = TMWHair ? XML::getProperty(node, "value", mFail) :
+                                    XML::getProperty(node, "dye", mFail);
         }
     }
 

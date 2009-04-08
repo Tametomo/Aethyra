@@ -21,10 +21,10 @@
 
 #include "emotedb.h"
 
-#include "../animatedsprite.h"
-#include "../log.h"
+#include "../../animatedsprite.h"
+#include "../../log.h"
 
-#include "../utils/xml.h"
+#include "../../utils/xml.h"
 
 namespace
 {

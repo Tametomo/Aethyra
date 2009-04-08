@@ -35,7 +35,6 @@
 #include "../bindings/guichan/keyboardconfig.h"
 #include "../bindings/guichan/textmanager.h"
 
-#include "../resources/monsterinfo.h"
 #include "../resources/resourcemanager.h"
 
 #include "../utils/stringutils.h"

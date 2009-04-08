@@ -33,10 +33,10 @@
 #include "../../../localplayer.h"
 #include "../../../log.h"
 
-#include "../../../resources/emotedb.h"
 #include "../../../resources/image.h"
-#include "../../../resources/iteminfo.h"
 #include "../../../resources/resourcemanager.h"
+
+#include "../../../resources/db/emotedb.h"
 
 #include "../../../utils/dtor.h"
 #include "../../../utils/gettext.h"
@@ -92,7 +92,7 @@ void EmoteContainer::draw(gcn::Graphics *graphics)
         const int emoteX = ((i) % columns) * gridWidth;
         const int emoteY = ((i) / columns) * gridHeight;
 
-        // Draw selection image below selected item
+        // Draw selection image below selected emote
         if (mSelectedEmoteIndex == i)
         {
             static_cast<Graphics*>(graphics)->drawImage(

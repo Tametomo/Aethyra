@@ -26,12 +26,12 @@
 
 #include "itemdb.h"
 
-#include "../log.h"
+#include "../../log.h"
 
-#include "../utils/dtor.h"
-#include "../utils/gettext.h"
-#include "../utils/stringutils.h"
-#include "../utils/xml.h"
+#include "../../utils/dtor.h"
+#include "../../utils/gettext.h"
+#include "../../utils/stringutils.h"
+#include "../../utils/xml.h"
 
 namespace
 {
@@ -62,9 +62,7 @@ void ItemDB::load()
     xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "items"))
-    {
         logger->error("ItemDB: Error while loading items.xml!");
-    }
 
     for_each_xml_child_node(node, rootNode)
     {
@@ -136,7 +134,7 @@ void ItemDB::load()
                 else
                 {
                     logger->log("ItemDB: Duplicate name of item found item %d",
-                                   id);
+                                id);
                 }
             }
         }
@@ -214,13 +212,9 @@ void loadSpriteRef(ItemInfo *itemInfo, xmlNodePtr node)
     std::string filename = (const char*) node->xmlChildrenNode->content;
 
     if (gender == "male" || gender == "unisex")
-    {
         itemInfo->setSprite(filename, GENDER_MALE);
-    }
     if (gender == "female" || gender == "unisex")
-    {
         itemInfo->setSprite(filename, GENDER_FEMALE);
-    }
 }
 
 void loadSoundRef(ItemInfo *itemInfo, xmlNodePtr node)
@@ -229,16 +223,9 @@ void loadSoundRef(ItemInfo *itemInfo, xmlNodePtr node)
     std::string filename = (const char*) node->xmlChildrenNode->content;
 
     if (event == "hit")
-    {
         itemInfo->addSound(EQUIP_EVENT_HIT, filename);
-    }
     else if (event == "strike")
-    {
         itemInfo->addSound(EQUIP_EVENT_STRIKE, filename);
-    }
     else
-    {
-        logger->log("ItemDB: Ignoring unknown sound event '%s'",
-                event.c_str());
-    }
+        logger->log("ItemDB: Ignoring unknown sound event '%s'", event.c_str());
 }

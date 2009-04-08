@@ -40,8 +40,9 @@
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/playerbox.h"
 
-#include "../resources/iteminfo.h"
 #include "../resources/resourcemanager.h"
+
+#include "../resources/db/iteminfo.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

@@ -34,7 +34,7 @@
 #include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/textbox.h"
 
-#include "../resources/iteminfo.h"
+#include "../resources/db/iteminfo.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

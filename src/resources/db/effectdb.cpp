@@ -23,16 +23,25 @@
 
 #include "effectdb.h"
 
-#include "../being.h"
-#include "../log.h"
-#include "../particle.h"
+#include "../../being.h"
+#include "../../log.h"
+#include "../../particle.h"
 
-#include "../bindings/sdl/sound.h"
+#include "../../bindings/sdl/sound.h"
 
-#include "../utils/xml.h"
+#include "../../utils/xml.h"
 
-EffectManager::EffectManager()
+namespace
 {
+    Effects mEffects;
+    bool mLoaded = false;
+}
+
+void EffectDB::load()
+{
+    if (!mLoaded)
+        return;
+    
     XML::Document doc("effects.xml");
     xmlNodePtr root = doc.rootNode();
 
@@ -59,16 +68,23 @@ EffectManager::EffectManager()
             mEffects.push_back(ed);
         }
     }
+
+    mLoaded = true;
 }
 
-EffectManager::~EffectManager()
+void EffectDB::unload()
 {
+    logger->log("Unloading effect database...");
+
+    mEffects.clear();
+    mLoaded = false;
 }
 
-bool EffectManager::trigger(int id, Being* being)
+bool EffectDB::trigger(int id, Being* being)
 {
     bool rValue = false;
-    for (std::list<EffectDescription>::iterator i = mEffects.begin(); i != mEffects.end(); ++i)
+    for (std::list<EffectDescription>::iterator i = mEffects.begin();
+         i != mEffects.end(); ++i)
     {
         if ((*i).id == id)
         {
@@ -87,10 +103,11 @@ bool EffectManager::trigger(int id, Being* being)
     return rValue;
 }
 
-bool EffectManager::trigger(int id, int x, int y)
+bool EffectDB::trigger(int id, int x, int y)
 {
     bool rValue = false;
-    for (std::list<EffectDescription>::iterator i = mEffects.begin(); i != mEffects.end(); ++i)
+    for (std::list<EffectDescription>::iterator i = mEffects.begin();
+         i != mEffects.end(); ++i)
     {
         if ((*i).id == id)
         {

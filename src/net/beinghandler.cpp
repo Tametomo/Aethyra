@@ -35,7 +35,7 @@
 #include "../npc.h"
 #include "../player_relations.h"
 
-#include "../resources/effectdb.h"
+#include "../resources/db/effectdb.h"
 
 const int EMOTION_TIME = 150;    /**< Duration of emotion icon */
 
@@ -96,9 +96,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
                 // Being with id >= 110000000 and job 0 are better
                 // known as ghosts, so don't create those.
                 if (job == 0 && id >= 110000000)
-                {
                     break;
-                }
 
                 dstBeing = beingManager->createBeing(id, job);
             }
@@ -120,9 +118,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
             headBottom = msg->readInt16();
 
             if (msg->getId() == SMSG_BEING_MOVE)
-            {
                 msg->readInt32(); // server tick
-            }
 
             dstBeing->setSprite(Being::SHIELD_SPRITE, msg->readInt16());
             headTop = msg->readInt16();
@@ -186,7 +182,8 @@ void BeingHandler::handleMessage(MessageIn *msg)
              * we'll just pretend the packet didn't happen
              */
 
-            if (dstBeing) {
+            if (dstBeing)
+            {
                 dstBeing->setAction(Being::STAND);
                 dstBeing->mX = srcX;
                 dstBeing->mY = srcY;
@@ -261,7 +258,8 @@ void BeingHandler::handleMessage(MessageIn *msg)
             }
             break;
 
-        case SMSG_BEING_SELFEFFECT: {
+        case SMSG_BEING_SELFEFFECT:
+        {
             id = (Uint32)msg->readInt32();
             if (!beingManager->findBeing(id))
                 break;
@@ -269,16 +267,14 @@ void BeingHandler::handleMessage(MessageIn *msg)
             int effectType = msg->readInt32();
             Being* being = beingManager->findBeing(id);
 
-            effectManager->trigger(effectType, being);
+            EffectDB::trigger(effectType, being);
 
             break;
         }
 
         case SMSG_BEING_EMOTION:
             if (!(dstBeing = beingManager->findBeing(msg->readInt32())))
-            {
                 break;
-            }
 
             if (player_relations.hasPermission(dstBeing, PlayerRelation::EMOTE))
                 dstBeing->setEmote(msg->readInt8(), EMOTION_TIME);
@@ -301,22 +297,24 @@ void BeingHandler::handleMessage(MessageIn *msg)
              */
 
             if (!(dstBeing = beingManager->findBeing(msg->readInt32())))
-            {
                 break;
-            }
 
             int type = msg->readInt8();
             int id = 0;
             int id2 = 0;
 
-            if (msg->getId() == SMSG_BEING_CHANGE_LOOKS) {
+            if (msg->getId() == SMSG_BEING_CHANGE_LOOKS)
+            {
                 id = msg->readInt8();
-            } else {        // SMSG_BEING_CHANGE_LOOKS2
+            }
+            else
+            {        // SMSG_BEING_CHANGE_LOOKS2
                 id = msg->readInt16();
                 id2 = msg->readInt16();
             }
 
-            switch (type) {
+            switch (type)
+            {
                 case 1:     // eAthena LOOK_HAIR
                     dstBeing->setHairStyle(id, -1);
                     break;
@@ -364,9 +362,8 @@ void BeingHandler::handleMessage(MessageIn *msg)
 
         case SMSG_BEING_NAME_RESPONSE:
             if ((dstBeing = beingManager->findBeing(msg->readInt32())))
-            {
                 dstBeing->setName(msg->readString(24));
-            }
+
             break;
 
         case SMSG_PLAYER_UPDATE_1:
@@ -383,9 +380,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
             dstBeing = beingManager->findBeing(id);
 
             if (!dstBeing)
-            {
                 dstBeing = beingManager->createBeing(id, job);
-            }
 
             dstBeing->setWalkSpeed(speed);
             dstBeing->mJob = job;
@@ -395,9 +390,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
             headBottom = msg->readInt16();
 
             if (msg->getId() == SMSG_PLAYER_MOVE)
-            {
                 msg->readInt32(); // server tick
-            }
 
             headTop = msg->readInt16();
             headMid = msg->readInt16();
@@ -455,9 +448,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
                 }
             }
             else if (msg->getId() == SMSG_PLAYER_MOVE)
-            {
                 msg->readInt8(); // unknown
-            }
 
             msg->readInt8();   // Lv
             msg->readInt8();   // unknown
@@ -480,12 +471,15 @@ void BeingHandler::handleMessage(MessageIn *msg)
              */
 
             id = msg->readInt32();
-            if (mSync || id != player_node->getId()) {
+            if (mSync || id != player_node->getId())
+            {
                 dstBeing = beingManager->findBeing(id);
-                if (dstBeing) {
+                if (dstBeing)
+                {
                     dstBeing->mX = msg->readInt16();
                     dstBeing->mY = msg->readInt16();
-                    if (dstBeing->mAction == Being::WALK) {
+                    if (dstBeing->mAction == Being::WALK)
+                    {
                         dstBeing->mFrame = 0;
                         dstBeing->setAction(Being::STAND);
                     }

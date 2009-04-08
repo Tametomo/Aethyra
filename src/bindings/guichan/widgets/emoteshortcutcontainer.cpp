@@ -33,9 +33,10 @@
 #include "../../../localplayer.h"
 #include "../../../log.h"
 
-#include "../../../resources/emotedb.h"
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
+
+#include "../../../resources/db/emotedb.h"
 
 #include "../../../utils/dtor.h"
 #include "../../../utils/gettext.h"

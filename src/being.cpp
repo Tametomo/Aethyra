@@ -42,13 +42,14 @@
 
 #include "gui/speechbubble.h"
 
-#include "resources/colordb.h"
-#include "resources/emotedb.h"
-#include "resources/effectdb.h"
 #include "resources/image.h"
-#include "resources/itemdb.h"
-#include "resources/iteminfo.h"
 #include "resources/resourcemanager.h"
+
+#include "resources/db/colordb.h"
+#include "resources/db/emotedb.h"
+#include "resources/db/effectdb.h"
+#include "resources/db/itemdb.h"
+#include "resources/db/iteminfo.h"
 
 #include "utils/dtor.h"
 #include "utils/gettext.h"

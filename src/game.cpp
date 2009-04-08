@@ -91,7 +91,6 @@
 #include "net/skillhandler.h"
 #include "net/tradehandler.h"
 
-#include "resources/effectdb.h"
 #include "resources/imagewriter.h"
 
 #include "utils/gettext.h"
@@ -138,7 +137,6 @@ StorageWindow *storageWindow;
 BeingManager *beingManager = NULL;
 FloorItemManager *floorItemManager = NULL;
 Particle* particleEngine = NULL;
-EffectManager *effectManager = NULL;
 
 const int MAX_TIME = 10000;
 
@@ -291,7 +289,6 @@ Game::Game(Network *network):
 
     beingManager = new BeingManager();
     floorItemManager = new FloorItemManager();
-    effectManager = new EffectManager();
 
     particleEngine = new Particle(NULL);
     particleEngine->setupEngine();

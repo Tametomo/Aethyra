@@ -23,11 +23,11 @@
 #include "monsterdb.h"
 #include "monsterinfo.h"
 
-#include "../log.h"
+#include "../../log.h"
 
-#include "../utils/dtor.h"
-#include "../utils/gettext.h"
-#include "../utils/xml.h"
+#include "../../utils/dtor.h"
+#include "../../utils/gettext.h"
+#include "../../utils/xml.h"
 
 namespace
 {
@@ -50,17 +50,13 @@ void MonsterDB::load()
     xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "monsters"))
-    {
         logger->error("Monster Database: Error while loading monster.xml!");
-    }
 
     //iterate <monster>s
     for_each_xml_child_node(monsterNode, rootNode)
     {
         if (!xmlStrEqual(monsterNode->name, BAD_CAST "monster"))
-        {
             continue;
-        }
 
         MonsterInfo *currentInfo = new MonsterInfo();
 
@@ -69,17 +65,11 @@ void MonsterDB::load()
         std::string targetCursor;
         targetCursor = XML::getProperty(monsterNode, "targetCursor", "medium");
         if (targetCursor == "small")
-        {
             currentInfo->setTargetCursorSize(Being::TC_SMALL);
-        }
         else if (targetCursor == "medium")
-        {
             currentInfo->setTargetCursorSize(Being::TC_MEDIUM);
-        }
         else if (targetCursor == "large")
-        {
             currentInfo->setTargetCursorSize(Being::TC_LARGE);
-        }
         else
         {
             logger->log("MonsterDB: Unknown target cursor type \"%s\" for %s -"
@@ -92,10 +82,8 @@ void MonsterDB::load()
         for_each_xml_child_node(spriteNode, monsterNode)
         {
             if (xmlStrEqual(spriteNode->name, BAD_CAST "sprite"))
-            {
                 currentInfo->addSprite(
                         (const char*) spriteNode->xmlChildrenNode->content);
-            }
 
             if (xmlStrEqual(spriteNode->name, BAD_CAST "sound"))
             {
@@ -104,21 +92,13 @@ void MonsterDB::load()
                 filename = (const char*) spriteNode->xmlChildrenNode->content;
 
                 if (event == "hit")
-                {
                     currentInfo->addSound(MONSTER_EVENT_HIT, filename);
-                }
                 else if (event == "miss")
-                {
                     currentInfo->addSound(MONSTER_EVENT_MISS, filename);
-                }
                 else if (event == "hurt")
-                {
                     currentInfo->addSound(MONSTER_EVENT_HURT, filename);
-                }
                 else if (event == "die")
-                {
                     currentInfo->addSound(MONSTER_EVENT_DIE, filename);
-                }
                 else
                 {
                     logger->log("MonsterDB: Warning, sound effect %s for "
@@ -136,10 +116,8 @@ void MonsterDB::load()
             }
 
             if (xmlStrEqual(spriteNode->name, BAD_CAST "particlefx"))
-            {
                 currentInfo->addParticleEffect(
                     (const char*) spriteNode->xmlChildrenNode->content);
-            }
         }
         mMonsterInfos[XML::getProperty(monsterNode, "id", 0)] = currentInfo;
     }

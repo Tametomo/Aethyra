@@ -21,43 +21,46 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef EFFECT_MANAGER_H
-#define EFFECT_MANAGER_H
+#ifndef EFFECT_DB_H
+#define EFFECT_DB_H
 
 #include <list>
 #include <string>
 
 class Being;
 
-class EffectManager
+struct EffectDescription
 {
-    public:
-        struct EffectDescription
-        {
-             int id;
-             std::string GFX;
-             std::string SFX;
-        };
-
-        EffectManager();
-        ~EffectManager();
-
-        /**
-         * Triggers a effect with the id, at
-         * the specified being.
-         */
-        bool trigger(int id, Being* being);
-
-        /**
-         * Triggers a effect with the id, at
-         * the specified x and y coordinate.
-         */
-        bool trigger(int id, int x, int y);
-
-   private:
-        std::list<EffectDescription> mEffects;
+     int id;
+     std::string GFX;
+     std::string SFX;
 };
 
-extern EffectManager *effectManager;
+typedef std::list<EffectDescription> Effects;
 
-#endif // EFFECT_MANAGER_H
+namespace EffectDB
+{
+    /**
+     * Loads the effect data from <code>effects.xml</code>.
+     */
+    void load();
+
+    /**
+     * Frees effect data.
+     */
+    void unload();
+
+    /**
+     * Triggers a effect with the id, at
+     * the specified being.
+     */
+    bool trigger(int id, Being* being);
+
+    /**
+     * Triggers a effect with the id, at
+     * the specified x and y coordinate.
+     */
+    bool trigger(int id, int x, int y);
+};
+
+#endif // EFFECT_DB_H

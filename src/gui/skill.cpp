@@ -36,7 +36,7 @@
 #include "../bindings/guichan/widgets/table.h"
 #include "../bindings/guichan/widgets/windowcontainer.h"
 
-#include "../resources/skilldb.h"
+#include "../resources/db/skilldb.h"
 
 #include "../utils/dtor.h"
 #include "../utils/gettext.h"

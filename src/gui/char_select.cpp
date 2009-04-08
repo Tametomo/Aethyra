@@ -42,7 +42,7 @@
 #include "../net/charserverhandler.h"
 #include "../net/messageout.h"
 
-#include "../resources/colordb.h"
+#include "../resources/db/colordb.h"
 
 #include "../utils/gettext.h"
 #include "../utils/strprintf.h"

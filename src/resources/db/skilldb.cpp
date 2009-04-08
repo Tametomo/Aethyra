@@ -22,9 +22,9 @@
 
 #include "skilldb.h"
 
-#include "../log.h"
+#include "../../log.h"
 
-#include "../utils/xml.h"
+#include "../../utils/xml.h"
 
 #define SKILLS_FILE "skills.xml"
 

@@ -28,7 +28,7 @@
 #include <string>
 #include <vector>
 
-#include "../being.h"
+#include "../../being.h"
 
 enum MonsterSoundEvent
 {

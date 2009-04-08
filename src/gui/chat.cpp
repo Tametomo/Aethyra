@@ -45,8 +45,8 @@
 #include "../net/messageout.h"
 #include "../net/protocol.h"
 
-#include "../resources/iteminfo.h"
-#include "../resources/itemdb.h"
+#include "../resources/db/iteminfo.h"
+#include "../resources/db/itemdb.h"
 
 #include "../utils/gettext.h"
 #include "../utils/strprintf.h"

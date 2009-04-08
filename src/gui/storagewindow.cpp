@@ -45,7 +45,7 @@
 #include "../net/network.h"
 #include "../net/protocol.h"
 
-#include "../resources/iteminfo.h"
+#include "../resources/db/iteminfo.h"
 
 #include "../utils/gettext.h"
 #include "../utils/strprintf.h"

@@ -27,9 +27,9 @@
 #include <string>
 #include <vector>
 
-#include "spritedef.h"
+#include "../spritedef.h"
 
-#include "../being.h"
+#include "../../being.h"
 
 enum EquipmentSoundEvent
 {

@@ -33,7 +33,7 @@
 #include "net/messageout.h"
 #include "net/protocol.h"
 
-#include "resources/npcdb.h"
+#include "resources/db/npcdb.h"
 
 bool NPC::mTalking = false;
 int current_npc = 0;
