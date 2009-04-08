@@ -25,7 +25,7 @@
 #include "textfield.h"
 
 /**
- * TextBox which only accepts numbers as input.
+ * TextField which only accepts numbers as input.
  */
 class IntTextField : public TextField
 {

@@ -80,7 +80,7 @@ Setup::Setup():
     TabbedArea *panel = new TabbedArea;
     panel->setDimension(gcn::Rectangle(5, 5, width - 10, height - 40));
 
-    SetupTab *tab;
+    SetupTabHandler *tab;
 
     tab = new Setup_Video();
     panel->addTab(_("Video"), tab);
@@ -123,12 +123,12 @@ void Setup::action(const gcn::ActionEvent &event)
     if (event.getId() == "Apply")
     {
         setVisible(false);
-        for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTab::apply));
+        for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTabHandler::apply));
     }
     else if (event.getId() == "Cancel")
     {
         setVisible(false);
-        for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTab::cancel));
+        for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTabHandler::cancel));
     }
     else if (event.getId() == "Reset Windows")
     {

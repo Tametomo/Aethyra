@@ -25,7 +25,7 @@
 
 #include "../widgets/gccontainer.h"
 
-class SetupTab : public GCContainer
+class SetupTabHandler : public GCContainer
 {
     public:
         virtual void apply() = 0;

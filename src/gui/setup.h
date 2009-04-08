@@ -29,7 +29,7 @@
 
 #include "../bindings/guichan/widgets/window.h"
 
-class SetupTab;
+class SetupTabHandler;
 
 /**
  * The setup dialog.
@@ -60,7 +60,7 @@ class Setup : public Window, public gcn::ActionListener
         void setInGame(bool inGame);
 
     private:
-        std::list<SetupTab*> mTabs;
+        std::list<SetupTabHandler*> mTabs;
         gcn::Button* mResetWindows;
 };
 

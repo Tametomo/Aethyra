@@ -25,9 +25,9 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "../bindings/guichan/handlers/setuptab.h"
+#include "../bindings/guichan/handlers/setuptabhandler.h"
 
-class Setup_Audio : public SetupTab, public gcn::ActionListener
+class Setup_Audio : public SetupTabHandler, public gcn::ActionListener
 {
     public:
         Setup_Audio();

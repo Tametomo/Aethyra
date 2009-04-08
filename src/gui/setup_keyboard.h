@@ -28,9 +28,9 @@
 #include <guichan/actionlistener.hpp>
 
 #include "../bindings/guichan/guichanfwd.h"
-#include "../bindings/guichan/handlers/setuptab.h"
+#include "../bindings/guichan/handlers/setuptabhandler.h"
 
-class Setup_Keyboard : public SetupTab, public gcn::ActionListener
+class Setup_Keyboard : public SetupTabHandler, public gcn::ActionListener
 {
     public:
         /**

@@ -26,11 +26,11 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/keylistener.hpp>
 
-#include "../bindings/guichan/handlers/setuptab.h"
+#include "../bindings/guichan/handlers/setuptabhandler.h"
 
 class ModeListModel;
 
-class Setup_Video : public SetupTab, public gcn::ActionListener,
+class Setup_Video : public SetupTabHandler, public gcn::ActionListener,
                     public gcn::KeyListener
 {
     public:

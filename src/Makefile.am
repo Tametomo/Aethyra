@@ -28,7 +28,7 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/handlers/itemlinkhandler.cpp \
 	      bindings/guichan/handlers/itemlinkhandler.h \
 	      bindings/guichan/handlers/linkhandler.h \
-	      bindings/guichan/handlers/setuptab.h \
+	      bindings/guichan/handlers/setuptabhandler.h \
 	      bindings/guichan/models/ignorechoiceslistmodel.h \
 	      bindings/guichan/models/keylistmodel.h \
 	      bindings/guichan/models/modelistmodel.cpp \

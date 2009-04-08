@@ -27,9 +27,9 @@
 
 #include "../bindings/guichan/guichanfwd.h"
 
-#include "../bindings/guichan/handlers/setuptab.h"
+#include "../bindings/guichan/handlers/setuptabhandler.h"
 
-class Setup_Joystick : public SetupTab, public gcn::ActionListener
+class Setup_Joystick : public SetupTabHandler, public gcn::ActionListener
 {
     public:
         Setup_Joystick();

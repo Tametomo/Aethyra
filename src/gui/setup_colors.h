@@ -31,14 +31,14 @@
 
 #include "../bindings/guichan/guichanfwd.h"
 
-#include "../bindings/guichan/handlers/setuptab.h"
+#include "../bindings/guichan/handlers/setuptabhandler.h"
 
 #include "../bindings/guichan/widgets/textfield.h"
 #include "../bindings/guichan/widgets/textpreview.h"
 
 class BrowserBox;
 
-class Setup_Colors : public SetupTab, public gcn::ActionListener,
+class Setup_Colors : public SetupTabHandler, public gcn::ActionListener,
                      public TextFieldListener
 {
     public:

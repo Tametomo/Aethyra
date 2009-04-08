@@ -25,7 +25,7 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "../bindings/guichan/handlers/setuptab.h"
+#include "../bindings/guichan/handlers/setuptabhandler.h"
 
 #include "../player_relations.h"
 
@@ -33,7 +33,7 @@ class Table;
 class PlayerTableModel;
 class StaticTableModel;
 
-class Setup_Players : public SetupTab, public gcn::ActionListener,
+class Setup_Players : public SetupTabHandler, public gcn::ActionListener,
                       public PlayerRelationsListener
 {
 public:

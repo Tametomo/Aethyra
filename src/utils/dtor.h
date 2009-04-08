@@ -52,5 +52,4 @@ inline void delete_all(Container &c)
     std::for_each(c.begin(), c.end(), make_dtor(c));
 }
 
-
 #endif
