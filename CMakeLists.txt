@@ -5,7 +5,10 @@ SET(VERSION 0.0.29.1)
 # where to look for cmake modules
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake/Modules)
 
+FIND_PACKAGE(Gettext)
+
 OPTION(WITH_OPENGL "Enable OpenGL support" ON)
+OPTION(ENABLE_NLS "Enable building of tranlations" ON)
 
 IF (WIN32)
     SET(PKG_DATADIR ".")
@@ -17,6 +20,9 @@ ENDIF (WIN32)
 
 ADD_SUBDIRECTORY(data)
 ADD_SUBDIRECTORY(src)
-ADD_SUBDIRECTORY(po)
+
+IF (GETTEXT_FOUND AND ENABLE_NLS)
+    ADD_SUBDIRECTORY(po)
+ENDIF()
 
 INSTALL(FILES aethyra.desktop DESTINATION share/applications)
