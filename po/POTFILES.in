@@ -1,15 +1,16 @@
 # List of source files which contain translatable strings.
 
+src/bindings/guichan/keyboardconfig.cpp
+src/bindings/guichan/palette.cpp
+src/bindings/guichan/models/playerrelationlistmodel.h
 src/gui/buy.cpp
 src/gui/buysell.cpp
 src/gui/char_select.cpp
 src/gui/char_server.cpp
 src/gui/chat.cpp
-src/gui/color.cpp
 src/gui/confirm_dialog.cpp
 src/gui/connection.cpp
-src/gui/emotecontainer.cpp
-src/gui/emoteshortcutcontainer.cpp
+src/gui/debugwindow.cpp
 src/gui/emotewindow.cpp
 src/gui/equipmentwindow.cpp
 src/gui/help.cpp
@@ -29,16 +30,16 @@ src/gui/recorder.cpp
 src/gui/recorder.h
 src/gui/register.cpp
 src/gui/sell.cpp
-src/gui/setup_audio.cpp
 src/gui/setup.cpp
+src/gui/setup_audio.cpp
 src/gui/setup_colors.cpp
 src/gui/setup_joystick.cpp
 src/gui/setup_keyboard.cpp
 src/gui/setup_players.cpp
 src/gui/setup_video.cpp
 src/gui/skill.cpp
-src/gui/speechbubble.cpp
 src/gui/status.cpp
+src/gui/storagewindow.cpp
 src/gui/trade.cpp
 src/gui/updatewindow.cpp
 src/net/buysellhandler.cpp
@@ -53,8 +54,6 @@ src/net/tradehandler.cpp
 src/resources/itemdb.cpp
 src/resources/monsterdb.cpp
 src/resources/npcdb.cpp
-src/being.cpp
 src/game.cpp
-src/keyboardconfig.cpp
 src/main.cpp
 src/party.cpp

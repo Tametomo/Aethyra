@@ -32,8 +32,6 @@
 #include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/textbox.h"
 
-#include "../utils/gettext.h"
-
 SpeechBubble::SpeechBubble():
     Popup("Speech", "graphics/gui/speechbubble.xml"),
     mText("")

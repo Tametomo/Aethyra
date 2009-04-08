@@ -39,7 +39,6 @@
 #include "../../../resources/db/emotedb.h"
 
 #include "../../../utils/dtor.h"
-#include "../../../utils/gettext.h"
 #include "../../../utils/stringutils.h"
 
 const int EmoteContainer::gridWidth = 34;  // emote icon width + 4
@@ -60,7 +59,7 @@ EmoteContainer::EmoteContainer():
 
     mSelImg = resman->getImage("graphics/gui/selection.png");
     if (!mSelImg)
-        logger->error(_("Unable to load selection.png"));
+        logger->error("Unable to load selection.png");
 
     mSelImg->setAlpha(config.getValue("guialpha", 0.8));
 
