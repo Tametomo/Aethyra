@@ -346,8 +346,8 @@ void Map::setWalk(int x, int y, bool walkable)
  
 bool Map::occupied(int x, int y) const
 {
-    Beings &beings = beingManager->getAll();
-    for (BeingIterator i = beings.begin(); i != beings.end(); i++)
+    const Beings &beings = beingManager->getAll();
+    for (Beings::const_iterator i = beings.begin(); i != beings.end(); i++)
     {
         // job 45 is a portal, they don't collide
         if ((*i)->mX == x && (*i)->mY == y && (*i)->mJob != 45)

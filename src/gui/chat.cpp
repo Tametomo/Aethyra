@@ -585,10 +585,10 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
     }
     else if (command == "present")
     {
-        Beings & beings = beingManager->getAll();
+        const Beings &beings = beingManager->getAll();
         std::string response = "";
 
-        for (BeingIterator bi = beings.begin(), be = beings.end();
+        for (Beings::const_iterator bi = beings.begin(), be = beings.end();
              bi != be; ++bi)
         {
             if ((*bi)->getType() == Being::PLAYER)

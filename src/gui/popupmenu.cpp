@@ -112,7 +112,7 @@ void PopupMenu::showPopup(int x, int y, Being *being)
 
                 
                 /*mBrowserBox->addRow("##3---");
-                mBrowserBox->addRow(strprintf(_("@@party|Invite %s to party@@"), name.c_str()));
+                mBrowserBox->addRow(strprintf(_("@@party|Invite %s to party@@"), name.c_str()));*/
             }
             break;
 
