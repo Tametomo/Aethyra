@@ -17,5 +17,6 @@ ENDIF (WIN32)
 
 ADD_SUBDIRECTORY(data)
 ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(po)
 
 INSTALL(FILES aethyra.desktop DESTINATION share/applications)
