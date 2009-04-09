@@ -92,8 +92,11 @@ void Setup_Audio::apply()
             new OkDialog("Sound Engine", err);
             logger->log("Warning: %s", err);
         }
-	Map *currentMap = engine->getCurrentMap();
-	sound.playMusic(currentMap->getProperty("music"), -1);
+
+        if (engine) {
+            Map *currentMap = engine->getCurrentMap();
+            sound.playMusic(currentMap->getProperty("music"), -1);
+        }
     }
     else
     {
@@ -102,8 +105,8 @@ void Setup_Audio::apply()
     }
 
     mSoundEnabled = config.getValue("sound", 0);
-    mSfxVolume = (int)config.getValue("sfxVolume", 100);
-    mMusicVolume = (int)config.getValue("musicVolume", 60);
+    mSfxVolume = (int) config.getValue("sfxVolume", 100);
+    mMusicVolume = (int) config.getValue("musicVolume", 60);
 }
 
 void Setup_Audio::cancel()
@@ -116,7 +119,7 @@ void Setup_Audio::cancel()
     sound.setMusicVolume(mMusicVolume);
     mMusicSlider->setValue(mMusicVolume);
 
-    config.setValue("sound", mSoundEnabled ? true : false);
+    config.setValue("sound", mSoundEnabled ? 1 : 0);
     config.setValue("sfxVolume", mSfxVolume);
     config.setValue("musicVolume", mMusicVolume);
 }
@@ -125,12 +128,12 @@ void Setup_Audio::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "sfx")
     {
-        config.setValue("sfxVolume", (int)mSfxSlider->getValue());
-        sound.setSfxVolume((int)mSfxSlider->getValue());
+        config.setValue("sfxVolume", (int) mSfxSlider->getValue());
+        sound.setSfxVolume((int) mSfxSlider->getValue());
     }
     else if (event.getId() == "music")
     {
-        config.setValue("musicVolume", (int)mMusicSlider->getValue());
+        config.setValue("musicVolume", (int) mMusicSlider->getValue());
         sound.setMusicVolume((int)mMusicSlider->getValue());
     }
 }
