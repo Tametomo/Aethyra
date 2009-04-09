@@ -314,6 +314,8 @@ SET(SRCS
     resources/soundeffect.h
     resources/spritedef.cpp
     resources/spritedef.h
+    resources/wallpaper.cpp
+    resources/wallpaper.h
     resources/db/colordb.cpp
     resources/db/colordb.h
     resources/db/effectdb.cpp

@@ -367,6 +367,8 @@
 		<Unit filename="src\resources\soundeffect.h" />
 		<Unit filename="src\resources\spritedef.cpp" />
 		<Unit filename="src\resources\spritedef.h" />
+		<Unit filename="src\resources\wallpaper.cpp" />
+		<Unit filename="src\resources\wallpaper.h" />
 		<Unit filename="src\resources\db\colordb.cpp" />
 		<Unit filename="src\resources\db\colordb.h" />
 		<Unit filename="src\resources\db\effectdb.cpp" />

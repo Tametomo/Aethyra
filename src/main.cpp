@@ -78,6 +78,7 @@
 
 #include "resources/image.h"
 #include "resources/resourcemanager.h"
+#include "resources/wallpaper.h"
 
 #include "resources/db/colordb.h"
 #include "resources/db/effectdb.h"
@@ -840,22 +841,16 @@ int main(int argc, char *argv[])
     Network *network = new Network();
 
     // Set the most appropriate wallpaper, based on screen width
+    Wallpaper::loadWallpapers();
+
     int screenWidth = (int) config.getValue("screenwidth", defaultScreenWidth);
     int screenHeight = static_cast<int>(config.getValue("screenheight",
                                                         defaultScreenHeight));
-    std::string wallpaperName;
 
-    wallpaperName = "graphics/images/login_wallpaper.png";
-    if (screenWidth >= 1024 && screenWidth < 1280)
-        wallpaperName = "graphics/images/login_wallpaper_1024x768.png";
-    else if (screenWidth >= 1280 && screenWidth < 1440)
-        wallpaperName = "graphics/images/login_wallpaper_1280x960.png";
-    else if (screenWidth >= 1440 && screenWidth < 1600)
-        wallpaperName = "graphics/images/login_wallpaper_1440x1080.png";
-    else if (screenWidth >= 1600)
-        wallpaperName = "graphics/images/login_wallpaper_1600x1200.png";
+    std::string wallpaperName = Wallpaper::getWallpaper(screenWidth,
+                                                        screenHeight);
 
-    login_wallpaper = ResourceManager::getInstance()-> getImage(wallpaperName);
+    login_wallpaper = ResourceManager::getInstance()->getImage(wallpaperName);
 
     if (!login_wallpaper)
         logger->log("Couldn't load %s as wallpaper", wallpaperName.c_str());
@@ -922,9 +917,24 @@ int main(int argc, char *argv[])
                 case UPDATE_STATE:
                     loadUpdates();
                     // Reload the wallpaper in case that it was updated
-                    login_wallpaper->decRef();
-                    login_wallpaper = ResourceManager::getInstance()->
-                        getImage(wallpaperName);
+                    Wallpaper::loadWallpapers();
+
+                    {
+                    int screenWidth = (int) config.getValue("screenwidth",
+                                                        defaultScreenWidth);
+                    int screenHeight = (int) config.getValue("screenheight",
+                                                        defaultScreenHeight);
+
+                    Image *temp = ResourceManager::getInstance()
+                                ->getImage(Wallpaper::getWallpaper(screenWidth,
+                                                        screenHeight));
+
+                    if (temp)
+                    {
+                        login_wallpaper->decRef();
+                        login_wallpaper = temp;
+                    }
+                    }
                     break;
 
                     // Those states don't cause a network disconnect
