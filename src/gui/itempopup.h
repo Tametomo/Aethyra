@@ -51,12 +51,12 @@ class ItemPopup : public Popup
         /**
          * Gets the number of rows that the item popup currently has.
          */
-        unsigned int getNumRows();
+        unsigned int getNumRows() const;
 
         /**
          * Gets the name of the currently stored item in this popup.
          */
-        std::string getItemName();
+        std::string getItemName() const;
 
         /**
          * Updates the colors used within the item popup.
@@ -78,7 +78,7 @@ class ItemPopup : public Popup
         ScrollArea *mItemEffectScroll;
         ScrollArea *mItemWeightScroll;
 
-        gcn::Color getColor(const std::string& type);
+        static gcn::Color getColor(const std::string& type);
 };
 
 #endif // ITEMPOPUP_H
