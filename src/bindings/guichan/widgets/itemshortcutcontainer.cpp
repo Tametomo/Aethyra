@@ -109,6 +109,10 @@ void ItemShortcutContainer::draw(gcn::Graphics *graphics)
             {
                 const std::string label =
                     item->isEquipped() ? "Eq." : toString(item->getQuantity());
+
+                graphics->setColor(guiPalette->getColor(item->isEquipped() ? 
+                                       Palette::ITEM_EQUIPPED : Palette::TEXT));
+
                 g->drawImage(image, itemX, itemY);
                 g->drawText(label, itemX + mBoxWidth / 2,
                             itemY + mBoxHeight - 14, gcn::Graphics::CENTER);
@@ -124,6 +128,9 @@ void ItemShortcutContainer::draw(gcn::Graphics *graphics)
         {
             const int tPosX = mCursorPosX - (image->getWidth() / 2);
             const int tPosY = mCursorPosY - (image->getHeight() / 2);
+
+            graphics->setColor(guiPalette->getColor(item->isEquipped() ? 
+                                   Palette::ITEM_EQUIPPED : Palette::TEXT));
 
             g->drawImage(image, tPosX, tPosY);
             g->drawText(toString(mItemMoved->getQuantity()),

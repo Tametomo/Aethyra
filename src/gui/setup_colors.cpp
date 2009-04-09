@@ -199,6 +199,7 @@ void Setup_Colors::action(const gcn::ActionEvent &event)
                 mTextPreview->setShadow(false);
                 break;
             case Palette::TAB_HIGHLIGHT:
+            case Palette::ITEM_EQUIPPED:
                 mTextPreview->setFont(gui->getFont());
                 mTextPreview->setTextColor(col);
                 mTextPreview->setOutline(false);
