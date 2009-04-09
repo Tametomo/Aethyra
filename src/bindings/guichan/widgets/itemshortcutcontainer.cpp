@@ -129,7 +129,7 @@ void ItemShortcutContainer::draw(gcn::Graphics *graphics)
             const int tPosX = mCursorPosX - (image->getWidth() / 2);
             const int tPosY = mCursorPosY - (image->getHeight() / 2);
 
-            graphics->setColor(guiPalette->getColor(item->isEquipped() ? 
+            graphics->setColor(guiPalette->getColor(mItemMoved->isEquipped() ? 
                                    Palette::ITEM_EQUIPPED : Palette::TEXT));
 
             g->drawImage(image, tPosX, tPosY);
