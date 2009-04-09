@@ -31,10 +31,6 @@
  */
 class MessageIn
 {
-    friend Sint8& operator<<(Sint8 &lhs, MessageIn &msg);
-    friend Sint16& operator<<(Sint16 &lhs, MessageIn &msg);
-    friend Sint32& operator<<(Sint32 &lhs, MessageIn &msg);
-
     public:
         /**
          * Constructor.
@@ -51,9 +47,9 @@ class MessageIn
          */
         unsigned int getLength() { return mLength; }
 
-        Sint8 readInt8();               /**< Reads a byte. */
-        Sint16 readInt16();             /**< Reads a short. */
-        Sint32 readInt32();               /**< Reads a long. */
+        int readInt8();               /**< Reads a byte. */
+        int readInt16();              /**< Reads a short. */
+        int readInt32();              /**< Reads a long. */
 
         /**
          * Reads a special 3 byte block used by eAthena, containing x and y
