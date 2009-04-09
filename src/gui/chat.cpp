@@ -762,7 +762,7 @@ void ChatWindow::keyPressed(gcn::KeyEvent & event)
     }
 }
 
-void ChatWindow::setInputText(std::string input_str)
+void ChatWindow::addInputText(std::string input_str)
 {
      mChatInput->setText(mChatInput->getText() + input_str + " ");
      requestChatFocus();
@@ -772,8 +772,7 @@ void ChatWindow::addItemText(const std::string &item)
 {
     std::ostringstream text;
     text << "[" << item << "] ";
-    mChatInput->setText(mChatInput->getText() + text.str());
-    requestChatFocus();
+    addInputText(text.str());
 }
 
 void ChatWindow::setVisible(bool isVisible)

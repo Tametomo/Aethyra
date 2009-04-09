@@ -74,6 +74,9 @@ void PopupMenu::showPopup(int x, int y, Being *being)
     mBeingId = being->getId();
     mBrowserBox->clearRows();
 
+    // Any being's name can be added to chat
+    mBrowserBox->addRow(_("@@name|Add name to chat@@"));
+
     switch (being->getType())
     {
         case Being::PLAYER:
@@ -106,10 +109,10 @@ void PopupMenu::showPopup(int x, int y, Being *being)
                 }
 
                 //mBrowserBox->addRow(_("@@follow|Follow ") + name + "@@");
-                //mBrowserBox->addRow(_("@@buddy|Add ") + name + " to Buddy List@@");
 
-                mBrowserBox->addRow("##3---");
-                mBrowserBox->addRow(strprintf(_("@@party-invite|Invite %s to party@@"), name.c_str()));
+                
+                /*mBrowserBox->addRow("##3---");
+                mBrowserBox->addRow(strprintf(_("@@party|Invite %s to party@@"), name.c_str()));
             }
             break;
 
@@ -198,15 +201,10 @@ void PopupMenu::handleLink(const std::string& link)
     {
     }*/
 
-    /*
-    // Add Buddy action
-    else if ((link == "buddy") && being && being->isPlayer())
+    else if (link == "name")
     {
-        if (!buddyWindow->isVisible())
-            buddyWindow->setVisible(true);
-
-        buddyWindow->addBuddy(being->getName());
-    }*/
+        chatWindow->addInputText(being->getName());
+    }
 
     // Pick Up Floor Item action
     else if ((link == "pickup") && mFloorItem)
@@ -248,11 +246,14 @@ void PopupMenu::handleLink(const std::string& link)
     {
         new ItemAmountWindow(AMOUNT_ITEM_DROP, inventoryWindow, mItem);
     }
-    else if (link == "party-invite" && being &&
-             being->getType() == Being::PLAYER)
+    else if (link == "party" && being && being->getType() == Being::PLAYER)
     {
         MessageOut outMsg(CMSG_PARTY_INVITE);
         outMsg.writeInt32(being->getId());
+    }
+    else if (link == "name")
+    {
+        chatWindow->addInputText(being->getName());
     }
 
     // Unknown actions
