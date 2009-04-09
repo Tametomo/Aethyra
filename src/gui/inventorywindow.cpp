@@ -106,7 +106,6 @@ InventoryWindow::InventoryWindow(int invSize):
 
 InventoryWindow::~InventoryWindow()
 {
-    delete mItems;
 }
 
 void InventoryWindow::logic()

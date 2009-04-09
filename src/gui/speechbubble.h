@@ -41,8 +41,7 @@ class SpeechBubble : public Popup
         /**
          * Sets the name displayed for the speech bubble, and in what color.
          */
-        void setCaption(const std::string &name,
-                        const gcn::Color *color =
+        void setCaption(const std::string &name, const gcn::Color *color =
                         &guiPalette->getColor(Palette::TEXT));
 
         /**
@@ -58,7 +57,7 @@ class SpeechBubble : public Popup
         /**
          * Gets the number of rows the speech bubble has.
          */
-        unsigned int getNumRows();
+        unsigned int getNumRows() const;
 
     private:
         std::string mText;

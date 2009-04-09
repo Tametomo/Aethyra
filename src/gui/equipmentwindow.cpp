@@ -207,17 +207,15 @@ void EquipmentWindow::mousePressed(gcn::MouseEvent& mouseEvent)
     }
     else if (mouseEvent.getButton() == gcn::MouseEvent::RIGHT)
     {
-        item = getItem(x, y);
-
-        if (!item)
-            return;
-
-        /* Convert relative to the window coordinates to absolute screen
-         * coordinates.
-         */
-        const int mx = x + getX();
-        const int my = y + getY();
-        viewport->showPopup(mx, my, item);
+        if (Item *item = getItem(x, y))
+        {
+            /* Convert relative to the window coordinates to absolute screen
+             * coordinates.
+             */
+            const int mx = x + getX();
+            const int my = y + getY();
+            viewport->showPopup(mx, my, item);
+        }
     }
 }
 
