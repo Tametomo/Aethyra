@@ -63,6 +63,10 @@ class Setup_Colors : public SetupTabHandler, public gcn::ActionListener,
         gcn::Slider *mGradTypeSlider;
         gcn::Label *mGradTypeText;
 
+        gcn::Label *mGradDelayLabel;
+        gcn::Slider *mGradDelaySlider;
+        TextField *mGradDelayText;
+
         gcn::Label *mRedLabel;
         gcn::Slider *mRedSlider;
         TextField *mRedText;

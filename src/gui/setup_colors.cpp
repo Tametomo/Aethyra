@@ -72,13 +72,29 @@ Setup_Colors::Setup_Colors() :
     mGradTypeLabel = new Label(_("Type: "));
 
     mGradTypeSlider = new Slider(0, 3);
-    mGradTypeSlider->setWidth(160);
+    mGradTypeSlider->setWidth(200);
     mGradTypeSlider->setActionEventId("slider_grad");
     mGradTypeSlider->setValue(0);
     mGradTypeSlider->addActionListener(this);
     mGradTypeSlider->setEnabled(false);
 
     mGradTypeText = new Label();
+
+    mGradDelayLabel = new Label(_("Delay: "));
+
+    mGradDelayText = new TextField();
+    mGradDelayText->setWidth(40);
+    mGradDelayText->setRange(20, 400);
+    mGradDelayText->setNumeric(true);
+    mGradDelayText->addListener(this);
+    mGradDelayText->setEnabled(false);
+
+    mGradDelaySlider = new Slider(20, 400);
+    mGradDelaySlider->setWidth(200);
+    mGradDelaySlider->setValue(mGradDelayText->getValue());
+    mGradDelaySlider->setActionEventId("slider_graddelay");
+    mGradDelaySlider->addActionListener(this);
+    mGradDelaySlider->setEnabled(false);
 
     mRedLabel = new Label(_("Red: "));
 
@@ -90,7 +106,7 @@ Setup_Colors::Setup_Colors() :
     mRedText->setEnabled(false);
 
     mRedSlider = new Slider(0, 255);
-    mRedSlider->setWidth(160);
+    mRedSlider->setWidth(200);
     mRedSlider->setValue(mRedText->getValue());
     mRedSlider->setActionEventId("slider_red");
     mRedSlider->addActionListener(this);
@@ -106,7 +122,7 @@ Setup_Colors::Setup_Colors() :
     mGreenText->setEnabled(false);
 
     mGreenSlider = new Slider(0, 255);
-    mGreenSlider->setWidth(160);
+    mGreenSlider->setWidth(200);
     mGreenSlider->setValue(mGreenText->getValue());
     mGreenSlider->setActionEventId("slider_green");
     mGreenSlider->addActionListener(this);
@@ -122,7 +138,7 @@ Setup_Colors::Setup_Colors() :
     mBlueText->setEnabled(false);
 
     mBlueSlider = new Slider(0, 255);
-    mBlueSlider->setWidth(160);
+    mBlueSlider->setWidth(200);
     mBlueSlider->setValue(mBlueText->getValue());
     mBlueSlider->setActionEventId("slider_blue");
     mBlueSlider->addActionListener(this);
@@ -139,15 +155,18 @@ Setup_Colors::Setup_Colors() :
     place(0, 7, mGradTypeLabel, 2);
     place(2, 7, mGradTypeSlider);
     place(3, 7, mGradTypeText);
-    place(0, 8, mRedLabel, 2);
-    place(2, 8, mRedSlider);
-    place(3, 8, mRedText).setPadding(1);
-    place(0, 9, mGreenLabel, 2);
-    place(2, 9, mGreenSlider);
-    place(3, 9, mGreenText).setPadding(1);
-    place(0, 10, mBlueLabel, 2);
-    place(2, 10, mBlueSlider);
-    place(3, 10, mBlueText).setPadding(1);
+    place(0, 8, mGradDelayLabel, 2);
+    place(2, 8, mGradDelaySlider);
+    place(3, 8, mGradDelayText);
+    place(0, 9, mRedLabel, 2);
+    place(2, 9, mRedSlider);
+    place(3, 9, mRedText).setPadding(1);
+    place(0, 10, mGreenLabel, 2);
+    place(2, 10, mGreenSlider);
+    place(3, 10, mGreenText).setPadding(1);
+    place(0, 11, mBlueLabel, 2);
+    place(2, 11, mBlueSlider);
+    place(3, 11, mBlueText).setPadding(1);
 
     setDimension(gcn::Rectangle(0, 0, 325, 280));
 }
@@ -168,9 +187,10 @@ void Setup_Colors::action(const gcn::ActionEvent &event)
         Palette::ColorType type = guiPalette->getColorTypeAt(mSelected);
         const gcn::Color *col = &guiPalette->getColor(type);
         Palette::GradientType grad = guiPalette->getGradientType(type);
+        const int delay = guiPalette->getGradientDelay(type);
 
         std::string msg;
-        char ch = guiPalette->getColorChar(type);
+        const char ch = guiPalette->getColorChar(type);
 
         mPreview->clearRows();
         mPreviewBox->setContent(mTextPreview);
@@ -285,6 +305,7 @@ void Setup_Colors::action(const gcn::ActionEvent &event)
             col = &guiPalette->getTestColor(type);
         }
 
+        setEntry(mGradDelaySlider, mGradDelayText, delay);
         setEntry(mRedSlider, mRedText, col->r);
         setEntry(mGreenSlider, mGreenText, col->g);
         setEntry(mBlueSlider, mBlueText, col->b);
@@ -299,6 +320,13 @@ void Setup_Colors::action(const gcn::ActionEvent &event)
     if (event.getId() == "slider_grad")
     {
         updateGradType();
+        updateColor();
+        return;
+    }
+
+    if (event.getId() == "slider_graddelay")
+    {
+        mGradDelayText->setText(toString(std::floor(mGradDelaySlider->getValue())));
         updateColor();
         return;
     }
@@ -344,6 +372,8 @@ void Setup_Colors::cancel()
     Palette::ColorType type = guiPalette->getColorTypeAt(mSelected);
     const gcn::Color *col = &guiPalette->getColor(type);
     mGradTypeSlider->setValue(guiPalette->getGradientType(type));
+    const int delay = guiPalette->getGradientDelay(type);
+    setEntry(mGradDelaySlider, mGradDelayText, delay);
     setEntry(mRedSlider, mRedText, col->r);
     setEntry(mGreenSlider, mGreenText, col->g);
     setEntry(mBlueSlider, mBlueText, col->b);
@@ -351,24 +381,16 @@ void Setup_Colors::cancel()
 
 void Setup_Colors::listen(const TextField *tf)
 {
-    if (tf == mRedText)
-    {
+    if (tf == mGradDelayText)
+        mGradDelaySlider->setValue(tf->getValue());
+    else if (tf == mRedText)
         mRedSlider->setValue(tf->getValue());
-        updateColor();
-        return;
-    }
-    if (tf == mGreenText)
-    {
+    else if (tf == mGreenText)
         mGreenSlider->setValue(tf->getValue());
-        updateColor();
-        return;
-    }
-    if (tf == mBlueText)
-    {
+    else if (tf == mBlueText)
         mBlueSlider->setValue(tf->getValue());
-        updateColor();
-        return;
-    }
+
+    updateColor();
 }
 
 void Setup_Colors::updateGradType()
@@ -385,7 +407,12 @@ void Setup_Colors::updateGradType()
             (grad == Palette::PULSE) ? _("Pulse") :
             (grad == Palette::RAINBOW) ? _("Rainbow") : _("Spectrum"));
 
-    bool enable = (grad == Palette::STATIC || grad == Palette::PULSE);
+    const bool enable = (grad == Palette::STATIC || grad == Palette::PULSE);
+    const bool delayEnable = (grad != Palette::STATIC);
+
+    mGradDelayText->setEnabled(delayEnable);
+    mGradDelaySlider->setEnabled(delayEnable);
+
     mRedText->setEnabled(enable);
     mRedSlider->setEnabled(enable);
     mGreenText->setEnabled(enable);
@@ -401,8 +428,10 @@ void Setup_Colors::updateColor()
 
     Palette::ColorType type = guiPalette->getColorTypeAt(mSelected);
     Palette::GradientType grad =
-            (Palette::GradientType) (mGradTypeSlider->getValue());
+            (Palette::GradientType) mGradTypeSlider->getValue();
+    int delay = (int) mGradDelaySlider->getValue();
     guiPalette->setGradient(type, grad);
+    guiPalette->setGradientDelay(type, delay);
 
     if (grad == Palette::STATIC)
     {
