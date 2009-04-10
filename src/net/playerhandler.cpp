@@ -90,6 +90,7 @@ namespace {
             buySellDialog->setVisible(false);
             if (storageWindow->isVisible())
                 storageWindow->close();
+            viewport->closePopupMenu();
             current_npc = 0;
         }
     } deathListener;

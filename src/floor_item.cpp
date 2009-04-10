@@ -54,6 +54,11 @@ int FloorItem::getItemId() const
     return mItem->getId();
 }
 
+Item* FloorItem::getItem() const
+{
+    return mItem;
+}
+
 void FloorItem::draw(Graphics *graphics, int offsetX, int offsetY) const
 {
     graphics->drawImage(mItem->getImage(),

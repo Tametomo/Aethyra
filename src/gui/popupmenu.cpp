@@ -77,13 +77,13 @@ void PopupMenu::showPopup(int x, int y, Being *being)
     // Any being's name can be added to chat
     mBrowserBox->addRow(_("@@name|Add name to chat@@"));
 
+    const std::string &name = being->getName();
     switch (being->getType())
     {
         case Being::PLAYER:
             {
                 // Players can be traded with. Later also follow and
                 // add as buddy will be options in this menu.
-                const std::string &name = being->getName();
                 mBrowserBox->addRow(strprintf(_("@@trade|Trade With %s@@"), name.c_str()));
                 mBrowserBox->addRow(strprintf(_("@@attack|Attack %s@@"), name.c_str()));
 
@@ -108,7 +108,7 @@ void PopupMenu::showPopup(int x, int y, Being *being)
                     break;
                 }
 
-                //mBrowserBox->addRow(_("@@follow|Follow ") + name + "@@");
+                //mBrowserBox->addRow(_(strprintf("@@follow|Follow %s@@"), name.c_str()));
 
                 
                 /*mBrowserBox->addRow("##3---");
@@ -119,12 +119,17 @@ void PopupMenu::showPopup(int x, int y, Being *being)
         case Being::NPC:
             // NPCs can be talked to (single option, candidate for removal
             // unless more options would be added)
-            mBrowserBox->addRow(_("@@talk|Talk To NPC@@"));
+            mBrowserBox->addRow(strprintf(_("@@talk|Talk To %s@@"), name.c_str()));
+            break;
+
+        case Being::MONSTER:
+            // Monsters can be attacked
+            mBrowserBox->addRow(strprintf(_("@@attack|Attack %s@@"), name.c_str()));
             break;
 
         default:
             /* Other beings aren't interesting... */
-            break;
+            return;
     }
 
     //browserBox->addRow("@@look|Look To@@");
@@ -137,11 +142,13 @@ void PopupMenu::showPopup(int x, int y, Being *being)
 void PopupMenu::showPopup(int x, int y, FloorItem *floorItem)
 {
     mFloorItem = floorItem;
+    mItem = floorItem->getItem();
     mBrowserBox->clearRows();
 
     // Floor item can be picked up (single option, candidate for removal)
     std::string name = ItemDB::get(mFloorItem->getItemId()).getName();
     mBrowserBox->addRow(strprintf(_("@@pickup|Pick Up %s@@"), name.c_str()));
+    mBrowserBox->addRow(_("@@chat|Add to Chat@@"));
 
     //browserBox->addRow("@@look|Look To@@");
     mBrowserBox->addRow("##3---");
@@ -169,7 +176,7 @@ void PopupMenu::handleLink(const std::string& link)
     }
 
     // Attack action
-    else if (link == "attack" && being && being->getType() == Being::PLAYER)
+    else if (link == "attack" && being)
     {
         player_node->attack(being, true);
     }
@@ -184,8 +191,7 @@ void PopupMenu::handleLink(const std::string& link)
         player_relations.setRelation(being->getName(), PlayerRelation::IGNORED);
     }
 
-    else if (link == "disregard" && being &&
-             being->getType() == Being::PLAYER)
+    else if (link == "disregard" && being && being->getType() == Being::PLAYER)
     {
         player_relations.setRelation(being->getName(), PlayerRelation::DISREGARDED);
     }
@@ -200,11 +206,6 @@ void PopupMenu::handleLink(const std::string& link)
     else if (link == "follow")
     {
     }*/
-
-    else if (link == "name")
-    {
-        chatWindow->addInputText(being->getName());
-    }
 
     // Pick Up Floor Item action
     else if ((link == "pickup") && mFloorItem)
@@ -246,18 +247,20 @@ void PopupMenu::handleLink(const std::string& link)
     {
         new ItemAmountWindow(AMOUNT_ITEM_DROP, inventoryWindow, mItem);
     }
+
     else if (link == "party" && being && being->getType() == Being::PLAYER)
     {
         MessageOut outMsg(CMSG_PARTY_INVITE);
         outMsg.writeInt32(being->getId());
     }
-    else if (link == "name")
+
+    else if (link == "name" && being)
     {
         chatWindow->addInputText(being->getName());
     }
 
     // Unknown actions
-    else
+    else if (link != "cancel")
     {
         std::cout << link << std::endl;
     }
