@@ -159,14 +159,14 @@
 		<Unit filename="src\bindings\guichan\widgets\chatinput.h" />
 		<Unit filename="src\bindings\guichan\widgets\checkbox.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\checkbox.h" />
+		<Unit filename="src\bindings\guichan\widgets\container.cpp" />
+		<Unit filename="src\bindings\guichan\widgets\container.h" />
 		<Unit filename="src\bindings\guichan\widgets\dropdown.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\dropdown.h" />
 		<Unit filename="src\bindings\guichan\widgets\emotecontainer.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\emotecontainer.h" />
 		<Unit filename="src\bindings\guichan\widgets\emoteshortcutcontainer.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\emoteshortcutcontainer.h" />
-		<Unit filename="src\bindings\guichan\widgets\gccontainer.cpp" />
-		<Unit filename="src\bindings\guichan\widgets\gccontainer.h" />
 		<Unit filename="src\bindings\guichan\widgets\inttextfield.h" />
 		<Unit filename="src\bindings\guichan\widgets\inttextfield.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\itemcontainer.cpp" />

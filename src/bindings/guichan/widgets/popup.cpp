@@ -64,13 +64,6 @@ Popup::~Popup()
 
     savePopupConfiguration();
 
-    while (!mWidgets.empty())
-    {
-        gcn::Widget *w = mWidgets.front();
-        remove(w);
-        delete(w);
-    }
-
     mSkin->instances--;
 }
 

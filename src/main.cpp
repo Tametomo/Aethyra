@@ -1152,13 +1152,6 @@ int main(int argc, char *argv[])
     }
 
     delete guiPalette;
-#ifdef PACKAGE_VERSION
-    delete versionLabel;
-#endif
-    delete progressBar;
-    delete progressLabel;
-    delete setup;
-    delete setupWindow;
 
     delete network;
     SDLNet_Quit();

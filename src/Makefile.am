@@ -58,14 +58,14 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/widgets/chatinput.h \
 	      bindings/guichan/widgets/checkbox.cpp \
 	      bindings/guichan/widgets/checkbox.h \
+	      bindings/guichan/widgets/container.cpp \
+	      bindings/guichan/widgets/container.h \
 	      bindings/guichan/widgets/dropdown.cpp \
 	      bindings/guichan/widgets/dropdown.h \
 	      bindings/guichan/widgets/emotecontainer.cpp \
 	      bindings/guichan/widgets/emotecontainer.h \
 	      bindings/guichan/widgets/emoteshortcutcontainer.cpp \
 	      bindings/guichan/widgets/emoteshortcutcontainer.h \
-	      bindings/guichan/widgets/gccontainer.cpp \
-	      bindings/guichan/widgets/gccontainer.h \
 	      bindings/guichan/widgets/inttextfield.h \
 	      bindings/guichan/widgets/inttextfield.cpp \
 	      bindings/guichan/widgets/itemcontainer.cpp \

@@ -20,36 +20,20 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "gccontainer.h"
+#ifndef GUI_CONTAINER_H
+#define GUI_CONTAINER_H
 
-GCContainer::~GCContainer()
+#include <guichan/widgets/container.hpp>
+
+/**
+ * A widget container. The only difference between the standard Guichan
+ * container and this one is that childs added to this container are
+ * automatically deleted when the container is deleted.
+ */
+class Container : public gcn::Container
 {
-    WidgetIterator i = mDeathList.begin();
+    public:
+        ~Container();
+};
 
-    while (i != mDeathList.end()) {
-        /* Take care _not_ to modify the list in our _announceDeath method */
-        gcn::Widget *w = (*i);
-        i = mDeathList.erase(i);
-        delete w;
-    }
-
-    mDeathList.clear();
-}
-
-void GCContainer::add(gcn::Widget *w)
-{
-    mDeathList.push_back(w);
-    Container::add(w);
-}
-
-void GCContainer::add(gcn::Widget *w, int x, int y)
-{
-    mDeathList.push_back(w);
-    Container::add(w, x, y);
-}
-
-void GCContainer::death(const gcn::Event &event)
-{
-    mDeathList.remove(event.getSource());
-    Container::death(event);
-}
+#endif

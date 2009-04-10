@@ -23,9 +23,9 @@
 #ifndef GUI_SETUPTAB_H
 #define GUI_SETUPTAB_H
 
-#include "../widgets/gccontainer.h"
+#include "../widgets/container.h"
 
-class SetupTabHandler : public GCContainer
+class SetupTabHandler : public Container
 {
     public:
         virtual void apply() = 0;
