@@ -23,11 +23,11 @@
 #include <cstring>
 #include <physfs.h>
 
-#include "resources/wallpaper.h"
+#include "wallpaper.h"
 
-#include "log.h"
+#include "../log.h"
 
-#include "utils/strprintf.h"
+#include "../utils/strprintf.h"
 
 #define WALLPAPER_FOLDER "graphics/images/"
 
