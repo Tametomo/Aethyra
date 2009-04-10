@@ -24,10 +24,10 @@
 #include "viewport.h"
 
 #include "../engine.h"
-#include "../game.h"
 #include "../particle.h"
 #include "../map.h"
 
+#include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/layout.h"
 
 #include "../bindings/guichan/widgets/label.h"

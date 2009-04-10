@@ -21,11 +21,11 @@
  */
 
 #include "animatedsprite.h"
-#include "game.h"
 #include "localplayer.h"
 #include "monster.h"
 #include "particle.h"
 
+#include "bindings/guichan/gui.h"
 #include "bindings/guichan/palette.h"
 #include "bindings/guichan/text.h"
 

@@ -34,6 +34,7 @@
 #include "../particle.h"
 
 #include "../bindings/guichan/graphics.h"
+#include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/layouthelper.h"
 
 #include "../bindings/guichan/models/modelistmodel.h"
@@ -102,6 +103,7 @@ Setup_Video::Setup_Video():
     scrollLazinessLabel = new Label(_("Scroll laziness"));
     overlayDetailLabel = new Label(_("Ambient FX"));
     particleDetailLabel = new Label(_("Particle Detail"));
+    mFpsLabel = new Label("");
 
     mModeList->setEnabled(true);
 #ifndef USE_OPENGL
@@ -248,6 +250,8 @@ Setup_Video::Setup_Video():
     place(2, 10, mSpeechLabel, 3).setPadding(2);
     place(2, 11, mOverlayDetailField, 3).setPadding(2);
     place(2, 12, mParticleDetailField, 3).setPadding(2);
+
+    place(3, 7, mFpsLabel);
 
     setDimension(gcn::Rectangle(0, 0, 325, 280));
 }
@@ -513,6 +517,14 @@ void Setup_Video::action(const gcn::ActionEvent &event)
         mFpsSlider->setValue(mFps);
         mFpsSlider->setEnabled(mFps > 0);
     }
+}
+
+void Setup_Video::logic()
+{
+    if (!isVisible())
+        return;
+
+    mFpsLabel->setCaption(toString(fps) + " FPS");
 }
 
 void Setup_Video::keyPressed(gcn::KeyEvent &event)

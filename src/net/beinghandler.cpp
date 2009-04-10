@@ -29,11 +29,12 @@
 
 #include "../being.h"
 #include "../beingmanager.h"
-#include "../game.h"
 #include "../localplayer.h"
 #include "../log.h"
 #include "../npc.h"
 #include "../player_relations.h"
+
+#include "../bindings/guichan/gui.h"
 
 #include "../resources/db/effectdb.h"
 

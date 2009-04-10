@@ -25,7 +25,6 @@
 #include "configuration.h"
 #include "equipment.h"
 #include "floor_item.h"
-#include "game.h"
 #include "inventory.h"
 #include "item.h"
 #include "localplayer.h"

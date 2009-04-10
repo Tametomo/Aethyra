@@ -100,8 +100,6 @@ class Map;
 std::string map_path;
 
 bool done = false;
-volatile int tick_time;
-volatile int fps = 0, frame = 0;
 
 Engine *engine = NULL;
 Joystick *joystick = NULL;
@@ -138,12 +136,11 @@ BeingManager *beingManager = NULL;
 FloorItemManager *floorItemManager = NULL;
 Particle* particleEngine = NULL;
 
-const int MAX_TIME = 10000;
-
 /**
  * Listener used for exiting handling.
  */
-namespace {
+namespace
+{
     struct ExitListener : public gcn::ActionListener
     {
         void action(const gcn::ActionEvent &event)
@@ -155,35 +152,6 @@ namespace {
             disconnectedDialog = NULL;
         }
     } exitListener;
-}
-
-/**
- * Advances game logic counter.
- */
-Uint32 nextTick(Uint32 interval, void *param)
-{
-    tick_time++;
-    if (tick_time == MAX_TIME) tick_time = 0;
-    return interval;
-}
-
-/**
- * Updates fps.
- */
-Uint32 nextSecond(Uint32 interval, void *param)
-{
-    fps = frame;
-    frame = 0;
-
-    return interval;
-}
-
-int get_elapsed_time(int start_time)
-{
-    if (start_time <= tick_time)
-        return (tick_time - start_time) * 10;
-    else
-        return (tick_time + (MAX_TIME - start_time)) * 10;
 }
 
 /**
@@ -293,15 +261,6 @@ Game::Game(Network *network):
     particleEngine = new Particle(NULL);
     particleEngine->setupEngine();
 
-    // Initialize timers
-    tick_time = 0;
-    SDL_AddTimer(10, nextTick, NULL);                     // Logic counter
-    SDL_AddTimer(1000, nextSecond, NULL);                 // Seconds counter
-
-    // Initialize frame limiting
-    config.addListener("fpslimit", this);
-    optionChanged("fpslimit");
-
     // Initialize beings
     beingManager->setPlayer(player_node);
 
@@ -405,26 +364,9 @@ static bool saveScreenshot()
     return success;
 }
 
-void Game::optionChanged(const std::string &name)
-{
-    int fpsLimit = (int) config.getValue("fpslimit", 0);
-
-    // Calculate new minimum frame time. If one isn't set, use 60 FPS.
-    // (1000 / 60 is 16.66) Since the client can go well above the refresh
-    // rates for monitors now in OpenGL mode, this cutoff is done to help
-    // conserve on CPU time.
-    mMinFrameTime = fpsLimit ? 1000 / fpsLimit : 16;
-
-    // Reset draw time to current time
-    mDrawTime = tick_time * 10;
-}
-
 void Game::logic()
 {
-    // mDrawTime has a higher granularity than gameTime in order to be able to
-    // work with minimum frame durations in milliseconds.
     int gameTime = tick_time;
-    mDrawTime = tick_time * 10;
 
     while (!done)
     {
@@ -439,33 +381,7 @@ void Game::logic()
         // This is done because at some point tick_time will wrap.
         gameTime = tick_time;
 
-        // Update the screen when application is active, delay otherwise.
-        if (SDL_GetAppState() & SDL_APPACTIVE)
-        {
-            // Draw a frame if either frames are not limited or enough time has
-            // passed since the last frame.
-            if (!mMinFrameTime ||
-                get_elapsed_time(mDrawTime / 10) > mMinFrameTime)
-            {
-                frame++;
-                gui->draw();
-                graphics->updateScreen();
-                mDrawTime += mMinFrameTime;
-
-                // Make sure to wrap mDrawTime, since tick_time will wrap.
-                if (mDrawTime > MAX_TIME * 10)
-                    mDrawTime -= MAX_TIME * 10;
-            }
-            else
-            {
-                SDL_Delay(10);
-            }
-        }
-        else
-        {
-            SDL_Delay(10);
-            mDrawTime = tick_time * 10;
-        }
+        gui->draw();
 
         // Handle network stuff
         mNetwork->flush();

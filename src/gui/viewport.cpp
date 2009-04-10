@@ -92,9 +92,7 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
 
     // Avoid freaking out when tick_time overflows
     if (tick_time < lastTick)
-    {
         lastTick = tick_time;
-    }
 
     // Calculate viewpoint
     int midTileX = (graphics->getWidth() + mScrollCenterOffsetX) / 32 / 2;
@@ -135,11 +133,10 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
     }
 
     // Auto center when player is off screen
-    if (        player_x - mPixelViewX > graphics->getWidth() / 2
-            ||  mPixelViewX - player_x > graphics->getWidth() / 2
-            ||  mPixelViewY - player_y > graphics->getHeight() / 2
-            ||  player_y - mPixelViewY > graphics->getHeight() / 2
-        )
+    if (player_x - mPixelViewX > graphics->getWidth() / 2 ||
+        mPixelViewX - player_x > graphics->getWidth() / 2 ||
+        mPixelViewY - player_y > graphics->getHeight() / 2 ||
+        player_y - mPixelViewY > graphics->getHeight() / 2)
     {
         mPixelViewX = player_x;
         mPixelViewY = player_y;
@@ -230,7 +227,7 @@ void Viewport::logic()
     Uint8 button = SDL_GetMouseState(&mMouseX, &mMouseY);
 
     if (mPlayerFollowMouse && button & SDL_BUTTON(1) &&
-            mWalkTime != player_node->mWalkTime)
+        mWalkTime != player_node->mWalkTime)
     {
         player_node->setDestination(mMouseX / 32 + mTileViewX,
                                     mMouseY / 32 + mTileViewY);

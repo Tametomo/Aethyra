@@ -56,6 +56,11 @@ SDLInput *guiInput = 0;
 // Bolded font
 gcn::Font *boldFont = 0;
 
+volatile int tick_time;
+volatile int fps = 0, frame = 0;
+
+const int MAX_TIME = 10000;
+
 class GuiConfigListener : public ConfigListener
 {
     public:
@@ -70,10 +75,45 @@ class GuiConfigListener : public ConfigListener
                 bool bCustomCursor = config.getValue("customcursor", 1) == 1;
                 mGui->setUseCustomCursor(bCustomCursor);
             }
+            else if (name == "framerate")
+            {
+                mGui->framerateChanged();
+            }
         }
     private:
         Gui *mGui;
 };
+
+/**
+ * Advances game logic counter.
+ */
+Uint32 nextTick(Uint32 interval, void *param)
+{
+    tick_time++;
+    if (tick_time == MAX_TIME)
+        tick_time = 0;
+
+    return interval;
+}
+
+/**
+ * Updates fps.
+ */
+Uint32 nextSecond(Uint32 interval, void *param)
+{
+    fps = frame;
+    frame = 0;
+
+    return interval;
+}
+
+int get_elapsed_time(int start_time)
+{
+    if (start_time <= tick_time)
+        return (tick_time - start_time) * 10;
+    else
+        return (tick_time + (MAX_TIME - start_time)) * 10;
+}
 
 Gui::Gui(Graphics *graphics):
     mCustomCursor(false),
@@ -97,6 +137,11 @@ Gui::Gui(Graphics *graphics):
     // Set focus handler
     delete mFocusHandler;
     mFocusHandler = new FocusHandler;
+
+    // Initialize timers
+    tick_time = 0;
+    SDL_AddTimer(10, nextTick, NULL);                     // Logic counter
+    SDL_AddTimer(1000, nextSecond, NULL);                 // Seconds counter
 
     // Initialize top GUI widget
     WindowContainer *guiTop = new WindowContainer();
@@ -142,6 +187,10 @@ Gui::Gui(Graphics *graphics):
     mConfigListener = new GuiConfigListener(this);
     config.addListener("customcursor", mConfigListener);
 
+    // Initialize frame limiting
+    config.addListener("fpslimit", mConfigListener);
+    framerateChanged();
+
     // Create the viewport
     viewport = new Viewport();
     viewport->setDimension(gcn::Rectangle(0, 0,
@@ -168,6 +217,32 @@ Gui::~Gui()
 
 void Gui::logic()
 {
+    // Update the screen when application is active, delay otherwise.
+    if (SDL_GetAppState() & SDL_APPACTIVE)
+    {
+        // Draw a frame if either frames are not limited or enough time has
+        // passed since the last frame.
+        if (!mMinFrameTime || get_elapsed_time(mDrawTime / 10) > mMinFrameTime)
+        {
+            frame++;
+            graphics->updateScreen();
+            mDrawTime += mMinFrameTime;
+
+            // Make sure to wrap mDrawTime, since tick_time will wrap.
+            if (mDrawTime > MAX_TIME * 10)
+                mDrawTime -= MAX_TIME * 10;
+        }
+        else
+        {
+            SDL_Delay(10);
+        }
+    }
+    else
+    {
+        SDL_Delay(10);
+        mDrawTime = tick_time * 10;
+    }
+
     // Fade out mouse cursor after extended inactivity
     if (mMouseInactivityTimer < 100 * 15)
     {
@@ -182,6 +257,20 @@ void Gui::logic()
     gcn::Gui::logic();
 }
 
+void Gui::framerateChanged()
+{
+    int fpsLimit = (int) config.getValue("fpslimit", 0);
+
+    // Calculate new minimum frame time. If one isn't set, use 60 FPS.
+    // (1000 / 60 is 16.66) Since the client can go well above the refresh
+    // rates for monitors now in OpenGL mode, this cutoff is done to help
+    // conserve on CPU time.
+    mMinFrameTime = fpsLimit ? 1000 / fpsLimit : 16;
+
+    // Reset draw time to current time
+    mDrawTime = tick_time * 10;
+}
+
 void Gui::draw()
 {
     mGraphics->pushClipArea(getTop()->getDimension());
@@ -190,17 +279,14 @@ void Gui::draw()
     int mouseX, mouseY;
     Uint8 button = SDL_GetMouseState(&mouseX, &mouseY);
 
-    if ((SDL_GetAppState() & SDL_APPMOUSEFOCUS || button & SDL_BUTTON(1))
-            && mCustomCursor
-            && mMouseCursorAlpha > 0.0f)
+    if ((SDL_GetAppState() & SDL_APPMOUSEFOCUS || button & SDL_BUTTON(1)) &&
+         mCustomCursor && mMouseCursorAlpha > 0.0f)
     {
         Image *mouseCursor = mMouseCursors->get(mCursorType);
         mouseCursor->setAlpha(mMouseCursorAlpha);
 
-        static_cast<Graphics*>(mGraphics)->drawImage(
-                mouseCursor,
-                mouseX - 15,
-                mouseY - 17);
+        static_cast<Graphics*>(mGraphics)->drawImage(mouseCursor, mouseX - 15,
+                                                     mouseY - 17);
     }
 
     mGraphics->popClipArea();

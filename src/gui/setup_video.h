@@ -38,6 +38,7 @@ class Setup_Video : public SetupTabHandler, public gcn::ActionListener,
 
         void apply();
         void cancel();
+        void logic();
 
         void action(const gcn::ActionEvent &event);
 
@@ -83,6 +84,7 @@ class Setup_Video : public SetupTabHandler, public gcn::ActionListener,
         gcn::CheckBox *mFpsCheckBox;
         gcn::Slider *mFpsSlider;
         gcn::TextField *mFpsField;
+        gcn::Label *mFpsLabel;
 
         int mOriginalScrollLaziness;
         gcn::Slider *mScrollLazinessSlider;

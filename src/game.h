@@ -25,16 +25,12 @@
 
 #include <memory>
 
-#include "configlistener.h"
-
 class MessageHandler;
 class Network;
 
 extern std::string map_path;
-extern volatile int fps;
-extern volatile int tick_time;
 
-class Game : public ConfigListener
+class Game
 {
     public:
         Game(Network *network);
@@ -44,16 +40,8 @@ class Game : public ConfigListener
 
         void handleInput();
 
-        void optionChanged(const std::string &name);
-
     private:
         Network *mNetwork;
-
-        /** Used to determine whether to draw the next frame. */
-        int mDrawTime;
-
-        /** The minimum frame time (used for frame limiting). */
-        int mMinFrameTime;
 
         typedef const std::auto_ptr<MessageHandler> MessageHandlerPtr;
         MessageHandlerPtr mBeingHandler;
@@ -67,10 +55,5 @@ class Game : public ConfigListener
         MessageHandlerPtr mSkillHandler;
         MessageHandlerPtr mTradeHandler;
 };
-
-/**
- * Returns elapsed time. (Warning: supposes the delay is always < 100 seconds)
- */
-int get_elapsed_time(int start_time);
 
 #endif

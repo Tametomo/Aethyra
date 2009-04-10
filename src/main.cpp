@@ -96,11 +96,6 @@
 #include <CoreFoundation/CFBundle.h>
 #endif
 
-#ifdef __MINGW32__
-#include <windows.h>
-#define usleep(usec) (Sleep ((usec) / 1000), 0)
-#endif
-
 #ifdef WIN32
 #include <SDL_syswm.h>
 #else
@@ -812,8 +807,7 @@ int main(int argc, char *argv[])
     ProgressBar *progressBar = new ProgressBar(0.0f, 100, 20, 168, 116, 31);
     gcn::Label *progressLabel = new Label();
     top->add(progressBar, 5, top->getHeight() - 5 - progressBar->getHeight());
-    top->add(progressLabel, 15 + progressBar->getWidth(),
-                            progressBar->getY() + 4);
+    top->add(progressLabel, 15 + progressBar->getWidth(), progressBar->getY() + 4);
     progressBar->setVisible(false);
     gcn::Button *setup = new Button(_("Setup"), "Setup", &listener);
     setup->setPosition(top->getWidth() - setup->getWidth() - 3, 3);
@@ -1116,8 +1110,7 @@ int main(int argc, char *argv[])
                 case CONNECTING_STATE:
                     logger->log("State: CONNECTING");
                     progressBar->setVisible(true);
-                    progressLabel->setCaption(
-                            _("Connecting to map server..."));
+                    progressLabel->setCaption(_("Connecting to map server..."));
                     progressLabel->adjustSize();
                     mapLogin(network, &loginData);
                     break;
@@ -1143,12 +1136,6 @@ int main(int argc, char *argv[])
                     break;
             }
         }
-        /*
-         * This loop can really stress the CPU, for no reason since it's
-         * just constantly redrawing the wallpaper.  Added the following
-         * usleep to limit it to 40 FPS during the login sequence
-         */
-        usleep(25000);
     }
 
     delete guiPalette;

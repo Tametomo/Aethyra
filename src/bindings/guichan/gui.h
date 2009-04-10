@@ -25,14 +25,19 @@
 
 #include <guichan/gui.hpp>
 
+#include <string>
+
 #include "guichanfwd.h"
 
+class Game;
 class Graphics;
 class GuiConfigListener;
 class ImageSet;
 class SDLInput;
 class Viewport;
 
+extern volatile int fps;
+extern volatile int tick_time;
 /**
  * \defgroup GUI Core GUI related classes (widgets)
  */
@@ -74,8 +79,7 @@ class Gui : public gcn::Gui
         /**
          * Return game font.
          */
-        gcn::Font* getFont() const
-        { return mGuiFont; }
+        gcn::Font* getFont() const { return mGuiFont; }
 
         /**
          * Return game font height.
@@ -86,8 +90,7 @@ class Gui : public gcn::Gui
          * Return the Font used for "Info Particles", i.e. ones showing, what
          * you picked up, etc.
          */
-        gcn::Font* getInfoParticleFont() const
-        { return mInfoParticleFont; }
+        gcn::Font* getInfoParticleFont() const { return mInfoParticleFont; }
 
         /**
          * Sets whether a custom cursor should be rendered.
@@ -97,8 +100,12 @@ class Gui : public gcn::Gui
         /**
          * Sets which cursor should be used.
          */
-        void setCursorType(int index)
-        { mCursorType = index; }
+        void setCursorType(int index) { mCursorType = index; }
+
+        /**
+         * Frame rate has been changed. Adjust it accordingly.
+         */
+        void framerateChanged();
 
         /**
          * Cursors are in graphic order from left to right.
@@ -126,7 +133,18 @@ class Gui : public gcn::Gui
         float mMouseCursorAlpha;
         int mMouseInactivityTimer;
         int mCursorType;
+
+        /** Used to determine whether to draw the next frame. */
+        int mDrawTime;
+
+        /** The minimum frame time (used for frame limiting). */
+        int mMinFrameTime;
 };
+
+/**
+ * Returns elapsed time. (Warning: supposes the delay is always < 100 seconds)
+ */
+int get_elapsed_time(int start_time);
 
 extern Gui *gui;                              /**< The GUI system */
 extern SDLInput *guiInput;                    /**< GUI input */

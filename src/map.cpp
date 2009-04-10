@@ -24,7 +24,6 @@
 
 #include "beingmanager.h"
 #include "configuration.h"
-#include "game.h"
 #include "map.h"
 #include "particle.h"
 #include "simpleanimation.h"
@@ -32,6 +31,7 @@
 #include "tileset.h"
 
 #include "bindings/guichan/graphics.h"
+#include "bindings/guichan/gui.h"
 
 #include "resources/ambientoverlay.h"
 #include "resources/image.h"
