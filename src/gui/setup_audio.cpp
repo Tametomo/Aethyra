@@ -93,10 +93,13 @@ void Setup_Audio::apply()
             logger->log("Warning: %s", err);
         }
 
-        if (engine) {
+        if (engine)
+        {
             Map *currentMap = engine->getCurrentMap();
             sound.playMusic(currentMap->getProperty("music"), -1);
         }
+        else
+            sound.playMusic("Magick - Real.ogg");
     }
     else
     {
