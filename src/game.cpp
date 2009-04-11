@@ -36,6 +36,7 @@
 #include "itemshortcut.h"
 #include "localplayer.h"
 #include "log.h"
+#include "map.h"
 #include "npc.h"
 #include "particle.h"
 #include "player_relations.h"
@@ -94,8 +95,6 @@
 #include "resources/imagewriter.h"
 
 #include "utils/gettext.h"
-
-class Map;
 
 std::string map_path;
 
@@ -370,6 +369,8 @@ void Game::logic()
 
     while (!done)
     {
+        engine->getCurrentMap()->update(get_elapsed_time(gameTime));
+
         // Handle all necessary game logic
         while (get_elapsed_time(gameTime) > 0)
         {
@@ -379,7 +380,6 @@ void Game::logic()
 
         // This is done because at some point tick_time will wrap.
         gameTime = tick_time;
-
         handleInput();
         gui->logic();
         gui->draw();
