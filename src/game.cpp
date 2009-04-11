@@ -381,6 +381,7 @@ void Game::logic()
         // This is done because at some point tick_time will wrap.
         gameTime = tick_time;
 
+        gui->logic();
         gui->draw();
 
         // Handle network stuff
