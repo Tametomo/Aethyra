@@ -49,8 +49,7 @@ NPC::NPC(int id, int job, Map *map):
     // Setup NPC sprites
     int c = BASE_SPRITE;
     for (std::list<NPCsprite*>::const_iterator i = info.sprites.begin();
-         i != info.sprites.end();
-         i++)
+         i != info.sprites.end(); i++)
     {
         if (c == VECTOREND_SPRITE)
             break;
@@ -65,8 +64,7 @@ NPC::NPC(int id, int job, Map *map):
     {
         //setup particle effects
         for (std::list<std::string>::const_iterator i = info.particles.begin();
-             i != info.particles.end();
-             i++)
+             i != info.particles.end(); i++)
         {
             Particle *p = particleEngine->addEffect(*i, 0, 0);
             this->controlParticle(p);
@@ -88,8 +86,7 @@ void NPC::setName(const std::string &name)
 
     delete mName;
     mName = new Text(displayName, mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET,
-                     gcn::Graphics::CENTER,
-                     &guiPalette->getColor(Palette::NPC));
+                     gcn::Graphics::CENTER, &guiPalette->getColor(Palette::NPC));
     Being::setName(displayName + " (NPC)");
 }
 

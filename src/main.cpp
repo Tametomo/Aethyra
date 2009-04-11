@@ -872,7 +872,6 @@ int main(int argc, char *argv[])
 
         network->flush();
         network->dispatchMessages();
-        gui->logic();
 
         if (network->getState() == Network::NET_ERROR)
         {
@@ -901,8 +900,8 @@ int main(int argc, char *argv[])
         graphics->drawImage(login_wallpaper,
                 (graphics->getWidth() - login_wallpaper->getWidth()) / 2,
                 (graphics->getHeight() - login_wallpaper->getHeight()) / 2);
-        gui->draw();
-        graphics->updateScreen();
+
+        gui->logic();
 
         if (state != oldstate)
         {

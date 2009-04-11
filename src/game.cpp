@@ -382,7 +382,6 @@ void Game::logic()
         gameTime = tick_time;
         handleInput();
         gui->logic();
-        gui->draw();
 
         // Handle network stuff
         mNetwork->flush();

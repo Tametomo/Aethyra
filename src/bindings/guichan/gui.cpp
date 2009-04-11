@@ -225,6 +225,7 @@ void Gui::logic()
         if (!mMinFrameTime || get_elapsed_time(mDrawTime / 10) > mMinFrameTime)
         {
             frame++;
+            gui->draw();
             graphics->updateScreen();
             mDrawTime += mMinFrameTime;
 
