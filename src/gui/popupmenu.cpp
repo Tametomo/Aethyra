@@ -77,8 +77,9 @@ void PopupMenu::showPopup(int x, int y, Being *being)
     // Any being's name can be added to chat
     mBrowserBox->addRow(_("@@name|Add name to chat@@"));
 
-    const std::string &name = Being::NPC ? being->getName().substr(0,
-                              being->getName().size() - 6) : being->getName();
+    const std::string &name = being->getType() == Being::NPC ?
+                              being->getName().substr(0, being->getName().size()
+                              - 6) : being->getName();
 
     switch (being->getType())
     {
@@ -258,7 +259,8 @@ void PopupMenu::handleLink(const std::string& link)
 
     else if (link == "name" && being)
     {
-        const std::string &name = Being::NPC ? being->getName().substr(0, 
+        const std::string &name = being->getType() == Being::NPC ?
+                                  being->getName().substr(0,
                                   being->getName().size() - 6) : being->getName();
         chatWindow->addInputText(name);
     }
