@@ -75,7 +75,7 @@ class GuiConfigListener : public ConfigListener
                 bool bCustomCursor = config.getValue("customcursor", 1) == 1;
                 mGui->setUseCustomCursor(bCustomCursor);
             }
-            else if (name == "framerate")
+            else if (name == "fpslimit")
             {
                 mGui->framerateChanged();
             }

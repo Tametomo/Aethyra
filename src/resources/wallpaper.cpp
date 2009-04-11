@@ -43,11 +43,10 @@ bool haveBackup; // Is the backup (no size given) version availabnle?
 
 bool wallpaperCompare(struct wallpaper x, struct wallpaper y)
 {
-    int aX = x.width * x.height;
-    int aY = y.width * y.height;
+    const int aX = x.width * x.height;
+    const int aY = y.width * y.height;
 
-    if (aX > aY || (aX == aY && x.width > y.width)) return true;
-    return false;
+    return aX > aY || (aX == aY && x.width > y.width);
 }
 
 void Wallpaper::loadWallpapers()
@@ -72,7 +71,7 @@ void Wallpaper::loadWallpapers()
                     haveBackup = true;
             }
             else if (sscanf(*i, WALLPAPER_BASE "_%dx%d.png", &width,
-                     &height) == 2)
+                            &height) == 2)
             {
                 struct wallpaper wp;
                 wp.width = width;
@@ -92,7 +91,7 @@ std::string Wallpaper::getWallpaper(int width, int height)
     std::vector<wallpaper>::iterator iter;
     wallpaper wp;
 
-    for(iter = wallpapers.begin(); iter != wallpapers.end(); iter++)
+    for (iter = wallpapers.begin(); iter != wallpapers.end(); iter++)
     {
         wp = *iter;
         if (wp.width <= width && wp.height <= height)
@@ -100,7 +99,8 @@ std::string Wallpaper::getWallpaper(int width, int height)
                                 "_%dx%d.png", wp.width, wp.height));
     }
 
-    if (haveBackup) return std::string(WALLPAPER_FOLDER WALLPAPER_BASE ".png");
+    if (haveBackup)
+        return std::string(WALLPAPER_FOLDER WALLPAPER_BASE ".png");
 
     return std::string("");
 }
