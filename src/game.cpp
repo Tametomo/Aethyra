@@ -373,7 +373,6 @@ void Game::logic()
         // Handle all necessary game logic
         while (get_elapsed_time(gameTime) > 0)
         {
-            handleInput();
             engine->logic();
             gameTime++;
         }
@@ -381,6 +380,7 @@ void Game::logic()
         // This is done because at some point tick_time will wrap.
         gameTime = tick_time;
 
+        handleInput();
         gui->logic();
         gui->draw();
 
