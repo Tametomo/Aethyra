@@ -506,14 +506,14 @@ void Being::drawSpeech(int offsetX, int offsetY)
             mText = NULL;
         }
 
+        const int width = 16;
+        const int height = getHeight() - 32;
+
         mSpeechBubble->setCaption(showName ? mName : "", mNameColor);
 
-        // Not quite centered, but close enough. However, it's not too important
-        // to get it right right now, as it doesn't take bubble collision into
-        // account yet.
         mSpeechBubble->setText(mSpeech, showName);
-        mSpeechBubble->setPosition(px - (mSpeechBubble->getWidth() * 4 / 11), 
-                                   py - 40 - (mSpeechBubble->getHeight()));
+        mSpeechBubble->setPosition(px + width - (mSpeechBubble->getWidth() / 2), 
+                                   py - height - (mSpeechBubble->getHeight()));
         mSpeechBubble->setVisible(true);
     }
     else if (mSpeechTime > 0 && speech == TEXT_OVERHEAD)
