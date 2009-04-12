@@ -44,7 +44,8 @@ static const int NAME_Y_OFFSET = 30;
 NPC::NPC(int id, int job, Map *map):
     Player(id, job, map)
 {
-    NPCInfo info = NPCDB::get(job);
+    this->job = job;
+    const NPCInfo info = NPCDB::get(job);
 
     // Setup NPC sprites
     int c = BASE_SPRITE;
@@ -60,16 +61,8 @@ NPC::NPC(int id, int job, Map *map):
         c++;
     }
 
-    if (mParticleEffects)
-    {
-        //setup particle effects
-        for (std::list<std::string>::const_iterator i = info.particles.begin();
-             i != info.particles.end(); i++)
-        {
-            Particle *p = particleEngine->addEffect(*i, 0, 0);
-            this->controlParticle(p);
-        }
-    }
+    loadInitialParticleEffects();
+
     mName = 0;
 
     mNameColor = &guiPalette->getColor(Palette::NPC);
@@ -78,6 +71,23 @@ NPC::NPC(int id, int job, Map *map):
 NPC::~NPC()
 {
     delete mName;
+}
+
+void NPC::loadInitialParticleEffects()
+{
+    mChildParticleEffects.clear();
+
+    if (mParticleEffects)
+    {
+        const NPCInfo info = NPCDB::get(job);
+
+        //setup particle effects
+        for (std::list<std::string>::const_iterator i = info.particles.begin();
+             i != info.particles.end(); i++)
+        {
+            controlParticle(particleEngine->addEffect(*i, 0, 0));
+        }
+    }
 }
 
 void NPC::setName(const std::string &name)

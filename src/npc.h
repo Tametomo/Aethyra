@@ -35,13 +35,18 @@ class NPC : public Player
 
         ~NPC();
 
+        /**
+         * Loads initial particle effects.
+         */
+        void loadInitialParticleEffects();
+
         void setName(const std::string &name);
         void setGender(Gender gender);
         void setSprite(int slot, int id, std::string color);
 
         virtual Type getType() const;
 
-        void talk();;
+        void talk();
 
         static bool mTalking;
 
@@ -49,6 +54,7 @@ class NPC : public Player
 
     private:
         Text *mName;
+        int job;
 };
 
 extern int current_npc;

@@ -27,11 +27,13 @@
 #include "ok_dialog.h"
 #include "setup_video.h"
 
+#include "../beingmanager.h"
 #include "../configuration.h"
 #include "../engine.h"
 #include "../localplayer.h"
 #include "../log.h"
 #include "../main.h"
+#include "../map.h"
 #include "../particle.h"
 
 #include "../bindings/guichan/graphics.h"
@@ -402,18 +404,25 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "particleeffects")
     {
-        config.setValue("particleeffects",
-                mParticleEffectsCheckBox->isSelected() ? true : false);
+        const bool particleEffects = mParticleEffectsCheckBox->isSelected() ?
+                                        true : false;
+
+        config.setValue("particleeffects", particleEffects);
         if (engine)
         {
-            new OkDialog(_("Particle effect settings changed."),
-                         _("Changes will take effect on map change."));
+            beingManager->loadParticleEffects();
+            Map* map = engine->getCurrentMap();
+
+            if (map)
+            {
+                map->initializeParticleEffects(particleEngine);
+            }
         }
     }
     else if (event.getId() == "pickupchat")
     {
-        config.setValue("showpickupchat", mPickupChatCheckBox->isSelected()
-                        ? true : false);
+        config.setValue("showpickupchat", mPickupChatCheckBox->isSelected() ?
+                                              true : false);
     }
     else if (event.getId() == "pickupparticle")
     {

@@ -45,6 +45,7 @@
 #define SPEECH_MAX_TIME 1000
 
 class AnimatedSprite;
+class BeingConfigListener;
 class Image;
 class ItemInfo;
 class Item;
@@ -382,6 +383,12 @@ class Being : public Sprite
         void setTargetAnimation(SimpleAnimation* animation);
 
         /**
+         * Sets whether or not to show particle effects.
+         */
+        void setUseParticleEffects(bool particles)
+            { mParticleEffects = particles; }
+
+        /**
          * Untargets the being
          */
         void untarget() { mUsedTargetCursor = NULL; }
@@ -435,6 +442,8 @@ class Being : public Sprite
         std::vector<int> mSpriteIDs;
         std::vector<std::string> mSpriteColors;
         ParticleList mChildParticleEffects;
+
+        BeingConfigListener *mConfigListener;
 
     private:
         /**

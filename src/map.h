@@ -26,6 +26,7 @@
 #include <list>
 #include <vector>
 
+#include "particlecontainer.h"
 #include "properties.h"
 
 #include "utils/position.h"
@@ -303,6 +304,8 @@ class Map : public Properties
             int y;
         };
         std::list<ParticleEffectData> particleEffects;
+
+        ParticleList mParticleList;
 
         std::map<int, TileAnimation*> mTileAnimations;
 };

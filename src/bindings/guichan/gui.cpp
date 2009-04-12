@@ -201,6 +201,7 @@ Gui::Gui(Graphics *graphics):
 Gui::~Gui()
 {
     config.removeListener("customcursor", mConfigListener);
+    config.removeListener("fpslimit", mConfigListener);
     delete mConfigListener;
 
     if (mMouseCursors)

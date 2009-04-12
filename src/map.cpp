@@ -549,12 +549,15 @@ void Map::addParticleEffect(const std::string &effectFile, int x, int y)
 
 void Map::initializeParticleEffects(Particle* particleEngine)
 {
+    mParticleList.clear();
+
     if (config.getValue("particleeffects", 1))
     {
         for (std::list<ParticleEffectData>::iterator i = particleEffects.begin();
              i != particleEffects.end(); i++)
         {
-            particleEngine->addEffect(i->file, i->x, i->y);
+            mParticleList.addLocally(particleEngine->addEffect(i->file,
+                                                               i->x, i->y));
         }
     }
 }
@@ -565,7 +568,9 @@ TileAnimation* Map::getAnimationForGid(int gid)
     if (i == mTileAnimations.end())
     {
         return NULL;
-    } else {
+    }
+    else
+    {
         return i->second;
     }
 }

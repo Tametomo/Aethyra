@@ -26,7 +26,7 @@
 #include "animatedsprite.h"
 #include "being.h"
 #include "configuration.h"
-#include "game.h"
+#include "configlistener.h"
 #include "localplayer.h"
 #include "log.h"
 #include "map.h"
@@ -66,6 +66,25 @@ static const int Y_SPEECH_OFFSET = 60;
 static const int DEFAULT_WIDTH = 32;
 static const int DEFAULT_HEIGHT = 32;
 
+class BeingConfigListener : public ConfigListener
+{
+    public:
+        BeingConfigListener(Being *b):
+            mBeing(b)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "particleeffects")
+            {
+                bool bParticleEffects = config.getValue("particleeffects", 1);
+                mBeing->setUseParticleEffects(bParticleEffects);
+            }
+        }
+    private:
+        Being *mBeing;
+};
+
 Being::Being(int id, int job, Map *map):
     mJob(job),
     mX(0), mY(0),
@@ -93,6 +112,9 @@ Being::Being(int id, int job, Map *map):
 {
     setMap(map);
 
+    mConfigListener = new BeingConfigListener(this);
+    config.addListener("particleeffects", mConfigListener);
+
     mSpeechBubble = new SpeechBubble();
 
     mSpeech = "";
@@ -105,6 +127,8 @@ Being::~Being()
     mUsedTargetCursor = NULL;
     delete_all(mSprites);
     clearPath();
+
+    config.removeListener("particleeffects", mConfigListener);
 
     if (player_node && player_node->getTarget() == this)
         player_node->setTarget(NULL);

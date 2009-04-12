@@ -35,6 +35,11 @@ class Monster : public Being
 
         ~Monster();
 
+        /**
+         * Loads initial particle effects.
+         */
+        virtual void loadInitialParticleEffects();
+
         virtual void logic();
 
         virtual void setAction(Action action);
@@ -84,6 +89,8 @@ class Monster : public Being
          * holds a text object when the mod displays it's name, 0 otherwise
          */
         Text *mText;
+
+        int job;
 };
 
 #endif

@@ -38,6 +38,11 @@ class BeingManager
         ~BeingManager();
 
         /**
+         * Load particle effects.
+         */
+        void loadParticleEffects();
+
+        /**
          * Sets the map on which beings are created.
          */
         void setMap(Map *map);

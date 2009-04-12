@@ -41,7 +41,8 @@ Monster::Monster(int id, Uint16 job, Map *map):
     Being(id, job, map),
     mText(0)
 {
-    const MonsterInfo&  info = MonsterDB::get(job - 1002);
+    this->job = job - 1002;
+    const MonsterInfo& info = MonsterDB::get(this->job);
 
     // Setup Monster sprites
     int c = BASE_SPRITE;
@@ -63,15 +64,7 @@ Monster::Monster(int id, Uint16 job, Map *map):
         mSprites[c] = AnimatedSprite::load("graphics/sprites/error.xml");
     }
 
-    if (mParticleEffects)
-    {
-        const std::list<std::string> &particleEffects = info.getParticleEffects();
-        for (std::list<std::string>::const_iterator i = particleEffects.begin();
-             i != particleEffects.end(); i++)
-        {
-            controlParticle(particleEngine->addEffect((*i), 0, 0));
-        }
-    }
+    loadInitialParticleEffects();
 
     mNameColor = &guiPalette->getColor(Palette::MONSTER);
 
@@ -81,6 +74,23 @@ Monster::Monster(int id, Uint16 job, Map *map):
 Monster::~Monster()
 {
     delete mText;
+}
+
+void Monster::loadInitialParticleEffects()
+{
+    mChildParticleEffects.clear();
+
+    if (mParticleEffects)
+    {
+        const MonsterInfo& info = MonsterDB::get(job);
+        const std::list<std::string> &particleEffects = info.getParticleEffects();
+
+        for (std::list<std::string>::const_iterator i = particleEffects.begin();
+             i != particleEffects.end(); i++)
+        {
+            controlParticle(particleEngine->addEffect(*i, 0, 0));
+        }
+    }
 }
 
 void Monster::logic()
@@ -132,9 +142,7 @@ void Monster::setAction(Action action)
                     case RIGHT: rotation = 270; break;
                     default: break;
                 }
-                Particle *p;
-                p = particleEngine->addEffect(particleEffect, 0, 0, rotation);
-                controlParticle(p);
+                controlParticle(particleEngine->addEffect(particleEffect, 0, 0, rotation));
             }
             break;
         case STAND:
