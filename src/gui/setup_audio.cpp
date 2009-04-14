@@ -43,8 +43,8 @@ Setup_Audio::Setup_Audio():
     mSfxVolume((int)config.getValue("sfxVolume", 100)),
     mSoundEnabled(config.getValue("sound", 0)),
     mSoundCheckBox(new CheckBox(_("Sound"), mSoundEnabled)),
-    mSfxSlider(new Slider(0, 128)),
-    mMusicSlider(new Slider(0, 128))
+    mSfxSlider(new Slider(0, sound.getMaxVolume())),
+    mMusicSlider(new Slider(0, sound.getMaxVolume()))
 {
     setName(_("Audio"));
 
@@ -92,14 +92,6 @@ void Setup_Audio::apply()
             new OkDialog("Sound Engine", err);
             logger->log("Warning: %s", err);
         }
-
-        if (engine)
-        {
-            Map *currentMap = engine->getCurrentMap();
-            sound.playMusic(currentMap->getProperty("music"), -1);
-        }
-        else
-            sound.playMusic("Magick - Real.ogg");
     }
     else
     {
@@ -137,6 +129,6 @@ void Setup_Audio::action(const gcn::ActionEvent &event)
     else if (event.getId() == "music")
     {
         config.setValue("musicVolume", (int) mMusicSlider->getValue());
-        sound.setMusicVolume((int)mMusicSlider->getValue());
+        sound.setMusicVolume((int) mMusicSlider->getValue());
     }
 }

@@ -53,11 +53,6 @@ class Sound
         void init();
 
         /**
-         * Logs various info about sound device.
-         */
-        void info();
-
-        /**
          * Removes all sound functionalities.
          */
         void close();
@@ -66,9 +61,8 @@ class Sound
          * Starts background music.
          *
          * @param path The full path to the music file.
-         * @param loop The number of times the song is played (-1 = infinite)
          */
-        void playMusic(const std::string &path, int loop = -1);
+        void playMusic(const std::string &path);
 
         /**
          * Stops currently running background music track.
@@ -79,11 +73,9 @@ class Sound
          * Fades in background music.
          *
          * @param path The full path to the music file.
-         * @param loop The number of times the song is played (-1 = infinite)
          * @param ms   Duration of fade-in effect (ms)
          */
-        void fadeInMusic(const std::string &path, int loop = -1,
-                         int ms = 2000);
+        void fadeInMusic(const std::string &path, int ms = 2000);
 
         /**
          * Fades out currently running background music track.
@@ -92,18 +84,9 @@ class Sound
          */
         void fadeOutMusic(int ms);
 
-        /**
-         * Sets music volume.
-         *
-         * @param volume Volume value
-         */
-        void setMusicVolume(int volume);
+        int getMaxVolume() const;
 
-        /**
-         * Sets sfx volume.
-         *
-         * @param volume Volume value
-         */
+        void setMusicVolume(int volume);
         void setSfxVolume(int volume);
 
         /**
@@ -114,11 +97,18 @@ class Sound
         void playSfx(const std::string &path);
 
     private:
+        /** Logs various info about sound device. */
+        void info();
+
+        /** Halts and frees currently playing music. */
+        void haltMusic();
+
         bool mInstalled;
 
         int mSfxVolume;
         int mMusicVolume;
 
+        std::string mCurrentMusicFile;
         Mix_Music *mMusic;
 };
 

@@ -413,15 +413,11 @@ void LocalPlayer::setDestination(Uint16 x, Uint16 y)
 void LocalPlayer::setWalkingDir(int dir)
 {
     if (mWalkingDir != dir)
-    {
         mWalkingDir = dir;
-    }
 
     // If we're not already walking, start walking.
     if (mAction != WALK && dir)
-    {
         walk(dir);
-    }
 }
 
 void LocalPlayer::raiseAttribute(Attribute attr)
@@ -625,12 +621,7 @@ bool LocalPlayer::withinAttackRange(Being *target)
     int dist_x = abs(target->mX - mX);
     int dist_y = abs(target->mY - mY);
 
-    if (dist_x > getAttackRange() || dist_y > getAttackRange())
-    {
-        return false;
-    }
-
-    return true;
+    return !(dist_x > getAttackRange() || dist_y > getAttackRange());
 }
 
 void LocalPlayer::setGotoTarget(Being *target)

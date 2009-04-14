@@ -863,7 +863,6 @@ int main(int argc, char *argv[])
                 case SDL_KEYDOWN:
                     if (event.key.keysym.sym == SDLK_ESCAPE)
                         state = EXIT_STATE;
-
                     break;
             }
 
