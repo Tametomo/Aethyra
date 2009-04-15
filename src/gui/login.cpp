@@ -33,9 +33,7 @@
 #include "../bindings/guichan/widgets/checkbox.h"
 #include "../bindings/guichan/widgets/dropdown.h"
 #include "../bindings/guichan/widgets/label.h"
-#include "../bindings/guichan/widgets/listbox.h"
 #include "../bindings/guichan/widgets/passwordfield.h"
-#include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/textfield.h"
 
 #include "../utils/gettext.h"
@@ -61,17 +59,12 @@ LoginDialog::LoginDialog(LoginData *loginData):
     dfltPort.push_back("21001");
     mServerList = new DropDownList("MostRecent00", dfltServer, dfltPort,
                                    MAX_SERVER_LIST_SIZE);
-    mServerListBox = new ListBox(mServerList);
-    mServerScrollArea = new ScrollArea();
 
     mUserField = new TextField(mLoginData->username);
     mPassField = new PasswordField(mLoginData->password);
     mServerField = new TextField(mServerList->getServerAt(0));
     mPortField = new TextField(mServerList->getPortAt(0));
-    mServerDropDown = new DropDown(mServerList,
-                                   mServerScrollArea,
-                                   mServerListBox);
-    mServerDropDown->setOpaque(false);
+    mServerDropDown = new DropDown(mServerList);
 
     mKeepCheck = new CheckBox(_("Keep"), mLoginData->remember);
     mOkButton = new Button(_("OK"), "ok", this);
@@ -140,7 +133,7 @@ void LoginDialog::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "changeSelection")
     {
-        int selected = mServerListBox->getSelected();
+        int selected = mServerDropDown->getSelected();
         mServerField->setText(mServerList->getServerAt(selected));
         mPortField->setText(mServerList->getPortAt(selected));
     }

@@ -32,9 +32,7 @@
 
 #include "../bindings/guichan/widgets/window.h"
 
-class DropDown;
 class LoginData;
-class ScrollArea;
 
 /**
  * The login dialog.
@@ -87,11 +85,11 @@ class LoginDialog : public Window, public gcn::ActionListener,
          */
         static unsigned short getUShort(const std::string &str);
 
-        DropDown *mServerDropDown;
         gcn::TextField *mUserField;
         gcn::TextField *mPassField;
         gcn::TextField *mServerField;
         gcn::TextField *mPortField;
+        gcn::DropDown *mServerDropDown;
         gcn::CheckBox *mKeepCheck;
         gcn::Button *mOkButton;
         gcn::Button *mCancelButton;
@@ -124,8 +122,6 @@ class LoginDialog : public Window, public gcn::ActionListener,
                 std::string getPortAt(int i);
         };
         DropDownList *mServerList;
-        gcn::ListBox *mServerListBox;
-        gcn::ScrollArea *mServerScrollArea;
 };
 
 #endif

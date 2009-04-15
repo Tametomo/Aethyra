@@ -25,8 +25,6 @@
 
 #include "../widgets/dropdown.h"
 #include "../widgets/label.h"
-#include "../widgets/listbox.h"
-#include "../widgets/scrollarea.h"
 #include "../widgets/table.h"
 
 #define NAME_COLUMN 0
@@ -79,10 +77,7 @@ void PlayerTableModel::playerRelationsUpdated(void)
         mWidgets.push_back(widget);
         gcn::ListModel *playerRelation = new PlayerRelationListModel();
 
-        gcn::DropDown *choicebox = new DropDown(playerRelation,
-                                                new ScrollArea(),
-                                                new ListBox(playerRelation),
-                                                false);
+        gcn::DropDown *choicebox = new DropDown(playerRelation);
         choicebox->setSelected(player_relations.getRelation(name));
         mWidgets.push_back(choicebox);
     }

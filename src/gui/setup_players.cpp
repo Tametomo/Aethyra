@@ -38,7 +38,6 @@
 #include "../bindings/guichan/widgets/checkbox.h"
 #include "../bindings/guichan/widgets/dropdown.h"
 #include "../bindings/guichan/widgets/label.h"
-#include "../bindings/guichan/widgets/listbox.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/table.h"
 
@@ -88,9 +87,8 @@ Setup_Players::Setup_Players():
                                            RELATION_CHOICE_COLUMN_WIDTH);
     mPlayerTitleTable->setBackgroundColor(gcn::Color(0xbf, 0xbf, 0xbf));
 
-    gcn::ListModel *ignoreChoices = new IgnoreChoicesListModel();
-    mIgnoreActionChoicesBox = new DropDown(ignoreChoices, new ScrollArea(),
-                                           new ListBox(ignoreChoices), false);
+    gcn::ListModel *ignoreChoices = new IgnoreChoicesListModel;
+    mIgnoreActionChoicesBox = new DropDown(ignoreChoices);
 
     for (int i = 0; i < COLUMNS_NR; i++)
     {
