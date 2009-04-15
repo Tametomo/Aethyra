@@ -58,7 +58,6 @@ Setup_Video::Setup_Video():
     mFullScreenEnabled(config.getValue("screen", false)),
     mOpenGLEnabled(config.getValue("opengl", false)),
     mCustomCursorEnabled(config.getValue("customcursor", true)),
-    mParticleEffectsEnabled(config.getValue("particleeffects", true)),
     mNameEnabled(config.getValue("showownname", false)),
     mPickupChatEnabled(config.getValue("showpickupchat", true)),
     mPickupParticleEnabled(config.getValue("showpickupparticle", false)),
@@ -70,7 +69,6 @@ Setup_Video::Setup_Video():
     mFsCheckBox(new CheckBox(_("Full screen"), mFullScreenEnabled)),
     mOpenGLCheckBox(new CheckBox(_("OpenGL"), mOpenGLEnabled)),
     mCustomCursorCheckBox(new CheckBox(_("Custom cursor"), mCustomCursorEnabled)),
-    mParticleEffectsCheckBox(new CheckBox(_("Particle effects"), mParticleEffectsEnabled)),
     mNameCheckBox(new CheckBox(_("Show name"), mNameEnabled)),
     mSpeechSlider(new Slider(0, 3)),
     mSpeechLabel(new Label("")),
@@ -88,7 +86,7 @@ Setup_Video::Setup_Video():
     mOverlayDetailSlider(new Slider(0, 2)),
     mOverlayDetailField(new Label("")),
     mParticleDetail(3 - (int) config.getValue("particleEmitterSkip", 1)),
-    mParticleDetailSlider(new Slider(0, 3)),
+    mParticleDetailSlider(new Slider(-1, 3)),
     mParticleDetailField(new Label("")),
     mPickupNotifyLabel(new Label(_("Show pickup notification"))),
     mPickupChatCheckBox(new CheckBox(_("in chat"), mPickupChatEnabled)),
@@ -126,7 +124,6 @@ Setup_Video::Setup_Video():
 
     mModeList->setActionEventId("videomode");
     mCustomCursorCheckBox->setActionEventId("customcursor");
-    mParticleEffectsCheckBox->setActionEventId("particleeffects");
     mPickupChatCheckBox->setActionEventId("pickupchat");
     mPickupParticleCheckBox->setActionEventId("pickupparticle");
     mNameCheckBox->setActionEventId("showownname");
@@ -145,7 +142,6 @@ Setup_Video::Setup_Video():
 
     mModeList->addActionListener(this);
     mCustomCursorCheckBox->addActionListener(this);
-    mParticleEffectsCheckBox->addActionListener(this);
     mPickupChatCheckBox->addActionListener(this);
     mPickupParticleCheckBox->addActionListener(this);
     mNameCheckBox->addActionListener(this);
@@ -202,6 +198,9 @@ Setup_Video::Setup_Video():
 
     switch (mParticleDetail)
     {
+        case -1:
+            mParticleDetailField->setCaption(_("off"));
+            break;
         case 0:
             mParticleDetailField->setCaption(_("low"));
             break;
@@ -226,10 +225,9 @@ Setup_Video::Setup_Video():
     place(3, 0, mOpenGLCheckBox, 1);
     place(1, 1, mCustomCursorCheckBox, 3);
     place(1, 2, mNameCheckBox, 3);
-    place(1, 3, mParticleEffectsCheckBox, 3);
-    place(1, 4, mPickupNotifyLabel, 3);
-    place(1, 5, mPickupChatCheckBox, 1);
-    place(2, 5, mPickupParticleCheckBox, 2);
+    place(1, 3, mPickupNotifyLabel, 3);
+    place(1, 4, mPickupChatCheckBox, 1);
+    place(2, 4, mPickupParticleCheckBox, 2);
 
     place(0, 6, mAlphaSlider);
     place(0, 7, mFpsSlider);
@@ -317,7 +315,6 @@ void Setup_Video::apply()
     // We sync old and new values at apply time
     mFullScreenEnabled = config.getValue("screen", false);
     mCustomCursorEnabled = config.getValue("customcursor", true);
-    mParticleEffectsEnabled = config.getValue("particleeffects", true);
     mNameEnabled = config.getValue("showownname", false);
     mSpeechMode = (int) config.getValue("speech", 3);
     mOpacity = config.getValue("guialpha", 0.8);
@@ -352,7 +349,6 @@ void Setup_Video::cancel()
     mFsCheckBox->setSelected(mFullScreenEnabled);
     mOpenGLCheckBox->setSelected(mOpenGLEnabled);
     mCustomCursorCheckBox->setSelected(mCustomCursorEnabled);
-    mParticleEffectsCheckBox->setSelected(mParticleEffectsEnabled);
     mSpeechSlider->setValue(mSpeechMode);
     mNameCheckBox->setSelected(mNameEnabled);
     mAlphaSlider->setValue(mOpacity);
@@ -366,7 +362,6 @@ void Setup_Video::cancel()
 
     config.setValue("screen", mFullScreenEnabled ? true : false);
     config.setValue("customcursor", mCustomCursorEnabled ? true : false);
-    config.setValue("particleeffects", mParticleEffectsEnabled ? true : false);
     config.setValue("speech", mSpeechMode);
     config.setValue("showownname", mNameEnabled ? true : false);
     if (player_node)
@@ -404,23 +399,6 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     {
         config.setValue("customcursor",
                 mCustomCursorCheckBox->isSelected() ? true : false);
-    }
-    else if (event.getId() == "particleeffects")
-    {
-        const bool particleEffects = mParticleEffectsCheckBox->isSelected() ?
-                                        true : false;
-
-        config.setValue("particleeffects", particleEffects);
-        if (engine)
-        {
-            beingManager->loadParticleEffects();
-            Map* map = engine->getCurrentMap();
-
-            if (map)
-            {
-                map->initializeParticleEffects(particleEngine);
-            }
-        }
     }
     else if (event.getId() == "pickupchat")
     {
@@ -501,6 +479,9 @@ void Setup_Video::action(const gcn::ActionEvent &event)
         int val = (int) mParticleDetailSlider->getValue();
         switch (val)
         {
+            case -1:
+                mParticleDetailField->setCaption(_("off"));
+                break;                
             case 0:
                 mParticleDetailField->setCaption(_("low"));
                 break;
@@ -514,8 +495,21 @@ void Setup_Video::action(const gcn::ActionEvent &event)
                 mParticleDetailField->setCaption(_("max"));
                 break;
         }
+
+        config.setValue("particleeffects", val != -1);
         config.setValue("particleEmitterSkip", 3 - val);
-        Particle::emitterSkip = 4 - val;
+
+        if (val < 1 && engine)
+        {
+            beingManager->loadParticleEffects();
+            Map* map = engine->getCurrentMap();
+
+            if (map)
+                map->initializeParticleEffects(particleEngine);
+        }
+
+        if (val > -1)
+            Particle::emitterSkip = 4 - val;
     }
     else if (event.getId() == "fpslimitcheckbox")
     {

@@ -54,7 +54,6 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener,
         bool mFullScreenEnabled;
         bool mOpenGLEnabled;
         bool mCustomCursorEnabled;
-        bool mParticleEffectsEnabled;
         bool mNameEnabled;
         bool mPickupChatEnabled;
         bool mPickupParticleEnabled;
@@ -75,7 +74,6 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener,
         gcn::CheckBox *mFsCheckBox;
         gcn::CheckBox *mOpenGLCheckBox;
         gcn::CheckBox *mCustomCursorCheckBox;
-        gcn::CheckBox *mParticleEffectsCheckBox;
         gcn::CheckBox *mNameCheckBox;
 
         gcn::Slider *mSpeechSlider;
