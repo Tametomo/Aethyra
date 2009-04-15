@@ -347,7 +347,7 @@ static void init_engine(const Options &options)
     config.setValue("host", "www.aethyra.org");
     config.setValue("port", 21001);
     config.setValue("hwaccel", 0);
-#if (defined __APPLE__ || defined WIN32) && defined USE_OPENGL
+#if defined USE_OPENGL
     config.setValue("opengl", 1);
 #else
     config.setValue("opengl", 0);
