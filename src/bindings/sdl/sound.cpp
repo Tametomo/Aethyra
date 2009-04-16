@@ -21,6 +21,7 @@
  */
 
 #include <SDL.h>
+#include <physfs.h>
 
 #include "sound.h"
 
@@ -146,8 +147,32 @@ void Sound::playMusic(const std::string &filename, int loop)
     ResourceManager *resman = ResourceManager::getInstance();
     std::string path = resman->getPath("music/" + filename);
 
-    logger->log("Sound::startMusic() Playing \"%s\" %i times", path.c_str(),
-                loop);
+    if (path.find(".zip/") != std::string::npos ||
+        path.find(".zip\\") != std::string::npos)
+    {
+        // Music file is a virtual file inside a zip archive - we have to copy
+        // it to a temporary physical file so that SDL_mixer can stream it.
+        logger->log("Loading music \"%s\" from temporary file tempMusic.ogg",
+                    path.c_str());
+
+        bool success = resman->copyFile("music/" + filename, "tempMusic.ogg");
+
+        if (success)
+            path = resman->getPath("tempMusic.ogg");
+        else
+            return;
+    }
+    else
+        logger->log("Sound::startMusic() Playing \"%s\" %i times", path.c_str(),
+                    loop);
+
+    Mix_Music *music = Mix_LoadMUS(path.c_str());
+
+    if (!music)
+    {
+        logger->log("Mix_LoadMUS() Error loading '%s': %s", path.c_str(),
+                    Mix_GetError());
+    }
 
     mMusic = Mix_LoadMUS(path.c_str());
 
