@@ -58,7 +58,6 @@ void NPCHandler::handleMessage(MessageIn *msg)
         case SMSG_NPC_CHOICE:
             msg->readInt16();  // length
             current_npc = msg->readInt32();
-            player_node->setAction(LocalPlayer::STAND);
             npcListDialog->parseItems(msg->readString(msg->getLength() - 8));
             npcListDialog->requestFocus();
             break;
@@ -66,7 +65,6 @@ void NPCHandler::handleMessage(MessageIn *msg)
         case SMSG_NPC_MESSAGE:
             msg->readInt16();  // length
             current_npc = msg->readInt32();
-            player_node->setAction(LocalPlayer::STAND);
             npcTextDialog->addText(msg->readString(msg->getLength() - 8));
             npcTextDialog->requestFocus();
             break;
@@ -85,7 +83,6 @@ void NPCHandler::handleMessage(MessageIn *msg)
         case SMSG_NPC_INT_INPUT:
             // Request for an integer
             current_npc = msg->readInt32();
-            player_node->setAction(LocalPlayer::STAND);
             npcIntegerDialog->setRange(0, 2147483647);
             npcIntegerDialog->setVisible(true);
             npcIntegerDialog->requestFocus();
@@ -94,7 +91,6 @@ void NPCHandler::handleMessage(MessageIn *msg)
         case SMSG_NPC_STR_INPUT:
             // Request for a string
             current_npc = msg->readInt32();
-            player_node->setAction(LocalPlayer::STAND);
             npcStringDialog->setValue("");
             npcStringDialog->setVisible(true);
             npcStringDialog->requestFocus();

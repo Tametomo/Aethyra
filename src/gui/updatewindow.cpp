@@ -74,7 +74,8 @@ std::vector<std::string> loadTextFile(const std::string &fileName)
     std::vector<std::string> lines;
     std::ifstream fin(fileName.c_str());
 
-    if (!fin) {
+    if (!fin)
+    {
         logger->log("Couldn't load text file: %s", fileName.c_str());
         return lines;
     }
@@ -179,9 +180,8 @@ void UpdaterWindow::action(const gcn::ActionEvent &event)
         mUserCancel = true;
         // Skip the updating process
         if (mDownloadStatus != UPDATE_COMPLETE)
-        {
             mDownloadStatus = UPDATE_ERROR;
-        }
+
     }
     else if (event.getId() == "play")
     {
@@ -218,18 +218,22 @@ void UpdaterWindow::loadNews()
     mScrollArea->setVerticalScrollAmount(0);
 }
 
-int UpdaterWindow::updateProgress(void *ptr,
-                                  double dt, double dn, double ut, double un)
+int UpdaterWindow::updateProgress(void *ptr, double dt, double dn, double ut,
+                                  double un)
 {
     float progress = dn / dt;
     UpdaterWindow *uw = reinterpret_cast<UpdaterWindow *>(ptr);
 
-    if (progress != progress) progress = 0.0f; // check for NaN
-    if (progress < 0.0f) progress = 0.0f; // no idea how this could ever happen, but why not check for it anyway.
-    if (progress > 1.0f) progress = 1.0f;
+    if (progress != progress)
+        progress = 0.0f; // check for NaN
+    if (progress < 0.0f)
+        progress = 0.0f; // no idea how this could ever happen,
+                         // but why not check for it anyway.
+    if (progress > 1.0f)
+        progress = 1.0f;
 
-    uw->setLabel(
-            uw->mCurrentFile + " (" + toString((int) (progress * 100)) + "%)");
+    uw->setLabel(uw->mCurrentFile + " (" + toString((int) (progress * 100)) +
+                 "%)");
     uw->setProgress(progress);
 
     if (state != UPDATE_STATE || uw->mDownloadStatus == UPDATE_ERROR)
@@ -241,7 +245,8 @@ int UpdaterWindow::updateProgress(void *ptr,
     return 0;
 }
 
-size_t UpdaterWindow::memoryWrite(void *ptr, size_t size, size_t nmemb, FILE *stream)
+size_t UpdaterWindow::memoryWrite(void *ptr, size_t size, size_t nmemb,
+                                  FILE *stream)
 {
     UpdaterWindow *uw = reinterpret_cast<UpdaterWindow *>(stream);
     size_t totalMem = size * nmemb;
@@ -293,9 +298,9 @@ int UpdaterWindow::downloadThread(void *ptr)
             }
 
 #ifdef PACKAGE_VERSION
-            curl_easy_setopt(curl, CURLOPT_USERAGENT, "TMW/" PACKAGE_VERSION);
+            curl_easy_setopt(curl, CURLOPT_USERAGENT, "Aethyra/" PACKAGE_VERSION);
 #else
-            curl_easy_setopt(curl, CURLOPT_USERAGENT, "TMW");
+            curl_easy_setopt(curl, CURLOPT_USERAGENT, "Aethyra");
 #endif
             curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, uw->mCurlError);
             curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
@@ -396,9 +401,8 @@ int UpdaterWindow::downloadThread(void *ptr)
         attempts++;
     }
 
-    if (!uw->mDownloadComplete) {
+    if (!uw->mDownloadComplete)
         uw->mDownloadStatus = UPDATE_ERROR;
-    }
 
     return 0;
 }
@@ -436,13 +440,15 @@ void UpdaterWindow::logic()
         case UPDATE_ERROR:
             if (mThread)
             {
-                if (mUserCancel) {
+                if (mUserCancel)
+                {
                     // Kill the thread, because user has canceled
                     SDL_KillThread(mThread);
                     // Set the flag to false again
                     mUserCancel = false;
                 }
-                else {
+                else
+                {
                     SDL_WaitThread(mThread, NULL);
                 }
                 mThread = NULL;
@@ -515,11 +521,11 @@ void UpdaterWindow::logic()
                 }
             }
             break;
+        case UPDATE_IDLE:
+            break;
         case UPDATE_COMPLETE:
             enable();
             setLabel(_("Completed"));
-            break;
-        case UPDATE_IDLE:
             break;
     }
 }

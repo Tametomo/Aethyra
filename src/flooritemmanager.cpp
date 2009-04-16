@@ -55,9 +55,7 @@ FloorItem *FloorItemManager::findById(int id)
     for (i = mFloorItems.begin(); i != mFloorItems.end(); i++)
     {
         if ((*i)->getId() == id)
-        {
             return *i;
-        }
     }
 
     return NULL;
@@ -69,9 +67,7 @@ FloorItem *FloorItemManager::findByCoordinates(int x, int y)
     for (i = mFloorItems.begin(); i != mFloorItems.end(); i++)
     {
         if ((*i)->getX() == x && (*i)->getY() == y)
-        {
             return *i;
-        }
     }
 
     return NULL;
