@@ -275,7 +275,7 @@ static void init_engine(const Options &options)
     if ((mkdir(homeDir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0) &&
             (errno != EEXIST))
 #else
-    // Checking if /home/user/.Aethyra folder exists.
+    // Checking if /home/user/.aethyra folder exists.
     if ((mkdir(homeDir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0) &&
             (errno != EEXIST))
 #endif
@@ -299,8 +299,8 @@ static void init_engine(const Options &options)
     logger->log("Initializing SDL...");
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
     {
-        std::cerr << _("Could not initialize SDL: ") <<
-            SDL_GetError() << std::endl;
+        std::cerr << _("Could not initialize SDL: ") << SDL_GetError()
+                  << std::endl;
         exit(1);
     }
     atexit(SDL_Quit);
@@ -409,7 +409,7 @@ static void init_engine(const Options &options)
 #endif
 
 #ifdef USE_OPENGL
-    bool useOpenGL = (config.getValue("opengl", 0) == 1);
+    bool useOpenGL = (bool) config.getValue("opengl", 0) == 1;
 
     // Setup image loading for the right image format
     Image::setLoadAsOpenGL(useOpenGL);
@@ -530,11 +530,11 @@ static void printHelp()
 static void printVersion()
 {
 #ifdef PACKAGE_VERSION
-    std::cout << _("Aethyra version ") << PACKAGE_VERSION <<
-        std::endl;
+    std::cout << _("Aethyra version ") << PACKAGE_VERSION << std::endl;
 #else
-    std::cout << _("Aethyra version ") <<
-             _("(local build?, PACKAGE_VERSION is not defined)") << std::endl;
+    std::cout << _("Aethyra version ")
+              << _("(local build?, PACKAGE_VERSION is not defined)")
+              << std::endl;
 #endif
 }
 
@@ -827,7 +827,7 @@ int main(int argc, char *argv[])
         loginData.password = options.password;
 
     loginData.hostname = config.getValue("host", "www.aethyra.org");
-    loginData.port = (short)config.getValue("port", 21001);
+    loginData.port = (short) config.getValue("port", 21001);
     loginData.remember = config.getValue("remember", 0);
     loginData.registerLogin = false;
 
@@ -838,8 +838,8 @@ int main(int argc, char *argv[])
     Wallpaper::loadWallpapers();
 
     int screenWidth = (int) config.getValue("screenwidth", defaultScreenWidth);
-    int screenHeight = static_cast<int>(config.getValue("screenheight",
-                                                        defaultScreenHeight));
+    int screenHeight = (int) config.getValue("screenheight",
+                                             defaultScreenHeight);
 
     std::string wallpaperName = Wallpaper::getWallpaper(screenWidth,
                                                         screenHeight);
@@ -891,7 +891,7 @@ int main(int argc, char *argv[])
         }
 
         if (graphics->getWidth() > login_wallpaper->getWidth() ||
-                graphics->getHeight() > login_wallpaper->getHeight())
+            graphics->getHeight() > login_wallpaper->getHeight())
         {
             graphics->setColor(gcn::Color(255, 255, 255));
             graphics->fillRectangle(gcn::Rectangle(
@@ -913,20 +913,22 @@ int main(int argc, char *argv[])
                     Wallpaper::loadWallpapers();
 
                     {
-                    int screenWidth = (int) config.getValue("screenwidth",
-                                                        defaultScreenWidth);
-                    int screenHeight = (int) config.getValue("screenheight",
-                                                        defaultScreenHeight);
+                        const int screenWidth = (int) config.getValue(
+                                                      "screenwidth",
+                                                      defaultScreenWidth);
+                        const int screenHeight = (int) config.getValue(
+                                                       "screenheight",
+                                                       defaultScreenHeight);
 
-                    Image *temp = ResourceManager::getInstance()
-                                ->getImage(Wallpaper::getWallpaper(screenWidth,
-                                                        screenHeight));
+                        Image *temp = ResourceManager::getInstance()->getImage(
+                                          Wallpaper::getWallpaper(screenWidth,
+                                                                  screenHeight));
 
-                    if (temp)
-                    {
-                        login_wallpaper->decRef();
-                        login_wallpaper = temp;
-                    }
+                        if (temp)
+                        {
+                            login_wallpaper->decRef();
+                            login_wallpaper = temp;
+                        }
                     }
                     break;
 
@@ -963,9 +965,7 @@ int main(int argc, char *argv[])
 
                     // Add customdata directory
                     ResourceManager::getInstance()->searchAndAddArchives(
-                        "customdata/",
-                        "zip",
-                        false);
+                        "customdata/", "zip", false);
 
                     // Load XML databases
                     EffectDB::load();
@@ -1020,8 +1020,8 @@ int main(int argc, char *argv[])
                                                                 nextState);
                         positionDialog(currentDialog, screenWidth,
                                                       screenHeight);
-                        if (options.chooseDefault
-                                || !options.playername.empty())
+                        if (options.chooseDefault ||
+                           !options.playername.empty())
                         {
                             ((ServerSelectDialog*) currentDialog)->action(
                                 gcn::ActionEvent(NULL, "ok"));
@@ -1036,8 +1036,8 @@ int main(int argc, char *argv[])
                                                          GENDER_MALE);
                     positionDialog(currentDialog, screenWidth, screenHeight);
 
-                    if (((CharSelectDialog*) currentDialog)->
-                            selectByName(options.playername))
+                    if (((CharSelectDialog*) currentDialog)->selectByName(
+                            options.playername))
                         options.chooseDefault = true;
                     else
                         ((CharSelectDialog*) currentDialog)->selectByName(

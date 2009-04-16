@@ -51,7 +51,8 @@ class Particle : public Sprite
         static int fastPhysics;          /**< Mode of squareroot calculation */
         static int particleCount;        /**< Current number of particles */
         static int maxCount;             /**< Maximum number of particles */
-        static int emitterSkip;          /**< Duration of pause between two emitter updates in ticks */
+        static int emitterSkip;          /**< Duration of pause between two
+                                              emitter updates in ticks */
 
         /**
          * Constructor.
@@ -85,13 +86,12 @@ class Particle : public Sprite
         /**
          * Draws the particle image.
          */
-        virtual void draw(Graphics *graphics, int offsetX, int offsetY) const;
+        virtual void draw(Graphics *graphics, int offsetX, int offsetY) const {}
 
         /**
          * Necessary for sorting with the other sprites.
          */
-        virtual int getPixelY() const
-        { return (int) (mPos.y + mPos.z) - 64; }
+        virtual int getPixelY() const { return (int) (mPos.y + mPos.z) - 64; }
 
         /**
          * Sets the map the particle is on.
@@ -128,8 +128,7 @@ class Particle : public Sprite
         /**
          * Sets the position in 3 dimensional space in pixels relative to map.
          */
-        void moveTo(const Vector &pos)
-        { moveBy (pos - mPos);}
+        void moveTo(const Vector &pos) { moveBy (pos - mPos);}
 
         /**
          * Sets the position in 2 dimensional space in pixels relative to map.
@@ -139,8 +138,7 @@ class Particle : public Sprite
         /**
          * Returns the particle position.
          */
-        const Vector& getPosition() const
-        { return mPos; }
+        const Vector& getPosition() const { return mPos; }
 
         /**
          * Changes the particle position relative
@@ -157,21 +155,18 @@ class Particle : public Sprite
          * Sets the age of the pixel in game ticks where the particle has
          * faded in completely.
          */
-        void setFadeOut(int fadeOut)
-        { mFadeOut = fadeOut; }
+        void setFadeOut(int fadeOut) { mFadeOut = fadeOut; }
 
         /**
          * Sets the remaining particle lifetime where the particle starts to
          * fade out.
          */
-        void setFadeIn(int fadeIn)
-        { mFadeIn = fadeIn; }
+        void setFadeIn(int fadeIn) { mFadeIn = fadeIn; }
 
         /**
          * Sets the alpha value of the particle
          */
-        void setAlpha(float alpha)
-        { mAlpha = alpha; }
+        void setAlpha(float alpha) { mAlpha = alpha; }
 
         /**
          * Sets the sprite iterator of the particle on the current map to make
@@ -183,8 +178,7 @@ class Particle : public Sprite
         /**
          * Gets the sprite iterator of the particle on the current map.
          */
-        std::list<Sprite*>::iterator
-        getSpriteIterator() const
+        std::list<Sprite*>::iterator getSpriteIterator() const
         { return mSpriteIterator; }
 
         /**
@@ -196,33 +190,28 @@ class Particle : public Sprite
         /**
          * Sets the downward acceleration.
          */
-        void setGravity(float gravity)
-        { mGravity = gravity; }
+        void setGravity(float gravity) { mGravity = gravity; }
 
         /**
          * Sets the ammount of random vector changes
          */
-        void setRandomness(int r)
-        { mRandomness = r; }
+        void setRandomness(int r) { mRandomness = r; }
 
         /**
          * Sets the ammount of velocity particles retain after
          * hitting the ground.
          */
-        void setBounce(float bouncieness)
-        { mBounce = bouncieness; }
+        void setBounce(float bouncieness) { mBounce = bouncieness; }
 
         /**
          * Sets the flag if the particle is supposed to be moved by its parent
          */
-        void setFollow(bool follow)
-        { mFollow = follow; }
+        void setFollow(bool follow) { mFollow = follow; }
 
         /**
          * Gets the flag if the particle is supposed to be moved by its parent
          */
-        bool doesFollow()
-        { return mFollow; }
+        bool doesFollow() { return mFollow; }
 
         /**
          * Makes the particle move toward another particle with a
@@ -236,60 +225,71 @@ class Particle : public Sprite
          * particle before it is destroyed. Does only make sense after a target
          * particle has been set using setDestination.
          */
-        void setDieDistance(float dist)
-        { mInvDieDistance = 1.0f / dist; }
+        void setDieDistance(float dist) { mInvDieDistance = 1.0f / dist; }
 
-        bool isAlive()
-        { return mAlive; }
+        bool isAlive() { return mAlive; }
 
         /**
          * Determines whether the particle and its children are all dead
          */
-        bool isExtinct()
-        { return !isAlive() && mChildParticles.empty(); }
+        bool isExtinct() { return !isAlive() && mChildParticles.empty(); }
 
         /**
          * Manually marks the particle for deletion.
          */
-        void kill()
-        { mAlive = false; mAutoDelete = true; }
+        void kill() { mAlive = false; mAutoDelete = true; }
 
         /**
          * After calling this function the particle will only request
          * deletion when kill() is called
          */
-        void disableAutoDelete()
-        { mAutoDelete = false; }
+        void disableAutoDelete() { mAutoDelete = false; }
 
     protected:
-        bool mAlive;                /**< Is the particle supposed to be drawn and updated?*/
+        bool mAlive;                /**< Is the particle supposed to be drawn
+                                         and updated?*/
         Vector mPos;                /**< Position in pixels relative to map. */
         int mLifetimeLeft;          /**< Lifetime left in game ticks*/
         int mLifetimePast;          /**< Age of the particle in game ticks*/
-        int mFadeOut;               /**< Lifetime in game ticks left where fading out begins*/
-        int mFadeIn;                /**< Age in game ticks where fading in is finished*/
-        float mAlpha;               /**< Opacity of the graphical representation of the particle */
+        int mFadeOut;               /**< Lifetime in game ticks left where
+                                         fading out begins*/
+        int mFadeIn;                /**< Age in game ticks where fading in is
+                                         finished*/
+        float mAlpha;               /**< Opacity of the graphical representation
+                                         of the particle */
 
     private:
         // generic properties
-        bool mAutoDelete;           /**< May the particle request its deletion by the parent particle? */
+        bool mAutoDelete;           /**< May the particle request its deletion
+                                         by the parent particle? */
         Map *mMap;                  /**< Map the particle is on. */
-        std::list<Sprite*>::iterator mSpriteIterator;   /**< iterator of the particle on the current map */
+        std::list<Sprite*>::iterator mSpriteIterator;
+                                    /**< iterator of the particle on the current
+                                         map */
         Emitters mChildEmitters;    /**< List of child emitters. */
-        Particles mChildParticles;  /**< List of particles controlled by this particle */
+        Particles mChildParticles;  /**< List of particles controlled by this
+                                         particle */
 
         // dynamic particle
         Vector mVelocity;           /**< Speed in pixels per game-tick. */
-        float mGravity;             /**< Downward acceleration in pixels per game-tick. */
+        float mGravity;             /**< Downward acceleration in pixels per
+                                         game-tick. */
         int mRandomness;            /**< Ammount of random vector change */
-        float mBounce;              /**< How much the particle bounces off when hitting the ground */
-        bool mFollow;               /**< is this particle moved when its parent particle moves? */
+        float mBounce;              /**< How much the particle bounces off when
+                                         hitting the ground */
+        bool mFollow;               /**< is this particle moved when its parent
+                                         particle moves? */
 
         // follow-point particles
-        Particle *mTarget;          /**< The particle that attracts this particle*/
-        float mAcceleration;        /**< Acceleration towards the target particle in pixels per game-tick²*/
-        float mInvDieDistance;      /**< Distance in pixels from the target particle that causes the destruction of the particle*/
-        float mMomentum;            /**< How much speed the particle retains after each game tick*/
+        Particle *mTarget;          /**< The particle that attracts this
+                                         particle */
+        float mAcceleration;        /**< Acceleration towards the target
+                                         particle in pixels per game-tick² */
+        float mInvDieDistance;      /**< Distance in pixels from the target
+                                         particle that causes the destruction of
+                                         the particle*/
+        float mMomentum;            /**< How much speed the particle retains
+                                         after each game tick*/
 };
 
 extern Particle *particleEngine;

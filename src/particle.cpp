@@ -70,6 +70,7 @@ Particle::Particle(Map *map):
     mMomentum(1.0f)
 {
     Particle::particleCount++;
+
     if (mMap)
         setSpriteIterator(mMap->addSprite(this));
 }
@@ -79,6 +80,7 @@ Particle::~Particle()
     // Remove from map sprite list
     if (mMap)
         mMap->removeSprite(mSpriteIterator);
+
     // Delete child emitters and child particles
     clear();
     Particle::particleCount--;
@@ -91,10 +93,6 @@ void Particle::setupEngine()
     Particle::emitterSkip = (int)config.getValue("particleEmitterSkip", 1) + 1;
     disableAutoDelete();
     logger->log("Particle engine set up");
-}
-
-void Particle::draw(Graphics *, int, int) const
-{
 }
 
 bool Particle::update()
@@ -111,9 +109,7 @@ bool Particle::update()
     {
         //calculate particle movement
         if (mMomentum != 1.0f)
-        {
             mVelocity *= mMomentum;
-        }
 
         if (mTarget && mAcceleration != 0.0f)
         {
@@ -140,9 +136,8 @@ bool Particle::update()
             if (invHypotenuse)
             {
                 if (mInvDieDistance > 0.0f && invHypotenuse > mInvDieDistance)
-                {
                     mAlive = false;
-                }
+
                 float accFactor = invHypotenuse * mAcceleration;
                 mVelocity -= dist * accFactor;
             }
@@ -164,9 +159,8 @@ bool Particle::update()
 
         // Update other stuff
         if (mLifetimeLeft > 0)
-        {
             mLifetimeLeft--;
-        }
+
         mLifetimePast++;
 
         if (mPos.z > PARTICLE_SKY || mPos.z < 0.0f)
@@ -184,7 +178,7 @@ bool Particle::update()
         }
 
         // Update child emitters
-        if ((mLifetimePast-1)%Particle::emitterSkip == 0)
+        if ((mLifetimePast - 1) % Particle::emitterSkip == 0)
         {
             for (EmitterIterator e = mChildEmitters.begin();
                  e != mChildEmitters.end(); e++)
@@ -209,9 +203,8 @@ bool Particle::update()
     {
         //move particle with its parent if desired
         if ((*p)->doesFollow())
-        {
             (*p)->moveBy(change);
-        }
+
         //update particle
         if ((*p)->update())
         {
@@ -224,12 +217,7 @@ bool Particle::update()
         }
     }
 
-    if (!mAlive && mChildParticles.empty() && mAutoDelete)
-    {
-        return false;
-    }
-
-    return true;
+    return (mAlive || !mChildParticles.empty() || !mAutoDelete);
 }
 
 void Particle::moveBy(const Vector &change)
@@ -239,9 +227,7 @@ void Particle::moveBy(const Vector &change)
          p != mChildParticles.end(); p++)
     {
         if ((*p)->doesFollow())
-        {
             (*p)->moveBy(change);
-        }
     }
 }
 
@@ -300,8 +286,7 @@ Particle* Particle::addEffect(const std::string &particleEffectFile,
         float offsetY = XML::getFloatProperty(effectChildNode, "position-y", 0);
         float offsetZ = XML::getFloatProperty(effectChildNode, "position-z", 0);
         Vector position (mPos.x + (float)pixelX + offsetX,
-                         mPos.y + (float)pixelY + offsetY,
-                         mPos.z + offsetZ);
+                         mPos.y + (float)pixelY + offsetY, mPos.z + offsetZ);
         newParticle->moveTo(position);
 
         int lifetime = XML::getProperty(effectChildNode, "lifetime", -1);
@@ -344,9 +329,8 @@ Particle *Particle::addTextSplashEffect(const std::string &text, int x, int y,
     return newParticle;
 }
 
-Particle *Particle::addTextRiseFadeOutEffect(const std::string &text,
-                                             int x, int y,
-                                             const gcn::Color *color,
+Particle *Particle::addTextRiseFadeOutEffect(const std::string &text, int x,
+                                             int y, const gcn::Color *color,
                                              gcn::Font *font, bool outline)
 {
     Particle *newParticle = new TextParticle(mMap, text, color, font, outline);
@@ -365,6 +349,7 @@ Particle *Particle::addTextRiseFadeOutEffect(const std::string &text,
 void Particle::setMap(Map *map)
 {
     mMap = map;
+
     if (mMap)
         setSpriteIterator(mMap->addSprite(this));
 }

@@ -52,8 +52,6 @@
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
 
-extern Graphics *graphics;
-
 Setup_Video::Setup_Video():
     mFullScreenEnabled(config.getValue("screen", false)),
     mOpenGLEnabled(config.getValue("opengl", false)),
@@ -330,14 +328,12 @@ int Setup_Video::updateSlider(gcn::Slider *slider, gcn::TextField *field,
     int value;
     std::stringstream temp(field->getText());
     temp >> value;
+
     if (value < slider->getScaleStart())
-    {
         value = (int) slider->getScaleStart();
-    }
     else if (value > slider->getScaleEnd())
-    {
         value = (int) slider->getScaleEnd();
-    }
+
     field->setText(toString(value));
     slider->setValue(value);
     config.setValue(configName, value);
@@ -364,13 +360,14 @@ void Setup_Video::cancel()
     config.setValue("customcursor", mCustomCursorEnabled ? true : false);
     config.setValue("speech", mSpeechMode);
     config.setValue("showownname", mNameEnabled ? true : false);
-    if (player_node)
-        player_node->mUpdateName = true;
     config.setValue("guialpha", mOpacity);
     config.setValue("opengl", mOpenGLEnabled ? true : false);
     config.setValue("showpickupchat", mPickupChatEnabled ? true : false);
     config.setValue("showpickupparticle", mPickupParticleEnabled ?
                     true : false);
+
+    if (player_node)
+        player_node->mUpdateName = true;
 }
 
 void Setup_Video::action(const gcn::ActionEvent &event)
@@ -514,13 +511,10 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     else if (event.getId() == "fpslimitcheckbox")
     {
         if (mFpsCheckBox->isSelected())
-        {
             mFps = (int) mFpsSlider->getValue();
-        }
         else
-        {
             mFps = 0;
-        }
+
         mFpsField->setEnabled(mFps > 0);
         mFpsField->setText(toString(mFps));
         mFpsSlider->setValue(mFps);
@@ -543,13 +537,10 @@ void Setup_Video::keyPressed(gcn::KeyEvent &event)
     if (tempFps >> mFps)
     {
         if (mFps < 10)
-        {
             mFps = 10;
-        }
         else if (mFps > 120)
-        {
             mFps = 120;
-        }
+
         mFpsField->setText(toString(mFps));
         mFpsSlider->setValue(mFps);
     }

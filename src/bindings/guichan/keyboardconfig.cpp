@@ -130,17 +130,13 @@ void KeyboardConfig::retrieve()
 void KeyboardConfig::store()
 {
     for (int i = 0; i < KEY_TOTAL; i++)
-    {
         config.setValue(mKey[i].configField, mKey[i].value);
-    }
 }
 
 void KeyboardConfig::makeDefault()
 {
     for (int i = 0; i < KEY_TOTAL; i++)
-    {
         mKey[i].value = mKey[i].defaultValue;
-    }
 }
 
 bool KeyboardConfig::hasConflicts()
@@ -158,8 +154,7 @@ bool KeyboardConfig::hasConflicts()
             if (!((((i >= KEY_SHORTCUT_1) && (i <= KEY_SHORTCUT_12)) &&
                    ((j >= KEY_EMOTE_1) && (j <= KEY_EMOTE_12))) ||
                    ((i == KEY_TOGGLE_CHAT) && (j == KEY_OK))) &&
-                   (mKey[i].value == mKey[j].value)
-               )
+                   (mKey[i].value == mKey[j].value))
             {
                 return true;
             }
@@ -178,30 +173,24 @@ int KeyboardConfig::getKeyIndex(int keyValue) const
     for (int i = 0; i < KEY_TOTAL; i++)
     {
         if (keyValue == mKey[i].value)
-        {
             return i;
-        }
     }
     return KEY_NO_VALUE;
 }
-
 
 int KeyboardConfig::getKeyEmoteOffset(int keyValue) const
 {
     for (int i = KEY_EMOTE_1; i <= KEY_EMOTE_12; i++)
     {
         if (keyValue == mKey[i].value)
-        {
             return 1 + i - KEY_EMOTE_1;
-        }
     }
     return 0;
 }
 
 bool KeyboardConfig::isKeyActive(int index)
 {
-    if (!mActiveKeys) return false;
-    return mActiveKeys[mKey[index].value];
+    return !mActiveKeys ? false : mActiveKeys[mKey[index].value];
 }
 
 void KeyboardConfig::refreshActiveKeys()
