@@ -87,8 +87,8 @@ Setup_Players::Setup_Players():
                                            RELATION_CHOICE_COLUMN_WIDTH);
     mPlayerTitleTable->setBackgroundColor(gcn::Color(0xbf, 0xbf, 0xbf));
 
-    gcn::ListModel *ignoreChoices = new IgnoreChoicesListModel;
-    mIgnoreActionChoicesBox = new DropDown(ignoreChoices);
+    mIgnoreActionChoicesModel = new IgnoreChoicesListModel();
+    mIgnoreActionChoicesBox = new DropDown(mIgnoreActionChoicesModel);
 
     for (int i = 0; i < COLUMNS_NR; i++)
     {
@@ -143,6 +143,7 @@ Setup_Players::Setup_Players():
 Setup_Players::~Setup_Players(void)
 {
     player_relations.removeListener(this);
+    delete mIgnoreActionChoicesModel;
 }
 
 void Setup_Players::reset()
