@@ -27,7 +27,6 @@
 #include "../bindings/guichan/gui.h"
 
 #include "../bindings/guichan/widgets/button.h"
-#include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/textbox.h"
 
 #include "../utils/gettext.h"
@@ -39,16 +38,10 @@ ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
     mTextBox = new TextBox();
     mTextBox->setEditable(false);
     mTextBox->setOpaque(false);
+    mTextBox->setTextWrapped(msg, 260);
 
-    mTextArea = new ScrollArea(mTextBox);
     gcn::Button *yesButton = new Button(_("Yes"), "yes", this);
     gcn::Button *noButton = new Button(_("No"), "no", this);
-
-    mTextArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
-    mTextArea->setVerticalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
-    mTextArea->setOpaque(false);
-
-    mTextBox->setTextWrapped(msg, 260);
 
     const int numRows = mTextBox->getNumberOfRows();
     const int inWidth = yesButton->getWidth() + noButton->getWidth() + 
@@ -64,8 +57,7 @@ ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
 
     setContentSize(mTextBox->getMinWidth() + fontHeight, height + fontHeight +
                    noButton->getHeight());
-    mTextArea->setDimension(gcn::Rectangle(4, 5, width + 2 * getPadding(),
-                                           height + getPadding()));
+    mTextBox->setPosition(getPadding(), getPadding());
 
     // 8 is the padding that GUIChan adds to button widgets
     // (top and bottom combined)
@@ -73,7 +65,7 @@ ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
     noButton->setPosition(yesButton->getX() + inWidth - noButton->getWidth(),
                           height + 8);
 
-    add(mTextArea);
+    add(mTextBox);
     add(yesButton);
     add(noButton);
 

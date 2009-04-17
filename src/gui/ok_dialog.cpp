@@ -27,7 +27,6 @@
 #include "../bindings/guichan/gui.h"
 
 #include "../bindings/guichan/widgets/button.h"
-#include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/textbox.h"
 
 #include "../utils/gettext.h"
@@ -39,15 +38,9 @@ OkDialog::OkDialog(const std::string &title, const std::string &msg,
     mTextBox = new TextBox();
     mTextBox->setEditable(false);
     mTextBox->setOpaque(false);
-
-    mTextArea = new ScrollArea(mTextBox);
-    okButton = new Button(_("Ok"), "ok", this);
-
-    mTextArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
-    mTextArea->setVerticalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
-    mTextArea->setOpaque(false);
-
     mTextBox->setTextWrapped(msg, 260);
+
+    okButton = new Button(_("Ok"), "ok", this);
 
     const int numRows = mTextBox->getNumberOfRows();
     const int fontHeight = getFont()->getHeight();
@@ -61,14 +54,13 @@ OkDialog::OkDialog(const std::string &title, const std::string &msg,
 
     setContentSize(mTextBox->getMinWidth() + fontHeight, height +
                    fontHeight + okButton->getHeight());
-    mTextArea->setDimension(gcn::Rectangle(4, 5, width + 2 * getPadding(),
-                                           height + getPadding()));
+    mTextBox->setPosition(getPadding(), getPadding());
 
     // 8 is the padding that GUIChan adds to button widgets
     // (top and bottom combined)
     okButton->setPosition((width - okButton->getWidth()) / 2, height + 8);
 
-    add(mTextArea);
+    add(mTextBox);
     add(okButton);
 
     setLocationRelativeTo(getParent());

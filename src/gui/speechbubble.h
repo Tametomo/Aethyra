@@ -27,7 +27,6 @@
 
 #include "../bindings/guichan/widgets/popup.h"
 
-class ScrollArea;
 class TextBox;
 
 class SpeechBubble : public Popup
@@ -63,7 +62,6 @@ class SpeechBubble : public Popup
         std::string mText;
         gcn::Label *mCaption;
         TextBox *mSpeechBox;
-        ScrollArea *mSpeechArea;
 };
 
 #endif

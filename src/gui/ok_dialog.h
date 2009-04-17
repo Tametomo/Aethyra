@@ -27,7 +27,6 @@
 
 #include "../bindings/guichan/widgets/window.h"
 
-class ScrollArea;
 class TextBox;
 
 /**
@@ -44,7 +43,7 @@ class OkDialog : public Window, public gcn::ActionListener
          * @see Window::Window
          */
         OkDialog(const std::string &title, const std::string &msg,
-                Window *parent = NULL);
+                 Window *parent = NULL);
 
         unsigned int getNumRows();
 
@@ -55,7 +54,6 @@ class OkDialog : public Window, public gcn::ActionListener
 
     private:
         TextBox *mTextBox;
-        ScrollArea *mTextArea;
         gcn::Button *okButton;
 };
 

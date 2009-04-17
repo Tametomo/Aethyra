@@ -29,7 +29,6 @@
 #include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/graphics.h"
 
-#include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/textbox.h"
 
 SpeechBubble::SpeechBubble():
@@ -48,14 +47,8 @@ SpeechBubble::SpeechBubble():
     mSpeechBox->setOpaque(false);
     mSpeechBox->setTextColor(&guiPalette->getColor(Palette::CHAT));
 
-    mSpeechArea = new ScrollArea(mSpeechBox);
-
-    mSpeechArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
-    mSpeechArea->setVerticalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
-    mSpeechArea->setOpaque(false);
-
     add(mCaption);
-    add(mSpeechArea);
+    add(mSpeechBox);
 
     loadPopupConfiguration();
 }
@@ -95,7 +88,7 @@ void SpeechBubble::setText(std::string text, bool showName)
     const int yPos = ((getHeight() - height) / 2) + nameHeight;
 
     mCaption->setPosition(xPos, getPadding());
-    mSpeechArea->setDimension(gcn::Rectangle(xPos, yPos, width, height));
+    mSpeechBox->setPosition(xPos, yPos);
 }
 
 unsigned int SpeechBubble::getNumRows() const

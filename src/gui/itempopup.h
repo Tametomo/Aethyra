@@ -27,7 +27,6 @@
 #include "../bindings/guichan/widgets/popup.h"
 
 class ItemInfo;
-class ScrollArea;
 class TextBox;
 
 class ItemPopup : public Popup
@@ -74,9 +73,6 @@ class ItemPopup : public Popup
         TextBox *mItemEffect;
         TextBox *mItemWeight;
         std::string mItemType;
-        ScrollArea *mItemDescScroll;
-        ScrollArea *mItemEffectScroll;
-        ScrollArea *mItemWeightScroll;
 
         static gcn::Color getColor(const std::string& type);
 };
