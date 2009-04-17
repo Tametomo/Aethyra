@@ -445,226 +445,10 @@ void Game::handleInput()
 
             const int tKey = keyboard.getKeyIndex(event.key.keysym.sym);
 
-            if (keyboard.isKeyActive(keyboard.KEY_OK))
-            {
-                okKeyUsed = true;
-                // Quit with OK key if there's an exit confirm dialog
-                if (exitConfirm)
-                    done = true;
-                // Close the death notice window with OK key if there is one
-                else if (deathNotice)
-                    deathNotice->action(gcn::ActionEvent(NULL, "ok"));
-                // Close the weight notice window with OK key if there is one
-                else if (weightNotice)
-                    weightNotice->action(gcn::ActionEvent(NULL, "ok"));
-                // Close the Browser if opened
-                else if (helpWindow->isVisible())
-                    helpWindow->setVisible(false);
-                // Close the config window, cancelling changes if opened
-                else if (setupWindow->isVisible())
-                    setupWindow->action(gcn::ActionEvent(NULL, "Cancel"));
-                // Submits the text and proceeds to the next dialog
-                else if (npcStringDialog->isVisible())
-                    npcStringDialog->action(gcn::ActionEvent(NULL, "ok"));
-                // Proceed to the next dialog option, or close the window
-                else if (npcTextDialog->isVisible())
-                    npcTextDialog->action(gcn::ActionEvent(NULL, "ok"));
-                // Choose the currently highlighted dialogue option
-                else if (npcListDialog->isVisible())
-                    npcListDialog->action(gcn::ActionEvent(NULL, "ok"));
-                // Submits the text and proceeds to the next dialog
-                else if (npcIntegerDialog->isVisible())
-                    npcIntegerDialog->action(gcn::ActionEvent(NULL, "ok"));
-                else
-                    okKeyUsed = false;
-            }
             if (keyboard.isKeyActive(keyboard.KEY_EMOTE))
             {
                 int emotion = keyboard.getKeyEmoteOffset(event.key.keysym.sym);
                 emoteShortcut->useEmote(emotion);
-            }
-            if (!chatWindow->isInputFocused())
-            {
-                if (keyboard.isKeyActive(keyboard.KEY_TOGGLE_CHAT))
-                {
-                    // Only allow chat input to steal focus when it isn't equal
-                    // to the GUIChan accept input key, or when it is, make sure
-                    // that there's no key use overlap.
-                    if (keyboard.getKeyValue(KeyboardConfig::KEY_TOGGLE_CHAT) !=
-                        keyboard.getKeyValue(KeyboardConfig::KEY_OK) ||
-                        !okKeyUsed)
-                    {
-                        chatWindow->requestChatFocus();
-                        used = true;
-                    }
-                }
-                // Do not activate shortcuts if tradewindow is visible
-                if (!tradeWindow->isVisible() && !used &&
-                    tKey >= KeyboardConfig::KEY_SHORTCUT_1 &&
-                    tKey <= KeyboardConfig::KEY_SHORTCUT_12)
-                {
-                    itemShortcut->useItem(tKey - KeyboardConfig::KEY_SHORTCUT_1);
-                }
-
-                // Player actions
-                if (player_node->mAction != Being::DEAD && current_npc == 0)
-                {
-                    Being *target = player_node->getTarget();
-                    const Uint16 x = player_node->mX;
-                    const Uint16 y = player_node->mY;
-
-                    switch (tKey)
-                    {
-                        case KeyboardConfig::KEY_PICKUP:
-                            {
-                                Uint16 x = player_node->mX;
-                                Uint16 y = player_node->mY;
-                                FloorItem *item =
-                                    floorItemManager->findByCoordinates(x, y);
-
-                                // If none below the player, try the tile in
-                                // front of the player
-                                if (!item)
-                                {
-                                    if (player_node->getDirection() & Being::UP)
-                                        y--;
-                                    if (player_node->getDirection() & Being::DOWN)
-                                        y++;
-                                    if (player_node->getDirection() & Being::LEFT)
-                                        x--;
-                                    if (player_node->getDirection() & Being::RIGHT)
-                                        x++;
-
-                                    item =
-                                      floorItemManager->findByCoordinates(x, y);
-                                }
-
-                                if (item)
-                                    player_node->pickUp(item);
-                                used = true;
-                            }
-                            break;
-                        // Player sit action
-                        case KeyboardConfig::KEY_SIT:
-                            player_node->toggleSit();
-                            used = true;
-                            break;
-                    }
-
-                    if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
-                    {
-                        // Target the nearest player
-                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER))
-                            target = beingManager->findNearestLivingBeing(x, y,
-                                                              20, Being::PLAYER);
-
-                        // Target the nearest monster
-                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST) ||
-                           (joystick && joystick->buttonPressed(3)))
-                        {
-                            target = beingManager->findNearestLivingBeing(x, y,
-                                                              20, Being::MONSTER);
-                        }
-
-                        // Target the nearest npc
-                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_NPC))
-                            target = beingManager->findNearestLivingBeing(x, y,
-                                                              20, Being::NPC);
-
-                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER) || 
-                            keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST) ||
-                            keyboard.isKeyActive(keyboard.KEY_TARGET_NPC) ||
-                           (joystick && joystick->buttonPressed(3)))
-                            player_node->setTarget(target);
-
-                        if ((keyboard.isKeyActive(keyboard.KEY_ATTACK) ||
-                            (joystick && joystick->buttonPressed(0))) && 
-                            target && target->getType() != Being::NPC)
-                            player_node->attack(target, true);
-                    }
-                    // Stop attacking
-                    else
-                    {
-                        player_node->stopAttack();
-                    }
-
-                    // Talk to the nearest NPC
-                    if (keyboard.isKeyActive(keyboard.KEY_TALK))
-                    {
-                        if (!target)
-                            target = beingManager->findNearestLivingBeing(x, y,
-                                                                  20, Being::NPC);
-
-                        if (target && target->getType() == Being::NPC)
-                            dynamic_cast<NPC*>(target)->talk();
-                    }
-
-                    if (joystick)
-                    {
-                        if (joystick->buttonPressed(1))
-                        {
-                            FloorItem *item =
-                                floorItemManager->findByCoordinates(x, y);
-
-                            if (item)
-                                player_node->pickUp(item);
-                        }
-                        else if (joystick->buttonPressed(2))
-                        {
-                            player_node->toggleSit();
-                        }
-                    }
-                }
-
-                switch (tKey)
-                {
-                    // Hide certain windows
-                    case KeyboardConfig::KEY_HIDE_WINDOWS:
-                        statusWindow->setVisible(false);
-                        inventoryWindow->setVisible(false);
-                        equipmentWindow->setVisible(false);
-                        skillDialog->setVisible(false);
-                        chatWindow->setVisible(false);
-                        itemShortcutWindow->setVisible(false);
-                        setupWindow->setVisible(false);
-                        debugWindow->setVisible(false);
-                        emoteWindow->setVisible(false);
-                        helpWindow->setVisible(false);
-                        emoteShortcutWindow->setVisible(false);
-                        break;
-                    // Screenshot (picture, hence the p)
-                    case KeyboardConfig::KEY_SCREENSHOT:
-                        saveScreenshot();
-                        used = true;
-                        break;
-                    // Find path to mouse (debug purpose)
-                    case KeyboardConfig::KEY_PATHFIND:
-                        viewport->toggleDebugPath();
-                        used = true;
-                        break;
-                    // Toggle accepting of incoming trade requests
-                    case KeyboardConfig::KEY_TRADE:
-                        {
-                            unsigned int deflt = player_relations.getDefault();
-                            if (deflt & PlayerRelation::TRADE)
-                            {
-                                chatWindow->chatLog(_("Ignoring incoming trade "
-                                                      "requests"), BY_SERVER);
-                                deflt &= ~PlayerRelation::TRADE;
-                            }
-                            else
-                            {
-                                chatWindow->chatLog(_("Accepting incoming trade"
-                                                      " requests"), BY_SERVER);
-                                deflt |= PlayerRelation::TRADE;
-                            }
-
-                            player_relations.setDefault(deflt);
-
-                            used = true;
-                        }
-                        break;
-                }
             }
 
             switch (tKey)
@@ -747,6 +531,226 @@ void Game::handleInput()
                     break;
             }
 
+            if (!chatWindow->isInputFocused())
+            {
+                if (keyboard.isKeyActive(keyboard.KEY_OK))
+                {
+                    okKeyUsed = true;
+                    // Quit with OK key if there's an exit confirm dialog
+                    if (exitConfirm)
+                        done = true;
+                    // Close the death notice window with OK key if there is one
+                    else if (deathNotice)
+                        deathNotice->action(gcn::ActionEvent(NULL, "ok"));
+                    // Close the weight notice window with OK key if there is one
+                    else if (weightNotice)
+                        weightNotice->action(gcn::ActionEvent(NULL, "ok"));
+                    // Close the Browser if opened
+                    else if (helpWindow->isVisible())
+                        helpWindow->setVisible(false);
+                    // Close the config window, cancelling changes if opened
+                    else if (setupWindow->isVisible())
+                        setupWindow->action(gcn::ActionEvent(NULL, "Cancel"));
+                    // Submits the text and proceeds to the next dialog
+                    else if (npcStringDialog->isVisible())
+                        npcStringDialog->action(gcn::ActionEvent(NULL, "ok"));
+                    // Proceed to the next dialog option, or close the window
+                    else if (npcTextDialog->isVisible())
+                        npcTextDialog->action(gcn::ActionEvent(NULL, "ok"));
+                    // Choose the currently highlighted dialogue option
+                    else if (npcListDialog->isVisible())
+                        npcListDialog->action(gcn::ActionEvent(NULL, "ok"));
+                    // Submits the text and proceeds to the next dialog
+                    else if (npcIntegerDialog->isVisible())
+                        npcIntegerDialog->action(gcn::ActionEvent(NULL, "ok"));
+                    else
+                        okKeyUsed = false;
+                }
+
+                if (keyboard.isKeyActive(keyboard.KEY_TOGGLE_CHAT))
+                {
+                    // Only allow chat input to steal focus when it isn't equal
+                    // to the GUIChan accept input key, or when it is, make sure
+                    // that there's no key use overlap.
+                    if (keyboard.getKeyValue(KeyboardConfig::KEY_TOGGLE_CHAT) !=
+                        keyboard.getKeyValue(KeyboardConfig::KEY_OK) ||
+                        !okKeyUsed)
+                    {
+                        chatWindow->requestChatFocus();
+                        used = true;
+                    }
+                }
+
+                // Player actions
+                if (player_node->mAction != Being::DEAD && current_npc == 0)
+                {
+                    Being *target = player_node->getTarget();
+                    const Uint16 x = player_node->mX;
+                    const Uint16 y = player_node->mY;
+
+                    // Do not activate shortcuts if tradewindow is visible
+                    if (!tradeWindow->isVisible() &&
+                        tKey >= KeyboardConfig::KEY_SHORTCUT_1 &&
+                        tKey <= KeyboardConfig::KEY_SHORTCUT_12)
+                    {
+                        itemShortcut->useItem(tKey -
+                                              KeyboardConfig::KEY_SHORTCUT_1);
+                    }
+
+                    if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
+                    {
+                        // Target the nearest player
+                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER))
+                            target = beingManager->findNearestLivingBeing(x, y,
+                                                              20, Being::PLAYER);
+
+                        // Target the nearest monster
+                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST) ||
+                           (joystick && joystick->buttonPressed(3)))
+                        {
+                            target = beingManager->findNearestLivingBeing(x, y,
+                                                              20, Being::MONSTER);
+                        }
+
+                        // Target the nearest npc
+                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_NPC))
+                            target = beingManager->findNearestLivingBeing(x, y,
+                                                              20, Being::NPC);
+
+                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER) || 
+                            keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST) ||
+                            keyboard.isKeyActive(keyboard.KEY_TARGET_NPC) ||
+                           (joystick && joystick->buttonPressed(3)))
+                            player_node->setTarget(target);
+
+                        if ((keyboard.isKeyActive(keyboard.KEY_ATTACK) ||
+                            (joystick && joystick->buttonPressed(0))) && 
+                            target && target->getType() != Being::NPC)
+                            player_node->attack(target, true);
+                    }
+                    // Stop attacking
+                    else
+                    {
+                        player_node->stopAttack();
+                    }
+
+                    // Talk to the nearest NPC
+                    if (keyboard.isKeyActive(keyboard.KEY_TALK))
+                    {
+                        if (!target)
+                            target = beingManager->findNearestLivingBeing(x, y,
+                                                                  20, Being::NPC);
+
+                        if (target && target->getType() == Being::NPC)
+                            dynamic_cast<NPC*>(target)->talk();
+                    }
+
+                    if (joystick)
+                    {
+                        if (joystick->buttonPressed(1))
+                        {
+                            FloorItem *item =
+                                floorItemManager->findByCoordinates(x, y);
+
+                            if (item)
+                                player_node->pickUp(item);
+                        }
+                        else if (joystick->buttonPressed(2))
+                        {
+                            player_node->toggleSit();
+                        }
+                    }
+
+                    switch (tKey)
+                    {
+                        case KeyboardConfig::KEY_PICKUP:
+                            {
+                                Uint16 x = player_node->mX;
+                                Uint16 y = player_node->mY;
+                                FloorItem *item =
+                                    floorItemManager->findByCoordinates(x, y);
+
+                                // If none below the player, try the tile in
+                                // front of the player
+                                if (!item)
+                                {
+                                    if (player_node->getDirection() & Being::UP)
+                                        y--;
+                                    if (player_node->getDirection() & Being::DOWN)
+                                        y++;
+                                    if (player_node->getDirection() & Being::LEFT)
+                                        x--;
+                                    if (player_node->getDirection() & Being::RIGHT)
+                                        x++;
+
+                                    item =
+                                      floorItemManager->findByCoordinates(x, y);
+                                }
+
+                                if (item)
+                                    player_node->pickUp(item);
+                                used = true;
+                            }
+                            break;
+                        // Player sit action
+                        case KeyboardConfig::KEY_SIT:
+                            player_node->toggleSit();
+                            used = true;
+                            break;
+                    }
+                }
+
+                switch (tKey)
+                {
+                    // Hide certain windows
+                    case KeyboardConfig::KEY_HIDE_WINDOWS:
+                        statusWindow->setVisible(false);
+                        inventoryWindow->setVisible(false);
+                        equipmentWindow->setVisible(false);
+                        skillDialog->setVisible(false);
+                        chatWindow->setVisible(false);
+                        itemShortcutWindow->setVisible(false);
+                        setupWindow->setVisible(false);
+                        debugWindow->setVisible(false);
+                        emoteWindow->setVisible(false);
+                        helpWindow->setVisible(false);
+                        emoteShortcutWindow->setVisible(false);
+                        break;
+                    // Screenshot (picture, hence the p)
+                    case KeyboardConfig::KEY_SCREENSHOT:
+                        saveScreenshot();
+                        used = true;
+                        break;
+                    // Find path to mouse (debug purpose)
+                    case KeyboardConfig::KEY_PATHFIND:
+                        viewport->toggleDebugPath();
+                        used = true;
+                        break;
+                    // Toggle accepting of incoming trade requests
+                    case KeyboardConfig::KEY_TRADE:
+                        {
+                            unsigned int deflt = player_relations.getDefault();
+                            if (deflt & PlayerRelation::TRADE)
+                            {
+                                chatWindow->chatLog(_("Ignoring incoming trade "
+                                                      "requests"), BY_SERVER);
+                                deflt &= ~PlayerRelation::TRADE;
+                            }
+                            else
+                            {
+                                chatWindow->chatLog(_("Accepting incoming trade"
+                                                      " requests"), BY_SERVER);
+                                deflt |= PlayerRelation::TRADE;
+                            }
+
+                            player_relations.setDefault(deflt);
+
+                            used = true;
+                        }
+                        break;
+                }
+            }
+
             if (requestedWindow)
             {
                 requestedWindow->setVisible(!requestedWindow->isVisible());
@@ -757,6 +761,7 @@ void Game::handleInput()
                 used = true;
             }
         }
+
         // Quit event
         else if (event.type == SDL_QUIT)
         {

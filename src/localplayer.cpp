@@ -116,6 +116,9 @@ void LocalPlayer::logic()
            break;
 
         case DEAD:
+           mTargetTime = -1;
+           setTarget(NULL);
+           mLastTarget = -1;
            break;
 
         case HURT:
