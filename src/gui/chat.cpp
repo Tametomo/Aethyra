@@ -352,7 +352,7 @@ void ChatWindow::requestChatFocus()
 
 bool ChatWindow::isInputFocused()
 {
-    return mChatInput->isFocused();
+    return isVisible() ? mChatInput->isFocused() : false;
 }
 
 void ChatWindow::whisper(const std::string &nick, std::string msg)
