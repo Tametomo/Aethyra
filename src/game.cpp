@@ -704,17 +704,17 @@ void Game::handleInput()
                 {
                     // Hide certain windows
                     case KeyboardConfig::KEY_HIDE_WINDOWS:
-                        statusWindow->setVisible(false);
-                        inventoryWindow->setVisible(false);
-                        equipmentWindow->setVisible(false);
-                        skillDialog->setVisible(false);
-                        chatWindow->setVisible(false);
-                        itemShortcutWindow->setVisible(false);
-                        setupWindow->setVisible(false);
-                        debugWindow->setVisible(false);
-                        emoteWindow->setVisible(false);
-                        helpWindow->setVisible(false);
-                        emoteShortcutWindow->setVisible(false);
+                        statusWindow->hide();
+                        inventoryWindow->hide();
+                        equipmentWindow->hide();
+                        skillDialog->hide();
+                        chatWindow->hide();
+                        itemShortcutWindow->hide();
+                        setupWindow->hide();
+                        debugWindow->hide();
+                        emoteWindow->hide();
+                        helpWindow->hide();
+                        emoteShortcutWindow->hide();
                         break;
                     // Screenshot (picture, hence the p)
                     case KeyboardConfig::KEY_SCREENSHOT:

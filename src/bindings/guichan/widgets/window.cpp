@@ -49,7 +49,7 @@ Window::Window(const std::string& caption, bool modal, Window *parent, const std
     mShowTitle(true),
     mModal(modal),
     mCloseButton(false),
-    mSticky(false),
+    mOldVisibility(false),
     mMinWinWidth(100),
     mMinWinHeight(40),
     mMaxWinWidth(graphics->getWidth()),
@@ -130,10 +130,9 @@ void Window::draw(gcn::Graphics *graphics)
     // Draw Close Button
     if (mCloseButton)
     {
-        g->drawImage(mSkin->getCloseImage(),
-            getWidth() - mSkin->getCloseImage()->getWidth() - getPadding(),
-            getPadding()
-        );
+        g->drawImage(mSkin->getCloseImage(), getWidth() -
+                     mSkin->getCloseImage()->getWidth() - getPadding(),
+                     getPadding());
     }
 
     drawChildren(graphics);
@@ -278,16 +277,6 @@ void Window::setCloseButton(bool flag)
 bool Window::isResizable()
 {
     return mGrip;
-}
-
-void Window::setSticky(bool sticky)
-{
-    mSticky = sticky;
-}
-
-void Window::setVisible(bool visible)
-{
-    gcn::Window::setVisible(isSticky() || visible);
 }
 
 void Window::scheduleDelete()
@@ -537,6 +526,15 @@ void Window::setDefaultSize(int defaultX, int defaultY,
     mDefaultY = defaultY;
     mDefaultWidth = defaultWidth;
     mDefaultHeight = defaultHeight;
+}
+
+void Window::hide()
+{
+    const bool oldVisibility = isVisible();
+
+    setVisible(mOldVisibility);
+
+    mOldVisibility = oldVisibility;
 }
 
 void Window::setDefaultSize(int defaultWidth, int defaultHeight,
