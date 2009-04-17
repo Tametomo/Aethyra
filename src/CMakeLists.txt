@@ -177,8 +177,6 @@ SET(SRCS
     gui/chat.h
     gui/confirm_dialog.cpp
     gui/confirm_dialog.h
-    gui/connection.cpp
-    gui/connection.h
     gui/debugwindow.cpp
     gui/debugwindow.h
     gui/emotewindow.cpp

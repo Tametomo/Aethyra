@@ -67,8 +67,8 @@ void DebugWindow::logic()
         return;
 
     // Get the current mouse position
-    int mouseTileX = (viewport->getMouseX() + viewport->getCameraX()) / 32;
-    int mouseTileY = (viewport->getMouseY() + viewport->getCameraY()) / 32;
+    const int mouseTileX = (viewport->getMouseX() + viewport->getCameraX()) / 32;
+    const int mouseTileY = (viewport->getMouseY() + viewport->getCameraY()) / 32;
 
     mFPSLabel->setCaption(toString(fps) + " FPS");
 
@@ -76,18 +76,17 @@ void DebugWindow::logic()
                                 toString(mouseTileY) + ")");
 
     Map *currentMap = engine->getCurrentMap();
+
     if (currentMap)
     {
-        const std::string music =
-            "Music: " + currentMap->getProperty("music");
+        const std::string music = "Music: " + currentMap->getProperty("music");
         mMusicFileLabel->setCaption(music);
 
         const std::string minimap =
             "MiniMap: " + currentMap->getProperty("minimap");
         mMiniMapLabel->setCaption(minimap);
 
-        const std::string map =
-            "Map: " + currentMap->getProperty("_filename");
+        const std::string map = "Map: " + currentMap->getProperty("_filename");
         mMapLabel->setCaption(map);
     }
 

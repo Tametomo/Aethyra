@@ -26,6 +26,8 @@
 #include "../main.h"
 #include "../serverinfo.h"
 
+#include "../bindings/guichan/layout.h"
+
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/listbox.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
@@ -54,31 +56,21 @@ ServerSelectDialog::ServerSelectDialog(LoginData *loginData, int nextState):
 {
     mServerListModel = new ServerListModel();
     mServerList = new ListBox(mServerListModel);
+    mServerList->setActionEventId("ok");
+
     ScrollArea *mScrollArea = new ScrollArea(mServerList);
+    mScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
+
     mOkButton = new Button(_("OK"), "ok", this);
     Button *mCancelButton = new Button(_("Cancel"), "cancel", this);
 
-    setContentSize(200, 100);
+    ContainerPlacer place;
+    place = getPlacer(0, 0);
 
-    mCancelButton->setPosition(
-            200 - mCancelButton->getWidth() - 5,
-            100 - mCancelButton->getHeight() - 5);
-    mOkButton->setPosition(
-            mCancelButton->getX() - mOkButton->getWidth() - 5,
-            100 - mOkButton->getHeight() - 5);
-    mScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
-    mScrollArea->setDimension(gcn::Rectangle(
-                5, 5, 200 - 2 * 5,
-                100 - 3 * 5 - mCancelButton->getHeight() -
-                mScrollArea->getFrameSize()));
-
-    mServerList->setActionEventId("ok");
-
-    //mServerList->addActionListener(this);
-
-    add(mScrollArea);
-    add(mOkButton);
-    add(mCancelButton);
+    place(0, 0, mScrollArea, 8, 5).setPadding(3);
+    place(4, 5, mCancelButton);
+    place(5, 5, mOkButton);
+    reflowLayout(200, 100);
 
     if (n_server == 0)
         // Disable Ok button
