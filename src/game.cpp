@@ -588,7 +588,7 @@ void Game::handleInput()
                     const Uint16 x = player_node->mX;
                     const Uint16 y = player_node->mY;
 
-                    // Do not activate shortcuts if tradewindow is visible
+                    // Do not activate item shortcuts if tradewindow is visible
                     if (!tradeWindow->isVisible() &&
                         tKey >= KeyboardConfig::KEY_SHORTCUT_1 &&
                         tKey <= KeyboardConfig::KEY_SHORTCUT_12)
@@ -599,10 +599,7 @@ void Game::handleInput()
 
                     if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
                     {
-                        // Target the nearest player
-                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER))
-                            target = beingManager->findNearestLivingBeing(x, y,
-                                                              20, Being::PLAYER);
+                        bool targetKeyHit = true;
 
                         // Target the nearest monster
                         if (keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST) ||
@@ -611,16 +608,22 @@ void Game::handleInput()
                             target = beingManager->findNearestLivingBeing(x, y,
                                                               20, Being::MONSTER);
                         }
-
+                        // Target the nearest player
+                        else if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER))
+                        {
+                            target = beingManager->findNearestLivingBeing(x, y,
+                                                              20, Being::PLAYER);
+                        }
                         // Target the nearest npc
-                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_NPC))
+                        else if (keyboard.isKeyActive(keyboard.KEY_TARGET_NPC))
+                        {
                             target = beingManager->findNearestLivingBeing(x, y,
                                                               20, Being::NPC);
+                        }
+                        else
+                            targetKeyHit = false;
 
-                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER) || 
-                            keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST) ||
-                            keyboard.isKeyActive(keyboard.KEY_TARGET_NPC) ||
-                           (joystick && joystick->buttonPressed(3)))
+                        if (targetKeyHit)
                             player_node->setTarget(target);
 
                         if ((keyboard.isKeyActive(keyboard.KEY_ATTACK) ||
