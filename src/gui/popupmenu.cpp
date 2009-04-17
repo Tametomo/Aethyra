@@ -50,23 +50,18 @@
 extern std::string tradePartnerName;
 
 PopupMenu::PopupMenu():
-    Window("PopupMenu"),
-    mBeingId(0),
+    Popup("PopupMenu"),
+    mBeingId(NULL),
     mFloorItem(NULL),
     mItem(NULL)
 {
-    setResizable(false);
-    setTitleBarHeight(0);
-    setShowTitle(false);
-
     mBrowserBox = new BrowserBox();
-    mBrowserBox->setPosition(4, 4);
-    mBrowserBox->setHighlightMode(BrowserBox::BACKGROUND);
+    mBrowserBox->setPosition(getPadding(), getPadding());
     mBrowserBox->setOpaque(false);
     mBrowserBox->setLinkHandler(this);
     add(mBrowserBox);
 
-    loadWindowState();
+    loadPopupConfiguration();
 }
 
 void PopupMenu::showPopup(int x, int y, Being *being)
@@ -269,7 +264,7 @@ void PopupMenu::handleLink(const std::string& link)
 
     setVisible(false);
 
-    mBeingId = 0;
+    mBeingId = NULL;
     mFloorItem = NULL;
     mItem = NULL;
 }
@@ -300,10 +295,11 @@ void PopupMenu::showPopup(int x, int y, Item *item)
 
 void PopupMenu::showPopup(int x, int y)
 {
-    setContentSize(mBrowserBox->getWidth() + 8, mBrowserBox->getHeight() + 8);
-    if (graphics->getWidth() < (x + getWidth() + 5))
+    setContentSize(mBrowserBox->getWidth() + (2 * getPadding()),
+                   mBrowserBox->getHeight() + getPadding());
+    if (graphics->getWidth() < (x + getWidth()))
         x = graphics->getWidth() - getWidth();
-    if (graphics->getHeight() < (y + getHeight() + 5))
+    if (graphics->getHeight() < (y + getHeight()))
         y = graphics->getHeight() - getHeight();
     setPosition(x, y);
     setVisible(true);

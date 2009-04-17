@@ -46,6 +46,9 @@ Popup::Popup(const std::string& name, const std::string& skin):
     if (!windowContainer)
         throw GCN_EXCEPTION("Popup::Popup(): no windowContainer set");
 
+    if (!skinLoader)
+        skinLoader = new SkinLoader();
+
     setPadding(3);
 
     // Loads the skin

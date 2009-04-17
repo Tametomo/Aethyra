@@ -60,7 +60,7 @@ Window::Window(const std::string& caption, bool modal, Window *parent, const std
     if (!windowContainer)
         throw GCN_EXCEPTION("Window::Window(): no windowContainer set");
 
-    if (instances == 0)
+    if (!skinLoader)
         skinLoader = new SkinLoader();
 
     instances++;
