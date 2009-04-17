@@ -454,6 +454,7 @@ void Window::loadWindowState()
     setPosition((int) config.getValue(name + "WinX", mDefaultX),
                 (int) config.getValue(name + "WinY", mDefaultY));
     setVisible((bool) config.getValue(name + "Visible", false));
+    mOldVisibility = (bool) config.getValue(name + "Hidden", false);
 
     if (skinName.compare(mSkin->getFilePath()) != 0)
     {
@@ -492,6 +493,7 @@ void Window::saveWindowState()
         config.setValue(mWindowName + "WinY", getY());
         config.setValue(mWindowName + "Visible", isVisible());
         config.setValue(mWindowName + "Skin", mSkin->getFilePath());
+        config.setValue(mWindowName + "Hidden", mOldVisibility);
 
         if (mGrip)
         {
