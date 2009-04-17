@@ -715,6 +715,7 @@ void Game::handleInput()
                         emoteWindow->hide();
                         helpWindow->hide();
                         emoteShortcutWindow->hide();
+                        minimap->hide();
                         break;
                     // Screenshot (picture, hence the p)
                     case KeyboardConfig::KEY_SCREENSHOT:

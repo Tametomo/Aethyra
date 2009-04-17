@@ -61,6 +61,11 @@ class Minimap : public Window
         void toggle();
 
         /**
+         * Hides/unhides the minimap
+         */
+        void hide();
+
+        /**
          * Draws the minimap.
          */
         void draw(gcn::Graphics *graphics);

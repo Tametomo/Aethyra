@@ -228,7 +228,7 @@ class Window : public gcn::Window, gcn::WidgetListener
         /**
          * Hides/unhides a window
          */
-        void hide();
+        virtual void hide();
 
         /**
          * Set the default win pos and size.
@@ -290,6 +290,9 @@ class Window : public gcn::Window, gcn::WidgetListener
          */
         int getGuiAlpha();
 
+    protected:
+        bool mOldVisibility;          /**< Whether the window was previously
+                                           viewable before a hide */
     private:
         enum ResizeHandles
         {
@@ -317,8 +320,6 @@ class Window : public gcn::Window, gcn::WidgetListener
         bool mShowTitle;              /**< Window has a title bar */
         bool mModal;                  /**< Window is modal */
         bool mCloseButton;            /**< Window has a close button */
-        bool mOldVisibility;          /**< Whether the window was previously
-                                           viewable */
         int mMinWinWidth;             /**< Minimum window width */
         int mMinWinHeight;            /**< Minimum window height */
         int mMaxWinWidth;             /**< Maximum window width */

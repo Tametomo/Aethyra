@@ -41,6 +41,7 @@ int Window::mouseResize = 0;
 
 Window::Window(const std::string& caption, bool modal, Window *parent, const std::string& skin):
     gcn::Window(caption),
+    mOldVisibility(false),
     mGrip(0),
     mParent(parent),
     mLayout(NULL),
@@ -49,7 +50,6 @@ Window::Window(const std::string& caption, bool modal, Window *parent, const std
     mShowTitle(true),
     mModal(modal),
     mCloseButton(false),
-    mOldVisibility(false),
     mMinWinWidth(100),
     mMinWinHeight(40),
     mMaxWinWidth(graphics->getWidth()),

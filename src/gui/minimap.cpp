@@ -94,8 +94,14 @@ void Minimap::setMapImage(Image *img)
 
 void Minimap::toggle()
 {
-    mShow = ! isVisible();
-    setVisible(mShow);
+    mShow = !mShow;
+    setVisible(mShow && mMapImage);
+}
+
+void Minimap::hide()
+{
+    mShow = mOldVisibility;
+    Window::hide();
 }
 
 void Minimap::draw(gcn::Graphics *graphics)
