@@ -41,7 +41,6 @@
 #include "resource.h"
 
 class Dye;
-class Position;
 class SDL_Rect;
 class SDL_Surface;
 
@@ -98,14 +97,12 @@ class Image : public Resource
         /**
          * Returns the width of the image.
          */
-        virtual int getWidth() const
-        { return mBounds.w; }
+        virtual int getWidth() const { return mBounds.w; }
 
         /**
          * Returns the height of the image.
          */
-        virtual int getHeight() const
-        { return mBounds.h; }
+        virtual int getHeight() const { return mBounds.h; }
 
         /**
          * Creates a new image with the desired clipping rectangle.
@@ -140,7 +137,13 @@ class Image : public Resource
          * improve overall framerates. Don't use unless you are using it to
          * reduce the number of overall layers that need to be drawn through SDL.
          */
-        Image* merge(Image* image, const Position& pos);
+        Image* merge(Image* image, const int& x, const int& y);
+
+        /**
+         * Returns the current alpha value at a given pixel. Used to compute
+         * what the alpha value should be for a given pixel in SDL mode.
+         */
+        Uint8* mStoredAlpha;
 
     protected:
         /**
@@ -155,7 +158,7 @@ class Image : public Resource
          */
         static int powerOfTwo(int input);
 #endif
-        Image(SDL_Surface *image);
+        Image(SDL_Surface *image, Uint8* alphas = NULL);
 
         SDL_Rect mBounds;
         bool mLoaded;
@@ -200,6 +203,12 @@ class SubImage : public Image
          *         image otherwise.
          */
         Image *getSubImage(int x, int y, int width, int height);
+
+        /**
+         * Sets the alpha value of this image.
+         */
+        virtual void setAlpha(float alpha);
+
 
     private:
         Image *mParent;

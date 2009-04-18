@@ -53,13 +53,8 @@ class TextRenderer
                 graphics->drawText(text, x + 1, y + 1, align);
         }
 
-        if (outline) {
-/*            graphics->setColor(guiPalette->getColor(Palette::OUTLINE,
-                    alpha/4));
-            // TODO: Reanable when we can draw it nicely in software mode
-            graphics->drawText(text, x + 2, y + 2, align);
-            graphics->drawText(text, x + 1, y + 2, align);
-            graphics->drawText(text, x + 2, y + 1, align);*/
+        if (outline)
+        {
 
             // Text outline
             graphics->setColor(guiPalette->getColor(Palette::OUTLINE, alpha));

@@ -137,7 +137,7 @@ void ProgressBar::draw(gcn::Graphics *graphics)
         TextRenderer::renderText(graphics, mText, textX, textY,
                                  gcn::Graphics::CENTER,
                                  guiPalette->getColor(Palette::PROGRESS_BAR,
-                                 alpha), boldFont, true, false);
+                                 alpha), boldFont, true, false, alpha);
     }
 }
 

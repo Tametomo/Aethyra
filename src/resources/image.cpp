@@ -27,15 +27,14 @@
 
 #include "../log.h"
 
-#include "../utils/position.h"
-
 #ifdef USE_OPENGL
 bool Image::mUseOpenGL = false;
 int Image::mTextureType = 0;
 int Image::mTextureSize = 0;
 #endif
 
-Image::Image(SDL_Surface *image):
+Image::Image(SDL_Surface *image, Uint8* alphas):
+    mStoredAlpha(alphas),
 #ifdef USE_OPENGL
     mGLImage(0),
 #endif
@@ -50,6 +49,7 @@ Image::Image(SDL_Surface *image):
 
 #ifdef USE_OPENGL
 Image::Image(GLuint glimage, int width, int height, int texWidth, int texHeight):
+    mStoredAlpha(NULL),
     mGLImage(glimage),
     mTexWidth(texWidth),
     mTexHeight(texHeight),
@@ -167,7 +167,7 @@ Image *Image::load(SDL_Surface *tmpImage)
 
         SDL_Surface *oldImage = tmpImage;
         tmpImage = SDL_CreateRGBSurface(SDL_SWSURFACE, realWidth, realHeight,
-            32, rmask, gmask, bmask, amask);
+                                        32, rmask, gmask, bmask, amask);
 
         if (!tmpImage)
         {
@@ -184,19 +184,15 @@ Image *Image::load(SDL_Surface *tmpImage)
         if (SDL_MUSTLOCK(tmpImage))
             SDL_LockSurface(tmpImage);
 
-        glTexImage2D(
-                mTextureType, 0, 4,
-                tmpImage->w, tmpImage->h,
-                0, GL_RGBA, GL_UNSIGNED_BYTE,
-                tmpImage->pixels);
+        glTexImage2D(mTextureType, 0, 4, tmpImage->w, tmpImage->h,
+                     0, GL_RGBA, GL_UNSIGNED_BYTE, tmpImage->pixels);
 
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         glTexParameteri(mTextureType, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(mTextureType, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-        if (SDL_MUSTLOCK(tmpImage)) {
+        if (SDL_MUSTLOCK(tmpImage))
             SDL_UnlockSurface(tmpImage);
-        }
 
         SDL_FreeSurface(tmpImage);
 
@@ -235,22 +231,20 @@ Image *Image::load(SDL_Surface *tmpImage)
 
     bool hasAlpha = false;
 
+    Uint8* imageAlphas = new Uint8[tmpImage->w * tmpImage->h];
     if (tmpImage->format->BitsPerPixel == 32)
     {
         // Figure out whether the image uses its alpha layer
         for (int i = 0; i < tmpImage->w * tmpImage->h; ++i)
         {
             Uint8 r, g, b, a;
-            SDL_GetRGBA(
-                    ((Uint32*) tmpImage->pixels)[i],
-                    tmpImage->format,
-                    &r, &g, &b, &a);
+            SDL_GetRGBA(((Uint32*) tmpImage->pixels)[i],
+                          tmpImage->format, &r, &g, &b, &a);
+
+            imageAlphas[i] = a;
 
             if (a != 255)
-            {
                 hasAlpha = true;
-                break;
-            }
         }
     }
 
@@ -268,7 +262,7 @@ Image *Image::load(SDL_Surface *tmpImage)
         return NULL;
     }
 
-    return new Image(image);
+    return new Image(image, imageAlphas);
 }
 
 void Image::unload()
@@ -280,6 +274,7 @@ void Image::unload()
         // Free the image surface.
         SDL_FreeSurface(mImage);
         mImage = NULL;
+        delete [] mStoredAlpha;
     }
 
 #ifdef USE_OPENGL
@@ -303,21 +298,38 @@ Image *Image::getSubImage(int x, int y, int width, int height)
     return new SubImage(this, mImage, x, y, width, height);
 }
 
-void Image::setAlpha(float a)
+void Image::setAlpha(float alpha)
 {
-    if (mAlpha == a)
+    if (mAlpha == alpha)
         return;
 
-    mAlpha = a;
+    mAlpha = alpha;
 
-    if (mImage)
+    if (mImage && !mUseOpenGL)
     {
-        // Set the alpha value this image is drawn at
-        SDL_SetAlpha(mImage, SDL_SRCALPHA, (int) (255 * mAlpha));
+        SDL_LockSurface(mImage);
+
+        // Set the alpha value this image is drawn at, pixel by pixel
+        for (int offsetY = 0; offsetY < getHeight(); offsetY++)
+        {
+            for (int offsetX = 0; offsetX < getWidth(); offsetX++)
+            {
+                int i = offsetY * getWidth() + offsetX;
+                Uint8 r, g, b, a;
+                SDL_GetRGBA(((Uint32*) mImage->pixels)[i], mImage->format, &r, 
+                                                           &g, &b, &a);
+
+                a = (Uint8) mStoredAlpha[i] * mAlpha;
+
+                ((Uint32 *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format, r,
+                                                              g, b, a);
+            }
+        }
+        SDL_UnlockSurface(mImage);
     }
 }
 
-Image* Image::merge(Image* image, const Position& pos)
+Image* Image::merge(Image* image, const int& x, const int& y)
 {
     SDL_Surface* surface = new SDL_Surface(*(image->mImage));
 
@@ -327,20 +339,20 @@ Image* Image::merge(Image* image, const Position& pos)
     SDL_PixelFormat *current_fmt = mImage->format;
     SDL_PixelFormat *surface_fmt = surface->format;
     int current_offset, surface_offset;
-    Position offset(0, 0);
+    int offsetX = 0, offsetY = 0;
 
     SDL_LockSurface(surface);
     SDL_LockSurface(mImage);
     // for each pixel lines of a source image
-    for (offset.x = (pos.x > 0 ? 0 : -pos.x); offset.x < image->getWidth() &&
-                     pos.x + offset.x < getWidth(); offset.x++)
+    for (offsetY = (y > 0 ? 0 : -y); offsetY < image->getHeight() &&
+                    y + offsetY < getHeight(); offsetY++)
     {
-        for (offset.y = (pos.y > 0 ? 0 : -pos.y); offset.y < image->getHeight()
-                        && pos.y + offset.y < getHeight(); offset.y++)
+        for (offsetX = (x > 0 ? 0 : -x); offsetX < image->getWidth() &&
+                        x + offsetX < getWidth(); offsetX++)
         {
             // Computing offset on both images
-            current_offset = (pos.y + offset.y) * getWidth() + pos.x + offset.x;
-            surface_offset = offset.y * surface->w + offset.x;
+            current_offset = (y + offsetY) * getWidth() + x + offsetX;
+            surface_offset = offsetY * surface->w + offsetX;
 
             // Retrieving a pixel to merge
             surface_pix = ((Uint32*) surface->pixels)[surface_offset];
@@ -426,8 +438,8 @@ int Image::powerOfTwo(int input)
 // SubImage Class
 //============================================================================
 
-SubImage::SubImage(Image *parent, SDL_Surface *image,
-        int x, int y, int width, int height):
+SubImage::SubImage(Image *parent, SDL_Surface *image, int x, int y, int width,
+                   int height):
     Image(image),
     mParent(parent)
 {
@@ -441,9 +453,8 @@ SubImage::SubImage(Image *parent, SDL_Surface *image,
 }
 
 #ifdef USE_OPENGL
-SubImage::SubImage(Image *parent, GLuint image,
-                   int x, int y, int width, int height,
-                   int texWidth, int texHeight):
+SubImage::SubImage(Image *parent, GLuint image, int x, int y, int width,
+                   int height, int texWidth, int texHeight):
     Image(image, width, height, texWidth, texHeight),
     mParent(parent)
 {
@@ -470,5 +481,39 @@ SubImage::~SubImage()
 Image *SubImage::getSubImage(int x, int y, int w, int h)
 {
     return mParent->getSubImage(mBounds.x + x, mBounds.y + y, w, h);
+}
+
+void SubImage::setAlpha(float alpha)
+{
+    if (mAlpha == alpha)
+        return;
+
+    mAlpha = alpha;
+
+    if (mImage && !mUseOpenGL)
+    {
+        SDL_LockSurface(mImage);
+
+        // Set the alpha value this image is drawn at, pixel by pixel
+        for (int offsetY = 0; offsetY < getHeight() &&
+            (offsetY + mBounds.y) < mParent->getHeight(); offsetY++)
+        {
+            for (int offsetX = 0; offsetX < getWidth() &&
+                (offsetX + mBounds.x) < mParent->getWidth(); offsetX++)
+            {
+                int i = (offsetY + mBounds.y) * mParent->getWidth() + offsetX +
+                        mBounds.x;
+                Uint8 r, g, b, a;
+                SDL_GetRGBA(((Uint32*) mImage->pixels)[i], mImage->format, &r, 
+                                                           &g, &b, &a);
+
+                a = (Uint8) mParent->mStoredAlpha[i] * mAlpha;
+
+                ((Uint32 *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format, r,
+                                                              g, b, a);
+            }
+        }
+        SDL_UnlockSurface(mImage);
+    }
 }
 
