@@ -68,8 +68,8 @@ void SpeechBubble::setText(std::string text, bool showName)
     mSpeechBox->setTextColor(&guiPalette->getColor(Palette::TEXT));
 
     int width = mCaption->getWidth() + 2 * getPadding();
-    const int speechWidth = mSpeechBox->getMinWidth() + 2 * getPadding();
     mSpeechBox->setTextWrapped(text, 130 > width ? 130 : width);
+    const int speechWidth = mSpeechBox->getMinWidth() + 2 * getPadding();
 
     const int fontHeight = getFont()->getHeight();
     const int nameHeight = showName ? mCaption->getHeight() + 
@@ -91,7 +91,3 @@ void SpeechBubble::setText(std::string text, bool showName)
     mSpeechBox->setPosition(xPos, yPos);
 }
 
-unsigned int SpeechBubble::getNumRows() const
-{
-    return mSpeechBox->getNumberOfRows();
-}

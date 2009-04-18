@@ -53,11 +53,6 @@ class SpeechBubble : public Popup
          */
         void setLocation(int x, int y);
 
-        /**
-         * Gets the number of rows the speech bubble has.
-         */
-        unsigned int getNumRows() const;
-
     private:
         std::string mText;
         gcn::Label *mCaption;
