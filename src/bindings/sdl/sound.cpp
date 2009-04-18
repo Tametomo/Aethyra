@@ -21,7 +21,6 @@
  */
 
 #include <SDL.h>
-#include <physfs.h>
 
 #include "sound.h"
 
