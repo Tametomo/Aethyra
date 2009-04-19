@@ -80,7 +80,7 @@ StorageWindow::StorageWindow(int invSize):
     mSlotsBar->setProgress((float) mUsedSlots / mMaxSlots);
 
     setMinHeight(130);
-    setMinWidth(mSlotsLabel->getWidth());
+    setMinWidth(200);
 
     place(0, 0, mSlotsLabel).setPadding(3);
     place(1, 0, mSlotsBar, 3);
