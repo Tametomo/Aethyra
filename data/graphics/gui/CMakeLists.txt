@@ -1,5 +1,4 @@
 SET (FILES
-    bg_quad_dis.png
     button.png
     button_disabled.png
     buttonhi.png

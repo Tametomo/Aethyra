@@ -310,20 +310,16 @@ void Image::setAlpha(float alpha)
         SDL_LockSurface(mImage);
 
         // Set the alpha value this image is drawn at, pixel by pixel
-        for (int offsetY = 0; offsetY < getHeight(); offsetY++)
+        for (int i = 0; i < mImage->w * mImage->h; i++)
         {
-            for (int offsetX = 0; offsetX < getWidth(); offsetX++)
-            {
-                int i = offsetY * getWidth() + offsetX;
-                Uint8 r, g, b, a;
-                SDL_GetRGBA(((Uint32*) mImage->pixels)[i], mImage->format, &r, 
-                                                           &g, &b, &a);
+            Uint8 r, g, b, a;
+            SDL_GetRGBA(((Uint32*) mImage->pixels)[i], mImage->format, &r, 
+                                                       &g, &b, &a);
 
-                a = (Uint8) mStoredAlpha[i] * mAlpha;
+            a = (Uint8) mStoredAlpha[i] * mAlpha;
 
-                ((Uint32 *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format, r,
-                                                              g, b, a);
-            }
+            ((Uint32 *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format, r,
+                                                          g, b, a);
         }
         SDL_UnlockSurface(mImage);
     }
