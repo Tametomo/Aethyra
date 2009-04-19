@@ -28,6 +28,8 @@
 
 #include "../palette.h"
 
+#include "../sdl/sdlinput.h"
+
 #include "../../../configuration.h"
 
 #include "../../../utils/dtor.h"
@@ -380,38 +382,38 @@ void Table::keyPressed(gcn::KeyEvent& keyEvent)
 {
     gcn::Key key = keyEvent.getKey();
 
-    if (key.getValue() == gcn::Key::ENTER || key.getValue() == gcn::Key::SPACE)
+    if (key.getValue() == Key::ENTER || key.getValue() == Key::SPACE)
     {
         distributeActionEvent();
         keyEvent.consume();
     }
-    else if (key.getValue() == gcn::Key::UP)
+    else if (key.getValue() == Key::UP)
     {
         setSelectedRow(mSelectedRow - 1);
         keyEvent.consume();
     }
-    else if (key.getValue() == gcn::Key::DOWN)
+    else if (key.getValue() == Key::DOWN)
     {
         setSelectedRow(mSelectedRow + 1);
         keyEvent.consume();
     }
-    else if (key.getValue() == gcn::Key::LEFT)
+    else if (key.getValue() == Key::LEFT)
     {
         setSelectedColumn(mSelectedColumn - 1);
         keyEvent.consume();
     }
-    else if (key.getValue() == gcn::Key::RIGHT)
+    else if (key.getValue() == Key::RIGHT)
     {
         setSelectedColumn(mSelectedColumn + 1);
         keyEvent.consume();
     }
-    else if (key.getValue() == gcn::Key::HOME)
+    else if (key.getValue() == Key::HOME)
     {
         setSelectedRow(0);
         setSelectedColumn(0);
         keyEvent.consume();
     }
-    else if (key.getValue() == gcn::Key::END)
+    else if (key.getValue() == Key::END)
     {
         setSelectedRow(mModel->getRows() - 1);
         setSelectedColumn(mModel->getColumns() - 1);

@@ -334,9 +334,7 @@ void Window::mouseReleased(gcn::MouseEvent &event)
 void Window::mouseExited(gcn::MouseEvent &event)
 {
     if (mGrip && !mouseResize)
-    {
         gui->setCursorType(Gui::CURSOR_POINTER);
-    }
 }
 
 void Window::mouseMoved(gcn::MouseEvent &event)
@@ -392,9 +390,7 @@ void Window::mouseDragged(gcn::MouseEvent &event)
                                      std::max(mMinWinHeight, newHeight));
 
             if (mouseResize & TOP)
-            {
                 newDim.y -= newDim.height - getHeight();
-            }
         }
 
         if (mouseResize & (LEFT | RIGHT))
@@ -404,9 +400,7 @@ void Window::mouseDragged(gcn::MouseEvent &event)
                                     std::max(mMinWinWidth, newWidth));
 
             if (mouseResize & LEFT)
-            {
                 newDim.x -= newDim.width - getWidth();
-            }
         }
 
         // Keep guichan window inside screen (supports resizing any side)
