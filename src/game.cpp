@@ -61,7 +61,6 @@
 #include "gui/equipmentwindow.h"
 #include "gui/help.h"
 #include "gui/inventorywindow.h"
-#include "gui/shortcutwindow.h"
 #include "gui/menuwindow.h"
 #include "gui/minimap.h"
 #include "gui/ministatus.h"
@@ -72,6 +71,7 @@
 #include "gui/ok_dialog.h"
 #include "gui/sell.h"
 #include "gui/setup.h"
+#include "gui/shortcutwindow.h"
 #include "gui/skill.h"
 #include "gui/status.h"
 #include "gui/storagewindow.h"
@@ -449,6 +449,7 @@ void Game::handleInput()
             {
                 int emotion = keyboard.getKeyEmoteOffset(event.key.keysym.sym);
                 emoteShortcut->useEmote(emotion);
+                used = true;
             }
 
             switch (tKey)
@@ -595,6 +596,7 @@ void Game::handleInput()
                     {
                         itemShortcut->useItem(tKey -
                                               KeyboardConfig::KEY_SHORTCUT_1);
+                        used = true;
                     }
 
                     if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
@@ -624,12 +626,18 @@ void Game::handleInput()
                             targetKeyHit = false;
 
                         if (targetKeyHit)
+                        {
                             player_node->setTarget(target);
+                            used = true;
+                        }
 
                         if ((keyboard.isKeyActive(keyboard.KEY_ATTACK) ||
                             (joystick && joystick->buttonPressed(0))) && 
                             target && target->getType() != Being::NPC)
+                        {
                             player_node->attack(target, true);
+                            used = true;
+                        }
                     }
                     // Stop attacking
                     else
@@ -646,6 +654,7 @@ void Game::handleInput()
 
                         if (target && target->getType() == Being::NPC)
                             dynamic_cast<NPC*>(target)->talk();
+                        used = true;
                     }
 
                     if (joystick)
@@ -719,6 +728,7 @@ void Game::handleInput()
                         helpWindow->hide();
                         emoteShortcutWindow->hide();
                         minimap->hide();
+                        used = true;
                         break;
                     // Screenshot (picture, hence the p)
                     case KeyboardConfig::KEY_SCREENSHOT:
@@ -824,6 +834,6 @@ void Game::handleInput()
             }
 
             player_node->setWalkingDir(direction);
-        }
+       }
     } // End while
 }
