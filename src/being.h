@@ -315,7 +315,7 @@ class Being : public Sprite
         /**
          * Sets the current direction.
          */
-        void setDirection(Uint8 direction);
+        virtual void setDirection(Uint8 direction);
 
         /**
          * Gets the current action.

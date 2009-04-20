@@ -62,6 +62,11 @@ class LocalPlayer : public Player
         virtual void logic();
 
         /**
+         * Sets the current direction.
+         */
+        virtual void setDirection(Uint8 direction);
+
+        /**
          * Adds a new step when walking before calling super. Also, when
          * specified it picks up an item at the end of a path.
          */

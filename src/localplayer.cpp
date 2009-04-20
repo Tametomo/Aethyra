@@ -204,6 +204,15 @@ void LocalPlayer::logic()
     Being::logic();
 }
 
+void LocalPlayer::setDirection(Uint8 direction)
+{
+    Being::setDirection(direction);
+
+    MessageOut outMsg(CMSG_PLAYER_CHANGE_DIR);
+    outMsg.writeInt16(0);
+    outMsg.writeInt8(direction);
+}
+
 void LocalPlayer::setGM()
 {
     mIsGM = !mIsGM;

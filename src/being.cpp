@@ -352,10 +352,6 @@ void Being::setDirection(Uint8 direction)
        if (mSprites[i])
            mSprites[i]->setDirection(dir);
     }
-
-    MessageOut outMsg(CMSG_PLAYER_CHANGE_DIR);
-    outMsg.writeInt16(0);
-    outMsg.writeInt8(direction);
 }
 
 SpriteDirection Being::getSpriteDirection() const
