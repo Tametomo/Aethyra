@@ -410,17 +410,24 @@ void Game::handleInput()
     if (joystick)
         joystick->update();
 
-    bool ignoreFocus = false;
+    bool ignoreFocus = false, browserBoxIgnoreFocus = false;
 
     // Events
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        bool used = false, browserBoxIgnoreFocus = false;
+        bool used = false;
         gcn::Widget* widget = gui->getFocused();
 
-        // Ignore focus for all menu window buttons for practically everything
-        if (menuWindow)
+        // The browser box (aka chat box in this case) sometimes gets focus
+        // as well. This should also be ignored, but in all cases instead.
+        if (widget && typeid(*widget) == typeid(BrowserBox))
+        {
+            ignoreFocus = true;
+            browserBoxIgnoreFocus = true;
+        }
+        // Ignore focus for all menu window buttons for nearly everything
+        else if (menuWindow)
         {
             for (size_t i = 0; i < menuWindow->buttons.size(); i++)
             {
@@ -431,13 +438,6 @@ void Game::handleInput()
                 }
             }
         }
-        // The browser box (aka chat box) sometimes gets focus as well. This
-        // should also be ignored
-        if (widget && typeid(*widget) == typeid(BrowserBox))
-        {
-            ignoreFocus = true;
-            browserBoxIgnoreFocus = true;
-        } 
 
         // Keyboard events (for discontinuous keys)
         if (event.type == SDL_KEYDOWN)
