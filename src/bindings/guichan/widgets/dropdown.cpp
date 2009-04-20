@@ -29,6 +29,8 @@
 #include "../palette.h"
 #include "../graphics.h"
 
+#include "../sdl/sdlinput.h"
+
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -187,4 +189,49 @@ void DropDown::drawButton(gcn::Graphics *graphics)
 
     static_cast<Graphics*>(graphics)->
         drawImage(buttons[mDroppedDown][mPushed], getWidth() - height + 2, 1);
+}
+
+// -- KeyListener notifications
+void DropDown::keyPressed(gcn::KeyEvent& keyEvent)
+{
+    gcn::Key key = keyEvent.getKey();
+
+    if (key.getValue() == Key::ENTER || key.getValue() == Key::SPACE)
+    {
+        if (!mDroppedDown)
+            dropDown();
+        keyEvent.consume();
+    }
+    else if (key.getValue() == Key::UP)
+    {
+        setSelected(getSelected() - 1);
+        keyEvent.consume();
+    }
+    else if (key.getValue() == Key::DOWN)
+    {
+        setSelected(getSelected() + 1);
+        keyEvent.consume();
+    }
+    else if (key.getValue() == Key::HOME)
+    {
+        setSelected(0);
+        keyEvent.consume();
+    }
+    else if (key.getValue() == Key::END)
+    {
+        setSelected(mListBox->getListModel()->getNumberOfElements() - 1);
+        keyEvent.consume();
+    }
+}
+
+void DropDown::mouseWheelMovedUp(gcn::MouseEvent& mouseEvent)
+{
+    setSelected(getSelected() - 1);
+    mouseEvent.consume();
+}
+
+void DropDown::mouseWheelMovedDown(gcn::MouseEvent& mouseEvent)
+{
+    setSelected(getSelected() + 1);
+    mouseEvent.consume();
 }
