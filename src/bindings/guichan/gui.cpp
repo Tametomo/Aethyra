@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <typeinfo>
+
 #include <guichan/exception.hpp>
 #include <guichan/image.hpp>
 #include <guichan/imagefont.hpp>
@@ -34,6 +36,7 @@
 
 #include "sdl/sdlinput.h"
 
+#include "widgets/button.h"
 #include "widgets/window.h"
 #include "widgets/windowcontainer.h"
 
@@ -284,8 +287,10 @@ void Gui::draw()
 
 bool Gui::isWindowFocused()
 {
-    return (mFocusHandler->getFocused() != NULL && 
-            mFocusHandler->getFocused() != windowContainer);
+    gcn::Widget* widget = mFocusHandler->getFocused();
+
+    return (widget != NULL && widget != windowContainer &&
+            typeid(*widget) != typeid(Button));
 }
 
 void Gui::setUseCustomCursor(bool customCursor)
