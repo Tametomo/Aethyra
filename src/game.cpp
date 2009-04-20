@@ -803,7 +803,7 @@ void Game::handleInput()
         // there as well (in case we ever use other input libraries. If they're
         // all inside that loop, their implementing logic could be reduced to a
         // single function call)
-        if (!chatWindow->isInputFocused())
+        if (!gui->isWindowFocused())
         {
             unsigned char direction = 0;
 
