@@ -84,7 +84,6 @@ void NPCHandler::handleMessage(MessageIn *msg)
             // Request for an integer
             current_npc = msg->readInt32();
             npcIntegerDialog->setRange(0, 2147483647);
-            npcIntegerDialog->setVisible(true);
             npcIntegerDialog->requestFocus();
             break;
 
@@ -92,7 +91,6 @@ void NPCHandler::handleMessage(MessageIn *msg)
             // Request for a string
             current_npc = msg->readInt32();
             npcStringDialog->setValue("");
-            npcStringDialog->setVisible(true);
             npcStringDialog->requestFocus();
             break;
     }

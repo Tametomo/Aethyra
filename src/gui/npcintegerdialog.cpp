@@ -129,5 +129,6 @@ bool NpcIntegerDialog::isInputFocused()
 
 void NpcIntegerDialog::requestFocus()
 {
+    setVisible(true);
     mValueField->requestFocus();
 }

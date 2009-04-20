@@ -89,5 +89,6 @@ bool NpcStringDialog::isInputFocused()
 
 void NpcStringDialog::requestFocus()
 {
+    setVisible(true);
     mValueField->requestFocus();
 }
