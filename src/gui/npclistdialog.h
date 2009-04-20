@@ -74,12 +74,20 @@ class NpcListDialog : public Window, public gcn::ActionListener,
         void reset();
 
         /**
-         * Requests the listbox to take focus for input and sets window width
-         * to the last known setting.
+         * Called when the dialog is visible to allow for mItemList to request
+         * focus.
          */
         void requestFocus();
 
+        /**
+         * Overridden close() method which cleans up the NPC List dialog on
+         * close or losing visibility.
+         */
+        void close();
+
     private:
+        int mChoice;
+
         gcn::ListBox *mItemList;
         gcn::ScrollArea *scrollArea;
         gcn::Button *okButton;

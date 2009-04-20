@@ -121,5 +121,6 @@ void NpcTextDialog::requestFocus()
 {
     loadWindowState();
     setVisible(true);
+    mButton->requestFocus();
 }
 

@@ -77,6 +77,12 @@ class NpcIntegerDialog : public Window, public gcn::ActionListener
          */
         void requestFocus();
 
+        /**
+         * Overridden close() method which cleans up the NPC Integer dialog to
+         * clean up after itself on close or lost visibility.
+         */
+        void close();
+
     private:
         gcn::Button *mDecButton;
         gcn::Button *mIncButton;

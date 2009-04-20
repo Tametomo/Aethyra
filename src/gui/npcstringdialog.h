@@ -69,6 +69,12 @@ class NpcStringDialog : public Window, public gcn::ActionListener
          */
         void requestFocus();
 
+        /**
+         * Overridden close() method which allows the NPC String dialog to clean
+         * up after itself on close or lost visibility.
+         */
+        void close();
+
     private:
         gcn::TextField *mValueField;
         gcn::Button *okButton;

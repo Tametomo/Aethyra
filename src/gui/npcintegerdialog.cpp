@@ -37,7 +37,7 @@
 NpcIntegerDialog::NpcIntegerDialog():
     Window(_("NPC Input"))
 {
-    mValueField = new IntTextField();
+    mValueField = new IntTextField(0, "ok", this);
     setWindowName("NPCInput");
 
     setDefaultSize(175, 75, ImageRect::CENTER);
@@ -62,7 +62,6 @@ NpcIntegerDialog::NpcIntegerDialog():
     place(0, 0, resetButton);
     place(2, 0, cancelButton);
     place(3, 0, okButton);
-    //reflowLayout(175, 0);
 
     loadWindowState();
 }
@@ -84,16 +83,14 @@ void NpcIntegerDialog::reset()
 
 void NpcIntegerDialog::action(const gcn::ActionEvent &event)
 {
-    bool finish = false;
-
     if (event.getId() == "ok")
     {
-        finish = true;
+        close();
     }
     else if (event.getId() == "cancel")
     {
-        finish = true;
         mValueField->reset();
+        close();
     }
     else if (event.getId() == "decvalue")
     {
@@ -107,19 +104,6 @@ void NpcIntegerDialog::action(const gcn::ActionEvent &event)
     {
         mValueField->reset();
     }
-
-    if (finish)
-    {
-        setVisible(false);
-        NPC::mTalking = false;
-
-        MessageOut outMsg(CMSG_NPC_INT_RESPONSE);
-        outMsg.writeInt32(current_npc);
-        outMsg.writeInt32(mValueField->getValue());
-
-        current_npc = 0;
-        mValueField->reset();
-    }
 }
 
 bool NpcIntegerDialog::isInputFocused()
@@ -131,4 +115,17 @@ void NpcIntegerDialog::requestFocus()
 {
     setVisible(true);
     mValueField->requestFocus();
+}
+
+void NpcIntegerDialog::close()
+{
+    setVisible(false);
+    NPC::mTalking = false;
+
+    MessageOut outMsg(CMSG_NPC_INT_RESPONSE);
+    outMsg.writeInt32(current_npc);
+    outMsg.writeInt32(mValueField->getValue());
+
+    current_npc = 0;
+    mValueField->reset();
 }

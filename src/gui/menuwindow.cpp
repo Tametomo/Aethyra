@@ -42,6 +42,8 @@ extern Window *setupWindow;
 extern Window *skillDialog;
 extern Window *statusWindow;
 
+bool menuWindowFocused = false;
+
 namespace {
     struct MenuWindowListener : public gcn::ActionListener
     {
@@ -74,6 +76,7 @@ MenuWindow::MenuWindow():
     {
         gcn::Button *btn = new Button(gettext(*curBtn), *curBtn, &listener);
         btn->setPosition(x, 0);
+        buttons.push_back(btn);
         add(btn);
         x += btn->getWidth() + 3;
         h = btn->getHeight();

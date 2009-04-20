@@ -33,7 +33,8 @@ class IntTextField : public TextField
         /**
          * Constructor, sets default value.
          */
-        IntTextField(int def = 0);
+        IntTextField(int def = 0, const std::string &actionEventId = "",
+                     gcn::ActionListener *listener = NULL);
 
         /**
          * Sets the minimum and maximum values of the text box.

@@ -35,9 +35,15 @@
 
 float ListBox::mAlpha = 1.0;
 
-ListBox::ListBox(gcn::ListModel *listModel):
+ListBox::ListBox(gcn::ListModel *listModel, const std::string &actionEventId,
+                 gcn::ActionListener *listener):
     gcn::ListBox(listModel)
 {
+    if (!actionEventId.empty())
+        setActionEventId(actionEventId);
+
+    if (listener && !actionEventId.empty())
+        addActionListener(listener);
 }
 
 void ListBox::draw(gcn::Graphics *graphics)

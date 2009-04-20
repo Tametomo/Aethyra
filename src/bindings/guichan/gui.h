@@ -77,9 +77,14 @@ class Gui : public gcn::Gui
         void draw();
 
         /**
-         * Whether there's a focused window or not.
+         * Whether there's focused input or not.
          */
-        bool isWindowFocused();
+        bool isInputFocused();
+
+        /**
+         * Gets the currently focused widget.
+         */
+        gcn::Widget* getFocused();
 
         /**
          * Return game font.

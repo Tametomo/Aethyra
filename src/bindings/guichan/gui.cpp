@@ -20,8 +20,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <typeinfo>
-
 #include <guichan/exception.hpp>
 #include <guichan/image.hpp>
 #include <guichan/imagefont.hpp>
@@ -36,7 +34,6 @@
 
 #include "sdl/sdlinput.h"
 
-#include "widgets/button.h"
 #include "widgets/window.h"
 #include "widgets/windowcontainer.h"
 
@@ -44,6 +41,7 @@
 #include "../../configuration.h"
 #include "../../log.h"
 
+#include "../../gui/menuwindow.h"
 #include "../../gui/viewport.h"
 
 #include "../../resources/image.h"
@@ -285,12 +283,18 @@ void Gui::draw()
     mGraphics->popClipArea();
 }
 
-bool Gui::isWindowFocused()
+bool Gui::isInputFocused()
 {
     gcn::Widget* widget = mFocusHandler->getFocused();
 
-    return (widget != NULL && widget != windowContainer &&
-            typeid(*widget) != typeid(Button));
+    return (widget != NULL && widget != windowContainer);
+}
+
+gcn::Widget* Gui::getFocused()
+{
+    gcn::Widget* widget = mFocusHandler->getFocused();
+
+    return (widget);
 }
 
 void Gui::setUseCustomCursor(bool customCursor)

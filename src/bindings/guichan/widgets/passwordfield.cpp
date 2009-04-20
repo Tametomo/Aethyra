@@ -22,8 +22,12 @@
 
 #include "passwordfield.h"
 
-PasswordField::PasswordField(const std::string& text):
-    TextField(text)
+#include "../sdl/sdlinput.h"
+
+PasswordField::PasswordField(const std::string& text, 
+                             const std::string &actionEventId,
+                             gcn::ActionListener *listener):
+    TextField(text, actionEventId, listener)
 {
 }
 
@@ -34,4 +38,17 @@ void PasswordField::draw(gcn::Graphics *graphics)
     mText.assign(mText.length(), '*');
     TextField::draw(graphics);
     mText = original;
+}
+
+void PasswordField::keyPressed(gcn::KeyEvent &event)
+{
+    const gcn::Key &key = event.getKey();
+
+    if (key.getValue() == Key::ENTER)
+    {
+        distributeActionEvent();
+        event.consume();
+    }
+
+    TextField::keyPressed(event);
 }

@@ -24,6 +24,7 @@
 #include <physfs.h>
 #include <sstream>
 #include <string>
+#include <typeinfo>
 
 #include <guichan/exception.hpp>
 
@@ -47,6 +48,7 @@
 
 #include "bindings/guichan/sdl/sdlinput.h"
 
+#include "bindings/guichan/widgets/browserbox.h"
 #include "bindings/guichan/widgets/emoteshortcutcontainer.h"
 #include "bindings/guichan/widgets/itemshortcutcontainer.h"
 
@@ -408,11 +410,34 @@ void Game::handleInput()
     if (joystick)
         joystick->update();
 
+    bool ignoreFocus = false;
+
     // Events
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        bool used = false;
+        bool used = false, browserBoxIgnoreFocus = false;
+        gcn::Widget* widget = gui->getFocused();
+
+        // Ignore focus for all menu window buttons for practically everything
+        if (menuWindow)
+        {
+            for (size_t i = 0; i < menuWindow->buttons.size(); i++)
+            {
+                if (widget == menuWindow->buttons[i])
+                {
+                    ignoreFocus = true;
+                    break;
+                }
+            }
+        }
+        // The browser box (aka chat box) sometimes gets focus as well. This
+        // should also be ignored
+        if (widget && typeid(*widget) == typeid(BrowserBox))
+        {
+            ignoreFocus = true;
+            browserBoxIgnoreFocus = true;
+        } 
 
         // Keyboard events (for discontinuous keys)
         if (event.type == SDL_KEYDOWN)
@@ -439,8 +464,6 @@ void Game::handleInput()
                 return;
             }
 
-            bool okKeyUsed = false; // whether or not chat input might need to
-                                    // be blocked from an OK dialog being used
             gcn::Window *requestedWindow = NULL;
 
             const int tKey = keyboard.getKeyIndex(event.key.keysym.sym);
@@ -532,50 +555,24 @@ void Game::handleInput()
                     break;
             }
 
-            if (!chatWindow->isInputFocused())
+            if (!gui->isInputFocused() || ignoreFocus)
             {
-                if (keyboard.isKeyActive(keyboard.KEY_OK))
-                {
-                    okKeyUsed = true;
-                    // Quit with OK key if there's an exit confirm dialog
-                    if (exitConfirm)
-                        done = true;
-                    // Close the death notice window with OK key if there is one
-                    else if (deathNotice)
-                        deathNotice->action(gcn::ActionEvent(NULL, "ok"));
-                    // Close the weight notice window with OK key if there is one
-                    else if (weightNotice)
-                        weightNotice->action(gcn::ActionEvent(NULL, "ok"));
-                    // Close the Browser if opened
-                    else if (helpWindow->isVisible())
-                        helpWindow->setVisible(false);
-                    // Close the config window, cancelling changes if opened
-                    else if (setupWindow->isVisible())
-                        setupWindow->action(gcn::ActionEvent(NULL, "Cancel"));
-                    // Submits the text and proceeds to the next dialog
-                    else if (npcStringDialog->isVisible())
-                        npcStringDialog->action(gcn::ActionEvent(NULL, "ok"));
-                    // Proceed to the next dialog option, or close the window
-                    else if (npcTextDialog->isVisible())
-                        npcTextDialog->action(gcn::ActionEvent(NULL, "ok"));
-                    // Choose the currently highlighted dialogue option
-                    else if (npcListDialog->isVisible())
-                        npcListDialog->action(gcn::ActionEvent(NULL, "ok"));
-                    // Submits the text and proceeds to the next dialog
-                    else if (npcIntegerDialog->isVisible())
-                        npcIntegerDialog->action(gcn::ActionEvent(NULL, "ok"));
-                    else
-                        okKeyUsed = false;
-                }
-
                 if (keyboard.isKeyActive(keyboard.KEY_TOGGLE_CHAT))
                 {
-                    // Only allow chat input to steal focus when it isn't equal
-                    // to the GUIChan accept input key, or when it is, make sure
-                    // that there's no key use overlap.
-                    if (keyboard.getKeyValue(KeyboardConfig::KEY_TOGGLE_CHAT) !=
-                        keyboard.getKeyValue(KeyboardConfig::KEY_OK) ||
-                        !okKeyUsed)
+                    // Only allow chat input to steal focus all the time when
+                    // it's not equal to the GUIChan accept input key.
+                    // Specifically not using Key::ENTER here because it
+                    // evaluates to \n, and, depending on the OS, the enter key
+                    // itself might evaluate to \n, \r\n, \r or other
+                    // combinations (those are just the 3 most common).
+                    // Specifically, if there's no \r check on Linux, we have
+                    // issues, so both are covered to cover all OS specific
+                    // use situations.
+                    if (((keyboard.getKeyValue(KeyboardConfig::KEY_TOGGLE_CHAT)
+                          != ((int) '\n')) &&
+                         (keyboard.getKeyValue(KeyboardConfig::KEY_TOGGLE_CHAT)
+                          != ((int) '\r'))) || !ignoreFocus ||
+                          browserBoxIgnoreFocus)
                     {
                         chatWindow->requestChatFocus();
                         used = true;
@@ -803,7 +800,7 @@ void Game::handleInput()
         // there as well (in case we ever use other input libraries. If they're
         // all inside that loop, their implementing logic could be reduced to a
         // single function call)
-        if (!gui->isWindowFocused())
+        if (!gui->isInputFocused() || ignoreFocus)
         {
             unsigned char direction = 0;
 

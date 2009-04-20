@@ -23,6 +23,10 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include <vector>
+
+#include <guichan/widgets/button.hpp>
+
 #include "../bindings/guichan/widgets/popup.h"
 
 /**
@@ -42,7 +46,11 @@ class MenuWindow : public Popup
          * Draw this window
          */
         void draw(gcn::Graphics *graphics);
+
+        std::vector<gcn::Button*> buttons;
 };
+
+extern MenuWindow *menuWindow;
 
 #endif
 

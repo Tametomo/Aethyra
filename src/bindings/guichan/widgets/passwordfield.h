@@ -38,12 +38,19 @@ class PasswordField : public TextField
         /**
          * Constructor, initializes the password field with the given string.
          */
-        PasswordField(const std::string& text = "");
+        PasswordField(const std::string& text = "", 
+                      const std::string &actionEventId = "",
+                      gcn::ActionListener *listener = NULL);
 
         /**
          * Draws the password field.
          */
         void draw(gcn::Graphics *graphics);
+
+        /**
+         * Responds to key presses.
+         */
+        void keyPressed(gcn::KeyEvent &event);
 };
 
 #endif

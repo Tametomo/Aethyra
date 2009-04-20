@@ -25,8 +25,9 @@
 
 #include "../../../utils/stringutils.h"
 
-IntTextField::IntTextField(int def):
-    TextField(toString(def)),
+IntTextField::IntTextField(int def, const std::string &actionEventId,
+                           gcn::ActionListener *listener):
+    TextField(toString(def), actionEventId, listener),
     mDefault(def),
     mValue(def)
 {
@@ -40,6 +41,11 @@ void IntTextField::keyPressed(gcn::KeyEvent &event)
         key.getValue() == Key::DELETE)
     {
         setText(std::string());
+        event.consume();
+    }
+    else if (key.getValue() == Key::ENTER)
+    {
+        distributeActionEvent();
         event.consume();
     }
 

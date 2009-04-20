@@ -48,7 +48,7 @@ NpcListDialog::NpcListDialog():
 
     setDefaultSize(260, 200, ImageRect::CENTER);
 
-    mItemList = new ListBox(this);
+    mItemList = new ListBox(this, "ok", this);
     mItemList->setWrappingEnabled(true);
 
     scrollArea = new ScrollArea(mItemList);
@@ -97,7 +97,7 @@ void NpcListDialog::reset()
 
 void NpcListDialog::action(const gcn::ActionEvent &event)
 {
-    int choice = 0;
+    mChoice = 0;
 
     if (event.getId() == "ok")
     {
@@ -105,24 +105,17 @@ void NpcListDialog::action(const gcn::ActionEvent &event)
         int selectedIndex = mItemList->getSelected();
 
         if (selectedIndex > -1)
-            choice = selectedIndex + 1;
+            mChoice = selectedIndex + 1;
     }
     else if (event.getId() == "cancel")
     {
-        choice = 0xff; // 0xff means cancel
+        mChoice = 0xff; // 0xff means cancel
     }
 
-    if (choice)
+    if (mChoice)
     {
         setVisible(false);
-        saveWindowState();
-        reset();
-
-        MessageOut outMsg(CMSG_NPC_LIST_CHOICE);
-        outMsg.writeInt32(current_npc);
-        outMsg.writeInt8(choice);
-
-        current_npc = 0;
+        close();
     }
 }
 
@@ -132,4 +125,19 @@ void NpcListDialog::requestFocus()
     setVisible(true);
     mItemList->requestFocus();
     mItemList->setSelected(0);
+}
+
+void NpcListDialog::close()
+{
+    saveWindowState();
+    reset();
+
+    if (mChoice == 0)
+        mChoice = 0xff;
+
+    MessageOut outMsg(CMSG_NPC_LIST_CHOICE);
+    outMsg.writeInt32(current_npc);
+    outMsg.writeInt8(mChoice);
+
+    current_npc = 0;
 }

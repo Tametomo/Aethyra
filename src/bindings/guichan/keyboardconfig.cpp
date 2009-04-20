@@ -97,7 +97,6 @@ static KeyData const keyData[KeyboardConfig::KEY_TOTAL] = {
     {"keyChat", SDLK_RETURN, _("Toggle Chat")},
     {"keyChatScrollUp", SDLK_PAGEUP, _("Scroll Chat Up")},
     {"keyChatScrollDown", SDLK_PAGEDOWN, _("Scroll Chat Down")},
-    {"keyOK", SDLK_RETURN, _("Select OK")},
     {"keyQuit", SDLK_ESCAPE, _("Quit")},
     {"keyIgnoreInput1", SDLK_LSUPER, _("Ignore input 1")},
     {"keyIgnoreInput2", SDLK_RSUPER, _("Ignore input 2")}
@@ -151,10 +150,9 @@ bool KeyboardConfig::hasConflicts()
         for (j = i, j++; j < KEY_TOTAL; j++)
         {
             // Allow for item shortcut and emote keys to overlap, but no other keys
-            if (!((((i >= KEY_SHORTCUT_1) && (i <= KEY_SHORTCUT_12)) &&
-                   ((j >= KEY_EMOTE_1) && (j <= KEY_EMOTE_12))) ||
-                   ((i == KEY_TOGGLE_CHAT) && (j == KEY_OK))) &&
-                   (mKey[i].value == mKey[j].value))
+            if (!(((i >= KEY_SHORTCUT_1) && (i <= KEY_SHORTCUT_12)) &&
+                  ((j >= KEY_EMOTE_1) && (j <= KEY_EMOTE_12))) &&
+                  (mKey[i].value == mKey[j].value))
             {
                 return true;
             }

@@ -42,12 +42,20 @@ int TextField::instances = 0;
 float TextField::mAlpha = 1.0;
 ImageRect TextField::skin;
 
-TextField::TextField(const std::string& text):
+TextField::TextField(const std::string& text,
+                     const std::string &actionEventId,
+                     gcn::ActionListener *actionListener):
     gcn::TextField(text),
     mNumeric(false),
     mListener(0)
 {
     setFrameSize(2);
+
+    if (!actionEventId.empty())
+        setActionEventId(actionEventId);
+
+    if (actionListener && !actionEventId.empty())
+        addActionListener(actionListener);
 
     if (instances == 0)
     {

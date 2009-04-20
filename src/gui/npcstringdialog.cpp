@@ -38,7 +38,7 @@ NpcStringDialog::NpcStringDialog():
     Window(_("NPC Input"))
 {
     setWindowName("NPCInput");
-    mValueField = new TextField("");
+    mValueField = new TextField("", "ok", this);
 
     setDefaultSize(175, 75, ImageRect::CENTER);
 
@@ -67,6 +67,22 @@ void NpcStringDialog::action(const gcn::ActionEvent &event)
     if (event.getId() == "cancel")
         mValueField->setText("");
 
+    close();
+}
+
+bool NpcStringDialog::isInputFocused()
+{
+    return mValueField->isFocused();
+}
+
+void NpcStringDialog::requestFocus()
+{
+    setVisible(true);
+    mValueField->requestFocus();
+}
+
+void NpcStringDialog::close()
+{
     setVisible(false);
     NPC::mTalking = false;
 
@@ -80,15 +96,4 @@ void NpcStringDialog::action(const gcn::ActionEvent &event)
     outMsg.writeInt8(0);
 
     current_npc = 0;
-}
-
-bool NpcStringDialog::isInputFocused()
-{
-    return mValueField->isFocused();
-}
-
-void NpcStringDialog::requestFocus()
-{
-    setVisible(true);
-    mValueField->requestFocus();
 }

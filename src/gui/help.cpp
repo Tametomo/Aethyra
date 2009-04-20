@@ -46,17 +46,17 @@ HelpWindow::HelpWindow():
     mBrowserBox = new BrowserBox();
     mBrowserBox->setOpaque(false);
     mScrollArea = new ScrollArea(mBrowserBox);
-    Button *okButton = new Button(_("Close"), "close", this);
+    mOkButton = new Button(_("Close"), "close", this);
 
     mScrollArea->setDimension(gcn::Rectangle(5, 5, 445,
-                                             335 - okButton->getHeight()));
-    okButton->setPosition(450 - okButton->getWidth(),
-                          345 - okButton->getHeight());
+                                             335 - mOkButton->getHeight()));
+    mOkButton->setPosition(450 - mOkButton->getWidth(),
+                           345 - mOkButton->getHeight());
 
     mBrowserBox->setLinkHandler(this);
 
     place(0, 0, mScrollArea, 5, 3).setPadding(3);
-    place(4, 3, okButton);
+    place(4, 3, mOkButton);
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
@@ -99,4 +99,12 @@ void HelpWindow::loadFile(const std::string &file)
     {
         mBrowserBox->addRow(lines[i]);
     }
+}
+
+void HelpWindow::setVisible(bool visible)
+{
+    Window::setVisible(visible);
+
+    if (visible)
+        mOkButton->requestFocus();
 }

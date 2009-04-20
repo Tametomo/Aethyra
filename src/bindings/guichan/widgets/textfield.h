@@ -39,12 +39,15 @@ class TextFieldListener
  *
  * \ingroup GUI
  */
-class TextField : public gcn::TextField {
+class TextField : public gcn::TextField
+{
     public:
         /**
          * Constructor, initializes the text field with the given string.
          */
-        TextField(const std::string& text = "");
+        TextField(const std::string& text = "",
+                  const std::string &actionEventId = "",
+                  gcn::ActionListener *actionListener = NULL);
 
         /**
          * Destructor.
@@ -69,7 +72,7 @@ class TextField : public gcn::TextField {
         /**
          * Set the range on the field if it is numeric
          */
-        void setRange(int min, int max) {mMinimum = min; mMaximum = max; }
+        void setRange(int min, int max) { mMinimum = min; mMaximum = max; }
 
         /**
          * Processes one keypress.
@@ -79,12 +82,12 @@ class TextField : public gcn::TextField {
         /**
          * Set the minimum value for a range
          */
-        void setMinimum(int min) {mMinimum = min; }
+        void setMinimum(int min) { mMinimum = min; }
 
         /**
          * Set the maximum value for a range
          */
-        void setMaximum(int max) {mMaximum = max; }
+        void setMaximum(int max) { mMaximum = max; }
 
         /**
          * Return the value for a numeric field
@@ -94,7 +97,7 @@ class TextField : public gcn::TextField {
         /**
          * Add a listener
          */
-        void addListener(TextFieldListener *listener) {mListener = listener; }
+        void addListener(TextFieldListener *listener) { mListener = listener; }
 
     private:
         static int instances;

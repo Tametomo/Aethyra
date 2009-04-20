@@ -40,7 +40,8 @@ class ListBox : public gcn::ListBox
         /**
          * Constructor.
          */
-        ListBox(gcn::ListModel *listModel);
+        ListBox(gcn::ListModel *listModel, const std::string &actionEventId = "",
+                gcn::ActionListener *listener = NULL);
 
         /**
          * Draws the list box.

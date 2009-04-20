@@ -231,6 +231,12 @@ class Window : public gcn::Window, gcn::WidgetListener
         virtual void hide();
 
         /**
+         * Allow for overriding the setVisible function. Not used for the Window
+         * class, but used in a few windows that use this widget.
+         */
+        virtual void setVisible(bool visible) { gcn::Window::setVisible(visible); }
+
+        /**
          * Set the default win pos and size.
          * (which can be different of the actual ones.)
          */
