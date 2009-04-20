@@ -160,23 +160,11 @@ Gui::Gui(Graphics *graphics):
         const int fontSize = (int)config.getValue("fontSize", 11);
         mGuiFont = new TrueTypeFont(path, fontSize);
         mInfoParticleFont = new TrueTypeFont(path, fontSize, 1);
+        boldFont = new TrueTypeFont(path, fontSize, 1);
     }
     catch (gcn::Exception e)
     {
         logger->error(std::string("Unable to load dejavusans.ttf: ")
-            + e.getMessage());
-    }
-
-    // Set bold font
-    path = resman->getPath("fonts/dejavusans-bold.ttf");
-    try
-    {
-        const int fontSize = (int)config.getValue("fontSize", 11);
-        boldFont = new TrueTypeFont(path, fontSize);
-    }
-    catch (gcn::Exception e)
-    {
-        logger->error(std::string("Unable to load dejavusans-bold.ttf: ")
             + e.getMessage());
     }
 
