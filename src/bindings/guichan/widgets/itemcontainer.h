@@ -25,6 +25,7 @@
 
 #include <list>
 
+#include <guichan/keylistener.hpp>
 #include <guichan/mouselistener.hpp>
 #include <guichan/widget.hpp>
 #include <guichan/widgetlistener.hpp>
@@ -44,6 +45,7 @@ namespace gcn {
  * \ingroup GUI
  */
 class ItemContainer : public gcn::Widget,
+                      public gcn::KeyListener,
                       public gcn::MouseListener,
                       public gcn::WidgetListener
 {
@@ -51,7 +53,8 @@ class ItemContainer : public gcn::Widget,
         /**
          * Constructor. Initializes the graphic.
          */
-        ItemContainer(Inventory *inventory);
+        ItemContainer(Inventory *inventory, const std::string &actionEventId = "",
+                      gcn::ActionListener *listener = NULL);
 
         /**
          * Destructor.
@@ -107,6 +110,9 @@ class ItemContainer : public gcn::Widget,
         }
 
     private:
+        // KeyListener
+        void keyPressed(gcn::KeyEvent &event);
+
         void mouseExited(gcn::MouseEvent &event);
         void mouseMoved(gcn::MouseEvent &event);
 

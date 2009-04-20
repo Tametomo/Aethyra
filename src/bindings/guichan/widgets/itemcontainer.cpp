@@ -28,6 +28,8 @@
 #include "../graphics.h"
 #include "../palette.h"
 
+#include "../sdl/sdlinput.h"
+
 #include "../../../inventory.h"
 #include "../../../item.h"
 #include "../../../itemshortcut.h"
@@ -47,13 +49,22 @@ const int ItemContainer::gridHeight = 42; // item icon height + 10
 
 static const int NO_ITEM = -1;
 
-ItemContainer::ItemContainer(Inventory *inventory):
+ItemContainer::ItemContainer(Inventory *inventory,
+                             const std::string &actionEventId,
+                             gcn::ActionListener *listener):
     mInventory(inventory),
     mSelectedItemIndex(NO_ITEM),
     mLastSelectedItemId(NO_ITEM)
 {
+    if (!actionEventId.empty())
+        setActionEventId(actionEventId);
+
+    if (listener && !actionEventId.empty())
+        addActionListener(listener);
+
     mItemPopup = new ItemPopup();
     mItemPopup->setOpaque(false);
+    setFocusable(true);
 
     ResourceManager *resman = ResourceManager::getInstance();
 
@@ -62,6 +73,7 @@ ItemContainer::ItemContainer(Inventory *inventory):
 
     mMaxItems = mInventory->getLastUsedSlot(); // Count from 0, usage from 2
 
+    addKeyListener(this);
     addMouseListener(this);
     addWidgetListener(this);
 }
@@ -218,6 +230,42 @@ void ItemContainer::distributeValueChangedEvent()
     for (i = mListeners.begin(); i != i_end; ++i)
     {
         (*i)->valueChanged(event);
+    }
+}
+
+void ItemContainer::keyPressed(gcn::KeyEvent &event)
+{
+    int columns = getWidth() / gridWidth;
+    const int rows = mInventory->getNumberOfSlotsUsed() / columns;
+    const int itemX = mSelectedItemIndex % columns;
+    const int itemY = mSelectedItemIndex / columns;
+
+    if (columns > mInventory->getNumberOfSlotsUsed())
+        columns = mInventory->getNumberOfSlotsUsed();
+
+    switch (event.getKey().getValue())
+    {
+        case Key::LEFT:
+            if (itemX != 0)
+                setSelectedItemIndex((itemY * columns) + itemX - 1);
+            break;
+        case Key::RIGHT:
+            if (itemX < (columns - 1) &&
+               ((itemY * columns) + itemX + 1) < mInventory->getNumberOfSlotsUsed())
+                setSelectedItemIndex((itemY * columns) + itemX + 1);
+            break;
+        case Key::UP:
+            if (itemY != 0)
+                setSelectedItemIndex(((itemY - 1) * columns) + itemX);
+            break;
+        case Key::DOWN:
+            if (itemY < rows &&
+               (((itemY + 1) * columns) + itemX) < mInventory->getNumberOfSlotsUsed())
+                setSelectedItemIndex(((itemY + 1) * columns) + itemX);
+            break;
+        case Key::ENTER:
+            distributeActionEvent();
+            break;
     }
 }
 
