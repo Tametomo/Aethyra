@@ -37,10 +37,9 @@
 NpcIntegerDialog::NpcIntegerDialog():
     Window(_("NPC Input"))
 {
-    mValueField = new IntTextField(0, "ok", this);
     setWindowName("NPCInput");
 
-    setDefaultSize(175, 75, ImageRect::CENTER);
+    mValueField = new IntTextField(0, "ok", this);
 
     mDecButton = new Button("-", "decvalue", this);
     mIncButton = new Button("+", "incvalue", this);
@@ -63,7 +62,10 @@ NpcIntegerDialog::NpcIntegerDialog():
     place(2, 0, cancelButton);
     place(3, 0, okButton);
 
+    setDefaultSize(175, 75, ImageRect::CENTER);
+
     loadWindowState();
+    setVisible(false);
 }
 
 void NpcIntegerDialog::setRange(const int min, const int max)

@@ -35,6 +35,7 @@ BuySellDialog::BuySellDialog():
     Window(_("Shop"))
 {
     setWindowName("BuySell");
+
     Button *buyButton = 0;
     static const char *buttonNames[] = {
         N_("Buy"), N_("Sell"), N_("Cancel"), 0
@@ -50,12 +51,14 @@ BuySellDialog::BuySellDialog():
         add(btn);
         x += btn->getWidth() + 10;
     }
+
     buyButton->requestFocus();
 
     setDefaultSize(x + getPadding(), (2 * y + buyButton->getHeight() +
                    getTitleBarHeight()), ImageRect::CENTER);
 
     loadWindowState();
+    setVisible(false);
 }
 
 void BuySellDialog::logic()

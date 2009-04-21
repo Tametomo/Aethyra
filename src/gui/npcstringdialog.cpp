@@ -38,6 +38,7 @@ NpcStringDialog::NpcStringDialog():
     Window(_("NPC Input"))
 {
     setWindowName("NPCInput");
+
     mValueField = new TextField("", "ok", this);
 
     setDefaultSize(175, 75, ImageRect::CENTER);
@@ -50,6 +51,7 @@ NpcStringDialog::NpcStringDialog():
     place(2, 1, okButton);
 
     loadWindowState();
+    setVisible(false);
 }
 
 std::string NpcStringDialog::getValue()

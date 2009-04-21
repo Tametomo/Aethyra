@@ -67,6 +67,7 @@ NpcListDialog::NpcListDialog():
     layout.setRowHeight(0, Layout::AUTO_SET);
 
     loadWindowState();
+    setVisible(false);
 }
 
 int NpcListDialog::getNumberOfElements()

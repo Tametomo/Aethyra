@@ -92,6 +92,7 @@ StorageWindow::StorageWindow(int invSize):
     layout.setRowHeight(0, mStoreButton->getHeight());
 
     loadWindowState();
+    setVisible(false);
 }
 
 StorageWindow::~StorageWindow()

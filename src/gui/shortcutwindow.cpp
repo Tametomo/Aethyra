@@ -22,12 +22,12 @@
 
 #include "shortcutwindow.h"
 
+#include "../configuration.h"
+
 #include "../bindings/guichan/layout.h"
 
 #include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/shortcutcontainer.h"
-
-#include "../configuration.h"
 
 static const int SCROLL_PADDING = 0;
 

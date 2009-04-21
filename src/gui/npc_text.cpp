@@ -64,6 +64,7 @@ NpcTextDialog::NpcTextDialog():
     layout.setRowHeight(0, Layout::AUTO_SET);
 
     loadWindowState();
+    setVisible(false);
 }
 
 void NpcTextDialog::setText(const std::string &text)

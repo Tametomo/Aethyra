@@ -46,12 +46,14 @@ Minimap::Minimap():
     mProportion(0.5)
 {
     setWindowName("MiniMap");
+    setResizable(true);
+    setCloseButton(true);
+
     mShow = config.getValue(getWindowName() + "Show", true);
     mUserWidth = config.getValue(getWindowName() + "UserWidth", 100);
     mUserHeight = config.getValue(getWindowName() + "UserHeight", 100);
+
     setDefaultSize(5, 25, 100, 100);
-    setResizable(true);
-    setCloseButton(true);
 
     loadWindowState();
 }

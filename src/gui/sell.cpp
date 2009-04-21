@@ -106,6 +106,7 @@ SellDialog::SellDialog():
     layout.setRowHeight(0, Layout::AUTO_SET);
 
     loadWindowState();
+    setVisible(false);
 }
 
 SellDialog::~SellDialog()

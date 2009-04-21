@@ -57,6 +57,8 @@ namespace {
 MenuWindow::MenuWindow():
     Popup("Menu")
 {
+    setVisible(true);
+
     // Buttons
     static const char *buttonNames[] =
     {

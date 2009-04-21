@@ -22,7 +22,6 @@
 
 #include "ministatus.h"
 
-#include "../configuration.h"
 #include "../localplayer.h"
 
 #include "../bindings/guichan/gui.h"
@@ -35,6 +34,8 @@
 MiniStatusWindow::MiniStatusWindow():
     Popup("MiniStatus")
 {
+    setVisible(true);
+
     mHpBar = new ProgressBar(1.0f, 100, 20, 0, 171, 34);
     mMpBar = new ProgressBar(1.0f, 100, 20, 26, 102, 230);
     mXpBar = new ProgressBar(1.0f, 100, 20, 143, 192, 211);

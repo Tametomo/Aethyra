@@ -105,6 +105,7 @@ TradeWindow::TradeWindow():
     mOkButton->setCaption(_("OK"));
 
     loadWindowState();
+    setVisible(false);
 }
 
 TradeWindow::~TradeWindow()

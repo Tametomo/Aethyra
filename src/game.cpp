@@ -184,29 +184,6 @@ void createGuiWindows()
     emoteShortcutWindow = new ShortcutWindow("emoteShortcut",
                                              new EmoteShortcutContainer);
     storageWindow = new StorageWindow();
-
-    // Set initial window visibility
-    chatWindow->setVisible((bool) config.getValue(
-        chatWindow->getWindowName() + "Visible", true));
-    miniStatusWindow->setVisible((bool) config.getValue(
-        miniStatusWindow->getPopupName() + "Visible", true));
-    buyDialog->setVisible(false);
-    sellDialog->setVisible(false);
-    tradeWindow->setVisible(false);
-    menuWindow->setVisible((bool) config.getValue(
-        menuWindow->getPopupName() + "Visible", true));
-    itemShortcutWindow->setVisible((bool) config.getValue(
-        itemShortcutWindow->getWindowName() + "Visible", true));
-    emoteShortcutWindow->setVisible((bool) config.getValue(
-        emoteShortcutWindow->getWindowName() + "Visible", true));
-    minimap->setVisible((bool) config.getValue(
-        minimap->getWindowName() + "Visible", true));
-    buySellDialog->setVisible(false);
-    npcTextDialog->setVisible(false);
-    npcIntegerDialog->setVisible(false);
-    npcListDialog->setVisible(false);
-    npcStringDialog->setVisible(false);
-    storageWindow->setVisible(false);
 }
 
 /**
