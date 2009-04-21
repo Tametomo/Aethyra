@@ -386,7 +386,7 @@ void Game::handleInput()
     if (joystick)
         joystick->update();
 
-    bool ignoreFocus = false, browserBoxIgnoreFocus = false;
+    bool ignoreFocus = false, chatIgnoreFocus = false;
 
     // Events
     SDL_Event event;
@@ -400,7 +400,7 @@ void Game::handleInput()
         if (widget && typeid(*widget) == typeid(BrowserBox))
         {
             ignoreFocus = true;
-            browserBoxIgnoreFocus = true;
+            chatIgnoreFocus = true;
         }
         // Ignore focus for all menu window buttons for nearly everything
         else if (menuWindow)
@@ -548,7 +548,7 @@ void Game::handleInput()
                           != ((int) '\n')) &&
                          (keyboard.getKeyValue(KeyboardConfig::KEY_TOGGLE_CHAT)
                           != ((int) '\r'))) || !ignoreFocus ||
-                          browserBoxIgnoreFocus)
+                          chatIgnoreFocus)
                     {
                         chatWindow->requestChatFocus();
                         used = true;

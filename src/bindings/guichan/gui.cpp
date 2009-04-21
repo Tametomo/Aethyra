@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <typeinfo>
+
 #include <guichan/exception.hpp>
 #include <guichan/image.hpp>
 #include <guichan/imagefont.hpp>
@@ -34,6 +36,7 @@
 
 #include "sdl/sdlinput.h"
 
+#include "widgets/textbox.h"
 #include "widgets/window.h"
 #include "widgets/windowcontainer.h"
 
@@ -287,7 +290,19 @@ bool Gui::isInputFocused()
 {
     gcn::Widget* widget = mFocusHandler->getFocused();
 
-    return (widget != NULL && widget != windowContainer);
+    // Both the TextBox from the SpeechBubble popup and the ItemPopup maintain
+    // focus throughout their lives without surrendering it, since they are
+    // force repositioned all of the time. Because of this, they need to be
+    // released, or else their continual focus adding will cause input to be put
+    // into a dead state while they're visible if a GUIChan native key is
+    // pressed.
+    while (widget && typeid(*widget) == typeid(TextBox))
+    {
+        mFocusHandler->remove(widget);
+        widget = mFocusHandler->getFocused();
+    }
+
+    return (widget && widget != windowContainer);
 }
 
 gcn::Widget* Gui::getFocused()
