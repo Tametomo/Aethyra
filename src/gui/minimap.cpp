@@ -30,6 +30,7 @@
 #include "../localplayer.h"
 
 #include "../bindings/guichan/graphics.h"
+#include "../bindings/guichan/skin.h"
 
 #include "../resources/image.h"
 
@@ -46,6 +47,7 @@ Minimap::Minimap():
     mShow = config.getValue(getWindowName() + "Show", true);
     setDefaultSize(5, 25, 100, 100);
     setResizable(true);
+    setCloseButton(true);
 
     loadWindowState();
 }
@@ -69,7 +71,9 @@ void Minimap::setMapImage(Image *img)
     {
         const int offsetX = 2 * getPadding();
         const int offsetY = getTitleBarHeight() + getPadding();
-        const int titleWidth = getFont()->getWidth(getCaption()) + 15;
+        const int titleWidth = getFont()->getWidth(getCaption()) +
+                               mSkin->getCloseImage()->getWidth() + 4 * 
+                               getPadding();
         const int mapWidth = mMapImage->getWidth() < 100 ?
                              mMapImage->getWidth() + offsetX : 100;
         const int mapHeight = mMapImage->getHeight() < 100 ?
@@ -148,7 +152,8 @@ void Minimap::draw(gcn::Graphics *graphics)
         const Being *being = (*bi);
         int dotSize = 2;
 
-        switch (being->getType()) {
+        switch (being->getType())
+        {
             case Being::PLAYER:
                 if (being == player_node)
                 {

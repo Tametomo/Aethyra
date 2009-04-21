@@ -299,6 +299,8 @@ class Window : public gcn::Window, gcn::WidgetListener
     protected:
         bool mOldVisibility;          /**< Whether the window was previously
                                            viewable before a hide */
+
+        Skin* mSkin;                  /**< Skin in use by this window */
     private:
         enum ResizeHandles
         {
@@ -337,8 +339,6 @@ class Window : public gcn::Window, gcn::WidgetListener
 
         static int mouseResize;       /**< Active resize handles */
         static int instances;         /**< Number of Window instances */
-
-        Skin* mSkin;                  /**< Skin in use by this window */
 
         /**
          * The width of the resize border. Is independent of the actual window

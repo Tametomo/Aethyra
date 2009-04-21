@@ -40,6 +40,7 @@ HelpWindow::HelpWindow():
     setContentSize(455, 350);
     setWindowName(_("Help"));
     setResizable(true);
+    setCloseButton(true);
 
     setDefaultSize(500, 400, ImageRect::CENTER);
 
