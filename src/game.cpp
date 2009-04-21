@@ -38,7 +38,6 @@
 #include "localplayer.h"
 #include "log.h"
 #include "map.h"
-#include "npc.h"
 #include "particle.h"
 #include "player_relations.h"
 
@@ -580,7 +579,7 @@ void Game::handleInput()
                 }
 
                 // Player actions
-                if (player_node->mAction != Being::DEAD && current_npc == 0)
+                if (player_node->mAction != Being::DEAD)
                 {
                     Being *target = player_node->getTarget();
                     const Uint16 x = player_node->mX;
@@ -800,7 +799,8 @@ void Game::handleInput()
         // there as well (in case we ever use other input libraries. If they're
         // all inside that loop, their implementing logic could be reduced to a
         // single function call)
-        if (!gui->isInputFocused() || ignoreFocus)
+        if ((!gui->isInputFocused() || ignoreFocus) &&
+            player_node->mAction != Being::DEAD)
         {
             unsigned char direction = 0;
 

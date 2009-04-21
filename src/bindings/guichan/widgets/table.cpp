@@ -504,7 +504,7 @@ gcn::Widget* Table::getWidgetAt(int x, int y)
 
 int Table::getRowForY(int y)
 {
-   int row = 0;
+   int row = -1;
 
    if (getRowHeight() > 0)
        row = y / getRowHeight();
