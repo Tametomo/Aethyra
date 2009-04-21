@@ -104,20 +104,21 @@ void ItemPopup::setItem(const ItemInfo &item)
 
     const int numRowsDesc = mItemDesc->getNumberOfRows();
     const int numRowsEffect = mItemEffect->getNumberOfRows();
-    //const int numRowsWeight = mItemWeight->getNumberOfRows();
+    const int numRowsWeight = mItemWeight->getNumberOfRows();
     const int height = getFont()->getHeight();
 
     if (item.getEffect().empty())
     {
-        setContentSize(minWidth, (numRowsDesc + 3) * height);
+        setContentSize(minWidth, (numRowsDesc + numRowsWeight + getPadding()) *
+                       height);
 
         mItemWeight->setPosition(getPadding(), (numRowsDesc + getPadding()) *
                                  height);
     }
     else
     {
-        setContentSize(minWidth, (numRowsDesc + numRowsEffect + getPadding()) *
-                       height);
+        setContentSize(minWidth, (numRowsDesc + numRowsEffect + numRowsWeight +
+                       getPadding()) * height);
 
         mItemWeight->setPosition(getPadding(), (numRowsDesc + numRowsEffect +
                                  getPadding()) * height);
@@ -181,11 +182,10 @@ unsigned int ItemPopup::getNumRows() const
 void ItemPopup::view(int x, int y)
 {
     if (graphics->getWidth() < (x + getWidth() + 5))
-	x = graphics->getWidth() - getWidth();
-    if ((y - getHeight() - 10) < 0)
-	y = 0;
-    else
-        y = y - getHeight() - 10;
+       x = graphics->getWidth() - getWidth();
+
+    y = y - getHeight() - 10;
+
     setPosition(x, y);
     setVisible(true);
     requestMoveToTop();
