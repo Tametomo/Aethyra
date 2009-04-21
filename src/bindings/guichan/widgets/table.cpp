@@ -504,7 +504,10 @@ gcn::Widget* Table::getWidgetAt(int x, int y)
 
 int Table::getRowForY(int y)
 {
-   int row = y / getRowHeight();
+   int row = 0;
+
+   if (getRowHeight() > 0)
+       row = y / getRowHeight();
 
    if (row < 0 || row >= mModel->getRows())
        return -1;
