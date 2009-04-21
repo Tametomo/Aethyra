@@ -51,7 +51,8 @@ class Minimap : public Window
         void setMapImage(Image *img);
 
         /**
-         * Sets the map proportion (1 means 1 tile to one pixel, .5 means 2 tiles to 1 pixel, etc.)
+         * Sets the map proportion (1 means 1 tile to one pixel, .5 means 2
+         * tiles to 1 pixel, etc.)
          */
         void setProportion(float proportion) { mProportion = proportion; }
 
@@ -70,10 +71,18 @@ class Minimap : public Window
          */
         void draw(gcn::Graphics *graphics);
 
+        /**
+         * Overrridden to allow the MiniMap to keep track of the user set width
+         * and height values.
+         */
+        void mouseReleased(gcn::MouseEvent &event);
+
     private:
         Image *mMapImage;
         float mProportion;
         static bool mShow;
+        static int mUserWidth;
+        static int mUserHeight;
 };
 
 extern Minimap *minimap;

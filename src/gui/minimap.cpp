@@ -37,6 +37,8 @@
 #include "../utils/gettext.h"
 
 bool Minimap::mShow = true;
+int Minimap::mUserWidth = 100;
+int Minimap::mUserHeight = 100;
 
 Minimap::Minimap():
     Window(_("MiniMap")),
@@ -45,6 +47,8 @@ Minimap::Minimap():
 {
     setWindowName("MiniMap");
     mShow = config.getValue(getWindowName() + "Show", true);
+    mUserWidth = config.getValue(getWindowName() + "UserWidth", 100);
+    mUserHeight = config.getValue(getWindowName() + "UserHeight", 100);
     setDefaultSize(5, 25, 100, 100);
     setResizable(true);
     setCloseButton(true);
@@ -58,6 +62,8 @@ Minimap::~Minimap()
         mMapImage->decRef();
 
     config.setValue(getWindowName() + "Show", mShow);
+    config.setValue(getWindowName() + "UserWidth", mUserWidth);
+    config.setValue(getWindowName() + "UserHeight", mUserHeight);
 }
 
 void Minimap::setMapImage(Image *img)
@@ -85,7 +91,7 @@ void Minimap::setMapImage(Image *img)
                     mMapImage->getWidth() + offsetX : titleWidth);
         setMaxHeight(mMapImage->getHeight() + offsetY);
 
-        setDefaultSize(getX(), getY(), getWidth(), getHeight());
+        setDefaultSize(getX(), getY(), mUserWidth, mUserHeight);
         resetToDefaultSize();
 
         setVisible(mShow);
@@ -185,4 +191,11 @@ void Minimap::draw(gcn::Graphics *graphics)
     }
 
     graphics->popClipArea();
+}
+
+void Minimap::mouseReleased(gcn::MouseEvent &event)
+{
+    mUserWidth = getWidth();
+    mUserHeight = getHeight();
+    Window::mouseReleased(event);
 }

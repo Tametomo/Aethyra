@@ -284,6 +284,11 @@ void Window::scheduleDelete()
     windowContainer->scheduleDelete(this);
 }
 
+void Window::close()
+{
+    setVisible(false);
+}
+
 void Window::mousePressed(gcn::MouseEvent &event)
 {
     // Let Guichan move window to top and figure out title bar drag
@@ -312,11 +317,6 @@ void Window::mousePressed(gcn::MouseEvent &event)
         // Handle window resizing
         mouseResize = getResizeHandles(event);
     }
-}
-
-void Window::close()
-{
-    setVisible(false);
 }
 
 void Window::mouseReleased(gcn::MouseEvent &event)

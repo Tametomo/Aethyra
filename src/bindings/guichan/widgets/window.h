@@ -180,25 +180,25 @@ class Window : public gcn::Window, gcn::WidgetListener
          * Implements window resizing and makes sure the window is not
          * dragged/resized outside of the screen.
          */
-        void mouseDragged(gcn::MouseEvent &event);
+        virtual void mouseDragged(gcn::MouseEvent &event);
 
         /**
          * Implements custom cursor image changing context, based on mouse
          * relative position.
          */
-        void mouseMoved(gcn::MouseEvent &event);
+        virtual void mouseMoved(gcn::MouseEvent &event);
 
         /**
          * When the mouse button has been let go, this ensures that the mouse
          * custom cursor is restored back to it's standard image.
          */
-        void mouseReleased(gcn::MouseEvent &event);
+        virtual void mouseReleased(gcn::MouseEvent &event);
 
         /**
          * When the mouse leaves the window this ensures that the custom cursor
          * is restored back to it's standard image.
          */
-        void mouseExited(gcn::MouseEvent &event);
+        virtual void mouseExited(gcn::MouseEvent &event);
 
         /**
          * Sets the name of the window. This is not the window title.
