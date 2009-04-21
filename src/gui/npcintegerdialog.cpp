@@ -119,7 +119,7 @@ void NpcIntegerDialog::requestFocus()
 
 void NpcIntegerDialog::close()
 {
-    setVisible(false);
+    Window::close();
     NPC::mTalking = false;
 
     MessageOut outMsg(CMSG_NPC_INT_RESPONSE);

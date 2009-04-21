@@ -83,7 +83,7 @@ void NpcStringDialog::requestFocus()
 
 void NpcStringDialog::close()
 {
-    setVisible(false);
+    Window::close();
     NPC::mTalking = false;
 
     std::string text = mValueField->getText();

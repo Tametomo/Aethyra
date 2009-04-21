@@ -129,6 +129,7 @@ void NpcListDialog::requestFocus()
 
 void NpcListDialog::close()
 {
+    Window::close();
     saveWindowState();
     reset();
 
