@@ -286,7 +286,7 @@ void SellDialog::setVisible(bool visible)
     Window::setVisible(visible);
 
     if (visible)
-        requestFocus();
+        mShopItemList->requestFocus();
 }
 
 void SellDialog::close()

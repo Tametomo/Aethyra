@@ -36,7 +36,7 @@ BuySellDialog::BuySellDialog():
 {
     setWindowName("BuySell");
 
-    Button *buyButton = 0;
+    buyButton = NULL;
     static const char *buttonNames[] = {
         N_("Buy"), N_("Sell"), N_("Cancel"), 0
     };
@@ -74,7 +74,7 @@ void BuySellDialog::setVisible(bool visible)
     Window::setVisible(visible);
 
     if (visible)
-        requestFocus();
+        buyButton->requestFocus();
 }
 
 void BuySellDialog::action(const gcn::ActionEvent &event)
