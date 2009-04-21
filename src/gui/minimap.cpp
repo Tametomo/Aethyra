@@ -108,6 +108,12 @@ void Minimap::toggle()
     setVisible(mShow && mMapImage);
 }
 
+void Minimap::close()
+{
+    mShow = false;
+    Window::close();
+}
+
 void Minimap::hide()
 {
     mShow = mOldVisibility;

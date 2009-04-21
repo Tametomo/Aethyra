@@ -62,6 +62,12 @@ class Minimap : public Window
         void toggle();
 
         /**
+         * Overrridden close() method so that the user's visible state for the
+         * minimap can be remembered;
+         */
+        void close();
+
+        /**
          * Hides/unhides the minimap
          */
         void hide();
