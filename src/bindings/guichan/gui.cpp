@@ -122,7 +122,7 @@ int get_elapsed_time(int start_time)
 Gui::Gui(Graphics *graphics):
     mCustomCursor(false),
     mMouseCursors(NULL),
-    mMaxMouseCursorAlpha(1.0f),
+    mMaxMouseCursorAlpha(0.7f),
     mMouseCursorAlpha(mMaxMouseCursorAlpha),
     mMouseInactivityTimer(0),
     mCursorType(CURSOR_POINTER)
