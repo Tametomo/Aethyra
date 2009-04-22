@@ -140,7 +140,8 @@ class Gui : public gcn::Gui
         gcn::Font *mInfoParticleFont;         /**< Font for Info Particles*/
         bool mCustomCursor;                   /**< Show custom cursor */
         ImageSet *mMouseCursors;              /**< Mouse cursor images */
-        float mMouseCursorAlpha;
+        float mMaxMouseCursorAlpha;           /**< Cursor opacity/transparency. */
+        float mMouseCursorAlpha;              /**< Current cursor opacity/transparency.  Changes as the cursor fades out due to inactivity. */
         int mMouseInactivityTimer;
         int mCursorType;
 

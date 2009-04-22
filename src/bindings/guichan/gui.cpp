@@ -122,7 +122,8 @@ int get_elapsed_time(int start_time)
 Gui::Gui(Graphics *graphics):
     mCustomCursor(false),
     mMouseCursors(NULL),
-    mMouseCursorAlpha(1.0f),
+    mMaxMouseCursorAlpha(1.0f),
+    mMouseCursorAlpha(mMaxMouseCursorAlpha),
     mMouseInactivityTimer(0),
     mCursorType(CURSOR_POINTER)
 {
@@ -241,7 +242,7 @@ void Gui::logic()
     if (mMouseInactivityTimer < 100 * 15)
     {
         ++mMouseInactivityTimer;
-        mMouseCursorAlpha = std::min(1.0f, mMouseCursorAlpha + 0.05f);
+        mMouseCursorAlpha = std::min(mMaxMouseCursorAlpha, mMouseCursorAlpha + 0.05f);
     }
     else
         mMouseCursorAlpha = std::max(0.0f, mMouseCursorAlpha - 0.005f);
