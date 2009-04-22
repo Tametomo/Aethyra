@@ -116,9 +116,6 @@ void LocalPlayer::logic()
            break;
 
         case DEAD:
-           mTargetTime = -1;
-           setTarget(NULL);
-           mLastTarget = -1;
            break;
 
         case HURT:
@@ -202,6 +199,18 @@ void LocalPlayer::logic()
     }
 
     Being::logic();
+}
+ 
+void LocalPlayer::setAction(Action action)
+{
+    if (action == DEAD)
+    {
+        mTargetTime = -1;
+        setTarget(NULL);
+        mLastTarget = -1;
+    }
+
+    Player::setAction(action);
 }
 
 void LocalPlayer::setDirection(Uint8 direction)

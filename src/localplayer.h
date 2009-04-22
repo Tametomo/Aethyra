@@ -61,6 +61,8 @@ class LocalPlayer : public Player
         virtual void setName(const std::string &name);
         virtual void logic();
 
+        virtual void setAction(Action action);
+
         /**
          * Sets the current direction.
          */
