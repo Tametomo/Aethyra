@@ -26,6 +26,7 @@
 #include "../bindings/guichan/widgets/window.h"
 
 class Image;
+class Map;
 
 /**
  * Minimap dialog.
@@ -48,13 +49,7 @@ class Minimap : public Window
         /**
          * Sets the map image that should be displayed.
          */
-        void setMapImage(Image *img);
-
-        /**
-         * Sets the map proportion (1 means 1 tile to one pixel, .5 means 2
-         * tiles to 1 pixel, etc.)
-         */
-        void setProportion(float proportion) { mProportion = proportion; }
+        void setMap(Map *map);
 
         /**
          * Toggles the displaying of the minimap.
@@ -84,8 +79,10 @@ class Minimap : public Window
         void mouseReleased(gcn::MouseEvent &event);
 
     private:
+        Map *mMap;
         Image *mMapImage;
-        float mProportion;
+        float mWidthProportion;
+        float mHeightProportion;
         static bool mShow;
         static int mUserWidth;
         static int mUserHeight;

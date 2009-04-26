@@ -83,11 +83,8 @@ bool Engine::changeMap(const std::string &mapPath)
         logger->error("Could not find map file");
 
     // Notify the minimap and beingManager about the map change
-    Image *mapImage = NULL;
     if (newMap->hasProperty("minimap"))
     {
-        mapImage = resman->getImage(newMap->getProperty("minimap"));
-
         // Set the title for the Minimap
         if (newMap->hasProperty("mapname"))
              minimap->setCaption(newMap->getProperty("mapname"));
@@ -99,17 +96,9 @@ bool Engine::changeMap(const std::string &mapPath)
              logger->log("WARNING: Map file '%s' defines a minimap image but "
                          "does not define a 'mapname' property",
                          map_path.c_str());
-        }
-
-        // How many pixels equal one tile. .5 (which is the TMW default) is
-        // 2 tiles to a pixel, while 1 is 1 tile to 1 pixel
-        if (newMap->hasProperty("minimapproportion"))
-             minimap->setProportion(atof(
-                      newMap->getProperty("minimapproportion").c_str()));
-        else
-             minimap->setProportion(0.5);
+        }    
     }
-    minimap->setMapImage(mapImage);
+    minimap->setMap(newMap);
     beingManager->setMap(newMap);
     particleEngine->setMap(newMap);
     viewport->setMap(newMap);

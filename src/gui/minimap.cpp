@@ -28,11 +28,14 @@
 #include "../beingmanager.h"
 #include "../configuration.h"
 #include "../localplayer.h"
+#include "../log.h"
+#include "../map.h"
 
 #include "../bindings/guichan/graphics.h"
 #include "../bindings/guichan/skin.h"
 
 #include "../resources/image.h"
+#include "../resources/resourcemanager.h"
 
 #include "../utils/gettext.h"
 
@@ -43,7 +46,8 @@ int Minimap::mUserHeight = 100;
 Minimap::Minimap():
     Window(_("MiniMap")),
     mMapImage(NULL),
-    mProportion(0.5)
+    mWidthProportion(0.5),
+    mHeightProportion(0.5)
 {
     setWindowName("MiniMap");
     setResizable(true);
@@ -68,12 +72,15 @@ Minimap::~Minimap()
     config.setValue(getWindowName() + "UserHeight", mUserHeight);
 }
 
-void Minimap::setMapImage(Image *img)
+void Minimap::setMap(Map *map)
 {
     if (mMapImage)
         mMapImage->decRef();
 
-    mMapImage = img;
+    mMap = map;
+    
+    ResourceManager *resman = ResourceManager::getInstance();
+    mMapImage = resman->getImage(mMap->getProperty("minimap"));
 
     if (mMapImage)
     {
@@ -89,6 +96,15 @@ void Minimap::setMapImage(Image *img)
 
         setMinWidth(mapWidth > titleWidth ? mapWidth : titleWidth);
         setMinHeight(mapHeight);
+        
+        mWidthProportion =  (float) mMapImage->getWidth() / (float) mMap->getWidth();
+        mHeightProportion = (float) mMapImage->getHeight() / (float) mMap->getHeight();
+        
+        logger->log("Minimap width : %d ; %d ; %f", mMapImage->getWidth(), 
+                    mMap->getWidth(), mWidthProportion);
+        logger->log("Minimap height : %d ; %d ; %f", mMapImage->getHeight(),
+                    mMap->getHeight(), mHeightProportion);
+        
         setMaxWidth(mMapImage->getWidth() > titleWidth ?
                     mMapImage->getWidth() + offsetX : titleWidth);
         setMaxHeight(mMapImage->getHeight() + offsetY);
@@ -138,8 +154,10 @@ void Minimap::draw(gcn::Graphics *graphics)
         if (mMapImage->getWidth() > a.width ||
             mMapImage->getHeight() > a.height)
         {
-            mapOriginX = (int) (((a.width) / 2) - (player_node->mX * mProportion));
-            mapOriginY = (int) (((a.height) / 2) - (player_node->mY * mProportion));
+            mapOriginX = (int) (((a.width) / 2) - (player_node->mX *
+                          mWidthProportion));
+            mapOriginY = (int) (((a.height) / 2) - (player_node->mY *
+                          mHeightProportion));
 
             const int minOriginX = a.width - mMapImage->getWidth();
             const int minOriginY = a.height - mMapImage->getHeight();
@@ -190,12 +208,13 @@ void Minimap::draw(gcn::Graphics *graphics)
                 continue;
         }
 
-        const int offset = (int) ((dotSize - 1) * mProportion);
+        const int offsetHeight = (int) ((dotSize - 1) * mHeightProportion);
+        const int offsetWidth = (int) ((dotSize - 1) * mWidthProportion);
 
-        graphics->fillRectangle(gcn::Rectangle(
-                    (int) (being->mX * mProportion) + mapOriginX - offset,
-                    (int) (being->mY * mProportion) + mapOriginY - offset,
-                    dotSize, dotSize));
+        graphics->fillRectangle(gcn::Rectangle((int) (being->mX *
+                                mWidthProportion) + mapOriginX - offsetWidth,
+                                (int) (being->mY * mHeightProportion) +
+                                mapOriginY - offsetHeight, dotSize, dotSize));
     }
 
     graphics->popClipArea();
