@@ -29,21 +29,18 @@ class Image;
 class Map;
 
 /**
- * Minimap dialog.
+ * Minimap window. Shows a minimap image and the name of the current map.
+ *
+ * The name of the map is defined by the map property "name". The minimap image
+ * is defined by the map property "minimap". The path to the image should be
+ * given relative to the root of the client data.
  *
  * \ingroup Interface
  */
 class Minimap : public Window
 {
     public:
-        /**
-         * Constructor.
-         */
         Minimap();
-
-        /**
-         * Destructor.
-         */
         ~Minimap();
 
         /**
@@ -79,7 +76,6 @@ class Minimap : public Window
         void mouseReleased(gcn::MouseEvent &event);
 
     private:
-        Map *mMap;
         Image *mMapImage;
         float mWidthProportion;
         float mHeightProportion;

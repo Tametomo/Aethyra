@@ -47,7 +47,7 @@ class ShortcutContainer : public gcn::Widget,
         /**
          * Destructor.
          */
-        ~ShortcutContainer(){}
+        ~ShortcutContainer() {}
 
         /**
          * Draws the shortcuts
@@ -75,11 +75,11 @@ class ShortcutContainer : public gcn::Widget,
          */
         virtual void mouseReleased(gcn::MouseEvent &event) = 0;
 
-        int getMaxItems() const { return mMaxItems; }
+        virtual int getMaxItems() const { return mMaxItems; }
 
-        int getBoxWidth() const { return mBoxWidth; }
+        virtual int getBoxWidth() const { return mBoxWidth; }
 
-        int getBoxHeight() const { return mBoxHeight; }
+        virtual int getBoxHeight() const { return mBoxHeight; }
 
     protected:
         /**

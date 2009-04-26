@@ -28,7 +28,6 @@
 #include "../beingmanager.h"
 #include "../configuration.h"
 #include "../localplayer.h"
-#include "../log.h"
 #include "../map.h"
 
 #include "../bindings/guichan/graphics.h"
@@ -44,7 +43,7 @@ int Minimap::mUserWidth = 100;
 int Minimap::mUserHeight = 100;
 
 Minimap::Minimap():
-    Window(_("MiniMap")),
+    Window(_("Map")),
     mMapImage(NULL),
     mWidthProportion(0.5),
     mHeightProportion(0.5)
@@ -74,13 +73,24 @@ Minimap::~Minimap()
 
 void Minimap::setMap(Map *map)
 {
+    // Set the title for the Minimap
+    std::string caption;
+
+    if (map->hasProperty("name"))
+        caption = map->getProperty("name");
+    else if (map->hasProperty("mapname"))
+        caption = map->getProperty("mapname");
+    else
+        caption = _("Map");
+
+    minimap->setCaption(caption);
+
+    // Remove the old image if there is one.
     if (mMapImage)
         mMapImage->decRef();
 
-    mMap = map;
-    
     ResourceManager *resman = ResourceManager::getInstance();
-    mMapImage = resman->getImage(mMap->getProperty("minimap"));
+    mMapImage = resman->getImage(map->getProperty("minimap"));
 
     if (mMapImage)
     {
@@ -96,15 +106,10 @@ void Minimap::setMap(Map *map)
 
         setMinWidth(mapWidth > titleWidth ? mapWidth : titleWidth);
         setMinHeight(mapHeight);
-        
-        mWidthProportion =  (float) mMapImage->getWidth() / (float) mMap->getWidth();
-        mHeightProportion = (float) mMapImage->getHeight() / (float) mMap->getHeight();
-        
-        logger->log("Minimap width : %d ; %d ; %f", mMapImage->getWidth(), 
-                    mMap->getWidth(), mWidthProportion);
-        logger->log("Minimap height : %d ; %d ; %f", mMapImage->getHeight(),
-                    mMap->getHeight(), mHeightProportion);
-        
+
+        mWidthProportion = (float) mMapImage->getWidth() / map->getWidth();
+        mHeightProportion = (float) mMapImage->getHeight() / map->getHeight();
+
         setMaxWidth(mMapImage->getWidth() > titleWidth ?
                     mMapImage->getWidth() + offsetX : titleWidth);
         setMaxHeight(mMapImage->getHeight() + offsetY);
