@@ -587,6 +587,8 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
     {
         const Beings &beings = beingManager->getAll();
         std::string response = "";
+        unsigned short playercount = 0;
+        char cpc[25];
 
         for (Beings::const_iterator bi = beings.begin(), be = beings.end();
              bi != be; ++bi)
@@ -598,9 +600,11 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
                     response += ", ";
                 }
                 response += (*bi)->getName();
+                ++playercount;
             }
         }
 
+        sprintf(cpc,_("%u players are present."), playercount);
         if (mRecorder->isRecording())
         {
             // Get the current system time
@@ -615,13 +619,13 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
                 << (int) ((t / 60) % 60)
                 << "] ";
 
-
-            mRecorder->record(timeStr.str() + _("Present: ") + response + ".");
+            mRecorder->record(timeStr.str() + _("Present: ") + response + "; " +
+                              cpc);
             chatLog(_("Attendance written to record log."), BY_SERVER, true);
         }
         else
         {
-            chatLog(_("Present: ") + response, BY_SERVER);
+            chatLog(_("Present: ") + response + "; " + cpc, BY_SERVER);
         }
     }
     else if (command == "me")
