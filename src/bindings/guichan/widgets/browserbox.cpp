@@ -252,6 +252,20 @@ void BrowserBox::mouseMoved(gcn::MouseEvent &event)
 
 void BrowserBox::draw(gcn::Graphics *graphics)
 {
+    /* Forge's addition: The remaining code get nuts
+     *   on infinite loop when getWidth is 0 (how and why
+     * it might be so is yet to be explained). For the
+     * time being, just protect with a basic sanity check.
+     *
+     * The infinite loop (well, sort of) is the increasing of x
+     * while trying to fit part into the current width
+     * (while (x + part..+10 > getWidth() ), which cannot be false)
+     */
+    if (!isVisible() ||!getWidth()||!getHeight())
+    {
+       return;
+    }
+    // End of Forge's addition
     if (mOpaque)
     {
         graphics->setColor(guiPalette->getColor(Palette::BACKGROUND));
