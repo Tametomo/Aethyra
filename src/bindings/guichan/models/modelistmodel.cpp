@@ -28,6 +28,9 @@
 
 #include "../../../utils/stringutils.h"
 
+#define MIN_H 600
+#define MIN_W 800
+
 ModeListModel::ModeListModel()
 {
     /* Get available fullscreen/hardware modes */
@@ -43,10 +46,13 @@ ModeListModel::ModeListModel()
         //logger->log("Available Modes");
         for (int i = 0; modes[i]; ++i)
         {
-            const std::string modeString =
-                toString((int)modes[i]->w) + "x" + toString((int)modes[i]->h);
-            //logger->log(modeString.c_str());
-            mVideoModes.push_back(modeString);
+            if ((modes[i]->w >= MIN_W) && (modes[i]->h >=MIN_H))
+            {
+               const std::string modeString =
+                  toString((int)modes[i]->w) + "x" + toString((int)modes[i]->h);
+               //logger->log(modeString.c_str());
+               mVideoModes.push_back(modeString);
+            }
         }
     }
 }
