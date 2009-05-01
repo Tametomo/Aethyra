@@ -29,8 +29,10 @@
 #include "../configuration.h"
 #include "../localplayer.h"
 #include "../map.h"
+#include "../player.h"
 
 #include "../bindings/guichan/graphics.h"
+#include "../bindings/guichan/palette.h"
 #include "../bindings/guichan/skin.h"
 
 #include "../resources/image.h"
@@ -186,27 +188,34 @@ void Minimap::draw(gcn::Graphics *graphics)
     for (Beings::const_iterator bi = beings.begin(), bi_end = beings.end();
          bi != bi_end; ++bi)
     {
-        const Being *being = (*bi);
+        Being *being = (*bi);
         int dotSize = 2;
 
         switch (being->getType())
         {
             case Being::PLAYER:
-                if (being == player_node)
                 {
-                    dotSize = 3;
-                    graphics->setColor(gcn::Color(61, 209, 52));
+                    Palette::ColorType type = Palette::PC;
+
+                    if (being == player_node)
+                    {
+                        type = Palette::SELF;
+                        dotSize = 3;
+                    }
+
+                    if (static_cast<Player*>(being)->isGM())
+                        type = Palette::GM_NAME;
+
+                    graphics->setColor(guiPalette->getColor(type));
                     break;
-                }
-                graphics->setColor(gcn::Color(61, 52, 209));
-                break;
+                 }
 
             case Being::MONSTER:
-                graphics->setColor(gcn::Color(209, 52, 61));
+                graphics->setColor(guiPalette->getColor(Palette::MONSTER));
                 break;
 
             case Being::NPC:
-                graphics->setColor(gcn::Color(255, 255, 0));
+                graphics->setColor(guiPalette->getColor(Palette::NPC));
                 break;
 
             default:
