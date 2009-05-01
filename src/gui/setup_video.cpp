@@ -522,15 +522,15 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     }
 }
 
-#if 0
 void Setup_Video::logic()
 {
     if (!isVisible())
         return;
 
+    SetupTabContainer::logic();
+
     mFpsLabel->setCaption(toString(fps) + " FPS");
 }
-#endif
 
 void Setup_Video::keyPressed(gcn::KeyEvent &event)
 {
