@@ -78,12 +78,12 @@ Setup_Input::Setup_Input():
     LayoutHelper h(this);
     ContainerPlacer place = h.getPlacer(0, 0);
 
-    place(0, 0, mJoystickCheckbox, 3);
-    place(0, 1, mCalibrateLabel, 4);
-    place(0, 2, mCalibrateButton);
-    place(0, 3, scrollArea, 4, 7).setPadding(2);
-    place(0, 10, mMakeDefaultButton);
-    place(3, 10, mAssignKeyButton);
+    place(0, 0, scrollArea, 4, 7).setPadding(2);
+    place(0, 7, mMakeDefaultButton);
+    place(3, 7, mAssignKeyButton);
+    place(0, 8, mJoystickCheckbox, 3);
+    place(0, 9, mCalibrateLabel, 4);
+    place(0, 10, mCalibrateButton);
 
     setDimension(gcn::Rectangle(0, 0, 325, 280));
 }
