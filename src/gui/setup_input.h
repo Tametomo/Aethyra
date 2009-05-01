@@ -1,6 +1,6 @@
 /*
  *  Aethyra
- *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2007  The Mana World Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -20,8 +20,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GUI_SETUP_JOYSTICK_H
-#define GUI_SETUP_JOYSTICK_H
+#ifndef GUI_SETUP_INPUT_H
+#define GUI_SETUP_INPUT_H
+
+#include <string>
 
 #include <guichan/actionlistener.hpp>
 
@@ -29,21 +31,58 @@
 
 #include "../bindings/guichan/widgets/setuptabcontainer.h"
 
-class Setup_Joystick : public SetupTabContainer, public gcn::ActionListener
+class Setup_Input : public SetupTabContainer, public gcn::ActionListener
 {
     public:
-        Setup_Joystick();
+        /**
+         * Constructor
+         */
+        Setup_Input();
+
+        /**
+         * Destructor
+         */
+        ~Setup_Input();
 
         void apply();
         void cancel();
 
         void action(const gcn::ActionEvent &event);
 
+        /**
+         * Get an update on the assigned key.
+         */
+        void refreshAssignedKey(int index);
+
+        /**
+         * The callback function when a new key has been pressed.
+         */
+        void newKeyCallback(int index);
+
+        /**
+         * Shorthand method to update all the keys.
+         */
+        void refreshKeys();
+
+        /**
+         * If a key function is unresolved, then this reverts it.
+         */
+        void keyUnresolved();
+
     private:
+        class KeyListModel *mKeyListModel;
+
         gcn::Label *mCalibrateLabel;
-        gcn::Button *mCalibrateButton;
-        bool mOriginalJoystickEnabled;
         gcn::CheckBox *mJoystickEnabled;
+
+        gcn::ListBox *mKeyList;
+
+        gcn::Button *mCalibrateButton;
+        gcn::Button *mAssignKeyButton;
+        gcn::Button *mMakeDefaultButton;
+
+        bool mOriginalJoystickEnabled;
+        bool mKeySetting; /**< flag to check if key being set. */
 };
 
 #endif

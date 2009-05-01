@@ -37,7 +37,7 @@ struct KeyFunction
     int value;                  /** The actual value that is used. */
 };
 
-class Setup_Keyboard;
+class Setup_Input;
 
 class KeyboardConfig
 {
@@ -121,7 +121,7 @@ class KeyboardConfig
         /**
          * Set a reference to the key setup window.
          */
-        void setSetupKeyboard(Setup_Keyboard *setupKey) { mSetupKey = setupKey; }
+        void setSetupKeyboard(Setup_Input *setupKey) { mSetupKey = setupKey; }
 
         /**
          * Checks if the key is active, by providing the key function index.
@@ -209,7 +209,7 @@ class KeyboardConfig
         int mNewKeyIndex;              /**< Index of new key to be assigned */
         bool mEnabled;                 /**< Flag to respond to key input */
 
-        Setup_Keyboard *mSetupKey;     /**< Reference to setup window */
+        Setup_Input *mSetupKey;        /**< Reference to setup window */
 
         KeyFunction mKey[KEY_TOTAL];   /**< Pointer to all the key data */
 

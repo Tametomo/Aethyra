@@ -23,7 +23,9 @@
 #include <SDL_keyboard.h>
 
 #include "ok_dialog.h"
-#include "setup_keyboard.h"
+#include "setup_input.h"
+
+#include "../configuration.h"
 
 #include "../bindings/guichan/keyboardconfig.h"
 #include "../bindings/guichan/layouthelper.h"
@@ -31,21 +33,35 @@
 #include "../bindings/guichan/models/keylistmodel.h"
 
 #include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/checkbox.h"
+#include "../bindings/guichan/widgets/label.h"
 #include "../bindings/guichan/widgets/listbox.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
+
+#include "../bindings/sdl/joystick.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
 
-Setup_Keyboard::Setup_Keyboard():
+extern Joystick *joystick;
+
+Setup_Input::Setup_Input():
     mKeyListModel(new KeyListModel()),
+    mCalibrateLabel(new Label(_("Press the button to start calibration"))),
+    mJoystickEnabled(new CheckBox(_("Enable joystick"))),
     mKeyList(new ListBox(mKeyListModel)),
+    mCalibrateButton(new Button(_("Calibrate"), "calibrate", this)),
     mKeySetting(false)
 {
     keyboard.setSetupKeyboard(this);
-    setName(_("Keyboard"));
+    setName(_("Input"));
 
     refreshKeys();
+
+    mOriginalJoystickEnabled = !config.getValue("joystickEnabled", false);
+    mJoystickEnabled->setSelected(mOriginalJoystickEnabled);
+
+    mJoystickEnabled->addActionListener(this);
 
     mKeyList->addActionListener(this);
 
@@ -63,14 +79,17 @@ Setup_Keyboard::Setup_Keyboard():
     LayoutHelper h(this);
     ContainerPlacer place = h.getPlacer(0, 0);
 
-    place(0, 0, scrollArea, 4, 6).setPadding(2);
-    place(0, 6, mMakeDefaultButton);
-    place(3, 6, mAssignKeyButton);
+    place(0, 0, mJoystickEnabled, 3);
+    place(0, 1, mCalibrateLabel, 4);
+    place(0, 2, mCalibrateButton);
+    place(0, 3, scrollArea, 4, 7).setPadding(2);
+    place(0, 10, mMakeDefaultButton);
+    place(3, 10, mAssignKeyButton);
 
     setDimension(gcn::Rectangle(0, 0, 325, 280));
 }
 
-Setup_Keyboard::~Setup_Keyboard()
+Setup_Input::~Setup_Input()
 {
     delete mKeyList;
     delete mKeyListModel;
@@ -79,8 +98,13 @@ Setup_Keyboard::~Setup_Keyboard()
     delete mMakeDefaultButton;
 }
 
-void Setup_Keyboard::apply()
+void Setup_Input::apply()
 {
+    if (joystick)
+        joystick->setEnabled(mOriginalJoystickEnabled);
+
+    mJoystickEnabled->setSelected(mOriginalJoystickEnabled);
+
     keyUnresolved();
 
     if (keyboard.hasConflicts())
@@ -93,8 +117,11 @@ void Setup_Keyboard::apply()
     keyboard.store();
 }
 
-void Setup_Keyboard::cancel()
+void Setup_Input::cancel()
 {
+    config.setValue("joystickEnabled",
+                    joystick ? joystick->isEnabled() : false);
+
     keyUnresolved();
 
     keyboard.retrieve();
@@ -103,7 +130,7 @@ void Setup_Keyboard::cancel()
     refreshKeys();
 }
 
-void Setup_Keyboard::action(const gcn::ActionEvent &event)
+void Setup_Input::action(const gcn::ActionEvent &event)
 {
     if (event.getSource() == mKeyList)
     {
@@ -124,9 +151,33 @@ void Setup_Keyboard::action(const gcn::ActionEvent &event)
         keyboard.makeDefault();
         refreshKeys();
     }
+
+    if (!joystick)
+        return;
+
+    if (event.getSource() == mJoystickEnabled)
+    {
+        joystick->setEnabled(mJoystickEnabled->isSelected());
+    }
+    else
+    {
+        if (joystick->isCalibrating())
+        {
+            mCalibrateButton->setCaption(_("Calibrate"));
+            mCalibrateLabel->setCaption
+                (_("Press the button to start calibration"));
+            joystick->finishCalibration();
+        }
+        else
+        {
+            mCalibrateButton->setCaption(_("Stop"));
+            mCalibrateLabel->setCaption(_("Rotate the stick"));
+            joystick->startCalibration();
+        }
+    }
 }
 
-void Setup_Keyboard::refreshAssignedKey(int index)
+void Setup_Input::refreshAssignedKey(int index)
 {
     std::string caption;
     char *temp = SDL_GetKeyName((SDLKey) keyboard.getKeyValue(index));
@@ -134,14 +185,14 @@ void Setup_Keyboard::refreshAssignedKey(int index)
     mKeyListModel->setElementAt(index, caption);
 }
 
-void Setup_Keyboard::newKeyCallback(int index)
+void Setup_Input::newKeyCallback(int index)
 {
     mKeySetting = false;
     refreshAssignedKey(index);
     mAssignKeyButton->setEnabled(true);
 }
 
-void Setup_Keyboard::refreshKeys()
+void Setup_Input::refreshKeys()
 {
     for (int i = 0; i < keyboard.KEY_TOTAL; i++)
     {
@@ -149,7 +200,7 @@ void Setup_Keyboard::refreshKeys()
     }
 }
 
-void Setup_Keyboard::keyUnresolved()
+void Setup_Input::keyUnresolved()
 {
     if (mKeySetting)
     {

@@ -276,10 +276,8 @@
 		<Unit filename="src\gui\setup_audio.h" />
 		<Unit filename="src\gui\setup_colors.cpp" />
 		<Unit filename="src\gui\setup_colors.h" />
-		<Unit filename="src\gui\setup_joystick.cpp" />
-		<Unit filename="src\gui\setup_joystick.h" />
-		<Unit filename="src\gui\setup_keyboard.cpp" />
-		<Unit filename="src\gui\setup_keyboard.h" />
+		<Unit filename="src\gui\setup_input.cpp" />
+		<Unit filename="src\gui\setup_input.h" />
 		<Unit filename="src\gui\setup_players.cpp" />
 		<Unit filename="src\gui\setup_players.h" />
 		<Unit filename="src\gui\setup_video.cpp" />

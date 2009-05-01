@@ -27,7 +27,7 @@
 #include "../../configuration.h"
 #include "../../log.h"
 
-#include "../../gui/setup_keyboard.h"
+#include "../../gui/setup_input.h"
 
 #include "../../utils/gettext.h"
 #include "../../utils/strprintf.h"

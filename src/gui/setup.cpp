@@ -23,8 +23,7 @@
 #include "setup.h"
 #include "setup_audio.h"
 #include "setup_colors.h"
-#include "setup_joystick.h"
-#include "setup_keyboard.h"
+#include "setup_input.h"
 #include "setup_players.h"
 #include "setup_video.h"
 
@@ -73,7 +72,7 @@ Setup::Setup():
         add(btn);
 
         // Store this button, as it needs to be enabled/disabled
-        if (!strcmp(*curBtn, "Reset Windows"))
+        if (!strcmp(*curBtn, N_("Reset Windows")))
             mResetWindows = btn;
     }
 
@@ -82,8 +81,7 @@ Setup::Setup():
 
     mTabs.push_back(new Setup_Video());
     mTabs.push_back(new Setup_Audio());
-    mTabs.push_back(new Setup_Joystick());
-    mTabs.push_back(new Setup_Keyboard());
+    mTabs.push_back(new Setup_Input());
     mTabs.push_back(new Setup_Colors());
     mTabs.push_back(new Setup_Players());
 

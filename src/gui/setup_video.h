@@ -24,14 +24,12 @@
 #define GUI_SETUP_VIDEO_H
 
 #include <guichan/actionlistener.hpp>
-#include <guichan/keylistener.hpp>
 
 #include "../bindings/guichan/widgets/setuptabcontainer.h"
 
 class ModeListModel;
 
-class Setup_Video : public SetupTabContainer, public gcn::ActionListener,
-                    public gcn::KeyListener
+class Setup_Video : public SetupTabContainer, public gcn::ActionListener
 {
     public:
         Setup_Video();
@@ -42,14 +40,15 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener,
 
         void action(const gcn::ActionEvent &event);
 
-        /** Called when key is pressed */
-        void keyPressed(gcn::KeyEvent &event);
-
     private:
         void updateSliders(bool originalValues);
 
         int updateSlider(gcn::Slider *slider, gcn::TextField *field,
                          const std::string &configName);
+
+        void setSpeechModeLabel(int value);
+        void setOverlayDetailLabel(int value);
+        void setParticleDetailLabel(int value);
 
         bool mFullScreenEnabled;
         bool mOpenGLEnabled;
@@ -77,7 +76,7 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener,
         gcn::CheckBox *mNameCheckBox;
 
         gcn::Slider *mSpeechSlider;
-        gcn::Label *mSpeechLabel;
+        gcn::Label *mSpeechModeLabel;
         gcn::Slider *mAlphaSlider;
         gcn::CheckBox *mFpsCheckBox;
         gcn::Slider *mFpsSlider;
@@ -94,11 +93,11 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener,
 
         int mOverlayDetail;
         gcn::Slider *mOverlayDetailSlider;
-        gcn::Label *mOverlayDetailField;
+        gcn::Label *mOverlayDetailLabel;
 
         int mParticleDetail;
         gcn::Slider *mParticleDetailSlider;
-        gcn::Label *mParticleDetailField;
+        gcn::Label *mParticleDetailLabel;
 
         gcn::Label *mPickupNotifyLabel;
         gcn::CheckBox *mPickupChatCheckBox;

@@ -63,13 +63,13 @@ Setup_Video::Setup_Video():
     mFps((int) config.getValue("fpslimit", 0)),
     mSpeechMode((int) config.getValue("speech", 3)),
     mModeListModel(new ModeListModel),
-    mModeList(new ListBox(mModeListModel)),
+    mModeList(new ListBox(mModeListModel, "videomode", this)),
     mFsCheckBox(new CheckBox(_("Full screen"), mFullScreenEnabled)),
     mOpenGLCheckBox(new CheckBox(_("OpenGL"), mOpenGLEnabled)),
     mCustomCursorCheckBox(new CheckBox(_("Custom cursor"), mCustomCursorEnabled)),
     mNameCheckBox(new CheckBox(_("Show name"), mNameEnabled)),
     mSpeechSlider(new Slider(0, 3)),
-    mSpeechLabel(new Label("")),
+    mSpeechModeLabel(new Label("")),
     mAlphaSlider(new Slider(0.2, 1.0)),
     mFpsCheckBox(new CheckBox(_("FPS Limit:"))),
     mFpsSlider(new Slider(10, 120)),
@@ -82,10 +82,10 @@ Setup_Video::Setup_Video():
     mScrollRadiusField(new TextField),
     mOverlayDetail((int) config.getValue("OverlayDetail", 2)),
     mOverlayDetailSlider(new Slider(0, 2)),
-    mOverlayDetailField(new Label("")),
+    mOverlayDetailLabel(new Label("")),
     mParticleDetail(3 - (int) config.getValue("particleEmitterSkip", 1)),
     mParticleDetailSlider(new Slider(-1, 3)),
-    mParticleDetailField(new Label("")),
+    mParticleDetailLabel(new Label("")),
     mPickupNotifyLabel(new Label(_("Show pickup notification"))),
     mPickupChatCheckBox(new CheckBox(_("in chat"), mPickupChatEnabled)),
     mPickupParticleCheckBox(new CheckBox(_("as particle"),
@@ -95,6 +95,7 @@ Setup_Video::Setup_Video():
 
     ScrollArea *scrollArea = new ScrollArea(mModeList);
     scrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
+    scrollArea->setWidth(90);
 
     speechLabel = new Label(_("Overhead text"));
     alphaLabel = new Label(_("Gui opacity"));
@@ -111,16 +112,13 @@ Setup_Video::Setup_Video():
 #endif
 
     mAlphaSlider->setValue(mOpacity);
-    mAlphaSlider->setWidth(90);
 
     mFpsField->setText(toString(mFps));
-    mFpsField->setEnabled(mFps > 0);
     mFpsField->setWidth(30);
     mFpsSlider->setValue(mFps);
     mFpsSlider->setEnabled(mFps > 0);
     mFpsCheckBox->setSelected(mFps > 0);
 
-    mModeList->setActionEventId("videomode");
     mCustomCursorCheckBox->setActionEventId("customcursor");
     mPickupChatCheckBox->setActionEventId("pickupchat");
     mPickupParticleCheckBox->setActionEventId("pickupparticle");
@@ -134,11 +132,10 @@ Setup_Video::Setup_Video():
     mScrollLazinessSlider->setActionEventId("scrolllazinessslider");
     mScrollLazinessField->setActionEventId("scrolllazinessfield");
     mOverlayDetailSlider->setActionEventId("overlaydetailslider");
-    mOverlayDetailField->setActionEventId("overlaydetailfield");
+    mOverlayDetailLabel->setActionEventId("OverlayDetailLabel");
     mParticleDetailSlider->setActionEventId("particledetailslider");
-    mParticleDetailField->setActionEventId("particledetailfield");
+    mParticleDetailLabel->setActionEventId("particledetailfield");
 
-    mModeList->addActionListener(this);
     mCustomCursorCheckBox->addActionListener(this);
     mPickupChatCheckBox->addActionListener(this);
     mPickupParticleCheckBox->addActionListener(this);
@@ -147,15 +144,10 @@ Setup_Video::Setup_Video():
     mFpsCheckBox->addActionListener(this);
     mSpeechSlider->addActionListener(this);
     mFpsSlider->addActionListener(this);
-    mFpsField->addKeyListener(this);
     mScrollRadiusSlider->addActionListener(this);
-    mScrollRadiusField->addKeyListener(this);
     mScrollLazinessSlider->addActionListener(this);
-    mScrollLazinessField->addKeyListener(this);
     mOverlayDetailSlider->addActionListener(this);
-    mOverlayDetailField->addKeyListener(this);
     mParticleDetailSlider->addActionListener(this);
-    mParticleDetailField->addKeyListener(this);
 
     mScrollRadiusField->setText(toString(mOriginalScrollRadius));
     mScrollRadiusSlider->setValue(mOriginalScrollRadius);
@@ -163,55 +155,13 @@ Setup_Video::Setup_Video():
     mScrollLazinessField->setText(toString(mOriginalScrollLaziness));
     mScrollLazinessSlider->setValue(mOriginalScrollLaziness);
 
-    switch (mSpeechMode)
-    {
-        case 0:
-            mSpeechLabel->setCaption(_("No text"));
-            break;
-        case 1:
-            mSpeechLabel->setCaption(_("Text"));
-            break;
-        case 2:
-            mSpeechLabel->setCaption(_("Bubbles, no names"));
-            break;
-        case 3:
-            mSpeechLabel->setCaption(_("Bubbles with names"));
-            break;
-    }
+    setSpeechModeLabel(mSpeechMode);
     mSpeechSlider->setValue(mSpeechMode);
 
-    switch (mOverlayDetail)
-    {
-        case 0:
-            mOverlayDetailField->setCaption(_("off"));
-            break;
-        case 1:
-            mOverlayDetailField->setCaption(_("low"));
-            break;
-        case 2:
-            mOverlayDetailField->setCaption(_("high"));
-            break;
-    }
+    setOverlayDetailLabel(mOverlayDetail);
     mOverlayDetailSlider->setValue(mOverlayDetail);
 
-    switch (mParticleDetail)
-    {
-        case -1:
-            mParticleDetailField->setCaption(_("off"));
-            break;
-        case 0:
-            mParticleDetailField->setCaption(_("low"));
-            break;
-        case 1:
-            mParticleDetailField->setCaption(_("medium"));
-            break;
-        case 2:
-            mParticleDetailField->setCaption(_("high"));
-            break;
-        case 3:
-            mParticleDetailField->setCaption(_("max"));
-            break;
-    }
+    setParticleDetailLabel(mParticleDetail);
     mParticleDetailSlider->setValue(mParticleDetail);
 
     // Do the layout
@@ -246,9 +196,9 @@ Setup_Video::Setup_Video():
     place(2, 7, mFpsField).setPadding(1);
     place(2, 8, mScrollRadiusField).setPadding(1);
     place(2, 9, mScrollLazinessField).setPadding(1);
-    place(2, 10, mSpeechLabel, 3).setPadding(2);
-    place(2, 11, mOverlayDetailField, 3).setPadding(2);
-    place(2, 12, mParticleDetailField, 3).setPadding(2);
+    place(2, 10, mSpeechModeLabel, 3).setPadding(2);
+    place(2, 11, mOverlayDetailLabel, 3).setPadding(2);
+    place(2, 12, mParticleDetailLabel, 3).setPadding(2);
 
     place(3, 7, mFpsLabel);
 
@@ -410,21 +360,8 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     else if (event.getId() == "speech")
     {
         int val = (int) mSpeechSlider->getValue();
-        switch (val)
-        {
-            case 0:
-                mSpeechLabel->setCaption(_("No text"));
-                break;
-            case 1:
-                mSpeechLabel->setCaption(_("Text"));
-                break;
-            case 2:
-                mSpeechLabel->setCaption(_("Bubbles, no names"));
-                break;
-            case 3:
-                mSpeechLabel->setCaption(_("Bubbles with names"));
-                break;
-        }
+        setSpeechModeLabel(val);        
+
         mSpeechSlider->setValue(val);
         config.setValue("speech", val);
     }
@@ -434,8 +371,9 @@ void Setup_Video::action(const gcn::ActionEvent &event)
         // and requires an update
         if (player_node)
             player_node->mUpdateName = true;
-        config.setValue("showownname",
-                mNameCheckBox->isSelected() ? true : false);
+
+        config.setValue("showownname", mNameCheckBox->isSelected() ? true :
+                                                                     false);
     }
     else if (event.getId() == "fpslimitslider")
     {
@@ -457,42 +395,13 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     else if (event.getId() == "overlaydetailslider")
     {
         int val = (int) mOverlayDetailSlider->getValue();
-        switch (val)
-        {
-            case 0:
-                mOverlayDetailField->setCaption(_("off"));
-                break;
-            case 1:
-                mOverlayDetailField->setCaption(_("low"));
-                break;
-            case 2:
-                mOverlayDetailField->setCaption(_("high"));
-                break;
-        }
+        setOverlayDetailLabel(val);
         config.setValue("OverlayDetail", val);
     }
     else if (event.getId() == "particledetailslider")
     {
         int val = (int) mParticleDetailSlider->getValue();
-        switch (val)
-        {
-            case -1:
-                mParticleDetailField->setCaption(_("off"));
-                break;                
-            case 0:
-                mParticleDetailField->setCaption(_("low"));
-                break;
-            case 1:
-                mParticleDetailField->setCaption(_("medium"));
-                break;
-            case 2:
-                mParticleDetailField->setCaption(_("high"));
-                break;
-            case 3:
-                mParticleDetailField->setCaption(_("max"));
-                break;
-        }
-
+        setParticleDetailLabel(val);
         config.setValue("particleeffects", val != -1);
         config.setValue("particleEmitterSkip", 3 - val);
 
@@ -515,10 +424,66 @@ void Setup_Video::action(const gcn::ActionEvent &event)
         else
             mFps = 0;
 
-        mFpsField->setEnabled(mFps > 0);
         mFpsField->setText(toString(mFps));
         mFpsSlider->setValue(mFps);
         mFpsSlider->setEnabled(mFps > 0);
+    }
+}
+
+void Setup_Video::setSpeechModeLabel(int value)
+{
+    switch (value)
+    {
+        case 0:
+            mSpeechModeLabel->setCaption(_("No text"));
+            break;
+        case 1:
+            mSpeechModeLabel->setCaption(_("Text"));
+            break;
+        case 2:
+            mSpeechModeLabel->setCaption(_("Bubbles, no names"));
+            break;
+        case 3:
+            mSpeechModeLabel->setCaption(_("Bubbles with names"));
+            break;
+    }
+}
+
+void Setup_Video::setOverlayDetailLabel(int value)
+{
+    switch (value)
+    {
+        case 0:
+            mOverlayDetailLabel->setCaption(_("off"));
+            break;
+        case 1:
+            mOverlayDetailLabel->setCaption(_("low"));
+            break;
+        case 2:
+            mOverlayDetailLabel->setCaption(_("high"));
+            break;
+    }
+}
+
+void Setup_Video::setParticleDetailLabel(int value)
+{
+    switch (value)
+    {
+        case -1:
+            mParticleDetailLabel->setCaption(_("off"));
+            break;                
+        case 0:
+            mParticleDetailLabel->setCaption(_("low"));
+            break;
+        case 1:
+            mParticleDetailLabel->setCaption(_("medium"));
+            break;
+        case 2:
+            mParticleDetailLabel->setCaption(_("high"));
+            break;
+        case 3:
+            mParticleDetailLabel->setCaption(_("max"));
+            break;
     }
 }
 
@@ -530,27 +495,4 @@ void Setup_Video::logic()
     SetupTabContainer::logic();
 
     mFpsLabel->setCaption(toString(fps) + " FPS");
-}
-
-void Setup_Video::keyPressed(gcn::KeyEvent &event)
-{
-    std::stringstream tempFps(mFpsField->getText());
-
-    if (tempFps >> mFps)
-    {
-        if (mFps < 10)
-            mFps = 10;
-        else if (mFps > 120)
-            mFps = 120;
-
-        mFpsField->setText(toString(mFps));
-        mFpsSlider->setValue(mFps);
-    }
-    else
-    {
-        mFpsField->setText("");
-        mFps = 0;
-    }
-    updateSlider(mScrollRadiusSlider, mScrollRadiusField, "ScrollRadius");
-    updateSlider(mScrollLazinessSlider, mScrollLazinessField, "ScrollLaziness");
 }

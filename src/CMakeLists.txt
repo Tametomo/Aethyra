@@ -223,10 +223,8 @@ SET(SRCS
     gui/setup_audio.h
     gui/setup_colors.cpp
     gui/setup_colors.h
-    gui/setup_joystick.cpp
-    gui/setup_joystick.h
-    gui/setup_keyboard.cpp
-    gui/setup_keyboard.h
+    gui/setup_input.cpp
+    gui/setup_input.h
     gui/setup_players.cpp
     gui/setup_players.h
     gui/setup_video.cpp
