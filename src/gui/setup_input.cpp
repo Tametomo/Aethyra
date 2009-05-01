@@ -48,7 +48,7 @@ extern Joystick *joystick;
 Setup_Input::Setup_Input():
     mKeyListModel(new KeyListModel()),
     mCalibrateLabel(new Label(_("Press the button to start calibration"))),
-    mJoystickEnabled(new CheckBox(_("Enable joystick"))),
+    mJoystickCheckbox(new CheckBox(_("Enable joystick"))),
     mKeyList(new ListBox(mKeyListModel)),
     mCalibrateButton(new Button(_("Calibrate"), "calibrate", this)),
     mKeySetting(false)
@@ -58,10 +58,9 @@ Setup_Input::Setup_Input():
 
     refreshKeys();
 
-    mOriginalJoystickEnabled = !config.getValue("joystickEnabled", false);
-    mJoystickEnabled->setSelected(mOriginalJoystickEnabled);
+    mJoystickCheckbox->setSelected(config.getValue("joystickEnabled", false));
 
-    mJoystickEnabled->addActionListener(this);
+    mJoystickCheckbox->addActionListener(this);
 
     mKeyList->addActionListener(this);
 
@@ -79,7 +78,7 @@ Setup_Input::Setup_Input():
     LayoutHelper h(this);
     ContainerPlacer place = h.getPlacer(0, 0);
 
-    place(0, 0, mJoystickEnabled, 3);
+    place(0, 0, mJoystickCheckbox, 3);
     place(0, 1, mCalibrateLabel, 4);
     place(0, 2, mCalibrateButton);
     place(0, 3, scrollArea, 4, 7).setPadding(2);
@@ -100,10 +99,10 @@ Setup_Input::~Setup_Input()
 
 void Setup_Input::apply()
 {
-    if (joystick)
-        joystick->setEnabled(mOriginalJoystickEnabled);
+    config.setValue("joystickEnabled", mJoystickCheckbox->isSelected());
 
-    mJoystickEnabled->setSelected(mOriginalJoystickEnabled);
+    if (joystick)
+        joystick->setEnabled(mJoystickCheckbox->isSelected());
 
     keyUnresolved();
 
@@ -111,7 +110,7 @@ void Setup_Input::apply()
     {
         new OkDialog(_("Key Conflict(s) Detected."),
                      _("Resolve them, or gameplay may result in strange "
-                       "behaviour."));
+                       "behavior."));
     }
     keyboard.setEnabled(true);
     keyboard.store();
@@ -119,8 +118,7 @@ void Setup_Input::apply()
 
 void Setup_Input::cancel()
 {
-    config.setValue("joystickEnabled",
-                    joystick ? joystick->isEnabled() : false);
+    mJoystickCheckbox->setSelected(config.getValue("joystickEnabled", false));
 
     keyUnresolved();
 
@@ -155,9 +153,9 @@ void Setup_Input::action(const gcn::ActionEvent &event)
     if (!joystick)
         return;
 
-    if (event.getSource() == mJoystickEnabled)
+    if (event.getSource() == mJoystickCheckbox)
     {
-        joystick->setEnabled(mJoystickEnabled->isSelected());
+        joystick->setEnabled(mJoystickCheckbox->isSelected());
     }
     else
     {

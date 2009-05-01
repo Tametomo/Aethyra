@@ -73,7 +73,7 @@ class Setup_Input : public SetupTabContainer, public gcn::ActionListener
         class KeyListModel *mKeyListModel;
 
         gcn::Label *mCalibrateLabel;
-        gcn::CheckBox *mJoystickEnabled;
+        gcn::CheckBox *mJoystickCheckbox;
 
         gcn::ListBox *mKeyList;
 
@@ -81,7 +81,6 @@ class Setup_Input : public SetupTabContainer, public gcn::ActionListener
         gcn::Button *mAssignKeyButton;
         gcn::Button *mMakeDefaultButton;
 
-        bool mOriginalJoystickEnabled;
         bool mKeySetting; /**< flag to check if key being set. */
 };
 
