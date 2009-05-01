@@ -41,6 +41,8 @@ class OpenGLGraphics : public Graphics
 
         bool setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel);
 
+        bool resizeVideoMode(int w,int h);
+
         /**
          * Blits an image onto the screen.
          *

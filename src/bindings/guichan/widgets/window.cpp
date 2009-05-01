@@ -653,3 +653,54 @@ void Window::reflowLayout(int w, int h)
     setContentSize(w, h);
 }
 
+void Window::adaptToNewSize(int new_w,int new_h, int old_w, int old_h, bool extend,bool save)
+{
+   int x = getX(); 
+   int y = getY();
+   int w = getWidth();
+   int h = getHeight();
+   int xr = x+w;
+   int yb = y+h;
+   if (xr>old_w*3/4)
+   { /* in the right side 
+      * Keep the right border distance 
+      */
+      x+=new_w-old_w;
+      if ((isResizable())&&(extend))
+      {
+         w=(w*new_w)/old_w;
+         x-= w-getWidth();
+      }
+   }
+   else
+   {
+      /* let's glue the left side */
+      if ((isResizable())&&(extend))
+      {
+         w=(w*new_w)/old_w;
+      }
+   }
+   if (yb>old_h*3/4)
+   { /* in the bottom side 
+      * Keep the bottom border distance 
+      */
+      y+=new_h-old_h;
+      if ((isResizable())&&(extend))
+      {
+         h=(h*new_h)/old_h;
+         y-= h-getHeight();
+      }
+   }
+   else
+   {
+      /* let's glue the top side */
+      if ((isResizable())&&(extend))
+      {
+         h=(h*new_h)/old_h;
+      }
+   }
+
+   setPosition(x, y);
+   setSize(w, h);
+   if (save) saveWindowState();
+}

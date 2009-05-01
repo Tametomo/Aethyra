@@ -91,6 +91,11 @@ class Graphics : public gcn::SDLGraphics
         virtual bool setFullscreen(bool fs);
 
         /**
+         * Try to change the size of the window
+         */
+        virtual bool resizeVideoMode(int w,int h)=0;
+
+        /**
          * Blits an image onto the screen.
          *
          * @return <code>true</code> if the image was blitted properly

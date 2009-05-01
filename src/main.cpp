@@ -851,6 +851,9 @@ int main(int argc, char *argv[])
 
     while (state != EXIT_STATE)
     {
+     screenWidth = (int) config.getValue("screenwidth", defaultScreenWidth);
+     screenHeight = (int) config.getValue("screenheight",
+                                             defaultScreenHeight);
         // Handle SDL events
         while (SDL_PollEvent(&event))
         {
