@@ -154,11 +154,8 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
                 break;
             }
 
-            if (!equipPoint)
-            {
-                // No point given, no point in searching
+            if (!equipPoint)   // No point given, no point in searching
                 break;
-            }
 
             mask = 1;
             position = 0;
@@ -169,19 +166,16 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
             }
 
             item = inventory->getItem(index);
+
             if (!item)
                 break;
 
             item->setEquipped(false);
 
-            if (equipPoint & 0x8000)
-            {    // Arrows
+            if (equipPoint & 0x8000)    // Arrows
                 player_node->mEquipment->setArrows(-1);
-            }
             else
-            {
                 player_node->mEquipment->removeEquipment(position);
-            }
 
             if (debugEquipment)
             {

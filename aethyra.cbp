@@ -332,7 +332,6 @@
 		<Unit filename="src\net\partyhandler.h" />
 		<Unit filename="src\net\playerhandler.cpp" />
 		<Unit filename="src\net\playerhandler.h" />
-		<Unit filename="src\net\protocol.cpp" />
 		<Unit filename="src\net\protocol.h" />
 		<Unit filename="src\net\skillhandler.cpp" />
 		<Unit filename="src\net\skillhandler.h" />

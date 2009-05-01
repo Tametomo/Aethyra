@@ -231,7 +231,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      net/partyhandler.h \
 	      net/playerhandler.cpp \
 	      net/playerhandler.h \
-	      net/protocol.cpp \
 	      net/protocol.h \
 	      net/skillhandler.cpp \
 	      net/skillhandler.h \

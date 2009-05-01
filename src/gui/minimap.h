@@ -26,35 +26,27 @@
 #include "../bindings/guichan/widgets/window.h"
 
 class Image;
+class Map;
 
 /**
- * Minimap dialog.
+ * Minimap window. Shows a minimap image and the name of the current map.
+ *
+ * The name of the map is defined by the map property "name". The minimap image
+ * is defined by the map property "minimap". The path to the image should be
+ * given relative to the root of the client data.
  *
  * \ingroup Interface
  */
 class Minimap : public Window
 {
     public:
-        /**
-         * Constructor.
-         */
         Minimap();
-
-        /**
-         * Destructor.
-         */
         ~Minimap();
 
         /**
          * Sets the map image that should be displayed.
          */
-        void setMapImage(Image *img);
-
-        /**
-         * Sets the map proportion (1 means 1 tile to one pixel, .5 means 2
-         * tiles to 1 pixel, etc.)
-         */
-        void setProportion(float proportion) { mProportion = proportion; }
+        void setMap(Map *map);
 
         /**
          * Toggles the displaying of the minimap.
@@ -85,7 +77,8 @@ class Minimap : public Window
 
     private:
         Image *mMapImage;
-        float mProportion;
+        float mWidthProportion;
+        float mHeightProportion;
         static bool mShow;
         static int mUserWidth;
         static int mUserHeight;

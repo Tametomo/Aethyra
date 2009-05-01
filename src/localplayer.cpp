@@ -418,10 +418,8 @@ void LocalPlayer::setDestination(Uint16 x, Uint16 y)
         mDestX = x;
         mDestY = y;
 
-        char temp[4] = "";
-        set_coordinates(temp, x, y, mDirection);
         MessageOut outMsg(0x0085);
-        outMsg.writeString(temp, 3);
+        outMsg.writeCoordinates(x, y, mDirection);
     }
 
     mPickUpTarget = NULL;
