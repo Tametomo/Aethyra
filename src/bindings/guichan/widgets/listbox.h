@@ -48,6 +48,10 @@ class ListBox : public gcn::ListBox
          */
         void draw(gcn::Graphics *graphics);
 
+        void incrementSelected();
+
+        void decrementSelected();
+
         // Inherited from KeyListener
 
         void keyPressed(gcn::KeyEvent& keyEvent);

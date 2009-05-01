@@ -74,54 +74,52 @@ void ListBox::draw(gcn::Graphics *graphics)
     }
 }
 
+void ListBox::incrementSelected()
+{
+    const int lastSelection = getListModel()->getNumberOfElements() - 1;
+
+    if (getSelected() < lastSelection)
+        setSelected(mSelected + 1);
+    else if (getSelected() == lastSelection && mWrappingEnabled)
+        setSelected(0);
+}
+
+void ListBox::decrementSelected()
+{
+    const int lastSelection = getListModel()->getNumberOfElements() - 1;
+
+    if (getSelected() > 0)
+        setSelected(mSelected - 1);
+    else if (getSelected() == 0 && mWrappingEnabled)
+        setSelected(lastSelection);
+}
+
 // -- KeyListener notifications
 void ListBox::keyPressed(gcn::KeyEvent& keyEvent)
 {
     gcn::Key key = keyEvent.getKey();
 
     if (key.getValue() == Key::ENTER || key.getValue() == Key::SPACE)
-    {
         distributeActionEvent();
-        keyEvent.consume();
-    }
     else if (key.getValue() == Key::UP)
-    {
-        if (getSelected() > 0)
-            setSelected(mSelected - 1);
-        else if (getSelected() == 0 && mWrappingEnabled)
-            setSelected(getListModel()->getNumberOfElements() - 1);
-        keyEvent.consume();
-    }
+        decrementSelected();
     else if (key.getValue() == Key::DOWN)
-    {
-        if (getSelected() < (getListModel()->getNumberOfElements() - 1))
-            setSelected(mSelected + 1);
-        else if (getSelected() == (getListModel()->getNumberOfElements() - 1) &&
-                 mWrappingEnabled)
-            setSelected(0);
-        keyEvent.consume();
-    }
+        incrementSelected();
     else if (key.getValue() == Key::HOME)
-    {
         setSelected(0);
-        keyEvent.consume();
-    }
     else if (key.getValue() == Key::END)
-    {
         setSelected(getListModel()->getNumberOfElements() - 1);
-        keyEvent.consume();
-    }
+    else
+        return;
+
+    keyEvent.consume();
 }
 
 void ListBox::mouseWheelMovedUp(gcn::MouseEvent& mouseEvent)
 {
     if (isFocused())
     {
-        if (getSelected() > 0)
-            setSelected(getSelected() - 1);
-        else if (getSelected() == 0 && mWrappingEnabled)
-            setSelected(getListModel()->getNumberOfElements() - 1);
-
+        decrementSelected();
         mouseEvent.consume();
     }
 }
@@ -130,12 +128,7 @@ void ListBox::mouseWheelMovedDown(gcn::MouseEvent& mouseEvent)
 {
     if (isFocused())
     {
-        if (getSelected() < (getListModel()->getNumberOfElements() - 1))
-            setSelected(getSelected() + 1);
-        else if (getSelected() == (getListModel()->getNumberOfElements() - 1) &&
-                 mWrappingEnabled)
-            setSelected(0);
-
+        incrementSelected();
         mouseEvent.consume();
     }
 }
