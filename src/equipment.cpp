@@ -26,7 +26,7 @@
 #include "localplayer.h"
 
 Equipment::Equipment():
-    mArrows(0)
+    mArrows(-1)
 {
     std::fill_n(mEquipment, EQUIPMENT_SIZE, -1);
 }

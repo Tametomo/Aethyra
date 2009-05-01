@@ -38,7 +38,7 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener,
 
         void apply();
         void cancel();
-        void logic();
+        // void logic();
 
         void action(const gcn::ActionEvent &event);
 
