@@ -166,6 +166,8 @@
 		<Unit filename="src\bindings\guichan\widgets\emotecontainer.h" />
 		<Unit filename="src\bindings\guichan\widgets\emoteshortcutcontainer.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\emoteshortcutcontainer.h" />
+		<Unit filename="src\bindings\guichan\widgets\imagebutton.cpp" />
+		<Unit filename="src\bindings\guichan\widgets\imagebutton.h" />
 		<Unit filename="src\bindings\guichan\widgets\inttextfield.h" />
 		<Unit filename="src\bindings\guichan\widgets\inttextfield.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\itemcontainer.cpp" />

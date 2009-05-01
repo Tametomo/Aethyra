@@ -65,6 +65,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/widgets/emotecontainer.h \
 	      bindings/guichan/widgets/emoteshortcutcontainer.cpp \
 	      bindings/guichan/widgets/emoteshortcutcontainer.h \
+	      bindings/guichan/widgets/imagebutton.cpp \
+	      bindings/guichan/widgets/imagebutton.h \
 	      bindings/guichan/widgets/inttextfield.h \
 	      bindings/guichan/widgets/inttextfield.cpp \
 	      bindings/guichan/widgets/itemcontainer.cpp \
