@@ -71,7 +71,7 @@ EmoteContainer::EmoteContainer():
 
 EmoteContainer::~EmoteContainer()
 {
-    if (!mSelImg)
+    if (mSelImg)
     {
        mSelImg->decRef();
        mSelImg = NULL;
