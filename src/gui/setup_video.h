@@ -41,11 +41,6 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
         void action(const gcn::ActionEvent &event);
 
     private:
-        void updateSliders(bool originalValues);
-
-        int updateSlider(gcn::Slider *slider, gcn::TextField *field,
-                         const std::string &configName);
-
         void setSpeechModeLabel(int value);
         void setOverlayDetailLabel(int value);
         void setParticleDetailLabel(int value);
@@ -82,14 +77,6 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
         gcn::Slider *mFpsSlider;
         gcn::TextField *mFpsField;
         gcn::Label *mFpsLabel;
-
-        int mOriginalScrollLaziness;
-        gcn::Slider *mScrollLazinessSlider;
-        gcn::TextField *mScrollLazinessField;
-
-        int mOriginalScrollRadius;
-        gcn::Slider *mScrollRadiusSlider;
-        gcn::TextField *mScrollRadiusField;
 
         int mOverlayDetail;
         gcn::Slider *mOverlayDetailSlider;
