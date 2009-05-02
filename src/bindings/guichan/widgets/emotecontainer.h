@@ -26,6 +26,7 @@
 #include <list>
 #include <vector>
 
+#include <guichan/keylistener.hpp>
 #include <guichan/mouselistener.hpp>
 #include <guichan/widget.hpp>
 #include <guichan/widgetlistener.hpp>
@@ -42,15 +43,15 @@ namespace gcn {
  *
  * \ingroup GUI
  */
-class EmoteContainer : public gcn::Widget,
-                       public gcn::MouseListener,
-                       public gcn::WidgetListener
+class EmoteContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
+                              gcn::WidgetListener
 {
     public:
         /**
          * Constructor. Initializes the graphic.
          */
-        EmoteContainer();
+        EmoteContainer(const std::string &actionEventId = "",
+                       gcn::ActionListener *listener = NULL);
 
         /**
          * Destructor.
@@ -101,6 +102,9 @@ class EmoteContainer : public gcn::Widget,
         }
 
     private:
+        // KeyListener
+        void keyPressed(gcn::KeyEvent &event);
+
         /**
          * Sets the currently selected emote.  Invalid (e.g., negative) indices
          * set `no emotr'.

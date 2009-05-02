@@ -45,7 +45,7 @@ EmoteWindow::EmoteWindow():
 
     mUseButton = new Button(_("Use"), "use", this);
 
-    mEmotes = new EmoteContainer();
+    mEmotes = new EmoteContainer("use", this);
     mEmotes->addSelectionListener(this);
 
     mEmoteScroll = new ScrollArea(mEmotes);

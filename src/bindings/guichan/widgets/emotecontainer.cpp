@@ -27,6 +27,8 @@
 
 #include "../graphics.h"
 
+#include "../sdl/sdlinput.h"
+
 #include "../../../animatedsprite.h"
 #include "../../../configuration.h"
 #include "../../../emoteshortcut.h"
@@ -38,7 +40,6 @@
 
 #include "../../../resources/db/emotedb.h"
 
-#include "../../../utils/dtor.h"
 #include "../../../utils/stringutils.h"
 
 const int EmoteContainer::gridWidth = 34;  // emote icon width + 4
@@ -46,9 +47,18 @@ const int EmoteContainer::gridHeight = 36; // emote icon height + 4
 
 static const int NO_EMOTE = -1;
 
-EmoteContainer::EmoteContainer():
+EmoteContainer::EmoteContainer(const std::string &actionEventId,
+                               gcn::ActionListener *listener):
     mSelectedEmoteIndex(NO_EMOTE)
 {
+    if (!actionEventId.empty())
+        setActionEventId(actionEventId);
+
+    if (listener && !actionEventId.empty())
+        addActionListener(listener);
+
+    setFocusable(true);
+
     ResourceManager *resman = ResourceManager::getInstance();
 
     // Setup emote sprites
@@ -65,6 +75,7 @@ EmoteContainer::EmoteContainer():
 
     mMaxEmote = EmoteDB::getLast() + 1;
 
+    addKeyListener(this);
     addMouseListener(this);
     addWidgetListener(this);
 }
@@ -151,6 +162,42 @@ void EmoteContainer::distributeValueChangedEvent()
     for (i = mListeners.begin(); i != i_end; ++i)
     {
         (*i)->valueChanged(event);
+    }
+}
+
+void EmoteContainer::keyPressed(gcn::KeyEvent &event)
+{
+    int columns = getWidth() / gridWidth;
+    const int rows = mMaxEmote / columns;
+    const int emoteX = mSelectedEmoteIndex % columns;
+    const int emoteY = mSelectedEmoteIndex / columns;
+
+    if (columns > mMaxEmote)
+        columns = mMaxEmote;
+
+    switch (event.getKey().getValue())
+    {
+        case Key::LEFT:
+            if (emoteX != 0)
+                setSelectedEmoteIndex((emoteY * columns) + emoteX - 1);
+            break;
+        case Key::RIGHT:
+            if (emoteX < (columns - 1) &&
+               ((emoteY * columns) + emoteX + 1) < mMaxEmote)
+                setSelectedEmoteIndex((emoteY * columns) + emoteX + 1);
+            break;
+        case Key::UP:
+            if (emoteY != 0)
+                setSelectedEmoteIndex(((emoteY - 1) * columns) + emoteX);
+            break;
+        case Key::DOWN:
+            if (emoteY < rows &&
+               (((emoteY + 1) * columns) + emoteX) < mMaxEmote)
+                setSelectedEmoteIndex(((emoteY + 1) * columns) + emoteX);
+            break;
+        case Key::ENTER:
+            distributeActionEvent();
+            break;
     }
 }
 

@@ -44,10 +44,8 @@ namespace gcn {
  *
  * \ingroup GUI
  */
-class ItemContainer : public gcn::Widget,
-                      public gcn::KeyListener,
-                      public gcn::MouseListener,
-                      public gcn::WidgetListener
+class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
+                             gcn::WidgetListener
 {
     public:
         /**
