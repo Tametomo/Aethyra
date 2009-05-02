@@ -41,21 +41,14 @@ NpcIntegerDialog::NpcIntegerDialog():
 
     mValueField = new IntTextField(0, "ok", this);
 
-    mDecButton = new Button("-", "decvalue", this);
-    mIncButton = new Button("+", "incvalue", this);
     okButton = new Button(_("OK"), "ok", this);
     cancelButton = new Button(_("Cancel"), "cancel", this);
     resetButton = new Button(_("Reset"), "reset", this);
 
-    mDecButton->adjustSize();
-    mDecButton->setWidth(mIncButton->getWidth());
-
     ContainerPlacer place;
     place = getPlacer(0, 0);
 
-    place(0, 0, mDecButton);
-    place(1, 0, mValueField, 3);
-    place(4, 0, mIncButton);
+    place(0, 0, mValueField, 3);
     place.getCell().matchColWidth(1, 0);
     place = getPlacer(0, 1);
     place(0, 0, resetButton);
@@ -93,14 +86,6 @@ void NpcIntegerDialog::action(const gcn::ActionEvent &event)
     {
         mValueField->reset();
         close();
-    }
-    else if (event.getId() == "decvalue")
-    {
-        mValueField->setValue(mValueField->getValue() - 1);
-    }
-    else if (event.getId() == "incvalue")
-    {
-        mValueField->setValue(mValueField->getValue() + 1);
     }
     else if (event.getId() == "reset")
     {
