@@ -263,6 +263,13 @@ void Setup_Video::apply()
                      _("Restart your client for the change to take effect."));
     }
 
+    if (mFpsCheckBox->isSelected())
+        mFps = (int) mFpsSlider->getValue();
+    else
+        mFps = 0;
+
+    mFpsSlider->setEnabled(mFps > 0);
+
     // FPS change
     config.setValue("fpslimit", mFps);
 
@@ -282,9 +289,11 @@ void Setup_Video::apply()
 
 void Setup_Video::cancel()
 {
+    mFpsCheckBox->setSelected(mFps > 0);
     mFsCheckBox->setSelected(mFullScreenEnabled);
     mOpenGLCheckBox->setSelected(mOpenGLEnabled);
     mCustomCursorCheckBox->setSelected(mCustomCursorEnabled);
+    mFpsSlider->setValue(mFps);
     mSpeechSlider->setValue(mSpeechMode);
     mNameCheckBox->setSelected(mNameEnabled);
     mAlphaSlider->setValue(mOpacity);
@@ -292,6 +301,16 @@ void Setup_Video::cancel()
     mFontSizeSlider->setValue(mFontSize);
     mOverlayDetailSlider->setValue(mOverlayDetail);
     mParticleDetailSlider->setValue(mParticleDetail);
+
+    std::string text;
+
+    if (mFpsCheckBox->isSelected())
+        text = toString(mFps);
+    else
+        text = "";
+
+    mFpsSlider->setEnabled(mFps > 0);
+    mFpsField->setText(text);
 
     int val = (int) mFontSizeSlider->getValue();
     mFontSizeLabel->setCaption(strprintf(_("%d Point"), val));
@@ -381,8 +400,15 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "fpslimitslider")
     {
-        mFps = (int) mFpsSlider->getValue();
-        mFpsField->setText(toString(mFps));
+        const int fps = (int) mFpsSlider->getValue();
+        std::string text;
+
+        if (mFpsCheckBox->isSelected())
+            text = toString(fps);
+        else
+            text = "";
+
+        mFpsField->setText(text);
     }
     else if (event.getId() == "overlaydetailslider")
     {
@@ -416,14 +442,21 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "fpslimitcheckbox")
     {
-        if (mFpsCheckBox->isSelected())
-            mFps = (int) mFpsSlider->getValue();
-        else
-            mFps = 0;
+        std::string text;
+        int fps = (int) mFpsSlider->getValue();
 
-        mFpsField->setText(toString(mFps));
-        mFpsSlider->setValue(mFps);
-        mFpsSlider->setEnabled(mFps > 0);
+        if (mFpsCheckBox->isSelected())
+        {
+            text = toString(fps);
+        }
+        else
+        {
+            fps = 0;
+            text = "";
+        }
+
+        mFpsSlider->setEnabled(fps > 0);
+        mFpsField->setText(text);
     }
 }
 
