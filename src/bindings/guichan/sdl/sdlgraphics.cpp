@@ -39,6 +39,37 @@ SDLGraphics::~SDLGraphics()
     _endDraw();
 }
 
+bool SDLGraphics::resizeVideoMode(int w, int h)
+{
+    logger->log("Changing video mode %dx%d %s", w, h, 
+                mFullscreen ? "fullscreen" : "windowed");
+
+    int displayFlags = SDL_ANYFORMAT;
+
+    if (mFullscreen)
+        displayFlags |= SDL_FULLSCREEN;
+
+    if (mHWAccel)
+        displayFlags |= SDL_HWSURFACE | SDL_DOUBLEBUF;
+    else
+        displayFlags |= SDL_SWSURFACE;
+
+    mScreen = SDL_SetVideoMode(w, h, 0, displayFlags);
+
+    if (!mScreen)
+        return false;
+
+    /**
+     * This is ugly... TODO find a better & cleaner access
+     * to the cliping stack to reset it
+     */
+    mClipStack.top().width=w;
+    mClipStack.top().height=h;
+    //setTarget(mScreen);
+
+    return true;
+}
+
 bool SDLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
 {
     logger->log("Setting video mode %dx%d %s", w, h, fs ? "fullscreen" :

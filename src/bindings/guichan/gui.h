@@ -128,6 +128,11 @@ class Gui : public gcn::Gui
         void framerateChanged();
 
         /**
+         * Size of display has been changed. Adjust to it.
+         */
+        void resize(Graphics *graphics);
+
+        /**
          * Cursors are in graphic order from left to right.
          * CURSOR_POINTER should be left untouched.
          * CURSOR_TOTAL should always be last.

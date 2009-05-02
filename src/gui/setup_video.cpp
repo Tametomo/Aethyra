@@ -53,6 +53,26 @@
 #include "../utils/stringutils.h"
 #include "../utils/strprintf.h"
 
+extern Window *chatWindow;
+extern Window *statusWindow;
+extern Window *buyDialog;
+extern Window *sellDialog;
+extern Window *buySellDialog;
+extern Window *inventoryWindow;
+extern Window *emoteWindow;
+extern Window *npcTextDialog;
+extern Window *npcStringDialog;
+extern Window *skillDialog;
+extern Window *minimap;
+extern Window *equipmentWindow;
+extern Window *tradeWindow;
+extern Window *helpWindow;
+extern Window *debugWindow;
+extern Window *itemShortcutWindow;
+extern Window *emoteShortcutWindow;
+extern Window *storageWindow;
+extern Window *menuWindow;
+
 Setup_Video::Setup_Video():
     mFullScreenEnabled(config.getValue("screen", false)),
     mOpenGLEnabled(config.getValue("opengl", false)),
@@ -350,8 +370,39 @@ void Setup_Video::action(const gcn::ActionEvent &event)
         if (width != graphics->getWidth() || height != graphics->getHeight())
         {
             // TODO: Find out why the drawing area doesn't resize without a restart.
+            //
+            // Because: on Windows, the GL context get purged on resize!
+            // (well, not checked, but that what Internet reports)
+#ifdef WIN32
             new OkDialog(_("Screen resolution changed"),
                          _("Restart your client for the change to take effect."));
+#else 
+            int old_w = graphics->getWidth();
+            int old_h = graphics->getHeight();
+            graphics->resizeVideoMode(width,height);
+            gui->resize(graphics);
+            // move & resize all the sub-windows
+           if (chatWindow)  chatWindow->adaptToNewSize(width,height,old_w,old_h,true);
+           if (statusWindow)  statusWindow->adaptToNewSize(width,height,old_w,old_h,false);
+           if (buyDialog)  buyDialog->adaptToNewSize(width,height,old_w,old_h,true);
+           if (sellDialog)  sellDialog->adaptToNewSize(width,height,old_w,old_h,true);
+           if (buySellDialog)  buySellDialog->adaptToNewSize(width,height,old_w,old_h,true);
+           if (inventoryWindow)  inventoryWindow->adaptToNewSize(width,height,old_w,old_h,false);
+           if (emoteWindow)  emoteWindow->adaptToNewSize(width,height,old_w,old_h,true);
+           if (npcTextDialog)  npcTextDialog->adaptToNewSize(width,height,old_w,old_h,true);
+           if (npcStringDialog)  npcStringDialog->adaptToNewSize(width,height,old_w,old_h,true);
+           if (skillDialog)  skillDialog->adaptToNewSize(width,height,old_w,old_h,true);
+           if (minimap)  minimap->adaptToNewSize(width,height,old_w,old_h,true);
+           if (equipmentWindow)  equipmentWindow->adaptToNewSize(width,height,old_w,old_h,true);
+           if (tradeWindow)  tradeWindow->adaptToNewSize(width,height,old_w,old_h,true);
+           if (helpWindow)  helpWindow->adaptToNewSize(width,height,old_w,old_h,true);
+           if (debugWindow)  debugWindow->adaptToNewSize(width,height,old_w,old_h,true);
+           if (itemShortcutWindow)  itemShortcutWindow->adaptToNewSize(width,height,old_w,old_h,false);
+           if (emoteShortcutWindow)  emoteShortcutWindow->adaptToNewSize(width,height,old_w,old_h,false);
+           if (storageWindow)  storageWindow->adaptToNewSize(width,height,old_w,old_h,true);
+           if (menuWindow)  menuWindow->adaptToNewSize(width,height,old_w,old_h,false,false);
+
+#endif
         }
 
         config.setValue("screenwidth", width);

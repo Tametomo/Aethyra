@@ -218,6 +218,15 @@ Gui::~Gui()
     delete guiInput;
 }
 
+void Gui::resize(Graphics *graphics)
+{
+   WindowContainer *guiTop = static_cast<WindowContainer*>(getTop());
+   guiTop->setDimension(gcn::Rectangle(0, 0,
+                                       graphics->getWidth(), graphics->getHeight()));
+   Window::setWindowContainer(guiTop);
+   viewport->setDimension(gcn::Rectangle(0, 0,
+                                         graphics->getWidth(), graphics->getHeight()));
+}
 void Gui::logic()
 {
     // Update the screen when application is active, delay otherwise.

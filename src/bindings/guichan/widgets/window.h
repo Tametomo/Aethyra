@@ -260,6 +260,11 @@ class Window : public gcn::Window, gcn::WidgetListener
         virtual void resetToDefaultSize();
 
         /**
+         * Reset the win pos and size according to change of size.
+         */
+        void adaptToNewSize(int new_w,int new_h, int old_w, int old_h, bool extend, bool save=true);
+
+        /**
          * Gets the layout handler for this window.
          */
         Layout &getLayout();
