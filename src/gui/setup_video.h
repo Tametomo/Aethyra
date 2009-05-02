@@ -52,6 +52,7 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
         bool mPickupChatEnabled;
         bool mPickupParticleEnabled;
         double mOpacity;
+        double mMouseOpacity;
         int mFps;
         int mSpeechMode;
 
@@ -59,6 +60,7 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
 
         gcn::Label *speechLabel;
         gcn::Label *alphaLabel;
+        gcn::Label *mouseAlphaLabel;
         gcn::Label *scrollRadiusLabel;
         gcn::Label *scrollLazinessLabel;
         gcn::Label *overlayDetailLabel;
@@ -73,6 +75,7 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
         gcn::Slider *mSpeechSlider;
         gcn::Label *mSpeechModeLabel;
         gcn::Slider *mAlphaSlider;
+        gcn::Slider *mMouseAlphaSlider;
         gcn::CheckBox *mFpsCheckBox;
         gcn::Slider *mFpsSlider;
         gcn::TextField *mFpsField;

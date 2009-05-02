@@ -60,6 +60,7 @@ Setup_Video::Setup_Video():
     mPickupChatEnabled(config.getValue("showpickupchat", true)),
     mPickupParticleEnabled(config.getValue("showpickupparticle", false)),
     mOpacity(config.getValue("guialpha", 0.8)),
+    mMouseOpacity(config.getValue("mousealpha", 0.7)),
     mFps((int) config.getValue("fpslimit", 0)),
     mSpeechMode((int) config.getValue("speech", 3)),
     mModeListModel(new ModeListModel),
@@ -71,6 +72,7 @@ Setup_Video::Setup_Video():
     mSpeechSlider(new Slider(0, 3)),
     mSpeechModeLabel(new Label("")),
     mAlphaSlider(new Slider(0.2, 1.0)),
+    mMouseAlphaSlider(new Slider(0.2, 0.99)),
     mFpsCheckBox(new CheckBox(_("FPS Limit:"))),
     mFpsSlider(new Slider(10, 120)),
     mFpsField(new TextField),
@@ -93,6 +95,7 @@ Setup_Video::Setup_Video():
 
     speechLabel = new Label(_("Overhead text"));
     alphaLabel = new Label(_("Gui opacity"));
+    mouseAlphaLabel = new Label(_("Mouse opacity"));
     overlayDetailLabel = new Label(_("Ambient FX"));
     particleDetailLabel = new Label(_("Particle Detail"));
     mFpsLabel = new Label("");
@@ -104,6 +107,7 @@ Setup_Video::Setup_Video():
 #endif
 
     mAlphaSlider->setValue(mOpacity);
+    mMouseAlphaSlider->setValue(mMouseOpacity);
 
     mFpsField->setText(toString(mFps));
     mFpsField->setWidth(30);
@@ -116,6 +120,7 @@ Setup_Video::Setup_Video():
     mPickupParticleCheckBox->setActionEventId("pickupparticle");
     mNameCheckBox->setActionEventId("showownname");
     mAlphaSlider->setActionEventId("guialpha");
+    mMouseAlphaSlider->setActionEventId("mousealpha");
     mFpsCheckBox->setActionEventId("fpslimitcheckbox");
     mSpeechSlider->setActionEventId("speech");
     mFpsSlider->setActionEventId("fpslimitslider");
@@ -129,6 +134,7 @@ Setup_Video::Setup_Video():
     mPickupParticleCheckBox->addActionListener(this);
     mNameCheckBox->addActionListener(this);
     mAlphaSlider->addActionListener(this);
+    mMouseAlphaSlider->addActionListener(this);
     mFpsCheckBox->addActionListener(this);
     mSpeechSlider->addActionListener(this);
     mFpsSlider->addActionListener(this);
@@ -148,7 +154,7 @@ Setup_Video::Setup_Video():
     LayoutHelper h(this);
     ContainerPlacer place = h.getPlacer(0, 0);
 
-    place(0, 0, scrollArea, 1, 5).setPadding(2);
+    place(0, 0, scrollArea, 1, 6).setPadding(2);
     place(1, 0, mFsCheckBox, 2);
     place(3, 0, mOpenGLCheckBox, 1);
     place(1, 1, mCustomCursorCheckBox, 3);
@@ -158,23 +164,25 @@ Setup_Video::Setup_Video():
     place(2, 4, mPickupParticleCheckBox, 2);
 
     place(0, 6, mAlphaSlider);
-    place(0, 7, mFpsSlider);
-    place(0, 8, mSpeechSlider);
-    place(0, 9, mOverlayDetailSlider);
-    place(0, 10, mParticleDetailSlider);
+    place(0, 7, mMouseAlphaSlider);
+    place(0, 8, mFpsSlider);
+    place(0, 9, mSpeechSlider);
+    place(0, 10, mOverlayDetailSlider);
+    place(0, 11, mParticleDetailSlider);
 
-    place(1, 6, alphaLabel, 3);
-    place(1, 7, mFpsCheckBox).setPadding(3);
-    place(1, 8, speechLabel);
-    place(1, 9, overlayDetailLabel);
-    place(1, 10, particleDetailLabel);
+    place(1, 6, alphaLabel, 3).setPadding(2);
+    place(1, 7, mouseAlphaLabel, 3).setPadding(2);
+    place(1, 8, mFpsCheckBox).setPadding(3);
+    place(1, 9, speechLabel);
+    place(1, 10, overlayDetailLabel);
+    place(1, 11, particleDetailLabel);
 
-    place(2, 7, mFpsField).setPadding(1);
-    place(2, 8, mSpeechModeLabel, 3).setPadding(2);
-    place(2, 9, mOverlayDetailLabel, 3).setPadding(2);
-    place(2, 10, mParticleDetailLabel, 3).setPadding(2);
+    place(2, 8, mFpsField).setPadding(1);
+    place(2, 9, mSpeechModeLabel, 3).setPadding(2);
+    place(2, 10, mOverlayDetailLabel, 3).setPadding(2);
+    place(2, 11, mParticleDetailLabel, 3).setPadding(2);
 
-    place(3, 7, mFpsLabel);
+    place(3, 8, mFpsLabel);
 
     setDimension(gcn::Rectangle(0, 0, 325, 280));
 }
@@ -240,6 +248,7 @@ void Setup_Video::apply()
     mNameEnabled = config.getValue("showownname", false);
     mSpeechMode = (int) config.getValue("speech", 3);
     mOpacity = config.getValue("guialpha", 0.8);
+    mMouseOpacity = config.getValue("mousealpha", 0.7);
     mOverlayDetail = (int) config.getValue("OverlayDetail", 2);
     mOpenGLEnabled = config.getValue("opengl", false);
     mPickupChatEnabled = config.getValue("showpickupchat", true);
@@ -254,6 +263,7 @@ void Setup_Video::cancel()
     mSpeechSlider->setValue(mSpeechMode);
     mNameCheckBox->setSelected(mNameEnabled);
     mAlphaSlider->setValue(mOpacity);
+    mMouseAlphaSlider->setValue(mMouseOpacity);
     mOverlayDetailSlider->setValue(mOverlayDetail);
     mParticleDetailSlider->setValue(mParticleDetail);
 
@@ -262,6 +272,7 @@ void Setup_Video::cancel()
     config.setValue("speech", mSpeechMode);
     config.setValue("showownname", mNameEnabled ? true : false);
     config.setValue("guialpha", mOpacity);
+    config.setValue("mousealpha", mMouseOpacity);
     config.setValue("opengl", mOpenGLEnabled ? true : false);
     config.setValue("showpickupchat", mPickupChatEnabled ? true : false);
     config.setValue("showpickupparticle", mPickupParticleEnabled ?
@@ -292,6 +303,10 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     else if (event.getId() == "guialpha")
     {
         config.setValue("guialpha", mAlphaSlider->getValue());
+    }
+    else if (event.getId() == "mousealpha")
+    {
+        config.setValue("mousealpha", mMouseAlphaSlider->getValue());
     }
     else if (event.getId() == "customcursor")
     {

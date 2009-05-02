@@ -83,6 +83,10 @@ class GuiConfigListener : public ConfigListener
             {
                 mGui->framerateChanged();
             }
+            else if (name == "mousealpha")
+            {
+                mGui->setMouseAlpha((float) config.getValue("mousealpha", 0.7f));
+            }
         }
     private:
         Gui *mGui;
@@ -122,8 +126,8 @@ int get_elapsed_time(int start_time)
 Gui::Gui(Graphics *graphics):
     mCustomCursor(false),
     mMouseCursors(NULL),
-    mMaxMouseCursorAlpha(0.7f),
-    mMouseCursorAlpha(mMaxMouseCursorAlpha),
+    mMaxMouseCursorAlpha(1.0f),
+    mMouseCursorAlpha(1.0f),
     mMouseInactivityTimer(0),
     mCursorType(CURSOR_POINTER)
 {
@@ -180,6 +184,10 @@ Gui::Gui(Graphics *graphics):
     mConfigListener = new GuiConfigListener(this);
     config.addListener("customcursor", mConfigListener);
 
+    // Set the initial mouse cursor opacity
+    mMaxMouseCursorAlpha = (float) config.getValue("mousealpha", 0.7f);
+    config.addListener("mousealpha", mConfigListener);
+
     // Initialize frame limiting
     config.addListener("fpslimit", mConfigListener);
     framerateChanged();
@@ -195,6 +203,7 @@ Gui::~Gui()
 {
     config.removeListener("customcursor", mConfigListener);
     config.removeListener("fpslimit", mConfigListener);
+    config.removeListener("mousealpha", mConfigListener);
     delete mConfigListener;
 
     if (mMouseCursors)

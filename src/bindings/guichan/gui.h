@@ -113,6 +113,11 @@ class Gui : public gcn::Gui
         void setCursorType(int index) { mCursorType = index; }
 
         /**
+         * Sets the opacity of the mouse cursor
+         */
+        void setMouseAlpha(float alpha) { mMaxMouseCursorAlpha = alpha; }
+
+        /**
          * Frame rate has been changed. Adjust it accordingly.
          */
         void framerateChanged();
