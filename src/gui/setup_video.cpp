@@ -53,6 +53,7 @@
 #include "../utils/stringutils.h"
 #include "../utils/strprintf.h"
 
+extern Window *setupWindow;
 extern Window *chatWindow;
 extern Window *statusWindow;
 extern Window *buyDialog;
@@ -381,26 +382,47 @@ void Setup_Video::action(const gcn::ActionEvent &event)
             int old_h = graphics->getHeight();
             graphics->resizeVideoMode(width,height);
             gui->resize(graphics);
+
             // move & resize all the sub-windows
-           if (chatWindow)  chatWindow->adaptToNewSize(width,height,old_w,old_h,true);
-           if (statusWindow)  statusWindow->adaptToNewSize(width,height,old_w,old_h,false);
-           if (buyDialog)  buyDialog->adaptToNewSize(width,height,old_w,old_h,true);
-           if (sellDialog)  sellDialog->adaptToNewSize(width,height,old_w,old_h,true);
-           if (buySellDialog)  buySellDialog->adaptToNewSize(width,height,old_w,old_h,true);
-           if (inventoryWindow)  inventoryWindow->adaptToNewSize(width,height,old_w,old_h,false);
-           if (emoteWindow)  emoteWindow->adaptToNewSize(width,height,old_w,old_h,true);
-           if (npcTextDialog)  npcTextDialog->adaptToNewSize(width,height,old_w,old_h,true);
-           if (npcStringDialog)  npcStringDialog->adaptToNewSize(width,height,old_w,old_h,true);
-           if (skillDialog)  skillDialog->adaptToNewSize(width,height,old_w,old_h,true);
-           if (minimap)  minimap->adaptToNewSize(width,height,old_w,old_h,true);
-           if (equipmentWindow)  equipmentWindow->adaptToNewSize(width,height,old_w,old_h,true);
-           if (tradeWindow)  tradeWindow->adaptToNewSize(width,height,old_w,old_h,true);
-           if (helpWindow)  helpWindow->adaptToNewSize(width,height,old_w,old_h,true);
-           if (debugWindow)  debugWindow->adaptToNewSize(width,height,old_w,old_h,true);
-           if (itemShortcutWindow)  itemShortcutWindow->adaptToNewSize(width,height,old_w,old_h,false);
-           if (emoteShortcutWindow)  emoteShortcutWindow->adaptToNewSize(width,height,old_w,old_h,false);
-           if (storageWindow)  storageWindow->adaptToNewSize(width,height,old_w,old_h,true);
-           if (menuWindow)  menuWindow->adaptToNewSize(width,height,old_w,old_h,false,false);
+            setupWindow->adaptToNewSize(width, height, old_w, old_h, true);
+            if (chatWindow)
+                chatWindow->adaptToNewSize(width, height, old_w, old_h, true);
+            if (statusWindow)
+                statusWindow->adaptToNewSize(width, height, old_w, old_h, false);
+            if (buyDialog)
+                buyDialog->adaptToNewSize(width, height, old_w, old_h, true);
+            if (sellDialog)
+                sellDialog->adaptToNewSize(width, height, old_w, old_h, true);
+            if (buySellDialog)
+                buySellDialog->adaptToNewSize(width, height, old_w, old_h, true);
+            if (inventoryWindow)
+                inventoryWindow->adaptToNewSize(width, height, old_w, old_h, false);
+            if (emoteWindow)
+                emoteWindow->adaptToNewSize(width, height, old_w, old_h, true);
+            if (npcTextDialog)
+                npcTextDialog->adaptToNewSize(width, height, old_w, old_h, true);
+            if (npcStringDialog)
+                npcStringDialog->adaptToNewSize(width, height, old_w, old_h, true);
+            if (skillDialog)
+                skillDialog->adaptToNewSize(width, height, old_w, old_h, true);
+            if (minimap)
+                minimap->adaptToNewSize(width, height, old_w, old_h, true);
+            if (equipmentWindow)
+                equipmentWindow->adaptToNewSize(width, height, old_w, old_h, true);
+            if (tradeWindow)
+                tradeWindow->adaptToNewSize(width, height, old_w, old_h, true);
+            if (helpWindow)
+                helpWindow->adaptToNewSize(width, height, old_w, old_h, true);
+            if (debugWindow)
+                debugWindow->adaptToNewSize(width, height, old_w, old_h, true);
+            if (itemShortcutWindow)
+                itemShortcutWindow->adaptToNewSize(width, height, old_w, old_h, false);
+            if (emoteShortcutWindow)
+                emoteShortcutWindow->adaptToNewSize(width, height, old_w, old_h, false);
+            if (storageWindow)
+                storageWindow->adaptToNewSize(width, height, old_w, old_h, true);
+            if (menuWindow)
+                menuWindow->adaptToNewSize(width, height, old_w, old_h, false, false);
 
 #endif
         }

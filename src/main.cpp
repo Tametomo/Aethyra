@@ -851,9 +851,26 @@ int main(int argc, char *argv[])
 
     while (state != EXIT_STATE)
     {
-     screenWidth = (int) config.getValue("screenwidth", defaultScreenWidth);
-     screenHeight = (int) config.getValue("screenheight",
-                                             defaultScreenHeight);
+        int newScreenWidth = graphics->getWidth();
+        int newScreenHeight = graphics->getHeight();
+
+        if (screenWidth != newScreenWidth || screenHeight != newScreenHeight)
+        {
+            screenWidth = newScreenWidth;
+            screenHeight = newScreenHeight;
+
+#ifndef WIN32
+            progressBar->setPosition(5, top->getHeight() - 5 - 
+                                     progressBar->getHeight());
+            progressLabel->setPosition(15 + progressBar->getWidth(), 4 +
+                                       progressBar->getY());
+            setup->setPosition(top->getWidth() - setup->getWidth() - 3, 3);
+
+            if (currentDialog)
+                positionDialog(currentDialog, screenWidth, screenHeight);
+#endif
+        }
+
         // Handle SDL events
         while (SDL_PollEvent(&event))
         {
@@ -892,6 +909,21 @@ int main(int argc, char *argv[])
                 progressBar->setProgress(0.0f);
         }
 
+        std::string tempWallpaper = Wallpaper::getWallpaper(screenWidth,
+                                                            screenHeight);
+
+        if (tempWallpaper.compare(wallpaperName) != 0)
+        {
+            wallpaperName = tempWallpaper;
+            Image *temp = ResourceManager::getInstance()->getImage(tempWallpaper);
+
+            if (temp)
+            {
+                login_wallpaper->decRef();
+                login_wallpaper = temp;
+            }
+        }
+
         if (graphics->getWidth() > login_wallpaper->getWidth() ||
             graphics->getHeight() > login_wallpaper->getHeight())
         {
@@ -911,27 +943,9 @@ int main(int argc, char *argv[])
             {
                 case UPDATE_STATE:
                     loadUpdates();
+
                     // Reload the wallpaper in case that it was updated
                     Wallpaper::loadWallpapers();
-
-                    {
-                        const int screenWidth = (int) config.getValue(
-                                                      "screenwidth",
-                                                      defaultScreenWidth);
-                        const int screenHeight = (int) config.getValue(
-                                                       "screenheight",
-                                                       defaultScreenHeight);
-
-                        Image *temp = ResourceManager::getInstance()->getImage(
-                                          Wallpaper::getWallpaper(screenWidth,
-                                                                  screenHeight));
-
-                        if (temp)
-                        {
-                            login_wallpaper->decRef();
-                            login_wallpaper = temp;
-                        }
-                    }
                     break;
 
                     // Those states don't cause a network disconnect
