@@ -120,8 +120,12 @@ void NpcTextDialog::widgetResized(const gcn::Event &event)
 
 void NpcTextDialog::requestFocus()
 {
-    loadWindowState();
-    setVisible(true);
+    if (!isVisible())
+    {
+        loadWindowState();
+        setVisible(true);
+    }
+
     mButton->requestFocus();
 }
 
