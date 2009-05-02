@@ -166,7 +166,7 @@ Gui::Gui(Graphics *graphics):
     std::string path = resman->getPath("fonts/dejavusans.ttf");
     try
     {
-        const int fontSize = (int)config.getValue("fontSize", 11);
+        const int fontSize = (int) config.getValue("fontSize", 11);
         mGuiFont = new TrueTypeFont(path, fontSize);
         mInfoParticleFont = new TrueTypeFont(path, fontSize, 1);
         boldFont = new TrueTypeFont(path, fontSize, 1);

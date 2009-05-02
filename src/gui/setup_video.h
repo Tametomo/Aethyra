@@ -61,8 +61,7 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
         gcn::Label *speechLabel;
         gcn::Label *alphaLabel;
         gcn::Label *mouseAlphaLabel;
-        gcn::Label *scrollRadiusLabel;
-        gcn::Label *scrollLazinessLabel;
+        gcn::Label *fontSizeLabel;
         gcn::Label *overlayDetailLabel;
         gcn::Label *particleDetailLabel;
 
@@ -80,6 +79,10 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
         gcn::Slider *mFpsSlider;
         gcn::TextField *mFpsField;
         gcn::Label *mFpsLabel;
+
+        int mFontSize;
+        gcn::Slider *mFontSizeSlider;
+        gcn::Label *mFontSizeLabel;
 
         int mOverlayDetail;
         gcn::Slider *mOverlayDetailSlider;

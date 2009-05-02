@@ -51,6 +51,7 @@
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
+#include "../utils/strprintf.h"
 
 Setup_Video::Setup_Video():
     mFullScreenEnabled(config.getValue("screen", false)),
@@ -76,6 +77,9 @@ Setup_Video::Setup_Video():
     mFpsCheckBox(new CheckBox(_("FPS Limit:"))),
     mFpsSlider(new Slider(10, 120)),
     mFpsField(new TextField),
+    mFontSize((int) config.getValue("fontSize", 11)),
+    mFontSizeSlider(new Slider(8, 14)),
+    mFontSizeLabel(new Label("")),
     mOverlayDetail((int) config.getValue("OverlayDetail", 2)),
     mOverlayDetailSlider(new Slider(0, 2)),
     mOverlayDetailLabel(new Label("")),
@@ -96,8 +100,9 @@ Setup_Video::Setup_Video():
     speechLabel = new Label(_("Overhead text"));
     alphaLabel = new Label(_("Gui opacity"));
     mouseAlphaLabel = new Label(_("Mouse opacity"));
+    fontSizeLabel = new Label(_("Font size"));
     overlayDetailLabel = new Label(_("Ambient FX"));
-    particleDetailLabel = new Label(_("Particle Detail"));
+    particleDetailLabel = new Label(_("Particle detail"));
     mFpsLabel = new Label("");
 
     mModeList->setEnabled(true);
@@ -111,6 +116,7 @@ Setup_Video::Setup_Video():
 
     mFpsField->setText(toString(mFps));
     mFpsField->setWidth(30);
+    mFpsField->setEnabled(false);
     mFpsSlider->setValue(mFps);
     mFpsSlider->setEnabled(mFps > 0);
     mFpsCheckBox->setSelected(mFps > 0);
@@ -124,10 +130,9 @@ Setup_Video::Setup_Video():
     mFpsCheckBox->setActionEventId("fpslimitcheckbox");
     mSpeechSlider->setActionEventId("speech");
     mFpsSlider->setActionEventId("fpslimitslider");
+    mFontSizeSlider->setActionEventId("fontsizeslider");
     mOverlayDetailSlider->setActionEventId("overlaydetailslider");
-    mOverlayDetailLabel->setActionEventId("OverlayDetailLabel");
     mParticleDetailSlider->setActionEventId("particledetailslider");
-    mParticleDetailLabel->setActionEventId("particledetailfield");
 
     mCustomCursorCheckBox->addActionListener(this);
     mPickupChatCheckBox->addActionListener(this);
@@ -138,11 +143,16 @@ Setup_Video::Setup_Video():
     mFpsCheckBox->addActionListener(this);
     mSpeechSlider->addActionListener(this);
     mFpsSlider->addActionListener(this);
+    mFontSizeSlider->addActionListener(this);
     mOverlayDetailSlider->addActionListener(this);
     mParticleDetailSlider->addActionListener(this);
 
     setSpeechModeLabel(mSpeechMode);
     mSpeechSlider->setValue(mSpeechMode);
+
+    mFontSize = (int) config.getValue("fontSize", 11);
+    mFontSizeLabel->setCaption(strprintf(_("%d Point"), mFontSize));
+    mFontSizeSlider->setValue(mFontSize);
 
     setOverlayDetailLabel(mOverlayDetail);
     mOverlayDetailSlider->setValue(mOverlayDetail);
@@ -166,21 +176,24 @@ Setup_Video::Setup_Video():
     place(0, 6, mAlphaSlider);
     place(0, 7, mMouseAlphaSlider);
     place(0, 8, mFpsSlider);
-    place(0, 9, mSpeechSlider);
-    place(0, 10, mOverlayDetailSlider);
-    place(0, 11, mParticleDetailSlider);
+    place(0, 9, mFontSizeSlider);
+    place(0, 10, mSpeechSlider);
+    place(0, 11, mOverlayDetailSlider);
+    place(0, 12, mParticleDetailSlider);
 
     place(1, 6, alphaLabel, 3).setPadding(2);
     place(1, 7, mouseAlphaLabel, 3).setPadding(2);
     place(1, 8, mFpsCheckBox).setPadding(3);
-    place(1, 9, speechLabel);
-    place(1, 10, overlayDetailLabel);
-    place(1, 11, particleDetailLabel);
+    place(1, 9, fontSizeLabel);
+    place(1, 10, speechLabel);
+    place(1, 11, overlayDetailLabel);
+    place(1, 12, particleDetailLabel);
 
     place(2, 8, mFpsField).setPadding(1);
-    place(2, 9, mSpeechModeLabel, 3).setPadding(2);
-    place(2, 10, mOverlayDetailLabel, 3).setPadding(2);
-    place(2, 11, mParticleDetailLabel, 3).setPadding(2);
+    place(2, 9, mFontSizeLabel, 3).setPadding(2);
+    place(2, 10, mSpeechModeLabel, 3).setPadding(2);
+    place(2, 11, mOverlayDetailLabel, 3).setPadding(2);
+    place(2, 12, mParticleDetailLabel, 3).setPadding(2);
 
     place(3, 8, mFpsLabel);
 
@@ -239,6 +252,17 @@ void Setup_Video::apply()
                      _("Applying change to OpenGL requires restart."));
     }
 
+    if ((int) mFontSizeSlider->getValue() != mFontSize)
+    {
+        const int val = (int) mFontSizeSlider->getValue();
+
+        config.setValue("fontSize", val);
+
+        // TODO: Fix font resizing so that it doesn't need a restart.
+        new OkDialog(_("Font size changed"),
+                     _("Restart your client for the change to take effect."));
+    }
+
     // FPS change
     config.setValue("fpslimit", mFps);
 
@@ -249,6 +273,7 @@ void Setup_Video::apply()
     mSpeechMode = (int) config.getValue("speech", 3);
     mOpacity = config.getValue("guialpha", 0.8);
     mMouseOpacity = config.getValue("mousealpha", 0.7);
+    mFontSize = (int) config.getValue("fontSize", 11);
     mOverlayDetail = (int) config.getValue("OverlayDetail", 2);
     mOpenGLEnabled = config.getValue("opengl", false);
     mPickupChatEnabled = config.getValue("showpickupchat", true);
@@ -264,8 +289,21 @@ void Setup_Video::cancel()
     mNameCheckBox->setSelected(mNameEnabled);
     mAlphaSlider->setValue(mOpacity);
     mMouseAlphaSlider->setValue(mMouseOpacity);
+    mFontSizeSlider->setValue(mFontSize);
     mOverlayDetailSlider->setValue(mOverlayDetail);
     mParticleDetailSlider->setValue(mParticleDetail);
+
+    int val = (int) mFontSizeSlider->getValue();
+    mFontSizeLabel->setCaption(strprintf(_("%d Point"), val));
+
+    val = (int) mSpeechSlider->getValue();
+    setSpeechModeLabel(val);
+
+    val = (int) mOverlayDetailSlider->getValue();
+    setOverlayDetailLabel(val);
+
+    val = (int) mParticleDetailSlider->getValue();
+    setParticleDetailLabel(val);
 
     config.setValue("screen", mFullScreenEnabled ? true : false);
     config.setValue("customcursor", mCustomCursorEnabled ? true : false);
@@ -348,13 +386,18 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "overlaydetailslider")
     {
-        int val = (int) mOverlayDetailSlider->getValue();
+        const int val = (int) mOverlayDetailSlider->getValue();
         setOverlayDetailLabel(val);
         config.setValue("OverlayDetail", val);
     }
+    else if (event.getId() == "fontsizeslider")
+    {
+        const int val = (int) mFontSizeSlider->getValue();
+        mFontSizeLabel->setCaption(strprintf(_("%d Point"), val));
+    }
     else if (event.getId() == "particledetailslider")
     {
-        int val = (int) mParticleDetailSlider->getValue();
+        const int val = (int) mParticleDetailSlider->getValue();
         setParticleDetailLabel(val);
         config.setValue("particleeffects", val != -1);
         config.setValue("particleEmitterSkip", 3 - val);
