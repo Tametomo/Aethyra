@@ -226,7 +226,7 @@ void Setup_Colors::action(const gcn::ActionEvent &event)
                 break;
             case Palette::PROGRESS_BAR:
                 mTextPreview->useTextAlpha(true);
-                mTextPreview->setFont(boldFont);
+                mTextPreview->setFont(gui->getBoldFont());
                 mTextPreview->setTextColor(col);
                 mTextPreview->setOutline(true);
                 mTextPreview->setShadow(false);
@@ -283,7 +283,7 @@ void Setup_Colors::action(const gcn::ActionEvent &event)
             case Palette::RING:
             case Palette::ARMS:
             case Palette::AMMO:
-                mTextPreview->setFont(boldFont);
+                mTextPreview->setFont(gui->getBoldFont());
                 mTextPreview->setTextColor(col);
                 mTextPreview->setOutline(false);
                 mTextPreview->setShadow(false);
@@ -302,7 +302,7 @@ void Setup_Colors::action(const gcn::ActionEvent &event)
             case Palette::GM_NAME:
             case Palette::NPC:
             case Palette::MONSTER:
-                mTextPreview->setFont(boldFont);
+                mTextPreview->setFont(gui->getBoldFont());
                 mTextPreview->setTextColor(col);
             case Palette::TYPE_COUNT:
                 break;

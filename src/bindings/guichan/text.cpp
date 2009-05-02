@@ -39,8 +39,8 @@ Text::Text(const std::string &text, int x, int y,
         textManager = new TextManager();
 
     ++mInstances;
-    mHeight = boldFont->getHeight();
-    mWidth = boldFont->getWidth(text);
+    mHeight = gui->getBoldFont()->getHeight();
+    mWidth = gui->getBoldFont()->getWidth(text);
 
     switch (alignment)
     {
@@ -78,11 +78,12 @@ Text::~Text()
 
 void Text::draw(gcn::Graphics *graphics, int xOff, int yOff)
 {
+    gcn::Font* boldFont = gui->getBoldFont();
+
     graphics->setFont(boldFont);
 
-    TextRenderer::renderText(graphics, mText,
-            mX - xOff, mY - yOff, gcn::Graphics::LEFT,
-            *mColor, boldFont, true);
+    TextRenderer::renderText(graphics, mText, mX - xOff, mY - yOff,
+                             gcn::Graphics::LEFT, *mColor, boldFont, true);
 }
 
 FlashText::FlashText(const std::string &text, int x, int y,

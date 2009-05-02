@@ -132,6 +132,8 @@ void ProgressBar::draw(gcn::Graphics *graphics)
     // The label
     if (!mText.empty())
     {
+        gcn::Font* boldFont = gui->getBoldFont();
+
         const int textX = getWidth() / 2;
         const int textY = (getHeight() - boldFont->getHeight()) / 2;
 

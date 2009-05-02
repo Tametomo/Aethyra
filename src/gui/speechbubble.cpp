@@ -40,7 +40,7 @@ SpeechBubble::SpeechBubble():
     setMinHeight(29);
 
     mCaption = new gcn::Label("");
-    mCaption->setFont(boldFont);
+    mCaption->setFont(gui->getBoldFont());
 
     mSpeechBox = new TextBox();
     mSpeechBox->setEditable(false);
@@ -55,6 +55,7 @@ SpeechBubble::SpeechBubble():
 
 void SpeechBubble::setCaption(const std::string &name, const gcn::Color *color)
 {
+    mCaption->setFont(gui->getBoldFont());
     mCaption->setCaption(name);
     mCaption->adjustSize();
     mCaption->setForegroundColor(*color);

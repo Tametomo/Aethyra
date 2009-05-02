@@ -58,7 +58,7 @@ Viewport *viewport = 0;                    /**< Viewport on the map. */
 SDLInput *guiInput = 0;
 
 // Bolded font
-gcn::Font *boldFont = 0;
+gcn::Font *mBoldFont = 0;
 
 volatile int tick_time;
 volatile int fps = 0, frame = 0;
@@ -169,7 +169,7 @@ Gui::Gui(Graphics *graphics):
         const int fontSize = (int) config.getValue("fontSize", 11);
         mGuiFont = new TrueTypeFont(path, fontSize);
         mInfoParticleFont = new TrueTypeFont(path, fontSize, 1);
-        boldFont = new TrueTypeFont(path, fontSize, 1);
+        mBoldFont = new TrueTypeFont(path, fontSize, 1);
     }
     catch (gcn::Exception e)
     {
@@ -210,7 +210,7 @@ Gui::~Gui()
         mMouseCursors->decRef();
 
     delete mGuiFont;
-    delete boldFont;
+    delete mBoldFont;
     delete mInfoParticleFont;
     delete viewport;
     delete getTop();

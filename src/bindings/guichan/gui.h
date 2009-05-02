@@ -92,6 +92,11 @@ class Gui : public gcn::Gui
         gcn::Font* getFont() const { return mGuiFont; }
 
         /**
+         * Return bolded game font.
+         */
+        gcn::Font* getBoldFont() const { return mBoldFont; }
+
+        /**
          * Return game font height.
          */
         const int getFontHeight() const;
@@ -143,10 +148,13 @@ class Gui : public gcn::Gui
         GuiConfigListener *mConfigListener;
         gcn::Font *mGuiFont;                  /**< The global GUI font */
         gcn::Font *mInfoParticleFont;         /**< Font for Info Particles*/
+        gcn::Font *mBoldFont;                 /**< Font for bolded text*/
         bool mCustomCursor;                   /**< Show custom cursor */
         ImageSet *mMouseCursors;              /**< Mouse cursor images */
         float mMaxMouseCursorAlpha;           /**< Cursor opacity/transparency. */
-        float mMouseCursorAlpha;              /**< Current cursor opacity/transparency.  Changes as the cursor fades out due to inactivity. */
+        float mMouseCursorAlpha;              /**< Current cursor opacity/transparency.
+                                                   Changes as the cursor fades
+                                                   out due to inactivity. */
         int mMouseInactivityTimer;
         int mCursorType;
 
@@ -164,10 +172,5 @@ int get_elapsed_time(int start_time);
 
 extern Gui *gui;                              /**< The GUI system */
 extern SDLInput *guiInput;                    /**< GUI input */
-
-/**
- * Bolded text font
- */
-extern gcn::Font *boldFont;
 
 #endif
