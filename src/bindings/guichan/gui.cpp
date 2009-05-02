@@ -230,6 +230,8 @@ void Gui::resize(Graphics *graphics)
 }
 void Gui::logic()
 {
+    gcn::Gui::logic();
+
     // Update the screen when application is active, delay otherwise.
     if (SDL_GetAppState() & SDL_APPACTIVE)
     {
@@ -241,6 +243,21 @@ void Gui::logic()
             draw();
             graphics->updateScreen();
             mDrawTime += mMinFrameTime;
+
+            // Fade out mouse cursor after extended inactivity
+            if (get_elapsed_time(mMouseInactivityTimer) < 15000)
+            {
+                const float alpha = std::min(mMouseCursorAlpha + 0.05f, 1.0f);
+                mMouseCursorAlpha = std::min(mMaxMouseCursorAlpha, alpha);
+            }
+            else if (mMouseInactivityTimer > MAX_TIME)
+            {
+                mMouseInactivityTimer -= MAX_TIME;
+            }
+            else
+            {
+                mMouseCursorAlpha = std::max(0.0f, mMouseCursorAlpha - 0.005f);
+            }
 
             // Make sure to wrap mDrawTime, since tick_time will wrap.
             if (mDrawTime > MAX_TIME * 10)
@@ -257,18 +274,7 @@ void Gui::logic()
         mDrawTime = tick_time * 10;
     }
 
-    // Fade out mouse cursor after extended inactivity
-    if (mMouseInactivityTimer < 100 * 15)
-    {
-        ++mMouseInactivityTimer;
-        mMouseCursorAlpha = std::min(mMaxMouseCursorAlpha, mMouseCursorAlpha + 0.05f);
-    }
-    else
-        mMouseCursorAlpha = std::max(0.0f, mMouseCursorAlpha - 0.005f);
-
     guiPalette->advanceGradient();
-
-    gcn::Gui::logic();
 }
 
 void Gui::framerateChanged()
@@ -369,7 +375,7 @@ void Gui::setUseCustomCursor(bool customCursor)
 void Gui::handleMouseMoved(const gcn::MouseInput &mouseInput)
 {
     gcn::Gui::handleMouseMoved(mouseInput);
-    mMouseInactivityTimer = 0;
+    mMouseInactivityTimer = tick_time;
 }
 
 const int Gui::getFontHeight() const

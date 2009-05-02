@@ -94,7 +94,7 @@ Setup_Video::Setup_Video():
     mSpeechSlider(new Slider(0, 3)),
     mSpeechModeLabel(new Label("")),
     mAlphaSlider(new Slider(0.2, 1.0)),
-    mMouseAlphaSlider(new Slider(0.2, 0.99)),
+    mMouseAlphaSlider(new Slider(0.2, 1.0)),
     mFpsCheckBox(new CheckBox(_("FPS Limit:"))),
     mFpsSlider(new Slider(10, 120)),
     mFpsField(new TextField),
