@@ -303,7 +303,8 @@ void Setup_Video::apply()
     mMouseOpacity = config.getValue("mousealpha", 0.7);
     mFontSize = (int) config.getValue("fontSize", 11);
     mOverlayDetail = (int) config.getValue("OverlayDetail", 2);
-    mParticleDetail = (int) config.getValue("particleEmitterSkip", 1);
+    mParticleDetail = 3 - (int) config.getValue("particleEmitterSkip", 1);
+    config.setValue("particleeffects", mParticleDetail != -1);
     mOpenGLEnabled = config.getValue("opengl", false);
     mPickupChatEnabled = config.getValue("showpickupchat", true);
     mPickupParticleEnabled = config.getValue("showpickupparticle", false);
@@ -370,7 +371,7 @@ void Setup_Video::action(const gcn::ActionEvent &event)
 
         if (width != graphics->getWidth() || height != graphics->getHeight())
         {
-            // TODO: Find out why the drawing area doesn't resize without a restart.
+            // TODO: If possible, fix resizing in place on Windows.
             //
             // Because: on Windows, the GL context get purged on resize!
             // (well, not checked, but that what Internet reports)
