@@ -302,6 +302,7 @@ void Setup_Video::apply()
     mMouseOpacity = config.getValue("mousealpha", 0.7);
     mFontSize = (int) config.getValue("fontSize", 11);
     mOverlayDetail = (int) config.getValue("OverlayDetail", 2);
+    mParticleDetail = (int) config.getValue("particleEmitterSkip", 1);
     mOpenGLEnabled = config.getValue("opengl", false);
     mPickupChatEnabled = config.getValue("showpickupchat", true);
     mPickupParticleEnabled = config.getValue("showpickupparticle", false);
@@ -341,8 +342,7 @@ void Setup_Video::cancel()
     val = (int) mOverlayDetailSlider->getValue();
     setOverlayDetailLabel(val);
 
-    val = (int) mParticleDetailSlider->getValue();
-    setParticleDetailLabel(val);
+    changeParticleDetailLevel(mParticleDetail);
 
     config.setValue("screen", mFullScreenEnabled ? true : false);
     config.setValue("customcursor", mCustomCursorEnabled ? true : false);
@@ -475,21 +475,7 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     else if (event.getId() == "particledetailslider")
     {
         const int val = (int) mParticleDetailSlider->getValue();
-        setParticleDetailLabel(val);
-        config.setValue("particleeffects", val != -1);
-        config.setValue("particleEmitterSkip", 3 - val);
-
-        if (val < 1 && engine)
-        {
-            beingManager->loadParticleEffects();
-            Map* map = engine->getCurrentMap();
-
-            if (map)
-                map->initializeParticleEffects(particleEngine);
-        }
-
-        if (val > -1)
-            Particle::emitterSkip = 4 - val;
+        changeParticleDetailLevel(val);
     }
     else if (event.getId() == "fpslimitcheckbox")
     {
@@ -511,7 +497,7 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     }
 }
 
-void Setup_Video::setSpeechModeLabel(int value)
+void Setup_Video::setSpeechModeLabel(const int &value)
 {
     switch (value)
     {
@@ -530,7 +516,7 @@ void Setup_Video::setSpeechModeLabel(int value)
     }
 }
 
-void Setup_Video::setOverlayDetailLabel(int value)
+void Setup_Video::setOverlayDetailLabel(const int &value)
 {
     switch (value)
     {
@@ -546,7 +532,7 @@ void Setup_Video::setOverlayDetailLabel(int value)
     }
 }
 
-void Setup_Video::setParticleDetailLabel(int value)
+void Setup_Video::setParticleDetailLabel(const int &value)
 {
     switch (value)
     {
@@ -566,6 +552,25 @@ void Setup_Video::setParticleDetailLabel(int value)
             mParticleDetailLabel->setCaption(_("max"));
             break;
     }
+}
+
+void Setup_Video::changeParticleDetailLevel(const int &value)
+{
+     setParticleDetailLabel(value);
+     config.setValue("particleeffects", value != -1);
+     config.setValue("particleEmitterSkip", 3 - value);
+
+     if (engine)
+     {
+         beingManager->loadParticleEffects();
+         Map* map = engine->getCurrentMap();
+
+         if (map)
+             map->initializeParticleEffects(particleEngine);
+     }
+
+     if (value > -1)
+         Particle::emitterSkip = 4 - value;
 }
 
 void Setup_Video::logic()
