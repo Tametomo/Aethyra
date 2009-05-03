@@ -53,7 +53,9 @@ void Wallpaper::loadWallpapers()
 {
     char **imgs = PHYSFS_enumerateFiles(WALLPAPER_FOLDER);
     char **i;
-    size_t baseLen = strlen(WALLPAPER_BASE), width, height;
+    size_t baseLen = strlen(WALLPAPER_BASE);
+    int width;
+    int height;
 
     wallpapers.clear();
 
