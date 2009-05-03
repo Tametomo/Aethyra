@@ -23,6 +23,7 @@
 #include "stringutils.h"
 
 #include <algorithm>
+#include <cstdio>
 
 std::string &trim(std::string &str)
 {
