@@ -25,9 +25,9 @@
 
 #include <vector>
 
-#import "tablemodel.h"
+#include "tablemodel.h"
 
-#import "../guichanfwd.h"
+#include "../guichanfwd.h"
 
 class StaticTableModel : public TableModel
 {
