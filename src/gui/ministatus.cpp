@@ -30,6 +30,7 @@
 #include "../bindings/guichan/widgets/progressbar.h"
 
 #include "../utils/stringutils.h"
+#include "../utils/strprintf.h"
 
 MiniStatusWindow::MiniStatusWindow():
     Popup("MiniStatus")
@@ -76,8 +77,7 @@ void MiniStatusWindow::update()
     mHpBar->setText(toString(player_node->mHp));
     mMpBar->setText(toString(player_node->mMp));
 
-    std::stringstream updatedText;
-    updatedText << (float) ((int) (xp * 10000.0f)) / 100.0f << "%";
+    std::string updatedText = strprintf("%2.2f", 100 * xp) + "%";
 
     // Displays the number of monsters to next lvl
     // (disabled for now but interesting idea)
@@ -92,7 +92,7 @@ void MiniStatusWindow::update()
     }
     */
 
-    mXpBar->setText(updatedText.str());
+    mXpBar->setText(updatedText);
 }
 
 void MiniStatusWindow::draw(gcn::Graphics *graphics)
