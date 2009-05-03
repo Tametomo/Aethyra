@@ -258,7 +258,6 @@ class Particle : public Sprite
         float mAlpha;               /**< Opacity of the graphical representation
                                          of the particle */
 
-    private:
         // generic properties
         bool mAutoDelete;           /**< May the particle request its deletion
                                          by the parent particle? */

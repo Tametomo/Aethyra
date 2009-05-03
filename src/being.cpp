@@ -264,7 +264,24 @@ void Being::takeDamage(Being *attacker, int amount, AttackType type)
 
 void Being::handleAttack(Being *victim, int damage, AttackType type)
 {
-    setAction(Being::ATTACK);
+    if (this != player_node)
+        setAction(Being::ATTACK);
+
+    if (getType() == PLAYER)
+    {
+        if (mEquippedWeapon->getAttackType() == ACTION_ATTACK_BOW)
+        {
+            Particle *p = new Particle(NULL);
+            p->setLifetime(1000);
+            victim->controlParticle(p);
+
+            Particle *p2 = particleEngine->addEffect("graphics/particles/arrow.particle.xml", mPx, mPy);
+            p2->setLifetime(900);
+            p2->setDestination(p, 7, 0);
+            p2->setDieDistance(8);
+        }
+    }
+
     mFrame = 0;
     mWalkTime = tick_time;
 }

@@ -405,6 +405,8 @@ SET(SRCS
     player_relations.cpp
     player_relations.h
     properties.h
+    rotationalparticle.cpp
+    rotationalparticle.h
     serverinfo.h
     shopitem.cpp
     shopitem.h
