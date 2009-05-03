@@ -74,7 +74,7 @@ LocalPlayer::LocalPlayer(Uint32 id, Uint16 job, Map *map):
     mEquipment(new Equipment()),
     mXp(0),
     mTarget(NULL), mPickUpTarget(NULL),
-    mTrading(false), mGoingToTarget(false),
+    mTrading(false), mGoingToTarget(false), mKeepAttacking(false),
     mTargetTime(-1), mLastAction(-1),
     mLastTarget(-1), mWalkingDir(0),
     mDestX(0), mDestY(0),
@@ -562,9 +562,6 @@ void LocalPlayer::attack(Being *target, bool keep)
         else
             setDirection(LEFT);
     }
-
-    // Implement charging attacks here
-    mLastAttackTime = 0;
 
     mWalkTime = tick_time;
     mTargetTime = tick_time;

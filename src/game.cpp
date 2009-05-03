@@ -607,7 +607,10 @@ void Game::handleInput()
                         if (keyboard.isKeyActive(keyboard.KEY_BEING_MENU) &&
                             target)
                         {
-                            viewport->showPopup(target->mX * 32 - viewport->getCameraX() + 16, target->mY * 32 - viewport->getCameraY(), target);
+                            viewport->showPopup(target->mX * 32 -
+                                                viewport->getCameraX() + 16,
+                                                target->mY * 32 -
+                                                viewport->getCameraY(), target);
                             used = true;
                         }
 
