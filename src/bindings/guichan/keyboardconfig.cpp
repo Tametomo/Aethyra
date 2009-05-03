@@ -30,7 +30,7 @@
 #include "../../gui/setup_input.h"
 
 #include "../../utils/gettext.h"
-#include "../../utils/strprintf.h"
+#include "../../utils/stringutils.h"
 
 struct KeyData
 {

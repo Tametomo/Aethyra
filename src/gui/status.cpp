@@ -32,7 +32,6 @@
 #include "../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../utils/gettext.h"
-#include "../utils/strprintf.h"
 #include "../utils/stringutils.h"
 
 StatusWindow::StatusWindow(LocalPlayer *player):

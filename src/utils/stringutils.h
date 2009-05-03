@@ -74,4 +74,15 @@ template<typename T> std::string toString(const T &arg)
  */
 const char *ipToString(int address);
 
+/**
+ * A safe version of sprintf that returns a std::string of the result.
+ */
+std::string strprintf(char const *, ...)
+#ifdef __GNUC__
+    /* This attribute is nice: it even works through gettext invokation. For
+       example, gcc will complain that strprintf(_("%s"), 42) is ill-formed. */
+    __attribute__((format(printf, 1, 2)))
+#endif
+;
+
 #endif // UTILS_STRINGUTILS_H

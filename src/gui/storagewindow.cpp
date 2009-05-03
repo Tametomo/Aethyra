@@ -48,7 +48,7 @@
 #include "../resources/db/iteminfo.h"
 
 #include "../utils/gettext.h"
-#include "../utils/strprintf.h"
+#include "../utils/stringutils.h"
 
 StorageWindow::StorageWindow(int invSize):
     Window(_("Storage")),

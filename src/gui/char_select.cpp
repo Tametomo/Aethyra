@@ -45,7 +45,6 @@
 #include "../resources/db/colordb.h"
 
 #include "../utils/gettext.h"
-#include "../utils/strprintf.h"
 #include "../utils/stringutils.h"
 
 // Defined in main.cpp, used here for setting the char create dialog

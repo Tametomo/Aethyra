@@ -35,14 +35,8 @@ class ProgressBar;
 class MiniStatusWindow : public Popup
 {
     public:
-        /**
-         * Constructor.
-         */
         MiniStatusWindow();
 
-        /**
-         * Draw this window.
-         */
         void draw(gcn::Graphics *graphics);
 
     private:
@@ -60,4 +54,3 @@ class MiniStatusWindow : public Popup
 };
 
 #endif
-

@@ -27,7 +27,7 @@
 
 #include "../log.h"
 
-#include "../utils/strprintf.h"
+#include "../utils/stringutils.h"
 
 #define WALLPAPER_FOLDER "graphics/images/"
 

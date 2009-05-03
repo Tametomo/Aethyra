@@ -34,7 +34,7 @@
 #include "../bindings/guichan/widgets/slider.h"
 
 #include "../utils/gettext.h"
-#include "../utils/strprintf.h"
+#include "../utils/stringutils.h"
 
 ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     Window("", true, parent),

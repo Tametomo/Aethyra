@@ -30,7 +30,6 @@
 #include "../bindings/guichan/widgets/progressbar.h"
 
 #include "../utils/stringutils.h"
-#include "../utils/strprintf.h"
 
 MiniStatusWindow::MiniStatusWindow():
     Popup("MiniStatus")

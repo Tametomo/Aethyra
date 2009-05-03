@@ -65,7 +65,6 @@
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
-#include "../utils/strprintf.h"
 
 Setup_Video::Setup_Video():
     mFullScreenEnabled(config.getValue("screen", false)),

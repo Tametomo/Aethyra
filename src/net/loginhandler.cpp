@@ -30,7 +30,6 @@
 #include "../serverinfo.h"
 
 #include "../utils/gettext.h"
-#include "../utils/strprintf.h"
 #include "../utils/stringutils.h"
 
 extern SERVER_INFO **server_info;

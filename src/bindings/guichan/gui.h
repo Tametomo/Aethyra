@@ -20,8 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GUI
-#define GUI
+#ifndef GUI_H
+#define GUI_H
 
 #include <guichan/gui.hpp>
 
@@ -178,4 +178,4 @@ int get_elapsed_time(int start_time);
 extern Gui *gui;                              /**< The GUI system */
 extern SDLInput *guiInput;                    /**< GUI input */
 
-#endif
+#endif // GUI_H

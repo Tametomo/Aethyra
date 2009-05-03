@@ -392,8 +392,6 @@
 		<Unit filename="src\utils\gettext.h" />
 		<Unit filename="src\utils\stringutils.cpp" />
 		<Unit filename="src\utils\stringutils.h" />
-		<Unit filename="src\utils\strprintf.cpp" />
-		<Unit filename="src\utils\strprintf.h" />
 		<Unit filename="src\utils\mutex.h" />
 		<Unit filename="src\utils\position.cpp" />
 		<Unit filename="src\utils\position.h" />

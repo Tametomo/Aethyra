@@ -291,8 +291,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      utils/gettext.h \
 	      utils/stringutils.cpp \
 	      utils/stringutils.h \
-	      utils/strprintf.cpp \
-	      utils/strprintf.h \
 	      utils/mutex.h \
 	      utils/position.cpp \
 	      utils/position.h \

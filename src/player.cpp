@@ -32,7 +32,7 @@
 #include "resources/db/colordb.h"
 #include "resources/db/itemdb.h"
 
-#include "utils/strprintf.h"
+#include "utils/stringutils.h"
 
 static const int NAME_X_OFFSET = 15;
 static const int NAME_Y_OFFSET = 30;

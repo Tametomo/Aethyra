@@ -39,7 +39,6 @@
 #include "../bindings/guichan/widgets/textfield.h"
 
 #include "../utils/gettext.h"
-#include "../utils/strprintf.h"
 #include "../utils/stringutils.h"
 
 /**
