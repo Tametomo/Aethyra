@@ -250,14 +250,6 @@ class Being : public Sprite
         virtual void nextStep();
 
         /**
-         * Triggers whether or not to show the name as a GM name.
-         * NOTE: This doesn't mean that just anyone can use this.
-         * If the server doesn't acknowlege you, you won't be shown
-         * as a GM on other people's clients.
-         */
-        virtual void setGM() { mIsGM = true; }
-
-        /**
          * Performs being logic.
          */
         virtual void logic();
@@ -421,7 +413,6 @@ class Being : public Sprite
         Map *mMap;                      /**< Map on which this being resides */
         std::string mName;              /**< Name of character */
         SpriteIterator mSpriteIterator;
-        bool mIsGM;
         bool mParticleEffects;          /**< Whether to display particles or not */
 
         /** Engine-related infos about weapon. */

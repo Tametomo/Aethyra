@@ -55,7 +55,12 @@ class Player : public Being
         /**
          * Whether or not this player is a GM.
          */
-        bool isGM() { return mIsGM; }
+        bool isGM() const { return mIsGM; }
+
+        /**
+         * Triggers whether or not to show the name as a GM name.
+         */
+        virtual void setGM() { mIsGM = true; }
 
         /**
          * Sets the hair style and color for this player.
@@ -83,6 +88,11 @@ class Player : public Being
         virtual void updateCoords();
 
         FlashText *mName;
+
+        bool mIsGM;
+
+    private:
+        bool mInParty;
 };
 
 #endif
