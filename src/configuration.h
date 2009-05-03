@@ -76,6 +76,13 @@ class ConfigurationObject
         virtual ~ConfigurationObject(void);
 
         /**
+         * Removes a specified key from the configuration file.
+         *
+         * \param key Option identifier.
+         */
+        virtual void removeValue(const std::string &key);
+
+        /**
          * Sets an option using a string value.
          *
          * \param key Option identifier.

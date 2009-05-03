@@ -27,6 +27,15 @@
 #include "utils/stringutils.h"
 #include "utils/xml.h"
 
+
+void ConfigurationObject::removeValue(const std::string &key)
+{
+    OptionIterator iter = mOptions.find(key);
+
+    if (mOptions.end() != iter)
+        mOptions.erase(key);
+}
+
 void ConfigurationObject::setValue(const std::string &key, std::string value)
 {
     mOptions[key] = value;
