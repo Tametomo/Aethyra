@@ -97,6 +97,7 @@ static KeyData const keyData[KeyboardConfig::KEY_TOTAL] = {
     {"keyChat", SDLK_RETURN, _("Toggle Chat")},
     {"keyChatScrollUp", SDLK_PAGEUP, _("Scroll Chat Up")},
     {"keyChatScrollDown", SDLK_PAGEDOWN, _("Scroll Chat Down")},
+    {"keyBeingMenu", SDLK_m, _("Being Menu")},
     {"keyQuit", SDLK_ESCAPE, _("Quit")},
     {"keyIgnoreInput1", SDLK_LSUPER, _("Ignore input 1")},
     {"keyIgnoreInput2", SDLK_RSUPER, _("Ignore input 2")}

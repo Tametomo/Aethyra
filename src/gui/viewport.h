@@ -31,6 +31,7 @@
 
 #include "../utils/position.h"
 
+class Being;
 class FloorItem;
 class Graphics;
 class ImageSet;
@@ -100,6 +101,12 @@ class Viewport : public WindowContainer, public gcn::MouseListener,
          * TODO Find some way to get rid of Item here
          */
         void showPopup(int x, int y, Item *item);
+
+        /**
+         * Shows a popup for a being.
+         * TODO Find some way to combine this with the function above
+         */
+        void showPopup(int x, int y, Being *being);
 
         /**
          * Closes the popup menu. Needed for when the player dies or switching

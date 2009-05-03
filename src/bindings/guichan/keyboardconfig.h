@@ -199,6 +199,7 @@ class KeyboardConfig
             KEY_TOGGLE_CHAT,
             KEY_SCROLL_CHAT_UP,
             KEY_SCROLL_CHAT_DOWN,
+            KEY_BEING_MENU,
             KEY_QUIT,
             KEY_IGNORE_INPUT_1,
             KEY_IGNORE_INPUT_2,

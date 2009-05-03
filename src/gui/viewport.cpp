@@ -367,6 +367,11 @@ void Viewport::showPopup(int x, int y, Item *item)
     mPopupMenu->showPopup(x, y, item);
 }
 
+void Viewport::showPopup(int x, int y, Being *being)
+{
+    mPopupMenu->showPopup(x, y, being);
+}
+
 void Viewport::closePopupMenu()
 {
     mPopupMenu->handleLink("cancel");

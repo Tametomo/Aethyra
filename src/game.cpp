@@ -604,6 +604,13 @@ void Game::handleInput()
                             used = true;
                         }
 
+                        if (keyboard.isKeyActive(keyboard.KEY_BEING_MENU) &&
+                            target)
+                        {
+                            viewport->showPopup(target->mX * 32 - viewport->getCameraX() + 16, target->mY * 32 - viewport->getCameraY(), target);
+                            used = true;
+                        }
+
                         if ((keyboard.isKeyActive(keyboard.KEY_ATTACK) ||
                             (joystick && joystick->buttonPressed(0))) && 
                             target && target->getType() != Being::NPC)
