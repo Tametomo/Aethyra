@@ -445,8 +445,19 @@ void Window::loadWindowState()
                                                  mSkin->getFilePath());
     assert(!name.empty());
 
-    setPosition((int) config.getValue(name + "WinX", mDefaultX),
-                (int) config.getValue(name + "WinY", mDefaultY));
+    const int screenheight=graphics->getHeight();
+    const int screenwidth=graphics->getWidth();
+    const float winx=config.getValue(name+"WinX",mDefaultX);
+    const float winy=config.getValue(name+"WinY",mDefaultX);
+    if ((winx > 1.0f)||(winy >1.0f))
+    { 
+       /* old storage , absolute pixel value */
+       setPosition((int) winx, (int) winy);
+    }
+    else
+    {
+       setPosition((int) (winx*screenwidth), (int) (winy*screenheight));
+    }
     setVisible((bool) config.getValue(name + "Visible", false));
     mOldVisibility = (bool) config.getValue(name + "Hidden", false);
 
@@ -458,8 +469,21 @@ void Window::loadWindowState()
 
     if (mGrip)
     {
-        int width = (int) config.getValue(name + "WinWidth", mDefaultWidth);
-        int height = (int) config.getValue(name + "WinHeight", mDefaultHeight);
+        const float fwidth = config.getValue(name + "WinWidth", mDefaultWidth);
+        const float fheight = config.getValue(name + "WinHeight", mDefaultHeight);
+        int width;
+        int height;
+        if ((fwidth > 1.0f)||(fheight > 1.0f))
+        {
+           /* old storage , absolute pixel value */
+           width = (int) fwidth;
+           height = (int) fheight;
+        }
+        else
+        {
+           width = (int)(fwidth * screenwidth);
+           height = (int)(fheight * screenheight);
+        }
 
         if (getMinWidth() > width)
             width = getMinWidth();
@@ -480,11 +504,13 @@ void Window::loadWindowState()
 
 void Window::saveWindowState()
 {
+    const float screenheight=(float)graphics->getHeight();
+    const float screenwidth=(float)graphics->getWidth();
     // Saving X, Y and Width and Height for resizables in the config
     if (!mWindowName.empty() && mWindowName != "window")
     {
-        config.setValue(mWindowName + "WinX", getX());
-        config.setValue(mWindowName + "WinY", getY());
+        config.setValue(mWindowName + "WinX", (float)getX()/screenwidth);
+        config.setValue(mWindowName + "WinY", (float)getY()/screenheight);
         config.setValue(mWindowName + "Visible", isVisible());
         config.setValue(mWindowName + "Skin", mSkin->getFilePath());
         config.setValue(mWindowName + "Hidden", mOldVisibility);
@@ -500,8 +526,8 @@ void Window::saveWindowState()
             else if (getMaxHeight() < getHeight())
                 setHeight(getMaxHeight());
 
-            config.setValue(mWindowName + "WinWidth", getWidth());
-            config.setValue(mWindowName + "WinHeight", getHeight());
+            config.setValue(mWindowName + "WinWidth",(float)getWidth()/screenwidth);
+            config.setValue(mWindowName + "WinHeight",(float)getHeight()/screenheight);
         }
     }
 }
