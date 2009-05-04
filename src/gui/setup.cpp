@@ -27,6 +27,8 @@
 #include "setup_players.h"
 #include "setup_video.h"
 
+#include "../bindings/guichan/layout.h"
+
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/tabbedarea.h"
 
@@ -55,26 +57,14 @@ extern Window *storageWindow;
 Setup::Setup():
     Window(_("Setup"))
 {
+    setWindowName("Setup");
     setCloseButton(true);
-    int width = 340;
-    int height = 340;
-    setContentSize(width, height);
+    int width = 340 + 2 * getPadding();
+    int height = 340 + 2 * getPadding() + getTitleBarHeight();
 
     static const char *buttonNames[] = {
         N_("Apply"), N_("Cancel"), N_("Reset Windows"), 0
     };
-    int x = width;
-    for (const char **curBtn = buttonNames; *curBtn; ++curBtn)
-    {
-        Button *btn = new Button(gettext(*curBtn), *curBtn, this);
-        x -= btn->getWidth() + 5;
-        btn->setPosition(x, height - btn->getHeight() - 5);
-        add(btn);
-
-        // Store this button, as it needs to be enabled/disabled
-        if (!strcmp(*curBtn, N_("Reset Windows")))
-            mResetWindows = btn;
-    }
 
     TabbedArea *panel = new TabbedArea;
     panel->setDimension(gcn::Rectangle(5, 5, width - 10, height - 40));
@@ -92,9 +82,25 @@ Setup::Setup():
         panel->addTab(tab->getName(), tab);
     }
 
-    add(panel);
+    place(0, 0, panel, 7, 6).setPadding(2);
 
-    setLocationRelativeTo(getParent());
+    for (int i = 0; buttonNames[i] != NULL; ++i)
+    {
+        Button *btn = new Button(gettext(buttonNames[i]), buttonNames[i], this);
+        place(6 - i, 6, btn);
+
+        // Store this button, as it needs to be enabled/disabled
+        if (!strcmp(buttonNames[i], N_("Reset Windows")))
+            mResetWindows = btn;
+    }
+
+    setDefaultSize(width, height, ImageRect::CENTER);
+
+    Layout &layout = getLayout();
+    layout.setRowHeight(0, Layout::AUTO_SET);
+
+    loadWindowState();
+    setVisible(false);
 
     setInGame(false);
 }
