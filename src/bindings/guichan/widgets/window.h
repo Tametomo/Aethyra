@@ -57,9 +57,11 @@ class Window : public gcn::Window, gcn::WidgetListener
          *                this one in the window hiearchy. When reordering,
          *                a window will never go below its parent window.
          * @param skin    The location where the window's skin XML can be found.
+         * @param visible Whether the window is visible by default.
          */
         Window(const std::string &caption = "Window", bool modal = false,
-               Window *parent = NULL, const std::string &skin = "graphics/gui/gui.xml");
+               Window *parent = NULL, const std::string &skin = "graphics/gui/gui.xml",
+               bool visible = false);
 
         /**
          * Destructor. Deletes all the added widgets.
@@ -361,6 +363,7 @@ class Window : public gcn::Window, gcn::WidgetListener
         bool mShowTitle;              /**< Window has a title bar */
         bool mModal;                  /**< Window is modal */
         bool mCloseButton;            /**< Window has a close button */
+        bool mDefaultVisible;         /**< Default visibility */
         int mMinWinWidth;             /**< Minimum window width */
         int mMinWinHeight;            /**< Minimum window height */
         int mMaxWinWidth;             /**< Maximum window width */

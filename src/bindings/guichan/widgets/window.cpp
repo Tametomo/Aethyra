@@ -41,7 +41,8 @@
 int Window::instances = 0;
 int Window::mouseResize = 0;
 
-Window::Window(const std::string& caption, bool modal, Window *parent, const std::string& skin):
+Window::Window(const std::string& caption, bool modal, Window *parent,
+               const std::string& skin, bool visible):
     gcn::Window(caption),
     mOldVisibility(false),
     mGrip(0),
@@ -52,6 +53,7 @@ Window::Window(const std::string& caption, bool modal, Window *parent, const std
     mShowTitle(true),
     mModal(modal),
     mCloseButton(false),
+    mDefaultVisible(visible),
     mMinWinWidth(100),
     mMinWinHeight(40),
     mMaxWinWidth(graphics->getWidth()),
@@ -569,7 +571,7 @@ void Window::loadWindowState()
         setPosition(mDefaultX, mDefaultY);
     }
 
-    setVisible((bool) config.getValue(name + "Visible", false));
+    setVisible((bool) config.getValue(name + "Visible", mDefaultVisible));
     mOldVisibility = (bool) config.getValue(name + "Hidden", false);
 
     if (skinName.compare(mSkin->getFilePath()) != 0)

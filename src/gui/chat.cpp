@@ -53,7 +53,7 @@
 #include "../utils/stringutils.h"
 
 ChatWindow::ChatWindow():
-    Window(""),
+    Window("", false, NULL, "graphics/gui/gui.xml", true),
     mTmpVisible(false)
 {
     setWindowName("Chat");
