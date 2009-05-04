@@ -154,8 +154,8 @@ Gui::Gui(Graphics *graphics):
 
     // Initialize top GUI widget
     WindowContainer *guiTop = new WindowContainer();
-    guiTop->setDimension(gcn::Rectangle(0, 0,
-                graphics->getWidth(), graphics->getHeight()));
+    guiTop->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
+                                        graphics->getHeight()));
     guiTop->setOpaque(false);
     Window::setWindowContainer(guiTop);
     setTop(guiTop);
@@ -223,8 +223,6 @@ void Gui::resize(Graphics *graphics)
     WindowContainer *guiTop = static_cast<WindowContainer*>(getTop());
     guiTop->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
                                         graphics->getHeight()));
-
-    Window::setWindowContainer(guiTop);
     viewport->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
                                           graphics->getHeight()));
 }

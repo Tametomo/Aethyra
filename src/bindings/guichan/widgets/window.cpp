@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <climits>
+
 #include <guichan/exception.hpp>
 
 #include "resizegrip.h"
@@ -168,49 +170,117 @@ void Window::setLocationRelativeTo(gcn::Widget *widget)
 }
 
 void Window::setLocationRelativeTo(ImageRect::ImagePosition position,
-                                   int offsetX, int offsetY)
+                                   const int &offsetX, const int &offsetY)
 {
-    if (position == ImageRect::UPPER_LEFT)
+    setLocationRelativeTo(position, graphics->getWidth(), graphics->getHeight(),
+                          offsetX, offsetY);
+}
+
+void Window::setLocationRelativeTo(ImageRect::ImagePosition position,
+                                   const int &width, const int &height,
+                                   const int &offsetX, const int &offsetY)
+{
+    int x = 0, y = 0;
+
+    getRelativeOffset(position, x, y, width, height, 0, 0);
+
+    setPosition(x - offsetX, y - offsetY);
+}
+
+void Window::getRelativeOffset(ImageRect::ImagePosition position, int &x, int &y,
+                               const int& width, const int& height)
+{
+    getRelativeOffset(position, x, y, graphics->getWidth(),
+                      graphics->getHeight(), width, height);
+}
+
+void Window::getRelativeOffset(ImageRect::ImagePosition position, int &x, int &y,
+                               const int &conWidth, const int &conHeight,
+                               const int& width, const int& height)
+{
+    switch (position)
     {
+        case ImageRect::UPPER_CENTER:
+            x += (conWidth - width) / 2;
+            break;
+        case ImageRect::UPPER_RIGHT:
+            x += conWidth - width;
+            break;
+        case ImageRect::LEFT:
+            y += (conHeight - height) / 2;
+            break;
+        case ImageRect::CENTER:
+            x += (conWidth - width) / 2;
+            y += (conHeight - height) / 2;
+            break;
+        case ImageRect::RIGHT:
+            x += conWidth - width;
+            y += (conHeight - height) / 2;
+            break;
+        case ImageRect::LOWER_LEFT:
+            y += conHeight - height;
+            break;
+        case ImageRect::LOWER_CENTER:
+            x += (conWidth - width) / 2;
+            y += conHeight - height;
+            break;
+        case ImageRect::LOWER_RIGHT:
+            x += conWidth - width;
+            y += conHeight - height;
+            break;
+        default:
+            break;
     }
-    else if (position == ImageRect::UPPER_CENTER)
+}
+
+void Window::saveRelativeLocation(const int &x, const int &y)
+{
+    ImageRect::ImagePosition savedPos = ImageRect::UPPER_LEFT;
+    int posX = 0, posY = 0, offsetX = 0, offsetY = 0, distX = 0, distY = 0;
+    int bestOffsetX = 0, bestOffsetY = 0;
+    int bestSquaredDistance = INT_MAX;
+
+    for (int pos = ImageRect::UPPER_LEFT; pos <= ImageRect::LOWER_RIGHT &&
+         bestSquaredDistance > 0; pos++)
     {
-        offsetX += (graphics->getWidth() - getWidth()) / 2;
-    }
-    else if (position == ImageRect::UPPER_RIGHT)
-    {
-        offsetX += graphics->getWidth() - getWidth();
-    }
-    else if (position == ImageRect::LEFT)
-    {
-        offsetY += (graphics->getHeight() - getHeight()) / 2;
-    }
-    else if (position == ImageRect::CENTER)
-    {
-        offsetX += (graphics->getWidth() - getWidth()) / 2;
-        offsetY += (graphics->getHeight() - getHeight()) / 2;
-    }
-    else if (position == ImageRect::RIGHT)
-    {
-        offsetX += graphics->getWidth() - getWidth();
-        offsetY += (graphics->getHeight() - getHeight()) / 2;
-    }
-    else if (position == ImageRect::LOWER_LEFT)
-    {
-        offsetY += graphics->getHeight() - getHeight();
-    }
-    else if (position == ImageRect::LOWER_CENTER)
-    {
-        offsetX += (graphics->getWidth() - getWidth()) / 2;
-        offsetY += graphics->getHeight() - getHeight();
-    }
-    else if (position == ImageRect::LOWER_RIGHT)
-    {
-        offsetX += graphics->getWidth() - getWidth();
-        offsetY += graphics->getHeight() - getHeight();
+        int squaredDistance = 0;
+
+        // Get the relative position's coordinates. This will be used as a
+        // multiplier to determine centered-ness.
+        posX = 0; posY = 0;
+        getRelativeOffset((ImageRect::ImagePosition) pos, posX, posY, getWidth(),
+                           getHeight(), 0, 0);
+
+        // Now determine the actual offset values to be used.
+        offsetX = -x; offsetY = -y;
+        getRelativeOffset((ImageRect::ImagePosition) pos, offsetX, offsetY, 0, 0);
+
+        // Compare the two values to get the relative distance between the two.
+        // Whichever of the two returns the lowest squared distance will cause
+        // the least disruption on changing resolution, and the most likely to
+        // match where the user would try to locate it themselves.
+        distX = offsetX - posX;
+        distY = offsetY - posY;
+
+        squaredDistance = distX * distX + distY * distY;
+
+        if (squaredDistance < bestSquaredDistance)
+        {
+            savedPos = (ImageRect::ImagePosition) pos;
+            bestSquaredDistance = squaredDistance;
+            bestOffsetX = offsetX;
+            bestOffsetY = offsetY;
+        }
     }
 
-    setPosition(offsetX, offsetY);
+    config.setValue(mWindowName + "Position", savedPos);
+    config.setValue(mWindowName + "OffsetX",  bestOffsetX);
+    config.setValue(mWindowName + "OffsetY",  bestOffsetY);
+}
+
+void Window::adaptToNewSize()
+{
+    setLocationRelativeTo(mPosition, mOffsetX, mOffsetY);
 }
 
 void Window::setMinWidth(int width)
@@ -221,7 +291,7 @@ void Window::setMinWidth(int width)
 void Window::setMinHeight(int height)
 {
     mMinWinHeight = height > mSkin->getMinHeight() ?
-                        height : mSkin->getMinHeight();
+                    height : mSkin->getMinHeight();
 }
 
 void Window::setMaxWidth(int width)
@@ -289,6 +359,15 @@ void Window::close()
     setVisible(false);
 }
 
+void Window::hide()
+{
+    const bool oldVisibility = isVisible();
+
+    setVisible(mOldVisibility);
+
+    mOldVisibility = oldVisibility;
+}
+
 void Window::mousePressed(gcn::MouseEvent &event)
 {
     // Let Guichan move window to top and figure out title bar drag
@@ -309,9 +388,7 @@ void Window::mousePressed(gcn::MouseEvent &event)
                 mSkin->getCloseImage()->getHeight());
 
             if (closeButtonRect.isPointInRect(x, y))
-            {
                 close();
-            }
         }
 
         // Handle window resizing
@@ -445,17 +522,6 @@ void Window::loadWindowState()
                                                  mSkin->getFilePath());
     assert(!name.empty());
 
-    setPosition((int) config.getValue(name + "WinX", mDefaultX),
-                (int) config.getValue(name + "WinY", mDefaultY));
-    setVisible((bool) config.getValue(name + "Visible", false));
-    mOldVisibility = (bool) config.getValue(name + "Hidden", false);
-
-    if (skinName.compare(mSkin->getFilePath()) != 0)
-    {
-        mSkin->instances--;
-        mSkin = skinLoader->load(skinName, mDefaultSkinPath);
-    }
-
     if (mGrip)
     {
         int width = (int) config.getValue(name + "WinWidth", mDefaultWidth);
@@ -476,30 +542,56 @@ void Window::loadWindowState()
     {
         setSize(mDefaultWidth, mDefaultHeight);
     }
+
+    int x = (int) config.getValue(name + "WinX", -1);
+    int y = (int) config.getValue(name + "WinY", -1);
+
+    if (x != -1 || y != -1)
+    {
+        // These two tags are deprecated. Convert them to the new system, then
+        // remove them to avoid client coordinate confusion.
+        config.removeValue(mWindowName + "WinX");
+        config.removeValue(mWindowName + "WinY");
+        saveRelativeLocation(x, y);
+    }
+
+    int position = (int) config.getValue(name + "Position", -1);
+    mOffsetX = (int) config.getValue(name + "OffsetX", 0);
+    mOffsetY = (int) config.getValue(name + "OffsetY", 0);
+
+    if (position != -1)
+    {
+        mPosition = (ImageRect::ImagePosition) position;
+        setLocationRelativeTo(mPosition, mOffsetX, mOffsetY);
+    }
+    else
+    {
+        setPosition(mDefaultX, mDefaultY);
+    }
+
+    setVisible((bool) config.getValue(name + "Visible", false));
+    mOldVisibility = (bool) config.getValue(name + "Hidden", false);
+
+    if (skinName.compare(mSkin->getFilePath()) != 0)
+    {
+        mSkin->instances--;
+        mSkin = skinLoader->load(skinName, mDefaultSkinPath);
+    }
 }
 
 void Window::saveWindowState()
 {
-    // Saving X, Y and Width and Height for resizables in the config
+    // Saving coordinates and Width and Height for resizables in the config
     if (!mWindowName.empty() && mWindowName != "window")
     {
-        config.setValue(mWindowName + "WinX", getX());
-        config.setValue(mWindowName + "WinY", getY());
         config.setValue(mWindowName + "Visible", isVisible());
         config.setValue(mWindowName + "Skin", mSkin->getFilePath());
         config.setValue(mWindowName + "Hidden", mOldVisibility);
 
+        saveRelativeLocation(getX(), getY());
+
         if (mGrip)
         {
-            if (getMinWidth() > getWidth())
-                setWidth(getMinWidth());
-            else if (getMaxWidth() < getWidth())
-                setWidth(getMaxWidth());
-            if (getMinHeight() > getHeight())
-                setHeight(getMinHeight());
-            else if (getMaxHeight() < getHeight())
-                setHeight(getMaxHeight());
-
             config.setValue(mWindowName + "WinWidth", getWidth());
             config.setValue(mWindowName + "WinHeight", getHeight());
         }
@@ -524,65 +616,21 @@ void Window::setDefaultSize(int defaultX, int defaultY,
     mDefaultHeight = defaultHeight;
 }
 
-void Window::hide()
-{
-    const bool oldVisibility = isVisible();
-
-    setVisible(mOldVisibility);
-
-    mOldVisibility = oldVisibility;
-}
-
 void Window::setDefaultSize(int defaultWidth, int defaultHeight,
                             ImageRect::ImagePosition position,
                             int offsetX, int offsetY)
 {
     int x = 0, y = 0;
 
-    if (position == ImageRect::UPPER_LEFT)
-    {
-    }
-    else if (position == ImageRect::UPPER_CENTER)
-    {
-        x = (graphics->getWidth() - defaultWidth) / 2;
-    }
-    else if (position == ImageRect::UPPER_RIGHT)
-    {
-        x = graphics->getWidth() - defaultWidth;
-    }
-    else if (position == ImageRect::LEFT)
-    {
-        y = (graphics->getHeight() - defaultHeight) / 2;
-    }
-    else if (position == ImageRect::CENTER)
-    {
-        x = (graphics->getWidth() - defaultWidth) / 2;
-        y = (graphics->getHeight() - defaultHeight) / 2;
-    }
-    else if (position == ImageRect::RIGHT)
-    {
-        x = graphics->getWidth() - defaultWidth;
-        y = (graphics->getHeight() - defaultHeight) / 2;
-    }
-    else if (position == ImageRect::LOWER_LEFT)
-    {
-        y = graphics->getHeight() - defaultHeight;
-    }
-    else if (position == ImageRect::LOWER_CENTER)
-    {
-        x = (graphics->getWidth() - defaultWidth) / 2;
-        y = graphics->getHeight() - defaultHeight;
-    }
-    else if (position == ImageRect::LOWER_RIGHT)
-    {
-        x = graphics->getWidth() - defaultWidth;
-        y = graphics->getHeight() - defaultHeight;
-    }
+    getRelativeOffset(position, x, y, defaultWidth, defaultHeight);
 
     mDefaultX = x - offsetX;
     mDefaultY = y - offsetY;
     mDefaultWidth = defaultWidth;
     mDefaultHeight = defaultHeight;
+    mDefaultPosition = position;
+    mDefaultOffsetX = offsetX;
+    mDefaultOffsetY = offsetY;
 }
 
 void Window::resetToDefaultSize()
@@ -651,56 +699,4 @@ void Window::reflowLayout(int w, int h)
     delete mLayout;
     mLayout = NULL;
     setContentSize(w, h);
-}
-
-void Window::adaptToNewSize(int new_w,int new_h, int old_w, int old_h, bool extend,bool save)
-{
-   int x = getX(); 
-   int y = getY();
-   int w = getWidth();
-   int h = getHeight();
-   int xr = x+w;
-   int yb = y+h;
-   if (xr>old_w*3/4)
-   { /* in the right side 
-      * Keep the right border distance 
-      */
-      x+=new_w-old_w;
-      if ((isResizable())&&(extend))
-      {
-         w=(w*new_w)/old_w;
-         x-= w-getWidth();
-      }
-   }
-   else
-   {
-      /* let's glue the left side */
-      if ((isResizable())&&(extend))
-      {
-         w=(w*new_w)/old_w;
-      }
-   }
-   if (yb>old_h*3/4)
-   { /* in the bottom side 
-      * Keep the bottom border distance 
-      */
-      y+=new_h-old_h;
-      if ((isResizable())&&(extend))
-      {
-         h=(h*new_h)/old_h;
-         y-= h-getHeight();
-      }
-   }
-   else
-   {
-      /* let's glue the top side */
-      if ((isResizable())&&(extend))
-      {
-         h=(h*new_h)/old_h;
-      }
-   }
-
-   setPosition(x, y);
-   setSize(w, h);
-   if (save) saveWindowState();
 }

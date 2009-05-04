@@ -30,7 +30,6 @@
 #include "../graphics.h"
 #include "../guichanfwd.h"
 
-class GCContainer;
 class ContainerPlacer;
 class Layout;
 class LayoutCell;
@@ -91,7 +90,37 @@ class Window : public gcn::Window, gcn::WidgetListener
          * Sets the location relative to the given enumerated position.
          */
         void setLocationRelativeTo(ImageRect::ImagePosition position,
-                                   int offsetX = 0, int offsetY = 0);
+                                   const int &offsetX = 0,
+                                   const int &offsetY = 0);
+
+        /**
+         * Sets the location relative to the given enumerated position.
+         */
+        void setLocationRelativeTo(ImageRect::ImagePosition position,
+                                   const int &width, const int &height,
+                                   const int &offsetX, const int &offsetY);
+
+        /**
+         * Converts a given x and y coordinate to a relative coordinate.
+         * Currently used to get coordinates which can be adapted to any screen
+         * resolution.
+         */
+        void saveRelativeLocation(const int &x, const int &y);
+
+        /**
+         * Gets the offsets to use for a particular position in comparison to
+         * the window resolution.
+         */
+        void getRelativeOffset(ImageRect::ImagePosition position, int &x, int &y,
+                               const int& width, const int& height);
+
+        /**
+         * Gets the offsets to use for a particular position in comparison to
+         * a supplied width and height.
+         */
+        void getRelativeOffset(ImageRect::ImagePosition position, int &x, int &y,
+                               const int &conWidth, const int &conHeight,
+                               const int& width, const int& height);
 
         /**
          * Sets whether or not the window can be resized.
@@ -262,7 +291,7 @@ class Window : public gcn::Window, gcn::WidgetListener
         /**
          * Reset the win pos and size according to change of size.
          */
-        void adaptToNewSize(int new_w,int new_h, int old_w, int old_h, bool extend, bool save=true);
+        void adaptToNewSize();
 
         /**
          * Gets the layout handler for this window.
@@ -324,7 +353,6 @@ class Window : public gcn::Window, gcn::WidgetListener
          */
         int getResizeHandles(gcn::MouseEvent &event);
 
-        GCContainer *mChrome;         /**< Contained container */
         ResizeGrip *mGrip;            /**< Resize grip */
         Window *mParent;              /**< The parent window */
         Layout *mLayout;              /**< Layout handler */
@@ -341,6 +369,21 @@ class Window : public gcn::Window, gcn::WidgetListener
         int mDefaultY;                /**< Default window Y position */
         int mDefaultWidth;            /**< Default window width */
         int mDefaultHeight;           /**< Default window height */
+
+        // Window "sector" system for placing windows. This provides a best
+        // effort adaptation of a user's window locations on window resize.
+        // Only needed when loading a window's initial location, saving it, or
+        // changing resolutions.
+        ImageRect::ImagePosition mPosition; /**< Window "sector" location */
+        int mOffsetX ;                      /**< X offset from the "sector" location */
+        int mOffsetY;                       /**< Y offset from the "sector" location */
+
+        // Default Window "sector" location
+        ImageRect::ImagePosition mDefaultPosition;
+        // Default X offset from the "sector" location
+        int mDefaultOffsetX;
+        // Default Y offset from the "sector" location
+        int mDefaultOffsetY;
 
         static int mouseResize;       /**< Active resize handles */
         static int instances;         /**< Number of Window instances */

@@ -20,12 +20,22 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <list>
 #include <string>
+#include <typeinfo>
 
 #include <guichan/key.hpp>
+#include <guichan/widget.hpp>
 
+#include "itempopup.h"
+#include "menuwindow.h"
+#include "ministatus.h"
 #include "ok_dialog.h"
+#include "popupmenu.h"
+#include "setup.h"
 #include "setup_video.h"
+#include "speechbubble.h"
+#include "viewport.h"
 
 #include "../beingmanager.h"
 #include "../configuration.h"
@@ -42,37 +52,20 @@
 
 #include "../bindings/guichan/models/modelistmodel.h"
 
+#include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/checkbox.h"
 #include "../bindings/guichan/widgets/label.h"
 #include "../bindings/guichan/widgets/listbox.h"
+#include "../bindings/guichan/widgets/progressbar.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/slider.h"
 #include "../bindings/guichan/widgets/textfield.h"
+#include "../bindings/guichan/widgets/window.h"
+#include "../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
 #include "../utils/strprintf.h"
-
-extern Window *setupWindow;
-extern Window *chatWindow;
-extern Window *statusWindow;
-extern Window *buyDialog;
-extern Window *sellDialog;
-extern Window *buySellDialog;
-extern Window *inventoryWindow;
-extern Window *emoteWindow;
-extern Window *npcTextDialog;
-extern Window *npcStringDialog;
-extern Window *skillDialog;
-extern Window *minimap;
-extern Window *equipmentWindow;
-extern Window *tradeWindow;
-extern Window *helpWindow;
-extern Window *debugWindow;
-extern Window *itemShortcutWindow;
-extern Window *emoteShortcutWindow;
-extern Window *storageWindow;
-extern Window *menuWindow;
 
 Setup_Video::Setup_Video():
     mFullScreenEnabled(config.getValue("screen", false)),
@@ -378,53 +371,44 @@ void Setup_Video::action(const gcn::ActionEvent &event)
 #ifdef WIN32
             new OkDialog(_("Screen resolution changed"),
                          _("Restart your client for the change to take effect."));
-#else 
-            int old_w = graphics->getWidth();
-            int old_h = graphics->getHeight();
-            graphics->resizeVideoMode(width,height);
+#else
+            graphics->resizeVideoMode(width, height);
             gui->resize(graphics);
 
-            // move & resize all the sub-windows
-            setupWindow->adaptToNewSize(width, height, old_w, old_h, true);
-            if (chatWindow)
-                chatWindow->adaptToNewSize(width, height, old_w, old_h, true);
-            if (statusWindow)
-                statusWindow->adaptToNewSize(width, height, old_w, old_h, false);
-            if (buyDialog)
-                buyDialog->adaptToNewSize(width, height, old_w, old_h, true);
-            if (sellDialog)
-                sellDialog->adaptToNewSize(width, height, old_w, old_h, true);
-            if (buySellDialog)
-                buySellDialog->adaptToNewSize(width, height, old_w, old_h, true);
-            if (inventoryWindow)
-                inventoryWindow->adaptToNewSize(width, height, old_w, old_h, false);
-            if (emoteWindow)
-                emoteWindow->adaptToNewSize(width, height, old_w, old_h, true);
-            if (npcTextDialog)
-                npcTextDialog->adaptToNewSize(width, height, old_w, old_h, true);
-            if (npcStringDialog)
-                npcStringDialog->adaptToNewSize(width, height, old_w, old_h, true);
-            if (skillDialog)
-                skillDialog->adaptToNewSize(width, height, old_w, old_h, true);
-            if (minimap)
-                minimap->adaptToNewSize(width, height, old_w, old_h, true);
-            if (equipmentWindow)
-                equipmentWindow->adaptToNewSize(width, height, old_w, old_h, true);
-            if (tradeWindow)
-                tradeWindow->adaptToNewSize(width, height, old_w, old_h, true);
-            if (helpWindow)
-                helpWindow->adaptToNewSize(width, height, old_w, old_h, true);
-            if (debugWindow)
-                debugWindow->adaptToNewSize(width, height, old_w, old_h, true);
-            if (itemShortcutWindow)
-                itemShortcutWindow->adaptToNewSize(width, height, old_w, old_h, false);
-            if (emoteShortcutWindow)
-                emoteShortcutWindow->adaptToNewSize(width, height, old_w, old_h, false);
-            if (storageWindow)
-                storageWindow->adaptToNewSize(width, height, old_w, old_h, true);
             if (menuWindow)
-                menuWindow->adaptToNewSize(width, height, old_w, old_h, false, false);
+                menuWindow->setPosition(graphics->getWidth() -
+                                        menuWindow->getWidth() - 3, 3);
 
+            typedef std::list<gcn::Widget*> Widgets;
+            Widgets windows = windowContainer->getWidgetList();
+
+            typedef Widgets::iterator WidgetIterator;
+            WidgetIterator iter;
+
+            // Reposition all the open sub-windows. The rest of the windows will
+            // reposition themselves on opening.
+            for (iter = windows.begin(); iter != windows.end(); ++iter)
+            {
+                // TODO: This is a bit better than hard coding all of the window
+                // types, but it'd still be better if we could detect if a class
+                // uses the window class as a base class, and then act on it
+                // instead. However, I don't have a way to look up how to do it
+                // at the moment.
+                if (typeid(**iter) != typeid(Viewport) &&
+                    typeid(**iter) != typeid(SpeechBubble) &&
+                    typeid(**iter) != typeid(ItemPopup) &&
+                    typeid(**iter) != typeid(PopupMenu) &&
+                    typeid(**iter) != typeid(MenuWindow) &&
+                    typeid(**iter) != typeid(MiniStatusWindow) &&
+                    typeid(**iter) != typeid(Button) &&
+                    typeid(**iter) != typeid(Label) &&
+                    typeid(**iter) != typeid(ProgressBar) &&
+                    typeid(**iter) != typeid(Setup))
+                {
+                    Window* window = static_cast<Window*>(*iter);
+                    window->adaptToNewSize();
+                }
+            }
 #endif
         }
 

@@ -51,6 +51,11 @@ class WindowContainer : public Container
          */
         int getNumberOfInstances() { return mDeathList.size(); }
 
+        /**
+         * Get the list of all widget instances
+         */
+        std::list<gcn::Widget*> getWidgetList() { return mWidgets; }
+
     private:
         /**
          * List of widgets that are scheduled to be deleted.
