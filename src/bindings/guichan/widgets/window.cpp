@@ -282,6 +282,8 @@ void Window::saveRelativeLocation(const int &x, const int &y)
 
 void Window::adaptToNewSize()
 {
+    setDefaultSize(mDefaultWidth, mDefaultHeight, mDefaultPosition,
+                   mDefaultOffsetX, mDefaultOffsetY);
     setLocationRelativeTo(mPosition, mOffsetX, mOffsetY);
 }
 
