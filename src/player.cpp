@@ -50,6 +50,33 @@ Player::~Player()
     delete mName;
 }
 
+void Player::handleAttack(Being *victim, int damage, AttackType type)
+{
+    if (this != player_node)
+        setAction(Being::ATTACK);
+
+    if (victim && mParticleEffects)
+    {
+        if (mEquippedWeapon && mEquippedWeapon->getAttackType() == ACTION_ATTACK_BOW)
+        {
+            Particle *p = new Particle(NULL);
+            p->setLifetime(1000);
+            p->moveBy(Vector(0.0f, 0.0f, 32.0f));
+            victim->controlParticle(p);
+
+            Particle *p2 = particleEngine->addEffect("graphics/particles/arrow.particle.xml", mPx, mPy);
+            if (p2)
+            {
+                p2->setLifetime(900);
+                p2->setDestination(p, 7, 0);
+                p2->setDieDistance(8);
+            }
+        }
+    }
+
+    Being::handleAttack(victim, damage, type);
+}
+
 void Player::setName(const std::string &name)
 {
     if (!mName)

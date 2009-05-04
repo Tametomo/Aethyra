@@ -42,6 +42,15 @@ class Player : public Being
         ~Player();
 
         /**
+         * Handles an attack of another being by this being.
+         *
+         * @param victim the victim being
+         * @param damage the amount of damage dealt (0 means miss)
+         * @param type the attack type
+         */
+        virtual void handleAttack(Being *victim, int damage, AttackType type);
+
+        /**
          * Set up mName to be the character's name
          */
         virtual void setName(const std::string &name);
