@@ -275,6 +275,10 @@ void Window::saveRelativeLocation(const int &x, const int &y)
         }
     }
 
+    mPosition = savedPos;
+    mOffsetX = bestOffsetX;
+    mOffsetY = bestOffsetY;
+
     config.setValue(mWindowName + "Position", savedPos);
     config.setValue(mWindowName + "OffsetX",  bestOffsetX);
     config.setValue(mWindowName + "OffsetY",  bestOffsetY);

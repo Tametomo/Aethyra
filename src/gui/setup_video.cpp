@@ -374,18 +374,30 @@ void Setup_Video::action(const gcn::ActionEvent &event)
             new OkDialog(_("Screen resolution changed"),
                          _("Restart your client for the change to take effect."));
 #else
-            graphics->resizeVideoMode(width, height);
-            gui->resize(graphics);
-
-            if (menuWindow)
-                menuWindow->setPosition(graphics->getWidth() -
-                                        menuWindow->getWidth() - 3, 3);
-
             typedef std::list<gcn::Widget*> Widgets;
             Widgets widgets = windowContainer->getWidgetList();
 
             typedef Widgets::iterator WidgetIterator;
             WidgetIterator iter;
+
+            // First save the window positions, adaptToNewSize will position
+            // them based on the saved positions.
+            for (iter = widgets.begin(); iter != widgets.end(); ++iter)
+            {
+                Window* window = dynamic_cast<Window*>(*iter);
+                if (window)
+                {
+                    window->saveWindowState();
+                }
+            }
+
+            graphics->resizeVideoMode(width, height);
+            gui->resize(graphics);
+
+            // The menuWindow is a Popup, not a subclass of Window
+            if (menuWindow)
+                menuWindow->setPosition(graphics->getWidth() -
+                                        menuWindow->getWidth() - 3, 3);
 
             // Reposition all the open sub-windows. The rest of the windows will
             // reposition themselves on opening.
