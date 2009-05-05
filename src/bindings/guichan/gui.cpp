@@ -44,7 +44,6 @@
 #include "../../configuration.h"
 #include "../../log.h"
 
-#include "../../gui/menuwindow.h"
 #include "../../gui/viewport.h"
 
 #include "../../resources/image.h"

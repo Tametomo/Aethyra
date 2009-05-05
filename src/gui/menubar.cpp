@@ -24,7 +24,7 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "menuwindow.h"
+#include "menubar.h"
 
 #include "../bindings/guichan/graphics.h"
 
@@ -42,10 +42,10 @@ extern Window *setupWindow;
 extern Window *skillDialog;
 extern Window *statusWindow;
 
-bool menuWindowFocused = false;
+bool menuBarFocused = false;
 
 namespace {
-    struct MenuWindowListener : public gcn::ActionListener
+    struct MenuBarListener : public gcn::ActionListener
     {
         /**
          * Called when receiving actions from widget.
@@ -54,7 +54,7 @@ namespace {
     } listener;
 }
 
-MenuWindow::MenuWindow():
+MenuBar::MenuBar():
     Popup("Menu")
 {
     setVisible(true);
@@ -88,12 +88,12 @@ MenuWindow::MenuWindow():
     setContentSize(x - 3, h);
 }
 
-void MenuWindow::draw(gcn::Graphics *graphics)
+void MenuBar::draw(gcn::Graphics *graphics)
 {
     drawChildren(graphics);
 }
 
-void MenuWindowListener::action(const gcn::ActionEvent &event)
+void MenuBarListener::action(const gcn::ActionEvent &event)
 {
     Window *window = NULL;
 

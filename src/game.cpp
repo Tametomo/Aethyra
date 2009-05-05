@@ -59,7 +59,7 @@
 #include "gui/equipmentwindow.h"
 #include "gui/help.h"
 #include "gui/inventorywindow.h"
-#include "gui/menuwindow.h"
+#include "gui/menubar.h"
 #include "gui/minimap.h"
 #include "gui/ministatus.h"
 #include "gui/npcintegerdialog.h"
@@ -113,7 +113,7 @@ ConfirmDialog *exitConfirm = NULL;
 OkDialog *disconnectedDialog = NULL;
 
 ChatWindow *chatWindow;
-MenuWindow *menuWindow;
+MenuBar *menuBar;
 StatusWindow *statusWindow;
 MiniStatusWindow *miniStatusWindow;
 BuyDialog *buyDialog;
@@ -164,7 +164,7 @@ void createGuiWindows()
 {
     // Create dialogs
     chatWindow = new ChatWindow();
-    menuWindow = new MenuWindow();
+    menuBar = new MenuBar();
     statusWindow = new StatusWindow(player_node);
     miniStatusWindow = new MiniStatusWindow();
     buyDialog = new BuyDialog();
@@ -198,7 +198,7 @@ static void destroyGuiWindows()
     delete chatWindow;
     delete statusWindow;
     delete miniStatusWindow;
-    delete menuWindow;
+    delete menuBar;
     delete buyDialog;
     delete sellDialog;
     delete buySellDialog;
@@ -406,11 +406,11 @@ void Game::handleInput()
             chatIgnoreFocus = true;
         }
         // Ignore focus for all menu window buttons for nearly everything
-        else if (menuWindow)
+        else if (menuBar)
         {
-            for (size_t i = 0; i < menuWindow->buttons.size(); i++)
+            for (size_t i = 0; i < menuBar->buttons.size(); i++)
             {
-                if (widget == menuWindow->buttons[i])
+                if (widget == menuBar->buttons[i])
                 {
                     ignoreFocus = true;
                     break;

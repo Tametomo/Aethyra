@@ -248,8 +248,8 @@
 		<Unit filename="src\gui\itemamount.h" />
 		<Unit filename="src\gui\login.cpp" />
 		<Unit filename="src\gui\login.h" />
-		<Unit filename="src\gui\menuwindow.cpp" />
-		<Unit filename="src\gui\menuwindow.h" />
+		<Unit filename="src\gui\menubar.cpp" />
+		<Unit filename="src\gui\menubar.h" />
 		<Unit filename="src\gui\minimap.cpp" />
 		<Unit filename="src\gui\minimap.h" />
 		<Unit filename="src\gui\ministatus.cpp" />

@@ -195,8 +195,8 @@ SET(SRCS
     gui/itemamount.h
     gui/login.cpp
     gui/login.h
-    gui/menuwindow.cpp
-    gui/menuwindow.h
+    gui/menubar.cpp
+    gui/menubar.h
     gui/minimap.cpp
     gui/minimap.h
     gui/ministatus.cpp

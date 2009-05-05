@@ -34,13 +34,13 @@
  *
  * \ingroup Interface
  */
-class MenuWindow : public Popup
+class MenuBar : public Popup
 {
     public:
         /**
          * Constructor.
          */
-        MenuWindow();
+        MenuBar();
 
         /**
          * Draw this window
@@ -50,7 +50,7 @@ class MenuWindow : public Popup
         std::vector<gcn::Button*> buttons;
 };
 
-extern MenuWindow *menuWindow;
+extern MenuBar *menuBar;
 
 #endif
 

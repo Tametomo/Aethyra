@@ -27,7 +27,7 @@
 #include <guichan/key.hpp>
 #include <guichan/widget.hpp>
 
-#include "menuwindow.h"
+#include "menubar.h"
 #include "okdialog.h"
 #include "setup_video.h"
 
@@ -376,29 +376,27 @@ void Setup_Video::action(const gcn::ActionEvent &event)
             for (iter = widgets.begin(); iter != widgets.end(); ++iter)
             {
                 Window* window = dynamic_cast<Window*>(*iter);
+
                 if (window)
-                {
                     window->saveWindowState();
-                }
             }
 
             graphics->resizeVideoMode(width, height);
             gui->resize(graphics);
 
-            // The menuWindow is a Popup, not a subclass of Window
-            if (menuWindow)
-                menuWindow->setPosition(graphics->getWidth() -
-                                        menuWindow->getWidth() - 3, 3);
+            // The menuBar is a Popup, not a subclass of Window
+            if (menuBar)
+                menuBar->setPosition(graphics->getWidth() - menuBar->getWidth() -
+                                     3, 3);
 
             // Reposition all the open sub-windows. The rest of the windows will
             // reposition themselves on opening.
             for (iter = widgets.begin(); iter != widgets.end(); ++iter)
             {
                 Window* window = dynamic_cast<Window*>(*iter);
+
                 if (window)
-                {
                     window->adaptToNewSize();
-                }
             }
 #endif
         }
