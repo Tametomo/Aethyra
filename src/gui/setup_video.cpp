@@ -27,15 +27,9 @@
 #include <guichan/key.hpp>
 #include <guichan/widget.hpp>
 
-#include "itempopup.h"
 #include "menuwindow.h"
-#include "ministatus.h"
 #include "okdialog.h"
-#include "popupmenu.h"
-#include "setup.h"
 #include "setup_video.h"
-#include "speechbubble.h"
-#include "viewport.h"
 
 #include "../configuration.h"
 #include "../engine.h"
@@ -49,15 +43,12 @@
 
 #include "../bindings/guichan/models/modelistmodel.h"
 
-#include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/checkbox.h"
 #include "../bindings/guichan/widgets/label.h"
 #include "../bindings/guichan/widgets/listbox.h"
-#include "../bindings/guichan/widgets/progressbar.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/slider.h"
 #include "../bindings/guichan/widgets/textfield.h"
-#include "../bindings/guichan/widgets/window.h"
 #include "../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../resources/beingmanager.h"
