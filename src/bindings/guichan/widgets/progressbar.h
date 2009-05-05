@@ -24,10 +24,13 @@
 #define PROGRESSBAR_H
 
 #include <string>
+#include <vector>
 
 #include <guichan/widget.hpp>
 
 #include <SDL_types.h>
+
+#include "../guichanfwd.h"
 
 class ImageRect;
 
@@ -62,6 +65,12 @@ class ProgressBar : public gcn::Widget
         void draw(gcn::Graphics *graphics);
 
         /**
+         * Adds a color to the progress bar. The progress bar will then
+         * transition between the added color and all previously added colors.
+         */
+        void addColor(Uint8, Uint8 green, Uint8 blue);
+
+        /**
          * Sets the current progress.
          */
         void setProgress(float progress);
@@ -70,11 +79,6 @@ class ProgressBar : public gcn::Widget
          * Returns the current progress.
          */
         float getProgress() const { return mProgress; }
-
-        /**
-         * Change the filling of the progress bar.
-         */
-        void setColor(Uint8, Uint8 green, Uint8 blue);
 
         /**
          * Returns the red value of color.
@@ -106,21 +110,23 @@ class ProgressBar : public gcn::Widget
         /**
          * Set wether the progress is moved smoothly
          */
-        void
-        setSmoothProgress(bool smoothProgress)
+        void setSmoothProgress(bool smoothProgress)
         { mSmoothProgress = smoothProgress; }
 
         /**
          * Set wether the color changing is made smoothly
          */
-        void
-        setSmoothColorChange(bool smoothColorChange)
+        void setSmoothColorChange(bool smoothColorChange)
         { mSmoothColorChange = smoothColorChange; }
 
 
     private:
+
         float mProgress, mProgressToGo;
         bool mSmoothProgress;
+
+        std::vector<gcn::Color*> mColors;
+        int mCurrentColor;
 
         Uint8 mRed, mGreen, mBlue;
         Uint8 mRedToGo, mGreenToGo, mBlueToGo;

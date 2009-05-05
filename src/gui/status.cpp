@@ -51,7 +51,9 @@ StatusWindow::StatusWindow(LocalPlayer *player):
     mGpLabel = new Label(strprintf(_("Money: %d GP"), 0));
 
     mHpLabel = new Label(_("HP:"));
-    mHpBar = new ProgressBar(1.0f, 80, 15, 0, 171, 34);
+    mHpBar = new ProgressBar(1.0f, 80, 15, 223, 32, 32);
+    mHpBar->addColor(230, 171, 34);
+    mHpBar->addColor(0, 171, 34);
 
     mXpLabel = new Label(_("Exp:"));
     mXpBar = new ProgressBar(1.0f, 80, 15, 143, 192, 211);
@@ -181,14 +183,6 @@ void StatusWindow::update()
 
     mJobBar->setText(toString(mPlayer->mJobXp) +
                      "/" + toString(mPlayer->mJobXpForNextLevel));
-
-    // HP Bar coloration
-    if (mPlayer->mHp < int(mPlayer->mMaxHp / 3))
-        mHpBar->setColor(223, 32, 32); // Red
-    else if (mPlayer->mHp < int((mPlayer->mMaxHp / 3) * 2))
-        mHpBar->setColor(230, 171, 34); // Orange
-    else
-        mHpBar->setColor(0, 171, 34); // Green
 
     mHpBar->setProgress((float) mPlayer->mHp / (float) mPlayer->mMaxHp);
     mMpBar->setProgress((float) mPlayer->mMp / (float) mPlayer->mMaxMp);

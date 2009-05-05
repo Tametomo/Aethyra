@@ -20,6 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/color.hpp>
 #include <guichan/font.hpp>
 
 #include "progressbar.h"
@@ -34,6 +35,8 @@
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
 
+#include "../../../utils/dtor.h"
+
 ImageRect ProgressBar::mBorder;
 int ProgressBar::mInstances = 0;
 float ProgressBar::mAlpha = 1.0;
@@ -42,11 +45,14 @@ ProgressBar::ProgressBar(float progress,
                          unsigned int width, unsigned int height,
                          Uint8 red, Uint8 green, Uint8 blue):
     gcn::Widget(),
+    mCurrentColor(0),
     mRed(red), mGreen(green), mBlue(blue),
     mRedToGo(red), mGreenToGo(green), mBlueToGo(blue)
 {
     mProgressToGo = mProgress = 0.0f;
     mSmoothProgress = mSmoothColorChange = true;
+
+    mColors.push_back(new gcn::Color(red, green, blue));
 
     setProgress(progress);
     setWidth(width);
@@ -94,19 +100,37 @@ ProgressBar::~ProgressBar()
         delete mBorder.grid[7];
         delete mBorder.grid[8];
     }
+
+    delete_all(mColors);
 }
 
 void ProgressBar::logic()
 {
+    const int index = mProgress * mColors.size();
+
+    if (mCurrentColor != index)
+    {
+        mCurrentColor = index;
+        mRedToGo = mColors[index]->r;
+        mGreenToGo = mColors[index]->g;
+        mBlueToGo = mColors[index]->b;
+    }
+
     if (mSmoothColorChange)
     {
         // Smoothly changing the color for a nicer effect.
-        if (mRedToGo > mRed) mRed++;
-        if (mRedToGo < mRed) mRed--;
-        if (mGreenToGo > mGreen) mGreen++;
-        if (mGreenToGo < mGreen) mGreen--;
-        if (mBlueToGo > mBlue) mBlue++;
-        if (mBlueToGo < mBlue) mBlue--;
+        if (mRedToGo > mRed)
+            mRed++;
+        if (mRedToGo < mRed)
+            mRed--;
+        if (mGreenToGo > mGreen)
+            mGreen++;
+        if (mGreenToGo < mGreen)
+            mGreen--;
+        if (mBlueToGo > mBlue)
+            mBlue++;
+        if (mBlueToGo < mBlue)
+            mBlue--;
     }
     else
     {
@@ -118,8 +142,10 @@ void ProgressBar::logic()
     if (mSmoothProgress)
     {
         // Smoothly showing the progressbar changes.
-        if (mProgressToGo > mProgress) mProgress = mProgress + 0.005f;
-        if (mProgressToGo < mProgress) mProgress = mProgress - 0.005f;
+        if (mProgressToGo > mProgress)
+            mProgress = mProgress + 0.005f;
+        if (mProgressToGo < mProgress)
+            mProgress = mProgress - 0.005f;
     }
     else
         mProgress = mProgressToGo;
@@ -167,14 +193,16 @@ void ProgressBar::draw(gcn::Graphics *graphics)
 
 void ProgressBar::setProgress(float progress)
 {
-    if (progress < 0.0f) mProgressToGo = 0.0;
-    else if (progress > 1.0f) mProgressToGo = 1.0;
-    else mProgressToGo = progress;
+    if (progress < 0.0f)
+        mProgressToGo = 0.0;
+    else if (progress > 1.0f)
+        mProgressToGo = 1.0;
+    else
+        mProgressToGo = progress;
 }
 
-void ProgressBar::setColor(Uint8 red, Uint8 green, Uint8 blue)
+void ProgressBar::addColor(Uint8 red, Uint8 green, Uint8 blue)
 {
-    mRedToGo = red;
-    mGreenToGo = green;
-    mBlueToGo = blue;
+    mColors.push_back(new gcn::Color(red, green, blue));
 }
+

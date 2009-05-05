@@ -87,6 +87,8 @@ InventoryWindow::InventoryWindow(int invSize):
 
     mSlotsBar = new ProgressBar(1.0f, 100, 20, 225, 200, 25);
     mWeightBar = new ProgressBar(1.0f, 100, 20, 0, 0, 255);
+    mWeightBar->addColor(255, 255, 0);
+    mWeightBar->addColor(255, 0, 0);
 
     setMinHeight(130);
     setMinWidth(mWeightLabel->getWidth() + mSlotsLabel->getWidth() + 280);
@@ -128,14 +130,6 @@ void InventoryWindow::logic()
         mTotalWeight = player_node->mTotalWeight;
         mMaxWeight = player_node->mMaxWeight;
         mUsedSlots = usedSlots;
-
-        // Weight Bar coloration
-        if (mTotalWeight < (mMaxWeight / 3))
-            mWeightBar->setColor(0, 0, 255); // Blue
-        else if (mTotalWeight < ((mMaxWeight / 3) * 2))
-            mWeightBar->setColor(255, 255, 0); // Yellow
-        else
-            mWeightBar->setColor(255, 0, 0); // Red
 
         // Adjust progress bars
         mSlotsBar->setProgress((float) mUsedSlots / mMaxSlots);
@@ -193,6 +187,7 @@ void InventoryWindow::mouseClicked(gcn::MouseEvent &event)
          */
         const int mx = event.getX() + getX();
         const int my = event.getY() + getY();
+
         viewport->showPopup(mx, my, item);
     }
 }

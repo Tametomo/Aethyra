@@ -36,7 +36,10 @@ MiniStatusWindow::MiniStatusWindow():
 {
     setVisible(true);
 
-    mHpBar = new ProgressBar(1.0f, 100, 20, 0, 171, 34);
+    mHpBar = new ProgressBar(1.0f, 100, 20, 223, 32, 32);
+    mHpBar->addColor(230, 171, 34);
+    mHpBar->addColor(0, 171, 34);
+
     mMpBar = new ProgressBar(1.0f, 100, 20, 26, 102, 230);
     mXpBar = new ProgressBar(1.0f, 100, 20, 143, 192, 211);
 
@@ -54,14 +57,6 @@ MiniStatusWindow::MiniStatusWindow():
 
 void MiniStatusWindow::update()
 {
-    // HP Bar coloration
-    if (player_node->mHp < int(player_node->mMaxHp / 3))
-        mHpBar->setColor(223, 32, 32); // Red
-    else if (player_node->mHp < int((player_node->mMaxHp / 3) * 2))
-        mHpBar->setColor(230, 171, 34); // Orange
-    else
-        mHpBar->setColor(0, 171, 34); // Green
-
     float xp = (float) player_node->getXp() / player_node->mXpForNextLevel;
 
     if (xp != xp) xp = 0.0f; // check for NaN
