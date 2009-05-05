@@ -20,10 +20,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "floor_item.h"
 #include "flooritemmanager.h"
 
-#include "utils/dtor.h"
+#include "sprite/flooritem.h"
+
+#include "../utils/dtor.h"
 
 FloorItemManager::~FloorItemManager()
 {

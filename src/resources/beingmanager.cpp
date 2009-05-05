@@ -23,15 +23,16 @@
 #include <typeinfo>
 
 #include "beingmanager.h"
-#include "localplayer.h"
-#include "monster.h"
-#include "npc.h"
-#include "player.h"
 
-#include "net/messageout.h"
-#include "net/protocol.h"
+#include "sprite/localplayer.h"
+#include "sprite/monster.h"
+#include "sprite/npc.h"
+#include "sprite/player.h"
 
-#include "utils/dtor.h"
+#include "../net/messageout.h"
+#include "../net/protocol.h"
+
+#include "../utils/dtor.h"
 
 class FindBeingFunctor
 {

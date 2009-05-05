@@ -19,8 +19,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "being.h"
-#include "localplayer.h"
 #include "party.h"
 
 #include "gui/chat.h"
@@ -28,6 +26,9 @@
 
 #include "net/messageout.h"
 #include "net/protocol.h"
+
+#include "resources/sprite/being.h"
+#include "resources/sprite/localplayer.h"
 
 #include "utils/gettext.h"
 #include "utils/stringutils.h"

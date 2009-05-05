@@ -23,7 +23,7 @@
 #ifndef ANIMATEDSPRITE_H
 #define ANIMATEDSPRITE_H
 
-#include "resources/spritedef.h"
+#include "../spritedef.h"
 
 #include <map>
 #include <string>

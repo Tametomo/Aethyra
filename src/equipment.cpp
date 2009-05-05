@@ -23,7 +23,8 @@
 #include "equipment.h"
 #include "item.h"
 #include "inventory.h"
-#include "localplayer.h"
+
+#include "resources/sprite/localplayer.h"
 
 Equipment::Equipment():
     mArrows(-1)

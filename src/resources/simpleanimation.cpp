@@ -20,15 +20,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "log.h"
+#include "animation.h"
+#include "image.h"
+#include "imageset.h"
+#include "resourcemanager.h"
 #include "simpleanimation.h"
 
-#include "bindings/guichan/graphics.h"
+#include "../log.h"
 
-#include "resources/animation.h"
-#include "resources/image.h"
-#include "resources/imageset.h"
-#include "resources/resourcemanager.h"
+#include "../bindings/guichan/graphics.h"
 
 SimpleAnimation::SimpleAnimation(Animation *animation):
     mAnimation(animation),

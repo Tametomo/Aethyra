@@ -37,7 +37,6 @@
 #include "emoteshortcut.h"
 #include "game.h"
 #include "itemshortcut.h"
-#include "localplayer.h"
 #include "log.h"
 #include "logindata.h"
 #include "main.h"
@@ -87,6 +86,8 @@
 #include "resources/db/monsterdb.h"
 #include "resources/db/npcdb.h"
 #include "resources/db/skilldb.h"
+
+#include "resources/sprite/localplayer.h"
 
 #include "utils/gettext.h"
 #include "utils/lockedarray.h"

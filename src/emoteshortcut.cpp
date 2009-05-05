@@ -23,7 +23,8 @@
 #include "emoteshortcut.h"
 
 #include "configuration.h"
-#include "localplayer.h"
+
+#include "resources/sprite/localplayer.h"
 
 #include "utils/stringutils.h"
 

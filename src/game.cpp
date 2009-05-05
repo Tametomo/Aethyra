@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -28,14 +29,11 @@
 
 #include <guichan/exception.hpp>
 
-#include "beingmanager.h"
 #include "configuration.h"
 #include "emoteshortcut.h"
 #include "engine.h"
-#include "flooritemmanager.h"
 #include "game.h"
 #include "itemshortcut.h"
-#include "localplayer.h"
 #include "log.h"
 #include "map.h"
 #include "player_relations.h"
@@ -92,9 +90,13 @@
 #include "net/skillhandler.h"
 #include "net/tradehandler.h"
 
+#include "resources/beingmanager.h"
+#include "resources/flooritemmanager.h"
 #include "resources/imagewriter.h"
 
 #include "resources/particle/particle.h"
+
+#include "resources/sprite/localplayer.h"
 
 #include "utils/gettext.h"
 

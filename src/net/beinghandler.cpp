@@ -27,16 +27,18 @@
 #include "messagein.h"
 #include "protocol.h"
 
-#include "../being.h"
-#include "../beingmanager.h"
-#include "../localplayer.h"
 #include "../log.h"
-#include "../npc.h"
 #include "../player_relations.h"
 
 #include "../bindings/guichan/gui.h"
 
+#include "../resources/beingmanager.h"
+
 #include "../resources/db/effectdb.h"
+
+#include "../resources/sprite/being.h"
+#include "../resources/sprite/localplayer.h"
+#include "../resources/sprite/npc.h"
 
 const int EMOTION_TIME = 150;    /**< Duration of emotion icon */
 

@@ -29,7 +29,7 @@
 
 #include "../bindings/guichan/widgets/window.h"
 
-#include "../npc.h"
+#include "../resources/sprite/npc.h"
 
 class TextBox;
 

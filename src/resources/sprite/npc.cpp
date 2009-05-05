@@ -21,20 +21,21 @@
  */
 
 #include "animatedsprite.h"
-#include "beingmanager.h"
 #include "npc.h"
 
-#include "bindings/guichan/palette.h"
-#include "bindings/guichan/text.h"
+#include "../beingmanager.h"
 
-#include "gui/npc_text.h"
+#include "../db/npcdb.h"
 
-#include "net/messageout.h"
-#include "net/protocol.h"
+#include "../particle/particle.h"
 
-#include "resources/db/npcdb.h"
+#include "../../bindings/guichan/palette.h"
+#include "../../bindings/guichan/text.h"
 
-#include "resources/particle/particle.h"
+#include "../../gui/npc_text.h"
+
+#include "../../net/messageout.h"
+#include "../../net/protocol.h"
 
 bool NPC::mTalking = false;
 int current_npc = 0;

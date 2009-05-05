@@ -31,7 +31,6 @@
 
 #include "../inventory.h"
 #include "../item.h"
-#include "../localplayer.h"
 
 #include "../bindings/guichan/layout.h"
 
@@ -42,6 +41,8 @@
 #include "../bindings/guichan/widgets/scrollarea.h"
 
 #include "../resources/db/iteminfo.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

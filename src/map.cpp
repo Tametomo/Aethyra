@@ -22,21 +22,22 @@
 
 #include <queue>
 
-#include "beingmanager.h"
 #include "configuration.h"
 #include "map.h"
-#include "simpleanimation.h"
-#include "sprite.h"
 #include "tileset.h"
 
 #include "bindings/guichan/graphics.h"
 #include "bindings/guichan/gui.h"
 
 #include "resources/ambientoverlay.h"
+#include "resources/beingmanager.h"
 #include "resources/image.h"
 #include "resources/resourcemanager.h"
+#include "resources/simpleanimation.h"
 
 #include "resources/particle/particle.h"
+
+#include "resources/sprite/sprite.h"
 
 #include "utils/dtor.h"
 #include "utils/stringutils.h"

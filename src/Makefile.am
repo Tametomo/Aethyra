@@ -242,8 +242,12 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      resources/ambientoverlay.h \
 	      resources/animation.cpp \
 	      resources/animation.h \
+	      resources/beingmanager.cpp \
+	      resources/beingmanager.h \
 	      resources/dye.cpp \
 	      resources/dye.h \
+	      resources/flooritemmanager.cpp \
+	      resources/flooritemmanager.h \
 	      resources/image.cpp \
 	      resources/image.h \
 	      resources/imageloader.cpp \
@@ -260,6 +264,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      resources/resource.h \
 	      resources/resourcemanager.cpp \
 	      resources/resourcemanager.h \
+	      resources/simpleanimation.cpp \
+	      resources/simpleanimation.h \
 	      resources/soundeffect.cpp \
 	      resources/soundeffect.h \
 	      resources/spritedef.cpp \
@@ -299,11 +305,27 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      resources/particle/rotationalparticle.h \
 	      resources/particle/textparticle.cpp \
 	      resources/particle/textparticle.h \
+	      resources/sprite/animatedsprite.cpp \
+	      resources/sprite/animatedsprite.h \
+	      resources/sprite/being.cpp \
+	      resources/sprite/being.h \
+	      resources/sprite/flooritem.cpp \
+	      resources/sprite/flooritem.h \
+	      resources/sprite/localplayer.cpp \
+	      resources/sprite/localplayer.h \
+	      resources/sprite/monster.cpp \
+	      resources/sprite/monster.h \
+	      resources/sprite/npc.cpp \
+	      resources/sprite/npc.h \
+	      resources/sprite/player.cpp \
+	      resources/sprite/player.h \
+	      resources/sprite/sprite.h \
 	      utils/base64.cpp \
 	      utils/base64.h \
 	      utils/dtor.h \
 	      utils/fastsqrt.h \
 	      utils/gettext.h \
+	      utils/lockedarray.h \
 	      utils/stringutils.cpp \
 	      utils/stringutils.h \
 	      utils/mutex.h \
@@ -313,12 +335,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      utils/xml.h \
 	      utils/vector.cpp \
 	      utils/vector.h \
-	      animatedsprite.cpp \
-	      animatedsprite.h \
-	      being.cpp \
-	      being.h \
-	      beingmanager.cpp \
-	      beingmanager.h \
 	      configlistener.h \
 	      configuration.cpp \
 	      configuration.h \
@@ -328,10 +344,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      engine.h \
 	      equipment.cpp \
 	      equipment.h \
-	      floor_item.cpp \
-	      floor_item.h \
-	      flooritemmanager.cpp \
-	      flooritemmanager.h \
 	      game.cpp \
 	      game.h \
 	      inventory.cpp \
@@ -340,9 +352,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      item.h \
 	      itemshortcut.cpp \
 	      itemshortcut.h \
-	      localplayer.cpp \
-	      localplayer.h \
-	      lockedarray.h \
 	      log.cpp \
 	      log.h \
 	      logindata.h \
@@ -350,23 +359,14 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      main.h \
 	      map.cpp \
 	      map.h \
-	      monster.cpp \
-	      monster.h \
-	      npc.cpp \
-	      npc.h \
 	      party.cpp \
 	      party.h \
-	      player.cpp \
-	      player.h \
 	      player_relations.cpp \
 	      player_relations.h \
 	      properties.h \
 	      serverinfo.h \
 	      shopitem.cpp \
 	      shopitem.h \
-	      simpleanimation.cpp \
-	      simpleanimation.h \
-	      sprite.h \
 	      tileset.h
 
 # set the include path found by configure

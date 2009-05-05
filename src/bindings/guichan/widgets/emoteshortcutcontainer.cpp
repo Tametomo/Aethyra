@@ -26,17 +26,18 @@
 #include "../graphics.h"
 #include "../palette.h"
 
-#include "../../../animatedsprite.h"
 #include "../../../configuration.h"
 #include "../../../emoteshortcut.h"
 #include "../../../inventory.h"
-#include "../../../localplayer.h"
 #include "../../../log.h"
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
 
 #include "../../../resources/db/emotedb.h"
+
+#include "../../../resources/sprite/animatedsprite.h"
+#include "../../../resources/sprite/localplayer.h"
 
 static const int MAX_ITEMS = 12;
 

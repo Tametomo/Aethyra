@@ -24,8 +24,6 @@
 
 #include "npclistdialog.h"
 
-#include "../npc.h"
-
 #include "../bindings/guichan/layout.h"
 
 #include "../bindings/guichan/widgets/button.h"
@@ -34,6 +32,8 @@
 
 #include "../net/messageout.h"
 #include "../net/protocol.h"
+
+#include "../resources/sprite/npc.h"
 
 #include "../utils/gettext.h"
 

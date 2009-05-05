@@ -24,16 +24,16 @@
 #include "localplayer.h"
 #include "player.h"
 
-#include "bindings/guichan/gui.h"
-#include "bindings/guichan/palette.h"
-#include "bindings/guichan/text.h"
+#include "../db/colordb.h"
+#include "../db/itemdb.h"
 
-#include "resources/db/colordb.h"
-#include "resources/db/itemdb.h"
+#include "../particle/particle.h"
 
-#include "resources/particle/particle.h"
+#include "../../bindings/guichan/gui.h"
+#include "../../bindings/guichan/palette.h"
+#include "../../bindings/guichan/text.h"
 
-#include "utils/stringutils.h"
+#include "../../utils/stringutils.h"
 
 static const int NAME_X_OFFSET = 15;
 static const int NAME_Y_OFFSET = 30;

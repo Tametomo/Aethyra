@@ -22,14 +22,14 @@
 
 #include "status.h"
 
-#include "../localplayer.h"
-
 #include "../bindings/guichan/layout.h"
 
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/label.h"
 #include "../bindings/guichan/widgets/progressbar.h"
 #include "../bindings/guichan/widgets/windowcontainer.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

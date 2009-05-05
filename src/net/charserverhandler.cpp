@@ -25,13 +25,14 @@
 #include "protocol.h"
 
 #include "../game.h"
-#include "../localplayer.h"
 #include "../log.h"
 #include "../logindata.h"
 #include "../main.h"
 
 #include "../gui/char_select.h"
 #include "../gui/ok_dialog.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

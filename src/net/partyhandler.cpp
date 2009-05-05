@@ -25,11 +25,12 @@
 #include "protocol.h"
 #include "messagein.h"
 
+#include "../party.h"
+
 #include "../gui/chat.h"
 #include "../gui/confirm_dialog.h"
 
-#include "../beingmanager.h"
-#include "../party.h"
+#include "../resources/beingmanager.h"
 
 PartyHandler::PartyHandler(Party *party) : mParty(party)
 {

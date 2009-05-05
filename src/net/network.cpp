@@ -27,6 +27,7 @@
 #include "network.h"
 
 #include "../log.h"
+
 #include "../utils/stringutils.h"
 
 /** Warning: buffers and other variables are shared,

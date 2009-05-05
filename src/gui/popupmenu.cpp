@@ -27,12 +27,7 @@
 #include "item_amount.h"
 #include "popupmenu.h"
 
-#include "../being.h"
-#include "../beingmanager.h"
-#include "../floor_item.h"
 #include "../item.h"
-#include "../localplayer.h"
-#include "../npc.h"
 #include "../player_relations.h"
 
 #include "../bindings/guichan/graphics.h"
@@ -42,7 +37,14 @@
 #include "../net/messageout.h"
 #include "../net/protocol.h"
 
+#include "../resources/beingmanager.h"
+
 #include "../resources/db/itemdb.h"
+
+#include "../resources/sprite/being.h"
+#include "../resources/sprite/flooritem.h"
+#include "../resources/sprite/localplayer.h"
+#include "../resources/sprite/npc.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

@@ -27,10 +27,11 @@
 #include "../equipment.h"
 #include "../inventory.h"
 #include "../item.h"
-#include "../localplayer.h"
 #include "../log.h"
 
 #include "../gui/chat.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 

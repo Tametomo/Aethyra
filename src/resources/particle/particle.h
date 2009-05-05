@@ -26,7 +26,7 @@
 #include <list>
 #include <string>
 
-#include "../../sprite.h"
+#include "../sprite/sprite.h"
 
 #include "../../bindings/guichan/guichanfwd.h"
 

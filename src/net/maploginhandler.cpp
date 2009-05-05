@@ -24,9 +24,10 @@
 #include "messagein.h"
 #include "protocol.h"
 
-#include "../localplayer.h"
 #include "../log.h"
 #include "../main.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 

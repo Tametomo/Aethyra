@@ -30,7 +30,6 @@
 #include "../../../inventory.h"
 #include "../../../item.h"
 #include "../../../itemshortcut.h"
-#include "../../../localplayer.h"
 
 #include "../../../gui/inventorywindow.h"
 #include "../../../gui/itempopup.h"
@@ -38,6 +37,8 @@
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
+
+#include "../../../resources/sprite/localplayer.h"
 
 #include "../../../utils/stringutils.h"
 

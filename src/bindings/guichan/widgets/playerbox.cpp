@@ -24,12 +24,13 @@
 
 #include "../graphics.h"
 
-#include "../../../animatedsprite.h"
 #include "../../../configuration.h"
-#include "../../../player.h"
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
+
+#include "../../../resources/sprite/animatedsprite.h"
+#include "../../../resources/sprite/player.h"
 
 #include "../../../utils/dtor.h"
 

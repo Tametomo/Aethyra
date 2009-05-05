@@ -22,35 +22,36 @@
 
 #include <cassert>
 
-#include "configuration.h"
-#include "equipment.h"
-#include "floor_item.h"
-#include "inventory.h"
-#include "item.h"
+#include "flooritem.h"
 #include "localplayer.h"
-#include "map.h"
 #include "monster.h"
-#include "simpleanimation.h"
 
-#include "bindings/guichan/graphics.h"
-#include "bindings/guichan/gui.h"
-#include "bindings/guichan/palette.h"
-#include "bindings/guichan/text.h"
+#include "../animation.h"
+#include "../imageset.h"
+#include "../resourcemanager.h"
+#include "../simpleanimation.h"
 
-#include "bindings/sdl/sound.h"
+#include "../particle/particle.h"
 
-#include "gui/storagewindow.h"
+#include "../../configuration.h"
+#include "../../equipment.h"
+#include "../../inventory.h"
+#include "../../item.h"
+#include "../../map.h"
 
-#include "net/messageout.h"
-#include "net/protocol.h"
+#include "../../bindings/guichan/graphics.h"
+#include "../../bindings/guichan/gui.h"
+#include "../../bindings/guichan/palette.h"
+#include "../../bindings/guichan/text.h"
 
-#include "resources/animation.h"
-#include "resources/imageset.h"
-#include "resources/resourcemanager.h"
+#include "../../bindings/sdl/sound.h"
 
-#include "resources/particle/particle.h"
+#include "../../gui/storagewindow.h"
 
-#include "utils/stringutils.h"
+#include "../../net/messageout.h"
+#include "../../net/protocol.h"
+
+#include "../../utils/stringutils.h"
 
 LocalPlayer *player_node = NULL;
 

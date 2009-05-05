@@ -29,7 +29,7 @@
 
 #include "../spritedef.h"
 
-#include "../../being.h"
+#include "../sprite/being.h"
 
 enum EquipmentSoundEvent
 {

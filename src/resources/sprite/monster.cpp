@@ -24,16 +24,16 @@
 #include "localplayer.h"
 #include "monster.h"
 
-#include "bindings/guichan/gui.h"
-#include "bindings/guichan/palette.h"
-#include "bindings/guichan/text.h"
+#include "../db/monsterdb.h"
+#include "../db/monsterinfo.h"
 
-#include "bindings/sdl/sound.h"
+#include "../particle/particle.h"
 
-#include "resources/db/monsterdb.h"
-#include "resources/db/monsterinfo.h"
+#include "../../bindings/guichan/gui.h"
+#include "../../bindings/guichan/palette.h"
+#include "../../bindings/guichan/text.h"
 
-#include "resources/particle/particle.h"
+#include "../../bindings/sdl/sound.h"
 
 static const int NAME_X_OFFSET = 16;
 static const int NAME_Y_OFFSET = 16;

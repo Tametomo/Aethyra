@@ -26,12 +26,13 @@
 
 #include "../inventory.h"
 #include "../item.h"
-#include "../localplayer.h"
 #include "../player_relations.h"
 
 #include "../gui/chat.h"
 #include "../gui/confirm_dialog.h"
 #include "../gui/trade.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 

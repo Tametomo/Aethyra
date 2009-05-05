@@ -31,7 +31,6 @@
 
 #include "../inventory.h"
 #include "../item.h"
-#include "../localplayer.h"
 
 #include "../bindings/guichan/layout.h"
 
@@ -46,6 +45,8 @@
 #include "../net/protocol.h"
 
 #include "../resources/db/iteminfo.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

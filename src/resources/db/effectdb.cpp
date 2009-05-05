@@ -25,10 +25,11 @@
 
 #include "../particle/particle.h"
 
-#include "../../being.h"
 #include "../../log.h"
 
 #include "../../bindings/sdl/sound.h"
+
+#include "../../resources/sprite/being.h"
 
 #include "../../utils/xml.h"
 

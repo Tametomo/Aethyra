@@ -33,11 +33,11 @@
 
 #include "sprite.h"
 
-#include "resources/spritedef.h"
+#include "../spritedef.h"
 
-#include "resources/particle/particlecontainer.h"
+#include "../particle/particlecontainer.h"
 
-#include "utils/position.h"
+#include "../../utils/position.h"
 
 #define FIRST_IGNORE_EMOTE 14
 #define STATUS_EFFECTS 32

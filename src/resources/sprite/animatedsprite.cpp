@@ -21,16 +21,17 @@
  */
 
 #include "animatedsprite.h"
-#include "log.h"
 
-#include "bindings/guichan/graphics.h"
+#include "../action.h"
+#include "../animation.h"
+#include "../image.h"
+#include "../resourcemanager.h"
 
-#include "resources/action.h"
-#include "resources/animation.h"
-#include "resources/image.h"
-#include "resources/resourcemanager.h"
+#include "../../log.h"
 
-#include "utils/xml.h"
+#include "../../bindings/guichan/graphics.h"
+
+#include "../../utils/xml.h"
 
 #include <cassert>
 

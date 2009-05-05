@@ -24,19 +24,20 @@
 
 #include "minimap.h"
 
-#include "../being.h"
-#include "../beingmanager.h"
 #include "../configuration.h"
-#include "../localplayer.h"
 #include "../map.h"
-#include "../player.h"
 
 #include "../bindings/guichan/graphics.h"
 #include "../bindings/guichan/palette.h"
 #include "../bindings/guichan/skin.h"
 
+#include "../resources/beingmanager.h"
 #include "../resources/image.h"
 #include "../resources/resourcemanager.h"
+
+#include "../resources/sprite/being.h"
+#include "../resources/sprite/localplayer.h"
+#include "../resources/sprite/player.h"
 
 #include "../utils/gettext.h"
 

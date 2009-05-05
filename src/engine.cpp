@@ -20,11 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "beingmanager.h"
 #include "engine.h"
-#include "flooritemmanager.h"
 #include "game.h"
-#include "localplayer.h"
 #include "log.h"
 #include "map.h"
 
@@ -35,10 +32,14 @@
 #include "gui/minimap.h"
 #include "gui/viewport.h"
 
+#include "resources/beingmanager.h"
+#include "resources/flooritemmanager.h"
 #include "resources/mapreader.h"
 #include "resources/resourcemanager.h"
 
 #include "resources/particle/particle.h"
+
+#include "resources/sprite/localplayer.h"
 
 #include "utils/stringutils.h"
 

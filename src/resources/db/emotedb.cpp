@@ -21,8 +21,9 @@
 
 #include "emotedb.h"
 
-#include "../../animatedsprite.h"
 #include "../../log.h"
+
+#include "../../resources/sprite/animatedsprite.h"
 
 #include "../../utils/xml.h"
 

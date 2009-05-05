@@ -26,16 +26,18 @@
 #include "messagein.h"
 #include "protocol.h"
 
-#include "../beingmanager.h"
 #include "../inventory.h"
 #include "../item.h"
-#include "../localplayer.h"
-#include "../npc.h"
 
 #include "../gui/buy.h"
 #include "../gui/buysell.h"
 #include "../gui/chat.h"
 #include "../gui/sell.h"
+
+#include "../resources/beingmanager.h"
+
+#include "../resources/sprite/localplayer.h"
+#include "../resources/sprite/npc.h"
 
 #include "../utils/gettext.h"
 

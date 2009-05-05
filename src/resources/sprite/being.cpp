@@ -25,39 +25,40 @@
 
 #include "animatedsprite.h"
 #include "being.h"
-#include "configuration.h"
-#include "configlistener.h"
 #include "localplayer.h"
-#include "log.h"
-#include "map.h"
-#include "simpleanimation.h"
 
-#include "bindings/guichan/graphics.h"
-#include "bindings/guichan/gui.h"
-#include "bindings/guichan/palette.h"
-#include "bindings/guichan/text.h"
+#include "../image.h"
+#include "../resourcemanager.h"
+#include "../simpleanimation.h"
 
-#include "bindings/sdl/sound.h"
+#include "../db/colordb.h"
+#include "../db/emotedb.h"
+#include "../db/effectdb.h"
+#include "../db/itemdb.h"
+#include "../db/iteminfo.h"
 
-#include "gui/speechbubble.h"
+#include "../particle/particle.h"
 
-#include "net/messageout.h"
-#include "net/protocol.h"
+#include "../../configuration.h"
+#include "../../configlistener.h"
+#include "../../log.h"
+#include "../../map.h"
 
-#include "resources/image.h"
-#include "resources/resourcemanager.h"
+#include "../../bindings/guichan/graphics.h"
+#include "../../bindings/guichan/gui.h"
+#include "../../bindings/guichan/palette.h"
+#include "../../bindings/guichan/text.h"
 
-#include "resources/db/colordb.h"
-#include "resources/db/emotedb.h"
-#include "resources/db/effectdb.h"
-#include "resources/db/itemdb.h"
-#include "resources/db/iteminfo.h"
+#include "../../bindings/sdl/sound.h"
 
-#include "resources/particle/particle.h"
+#include "../../gui/speechbubble.h"
 
-#include "utils/dtor.h"
-#include "utils/gettext.h"
-#include "utils/stringutils.h"
+#include "../../net/messageout.h"
+#include "../../net/protocol.h"
+
+#include "../../utils/dtor.h"
+#include "../../utils/gettext.h"
+#include "../../utils/stringutils.h"
 
 int Being::mNumberOfHairstyles = 1;
 

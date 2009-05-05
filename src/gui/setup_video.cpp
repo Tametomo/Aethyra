@@ -37,10 +37,8 @@
 #include "speechbubble.h"
 #include "viewport.h"
 
-#include "../beingmanager.h"
 #include "../configuration.h"
 #include "../engine.h"
-#include "../localplayer.h"
 #include "../log.h"
 #include "../main.h"
 #include "../map.h"
@@ -62,7 +60,11 @@
 #include "../bindings/guichan/widgets/window.h"
 #include "../bindings/guichan/widgets/windowcontainer.h"
 
+#include "../resources/beingmanager.h"
+
 #include "../resources/particle/particle.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

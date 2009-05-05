@@ -23,19 +23,20 @@
 #include "popupmenu.h"
 #include "viewport.h"
 
-#include "../beingmanager.h"
 #include "../configuration.h"
-#include "../flooritemmanager.h"
-#include "../localplayer.h"
 #include "../map.h"
-#include "../monster.h"
-#include "../npc.h"
 
 #include "../bindings/guichan/graphics.h"
 #include "../bindings/guichan/keyboardconfig.h"
 #include "../bindings/guichan/textmanager.h"
 
+#include "../resources/beingmanager.h"
+#include "../resources/flooritemmanager.h"
 #include "../resources/resourcemanager.h"
+
+#include "../resources/sprite/localplayer.h"
+#include "../resources/sprite/monster.h"
+#include "../resources/sprite/npc.h"
 
 #include "../utils/stringutils.h"
 

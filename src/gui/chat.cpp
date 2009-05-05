@@ -25,10 +25,8 @@
 #include "chat.h"
 #include "recorder.h"
 
-#include "../beingmanager.h"
 #include "../configuration.h"
 #include "../game.h"
-#include "../localplayer.h"
 #include "../party.h"
 
 #include "../bindings/guichan/layout.h"
@@ -45,8 +43,12 @@
 #include "../net/messageout.h"
 #include "../net/protocol.h"
 
+#include "../resources/beingmanager.h"
+
 #include "../resources/db/iteminfo.h"
 #include "../resources/db/itemdb.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

@@ -27,12 +27,14 @@
 #include "messagein.h"
 #include "protocol.h"
 
-#include "../being.h"
-#include "../beingmanager.h"
 #include "../game.h"
 #include "../player_relations.h"
 
 #include "../gui/chat.h"
+
+#include "../resources/beingmanager.h"
+
+#include "../resources/sprite/being.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

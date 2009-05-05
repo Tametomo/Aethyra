@@ -25,7 +25,8 @@
 #include "protocol.h"
 
 #include "../engine.h"
-#include "../flooritemmanager.h"
+
+#include "../resources/flooritemmanager.h"
 
 ItemHandler::ItemHandler()
 {

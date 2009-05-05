@@ -24,7 +24,8 @@
 #include "inventory.h"
 #include "item.h"
 #include "itemshortcut.h"
-#include "localplayer.h"
+
+#include "resources/sprite/localplayer.h"
 
 #include "utils/stringutils.h"
 

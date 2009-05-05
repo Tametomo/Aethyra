@@ -22,13 +22,15 @@
 
 #include <algorithm>
 
-#include "being.h"
-#include "beingmanager.h"
 #include "configuration.h"
-#include "player.h"
 #include "player_relations.h"
 
 #include "bindings/guichan/graphics.h"
+
+#include "resources/beingmanager.h"
+
+#include "resources/sprite/being.h"
+#include "resources/sprite/player.h"
 
 #include "utils/dtor.h"
 

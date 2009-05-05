@@ -23,7 +23,7 @@
 #ifndef SIMPLEANIMAION_H
 #define SIMPLEANIMAION_H
 
-#include "utils/xml.h"
+#include "../utils/xml.h"
 
 class Animation;
 class Frame;

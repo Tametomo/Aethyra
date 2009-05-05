@@ -30,13 +30,14 @@
 #include "../inventory.h"
 #include "../item.h"
 #include "../itemshortcut.h"
-#include "../localplayer.h"
 #include "../log.h"
 
 #include "../gui/chat.h"
 #include "../gui/storagewindow.h"
 
 #include "../resources/db/iteminfo.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

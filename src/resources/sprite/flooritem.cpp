@@ -20,13 +20,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "floor_item.h"
-#include "item.h"
-#include "map.h"
+#include "flooritem.h"
 
-#include "bindings/guichan/graphics.h"
+#include "../image.h"
 
-#include "resources/image.h"
+#include "../../item.h"
+#include "../../map.h"
+
+#include "../../bindings/guichan/graphics.h"
 
 FloorItem::FloorItem(int id, int itemId, int x, int y, Map *map):
     mId(id),

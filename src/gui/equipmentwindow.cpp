@@ -32,7 +32,6 @@
 #include "../equipment.h"
 #include "../inventory.h"
 #include "../item.h"
-#include "../localplayer.h"
 
 #include "../bindings/guichan/graphics.h"
 #include "../bindings/guichan/palette.h"
@@ -43,6 +42,8 @@
 #include "../resources/resourcemanager.h"
 
 #include "../resources/db/iteminfo.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

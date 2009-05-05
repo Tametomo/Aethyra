@@ -28,7 +28,7 @@
 #include "../bindings/guichan/widgets/emotecontainer.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
 
-#include "../localplayer.h"
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

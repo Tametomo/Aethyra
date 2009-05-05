@@ -22,7 +22,7 @@
 
 #include "animationparticle.h"
 
-#include "../../simpleanimation.h"
+#include "../simpleanimation.h"
 
 #include "../../bindings/guichan/graphics.h"
 

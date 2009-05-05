@@ -22,12 +22,12 @@
 
 #include "ministatus.h"
 
-#include "../localplayer.h"
-
 #include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/graphics.h"
 
 #include "../bindings/guichan/widgets/progressbar.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/stringutils.h"
 

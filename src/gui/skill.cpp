@@ -22,7 +22,6 @@
 
 #include "skill.h"
 
-#include "../localplayer.h"
 #include "../log.h"
 
 #include "../bindings/guichan/layout.h"
@@ -37,6 +36,8 @@
 #include "../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../resources/db/skilldb.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/dtor.h"
 #include "../utils/gettext.h"

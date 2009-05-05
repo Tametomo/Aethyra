@@ -26,9 +26,7 @@
 #include "protocol.h"
 
 #include "../engine.h"
-#include "../localplayer.h"
 #include "../log.h"
-#include "../npc.h"
 
 #include "../gui/buy.h"
 #include "../gui/buysell.h"
@@ -42,6 +40,9 @@
 #include "../gui/skill.h"
 #include "../gui/storagewindow.h"
 #include "../gui/viewport.h"
+
+#include "../resources/sprite/localplayer.h"
+#include "../resources/sprite/npc.h"
 
 #include "../utils/stringutils.h"
 #include "../utils/gettext.h"

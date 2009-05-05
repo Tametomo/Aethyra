@@ -29,7 +29,6 @@
 #include "ok_dialog.h"
 
 #include "../game.h"
-#include "../localplayer.h"
 #include "../main.h"
 
 #include "../bindings/guichan/layout.h"
@@ -43,6 +42,8 @@
 #include "../net/messageout.h"
 
 #include "../resources/db/colordb.h"
+
+#include "../resources/sprite/localplayer.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

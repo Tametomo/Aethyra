@@ -29,16 +29,17 @@
 
 #include "../sdl/sdlinput.h"
 
-#include "../../../animatedsprite.h"
 #include "../../../configuration.h"
 #include "../../../emoteshortcut.h"
-#include "../../../localplayer.h"
 #include "../../../log.h"
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
 
 #include "../../../resources/db/emotedb.h"
+
+#include "../../../resources/sprite/animatedsprite.h"
+#include "../../../resources/sprite/localplayer.h"
 
 #include "../../../utils/stringutils.h"
 

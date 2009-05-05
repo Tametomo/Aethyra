@@ -22,8 +22,6 @@
 
 #include "buy.h"
 
-#include "../npc.h"
-
 #include "../bindings/guichan/layout.h"
 
 #include "../bindings/guichan/models/shoplistmodel.h"
@@ -36,6 +34,8 @@
 
 #include "../net/messageout.h"
 #include "../net/protocol.h"
+
+#include "../resources/sprite/npc.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

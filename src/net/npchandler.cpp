@@ -26,14 +26,15 @@
 #include "npchandler.h"
 #include "protocol.h"
 
-#include "../beingmanager.h"
-#include "../localplayer.h"
-#include "../npc.h"
-
 #include "../gui/npc_text.h"
 #include "../gui/npcintegerdialog.h"
 #include "../gui/npclistdialog.h"
 #include "../gui/npcstringdialog.h"
+
+#include "../resources/beingmanager.h"
+
+#include "../resources/sprite/localplayer.h"
+#include "../resources/sprite/npc.h"
 
 NPCHandler::NPCHandler()
 {

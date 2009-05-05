@@ -27,7 +27,8 @@
 
 #include "../bindings/guichan/widgets/window.h"
 
-#include "../being.h"
+#include "../resources/sprite/being.h"
+
 #include "../utils/lockedarray.h"
 
 class LocalPlayer;
