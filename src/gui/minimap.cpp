@@ -59,7 +59,7 @@ Minimap::Minimap():
     mUserWidth = config.getValue(getWindowName() + "UserWidth", 100);
     mUserHeight = config.getValue(getWindowName() + "UserHeight", 100);
 
-    setDefaultSize(5, 25, 100, 100);
+    setDefaultSize(100, 100, ImageRect::UPPER_LEFT, 5, 25);
 
     loadWindowState();
 }
