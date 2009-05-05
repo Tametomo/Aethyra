@@ -31,28 +31,12 @@
 
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/tabbedarea.h"
+#include "../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../utils/dtor.h"
 #include "../utils/gettext.h"
 
-extern Window *chatWindow;
 extern Window *statusWindow;
-extern Window *buyDialog;
-extern Window *sellDialog;
-extern Window *buySellDialog;
-extern Window *inventoryWindow;
-extern Window *emoteWindow;
-extern Window *npcTextDialog;
-extern Window *npcStringDialog;
-extern Window *skillDialog;
-extern Window *minimap;
-extern Window *equipmentWindow;
-extern Window *tradeWindow;
-extern Window *helpWindow;
-extern Window *debugWindow;
-extern Window *itemShortcutWindow;
-extern Window *emoteShortcutWindow;
-extern Window *storageWindow;
 
 Setup::Setup():
     Window(_("Setup"))
@@ -129,24 +113,19 @@ void Setup::action(const gcn::ActionEvent &event)
         if (!statusWindow)
             return;
 
-        chatWindow->resetToDefaultSize();
-        statusWindow->resetToDefaultSize();
-        buyDialog->resetToDefaultSize();
-        sellDialog->resetToDefaultSize();
-        buySellDialog->resetToDefaultSize();
-        inventoryWindow->resetToDefaultSize();
-        emoteWindow->resetToDefaultSize();
-        npcTextDialog->resetToDefaultSize();
-        npcStringDialog->resetToDefaultSize();
-        skillDialog->resetToDefaultSize();
-        minimap->resetToDefaultSize();
-        equipmentWindow->resetToDefaultSize();
-        tradeWindow->resetToDefaultSize();
-        helpWindow->resetToDefaultSize();
-        debugWindow->resetToDefaultSize();
-        itemShortcutWindow->resetToDefaultSize();
-        emoteShortcutWindow->resetToDefaultSize();
-        storageWindow->resetToDefaultSize();
+        typedef std::list<gcn::Widget*> Widgets;
+        Widgets widgets = windowContainer->getWidgetList();
+
+        typedef Widgets::iterator WidgetIterator;
+        WidgetIterator iter;
+
+        for (iter = widgets.begin(); iter != widgets.end(); ++iter)
+        {
+            Window* window = dynamic_cast<Window*>(*iter);
+
+            if (window)
+                window->resetToDefaultSize();
+        }
     }
 }
 
