@@ -26,7 +26,6 @@
 
 #include "../configuration.h"
 #include "../log.h"
-#include "../logindata.h"
 #include "../main.h"
 
 #include "../bindings/guichan/layout.h"
@@ -37,6 +36,8 @@
 #include "../bindings/guichan/widgets/passwordfield.h"
 #include "../bindings/guichan/widgets/radiobutton.h"
 #include "../bindings/guichan/widgets/textfield.h"
+
+#include "../net/logindata.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

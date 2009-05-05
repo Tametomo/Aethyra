@@ -24,7 +24,6 @@
 #include "okdialog.h"
 
 #include "../main.h"
-#include "../logindata.h"
 #include "../configuration.h"
 
 #include "../bindings/guichan/layout.h"
@@ -35,6 +34,8 @@
 #include "../bindings/guichan/widgets/label.h"
 #include "../bindings/guichan/widgets/passwordfield.h"
 #include "../bindings/guichan/widgets/textfield.h"
+
+#include "../net/logindata.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

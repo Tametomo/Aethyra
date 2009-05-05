@@ -261,6 +261,7 @@ SET(SRCS
     net/inventoryhandler.cpp
     net/itemhandler.h
     net/itemhandler.cpp
+    net/logindata.h
     net/loginhandler.h
     net/loginhandler.cpp
     net/maploginhandler.cpp
@@ -280,6 +281,7 @@ SET(SRCS
     net/playerhandler.cpp
     net/playerhandler.h
     net/protocol.h
+    net/serverinfo.h
     net/skillhandler.cpp
     net/skillhandler.h
     net/tradehandler.cpp
@@ -402,7 +404,6 @@ SET(SRCS
     itemshortcut.h
     log.cpp
     log.h
-    logindata.h
     main.cpp
     main.h
     map.cpp
@@ -412,7 +413,6 @@ SET(SRCS
     playerrelations.cpp
     playerrelations.h
     properties.h
-    serverinfo.h
     shopitem.cpp
     shopitem.h
     tileset.h

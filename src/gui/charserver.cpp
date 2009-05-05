@@ -22,15 +22,16 @@
 
 #include "charserver.h"
 
-#include "../logindata.h"
 #include "../main.h"
-#include "../serverinfo.h"
 
 #include "../bindings/guichan/layout.h"
 
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/listbox.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
+
+#include "../net/logindata.h"
+#include "../net/serverinfo.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

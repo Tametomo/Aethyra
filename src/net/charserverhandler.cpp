@@ -21,12 +21,12 @@
  */
 
 #include "charserverhandler.h"
+#include "logindata.h"
 #include "messagein.h"
 #include "protocol.h"
 
 #include "../game.h"
 #include "../log.h"
-#include "../logindata.h"
 #include "../main.h"
 
 #include "../gui/charselect.h"

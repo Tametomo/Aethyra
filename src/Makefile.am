@@ -213,6 +213,7 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      net/inventoryhandler.cpp \
 	      net/itemhandler.h \
 	      net/itemhandler.cpp \
+	      net/logindata.h \
 	      net/loginhandler.h \
 	      net/loginhandler.cpp \
 	      net/maploginhandler.cpp \
@@ -232,6 +233,7 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      net/playerhandler.cpp \
 	      net/playerhandler.h \
 	      net/protocol.h \
+	      net/serverinfo.h \
 	      net/skillhandler.cpp \
 	      net/skillhandler.h \
 	      net/tradehandler.cpp \
@@ -354,7 +356,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      itemshortcut.h \
 	      log.cpp \
 	      log.h \
-	      logindata.h \
 	      main.cpp \
 	      main.h \
 	      map.cpp \
@@ -364,7 +365,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      playerrelations.cpp \
 	      playerrelations.h \
 	      properties.h \
-	      serverinfo.h \
 	      shopitem.cpp \
 	      shopitem.h \
 	      tileset.h

@@ -38,10 +38,8 @@
 #include "game.h"
 #include "itemshortcut.h"
 #include "log.h"
-#include "logindata.h"
 #include "main.h"
 #include "playerrelations.h"
-#include "serverinfo.h"
 
 #include "bindings/guichan/graphics.h"
 #include "bindings/guichan/gui.h"
@@ -70,10 +68,12 @@
 #include "gui/updatewindow.h"
 
 #include "net/charserverhandler.h"
+#include "net/logindata.h"
 #include "net/loginhandler.h"
 #include "net/maploginhandler.h"
 #include "net/messageout.h"
 #include "net/network.h"
+#include "net/serverinfo.h"
 
 #include "resources/image.h"
 #include "resources/resourcemanager.h"

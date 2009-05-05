@@ -314,6 +314,7 @@
 		<Unit filename="src\net\inventoryhandler.cpp" />
 		<Unit filename="src\net\itemhandler.h" />
 		<Unit filename="src\net\itemhandler.cpp" />
+		<Unit filename="src\net\logindata.h" />
 		<Unit filename="src\net\loginhandler.h" />
 		<Unit filename="src\net\loginhandler.cpp" />
 		<Unit filename="src\net\maploginhandler.cpp" />
@@ -333,6 +334,7 @@
 		<Unit filename="src\net\playerhandler.cpp" />
 		<Unit filename="src\net\playerhandler.h" />
 		<Unit filename="src\net\protocol.h" />
+		<Unit filename="src\net\serverinfo.h" />
 		<Unit filename="src\net\skillhandler.cpp" />
 		<Unit filename="src\net\skillhandler.h" />
 		<Unit filename="src\net\tradehandler.cpp" />
@@ -455,7 +457,6 @@
 		<Unit filename="src\itemshortcut.h" />
 		<Unit filename="src\log.cpp" />
 		<Unit filename="src\log.h" />
-		<Unit filename="src\logindata.h" />
 		<Unit filename="src\main.cpp" />
 		<Unit filename="src\main.h" />
 		<Unit filename="src\map.cpp" />
@@ -465,7 +466,6 @@
 		<Unit filename="src\playerrelations.cpp" />
 		<Unit filename="src\playerrelations.h" />
 		<Unit filename="src\properties.h" />
-		<Unit filename="src\serverinfo.h" />
 		<Unit filename="src\shopitem.cpp" />
 		<Unit filename="src\shopitem.h" />
 		<Unit filename="src\tileset.h" />
