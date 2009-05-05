@@ -30,7 +30,6 @@
 #include "localplayer.h"
 #include "log.h"
 #include "map.h"
-#include "particle.h"
 #include "simpleanimation.h"
 
 #include "bindings/guichan/graphics.h"
@@ -53,6 +52,8 @@
 #include "resources/db/effectdb.h"
 #include "resources/db/itemdb.h"
 #include "resources/db/iteminfo.h"
+
+#include "resources/particle/particle.h"
 
 #include "utils/dtor.h"
 #include "utils/gettext.h"

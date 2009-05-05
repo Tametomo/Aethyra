@@ -30,7 +30,6 @@
 #include "localplayer.h"
 #include "map.h"
 #include "monster.h"
-#include "particle.h"
 #include "simpleanimation.h"
 
 #include "bindings/guichan/graphics.h"
@@ -48,6 +47,8 @@
 #include "resources/animation.h"
 #include "resources/imageset.h"
 #include "resources/resourcemanager.h"
+
+#include "resources/particle/particle.h"
 
 #include "utils/stringutils.h"
 

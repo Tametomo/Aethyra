@@ -26,11 +26,11 @@
 #include <list>
 #include <string>
 
-#include "sprite.h"
+#include "../../sprite.h"
 
-#include "bindings/guichan/guichanfwd.h"
+#include "../../bindings/guichan/guichanfwd.h"
 
-#include "utils/vector.h"
+#include "../../utils/vector.h"
 
 class Map;
 class Particle;

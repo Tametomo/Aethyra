@@ -26,20 +26,21 @@
 #include <guichan/color.hpp>
 
 #include "animationparticle.h"
-#include "configuration.h"
 #include "imageparticle.h"
-#include "log.h"
-#include "map.h"
 #include "particle.h"
 #include "particleemitter.h"
 #include "rotationalparticle.h"
 #include "textparticle.h"
 
-#include "resources/resourcemanager.h"
+#include "../resourcemanager.h"
 
-#include "utils/dtor.h"
-#include "utils/fastsqrt.h"
-#include "utils/xml.h"
+#include "../../configuration.h"
+#include "../../log.h"
+#include "../../map.h"
+
+#include "../../utils/dtor.h"
+#include "../../utils/fastsqrt.h"
+#include "../../utils/xml.h"
 
 #define SIN45 0.707106781f
 

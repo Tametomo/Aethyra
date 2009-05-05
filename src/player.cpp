@@ -22,7 +22,6 @@
 
 #include "animatedsprite.h"
 #include "localplayer.h"
-#include "particle.h"
 #include "player.h"
 
 #include "bindings/guichan/gui.h"
@@ -31,6 +30,8 @@
 
 #include "resources/db/colordb.h"
 #include "resources/db/itemdb.h"
+
+#include "resources/particle/particle.h"
 
 #include "utils/stringutils.h"
 

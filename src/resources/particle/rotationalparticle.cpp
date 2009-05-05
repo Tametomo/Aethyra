@@ -20,9 +20,10 @@
  */
 
 #include "rotationalparticle.h"
-#include "simpleanimation.h"
 
-#include "bindings/guichan/graphics.h"
+#include "../../simpleanimation.h"
+
+#include "../../bindings/guichan/graphics.h"
 
 #define PI 3.14159265
 

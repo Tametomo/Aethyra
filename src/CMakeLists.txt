@@ -332,6 +332,21 @@ SET(SRCS
     resources/db/npcdb.h
     resources/db/skilldb.cpp
     resources/db/skilldb.h
+    resources/particle/animationparticle.cpp
+    resources/particle/animationparticle.h
+    resources/particle/imageparticle.cpp
+    resources/particle/imageparticle.h
+    resources/particle/particle.cpp
+    resources/particle/particle.h
+    resources/particle/particlecontainer.cpp
+    resources/particle/particlecontainer.h
+    resources/particle/particleemitter.cpp
+    resources/particle/particleemitter.h
+    resources/particle/particleemitterprop.h
+    resources/particle/rotationalparticle.cpp
+    resources/particle/rotationalparticle.h
+    resources/particle/textparticle.cpp
+    resources/particle/textparticle.h
     utils/base64.cpp
     utils/base64.h
     utils/dtor.h
@@ -348,8 +363,6 @@ SET(SRCS
     utils/vector.h
     animatedsprite.cpp
     animatedsprite.h
-    animationparticle.cpp
-    animationparticle.h
     being.cpp
     being.h
     beingmanager.cpp
@@ -369,8 +382,6 @@ SET(SRCS
     flooritemmanager.h
     game.cpp
     game.h
-    imageparticle.cpp
-    imageparticle.h
     inventory.cpp
     inventory.h
     item.cpp
@@ -391,13 +402,6 @@ SET(SRCS
     monster.h
     npc.cpp
     npc.h
-    particle.cpp
-    particle.h
-    particlecontainer.cpp
-    particlecontainer.h
-    particleemitter.cpp
-    particleemitter.h
-    particleemitterprop.h
     party.cpp
     party.h
     player.cpp
@@ -405,16 +409,12 @@ SET(SRCS
     player_relations.cpp
     player_relations.h
     properties.h
-    rotationalparticle.cpp
-    rotationalparticle.h
     serverinfo.h
     shopitem.cpp
     shopitem.h
     simpleanimation.cpp
     simpleanimation.h
     sprite.h
-    textparticle.cpp
-    textparticle.h
     tileset.h
     )
 

@@ -38,7 +38,6 @@
 #include "localplayer.h"
 #include "log.h"
 #include "map.h"
-#include "particle.h"
 #include "player_relations.h"
 
 #include "bindings/guichan/graphics.h"
@@ -94,6 +93,8 @@
 #include "net/tradehandler.h"
 
 #include "resources/imagewriter.h"
+
+#include "resources/particle/particle.h"
 
 #include "utils/gettext.h"
 

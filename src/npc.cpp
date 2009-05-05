@@ -23,7 +23,6 @@
 #include "animatedsprite.h"
 #include "beingmanager.h"
 #include "npc.h"
-#include "particle.h"
 
 #include "bindings/guichan/palette.h"
 #include "bindings/guichan/text.h"
@@ -34,6 +33,8 @@
 #include "net/protocol.h"
 
 #include "resources/db/npcdb.h"
+
+#include "resources/particle/particle.h"
 
 bool NPC::mTalking = false;
 int current_npc = 0;

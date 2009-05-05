@@ -385,6 +385,21 @@
 		<Unit filename="src\resources\db\npcdb.h" />
 		<Unit filename="src\resources\db\skilldb.cpp" />
 		<Unit filename="src\resources\db\skilldb.h" />
+		<Unit filename="src\resources\particle\animationparticle.cpp" />
+		<Unit filename="src\resources\particle\animationparticle.h" />
+		<Unit filename="src\resources\particle\imageparticle.cpp" />
+		<Unit filename="src\resources\particle\imageparticle.h" />
+		<Unit filename="src\resources\particle\particle.cpp" />
+		<Unit filename="src\resources\particle\particle.h" />
+		<Unit filename="src\resources\particle\particlecontainer.cpp" />
+		<Unit filename="src\resources\particle\particlecontainer.h" />
+		<Unit filename="src\resources\particle\particleemitter.cpp" />
+		<Unit filename="src\resources\particle\particleemitter.h" />
+		<Unit filename="src\resources\particle\particleemitterprop.h" />
+		<Unit filename="src\resources\particle\rotationalparticle.h" />
+		<Unit filename="src\resources\particle\rotationalparticle.h" />
+		<Unit filename="src\resources\particle\textparticle.cpp" />
+		<Unit filename="src\resources\particle\textparticle.h" />
 		<Unit filename="src\utils\base64.cpp" />
 		<Unit filename="src\utils\base64.h" />
 		<Unit filename="src\utils\dtor.h" />
@@ -401,8 +416,6 @@
 		<Unit filename="src\utils\vector.h" />
 		<Unit filename="src\animatedsprite.cpp" />
 		<Unit filename="src\animatedsprite.h" />
-		<Unit filename="src\animationparticle.cpp" />
-		<Unit filename="src\animationparticle.h" />
 		<Unit filename="src\being.cpp" />
 		<Unit filename="src\being.h" />
 		<Unit filename="src\beingmanager.cpp" />
@@ -422,8 +435,6 @@
 		<Unit filename="src\flooritemmanager.h" />
 		<Unit filename="src\game.cpp" />
 		<Unit filename="src\game.h" />
-		<Unit filename="src\imageparticle.cpp" />
-		<Unit filename="src\imageparticle.h" />
 		<Unit filename="src\inventory.cpp" />
 		<Unit filename="src\inventory.h" />
 		<Unit filename="src\item.cpp" />
@@ -444,13 +455,6 @@
 		<Unit filename="src\monster.h" />
 		<Unit filename="src\npc.cpp" />
 		<Unit filename="src\npc.h" />
-		<Unit filename="src\particle.cpp" />
-		<Unit filename="src\particle.h" />
-		<Unit filename="src\particlecontainer.cpp" />
-		<Unit filename="src\particlecontainer.h" />
-		<Unit filename="src\particleemitter.cpp" />
-		<Unit filename="src\particleemitter.h" />
-		<Unit filename="src\particleemitterprop.h" />
 		<Unit filename="src\party.cpp" />
 		<Unit filename="src\party.h" />
 		<Unit filename="src\player.cpp" />
@@ -464,8 +468,6 @@
 		<Unit filename="src\simpleanimation.cpp" />
 		<Unit filename="src\simpleanimation.h" />
 		<Unit filename="src\sprite.h" />
-		<Unit filename="src\textparticle.cpp" />
-		<Unit filename="src\textparticle.h" />
 		<Unit filename="src\tileset.h" />
 		<Unit filename="src\winver.h" />
 

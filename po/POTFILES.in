@@ -51,9 +51,9 @@ src/net/loginhandler.cpp
 src/net/maploginhandler.cpp
 src/net/playerhandler.cpp
 src/net/tradehandler.cpp
-src/resources/itemdb.cpp
-src/resources/monsterdb.cpp
-src/resources/npcdb.cpp
+src/resources/db/itemdb.cpp
+src/resources/db/monsterdb.cpp
+src/resources/db/npcdb.cpp
 src/game.cpp
 src/main.cpp
 src/party.cpp

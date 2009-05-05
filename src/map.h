@@ -26,8 +26,9 @@
 #include <list>
 #include <vector>
 
-#include "particlecontainer.h"
 #include "properties.h"
+
+#include "resources/particle/particlecontainer.h"
 
 #include "utils/position.h"
 

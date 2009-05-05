@@ -20,49 +20,46 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "imageparticle.h"
+#include <guichan/color.hpp>
 
-#include "bindings/guichan/graphics.h"
+#include "textparticle.h"
 
-#include "resources/image.h"
+#include "../../bindings/guichan/textrenderer.h"
 
-ImageParticle::ImageParticle(Map *map, Image *image):
+TextParticle::TextParticle(Map *map, const std::string &text,
+                           const gcn::Color* color,
+                           gcn::Font *font, bool outline):
     Particle(map),
-    mImage(image)
+    mText(text),
+    mTextFont(font),
+    mColor(color),
+    mOutline(outline)
 {
-    if (mImage) mImage->incRef();
 }
 
-ImageParticle::~ImageParticle()
-{
-    if (mImage) mImage->decRef();
-}
-
-void ImageParticle::draw(Graphics *graphics, int offsetX, int offsetY) const
+void TextParticle::draw(Graphics *graphics, int offsetX, int offsetY) const
 {
     if (!mAlive)
         return;
 
-    int screenX = (int) mPos.x + offsetX - mImage->getWidth() / 2;
-    int screenY = (int) mPos.y - (int)mPos.z + offsetY - mImage->getHeight()/2;
+    int screenX = (int) mPos.x + offsetX;
+    int screenY = (int) mPos.y - (int) mPos.z + offsetY;
 
-    // Check if on screen
-    if (screenX + mImage->getWidth() < 0 ||
-            screenX > graphics->getWidth() ||
-            screenY + mImage->getHeight() < 0 ||
-            screenY > graphics->getHeight())
-    {
-        return;
-    }
-
-    float alphafactor = mAlpha;
+    float alpha = mAlpha * 255.0f;
 
     if (mLifetimeLeft > -1 && mLifetimeLeft < mFadeOut)
-        alphafactor *= (float) mLifetimeLeft / (float) mFadeOut;
+    {
+        alpha *= mLifetimeLeft;
+        alpha /= mFadeOut;
+    }
 
     if (mLifetimePast < mFadeIn)
-        alphafactor *= (float) mLifetimePast / (float) mFadeIn;
+    {
+        alpha *= mLifetimePast;
+        alpha /= mFadeIn;
+    }
 
-    mImage->setAlpha(alphafactor);
-    graphics->drawImage(mImage, screenX, screenY);
+    TextRenderer::renderText(graphics, mText,
+            screenX, screenY, gcn::Graphics::CENTER,
+            *mColor, mTextFont, mOutline, false, (int) alpha);
 }

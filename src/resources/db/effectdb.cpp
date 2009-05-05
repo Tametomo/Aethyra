@@ -23,9 +23,10 @@
 
 #include "effectdb.h"
 
+#include "../particle/particle.h"
+
 #include "../../being.h"
 #include "../../log.h"
-#include "../../particle.h"
 
 #include "../../bindings/sdl/sound.h"
 

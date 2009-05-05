@@ -25,7 +25,6 @@
 #include "beingmanager.h"
 #include "configuration.h"
 #include "map.h"
-#include "particle.h"
 #include "simpleanimation.h"
 #include "sprite.h"
 #include "tileset.h"
@@ -36,6 +35,8 @@
 #include "resources/ambientoverlay.h"
 #include "resources/image.h"
 #include "resources/resourcemanager.h"
+
+#include "resources/particle/particle.h"
 
 #include "utils/dtor.h"
 #include "utils/stringutils.h"

@@ -44,7 +44,6 @@
 #include "../log.h"
 #include "../main.h"
 #include "../map.h"
-#include "../particle.h"
 
 #include "../bindings/guichan/graphics.h"
 #include "../bindings/guichan/gui.h"
@@ -62,6 +61,8 @@
 #include "../bindings/guichan/widgets/textfield.h"
 #include "../bindings/guichan/widgets/window.h"
 #include "../bindings/guichan/widgets/windowcontainer.h"
+
+#include "../resources/particle/particle.h"
 
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"

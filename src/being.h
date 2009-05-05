@@ -31,10 +31,11 @@
 #include <vector>
 #include <bitset>
 
-#include "particlecontainer.h"
 #include "sprite.h"
 
 #include "resources/spritedef.h"
+
+#include "resources/particle/particlecontainer.h"
 
 #include "utils/position.h"
 

@@ -25,11 +25,11 @@
 
 #include <list>
 
-#include "utils/xml.h"
-
 #include "particleemitterprop.h"
 
-#include "resources/animation.h"
+#include "../animation.h"
+
+#include "../../utils/xml.h"
 
 class Image;
 class Map;

@@ -20,46 +20,49 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <guichan/color.hpp>
+#include "imageparticle.h"
 
-#include "textparticle.h"
+#include "../image.h"
 
-#include "bindings/guichan/textrenderer.h"
+#include "../../bindings/guichan/graphics.h"
 
-TextParticle::TextParticle(Map *map, const std::string &text,
-                           const gcn::Color* color,
-                           gcn::Font *font, bool outline):
+ImageParticle::ImageParticle(Map *map, Image *image):
     Particle(map),
-    mText(text),
-    mTextFont(font),
-    mColor(color),
-    mOutline(outline)
+    mImage(image)
 {
+    if (mImage) mImage->incRef();
 }
 
-void TextParticle::draw(Graphics *graphics, int offsetX, int offsetY) const
+ImageParticle::~ImageParticle()
+{
+    if (mImage) mImage->decRef();
+}
+
+void ImageParticle::draw(Graphics *graphics, int offsetX, int offsetY) const
 {
     if (!mAlive)
         return;
 
-    int screenX = (int) mPos.x + offsetX;
-    int screenY = (int) mPos.y - (int) mPos.z + offsetY;
+    int screenX = (int) mPos.x + offsetX - mImage->getWidth() / 2;
+    int screenY = (int) mPos.y - (int)mPos.z + offsetY - mImage->getHeight()/2;
 
-    float alpha = mAlpha * 255.0f;
+    // Check if on screen
+    if (screenX + mImage->getWidth() < 0 ||
+            screenX > graphics->getWidth() ||
+            screenY + mImage->getHeight() < 0 ||
+            screenY > graphics->getHeight())
+    {
+        return;
+    }
+
+    float alphafactor = mAlpha;
 
     if (mLifetimeLeft > -1 && mLifetimeLeft < mFadeOut)
-    {
-        alpha *= mLifetimeLeft;
-        alpha /= mFadeOut;
-    }
+        alphafactor *= (float) mLifetimeLeft / (float) mFadeOut;
 
     if (mLifetimePast < mFadeIn)
-    {
-        alpha *= mLifetimePast;
-        alpha /= mFadeIn;
-    }
+        alphafactor *= (float) mLifetimePast / (float) mFadeIn;
 
-    TextRenderer::renderText(graphics, mText,
-            screenX, screenY, gcn::Graphics::CENTER,
-            *mColor, mTextFont, mOutline, false, (int) alpha);
+    mImage->setAlpha(alphafactor);
+    graphics->drawImage(mImage, screenX, screenY);
 }

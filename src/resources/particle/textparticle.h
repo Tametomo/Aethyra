@@ -25,7 +25,7 @@
 
 #include "particle.h"
 
-#include "bindings/guichan/guichanfwd.h"
+#include "../../bindings/guichan/guichanfwd.h"
 
 class TextParticle : public Particle
 {

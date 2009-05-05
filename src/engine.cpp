@@ -27,7 +27,6 @@
 #include "localplayer.h"
 #include "log.h"
 #include "map.h"
-#include "particle.h"
 
 #include "bindings/guichan/gui.h"
 
@@ -38,6 +37,8 @@
 
 #include "resources/mapreader.h"
 #include "resources/resourcemanager.h"
+
+#include "resources/particle/particle.h"
 
 #include "utils/stringutils.h"
 
