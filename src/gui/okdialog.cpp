@@ -22,7 +22,7 @@
 
 #include <guichan/font.hpp>
 
-#include "confirm_dialog.h"
+#include "okdialog.h"
 
 #include "../bindings/guichan/gui.h"
 
@@ -31,8 +31,8 @@
 
 #include "../utils/gettext.h"
 
-ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
-                             Window *parent):
+OkDialog::OkDialog(const std::string &title, const std::string &msg,
+                   Window *parent):
     Window(title, true, parent)
 {
     mTextBox = new TextBox();
@@ -40,51 +40,40 @@ ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
     mTextBox->setOpaque(false);
     mTextBox->setTextWrapped(msg, 260);
 
-    gcn::Button *yesButton = new Button(_("Yes"), "yes", this);
-    gcn::Button *noButton = new Button(_("No"), "no", this);
+    okButton = new Button(_("Ok"), "ok", this);
 
     const int numRows = mTextBox->getNumberOfRows();
-    const int inWidth = yesButton->getWidth() + noButton->getWidth() + 
-                        (2 * getPadding());
     const int fontHeight = getFont()->getHeight();
     const int height = numRows * fontHeight;
     int width = getFont()->getWidth(title);
 
     if (width < mTextBox->getMinWidth())
         width = mTextBox->getMinWidth();
-    if (width < inWidth)
-        width = inWidth;
+    if (width < okButton->getWidth())
+        width = okButton->getWidth();
 
-    setContentSize(mTextBox->getMinWidth() + fontHeight, height + fontHeight +
-                   noButton->getHeight());
+    setContentSize(mTextBox->getMinWidth() + fontHeight, height +
+                   fontHeight + okButton->getHeight());
     mTextBox->setPosition(getPadding(), getPadding());
 
     // 8 is the padding that GUIChan adds to button widgets
     // (top and bottom combined)
-    yesButton->setPosition((width - inWidth) / 2, height + 8);
-    noButton->setPosition(yesButton->getX() + inWidth - noButton->getWidth(),
-                          height + 8);
+    okButton->setPosition((width - okButton->getWidth()) / 2, height + 8);
 
     add(mTextBox);
-    add(yesButton);
-    add(noButton);
+    add(okButton);
 
-    if (getParent())
-    {
-        setLocationRelativeTo(getParent());
-        getParent()->moveToTop(this);
-    }
-
+    setLocationRelativeTo(getParent());
     setVisible(true);
-    yesButton->requestFocus();
+    okButton->requestFocus();
 }
 
-unsigned int ConfirmDialog::getNumRows()
+unsigned int OkDialog::getNumRows()
 {
     return mTextBox->getNumberOfRows();
 }
 
-void ConfirmDialog::action(const gcn::ActionEvent &event)
+void OkDialog::action(const gcn::ActionEvent &event)
 {
     // Proxy button events to our listeners
     ActionListenerIterator i;
@@ -94,6 +83,6 @@ void ConfirmDialog::action(const gcn::ActionEvent &event)
     }
 
     // Can we receive anything else anyway?
-    if (event.getId() == "yes" || event.getId() == "no")
+    if (event.getId() == "ok")
         scheduleDelete();
 }

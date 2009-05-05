@@ -26,10 +26,10 @@
 
 #include "../inventory.h"
 #include "../item.h"
-#include "../player_relations.h"
+#include "../playerrelations.h"
 
 #include "../gui/chat.h"
-#include "../gui/confirm_dialog.h"
+#include "../gui/confirmdialog.h"
 #include "../gui/trade.h"
 
 #include "../resources/sprite/localplayer.h"

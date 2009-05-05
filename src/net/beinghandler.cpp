@@ -28,7 +28,7 @@
 #include "protocol.h"
 
 #include "../log.h"
-#include "../player_relations.h"
+#include "../playerrelations.h"
 
 #include "../bindings/guichan/gui.h"
 

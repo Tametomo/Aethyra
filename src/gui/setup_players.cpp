@@ -23,7 +23,7 @@
 #include <string>
 #include <vector>
 
-#include "ok_dialog.h"
+#include "okdialog.h"
 #include "setup_players.h"
 
 #include "../configuration.h"

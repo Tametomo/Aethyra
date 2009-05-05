@@ -28,7 +28,7 @@
 #include "../party.h"
 
 #include "../gui/chat.h"
-#include "../gui/confirm_dialog.h"
+#include "../gui/confirmdialog.h"
 
 #include "../resources/beingmanager.h"
 

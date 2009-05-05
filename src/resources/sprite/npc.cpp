@@ -32,7 +32,7 @@
 #include "../../bindings/guichan/palette.h"
 #include "../../bindings/guichan/text.h"
 
-#include "../../gui/npc_text.h"
+#include "../../gui/npctext.h"
 
 #include "../../net/messageout.h"
 #include "../../net/protocol.h"

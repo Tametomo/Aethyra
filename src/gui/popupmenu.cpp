@@ -24,11 +24,11 @@
 
 #include "chat.h"
 #include "inventorywindow.h"
-#include "item_amount.h"
+#include "itemamount.h"
 #include "popupmenu.h"
 
 #include "../item.h"
-#include "../player_relations.h"
+#include "../playerrelations.h"
 
 #include "../bindings/guichan/graphics.h"
 

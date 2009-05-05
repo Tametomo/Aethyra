@@ -21,7 +21,7 @@
  */
 
 #include "login.h"
-#include "ok_dialog.h"
+#include "okdialog.h"
 
 #include "../main.h"
 #include "../logindata.h"

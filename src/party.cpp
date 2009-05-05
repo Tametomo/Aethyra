@@ -22,7 +22,7 @@
 #include "party.h"
 
 #include "gui/chat.h"
-#include "gui/confirm_dialog.h"
+#include "gui/confirmdialog.h"
 
 #include "net/messageout.h"
 #include "net/protocol.h"

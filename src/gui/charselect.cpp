@@ -24,9 +24,9 @@
 
 #include <guichan/font.hpp>
 
-#include "char_select.h"
-#include "confirm_dialog.h"
-#include "ok_dialog.h"
+#include "charselect.h"
+#include "confirmdialog.h"
+#include "okdialog.h"
 
 #include "../game.h"
 #include "../main.h"

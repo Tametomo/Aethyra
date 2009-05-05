@@ -23,7 +23,7 @@
 #include <algorithm>
 
 #include "configuration.h"
-#include "player_relations.h"
+#include "playerrelations.h"
 
 #include "bindings/guichan/graphics.h"
 

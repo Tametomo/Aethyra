@@ -26,7 +26,7 @@
 
 #include "chat.h"
 #include "inventorywindow.h"
-#include "item_amount.h"
+#include "itemamount.h"
 #include "trade.h"
 
 #include "../inventory.h"

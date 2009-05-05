@@ -28,7 +28,7 @@
 #include "protocol.h"
 
 #include "../game.h"
-#include "../player_relations.h"
+#include "../playerrelations.h"
 
 #include "../gui/chat.h"
 

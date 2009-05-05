@@ -29,8 +29,8 @@
 #include "../logindata.h"
 #include "../main.h"
 
-#include "../gui/char_select.h"
-#include "../gui/ok_dialog.h"
+#include "../gui/charselect.h"
+#include "../gui/okdialog.h"
 
 #include "../resources/sprite/localplayer.h"
 

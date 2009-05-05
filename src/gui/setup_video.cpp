@@ -30,7 +30,7 @@
 #include "itempopup.h"
 #include "menuwindow.h"
 #include "ministatus.h"
-#include "ok_dialog.h"
+#include "okdialog.h"
 #include "popupmenu.h"
 #include "setup.h"
 #include "setup_video.h"

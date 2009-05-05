@@ -22,7 +22,7 @@
 
 #include <SDL_keyboard.h>
 
-#include "ok_dialog.h"
+#include "okdialog.h"
 #include "setup_input.h"
 
 #include "../configuration.h"

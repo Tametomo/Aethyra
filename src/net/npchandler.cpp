@@ -26,7 +26,7 @@
 #include "npchandler.h"
 #include "protocol.h"
 
-#include "../gui/npc_text.h"
+#include "../gui/npctext.h"
 #include "../gui/npcintegerdialog.h"
 #include "../gui/npclistdialog.h"
 #include "../gui/npcstringdialog.h"

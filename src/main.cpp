@@ -40,7 +40,7 @@
 #include "log.h"
 #include "logindata.h"
 #include "main.h"
-#include "player_relations.h"
+#include "playerrelations.h"
 #include "serverinfo.h"
 
 #include "bindings/guichan/graphics.h"
@@ -61,10 +61,10 @@
 
 #include "bindings/sdl/sound.h"
 
-#include "gui/char_server.h"
-#include "gui/char_select.h"
+#include "gui/charserver.h"
+#include "gui/charselect.h"
 #include "gui/login.h"
-#include "gui/ok_dialog.h"
+#include "gui/okdialog.h"
 #include "gui/register.h"
 #include "gui/setup.h"
 #include "gui/updatewindow.h"

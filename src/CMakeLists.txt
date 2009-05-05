@@ -171,14 +171,14 @@ SET(SRCS
     gui/buy.h
     gui/buysell.cpp
     gui/buysell.h
-    gui/char_select.cpp
-    gui/char_select.h
-    gui/char_server.cpp
-    gui/char_server.h
+    gui/charselect.cpp
+    gui/charselect.h
+    gui/charserver.cpp
+    gui/charserver.h
     gui/chat.cpp
     gui/chat.h
-    gui/confirm_dialog.cpp
-    gui/confirm_dialog.h
+    gui/confirmdialog.cpp
+    gui/confirmdialog.h
     gui/debugwindow.cpp
     gui/debugwindow.h
     gui/emotewindow.cpp
@@ -191,8 +191,8 @@ SET(SRCS
     gui/inventorywindow.h
     gui/itempopup.cpp
     gui/itempopup.h
-    gui/item_amount.cpp
-    gui/item_amount.h
+    gui/itemamount.cpp
+    gui/itemamount.h
     gui/login.cpp
     gui/login.h
     gui/menuwindow.cpp
@@ -207,10 +207,10 @@ SET(SRCS
     gui/npclistdialog.h
     gui/npcstringdialog.cpp
     gui/npcstringdialog.h
-    gui/npc_text.cpp
-    gui/npc_text.h
-    gui/ok_dialog.cpp
-    gui/ok_dialog.h
+    gui/npctext.cpp
+    gui/npctext.h
+    gui/okdialog.cpp
+    gui/okdialog.h
     gui/popupmenu.cpp
     gui/popupmenu.h
     gui/recorder.cpp
@@ -409,8 +409,8 @@ SET(SRCS
     map.h
     party.cpp
     party.h
-    player_relations.cpp
-    player_relations.h
+    playerrelations.cpp
+    playerrelations.h
     properties.h
     serverinfo.h
     shopitem.cpp

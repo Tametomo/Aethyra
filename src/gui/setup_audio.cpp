@@ -20,7 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "ok_dialog.h"
+#include "okdialog.h"
 #include "setup_audio.h"
 
 #include "../configuration.h"

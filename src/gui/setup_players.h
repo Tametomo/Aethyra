@@ -27,7 +27,7 @@
 
 #include "../bindings/guichan/widgets/setuptabcontainer.h"
 
-#include "../player_relations.h"
+#include "../playerrelations.h"
 
 class Table;
 class PlayerTableModel;

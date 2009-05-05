@@ -24,7 +24,7 @@
 
 #include <guichan/listmodel.hpp>
 
-#include "../../../player_relations.h"
+#include "../../../playerrelations.h"
 
 #include "../../../utils/gettext.h"
 

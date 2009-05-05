@@ -25,7 +25,7 @@
 #include <guichan/mouseinput.hpp>
 
 #include "inventorywindow.h"
-#include "item_amount.h"
+#include "itemamount.h"
 #include "storagewindow.h"
 #include "viewport.h"
 
