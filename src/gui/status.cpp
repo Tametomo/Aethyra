@@ -280,3 +280,16 @@ void StatusWindow::action(const gcn::ActionEvent &event)
             player_node->raiseAttribute(LocalPlayer::LUK);
     }
 }
+
+void StatusWindow::setVisible(bool visible)
+{
+    Window::setVisible(visible);
+
+    if (visible)
+    {
+        mHpBar->reset();
+        mMpBar->reset();
+        mXpBar->reset();
+        mJobBar->reset();
+    }
+}

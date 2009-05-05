@@ -907,7 +907,7 @@ int main(int argc, char *argv[])
         {
             progressBar->setProgress(progressBar->getProgress() + 0.005f);
             if (progressBar->getProgress() == 1.0f)
-                progressBar->setProgress(0.0f);
+                progressBar->reset();
         }
 
         std::string tempWallpaper = Wallpaper::getWallpaper(screenWidth,

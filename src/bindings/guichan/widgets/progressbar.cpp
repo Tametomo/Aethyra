@@ -206,3 +206,10 @@ void ProgressBar::addColor(Uint8 red, Uint8 green, Uint8 blue)
     mColors.push_back(new gcn::Color(red, green, blue));
 }
 
+void ProgressBar::reset()
+{
+    mProgress = 0;
+    mRed = mRedToGo = mColors[0]->r;
+    mGreen = mGreenToGo = mColors[0]->g;
+    mBlue = mBlueToGo = mColors[0]->b;
+}

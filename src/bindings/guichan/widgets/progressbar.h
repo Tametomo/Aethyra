@@ -108,17 +108,22 @@ class ProgressBar : public gcn::Widget
         { return mText; }
 
         /**
-         * Set wether the progress is moved smoothly
+         * Set whether the progress is moved smoothly
          */
         void setSmoothProgress(bool smoothProgress)
         { mSmoothProgress = smoothProgress; }
 
         /**
-         * Set wether the color changing is made smoothly
+         * Set whether the color changing is made smoothly
          */
         void setSmoothColorChange(bool smoothColorChange)
         { mSmoothColorChange = smoothColorChange; }
 
+        /**
+         * Sets the current shown progress to 0, and resets the progress colors
+         * as well.
+         */
+        void reset();
 
     private:
 
