@@ -36,12 +36,12 @@ MiniStatusWindow::MiniStatusWindow():
 {
     setVisible(true);
 
-    mHpBar = new ProgressBar(1.0f, 100, 20, 223, 32, 32);
+    mHpBar = new ProgressBar(0.0f, 100, 20, 223, 32, 32);
     mHpBar->addColor(230, 171, 34);
     mHpBar->addColor(0, 171, 34);
 
-    mMpBar = new ProgressBar(1.0f, 100, 20, 26, 102, 230);
-    mXpBar = new ProgressBar(1.0f, 100, 20, 143, 192, 211);
+    mMpBar = new ProgressBar(0.0f, 100, 20, 26, 102, 230);
+    mXpBar = new ProgressBar(0.0f, 100, 20, 143, 192, 211);
 
     mHpBar->setPosition(0, 3);
     mMpBar->setPosition(mHpBar->getWidth() + 3, 3);
@@ -70,8 +70,7 @@ void MiniStatusWindow::update()
     // Update labels
     mHpBar->setText(toString(player_node->mHp));
     mMpBar->setText(toString(player_node->mMp));
-
-    std::string updatedText = strprintf("%2.2f", 100 * xp) + "%";
+    mXpBar->setText(strprintf("%2.2f", 100 * xp) + "%");
 
     // Displays the number of monsters to next lvl
     // (disabled for now but interesting idea)
@@ -85,8 +84,6 @@ void MiniStatusWindow::update()
             << config.getValue("xpBarMonsterCounterName", "Monsters") <<" left...";
     }
     */
-
-    mXpBar->setText(updatedText);
 }
 
 void MiniStatusWindow::draw(gcn::Graphics *graphics)

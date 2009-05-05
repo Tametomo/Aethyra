@@ -51,18 +51,18 @@ StatusWindow::StatusWindow(LocalPlayer *player):
     mGpLabel = new Label(strprintf(_("Money: %d GP"), 0));
 
     mHpLabel = new Label(_("HP:"));
-    mHpBar = new ProgressBar(1.0f, 80, 15, 223, 32, 32);
+    mHpBar = new ProgressBar(0.0f, 80, 15, 223, 32, 32);
     mHpBar->addColor(230, 171, 34);
     mHpBar->addColor(0, 171, 34);
 
     mXpLabel = new Label(_("Exp:"));
-    mXpBar = new ProgressBar(1.0f, 80, 15, 143, 192, 211);
+    mXpBar = new ProgressBar(0.0f, 80, 15, 143, 192, 211);
 
     mMpLabel = new Label(_("MP:"));
-    mMpBar = new ProgressBar(1.0f, 80, 15, 26, 102, 230);
+    mMpBar = new ProgressBar(0.0f, 80, 15, 26, 102, 230);
 
     mJobLabel = new Label(_("Job:"));
-    mJobBar = new ProgressBar(1.0f, 80, 15, 220, 135, 203);
+    mJobBar = new ProgressBar(0.0f, 80, 15, 220, 135, 203);
 
     // ----------------------
     // Stats Part
@@ -172,25 +172,21 @@ void StatusWindow::update()
     mGpLabel->setCaption(strprintf(_("Money: %d GP"), mPlayer->mGp));
     mGpLabel->adjustSize();
 
-    mHpBar->setText(toString(mPlayer->mHp) +
-                    "/" + toString(mPlayer->mMaxHp));
+    mHpBar->setText(toString(mPlayer->mHp) + "/" + toString(mPlayer->mMaxHp));
 
-    mMpBar->setText(toString(mPlayer->mMp) +
-                    "/" + toString(mPlayer->mMaxMp));
+    mMpBar->setText(toString(mPlayer->mMp) + "/" + toString(mPlayer->mMaxMp));
 
-    mXpBar->setText(toString(mPlayer->getXp()) +
-                    "/" + toString(mPlayer->mXpForNextLevel));
+    mXpBar->setText(toString(mPlayer->getXp()) + "/" + 
+                    toString(mPlayer->mXpForNextLevel));
 
-    mJobBar->setText(toString(mPlayer->mJobXp) +
-                     "/" + toString(mPlayer->mJobXpForNextLevel));
+    mJobBar->setText(toString(mPlayer->mJobXp) + "/" +
+                    toString(mPlayer->mJobXpForNextLevel));
 
-    mHpBar->setProgress((float) mPlayer->mHp / (float) mPlayer->mMaxHp);
-    mMpBar->setProgress((float) mPlayer->mMp / (float) mPlayer->mMaxMp);
+    mHpBar->setProgress((float) mPlayer->mHp / mPlayer->mMaxHp);
+    mMpBar->setProgress((float) mPlayer->mMp / mPlayer->mMaxMp);
 
-    mXpBar->setProgress(
-            (float) mPlayer->getXp() / (float) mPlayer->mXpForNextLevel);
-    mJobBar->setProgress(
-            (float) mPlayer->mJobXp / (float) mPlayer->mJobXpForNextLevel);
+    mXpBar->setProgress((float) mPlayer->getXp() / mPlayer->mXpForNextLevel);
+    mJobBar->setProgress((float) mPlayer->mJobXp / mPlayer->mJobXpForNextLevel);
 
     // Stats Part
     // ----------

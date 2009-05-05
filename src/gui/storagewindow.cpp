@@ -76,7 +76,7 @@ StorageWindow::StorageWindow(int invSize):
 
     mSlotsLabel = new Label(_("Slots: "));
 
-    mSlotsBar = new ProgressBar(1.0f, 100, 20, 225, 200, 25);
+    mSlotsBar = new ProgressBar(0.0f, 100, 20, 225, 200, 25);
     mSlotsBar->setText(strprintf("%d/%d", mUsedSlots, mMaxSlots));
     mSlotsBar->setProgress((float) mUsedSlots / mMaxSlots);
 
