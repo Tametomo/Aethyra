@@ -59,7 +59,9 @@ StatusWindow::StatusWindow(LocalPlayer *player):
     mXpBar = new ProgressBar(0.0f, 80, 15, 143, 192, 211);
 
     mMpLabel = new Label(_("MP:"));
-    mMpBar = new ProgressBar(0.0f, 80, 15, 26, 102, 230);
+    mMpBar = new ProgressBar(0.0f, 100, 20, 140, 70, 230);
+    mMpBar->addColor(110, 85, 230);
+    mMpBar->addColor(26, 100, 230);
 
     mJobLabel = new Label(_("Job:"));
     mJobBar = new ProgressBar(0.0f, 80, 15, 220, 135, 203);

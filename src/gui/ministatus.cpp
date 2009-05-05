@@ -40,7 +40,10 @@ MiniStatusWindow::MiniStatusWindow():
     mHpBar->addColor(230, 171, 34);
     mHpBar->addColor(0, 171, 34);
 
-    mMpBar = new ProgressBar(0.0f, 100, 20, 26, 102, 230);
+    mMpBar = new ProgressBar(0.0f, 100, 20, 140, 70, 230);
+    mMpBar->addColor(110, 85, 230);
+    mMpBar->addColor(26, 100, 230);
+
     mXpBar = new ProgressBar(0.0f, 100, 20, 143, 192, 211);
 
     mHpBar->setPosition(0, 3);
