@@ -382,32 +382,18 @@ void Setup_Video::action(const gcn::ActionEvent &event)
                                         menuWindow->getWidth() - 3, 3);
 
             typedef std::list<gcn::Widget*> Widgets;
-            Widgets windows = windowContainer->getWidgetList();
+            Widgets widgets = windowContainer->getWidgetList();
 
             typedef Widgets::iterator WidgetIterator;
             WidgetIterator iter;
 
             // Reposition all the open sub-windows. The rest of the windows will
             // reposition themselves on opening.
-            for (iter = windows.begin(); iter != windows.end(); ++iter)
+            for (iter = widgets.begin(); iter != widgets.end(); ++iter)
             {
-                // TODO: This is a bit better than hard coding all of the window
-                // types, but it'd still be better if we could detect if a class
-                // uses the window class as a base class, and then act on it
-                // instead. However, I don't have a way to look up how to do it
-                // at the moment.
-                if (typeid(**iter) != typeid(Viewport) &&
-                    typeid(**iter) != typeid(SpeechBubble) &&
-                    typeid(**iter) != typeid(ItemPopup) &&
-                    typeid(**iter) != typeid(PopupMenu) &&
-                    typeid(**iter) != typeid(MenuWindow) &&
-                    typeid(**iter) != typeid(MiniStatusWindow) &&
-                    typeid(**iter) != typeid(Button) &&
-                    typeid(**iter) != typeid(Label) &&
-                    typeid(**iter) != typeid(ProgressBar) &&
-                    typeid(**iter) != typeid(Setup))
+                Window* window = dynamic_cast<Window*>(*iter);
+                if (window)
                 {
-                    Window* window = static_cast<Window*>(*iter);
                     window->adaptToNewSize();
                 }
             }
