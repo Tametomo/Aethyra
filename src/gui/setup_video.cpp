@@ -27,6 +27,7 @@
 #include <guichan/key.hpp>
 #include <guichan/widget.hpp>
 
+#include "desktop.h"
 #include "menubar.h"
 #include "okdialog.h"
 #include "setup_video.h"
@@ -385,6 +386,9 @@ void Setup_Video::action(const gcn::ActionEvent &event)
             if (menuBar)
                 menuBar->setPosition(graphics->getWidth() - menuBar->getWidth() -
                                      3, 3);
+
+            if (!mInGame)
+                desktop->resize();
 
             // Reposition all the open sub-windows. The rest of the windows will
             // reposition themselves on opening.

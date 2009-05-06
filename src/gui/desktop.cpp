@@ -83,7 +83,6 @@ Desktop::Desktop():
     progressLabel = new Label();
 
     setup = new Button(_("Setup"), "Setup", &listener);
-    setup->setPosition(getWidth() - setup->getWidth() - 3, 3);
 
     // Set the most appropriate wallpaper, based on screen width
     Wallpaper::loadWallpapers();
@@ -95,9 +94,11 @@ Desktop::Desktop():
     if (!login_wallpaper)
         logger->log("Couldn't load %s as wallpaper", wallpaperName.c_str());
 
-    add(progressBar, 5, getHeight() - 5 - progressBar->getHeight());
-    add(progressLabel, 15 + progressBar->getWidth(), progressBar->getY() + 4);
+    add(progressBar);
+    add(progressLabel);
     add(setup);
+
+    resize();
 }
 
 Desktop::~Desktop()
@@ -136,8 +137,7 @@ void Desktop::resize()
                                    progressBar->getY());
         setup->setPosition(getWidth() - setup->getWidth() - 3, 3);
 
-        if (currentDialog)
-            positionDialog(currentDialog);
+        positionDialog(currentDialog);
 #endif
     }
 }
@@ -192,9 +192,17 @@ void Desktop::useProgressBar(std::string message)
 
 void Desktop::positionDialog(Window *dialog)
 {
-    dialog->setPosition(std::min(getWidth() * 5 / 8, getWidth() - 
-                        dialog->getWidth()), std::min(getHeight() * 5 / 8,
-                        getHeight() - dialog->getHeight()));
+    if (!dialog)
+        return;
+
+    const int width = std::min(getWidth() * 5 / 8, getWidth() -
+                               dialog->getWidth());
+
+    const int height = std::min(getHeight() * 5 / 8, getHeight() -
+                                dialog->getHeight());
+
+    dialog->setPosition(width, height);
+    dialog->saveRelativeLocation(width, height);
 }
 
 void Desktop::draw(gcn::Graphics *graphics)

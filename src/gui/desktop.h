@@ -113,4 +113,7 @@ class Desktop : public Container
         std::string wallpaperName;
         Image *login_wallpaper;
 };
+
+extern Desktop *desktop;
+
 #endif

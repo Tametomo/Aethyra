@@ -108,7 +108,7 @@ Graphics *graphics;
 class SERVER_INFO;
 SERVER_INFO **server_info;
 
-bool mInGame = false;
+bool mInGame;
 unsigned char state;
 std::string errorMessage;
 unsigned char screen_mode;
@@ -129,6 +129,7 @@ LockedArray<LocalPlayer*> charInfo(MAX_SLOT + 1);
 Palette *guiPalette;
 
 DebugWindow *debugWindow;
+Desktop *desktop;
 HelpWindow *helpWindow;
 Setup* setupWindow;
 
@@ -779,16 +780,11 @@ int main(int argc, char *argv[])
 
     gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
 
-    Desktop *desktop = NULL;
-
     while (state != EXIT_STATE)
     {
         Window* currentDialog;
         unsigned char errorState = loginData.registerLogin ? REGISTER_STATE :
                                                              LOGIN_STATE;
-
-        if (desktop)
-            desktop->resize();
 
         // Handle SDL events
         inputManager->handleInput();
@@ -869,6 +865,7 @@ int main(int argc, char *argv[])
                     desktop = new Desktop();
                     top->add(desktop);
 
+                    mInGame = false;
                     state = LOGIN_STATE;
                     break;
 
