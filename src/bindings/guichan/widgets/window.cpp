@@ -604,6 +604,12 @@ void Window::saveWindowState()
             config.setValue(mWindowName + "WinHeight", getHeight());
         }
     }
+    else if (mWindowName == "window")
+    {
+        config.removeValue(mWindowName + "Position");
+        config.removeValue(mWindowName + "OffsetX");
+        config.removeValue(mWindowName + "OffsetY");
+    }
 }
 
 void Window::setDefaultSize(int defaultX, int defaultY,
