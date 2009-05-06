@@ -211,12 +211,12 @@ void InputManager::handleInput()
                                                           "want to quit?"));
                         exitConfirm->addActionListener(&exitListener);
                         exitConfirm->requestMoveToTop();
-                        used = true;
                     }
                     else
                     {
                         exitConfirm->action(gcn::ActionEvent(NULL, "no"));
                     }
+                    used = true;
                     break;
             }
 
@@ -538,7 +538,7 @@ void InputManager::handleInput()
         // there as well (in case we ever use other input libraries. If they're
         // all inside that loop, their implementing logic could be reduced to a
         // single function call)
-        if ((!gui->isInputFocused() || ignoreFocus) &&
+        if (mInGame && (!gui->isInputFocused() || ignoreFocus) &&
             player_node->mAction != Being::DEAD)
         {
             unsigned char direction = 0;
