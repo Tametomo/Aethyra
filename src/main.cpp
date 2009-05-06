@@ -27,8 +27,6 @@
 #include <unistd.h>
 #include <vector>
 
-#include <guichan/actionlistener.hpp>
-
 #include <libxml/parser.h>
 
 #include <SDL/SDL_ttf.h>
@@ -52,14 +50,11 @@
 #include "bindings/guichan/sdl/sdlgraphics.h"
 #include "bindings/guichan/sdl/sdlinput.h"
 
-#include "bindings/guichan/widgets/button.h"
-#include "bindings/guichan/widgets/label.h"
-#include "bindings/guichan/widgets/progressbar.h"
-
 #include "bindings/sdl/sound.h"
 
 #include "gui/charserver.h"
 #include "gui/charselect.h"
+#include "gui/desktop.h"
 #include "gui/help.h"
 #include "gui/login.h"
 #include "gui/okdialog.h"
@@ -77,7 +72,6 @@
 
 #include "resources/image.h"
 #include "resources/resourcemanager.h"
-#include "resources/wallpaper.h"
 
 #include "resources/db/colordb.h"
 #include "resources/db/effectdb.h"
@@ -103,17 +97,6 @@
 #include <cerrno>
 #include <sys/stat.h>
 #endif
-
-namespace
-{
-    struct SetupListener : public gcn::ActionListener
-    {
-        /**
-         * Called when receiving actions from widget.
-         */
-        void action(const gcn::ActionEvent &event);
-    } listener;
-}
 
 // Account infos
 char n_server, n_character;
@@ -296,11 +279,11 @@ static void init_engine(const Options &options)
     // Set log file
     logger->setLogFile(homeDir + std::string("/aethyra.log"));
 
-    #ifdef PACKAGE_VERSION
-        logger->log("Starting Aethyra Version %s", PACKAGE_VERSION);
-    #else
-        logger->log("Starting Aethyra - Version not defined"));
-    #endif
+#ifdef PACKAGE_VERSION
+    logger->log("Starting Aethyra Version %s", PACKAGE_VERSION);
+#else
+    logger->log("Starting Aethyra - Version not defined"));
+#endif
 
     // Initialize SDL
     logger->log("Initializing SDL...");
@@ -386,6 +369,7 @@ static void init_engine(const Options &options)
         // We reopen the file in write mode and we create it
         configFile = fopen(configPath.c_str(), "wt");
     }
+
     if (configFile == NULL)
     {
         std::cout << "Can't create " << configPath << ". "
@@ -440,9 +424,8 @@ static void init_engine(const Options &options)
     // Try to set the desired video mode
     if (!graphics->setVideoMode(width, height, bpp, fullscreen, hwaccel))
     {
-        std::cerr << _("Couldn't set ")
-                  << width << "x" << height << "x" << bpp << _(" video mode: ")
-                  << SDL_GetError() << std::endl;
+        std::cerr << _("Couldn't set ") << width << "x" << height << "x" 
+                  << bpp << _(" video mode: ") << SDL_GetError() << std::endl;
         exit(1);
     }
 
@@ -458,8 +441,7 @@ static void init_engine(const Options &options)
         if (config.getValue("sound", 0) == 1)
             sound.init();
 
-        sound.setSfxVolume((int) config.getValue("sfxVolume",
-                                                 defaultSfxVolume));
+        sound.setSfxVolume((int) config.getValue("sfxVolume", defaultSfxVolume));
         sound.setMusicVolume((int) config.getValue("musicVolume",
                                                    defaultMusicVolume));
     }
@@ -614,14 +596,6 @@ static void loadUpdates()
     }
 }
 
-struct ErrorListener : public gcn::ActionListener
-{
-    void action(const gcn::ActionEvent &event)
-    {
-        state = loginData.registerLogin ? REGISTER_STATE : LOGIN_STATE;
-    }
-} errorListener;
-
 // TODO Find some nice place for these functions
 static void accountLogin(Network *network, LoginData *loginData)
 {
@@ -663,18 +637,6 @@ static void accountLogin(Network *network, LoginData *loginData)
         config.setValue("username", loginData->username);
     }
     config.setValue("remember", loginData->remember);
-}
-
-inline int MIN(int x, int y)
-{
-    return x < y ? x : y;
-}
-
-static void positionDialog(Window *dialog, int screenWidth, int screenHeight)
-{
-    dialog->setPosition(
-        MIN(screenWidth * 5 / 8, screenWidth - dialog->getWidth()),
-        MIN(screenHeight * 5 / 8, screenHeight - dialog->getHeight()));
 }
 
 static void charLogin(Network *network, LoginData *loginData)
@@ -785,24 +747,9 @@ int main(int argc, char *argv[])
     guiPalette = new Palette;
 
     game = NULL;
-    Window *currentDialog = NULL;
-    Image *login_wallpaper = NULL;
+
     setupWindow = new Setup();
     helpWindow = new HelpWindow();
-
-    gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
-#ifdef PACKAGE_VERSION
-    gcn::Label *versionLabel = new Label(PACKAGE_VERSION);
-    top->add(versionLabel, 2, 2);
-#endif
-    ProgressBar *progressBar = new ProgressBar(0.0f, 100, 20, 168, 116, 31);
-    gcn::Label *progressLabel = new Label();
-    top->add(progressBar, 5, top->getHeight() - 5 - progressBar->getHeight());
-    top->add(progressLabel, 15 + progressBar->getWidth(), progressBar->getY() + 4);
-    progressBar->setVisible(false);
-    gcn::Button *setup = new Button(_("Setup"), "Setup", &listener);
-    setup->setPosition(top->getWidth() - setup->getWidth() - 3, 3);
-    top->add(setup);
 
     sound.playMusic("Magick - Real.ogg");
 
@@ -826,42 +773,18 @@ int main(int argc, char *argv[])
     Network *network = new Network();
     InputManager *inputManager = new InputManager();
 
-    // Set the most appropriate wallpaper, based on screen width
-    Wallpaper::loadWallpapers();
+    gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
 
-    int screenWidth = (int) config.getValue("screenwidth", defaultScreenWidth);
-    int screenHeight = (int) config.getValue("screenheight",
-                                             defaultScreenHeight);
-
-    std::string wallpaperName = Wallpaper::getWallpaper(screenWidth,
-                                                        screenHeight);
-
-    login_wallpaper = ResourceManager::getInstance()->getImage(wallpaperName);
-
-    if (!login_wallpaper)
-        logger->log("Couldn't load %s as wallpaper", wallpaperName.c_str());
+    Desktop *desktop = NULL;
 
     while (state != EXIT_STATE)
     {
-        int newScreenWidth = graphics->getWidth();
-        int newScreenHeight = graphics->getHeight();
+        Window* currentDialog;
+        unsigned char errorState = loginData.registerLogin ? REGISTER_STATE :
+                                                             LOGIN_STATE;
 
-        if (screenWidth != newScreenWidth || screenHeight != newScreenHeight)
-        {
-            screenWidth = newScreenWidth;
-            screenHeight = newScreenHeight;
-
-#ifndef WIN32
-            progressBar->setPosition(5, top->getHeight() - 5 - 
-                                     progressBar->getHeight());
-            progressLabel->setPosition(15 + progressBar->getWidth(), 4 +
-                                       progressBar->getY());
-            setup->setPosition(top->getWidth() - setup->getWidth() - 3, 3);
-
-            if (currentDialog)
-                positionDialog(currentDialog, screenWidth, screenHeight);
-#endif
-        }
+        if (desktop)
+            desktop->resize();
 
         // Handle SDL events
         inputManager->handleInput();
@@ -878,39 +801,6 @@ int main(int argc, char *argv[])
                 errorMessage = _("Got disconnected from server!");
         }
 
-        if (progressBar->isVisible())
-        {
-            progressBar->setProgress(progressBar->getProgress() + 0.005f);
-            if (progressBar->getProgress() == 1.0f)
-                progressBar->reset();
-        }
-
-        std::string tempWallpaper = Wallpaper::getWallpaper(screenWidth,
-                                                            screenHeight);
-
-        if (tempWallpaper.compare(wallpaperName) != 0)
-        {
-            wallpaperName = tempWallpaper;
-            Image *temp = ResourceManager::getInstance()->getImage(tempWallpaper);
-
-            if (temp)
-            {
-                login_wallpaper->decRef();
-                login_wallpaper = temp;
-            }
-        }
-
-        if (graphics->getWidth() > login_wallpaper->getWidth() ||
-            graphics->getHeight() > login_wallpaper->getHeight())
-        {
-            graphics->setColor(gcn::Color(255, 255, 255));
-            graphics->fillRectangle(gcn::Rectangle(
-                        0, 0, graphics->getWidth(), graphics->getHeight()));
-        }
-        graphics->drawImage(login_wallpaper,
-                (graphics->getWidth() - login_wallpaper->getWidth()) / 2,
-                (graphics->getHeight() - login_wallpaper->getHeight()) / 2);
-
         gui->logic();
 
         if (state != oldstate)
@@ -920,8 +810,7 @@ int main(int argc, char *argv[])
                 case UPDATE_STATE:
                     loadUpdates();
 
-                    // Reload the wallpaper in case that it was updated
-                    Wallpaper::loadWallpapers();
+                    desktop->reload();
                     break;
 
                     // Those states don't cause a network disconnect
@@ -931,8 +820,7 @@ int main(int argc, char *argv[])
                 case ACCOUNT_STATE:
                 case CHAR_CONNECT_STATE:
                 case CONNECTING_STATE:
-                    progressBar->setVisible(false);
-                    progressLabel->setCaption("");
+                    desktop->resetProgressBar();
                     break;
 
                 default:
@@ -943,11 +831,10 @@ int main(int argc, char *argv[])
 
             oldstate = state;
 
-            if (currentDialog && state != ACCOUNT_STATE &&
-                    state != CHAR_CONNECT_STATE)
+            if (desktop &&state != ACCOUNT_STATE && state != CHAR_CONNECT_STATE &&
+                desktop->getCurrentDialog())
             {
-                delete currentDialog;
-                currentDialog = NULL;
+                desktop->removeCurrentDialog();
             }
 
             switch (state)
@@ -975,6 +862,9 @@ int main(int argc, char *argv[])
                 case LOGIN_STATE:
                     logger->log("State: LOGIN");
 
+                    desktop = new Desktop();
+                    top->add(desktop);
+
                     if (!loginData.password.empty())
                     {
                         loginData.registerLogin = false;
@@ -982,16 +872,13 @@ int main(int argc, char *argv[])
                     }
                     else
                     {
-                        currentDialog = new LoginDialog(&loginData);
-                        positionDialog(currentDialog, screenWidth,
-                                                      screenHeight);
+                        desktop->changeCurrentDialog(new LoginDialog(&loginData));
                     }
                     break;
 
                 case REGISTER_STATE:
                     logger->log("State: REGISTER");
-                    currentDialog = new RegisterDialog(&loginData);
-                    positionDialog(currentDialog, screenWidth, screenHeight);
+                    desktop->changeCurrentDialog(new RegisterDialog(&loginData));
                     break;
 
                 case CHAR_SERVER_STATE:
@@ -1008,13 +895,12 @@ int main(int argc, char *argv[])
                     else
                     {
                         int nextState = UPDATE_STATE;
-                        currentDialog = new ServerSelectDialog(&loginData,
-                                                                nextState);
-                        positionDialog(currentDialog, screenWidth,
-                                                      screenHeight);
-                        if (options.chooseDefault ||
-                           !options.playername.empty())
+                        desktop->changeCurrentDialog(new ServerSelectDialog(
+                                                         &loginData, nextState));
+
+                        if (options.chooseDefault || !options.playername.empty())
                         {
+                            currentDialog = desktop->getCurrentDialog();
                             ((ServerSelectDialog*) currentDialog)->action(
                                 gcn::ActionEvent(NULL, "ok"));
                         }
@@ -1022,11 +908,12 @@ int main(int argc, char *argv[])
                     break;
                 case CHAR_SELECT_STATE:
                     logger->log("State: CHAR_SELECT");
-                    currentDialog = new CharSelectDialog(&charInfo,
+                    desktop->changeCurrentDialog(new CharSelectDialog(&charInfo,
                                                         (loginData.sex == 0) ?
                                                          GENDER_FEMALE :
-                                                         GENDER_MALE);
-                    positionDialog(currentDialog, screenWidth, screenHeight);
+                                                         GENDER_MALE));
+
+                    currentDialog = desktop->getCurrentDialog();
 
                     if (((CharSelectDialog*) currentDialog)->selectByName(
                             options.playername))
@@ -1044,19 +931,7 @@ int main(int argc, char *argv[])
                 case GAME_STATE:
                     sound.fadeOutMusic(1000);
 
-#ifdef PACKAGE_VERSION
-                    delete versionLabel;
-                    versionLabel = NULL;
-#endif
-                    delete progressBar;
-                    delete progressLabel;
-                    delete setup;
-                    progressBar = NULL;
-                    progressLabel = NULL;
-                    currentDialog = NULL;
-                    setup = NULL;
-                    login_wallpaper->decRef();
-                    login_wallpaper = NULL;
+                    delete desktop;
 
                     logger->log("State: GAME");
                     game = new Game(network);
@@ -1080,44 +955,33 @@ int main(int argc, char *argv[])
                         setUpdatesDir();
                         logger->log("State: UPDATE");
 
-                        currentDialog = new UpdaterWindow(updateHost,
-                                                homeDir + "/" + updatesDir);
-                        positionDialog(currentDialog, screenWidth,
-                                                      screenHeight);
+                        desktop->changeCurrentDialog(new UpdaterWindow(updateHost,
+                                                                       homeDir + "/"
+                                                                       + updatesDir));
                     }
                     break;
 
                 case ERROR_STATE:
                     logger->log("State: ERROR");
-                    currentDialog = new OkDialog(_("Error"), errorMessage);
-                    positionDialog(currentDialog, screenWidth, screenHeight);
-                    currentDialog->addActionListener(&errorListener);
-                    currentDialog = NULL; // OkDialog deletes itself
+                    desktop->showError(new OkDialog(_("Error"), errorMessage),
+                                       errorState);
                     network->disconnect();
                     network->clearHandlers();
                     break;
 
                 case CONNECTING_STATE:
                     logger->log("State: CONNECTING");
-                    progressBar->setVisible(true);
-                    progressLabel->setCaption(_("Connecting to map server..."));
-                    progressLabel->adjustSize();
+                    desktop->useProgressBar(_("Connecting to map server..."));
                     mapLogin(network, &loginData);
                     break;
 
                 case CHAR_CONNECT_STATE:
-                    progressBar->setVisible(true);
-                    progressLabel->setCaption(
-                            _("Connecting to character server..."));
-                    progressLabel->adjustSize();
+                    desktop->useProgressBar(_("Connecting to character server..."));
                     charLogin(network, &loginData);
                     break;
 
                 case ACCOUNT_STATE:
-                    progressBar->setVisible(true);
-                    progressLabel->setCaption(
-                            _("Connecting to account server..."));
-                    progressLabel->adjustSize();
+                    desktop->useProgressBar(_("Connecting to account server..."));
                     accountLogin(network, &loginData);
                     break;
 
@@ -1142,17 +1006,3 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void SetupListener::action(const gcn::ActionEvent &event)
-{
-    Window *window = NULL;
-
-    if (event.getId() == "Setup")
-        window = setupWindow;
-
-    if (window)
-    {
-        window->setVisible(!window->isVisible());
-        if (window->isVisible())
-            window->requestMoveToTop();
-    }
-}

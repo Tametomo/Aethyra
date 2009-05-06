@@ -135,6 +135,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      gui/confirmdialog.h \
 	      gui/debugwindow.cpp \
 	      gui/debugwindow.h \
+	      gui/desktop.cpp \
+	      gui/desktop.h \
 	      gui/emotewindow.cpp \
 	      gui/emotewindow.h \
 	      gui/equipmentwindow.cpp \

@@ -236,6 +236,8 @@
 		<Unit filename="src\gui\confirmdialog.h" />
 		<Unit filename="src\gui\debugwindow.cpp" />
 		<Unit filename="src\gui\debugwindow.h" />
+		<Unit filename="src\gui\desktop.cpp" />
+		<Unit filename="src\gui\desktop.h" />
 		<Unit filename="src\gui\emotewindow.cpp" />
 		<Unit filename="src\gui\emotewindow.h" />
 		<Unit filename="src\gui\equipmentwindow.cpp" />
