@@ -34,9 +34,7 @@
 #include <SDL/SDL_ttf.h>
 
 #include "configuration.h"
-#include "emoteshortcut.h"
 #include "game.h"
-#include "itemshortcut.h"
 #include "log.h"
 #include "main.h"
 #include "playerrelations.h"
@@ -451,12 +449,6 @@ static void init_engine(const Options &options)
     // Initialize for drawing
     graphics->_beginDraw();
 
-    // Initialize the item shortcuts.
-    itemShortcut = new ItemShortcut();
-
-    // Initialize the emote shortcuts.
-    emoteShortcut = new EmoteShortcut();
-
     gui = new Gui(graphics);
     state = LOGIN_STATE; /**< Initial game state */
 
@@ -488,9 +480,9 @@ static void init_engine(const Options &options)
 /** Clear the engine */
 static void exit_engine()
 {
-    // Before config.write() since it writes the shortcuts to the config
-    delete itemShortcut;
-    delete emoteShortcut;
+    // Before config.write() so that global windows can get their settings
+    // written to the configuration file.
+    delete helpWindow;
 
     config.write();
 
@@ -1146,8 +1138,6 @@ int main(int argc, char *argv[])
     }
 
     delete guiPalette;
-
-    delete helpWindow;
     delete inputManager;
     delete network;
     SDLNet_Quit();

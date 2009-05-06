@@ -137,6 +137,10 @@ namespace
  */
 void createGuiWindows()
 {
+    // Initialize the shortcuts for the shortcut windows.
+    itemShortcut = new ItemShortcut();
+    emoteShortcut = new EmoteShortcut();
+
     // Create dialogs
     chatWindow = new ChatWindow();
     menuBar = new MenuBar();
@@ -190,6 +194,9 @@ static void destroyGuiWindows()
     delete itemShortcutWindow;
     delete emoteShortcutWindow;
     delete storageWindow;
+
+    delete itemShortcut;
+    delete emoteShortcut;
 }
 
 Game::Game(Network *network):
