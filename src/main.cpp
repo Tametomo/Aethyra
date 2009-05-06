@@ -469,6 +469,9 @@ static void exit_engine()
     // written to the configuration file.
     delete debugWindow;
     delete helpWindow;
+    delete setupWindow;
+
+    setupWindow = NULL;
 
     config.write();
 
