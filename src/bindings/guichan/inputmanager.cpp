@@ -226,6 +226,9 @@ void InputManager::handleInput()
 
                     used = true;
                     break;
+                case KeyboardConfig::KEY_WINDOW_SETUP:
+                    requestedWindow = setupWindow;
+                    break;
             }
 
             if (mInGame)
@@ -266,9 +269,6 @@ void InputManager::handleInput()
                         break;
                     case KeyboardConfig::KEY_WINDOW_SHORTCUT:
                         requestedWindow = itemShortcutWindow;
-                        break;
-                    case KeyboardConfig::KEY_WINDOW_SETUP:
-                        requestedWindow = setupWindow;
                         break;
                     case KeyboardConfig::KEY_WINDOW_EMOTE:
                         requestedWindow = emoteWindow;
@@ -501,16 +501,16 @@ void InputManager::handleInput()
                             break;
                     }
                 }
+            }
 
-                if (requestedWindow)
-                {
-                   requestedWindow->setVisible(!requestedWindow->isVisible());
+            if (requestedWindow)
+            {
+                requestedWindow->setVisible(!requestedWindow->isVisible());
          
-                    if (requestedWindow->isVisible())
-                        requestedWindow->requestMoveToTop();
+                if (requestedWindow->isVisible())
+                    requestedWindow->requestMoveToTop();
 
-                    used = true;
-                }
+                used = true;
             }
         }
 
