@@ -435,7 +435,7 @@ static void init_engine(const Options &options)
     graphics->_beginDraw();
 
     gui = new Gui(graphics);
-    state = LOGIN_STATE; /**< Initial game state */
+    state = START_STATE; /**< Initial game state */
 
     // Initialize sound engine
     try
@@ -835,8 +835,8 @@ int main(int argc, char *argv[])
 
             oldstate = state;
 
-            if (desktop &&state != ACCOUNT_STATE && state != CHAR_CONNECT_STATE &&
-                desktop->getCurrentDialog())
+            if (desktop && state != ACCOUNT_STATE && state != CHAR_CONNECT_STATE
+                && desktop->getCurrentDialog())
             {
                 desktop->removeCurrentDialog();
             }
@@ -863,11 +863,17 @@ int main(int argc, char *argv[])
                     state = CHAR_CONNECT_STATE;
                     break;
 
-                case LOGIN_STATE:
-                    logger->log("State: LOGIN");
+                case START_STATE:
+                    logger->log("State: START");
 
                     desktop = new Desktop();
                     top->add(desktop);
+
+                    state = LOGIN_STATE;
+                    break;
+
+                case LOGIN_STATE:
+                    logger->log("State: LOGIN");
 
                     if (!loginData.password.empty())
                     {
