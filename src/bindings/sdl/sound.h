@@ -96,6 +96,8 @@ class Sound
          */
         void playSfx(const std::string &path);
 
+        std::string getCurrentTrack() { return mCurrentMusicFile; }
+
     private:
         /** Logs various info about sound device. */
         void info();

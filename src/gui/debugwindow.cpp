@@ -31,6 +31,8 @@
 
 #include "../bindings/guichan/widgets/label.h"
 
+#include "../bindings/sdl/sound.h"
+
 #include "../resources/particle/particle.h"
 
 #include "../utils/gettext.h"
@@ -69,7 +71,6 @@ void DebugWindow::setVisible(bool visible)
     if (!engine)
     {
         mTileMouseLabel->setVisible(false);
-        mMusicFileLabel->setVisible(false);
         mParticleCountLabel->setVisible(false);
         mMapLabel->setVisible(false);
         mMiniMapLabel->setVisible(false);
@@ -77,7 +78,6 @@ void DebugWindow::setVisible(bool visible)
     else if (visible)
     {
         mTileMouseLabel->setVisible(true);
-        mMusicFileLabel->setVisible(true);
         mParticleCountLabel->setVisible(true);
         mMapLabel->setVisible(true);
         mMiniMapLabel->setVisible(true);
@@ -90,6 +90,9 @@ void DebugWindow::logic()
         return;
 
     mFPSLabel->setCaption(toString(fps) + " FPS");
+
+    const std::string music = "Music: " + sound.getCurrentTrack();
+    mMusicFileLabel->setCaption(music);
 
     if (!engine)
         return;
@@ -105,8 +108,6 @@ void DebugWindow::logic()
 
     if (currentMap)
     {
-        const std::string music = "Music: " + currentMap->getProperty("music");
-        mMusicFileLabel->setCaption(music);
 
         const std::string minimap =
             "MiniMap: " + currentMap->getProperty("minimap");
