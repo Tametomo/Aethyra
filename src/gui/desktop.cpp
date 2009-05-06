@@ -68,8 +68,8 @@ Desktop::Desktop():
 {
     currentDialog = NULL;
 
-    setWidth((int) config.getValue("getWidth()", defaultScreenWidth));
-    setHeight((int) config.getValue("getHeight()", defaultScreenHeight));
+    setWidth((int) config.getValue("screenwidth", defaultScreenWidth));
+    setHeight((int) config.getValue("screenheight", defaultScreenHeight));
     setOpaque(false);
 
 #ifdef PACKAGE_VERSION
@@ -79,10 +79,14 @@ Desktop::Desktop():
 
     progressBar = new ProgressBar(0.0f, 100, 20, 168, 116, 31);
     progressBar->setVisible(false);
+    progressBar->setPosition(5, getHeight() - 5 - progressBar->getHeight());
 
     progressLabel = new Label();
+    progressLabel->setPosition(15 + progressBar->getWidth(), 4 +
+                               progressBar->getY());
 
     setup = new Button(_("Setup"), "Setup", &listener);
+    setup->setPosition(getWidth() - setup->getWidth() - 3, 3);
 
     // Set the most appropriate wallpaper, based on screen width
     Wallpaper::loadWallpapers();
@@ -97,8 +101,6 @@ Desktop::Desktop():
     add(progressBar);
     add(progressLabel);
     add(setup);
-
-    resize();
 }
 
 Desktop::~Desktop()
