@@ -66,6 +66,14 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     minusButton->adjustSize();
     minusButton->setWidth(plusButton->getWidth());
 
+    // If only one item is available, then the window isn't needed, so move on
+    // To prevent problems, we still build the gui elements
+    if (mMax <= 1)
+    {
+        action(gcn::ActionEvent(this, "All"));
+        return;
+    }
+
     // Set positions
     ContainerPlacer place;
     place = getPlacer(0, 0);
@@ -114,21 +122,13 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
     int amount = mItemAmountSlide->getValue();
 
     if (event.getId() == "Cancel")
-    {
         close();
-    }
     else if (event.getId() == "Plus" && amount < mMax)
-    {
         amount++;
-    }
     else if (event.getId() == "Minus" && amount > 1)
-    {
         amount--;
-    }
     else if (event.getId() == "Slide")
-    {
         amount = static_cast<int>(mItemAmountSlide->getValue());
-    }
     else if (event.getId() == "Ok" || event.getId() == "All")
     {
         if (event.getId() == "All") 
