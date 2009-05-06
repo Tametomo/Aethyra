@@ -63,6 +63,7 @@ HelpWindow::HelpWindow():
     layout.setRowHeight(0, Layout::AUTO_SET);
 
     loadWindowState();
+    setVisible(false);
 }
 
 void HelpWindow::action(const gcn::ActionEvent &event)
@@ -98,5 +99,11 @@ void HelpWindow::loadFile(const std::string &file)
     {
         mBrowserBox->addRow(lines[i]);
     }
+}
+
+void HelpWindow::requestFocus()
+{
+    if (isVisible())
+        mOkButton->requestFocus();
 }
 

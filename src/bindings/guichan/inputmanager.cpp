@@ -197,9 +197,10 @@ void InputManager::handleInput()
                     else
                     {
                         helpWindow->loadHelp("index");
+                        helpWindow->requestFocus();
                         helpWindow->requestMoveToTop();
-                        used = true;
                     }
+                    used = true;
                     break;
                 // Quitting confirmation dialog
                 case KeyboardConfig::KEY_QUIT:

@@ -57,6 +57,12 @@ class HelpWindow : public Window, public LinkHandler,
          */
         void loadHelp(const std::string &helpFile);
 
+        /**
+         * Called when the dialog is visible to allow for mOkButton to request
+         * focus.
+         */
+        void requestFocus();
+
     private:
         void loadFile(const std::string &file);
 
