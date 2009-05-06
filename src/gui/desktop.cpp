@@ -130,7 +130,21 @@ void Desktop::resize()
         setWidth(newScreenWidth);
         setHeight(newScreenHeight);
 
-#ifndef WIN32
+        std::string tempWallpaper = Wallpaper::getWallpaper(getWidth(),
+                                                            getHeight());
+
+        if (tempWallpaper.compare(wallpaperName) != 0)
+        {
+            wallpaperName = tempWallpaper;
+            Image *temp = ResourceManager::getInstance()->getImage(tempWallpaper);
+
+            if (temp)
+            {
+                login_wallpaper->decRef();
+                login_wallpaper = temp;
+            }
+        }
+
         progressBar->setPosition(5, getHeight() - 5 - 
                                  progressBar->getHeight());
         progressLabel->setPosition(15 + progressBar->getWidth(), 4 +
@@ -138,7 +152,6 @@ void Desktop::resize()
         setup->setPosition(getWidth() - setup->getWidth() - 3, 3);
 
         positionDialog(currentDialog);
-#endif
     }
 }
 
@@ -227,23 +240,6 @@ void Desktop::draw(gcn::Graphics *graphics)
 
 void Desktop::logic()
 {
-    std::string tempWallpaper = Wallpaper::getWallpaper(getWidth(),
-                                                        getHeight());
-
-    if (tempWallpaper.compare(wallpaperName) != 0)
-    {
-        wallpaperName = tempWallpaper;
-        Image *temp = ResourceManager::getInstance()->getImage(tempWallpaper);
-
-        if (temp)
-        {
-            login_wallpaper->decRef();
-            login_wallpaper = temp;
-        }
-
-        resize();
-    }
-
     if (progressBar->isVisible())
     {
         progressBar->setProgress(progressBar->getProgress() + 0.005f);
