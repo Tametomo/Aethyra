@@ -27,6 +27,8 @@
 #include "setup_players.h"
 #include "setup_video.h"
 
+#include "../main.h"
+
 #include "../bindings/guichan/layout.h"
 
 #include "../bindings/guichan/widgets/button.h"
@@ -85,8 +87,6 @@ Setup::Setup():
 
     loadWindowState();
     setVisible(false);
-
-    setInGame(false);
 }
 
 Setup::~Setup()
@@ -129,8 +129,10 @@ void Setup::action(const gcn::ActionEvent &event)
     }
 }
 
-void Setup::setInGame(bool inGame)
+void Setup::logic()
 {
-    mResetWindows->setEnabled(inGame);
+    Window::logic();
+
+    mResetWindows->setEnabled(mInGame);
 }
 

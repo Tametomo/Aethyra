@@ -53,7 +53,6 @@
 #include "gui/npctext.h"
 #include "gui/okdialog.h"
 #include "gui/sell.h"
-#include "gui/setup.h"
 #include "gui/shortcutwindow.h"
 #include "gui/skill.h"
 #include "gui/status.h"
@@ -246,8 +245,6 @@ Game::Game(Network *network):
     map_path = map_path.substr(0, map_path.rfind("."));
     engine->changeMap(map_path);
     MessageOut outMsg(CMSG_MAP_LOADED);
-
-    setupWindow->setInGame(true);
 }
 
 Game::~Game()
