@@ -55,13 +55,7 @@ class HelpWindow : public Window, public LinkHandler,
         /**
          * Loads help in the dialog.
          */
-        void loadHelp(const std::string &helpFile); 
-
-        /**
-         * Overloads window setVisible by Guichan to allow for setting focus on
-         * the close button when visible.
-         */
-        void setVisible(bool visible);
+        void loadHelp(const std::string &helpFile);
 
     private:
         void loadFile(const std::string &file);

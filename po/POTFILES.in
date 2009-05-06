@@ -1,5 +1,6 @@
 # List of source files which contain translatable strings.
 
+src/bindings/guichan/graphics.cpp
 src/bindings/guichan/keyboardconfig.cpp
 src/bindings/guichan/palette.cpp
 src/bindings/guichan/models/playerrelationlistmodel.h

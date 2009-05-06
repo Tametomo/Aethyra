@@ -107,6 +107,8 @@
 		<Unit filename="src\bindings\guichan\guichanfwd.h" />
 		<Unit filename="src\bindings\guichan\gui.cpp" />
 		<Unit filename="src\bindings\guichan\gui.h" />
+		<Unit filename="src\bindings\guichan\inputmanager.cpp" />
+		<Unit filename="src\bindings\guichan\inputmanager.h" />
 		<Unit filename="src\bindings\guichan\keyboardconfig.cpp" />
 		<Unit filename="src\bindings\guichan\keyboardconfig.h" />
 		<Unit filename="src\bindings\guichan\layout.cpp" />

@@ -68,9 +68,7 @@ HelpWindow::HelpWindow():
 void HelpWindow::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "close")
-    {
         setVisible(false);
-    }
 }
 
 void HelpWindow::handleLink(const std::string& link)
@@ -102,10 +100,3 @@ void HelpWindow::loadFile(const std::string &file)
     }
 }
 
-void HelpWindow::setVisible(bool visible)
-{
-    Window::setVisible(visible);
-
-    if (visible)
-        mOkButton->requestFocus();
-}

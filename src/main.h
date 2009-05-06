@@ -77,6 +77,7 @@ const short defaultScreenHeight = 600;
 const short defaultSfxVolume = 100;
 const short defaultMusicVolume = 60;
 
+extern bool mInGame;
 extern char n_server, n_character;
 extern unsigned char state;
 extern std::string errorMessage;

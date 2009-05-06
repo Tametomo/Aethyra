@@ -54,6 +54,8 @@ SET(SRCS
     bindings/guichan/guichanfwd.h
     bindings/guichan/gui.cpp
     bindings/guichan/gui.h
+    bindings/guichan/inputmanager.cpp
+    bindings/guichan/inputmanager.h
     bindings/guichan/keyboardconfig.cpp
     bindings/guichan/keyboardconfig.h
     bindings/guichan/layout.cpp

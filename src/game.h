@@ -25,6 +25,8 @@
 
 #include <memory>
 
+#include "main.h"
+
 class MessageHandler;
 class Network;
 
@@ -38,7 +40,9 @@ class Game
 
         void logic();
 
-        void handleInput();
+        bool isInGame() { return mInGame; }
+
+        void setInGame(bool inGame) { mInGame = inGame; }
 
     private:
         Network *mNetwork;
@@ -55,5 +59,7 @@ class Game
         MessageHandlerPtr mSkillHandler;
         MessageHandlerPtr mTradeHandler;
 };
+
+extern Game *game;
 
 #endif

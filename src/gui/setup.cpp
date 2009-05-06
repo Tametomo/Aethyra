@@ -134,4 +134,3 @@ void Setup::setInGame(bool inGame)
     mResetWindows->setEnabled(inGame);
 }
 
-Setup* setupWindow;

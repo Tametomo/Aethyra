@@ -21,11 +21,21 @@
  */
 
 #include <cassert>
+#include <fstream>
+#include <physfs.h>
+#include <sstream>
 
 #include "graphics.h"
 
+#include "../../log.h"
+
+#include "../../gui/chat.h"
+
 #include "../../resources/image.h"
 #include "../../resources/imageloader.h"
+#include "../../resources/imagewriter.h"
+
+#include "../../utils/gettext.h"
 
 bool Graphics::setFullscreen(bool fs)
 {
@@ -86,4 +96,52 @@ int Graphics::getWidth()
 int Graphics::getHeight()
 {
     return mScreen->h;
+}
+
+bool saveScreenshot()
+{
+    static unsigned int screenshotCount = 0;
+
+    SDL_Surface *screenshot = graphics->getScreenshot();
+
+    // Search for an unused screenshot name
+    std::stringstream filenameSuffix;
+    std::stringstream filename;
+    std::fstream testExists;
+    bool found = false;
+
+    do {
+        screenshotCount++;
+        filename.str("");
+        filenameSuffix.str("");
+        filename << PHYSFS_getUserDir();
+#if (defined __USE_UNIX98 || defined __FreeBSD__)
+        filenameSuffix << ".aethyra/";
+#elif defined __APPLE__
+        filenameSuffix << "Desktop/";
+#endif
+        filenameSuffix << "Ae_Screenshot_" << screenshotCount << ".png";
+        filename << filenameSuffix.str();
+        testExists.open(filename.str().c_str(), std::ios::in);
+        found = !testExists.is_open();
+        testExists.close();
+    } while (!found);
+
+    const bool success = ImageWriter::writePNG(screenshot, filename.str());
+
+    if (success)
+    {
+        std::stringstream chatlogentry;
+        chatlogentry << _("Screenshot saved to ~/") << filenameSuffix.str();
+        chatWindow->chatLog(chatlogentry.str(), BY_SERVER);
+    }
+    else
+    {
+        chatWindow->chatLog(_("Saving screenshot failed!"), BY_SERVER);
+        logger->log("Error: could not save screenshot.");
+    }
+
+    SDL_FreeSurface(screenshot);
+
+    return success;
 }

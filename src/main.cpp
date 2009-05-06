@@ -43,6 +43,7 @@
 
 #include "bindings/guichan/graphics.h"
 #include "bindings/guichan/gui.h"
+#include "bindings/guichan/inputmanager.h"
 #include "bindings/guichan/keyboardconfig.h"
 #include "bindings/guichan/palette.h"
 
@@ -61,6 +62,7 @@
 
 #include "gui/charserver.h"
 #include "gui/charselect.h"
+#include "gui/help.h"
 #include "gui/login.h"
 #include "gui/okdialog.h"
 #include "gui/register.h"
@@ -124,22 +126,28 @@ Graphics *graphics;
 class SERVER_INFO;
 SERVER_INFO **server_info;
 
+bool mInGame = false;
 unsigned char state;
 std::string errorMessage;
 unsigned char screen_mode;
 
 Sound sound;
 Music *bgm;
+Game *game;
 
 Configuration config;         /**< XML file configuration reader */
 Logger *logger;               /**< Log object */
 KeyboardConfig keyboard;
+InputManager *inputManager;
 
 CharServerHandler charServerHandler;
 LoginData loginData;
 LockedArray<LocalPlayer*> charInfo(MAX_SLOT + 1);
 
 Palette *guiPalette;
+
+HelpWindow *helpWindow;
+Setup* setupWindow;
 
 // This anonymous namespace hides whatever is inside from other modules.
 namespace {
@@ -788,17 +796,16 @@ int main(int argc, char *argv[])
 
     init_engine(options);
 
-    SDL_Event event;
-
     unsigned int oldstate = !state; // We start with a status change.
 
     // Needs to be created in main, as the updater uses it
     guiPalette = new Palette;
 
-    Game *game = NULL;
+    game = NULL;
     Window *currentDialog = NULL;
     Image *login_wallpaper = NULL;
     setupWindow = new Setup();
+    helpWindow = new HelpWindow();
 
     gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
 #ifdef PACKAGE_VERSION
@@ -834,6 +841,7 @@ int main(int argc, char *argv[])
 
     SDLNet_Init();
     Network *network = new Network();
+    InputManager *inputManager = new InputManager();
 
     // Set the most appropriate wallpaper, based on screen width
     Wallpaper::loadWallpapers();
@@ -873,23 +881,7 @@ int main(int argc, char *argv[])
         }
 
         // Handle SDL events
-        while (SDL_PollEvent(&event))
-        {
-            switch (event.type)
-            {
-                case SDL_QUIT:
-                    state = EXIT_STATE;
-                    break;
-
-                case SDL_KEYDOWN:
-                    if (event.key.keysym.sym == SDLK_ESCAPE)
-                        state = EXIT_STATE;
-                    break;
-            }
-
-            guiInput->pushInput(event);
-        }
-
+        inputManager->handleInput();
         network->flush();
         network->dispatchMessages();
 
@@ -1087,7 +1079,6 @@ int main(int argc, char *argv[])
                     game = new Game(network);
                     game->logic();
                     delete game;
-                    state = EXIT_STATE;
                     break;
 
                 case UPDATE_STATE:
@@ -1156,6 +1147,8 @@ int main(int argc, char *argv[])
 
     delete guiPalette;
 
+    delete helpWindow;
+    delete inputManager;
     delete network;
     SDLNet_Quit();
 
