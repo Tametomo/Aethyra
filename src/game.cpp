@@ -77,6 +77,14 @@
 #include "resources/beingmanager.h"
 #include "resources/flooritemmanager.h"
 
+#include "resources/db/colordb.h"
+#include "resources/db/effectdb.h"
+#include "resources/db/emotedb.h"
+#include "resources/db/itemdb.h"
+#include "resources/db/monsterdb.h"
+#include "resources/db/npcdb.h"
+#include "resources/db/skilldb.h"
+
 #include "resources/particle/particle.h"
 
 #include "resources/sprite/localplayer.h"
@@ -197,6 +205,15 @@ static void destroyGuiWindows()
 
     delete itemShortcut;
     delete emoteShortcut;
+
+    // Unload XML databases
+    ColorDB::unload();
+    EmoteDB::unload();
+    ItemDB::unload();
+    MonsterDB::unload();
+    NPCDB::unload();
+    SkillDB::unload();
+    EffectDB::unload();
 }
 
 Game::Game(Network *network):

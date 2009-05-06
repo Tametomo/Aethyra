@@ -495,15 +495,6 @@ static void exit_engine()
     // Shutdown sound
     sound.close();
 
-    // Unload XML databases
-    ColorDB::unload();
-    EmoteDB::unload();
-    ItemDB::unload();
-    MonsterDB::unload();
-    NPCDB::unload();
-    SkillDB::unload();
-    EffectDB::unload();
-
     ResourceManager::deleteInstance();
     delete logger;
 
