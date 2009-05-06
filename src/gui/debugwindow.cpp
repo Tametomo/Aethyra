@@ -62,16 +62,41 @@ DebugWindow::DebugWindow():
     loadWindowState();
 }
 
+void DebugWindow::setVisible(bool visible)
+{
+    Window::setVisible(visible);
+
+    if (!engine)
+    {
+        mTileMouseLabel->setVisible(false);
+        mMusicFileLabel->setVisible(false);
+        mParticleCountLabel->setVisible(false);
+        mMapLabel->setVisible(false);
+        mMiniMapLabel->setVisible(false);
+    }
+    else if (visible)
+    {
+        mTileMouseLabel->setVisible(true);
+        mMusicFileLabel->setVisible(true);
+        mParticleCountLabel->setVisible(true);
+        mMapLabel->setVisible(true);
+        mMiniMapLabel->setVisible(true);
+    }
+}
+
 void DebugWindow::logic()
 {
     if (!isVisible())
         return;
 
+    mFPSLabel->setCaption(toString(fps) + " FPS");
+
+    if (!engine)
+        return;
+
     // Get the current mouse position
     const int mouseTileX = (viewport->getMouseX() + viewport->getCameraX()) / 32;
     const int mouseTileY = (viewport->getMouseY() + viewport->getCameraY()) / 32;
-
-    mFPSLabel->setCaption(toString(fps) + " FPS");
 
     mTileMouseLabel->setCaption("Tile: (" + toString(mouseTileX) + ", " +
                                 toString(mouseTileY) + ")");

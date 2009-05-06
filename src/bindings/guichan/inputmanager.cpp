@@ -218,6 +218,14 @@ void InputManager::handleInput()
                     }
                     used = true;
                     break;
+                case KeyboardConfig::KEY_WINDOW_DEBUG:
+                    debugWindow->setVisible(!debugWindow->isVisible());
+         
+                    if (debugWindow->isVisible())
+                        debugWindow->requestMoveToTop();
+
+                    used = true;
+                    break;
             }
 
             if (mInGame)
@@ -261,9 +269,6 @@ void InputManager::handleInput()
                         break;
                     case KeyboardConfig::KEY_WINDOW_SETUP:
                         requestedWindow = setupWindow;
-                        break;
-                    case KeyboardConfig::KEY_WINDOW_DEBUG:
-                        requestedWindow = debugWindow;
                         break;
                     case KeyboardConfig::KEY_WINDOW_EMOTE:
                         requestedWindow = emoteWindow;

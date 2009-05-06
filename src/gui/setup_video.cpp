@@ -110,7 +110,6 @@ Setup_Video::Setup_Video():
     fontSizeLabel = new Label(_("Font size"));
     overlayDetailLabel = new Label(_("Ambient FX"));
     particleDetailLabel = new Label(_("Particle detail"));
-    mFpsLabel = new Label("");
 
     mModeList->setEnabled(true);
 
@@ -201,8 +200,6 @@ Setup_Video::Setup_Video():
     place(2, 10, mSpeechModeLabel, 3).setPadding(2);
     place(2, 11, mOverlayDetailLabel, 3).setPadding(2);
     place(2, 12, mParticleDetailLabel, 3).setPadding(2);
-
-    place(3, 8, mFpsLabel);
 
     setDimension(gcn::Rectangle(0, 0, 325, 280));
 }
@@ -569,12 +566,3 @@ void Setup_Video::changeParticleDetailLevel(const int &value)
          Particle::emitterSkip = 4 - value;
 }
 
-void Setup_Video::logic()
-{
-    if (!isVisible())
-        return;
-
-    SetupTabContainer::logic();
-
-    mFpsLabel->setCaption(toString(fps) + " FPS");
-}

@@ -40,7 +40,6 @@
 #include "gui/buy.h"
 #include "gui/buysell.h"
 #include "gui/chat.h"
-#include "gui/debugwindow.h"
 #include "gui/emotewindow.h"
 #include "gui/equipmentwindow.h"
 #include "gui/inventorywindow.h"
@@ -114,7 +113,6 @@ SkillDialog *skillDialog;
 Minimap *minimap;
 EquipmentWindow *equipmentWindow;
 TradeWindow *tradeWindow;
-DebugWindow *debugWindow;
 ShortcutWindow *itemShortcutWindow;
 ShortcutWindow *emoteShortcutWindow;
 StorageWindow *storageWindow;
@@ -167,7 +165,6 @@ void createGuiWindows()
     minimap = new Minimap();
     equipmentWindow = new EquipmentWindow();
     tradeWindow = new TradeWindow();
-    debugWindow = new DebugWindow();
     itemShortcutWindow = new ShortcutWindow("ItemShortcut",
                                             new ItemShortcutContainer);
     emoteShortcutWindow = new ShortcutWindow("emoteShortcut",
@@ -198,7 +195,6 @@ static void destroyGuiWindows()
     delete minimap;
     delete equipmentWindow;
     delete tradeWindow;
-    delete debugWindow;
     delete itemShortcutWindow;
     delete emoteShortcutWindow;
     delete storageWindow;

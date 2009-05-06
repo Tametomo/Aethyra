@@ -54,6 +54,7 @@
 
 #include "gui/charserver.h"
 #include "gui/charselect.h"
+#include "gui/debugwindow.h"
 #include "gui/desktop.h"
 #include "gui/help.h"
 #include "gui/login.h"
@@ -127,6 +128,7 @@ LockedArray<LocalPlayer*> charInfo(MAX_SLOT + 1);
 
 Palette *guiPalette;
 
+DebugWindow *debugWindow;
 HelpWindow *helpWindow;
 Setup* setupWindow;
 
@@ -464,6 +466,7 @@ static void exit_engine()
 {
     // Before config.write() so that global windows can get their settings
     // written to the configuration file.
+    delete debugWindow;
     delete helpWindow;
 
     config.write();
@@ -749,6 +752,7 @@ int main(int argc, char *argv[])
     game = NULL;
 
     setupWindow = new Setup();
+    debugWindow = new DebugWindow();
     helpWindow = new HelpWindow();
 
     sound.playMusic("Magick - Real.ogg");
