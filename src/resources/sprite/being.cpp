@@ -27,6 +27,8 @@
 #include "being.h"
 #include "localplayer.h"
 
+#include "gui/viewport.h"
+
 #include "../image.h"
 #include "../resourcemanager.h"
 #include "../simpleanimation.h"
@@ -116,7 +118,7 @@ Being::Being(int id, int job, Map *map):
     mConfigListener = new BeingConfigListener(this);
     config.addListener("particleeffects", mConfigListener);
 
-    mSpeechBubble = new SpeechBubble();
+    mSpeechBubble = NULL;
 
     mSpeech = "";
     mNameColor = &guiPalette->getColor(Palette::CHAT);
@@ -411,7 +413,7 @@ void Being::nextStep()
 void Being::logic()
 {
     // Reduce the time that speech is still displayed
-    if (mSpeechTime > 0)
+    if (mSpeechTime > 0 && viewport)
          mSpeechTime--;
 
     // Remove text and speechbubbles if speech boxes aren't being used
@@ -429,9 +431,7 @@ void Being::logic()
     mPy = mY * 32 + getYOffset();
 
     if (mPx != oldPx || mPy != oldPy)
-    {
         updateCoords();
-    }
 
     if (mEmotion != 0)
     {
@@ -487,6 +487,9 @@ void Being::drawSpeech(int offsetX, int offsetY)
     const int px = mPx - offsetX;
     const int py = mPy - offsetY;
     const int speech = (int) config.getValue("speech", NAME_IN_BUBBLE);
+
+    if (!mSpeechBubble)
+        mSpeechBubble = new SpeechBubble();
 
     // Draw speech above this being
     if (mSpeechTime == 0)
