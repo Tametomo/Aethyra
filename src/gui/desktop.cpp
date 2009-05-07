@@ -242,6 +242,9 @@ void Desktop::draw(gcn::Graphics *graphics)
 
 void Desktop::logic()
 {
+    if (!isVisible())
+        return;
+
     if (progressBar->isVisible())
     {
         progressBar->setProgress(progressBar->getProgress() + 0.005f);

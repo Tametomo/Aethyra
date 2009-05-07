@@ -131,7 +131,7 @@ class ProgressBar : public gcn::Widget
         bool mSmoothProgress;
 
         std::vector<gcn::Color*> mColors;
-        int mCurrentColor;
+        size_t mCurrentColor;
 
         Uint8 mRed, mGreen, mBlue;
         Uint8 mRedToGo, mGreenToGo, mBlueToGo;

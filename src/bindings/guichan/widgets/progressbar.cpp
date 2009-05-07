@@ -106,9 +106,12 @@ ProgressBar::~ProgressBar()
 
 void ProgressBar::logic()
 {
-    const int index = mProgress * mColors.size();
+    if (!isVisible())
+        return;
 
-    if (mCurrentColor != index)
+    const size_t index = mProgress * mColors.size();
+
+    if (mCurrentColor != index && index != mColors.size())
     {
         mCurrentColor = index;
         mRedToGo = mColors[index]->r;

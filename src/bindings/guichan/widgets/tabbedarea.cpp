@@ -146,5 +146,8 @@ void TabbedArea::removeTab(Tab *tab)
 
 void TabbedArea::logic()
 {
+    if (!isVisible())
+        return;
+
     logicChildren();
 }

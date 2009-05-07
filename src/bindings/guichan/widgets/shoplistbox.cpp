@@ -119,9 +119,7 @@ void ShopListBox::draw(gcn::Graphics *gcnGraphics)
 void ShopListBox::adjustSize()
 {
     if (mListModel)
-    {
         setHeight(mRowHeight * mListModel->getNumberOfElements());
-    }
 }
 
 void ShopListBox::setPriceCheck(bool check)
