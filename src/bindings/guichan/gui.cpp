@@ -53,7 +53,6 @@
 
 // Guichan stuff
 Gui *gui = 0;
-Viewport *viewport = 0;                    /**< Viewport on the map. */
 SDLInput *guiInput = 0;
 
 // Bolded font
@@ -190,12 +189,6 @@ Gui::Gui(Graphics *graphics):
     // Initialize frame limiting
     config.addListener("fpslimit", mConfigListener);
     framerateChanged();
-
-    // Create the viewport
-    viewport = new Viewport();
-    viewport->setDimension(gcn::Rectangle(0, 0,
-                graphics->getWidth(), graphics->getHeight()));
-    guiTop->add(viewport);
 }
 
 Gui::~Gui()
@@ -211,7 +204,6 @@ Gui::~Gui()
     delete mGuiFont;
     delete mBoldFont;
     delete mInfoParticleFont;
-    delete viewport;
     delete getTop();
 
     delete guiInput;
@@ -222,8 +214,10 @@ void Gui::resize(Graphics *graphics)
     WindowContainer *guiTop = static_cast<WindowContainer*>(getTop());
     guiTop->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
                                         graphics->getHeight()));
-    viewport->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
-                                          graphics->getHeight()));
+
+    if (viewport)
+        viewport->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
+                                              graphics->getHeight()));
 }
 void Gui::logic()
 {

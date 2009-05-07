@@ -120,6 +120,7 @@ StorageWindow *storageWindow;
 BeingManager *beingManager = NULL;
 FloorItemManager *floorItemManager = NULL;
 Particle* particleEngine = NULL;
+Viewport *viewport = NULL;                    /**< Viewport on the map. */
 
 /**
  * Listener used for exiting handling.
@@ -225,7 +226,16 @@ Game::Game(Network *network):
     mSkillHandler(new SkillHandler()),
     mTradeHandler(new TradeHandler())
 {
+    // Create the viewport
+    viewport = new Viewport();
+    viewport->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
+                                          graphics->getHeight()));
+
+    gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
+    top->add(viewport);
+
     createGuiWindows();
+
     engine = new Engine();
     mInGame = true;
 
@@ -276,6 +286,7 @@ Game::~Game()
     delete floorItemManager;
     delete particleEngine;
     delete engine;
+    delete viewport;
 
     beingManager = NULL;
     floorItemManager = NULL;

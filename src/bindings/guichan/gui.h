@@ -34,7 +34,6 @@ class Graphics;
 class GuiConfigListener;
 class ImageSet;
 class SDLInput;
-class Viewport;
 
 extern volatile int fps;
 extern volatile int tick_time;
