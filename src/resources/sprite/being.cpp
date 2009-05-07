@@ -488,17 +488,18 @@ void Being::drawSpeech(int offsetX, int offsetY)
     const int py = mPy - offsetY;
     const int speech = (int) config.getValue("speech", NAME_IN_BUBBLE);
 
-    if (!mSpeechBubble)
-        mSpeechBubble = new SpeechBubble();
-
     // Draw speech above this being
     if (mSpeechTime == 0)
     {
-        mSpeechBubble->setVisible(false);
+        if (mSpeechBubble)
+            mSpeechBubble->setVisible(false);
     }
     else if (mSpeechTime > 0 && (speech == NAME_IN_BUBBLE ||
              speech == NO_NAME_IN_BUBBLE))
     {
+        if (!mSpeechBubble)
+            mSpeechBubble = new SpeechBubble();
+
         const bool showName = (speech == NAME_IN_BUBBLE);
 
         if (mText)
@@ -519,7 +520,10 @@ void Being::drawSpeech(int offsetX, int offsetY)
     }
     else if (mSpeechTime > 0 && speech == TEXT_OVERHEAD)
     {
-        mSpeechBubble->setVisible(false);
+        if (mSpeechBubble)
+            delete mSpeechBubble;
+
+        mSpeechBubble = NULL;
 
         // don't introduce a memory leak
         if (mText)
@@ -531,7 +535,10 @@ void Being::drawSpeech(int offsetX, int offsetY)
     }
     else if (speech == NO_SPEECH)
     {
-        mSpeechBubble->setVisible(false);
+        if (mSpeechBubble)
+            delete mSpeechBubble;
+
+        mSpeechBubble = NULL;
 
         if (mText)
             delete mText;
