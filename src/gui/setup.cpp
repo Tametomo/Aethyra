@@ -38,8 +38,6 @@
 #include "../utils/dtor.h"
 #include "../utils/gettext.h"
 
-extern Window *statusWindow;
-
 Setup::Setup():
     Window(_("Setup"))
 {
@@ -108,11 +106,6 @@ void Setup::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "Reset Windows")
     {
-        // Bail out if this action happens to be activated before the windows
-        // are created (though it should be disabled then)
-        if (!statusWindow)
-            return;
-
         typedef std::list<gcn::Widget*> Widgets;
         Widgets widgets = windowContainer->getWidgetList();
 
