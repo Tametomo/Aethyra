@@ -92,43 +92,47 @@ int Skin::getMinHeight() const
 Skin* SkinLoader::load(const std::string &filename,
                        const std::string &defaultPath)
 {
-    std::string filePath = filename;
-
     ResourceManager *resman = ResourceManager::getInstance();
-
-    logger->log("Loading Skin '%s'.", filename.c_str());
 
     if (filename.empty() && defaultPath.empty())
         logger->error("SkinLoader::load(): Invalid File Name.");
 
-    XML::Document *doc = new XML::Document(filePath);
-    xmlNodePtr rootNode = doc->rootNode();
-
-    if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "skinset"))
-    {
-        filePath = defaultPath;
-
-        logger->log("Widget Skinning error. Loading '%s' instead.",
-                    filePath.c_str());
-
-        delete doc;
-
-        doc = new XML::Document(filePath);
-        rootNode = doc->rootNode();
-        if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "skinset"))
-        {
-            logger->error(strprintf("Skinning failed. Check this skin file "
-                                    "to make sure it's valid: %s",
-                                    filePath.c_str()));
-        }
-    }
-
-    SkinIterator skinIterator = mSkins.find(filePath);
+    SkinIterator skinIterator = mSkins.find(filename);
 
     if (mSkins.end() != skinIterator)
     {
         skinIterator->second->instances++;
         return skinIterator->second;
+    }
+
+    logger->log("Loading Skin '%s'.", filename.c_str());
+
+    XML::Document *doc = new XML::Document(filename);
+    xmlNodePtr rootNode = doc->rootNode();
+
+    if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "skinset"))
+    {
+        logger->log("Widget Skinning error. Loading '%s' instead.",
+                    filename.c_str());
+
+        delete doc;
+
+        SkinIterator skinIterator = mSkins.find(defaultPath);
+
+        if (mSkins.end() != skinIterator)
+        {
+            skinIterator->second->instances++;
+            return skinIterator->second;
+        }
+
+        doc = new XML::Document(defaultPath);
+        rootNode = doc->rootNode();
+        if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "skinset"))
+        {
+            logger->error(strprintf("Skinning failed. Check this skin file "
+                                    "to make sure it's valid: %s",
+                                    defaultPath.c_str()));
+        }
     }
 
     std::string skinSetImage;
