@@ -237,8 +237,6 @@ class LocalPlayer : public Player
 
         bool mUpdateName;     /** Whether or not the name settings have changed */
 
-        bool mMapInitialized; /** Whether or not the map is available yet */
-
         const std::auto_ptr<Equipment> mEquipment;
 
     protected:

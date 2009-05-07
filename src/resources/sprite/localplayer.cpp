@@ -83,11 +83,6 @@ LocalPlayer::LocalPlayer(Uint32 id, Uint16 job, Map *map):
     mInventory(new Inventory(INVENTORY_SIZE)),
     mStorage(new Inventory(STORAGE_SIZE))
 {
-    // Variable to keep the local player from doing certain actions before a map
-    // is initialized. e.g. drawing a player's name using the TextManager, since
-    // it appears to be dependant upon map coordinates for updating drawing.
-    mMapInitialized = false;
-
     mUpdateName = true;
 
     initTargetCursor();
@@ -242,7 +237,7 @@ void LocalPlayer::setName(const std::string &name)
         mName = 0;
     }
 
-    if (config.getValue("showownname", false) && mMapInitialized)
+    if (config.getValue("showownname", false))
         Player::setName(name);
     else
         Being::setName(name);
