@@ -147,8 +147,8 @@ void ItemDB::load()
         {
             CHECK_PARAM(name, "");
             CHECK_PARAM(description, "");
+            CHECK_PARAM(image, "");
         }
-        CHECK_PARAM(image, "");
         // CHECK_PARAM(effect, "");
         // CHECK_PARAM(type, 0);
         // CHECK_PARAM(weight, 0);
