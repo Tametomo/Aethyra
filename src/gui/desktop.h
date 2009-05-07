@@ -1,6 +1,5 @@
 /*
  *  Aethyra
- *  Copyright (C) 2004  The Mana World Development Team
  *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra.
