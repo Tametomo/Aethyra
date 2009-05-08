@@ -27,8 +27,10 @@
 
 #include "../bindings/guichan/widgets/window.h"
 
+class Icon;
 class IntTextField;
 class Item;
+class ItemPopup;
 
 #define AMOUNT_TRADE_ADD 1
 #define AMOUNT_ITEM_DROP 2
@@ -58,6 +60,9 @@ class ItemAmountWindow : public Window, public gcn::ActionListener
          */
         void resetAmount();
 
+        // MouseListener
+        void mouseMoved(gcn::MouseEvent &event);
+
         /**
          * Schedules the Item Amount window for deletion.
          */
@@ -66,8 +71,10 @@ class ItemAmountWindow : public Window, public gcn::ActionListener
     private:
         gcn::Label *mItemAmountLabel;   /**< Item amount caption. */
         Item *mItem;
+        Icon *mItemIcon;
 
         int mMax, mUsage;
+        ItemPopup *mItemPopup;
 
         /**
          * Item Amount buttons.

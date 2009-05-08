@@ -21,14 +21,17 @@
  */
 
 #include "itemamount.h"
+#include "itempopup.h"
 #include "storagewindow.h"
 #include "trade.h"
+#include "viewport.h"
 
 #include "../item.h"
 
 #include "../bindings/guichan/layout.h"
 
 #include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/icon.h"
 #include "../bindings/guichan/widgets/label.h"
 #include "../bindings/guichan/widgets/slider.h"
 
@@ -56,6 +59,14 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     mItemAmountSlide->setActionEventId("Slide");
     mItemAmountSlide->addActionListener(this);
 
+    //Item icon
+    Image *image = item->getImage();
+    mItemIcon = new Icon(image);
+
+
+    mItemPopup = new ItemPopup();
+    mItemPopup->setOpaque(false);
+
     // Buttons
     Button *minusButton = new Button("-", "Minus", this);
     Button *plusButton = new Button("+", "Plus", this);
@@ -78,14 +89,16 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     ContainerPlacer place;
     place = getPlacer(0, 0);
 
-    place(0, 0, minusButton);
-    place(1, 0, mItemAmountSlide, 3);
-    place(4, 0, plusButton);
-    place(5, 0, mItemAmountLabel, 2);
-    place(7, 0, addAllButton);
-    place = getPlacer(0, 1);
-    place(4, 0, cancelButton);
-    place(5, 0, okButton);
+    place(0, 0, mItemIcon, 1, 3);
+    place(1, 1, minusButton);
+    place(2, 1, mItemAmountSlide, 3);
+    place(5, 1, plusButton);
+    place(6, 1, mItemAmountLabel, 2);
+    place(8, 1, addAllButton);
+    place = getPlacer(0, 3);
+    place(5, 0, cancelButton);
+    place(6, 0, okButton);
+
     reflowLayout(225, 0);
 
     resetAmount();
@@ -110,6 +123,23 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
 
     setLocationRelativeTo(getParentWindow());
     setVisible(true);
+
+    mItemIcon->addMouseListener(this);
+}
+
+// Show ItemTooltip
+void ItemAmountWindow::mouseMoved(gcn::MouseEvent &event)
+{
+    if (event.getSource() == mItemIcon)
+    {
+        mItemPopup->setItem(mItem->getInfo());
+        mItemPopup->updateColors();
+        mItemPopup->view(viewport->getMouseX(), viewport->getMouseY());
+    }
+    else
+    {
+        mItemPopup->setVisible(false);
+    }
 }
 
 void ItemAmountWindow::resetAmount()
@@ -153,7 +183,7 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
                 break;
         }
 
-        scheduleDelete();
+        close();
         return;
     }
 
@@ -163,5 +193,6 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
 
 void ItemAmountWindow::close()
 {
+    delete mItemPopup;
     scheduleDelete();
 }
