@@ -51,20 +51,20 @@ StatusWindow::StatusWindow(LocalPlayer *player):
     mGpLabel = new Label(strprintf(_("Money: %d GP"), 0));
 
     mHpLabel = new Label(_("HP:"));
-    mHpBar = new ProgressBar(0.0f, 80, 15, 223, 32, 32);
+    mHpBar = new ProgressBar(0.0f, 80, 15, gcn::Color(223, 32, 32));
     mHpBar->addColor(230, 171, 34);
     mHpBar->addColor(0, 171, 34);
 
     mXpLabel = new Label(_("Exp:"));
-    mXpBar = new ProgressBar(0.0f, 80, 15, 143, 192, 211);
+    mXpBar = new ProgressBar(0.0f, 80, 15, gcn::Color(143, 192, 211));
 
     mMpLabel = new Label(_("MP:"));
-    mMpBar = new ProgressBar(0.0f, 100, 20, 140, 70, 230);
+    mMpBar = new ProgressBar(0.0f, 100, 20, gcn::Color(140, 70, 230));
     mMpBar->addColor(110, 85, 230);
     mMpBar->addColor(26, 100, 230);
 
     mJobLabel = new Label(_("Job:"));
-    mJobBar = new ProgressBar(0.0f, 80, 15, 220, 135, 203);
+    mJobBar = new ProgressBar(0.0f, 80, 15, gcn::Color(220, 135, 203));
 
     // ----------------------
     // Stats Part

@@ -36,15 +36,15 @@ MiniStatusWindow::MiniStatusWindow():
 {
     setVisible(true);
 
-    mHpBar = new ProgressBar(0.0f, 100, 20, 223, 32, 32);
+    mHpBar = new ProgressBar(0.0f, 100, 20, gcn::Color(223, 32, 32));
     mHpBar->addColor(230, 171, 34);
     mHpBar->addColor(0, 171, 34);
 
-    mMpBar = new ProgressBar(0.0f, 100, 20, 140, 70, 230);
+    mMpBar = new ProgressBar(0.0f, 100, 20, gcn::Color(140, 70, 230));
     mMpBar->addColor(110, 85, 230);
     mMpBar->addColor(26, 100, 230);
 
-    mXpBar = new ProgressBar(0.0f, 100, 20, 143, 192, 211);
+    mXpBar = new ProgressBar(0.0f, 100, 20, gcn::Color(143, 192, 211));
 
     mHpBar->setPosition(0, 3);
     mMpBar->setPosition(mHpBar->getWidth() + 3, 3);
@@ -63,7 +63,8 @@ void MiniStatusWindow::update()
     float xp = (float) player_node->getXp() / player_node->mXpForNextLevel;
 
     if (xp != xp) xp = 0.0f; // check for NaN
-    if (xp < 0.0f) xp = 0.0f; // make sure the experience isn't negative (uninitialized pointer most likely)
+    if (xp < 0.0f) xp = 0.0f; // make sure the experience isn't negative
+                              // (uninitialized pointer most likely)
     if (xp > 1.0f) xp = 1.0f;
 
     mHpBar->setProgress((float) player_node->mHp / player_node->mMaxHp);

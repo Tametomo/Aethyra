@@ -45,13 +45,9 @@ class ProgressBar : public gcn::Widget
         /**
          * Constructor, initializes the progress with the given value.
          */
-        ProgressBar(float progress = 0.0f,
-                    unsigned int width = 40, unsigned int height = 7,
-                    Uint8 red = 150, Uint8 green = 150, Uint8 blue = 150);
+        ProgressBar(float progress = 0.0f, int width = 40, int height = 7,
+                    gcn::Color color = gcn::Color(150, 150, 150));
 
-        /**
-         * Destructor.
-         */
         ~ProgressBar();
 
         /**
@@ -68,6 +64,14 @@ class ProgressBar : public gcn::Widget
          * Adds a color to the progress bar. The progress bar will then
          * transition between the added color and all previously added colors.
          */
+        void addColor(const gcn::Color &color);
+
+        /**
+         * Adds a color to the progress bar. The progress bar will then
+         * transition between the added color and all previously added colors.
+         *
+         * This is an overloaded version added for convenience.
+         */
         void addColor(Uint8, Uint8 green, Uint8 blue);
 
         /**
@@ -81,40 +85,28 @@ class ProgressBar : public gcn::Widget
         float getProgress() const { return mProgress; }
 
         /**
-         * Returns the red value of color.
+         * Returns the color of the progress bar.
          */
-        Uint8 getRed() const { return mRed; }
-
-        /**
-         * Returns the green value of color.
-         */
-        Uint8 getGreen() const { return mGreen; }
-
-        /**
-         * Returns the blue value of color.
-         */
-        Uint8 getBlue() const { return mBlue; }
+        const gcn::Color &getColor() const { return mColor; }
 
         /**
          * Sets the text shown on the progress bar.
          */
-        void setText(const std::string &text)
-        { mText = text; }
+        void setText(const std::string &text) { mText = text; }
 
         /**
          * Returns the text shown on the progress bar.
          */
-        const std::string &text() const
-        { return mText; }
+        const std::string &text() const { return mText; }
 
         /**
-         * Set whether the progress is moved smoothly
+         * Set whether the progress is moved smoothly.
          */
         void setSmoothProgress(bool smoothProgress)
         { mSmoothProgress = smoothProgress; }
 
         /**
-         * Set whether the color changing is made smoothly
+         * Set whether the color changing is made smoothly.
          */
         void setSmoothColorChange(bool smoothColorChange)
         { mSmoothColorChange = smoothColorChange; }
@@ -130,15 +122,13 @@ class ProgressBar : public gcn::Widget
         float mProgress, mProgressToGo;
         bool mSmoothProgress;
 
-        std::vector<gcn::Color*> mColors;
+        std::vector<gcn::Color> mColors;
         size_t mCurrentColor;
 
-        Uint8 mRed, mGreen, mBlue;
-        Uint8 mRedToGo, mGreenToGo, mBlueToGo;
+        gcn::Color mColor, mColorToGo;
         bool mSmoothColorChange;
 
         std::string mText;
-        bool mUpdated;
 
         static ImageRect mBorder;
         static int mInstances;

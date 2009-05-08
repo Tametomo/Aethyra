@@ -77,7 +77,7 @@ Desktop::Desktop():
     add(versionLabel, 2, 2);
 #endif
 
-    progressBar = new ProgressBar(0.0f, 100, 20, 168, 116, 31);
+    progressBar = new ProgressBar(0.0f, 100, 20, gcn::Color(168, 116, 31));
     progressBar->setVisible(false);
     progressBar->setPosition(5, getHeight() - 5 - progressBar->getHeight());
 
