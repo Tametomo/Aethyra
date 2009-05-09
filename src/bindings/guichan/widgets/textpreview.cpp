@@ -48,10 +48,8 @@ void TextPreview::draw(gcn::Graphics* graphics)
     if (config.getValue("guialpha", 0.8) != mAlpha)
         mAlpha = config.getValue("guialpha", 0.8);
 
-    int alpha = (int) (mAlpha * 255.0f);
-
-    if (!mTextAlpha)
-        alpha = 255;
+    const int alpha = (int) (mAlpha * 255.0f);
+    const int textAlpha = mTextAlpha ? alpha : 255;
 
     if (mOpaque)
     {
@@ -76,6 +74,6 @@ void TextPreview::draw(gcn::Graphics* graphics)
 
     TextRenderer::renderText(graphics, *mText, 2, 2,  gcn::Graphics::LEFT,
                              gcn::Color(mTextColor->r, mTextColor->g,
-                                        mTextColor->b, alpha),
-                             mFont, mOutline, mShadow, alpha);
+                                        mTextColor->b, textAlpha),
+                             mFont, mOutline, mShadow, textAlpha);
 }

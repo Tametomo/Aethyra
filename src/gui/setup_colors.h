@@ -25,6 +25,7 @@
 #include <string>
 
 #include <guichan/actionlistener.hpp>
+#include <guichan/selectionlistener.hpp>
 
 #include <guichan/widgets/label.hpp>
 #include <guichan/widgets/listbox.hpp>
@@ -38,16 +39,18 @@
 class BrowserBox;
 
 class Setup_Colors : public SetupTabContainer, public gcn::ActionListener,
-                     public TextFieldListener
+                     public gcn::SelectionListener
 {
     public:
         Setup_Colors();
         ~Setup_Colors();
         void apply();
         void cancel();
+
         void action(const gcn::ActionEvent &event);
 
-        void listen(const TextField *tf);
+        void valueChanged(const gcn::SelectionEvent &event);
+
     private:
         static const std::string rawmsg;
 
