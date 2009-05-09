@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <sstream>
+
 #include <guichan/focushandler.hpp>
 
 #include "chat.h"
@@ -227,7 +229,7 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
     time(&t);
 
     // Format the time string properly
-    std::stringstream timeStr;
+    std::ostringstream timeStr;
     timeStr << "[" << ((((t / 60) / 60) % 24 < 10) ? "0" : "")
         << (int) (((t / 60) / 60) % 24)
         << ":" << (((t / 60) % 60 < 10) ? "0" : "")
@@ -767,16 +769,24 @@ void ChatWindow::keyPressed(gcn::KeyEvent & event)
     }
 }
 
-void ChatWindow::addInputText(std::string input_str)
+void ChatWindow::addInputText(const std::string &text)
 {
-     mChatInput->setText(mChatInput->getText() + input_str + " ");
-     requestChatFocus();
+    const int caretPos = mChatInput->getCaretPosition();
+    const std::string inputText = mChatInput->getText();
+
+    std::ostringstream ss;
+    ss << inputText.substr(0, caretPos) << text << " ";
+    ss << inputText.substr(caretPos);
+
+    mChatInput->setText(ss.str());
+    mChatInput->setCaretPosition(caretPos + text.length() + 1);
+    requestChatFocus();
 }
 
 void ChatWindow::addItemText(const std::string &item)
 {
     std::ostringstream text;
-    text << "[" << item << "] ";
+    text << "[" << item << "]";
     addInputText(text.str());
 }
 

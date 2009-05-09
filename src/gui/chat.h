@@ -182,7 +182,7 @@ class ChatWindow : public Window, public gcn::ActionListener,
         void keyPressed(gcn::KeyEvent &event);
 
         /** Add the given text to the chat input */
-        void addInputText(std::string input_str);
+        void addInputText(const std::string &text);
 
         /** Called to add item to chat */
         void addItemText(const std::string &item);
