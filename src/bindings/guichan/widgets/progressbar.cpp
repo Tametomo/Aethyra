@@ -36,6 +36,7 @@
 #include "../../../resources/resourcemanager.h"
 
 ImageRect ProgressBar::mBorder;
+
 int ProgressBar::mInstances = 0;
 float ProgressBar::mAlpha = 1.0;
 
@@ -60,6 +61,7 @@ ProgressBar::ProgressBar(float progress, int width, int height,
         ResourceManager *resman = ResourceManager::getInstance();
         Image *dBorders = resman->getImage("graphics/gui/vscroll_grey.png");
         Image *dInsides = resman->getImage("graphics/gui/buttonhi.png");
+
         mBorder.grid[0] = dBorders->getSubImage(0, 0, 4, 4);
         mBorder.grid[1] = dBorders->getSubImage(4, 0, 3, 4);
         mBorder.grid[2] = dBorders->getSubImage(7, 0, 4, 4);
@@ -75,6 +77,7 @@ ProgressBar::ProgressBar(float progress, int width, int height,
             mBorder.grid[i]->setAlpha(mAlpha);
         }
 
+        dInsides->decRef();
         dBorders->decRef();
     }
 
@@ -87,15 +90,8 @@ ProgressBar::~ProgressBar()
 
     if (mInstances == 0)
     {
-        delete mBorder.grid[0];
-        delete mBorder.grid[1];
-        delete mBorder.grid[2];
-        delete mBorder.grid[3];
-        delete mBorder.grid[4];
-        delete mBorder.grid[5];
-        delete mBorder.grid[6];
-        delete mBorder.grid[7];
-        delete mBorder.grid[8];
+        for (int i = 0; i < 9; i++)
+            delete mBorder.grid[i];
     }
 }
 
