@@ -282,3 +282,16 @@ void TradeWindow::close()
 {
     MessageOut outMsg(CMSG_TRADE_CANCEL_REQUEST);
 }
+
+void TradeWindow::mouseClicked(gcn::MouseEvent &event)
+{
+    Window::mouseClicked(event);
+
+    if (event.getButton() == gcn::MouseEvent::RIGHT &&
+        event.getSource() == mMyItemContainer)
+        mMyItemContainer->showPopup(TRADE);
+
+    else if (event.getButton() == gcn::MouseEvent::RIGHT &&
+             event.getSource() == mPartnerItemContainer)
+        mPartnerItemContainer->showPopup(TRADE);
+}

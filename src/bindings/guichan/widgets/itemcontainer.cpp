@@ -67,6 +67,8 @@ ItemContainer::ItemContainer(Inventory *inventory,
     mItemPopup->setOpaque(false);
     setFocusable(true);
 
+    mPopupMenu = new PopupMenu(TRADE);
+
     ResourceManager *resman = ResourceManager::getInstance();
 
     mSelImg = resman->getImage("graphics/gui/selection.png");
@@ -83,6 +85,7 @@ ItemContainer::~ItemContainer()
 {
     mSelImg->decRef();
     delete mItemPopup;
+    delete mPopupMenu;
 }
 
 void ItemContainer::logic()
@@ -289,6 +292,17 @@ void ItemContainer::mousePressed(gcn::MouseEvent &event)
         if (item)
             itemShortcut->setItemSelected(item->getId());
     }
+}
+
+void ItemContainer::showPopup(MenuType type)
+{
+    Item *item = getSelectedItem();
+
+    if (!item)
+        return;
+
+    mPopupMenu->setType(type);
+    mPopupMenu->showPopup(viewport->getMouseX(), viewport->getMouseY(), item);
 }
 
 // Show ItemTooltip

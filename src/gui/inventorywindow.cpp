@@ -27,7 +27,6 @@
 
 #include "inventorywindow.h"
 #include "itemamount.h"
-#include "viewport.h"
 
 #include "../inventory.h"
 #include "../item.h"
@@ -175,21 +174,9 @@ void InventoryWindow::mouseClicked(gcn::MouseEvent &event)
 {
     Window::mouseClicked(event);
 
-    if (event.getButton() == gcn::MouseEvent::RIGHT)
-    {
-        Item *item = mItems->getSelectedItem();
-
-        if (!item)
-            return;
-
-        /* Convert relative to the window coordinates to absolute screen
-         * coordinates.
-         */
-        const int mx = event.getX() + getX();
-        const int my = event.getY() + getY();
-
-        viewport->showPopup(mx, my, item);
-    }
+    if (event.getButton() == gcn::MouseEvent::RIGHT &&
+        event.getSource() == mItems)
+        mItems->showPopup(INVENTORY);
 }
 
 void InventoryWindow::updateButtons()
@@ -214,3 +201,4 @@ Item* InventoryWindow::getSelectedItem() const
 {
     return mItems->getSelectedItem();
 }
+

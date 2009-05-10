@@ -258,12 +258,14 @@ void Viewport::mousePressed(gcn::MouseEvent &event)
         if ((being = beingManager->findBeingByPixel(x, y)) &&
              being != player_node)
         {
+            mPopupMenu->setType(BEING);
             mPopupMenu->showPopup(event.getX(), event.getY(), being);
             return;
         }
         else if ((floorItem = floorItemManager->findByCoordinates(tilex,
                                                                   tiley)))
         {
+            mPopupMenu->setType(FLOOR_ITEM);
             mPopupMenu->showPopup(event.getX(), event.getY(), floorItem);
             return;
         }
@@ -361,11 +363,13 @@ void Viewport::mouseReleased(gcn::MouseEvent &event)
 
 void Viewport::showPopup(int x, int y, Item *item)
 {
+    mPopupMenu->setType(INVENTORY);
     mPopupMenu->showPopup(x, y, item);
 }
 
 void Viewport::showPopup(int x, int y, Being *being)
 {
+    mPopupMenu->setType(BEING);
     mPopupMenu->showPopup(x, y, being);
 }
 

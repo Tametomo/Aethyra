@@ -27,7 +27,6 @@
 #include "inventorywindow.h"
 #include "itemamount.h"
 #include "storagewindow.h"
-#include "viewport.h"
 
 #include "../inventory.h"
 #include "../item.h"
@@ -66,7 +65,7 @@ StorageWindow::StorageWindow(int invSize):
     mStoreButton = new Button(_("Store"), "store", this);
     mRetrieveButton = new Button(_("Retrieve"), "retrieve", this);
 
-    mItems = new ItemContainer(player_node->getStorage());
+    mItems = new ItemContainer(player_node->getStorage(), "retrieve", this);
     mItems->addSelectionListener(this);
 
     mInvenScroll = new ScrollArea(mItems);
@@ -164,25 +163,9 @@ void StorageWindow::mouseClicked(gcn::MouseEvent &event)
 {
     Window::mouseClicked(event);
 
-    if (event.getButton() == gcn::MouseEvent::RIGHT)
-    {
-        Item *item = mItems->getSelectedItem();
-
-        if (!item)
-        {
-            mRetrieveButton->setEnabled(false);
-            return;
-        }
-
-        mRetrieveButton->setEnabled(true);
-
-        /* Convert relative to the window coordinates to absolute screen
-         * coordinates.
-         */
-        const int mx = event.getX() + getX();
-        const int my = event.getY() + getY();
-        viewport->showPopup(mx, my, item);
-    }
+    if (event.getButton() == gcn::MouseEvent::RIGHT &&
+        event.getSource() == mItems)
+        mItems->showPopup(STORAGE);
 }
 
 Item* StorageWindow::getSelectedItem() const
@@ -208,3 +191,4 @@ void StorageWindow::close()
 {
     MessageOut outMsg(CMSG_CLOSE_STORAGE);
 }
+

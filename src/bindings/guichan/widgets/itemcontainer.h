@@ -30,6 +30,8 @@
 #include <guichan/widget.hpp>
 #include <guichan/widgetlistener.hpp>
 
+#include "../../../gui/popupmenu.h"
+
 class Image;
 class Inventory;
 class Item;
@@ -107,6 +109,8 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
             mListeners.remove(listener);
         }
 
+        void showPopup(MenuType type);
+
     private:
         // KeyListener
         void keyPressed(gcn::KeyEvent &event);
@@ -153,6 +157,7 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         int mOffset;
 
         ItemPopup *mItemPopup;
+        PopupMenu *mPopupMenu;
 
         std::list<gcn::SelectionListener*> mListeners;
 

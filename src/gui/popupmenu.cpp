@@ -26,6 +26,7 @@
 #include "inventorywindow.h"
 #include "itemamount.h"
 #include "popupmenu.h"
+#include "storagewindow.h"
 
 #include "../item.h"
 #include "../playerrelations.h"
@@ -51,11 +52,12 @@
 
 extern std::string tradePartnerName;
 
-PopupMenu::PopupMenu():
+PopupMenu::PopupMenu(MenuType type):
     Popup("PopupMenu"),
     mBeingId(NULL),
     mFloorItem(NULL),
-    mItem(NULL)
+    mItem(NULL),
+    mType(type)
 {
     mBrowserBox = new BrowserBox();
     mBrowserBox->setPosition(getPadding(), getPadding());
@@ -244,6 +246,17 @@ void PopupMenu::handleLink(const std::string& link)
         new ItemAmountWindow(AMOUNT_ITEM_DROP, inventoryWindow, mItem);
     }
 
+    else if (link == "store")
+    {
+        if (storageWindow && storageWindow->isVisible())
+            new ItemAmountWindow(AMOUNT_STORE_ADD, inventoryWindow, mItem);
+    }
+
+    else if (link == "retrieve")
+    {
+        new ItemAmountWindow(AMOUNT_STORE_REMOVE, storageWindow, mItem);
+    }
+
     else if (link == "party" && being && being->getType() == Being::PLAYER)
     {
         MessageOut outMsg(CMSG_PARTY_INVITE);
@@ -277,17 +290,28 @@ void PopupMenu::showPopup(int x, int y, Item *item)
     mItem = item;
     mBrowserBox->clearRows();
 
-    if (item->isEquipment())
+    if (mType == INVENTORY)
     {
-        if (item->isEquipped())
-            mBrowserBox->addRow(_("@@use|Unequip@@"));
+        if (item->isEquipment())
+        {
+            if (item->isEquipped())
+                mBrowserBox->addRow(_("@@use|Unequip@@"));
+            else
+                mBrowserBox->addRow(_("@@use|Equip@@"));
+        }
         else
-            mBrowserBox->addRow(_("@@use|Equip@@"));
-    }
-    else
-        mBrowserBox->addRow(_("@@use|Use@@"));
+            mBrowserBox->addRow(_("@@use|Use@@"));
 
-    mBrowserBox->addRow(_("@@drop|Drop@@"));
+        mBrowserBox->addRow(_("@@drop|Drop@@"));
+
+        if (storageWindow && storageWindow->isVisible())
+            mBrowserBox->addRow(_("@@store|Store@@"));
+    }
+    else if (mType == STORAGE)
+    {
+        mBrowserBox->addRow(_("@@retrieve|Retrieve@@"));
+    }
+
     mBrowserBox->addRow(_("@@chat|Add to Chat@@"));
     mBrowserBox->addRow("##3---");
     mBrowserBox->addRow(_("@@cancel|Cancel@@"));

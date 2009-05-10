@@ -110,6 +110,8 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
          */
         void close();
 
+        void mouseClicked(gcn::MouseEvent &event);
+
     private:
         typedef const std::auto_ptr<Inventory> InventoryPtr;
         InventoryPtr mMyInventory;

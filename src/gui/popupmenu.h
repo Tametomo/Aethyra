@@ -31,6 +31,15 @@ class BrowserBox;
 class FloorItem;
 class Item;
 
+enum MenuType {
+    FLOOR_ITEM,
+    TRADE,
+    INVENTORY,
+    STORAGE,
+    BEING,
+    UNKNOWN
+};
+
 /**
  * Window showing popup menu.
  */
@@ -40,7 +49,7 @@ class PopupMenu : public Popup, public LinkHandler
         /**
          * Constructor.
          */
-        PopupMenu();
+        PopupMenu(MenuType type = UNKNOWN);
 
         /**
          * Shows the being related popup menu at the specified mouse coords.
@@ -64,12 +73,18 @@ class PopupMenu : public Popup, public LinkHandler
          */
         void handleLink(const std::string& link);
 
+        /**
+         * Changes the type of popups this PopupMenu handles/
+         */
+        void setType(MenuType type) { mType = type; }
+
     private:
         BrowserBox* mBrowserBox;
 
         int mBeingId;
         FloorItem* mFloorItem;
         Item *mItem;
+        MenuType mType;
 
         /**
          * Shared code for the various showPopup functions.
