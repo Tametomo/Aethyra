@@ -81,10 +81,12 @@ EquipmentWindow::EquipmentWindow():
     setDefaultSize(180, 300, ImageRect::CENTER);
     loadWindowState();
 
+    const gcn::Rectangle &area = getChildrenArea();
+
     mUnequip = new Button(_("Unequip"), "unequip", this);
-    gcn::Rectangle const &area = getChildrenArea();
     mUnequip->setPosition(area.width  - mUnequip->getWidth() - 5,
                           area.height - mUnequip->getHeight() - 5);
+    mUnequip->setEnabled(false);
 
     add(mPlayerBox);
     add(mUnequip);
@@ -161,7 +163,7 @@ void EquipmentWindow::action(const gcn::ActionEvent &event)
                      mInventory->getItem(mEquipment->getEquipment(mSelected)) :
                      mInventory->getItem(mEquipment->getArrows());
         player_node->unequipItem(item);
-        mSelected = -1;
+        setSelected(-1);
     }
 }
 
@@ -203,7 +205,7 @@ void EquipmentWindow::mousePressed(gcn::MouseEvent& mouseEvent)
                                  BOX_WIDTH, BOX_HEIGHT);
 
             if (tRect.isPointInRect(x, y) && item)
-                mSelected = i;
+                setSelected(i);
         }
     }
     else if (mouseEvent.getButton() == gcn::MouseEvent::RIGHT)
@@ -248,4 +250,10 @@ void EquipmentWindow::mouseMoved(gcn::MouseEvent &event)
 void EquipmentWindow::mouseExited(gcn::MouseEvent &event)
 {
     mItemPopup->setVisible(false);
+}
+
+void EquipmentWindow::setSelected(int index)
+{
+    mSelected = index;
+    mUnequip->setEnabled(mSelected != -1);
 }

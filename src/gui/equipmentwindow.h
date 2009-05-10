@@ -92,6 +92,8 @@ class EquipmentWindow : public Window, public gcn::ActionListener
 
         Item* getItem(const int &x, const int &y);
 
+        void setSelected(int index);
+
         Equipment *mEquipment;
         Inventory *mInventory;
         gcn::Button *mUnequip;                  /**< Button for unequipping. */
