@@ -51,28 +51,24 @@ class EmoteShortcut
          *
          * @param index Index of the shortcut Emote.
          */
-        int getEmote(int index) const
-        { return mEmotes[index]; }
+        int getEmote(int index) const { return mEmotes[index]; }
 
         /**
          * Returns the amount of shortcut Emotes.
          */
-        int getEmoteCount() const
-        { return SHORTCUT_EMOTES; }
+        int getEmoteCount() const { return SHORTCUT_EMOTES; }
 
         /**
          * Returns the emote ID that is currently selected.
          */
-        int getEmoteSelected() const
-        { return mEmoteSelected; }
+        int getEmoteSelected() const { return mEmoteSelected; }
 
         /**
          * Adds the selected emote ID to the emotes specified by the index.
          *
          * @param index Index of the emotes.
          */
-        void setEmote(int index)
-        { mEmotes[index] = mEmoteSelected; }
+        void setEmote(int index) { mEmotes[index] = mEmoteSelected; }
 
         /**
          * Adds a emoticon to the emotes store specified by the index.
@@ -80,28 +76,24 @@ class EmoteShortcut
          * @param index Index of the emote.
          * @param emoteId ID of the emote.
          */
-        void setEmotes(int index, int emoteId)
-        { mEmotes[index] = emoteId; }
+        void setEmotes(int index, int emoteId) { mEmotes[index] = emoteId; }
 
         /**
          * Set the Emote that is selected.
          *
          * @param emoteId The ID of the emote that is to be assigned.
          */
-        void setEmoteSelected(int emoteId)
-        { mEmoteSelected = emoteId; }
+        void setEmoteSelected(int emoteId) { mEmoteSelected = emoteId; }
 
         /**
          * A flag to check if the Emote is selected.
          */
-        bool isEmoteSelected()
-        { return mEmoteSelected; }
+        bool isEmoteSelected() { return mEmoteSelected; }
 
         /**
-         * Remove a Emote from the shortcut.
+         * Remove an Emote from the shortcut.
          */
-        void removeEmote(int index)
-        { mEmotes[index] = 0; }
+        void removeEmote(int index) { mEmotes[index] = 0; }
 
         /**
          * Try to use the Emote specified by the index.
