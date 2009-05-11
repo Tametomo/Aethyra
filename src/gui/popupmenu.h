@@ -52,21 +52,9 @@ class PopupMenu : public Popup, public LinkHandler
         PopupMenu(MenuType type = UNKNOWN);
 
         /**
-         * Shows the being related popup menu at the specified mouse coords.
+         * Shows a popup menu at the specified mouse coords.
          */
-        void showPopup(int x, int y, Being *being);
-
-        /**
-         * Shows the floor item related popup menu at the specified
-         * mouse coords.
-         */
-        void showPopup(int x, int y, FloorItem *floorItem);
-
-        /**
-         * Shows the related popup menu when right click on the inventory
-         * at the specified mouse coordinates.
-         */
-        void showPopup(int x, int y, Item *item);
+        void showPopup(int x, int y);
 
         /**
          * Handles link action.
@@ -74,22 +62,32 @@ class PopupMenu : public Popup, public LinkHandler
         void handleLink(const std::string& link);
 
         /**
-         * Changes the type of popups this PopupMenu handles/
+         * Changes the type of popups this PopupMenu handles.
          */
         void setType(MenuType type) { mType = type; }
+
+        /**
+         * Sets the internal floor item to use.
+         */
+        void setFloorItem(FloorItem *item) { mFloorItem = item; }
+
+        /**
+         * Sets the internal item to use.
+         */
+        void setItem(Item *item) { mItem = item; }
+
+        /**
+         * Sets the internal being to use.
+         */
+        void setBeing(Being *being) { mBeing = being; }
 
     private:
         BrowserBox* mBrowserBox;
 
-        int mBeingId;
-        FloorItem* mFloorItem;
+        Being *mBeing;
+        FloorItem *mFloorItem;
         Item *mItem;
         MenuType mType;
-
-        /**
-         * Shared code for the various showPopup functions.
-         */
-        void showPopup(int x, int y);
 };
 
 #endif

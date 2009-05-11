@@ -302,7 +302,8 @@ void ItemContainer::showPopup(MenuType type)
         return;
 
     mPopupMenu->setType(type);
-    mPopupMenu->showPopup(viewport->getMouseX(), viewport->getMouseY(), item);
+    mPopupMenu->setItem(item);
+    mPopupMenu->showPopup(viewport->getMouseX(), viewport->getMouseY());
 }
 
 // Show ItemTooltip

@@ -40,8 +40,6 @@
 
 #include "../resources/beingmanager.h"
 
-#include "../resources/db/itemdb.h"
-
 #include "../resources/sprite/being.h"
 #include "../resources/sprite/flooritem.h"
 #include "../resources/sprite/localplayer.h"
@@ -54,7 +52,7 @@ extern std::string tradePartnerName;
 
 PopupMenu::PopupMenu(MenuType type):
     Popup("PopupMenu"),
-    mBeingId(NULL),
+    mBeing(NULL),
     mFloorItem(NULL),
     mItem(NULL),
     mType(type)
@@ -68,139 +66,46 @@ PopupMenu::PopupMenu(MenuType type):
     loadPopupConfiguration();
 }
 
-void PopupMenu::showPopup(int x, int y, Being *being)
-{
-    mBeingId = being->getId();
-    mBrowserBox->clearRows();
-
-    // Any being's name can be added to chat
-    mBrowserBox->addRow(_("@@name|Add name to chat@@"));
-
-    const std::string &name = being->getType() == Being::NPC ?
-                              being->getName().substr(0, being->getName().size()
-                              - 6) : being->getName();
-
-    switch (being->getType())
-    {
-        case Being::PLAYER:
-            {
-                // Players can be traded with. Later also follow and
-                // add as buddy will be options in this menu.
-                mBrowserBox->addRow(strprintf(_("@@trade|Trade With %s@@"), name.c_str()));
-                mBrowserBox->addRow(strprintf(_("@@attack|Attack %s@@"), name.c_str()));
-
-                mBrowserBox->addRow("##3---");
-
-                switch (player_relations.getRelation(name)) {
-                case PlayerRelation::NEUTRAL:
-                    mBrowserBox->addRow(strprintf(_("@@friend|Befriend %s@@"), name.c_str()));
-
-                case PlayerRelation::FRIEND:
-                    mBrowserBox->addRow(strprintf(_("@@disregard|Disregard %s@@"), name.c_str()));
-                    mBrowserBox->addRow(strprintf(_("@@ignore|Ignore %s@@"), name.c_str()));
-                    break;
-
-                case PlayerRelation::DISREGARDED:
-                    mBrowserBox->addRow(strprintf(_("@@unignore|Un-Ignore %s@@"), name.c_str()));
-                    mBrowserBox->addRow(strprintf(_("@@ignore|Completely ignore %s@@"), name.c_str()));
-                    break;
-
-                case PlayerRelation::IGNORED:
-                    mBrowserBox->addRow(strprintf(_("@@unignore|Un-Ignore %s@@"), name.c_str()));
-                    break;
-                }
-
-                //mBrowserBox->addRow(_(strprintf("@@follow|Follow %s@@"), name.c_str()));
-
-                
-                /*mBrowserBox->addRow("##3---");
-                mBrowserBox->addRow(strprintf(_("@@party|Invite %s to party@@"), name.c_str()));*/
-            }
-            break;
-
-        case Being::NPC:
-            // NPCs can be talked to (single option, candidate for removal
-            // unless more options would be added)
-            mBrowserBox->addRow(strprintf(_("@@talk|Talk To %s@@"), name.c_str()));
-            break;
-
-        case Being::MONSTER:
-            // Monsters can be attacked
-            mBrowserBox->addRow(strprintf(_("@@attack|Attack %s@@"), name.c_str()));
-            break;
-
-        default:
-            /* Other beings aren't interesting... */
-            return;
-    }
-
-    //browserBox->addRow("@@look|Look To@@");
-    mBrowserBox->addRow("##3---");
-    mBrowserBox->addRow(_("@@cancel|Cancel@@"));
-
-    showPopup(x, y);
-}
-
-void PopupMenu::showPopup(int x, int y, FloorItem *floorItem)
-{
-    mFloorItem = floorItem;
-    mItem = floorItem->getItem();
-    mBrowserBox->clearRows();
-
-    // Floor item can be picked up (single option, candidate for removal)
-    std::string name = ItemDB::get(mFloorItem->getItemId()).getName();
-    mBrowserBox->addRow(strprintf(_("@@pickup|Pick Up %s@@"), name.c_str()));
-    mBrowserBox->addRow(_("@@chat|Add to Chat@@"));
-
-    //browserBox->addRow("@@look|Look To@@");
-    mBrowserBox->addRow("##3---");
-    mBrowserBox->addRow(_("@@cancel|Cancel@@"));
-
-    showPopup(x, y);
-}
-
 void PopupMenu::handleLink(const std::string& link)
 {
-    Being *being = beingManager->findBeing(mBeingId);
-
     // Talk To action
-    if (link == "talk" && being && being->getType() == Being::NPC &&
+    if (link == "talk" && mBeing && mBeing->getType() == Being::NPC &&
         current_npc == 0)
     {
-        dynamic_cast<NPC*>(being)->talk();
+        dynamic_cast<NPC*>(mBeing)->talk();
     }
 
     // Trade action
-    else if (link == "trade" && being && being->getType() == Being::PLAYER)
+    else if (link == "trade" && mBeing && mBeing->getType() == Being::PLAYER)
     {
-        player_node->trade(being);
-        tradePartnerName = being->getName();
+        player_node->trade(mBeing);
+        tradePartnerName = mBeing->getName();
     }
 
     // Attack action
-    else if (link == "attack" && being)
+    else if (link == "attack" && mBeing)
     {
-        player_node->attack(being, true);
+        player_node->attack(mBeing, true);
     }
 
-    else if (link == "unignore" && being && being->getType() == Being::PLAYER)
+    else if (link == "unignore" && mBeing && mBeing->getType() == Being::PLAYER)
     {
-        player_relations.setRelation(being->getName(), PlayerRelation::NEUTRAL);
+        player_relations.setRelation(mBeing->getName(), PlayerRelation::NEUTRAL);
     }
 
-    else if (link == "ignore" && being && being->getType() == Being::PLAYER)
+    else if (link == "ignore" && mBeing && mBeing->getType() == Being::PLAYER)
     {
-        player_relations.setRelation(being->getName(), PlayerRelation::IGNORED);
+        player_relations.setRelation(mBeing->getName(), PlayerRelation::IGNORED);
     }
 
-    else if (link == "disregard" && being && being->getType() == Being::PLAYER)
+    else if (link == "disregard" && mBeing && mBeing->getType() == Being::PLAYER)
     {
-        player_relations.setRelation(being->getName(), PlayerRelation::DISREGARDED);
+        player_relations.setRelation(mBeing->getName(), PlayerRelation::DISREGARDED);
     }
 
-    else if (link == "friend" && being && being->getType() == Being::PLAYER)
+    else if (link == "friend" && mBeing && mBeing->getType() == Being::PLAYER)
     {
-        player_relations.setRelation(being->getName(), PlayerRelation::FRIEND);
+        player_relations.setRelation(mBeing->getName(), PlayerRelation::FRIEND);
     }
 
     /*
@@ -257,17 +162,17 @@ void PopupMenu::handleLink(const std::string& link)
         new ItemAmountWindow(AMOUNT_STORE_REMOVE, storageWindow, mItem);
     }
 
-    else if (link == "party" && being && being->getType() == Being::PLAYER)
+    else if (link == "party" && mBeing && mBeing->getType() == Being::PLAYER)
     {
         MessageOut outMsg(CMSG_PARTY_INVITE);
-        outMsg.writeInt32(being->getId());
+        outMsg.writeInt32(mBeing->getId());
     }
 
-    else if (link == "name" && being)
+    else if (link == "name" && mBeing)
     {
-        const std::string &name = being->getType() == Being::NPC ?
-                                  being->getName().substr(0,
-                                  being->getName().size() - 6) : being->getName();
+        const std::string &name = mBeing->getType() == Being::NPC ?
+                                  mBeing->getName().substr(0,
+                                  mBeing->getName().size() - 6) : mBeing->getName();
         chatWindow->addInputText(name);
     }
 
@@ -279,54 +184,133 @@ void PopupMenu::handleLink(const std::string& link)
 
     setVisible(false);
 
-    mBeingId = NULL;
+    mBeing = NULL;
     mFloorItem = NULL;
     mItem = NULL;
 }
 
-void PopupMenu::showPopup(int x, int y, Item *item)
+void PopupMenu::showPopup(int x, int y)
 {
-    assert(item);
-    mItem = item;
     mBrowserBox->clearRows();
 
-    if (mType == INVENTORY)
+    if (mType < BEING)
     {
-        if (item->isEquipment())
+        if (mType == FLOOR_ITEM)
+            mItem = mFloorItem->getItem();
+
+        if (!mItem)
+            return;
+
+        const std::string &name = mItem->getName();
+
+        if (mType == INVENTORY)
         {
-            if (item->isEquipped())
-                mBrowserBox->addRow(_("@@use|Unequip@@"));
+            if (mItem->isEquipment())
+            {
+                if (mItem->isEquipped())
+                    mBrowserBox->addRow(_("@@use|Unequip@@"));
+                else
+                    mBrowserBox->addRow(_("@@use|Equip@@"));
+            }
             else
-                mBrowserBox->addRow(_("@@use|Equip@@"));
+                mBrowserBox->addRow(_("@@use|Use@@"));
+
+            mBrowserBox->addRow(_("@@drop|Drop@@"));
+
+            if (storageWindow && storageWindow->isVisible())
+                mBrowserBox->addRow(_("@@store|Store@@"));
         }
-        else
-            mBrowserBox->addRow(_("@@use|Use@@"));
+        else if (mType == STORAGE)
+        {
+            mBrowserBox->addRow(_("@@retrieve|Retrieve@@"));
+        }
+        else if (mType == FLOOR_ITEM)
+        {
+            mBrowserBox->addRow(strprintf(_("@@pickup|Pick Up %s@@"), name.c_str()));
+        }
 
-        mBrowserBox->addRow(_("@@drop|Drop@@"));
-
-        if (storageWindow && storageWindow->isVisible())
-            mBrowserBox->addRow(_("@@store|Store@@"));
+        mBrowserBox->addRow(_("@@chat|Add to Chat@@"));
     }
-    else if (mType == STORAGE)
+    else if (mType == BEING)
     {
-        mBrowserBox->addRow(_("@@retrieve|Retrieve@@"));
+        if (!mBeing)
+            return;
+
+        // Any mBeing's name can be added to chat
+        mBrowserBox->addRow(_("@@name|Add name to chat@@"));
+
+        const std::string &name = mBeing->getType() == Being::NPC ?
+                                  mBeing->getName().substr(0,
+                                  mBeing->getName().size() - 6) :
+                                  mBeing->getName();
+
+        switch (mBeing->getType())
+        {
+            case Being::PLAYER:
+            {
+                // Players can be traded with. Later also follow and
+                // add as buddy will be options in this menu.
+                mBrowserBox->addRow(strprintf(_("@@trade|Trade With %s@@"), name.c_str()));
+                mBrowserBox->addRow(strprintf(_("@@attack|Attack %s@@"), name.c_str()));
+
+                mBrowserBox->addRow("##3---");
+
+                switch (player_relations.getRelation(name))
+                {
+                    case PlayerRelation::NEUTRAL:
+                        mBrowserBox->addRow(strprintf(_("@@friend|Befriend %s@@"), name.c_str()));
+
+                    case PlayerRelation::FRIEND:
+                        mBrowserBox->addRow(strprintf(_("@@disregard|Disregard %s@@"), name.c_str()));
+                        mBrowserBox->addRow(strprintf(_("@@ignore|Ignore %s@@"), name.c_str()));
+                        break;
+
+                    case PlayerRelation::DISREGARDED:
+                        mBrowserBox->addRow(strprintf(_("@@unignore|Un-Ignore %s@@"), name.c_str()));
+                        mBrowserBox->addRow(strprintf(_("@@ignore|Completely ignore %s@@"), name.c_str()));
+                        break;
+
+                    case PlayerRelation::IGNORED:
+                        mBrowserBox->addRow(strprintf(_("@@unignore|Un-Ignore %s@@"), name.c_str()));
+                        break;
+                }
+
+                //mBrowserBox->addRow(_(strprintf("@@follow|Follow %s@@"), name.c_str()));
+
+                
+                /*mBrowserBox->addRow("##3---");
+                mBrowserBox->addRow(strprintf(_("@@party|Invite %s to party@@"), name.c_str()));*/
+            }
+            break;
+
+            case Being::NPC:
+                // NPCs can be talked to (single option, candidate for removal
+                // unless more options would be added)
+                mBrowserBox->addRow(strprintf(_("@@talk|Talk To %s@@"), name.c_str()));
+                break;
+
+            case Being::MONSTER:
+                // Monsters can be attacked
+                mBrowserBox->addRow(strprintf(_("@@attack|Attack %s@@"), name.c_str()));
+                break;
+
+            default:
+                /* Other mBeings aren't interesting... */
+                return;
+        }
     }
 
-    mBrowserBox->addRow(_("@@chat|Add to Chat@@"));
     mBrowserBox->addRow("##3---");
     mBrowserBox->addRow(_("@@cancel|Cancel@@"));
 
-    showPopup(x, y);
-}
-
-void PopupMenu::showPopup(int x, int y)
-{
     setContentSize(mBrowserBox->getWidth() + (2 * getPadding()),
                    mBrowserBox->getHeight() + getPadding());
+
     if (graphics->getWidth() < (x + getWidth()))
         x = graphics->getWidth() - getWidth();
     if (graphics->getHeight() < (y + getHeight()))
         y = graphics->getHeight() - getHeight();
+
     setPosition(x, y);
     setVisible(true);
     requestMoveToTop();

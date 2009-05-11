@@ -109,6 +109,11 @@ class Item
          */
         const ItemInfo& getInfo() const { return ItemDB::get(mId); }
 
+        /**
+         * Returns the item's name.
+         */
+        std::string getName() const { return ItemDB::get(mId).getName(); }
+
     protected:
         int mId;              /**< Item type id. */
         Image *mImage;        /**< Item image. */
