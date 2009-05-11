@@ -181,13 +181,6 @@ void InputManager::handleInput()
 
             const int tKey = keyboard.getKeyIndex(event.key.keysym.sym);
 
-            if (keyboard.isKeyActive(keyboard.KEY_EMOTE))
-            {
-                int emotion = keyboard.getKeyEmoteOffset(event.key.keysym.sym);
-                emoteShortcut->useEmote(emotion);
-                used = true;
-            }
-
             switch (tKey)
             {
                 // In-game Help
@@ -240,8 +233,8 @@ void InputManager::handleInput()
                         {
                             chatWindow->scroll(-DEFAULT_CHAT_WINDOW_SCROLL);
                             used = true;
-                    }
-                    break;
+                        }
+                        break;
                     case KeyboardConfig::KEY_SCROLL_CHAT_DOWN:
                         if (chatWindow && chatWindow->isVisible())
                         {
@@ -302,6 +295,18 @@ void InputManager::handleInput()
                         }
                     }
 
+                    if (keyboard.isKeyActive(keyboard.KEY_EMOTE))
+                    {
+                        const int emotion = keyboard.getKeyEmoteOffset(event.key.keysym.sym);
+
+                        if (emotion)
+                        {
+                            emoteShortcut->useEmote(emotion);
+                            used = true;
+                            break;
+                        }
+                    }
+
                     // Player actions
                     if (player_node && player_node->mAction != Being::DEAD)
                     {
@@ -310,13 +315,19 @@ void InputManager::handleInput()
                         const Uint16 y = player_node->mY;
 
                         // Do not activate item shortcuts if tradewindow is visible
-                        if (!tradeWindow->isVisible() &&
-                            tKey >= KeyboardConfig::KEY_SHORTCUT_1 &&
-                            tKey <= KeyboardConfig::KEY_SHORTCUT_12)
+                        if (!tradeWindow->isVisible())
                         {
-                            itemShortcut->useItem(tKey -
-                                                  KeyboardConfig::KEY_SHORTCUT_1);
-                            used = true;
+                            for (int i = KeyboardConfig::KEY_SHORTCUT_1;
+                                     i <= KeyboardConfig::KEY_SHORTCUT_12;
+                                     i++)
+                            {
+                                if (tKey == i)
+                                {
+                                    itemShortcut->useItem(i - KeyboardConfig::KEY_SHORTCUT_1);
+                                    used = true;
+                                    break;
+                                }
+                            }
                         }
 
                         if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
