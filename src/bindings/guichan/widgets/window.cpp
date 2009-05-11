@@ -174,12 +174,12 @@ void Window::setLocationRelativeTo(gcn::Widget *widget)
 void Window::setLocationRelativeTo(ImageRect::ImagePosition position,
                                    const int &offsetX, const int &offsetY)
 {
-    setLocationRelativeTo(position, graphics->getWidth(), graphics->getHeight(),
+    setLocationRelativeTo(graphics->getWidth(), graphics->getHeight(), position,
                           offsetX, offsetY);
 }
 
-void Window::setLocationRelativeTo(ImageRect::ImagePosition position,
-                                   const int &width, const int &height,
+void Window::setLocationRelativeTo(const int &width, const int &height,
+                                   ImageRect::ImagePosition position,
                                    const int &offsetX, const int &offsetY)
 {
     int x = 0, y = 0;
@@ -286,8 +286,6 @@ void Window::saveRelativeLocation(const int &x, const int &y)
 
 void Window::adaptToNewSize()
 {
-    setDefaultSize(mDefaultWidth, mDefaultHeight, mDefaultPosition,
-                   mDefaultOffsetX, mDefaultOffsetY);
     setLocationRelativeTo(mPosition, mOffsetX, mOffsetY);
 }
 
@@ -564,8 +562,8 @@ void Window::loadWindowState()
     }
 
     int position = (int) config.getValue(name + "Position", -1);
-    mOffsetX = (int) config.getValue(name + "OffsetX", 0);
-    mOffsetY = (int) config.getValue(name + "OffsetY", 0);
+    mOffsetX = (int) config.getValue(name + "OffsetX", mDefaultOffsetX);
+    mOffsetY = (int) config.getValue(name + "OffsetY", mDefaultOffsetY);
 
     if (position != -1)
     {
@@ -574,7 +572,7 @@ void Window::loadWindowState()
     }
     else
     {
-        setPosition(mDefaultX, mDefaultY);
+        setLocationRelativeTo(mDefaultPosition, mDefaultOffsetX, mDefaultOffsetY);
     }
 
     setVisible((bool) config.getValue(name + "Visible", mDefaultVisible));
@@ -612,8 +610,9 @@ void Window::saveWindowState()
     }
 }
 
-void Window::setDefaultSize(int defaultX, int defaultY,
-                            int defaultWidth, int defaultHeight)
+void Window::setDefaultSize(int defaultWidth, int defaultHeight,
+                            ImageRect::ImagePosition position,
+                            int offsetX, int offsetY)
 {
     if (getMinWidth() > defaultWidth)
         defaultWidth = getMinWidth();
@@ -624,33 +623,21 @@ void Window::setDefaultSize(int defaultX, int defaultY,
     else if (getMaxHeight() < defaultHeight)
         defaultHeight = getMaxHeight();
 
-    mDefaultX = defaultX;
-    mDefaultY = defaultY;
-    mDefaultWidth = defaultWidth;
-    mDefaultHeight = defaultHeight;
-}
+    int posX = 0, posY = 0;
 
-void Window::setDefaultSize(int defaultWidth, int defaultHeight,
-                            ImageRect::ImagePosition position,
-                            int offsetX, int offsetY)
-{
-    int x = 0, y = 0;
+    getRelativeOffset(position, posX, posY, defaultWidth, defaultHeight, 0, 0);
 
-    getRelativeOffset(position, x, y, defaultWidth, defaultHeight);
-
-    mDefaultX = x - offsetX;
-    mDefaultY = y - offsetY;
     mDefaultWidth = defaultWidth;
     mDefaultHeight = defaultHeight;
     mDefaultPosition = position;
-    mDefaultOffsetX = offsetX;
-    mDefaultOffsetY = offsetY;
+    mDefaultOffsetX = posX - offsetX;
+    mDefaultOffsetY = posY - offsetY;
 }
 
 void Window::resetToDefaultSize()
 {
-    setPosition(mDefaultX, mDefaultY);
     setSize(mDefaultWidth, mDefaultHeight);
+    setLocationRelativeTo(mDefaultPosition, mDefaultOffsetX, mDefaultOffsetY);
     saveWindowState();
 }
 
@@ -663,8 +650,7 @@ int Window::getResizeHandles(gcn::MouseEvent &event)
     {
         const int x = event.getX();
 
-        if (!getChildrenArea().isPointInRect(x, y) &&
-                event.getSource() == this)
+        if (!getChildrenArea().isPointInRect(x, y) && event.getSource() == this)
         {
             resizeHandles |= (x > getWidth() - resizeBorderWidth) ? RIGHT :
                               (x < resizeBorderWidth) ? LEFT : 0;
@@ -691,7 +677,8 @@ int Window::getGuiAlpha()
 
 Layout &Window::getLayout()
 {
-    if (!mLayout) mLayout = new Layout;
+    if (!mLayout)
+        mLayout = new Layout;
     return *mLayout;
 }
 

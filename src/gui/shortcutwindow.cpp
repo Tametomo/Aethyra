@@ -52,7 +52,7 @@ ShortcutWindow::ShortcutWindow(const char *title, ShortcutContainer *content):
 
     setDefaultSize(mItems->getBoxWidth() + border, (mItems->getBoxHeight() *
                    mItems->getMaxItems()) + border, ImageRect::LOWER_RIGHT,
-                   mInstances * mItems->getBoxWidth(), 0);
+                   -mInstances * (mItems->getBoxWidth() + 2 * getPadding()), 0);
 
     mInstances++;
 

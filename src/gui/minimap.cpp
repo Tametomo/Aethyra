@@ -97,15 +97,15 @@ void Minimap::setMap(Map *map)
 
     if (mMapImage)
     {
-        const int offsetX = 2 * getPadding();
-        const int offsetY = getTitleBarHeight() + getPadding();
+        const int paddingX = 2 * getPadding();
+        const int paddingY = getTitleBarHeight() + getPadding();
         const int titleWidth = getFont()->getWidth(getCaption()) +
                                mSkin->getCloseImage()->getWidth() + 4 * 
                                getPadding();
         const int mapWidth = mMapImage->getWidth() < 100 ?
-                             mMapImage->getWidth() + offsetX : 100;
+                             mMapImage->getWidth() + paddingX : 100;
         const int mapHeight = mMapImage->getHeight() < 100 ?
-                              mMapImage->getHeight() + offsetY : 100;
+                              mMapImage->getHeight() + paddingY : 100;
 
         setMinWidth(mapWidth > titleWidth ? mapWidth : titleWidth);
         setMinHeight(mapHeight);
@@ -114,11 +114,11 @@ void Minimap::setMap(Map *map)
         mHeightProportion = (float) mMapImage->getHeight() / map->getHeight();
 
         setMaxWidth(mMapImage->getWidth() > titleWidth ?
-                    mMapImage->getWidth() + offsetX : titleWidth);
-        setMaxHeight(mMapImage->getHeight() + offsetY);
+                    mMapImage->getWidth() + paddingX : titleWidth);
+        setMaxHeight(mMapImage->getHeight() + paddingY);
 
-        setDefaultSize(getX(), getY(), mUserWidth, mUserHeight);
-        resetToDefaultSize();
+        setContentSize(mUserWidth - paddingX, mUserHeight - paddingY);
+        saveRelativeLocation(getX(), getY());
 
         setVisible(mShow);
     }

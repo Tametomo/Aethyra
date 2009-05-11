@@ -98,8 +98,8 @@ class Window : public gcn::Window, gcn::WidgetListener
         /**
          * Sets the location relative to the given enumerated position.
          */
-        void setLocationRelativeTo(ImageRect::ImagePosition position,
-                                   const int &width, const int &height,
+        void setLocationRelativeTo(const int &width, const int &height,
+                                   ImageRect::ImagePosition position,
                                    const int &offsetX, const int &offsetY);
 
         /**
@@ -269,20 +269,13 @@ class Window : public gcn::Window, gcn::WidgetListener
 
         /**
          * Set the default win pos and size.
-         * (which can be different of the actual ones.)
-         */
-        void setDefaultSize(int defaultX, int defaultY,
-                            int defaultWidth, int defaultHeight);
-
-        /**
-         * Set the default win pos and size.
-         * (which can be different of the actual ones.)
+         *
          * This version of setDefaultSize sets the window's position based
          * on a relative enumerated position, rather than a coordinate position.
          */
         void setDefaultSize(int defaultWidth, int defaultHeight,
                             ImageRect::ImagePosition position,
-                            int offsetx = 0, int offsetY = 0);
+                            int offsetX = 0, int offsetY = 0);
 
         /**
          * Reset the win pos and size to default. Don't forget to set defaults
@@ -332,6 +325,24 @@ class Window : public gcn::Window, gcn::WidgetListener
          */
         int getGuiAlpha();
 
+        /**
+         * Returns the X offset from the window's stored relative position
+         * location.
+         */
+        int getOffsetX() { return mOffsetX; }
+
+        /**
+         * Returns the Y offset from the window's stored relative position
+         * location.
+         */
+        int getOffsetY() { return mOffsetY; }
+
+        /**
+         * Returns the relative location that the window is stored, and the
+         * offsets count off of.
+         */
+        ImageRect::ImagePosition getPosition() { return mPosition; }
+
     protected:
         bool mOldVisibility;          /**< Whether the window was previously
                                            viewable before a hide */
@@ -368,8 +379,6 @@ class Window : public gcn::Window, gcn::WidgetListener
         int mMinWinHeight;            /**< Minimum window height */
         int mMaxWinWidth;             /**< Maximum window width */
         int mMaxWinHeight;            /**< Maximum window height */
-        int mDefaultX;                /**< Default window X position */
-        int mDefaultY;                /**< Default window Y position */
         int mDefaultWidth;            /**< Default window width */
         int mDefaultHeight;           /**< Default window height */
 
