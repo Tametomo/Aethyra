@@ -92,7 +92,7 @@ InventoryWindow::InventoryWindow(int invSize):
     mWeightBar->addColor(255, 0, 0);
 
     setMinHeight(130);
-    setMinWidth(mWeightLabel->getWidth() + mSlotsLabel->getWidth() + 280);
+    setMinWidth(mWeightLabel->getWidth() + mSlotsLabel->getWidth() + 260);
 
     place(0, 0, mWeightLabel).setPadding(3);
     place(1, 0, mWeightBar, 5);
