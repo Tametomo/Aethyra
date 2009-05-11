@@ -52,6 +52,7 @@ class PlayerConfSerialiser : public ConfigurationListManager<std::pair<std::stri
     {
         if (!value.second)
             return NULL;
+
         cobj->setValue(NAME, value.first);
         cobj->setValue(RELATION, value.second->mRelation);
 
@@ -63,10 +64,12 @@ class PlayerConfSerialiser : public ConfigurationListManager<std::pair<std::stri
                    std::map<std::string, PlayerRelation *> *container)
     {
         std::string name = cobj->getValue(NAME, "");
+
         if (name.empty())
             return container;
 
-        if (!(*container)[name]) {
+        if (!(*container)[name])
+        {
             int v = (int)cobj->getValue(RELATION, PlayerRelation::NEUTRAL);
             (*container)[name] = new PlayerRelation(static_cast<PlayerRelation::relation>(v));
         }
@@ -111,7 +114,7 @@ void PlayerRelationsManager::clear()
     delete names;
 }
 
-#define PERSIST_IGNORE_LIST "persist-player-list"
+#define PERSIST_IGNORE_LIST "persistent-player-list"
 #define PLAYER_IGNORE_STRATEGY "player-ignore-strategy"
 #define DEFAULT_PERMISSIONS "default-player-permissions"
 
@@ -129,8 +132,8 @@ void PlayerRelationsManager::load()
 {
     clear();
 
-    mPersistIgnores = config.getValue(PERSIST_IGNORE_LIST, 0);
-    mDefaultPermissions = (int)config.getValue(DEFAULT_PERMISSIONS, mDefaultPermissions);
+    mPersistIgnores = config.getValue(PERSIST_IGNORE_LIST, 1);
+    mDefaultPermissions = (int) config.getValue(DEFAULT_PERMISSIONS, mDefaultPermissions);
     std::string ignore_strategy_name = config.getValue(PLAYER_IGNORE_STRATEGY, DEFAULT_IGNORE_STRATEGY);
     int ignore_strategy_index = getPlayerIgnoreStrategyIndex(ignore_strategy_name);
     if (ignore_strategy_index >= 0)
@@ -180,20 +183,22 @@ unsigned int PlayerRelationsManager::checkPermissionSilently(const std::string &
     PlayerRelation *r = mRelations[player_name];
     if (!r)
         return mDefaultPermissions & flags;
-    else {
+    else
+    {
         unsigned int permissions = PlayerRelation::RELATION_PERMISSIONS[r->mRelation];
 
-        switch (r->mRelation) {
-        case PlayerRelation::NEUTRAL:
-            permissions = mDefaultPermissions;
-            break;
+        switch (r->mRelation)
+        {
+            case PlayerRelation::NEUTRAL:
+                permissions = mDefaultPermissions;
+                break;
 
-        case PlayerRelation::FRIEND:
-            permissions |= mDefaultPermissions; // widen
-            break;
+            case PlayerRelation::FRIEND:
+                permissions |= mDefaultPermissions; // widen
+                break;
 
-        default:
-            permissions &= mDefaultPermissions; // narrow
+            default:
+                permissions &= mDefaultPermissions; // narrow
         }
 
         return permissions & flags;
@@ -202,9 +207,8 @@ unsigned int PlayerRelationsManager::checkPermissionSilently(const std::string &
 
 bool PlayerRelationsManager::hasPermission(Being *being, unsigned int flags)
 {
-    if (being->getType() == Being::PLAYER)
-        return hasPermission(being->getName(), flags) == flags;
-    return true;
+    return (being->getType() == Being::PLAYER ? 
+            hasPermission(being->getName(), flags) == flags : true);
 }
 
 bool PlayerRelationsManager::hasPermission(const std::string &name, unsigned int flags)
@@ -212,9 +216,11 @@ bool PlayerRelationsManager::hasPermission(const std::string &name, unsigned int
     unsigned int rejections = flags & ~checkPermissionSilently(name, flags);
     bool permitted = rejections == 0;
 
-    if (!permitted) {
+    if (!permitted)
+    {
         // execute `ignore' strategy, if possible
-        if (mIgnoreStrategy) {
+        if (mIgnoreStrategy)
+        {
             Player *to_ignore = dynamic_cast<Player *>(beingManager->findBeingByName(name, Being::PLAYER));
 
             if (to_ignore)
@@ -229,6 +235,7 @@ bool PlayerRelationsManager::hasPermission(const std::string &name, unsigned int
 void PlayerRelationsManager::setRelation(const std::string &player_name, PlayerRelation::relation relation)
 {
     PlayerRelation *r = mRelations[player_name];
+
     if (r == NULL)
         mRelations[player_name] = new PlayerRelation(relation);
     else
@@ -300,8 +307,8 @@ public:
     }
 
     virtual void ignore(Player *player, unsigned int flags)
-     {
-     }
+    {
+    }
 };
 
 class PIS_dotdotdot : public PlayerIgnoreStrategy
@@ -314,9 +321,9 @@ public:
     }
 
     virtual void ignore(Player *player, unsigned int flags)
-     {
-         player->setSpeech("...", 500);
-     }
+    {
+        player->setSpeech("...", 500);
+    }
 };
 
 
@@ -346,9 +353,9 @@ public:
     }
 
     virtual void ignore(Player *player, unsigned int flags)
-     {
-         player->setEmote(mEmotion, IGNORE_EMOTE_TIME);
-     }
+    {
+        player->setEmote(mEmotion, IGNORE_EMOTE_TIME);
+    }
 private:
     int mEmotion;
 };
