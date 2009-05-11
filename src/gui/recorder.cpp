@@ -53,6 +53,7 @@ Recorder::Recorder(ChatWindow *chat, const std::string &title,
     layout.setRowHeight(0, Layout::AUTO_SET);
 
     loadWindowState();
+    setVisible(false);
 }
 
 Recorder::~Recorder()
