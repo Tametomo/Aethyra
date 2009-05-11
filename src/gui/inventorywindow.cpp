@@ -27,6 +27,7 @@
 
 #include "inventorywindow.h"
 #include "itemamount.h"
+#include "storagewindow.h"
 
 #include "../inventory.h"
 #include "../item.h"
@@ -68,6 +69,7 @@ InventoryWindow::InventoryWindow(int invSize):
         longestUseString = _("Unequip");
     }
 
+    mStoreButton = new Button(_("Store"), "store", this);
     mUseButton = new Button(longestUseString, "use", this);
     mDropButton = new Button(_("Drop"), "drop", this);
 
@@ -93,17 +95,20 @@ InventoryWindow::InventoryWindow(int invSize):
     setMinWidth(mWeightLabel->getWidth() + mSlotsLabel->getWidth() + 280);
 
     place(0, 0, mWeightLabel).setPadding(3);
-    place(1, 0, mWeightBar, 3);
-    place(4, 0, mSlotsLabel).setPadding(3);
-    place(5, 0, mSlotsBar, 2);
-    place(0, 1, mInvenScroll, 7, 4);
-    place(5, 5, mDropButton);
-    place(6, 5, mUseButton);
+    place(1, 0, mWeightBar, 5);
+    place(6, 0, mSlotsLabel).setPadding(3);
+    place(7, 0, mSlotsBar, 2);
+    place(0, 1, mInvenScroll, 9, 4);
+    place(6, 5, mStoreButton);
+    place(7, 5, mDropButton);
+    place(8, 5, mUseButton);
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, mDropButton->getHeight());
 
     loadWindowState();
+
+    mStoreButton->setVisible(false);
 }
 
 InventoryWindow::~InventoryWindow()
@@ -137,6 +142,8 @@ void InventoryWindow::logic()
         mSlotsBar->setText(strprintf("%d/%d", mUsedSlots, mMaxSlots));
         mWeightBar->setText(strprintf("%dg/%dg", mTotalWeight, mMaxWeight));
     }
+
+    mStoreButton->setVisible(storageWindow->isVisible());
 }
 
 void InventoryWindow::action(const gcn::ActionEvent &event)
@@ -146,7 +153,18 @@ void InventoryWindow::action(const gcn::ActionEvent &event)
     if (!item)
         return;
 
-    if (event.getId() == "use")
+    if (event.getId() == "store")
+    {
+        if (!storageWindow->isVisible())
+            return;
+
+        if (item->getQuantity() == 1)
+            storageWindow->addStore(item, 1);
+        // Choose amount of items to store
+        else
+            new ItemAmountWindow(AMOUNT_STORE_ADD, this, item);
+    }
+    else if (event.getId() == "use")
     {
         if (item->isEquipment())
         {
@@ -162,11 +180,9 @@ void InventoryWindow::action(const gcn::ActionEvent &event)
     {
         if (item->getQuantity() == 1)
             player_node->dropItem(item, 1);
+        // Choose amount of items to drop
         else
-        {
-            // Choose amount of items to drop
             new ItemAmountWindow(AMOUNT_ITEM_DROP, this, item);
-        }
     }
 }
 
@@ -195,6 +211,7 @@ void InventoryWindow::updateButtons()
 
     mUseButton->setEnabled(selectedItem != 0);
     mDropButton->setEnabled(selectedItem != 0);
+    mStoreButton->setEnabled(selectedItem != 0);
 }
 
 Item* InventoryWindow::getSelectedItem() const

@@ -24,7 +24,6 @@
 #include <guichan/font.hpp>
 #include <guichan/mouseinput.hpp>
 
-#include "inventorywindow.h"
 #include "itemamount.h"
 #include "storagewindow.h"
 
@@ -62,8 +61,8 @@ StorageWindow::StorageWindow(int invSize):
     // If you adjust these defaults, don't forget to adjust the trade window's.
     setDefaultSize(375, 300, ImageRect::CENTER);
 
-    mStoreButton = new Button(_("Store"), "store", this);
     mRetrieveButton = new Button(_("Retrieve"), "retrieve", this);
+    mRetrieveButton->setEnabled(false);
 
     mItems = new ItemContainer(player_node->getStorage(), "retrieve", this);
     mItems->addSelectionListener(this);
@@ -85,11 +84,10 @@ StorageWindow::StorageWindow(int invSize):
     place(0, 0, mSlotsLabel).setPadding(3);
     place(1, 0, mSlotsBar, 3);
     place(0, 1, mInvenScroll, 4, 4);
-    place(2, 5, mStoreButton);
     place(3, 5, mRetrieveButton);
 
     Layout &layout = getLayout();
-    layout.setRowHeight(0, mStoreButton->getHeight());
+    layout.setRowHeight(0, mRetrieveButton->getHeight());
 
     loadWindowState();
     setVisible(false);
@@ -117,30 +115,15 @@ void StorageWindow::logic()
 
         mSlotsBar->setText(strprintf("%d/%d", mUsedSlots, mMaxSlots));
     }
+
+    const Item *selectedItem = mItems->getSelectedItem();
+
+    mRetrieveButton->setEnabled(selectedItem != 0);
 }
 
 void StorageWindow::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == "store")
-    {
-        if (!inventoryWindow->isVisible()) return;
-
-        Item *item = inventoryWindow->getSelectedItem();
-
-        if (!item)
-            return;
-
-        if (item->getQuantity() == 1)
-        {
-            addStore(item, 1);
-        }
-        else
-        {
-            // Choose amount of items to trade
-            new ItemAmountWindow(AMOUNT_STORE_ADD, this, item);
-        }
-    }
-    else if (event.getId() == "retrieve")
+    if (event.getId() == "retrieve")
     {
         Item *item = mItems->getSelectedItem();
 
@@ -173,18 +156,18 @@ Item* StorageWindow::getSelectedItem() const
     return mItems->getSelectedItem();
 }
 
-void StorageWindow::addStore(Item *item, int ammount)
+void StorageWindow::addStore(Item *item, int amount)
 {
     MessageOut outMsg(CMSG_MOVE_TO_STORAGE);
     outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
-    outMsg.writeInt32(ammount);
+    outMsg.writeInt32(amount);
 }
 
-void StorageWindow::removeStore(Item *item, int ammount)
+void StorageWindow::removeStore(Item *item, int amount)
 {
     MessageOut outMsg(CSMG_MOVE_FROM_STORAGE);
     outMsg.writeInt16(item->getInvIndex() + STORAGE_OFFSET);
-    outMsg.writeInt32(ammount);
+    outMsg.writeInt32(amount);
 }
 
 void StorageWindow::close()

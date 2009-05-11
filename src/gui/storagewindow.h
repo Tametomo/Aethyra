@@ -72,12 +72,12 @@ class StorageWindow : public Window, gcn::ActionListener, gcn::SelectionListener
         /**
          * Add the specified ammount of the specified item to storage
          */
-        void addStore(Item* item, int ammount);
+        void addStore(Item* item, int amount);
 
         /**
          * Remove the specified ammount of the specified item from storage
          */
-        void removeStore(Item* item, int ammount);
+        void removeStore(Item* item, int amount);
 
         /**
          * Closes the Storage Window, as well as telling the server that the
@@ -90,7 +90,7 @@ class StorageWindow : public Window, gcn::ActionListener, gcn::SelectionListener
 
         int mSlots;
         int mUsedSlots;
-        gcn::Button *mStoreButton, *mRetrieveButton;
+        gcn::Button *mRetrieveButton;
         gcn::ScrollArea *mInvenScroll;
 
         gcn::Label *mSlotsLabel;
