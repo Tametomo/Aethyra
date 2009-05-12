@@ -162,6 +162,7 @@ void PlayerRelationsManager::store()
          mRelations.begin(), mRelations.end(),
          &player_conf_serialiser);
 
+    config.removeValue("persist-player-list");
     config.setValue(DEFAULT_PERMISSIONS, mDefaultPermissions);
     config.setValue(PERSIST_IGNORE_LIST, mPersistIgnores);
     config.setValue(PLAYER_IGNORE_STRATEGY,
