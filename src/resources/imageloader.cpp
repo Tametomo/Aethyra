@@ -92,6 +92,8 @@ gcn::Image *ImageLoader::load(std::string const &filename, bool convert)
 {
     ResourceManager *resman = ResourceManager::getInstance();
     ProxyImage *i = new ProxyImage(resman->loadSDLSurface(filename));
-    if (convert) i->convertToDisplayFormat();
+
+    if (convert)
+        i->convertToDisplayFormat();
     return i;
 }

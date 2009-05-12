@@ -417,10 +417,9 @@ int Image::powerOfTwo(int input)
     if (mTextureType == GL_TEXTURE_2D)
     {
         value = 1;
+
         while (value < input && value < mTextureSize)
-        {
             value <<= 1;
-        }
     }
     else
     {

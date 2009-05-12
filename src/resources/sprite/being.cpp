@@ -230,36 +230,24 @@ void Being::takeDamage(Being *attacker, int amount, AttackType type)
 
     // Selecting the right color
     if (type == CRITICAL || type == FLEE)
-    {
         color = &guiPalette->getColor(Palette::HIT_CRITICAL);
-    }
     else if (!amount)
     {
+        // This is intended to be the wrong direction to visually
+        // differentiate between hits and misses
         if (attacker == player_node)
-        {
-            // This is intended to be the wrong direction to visually
-            // differentiate between hits and misses
             color = &guiPalette->getColor(Palette::HIT_MONSTER_PLAYER);
-        }
         else
-        {
             color = &guiPalette->getColor(Palette::MISS);
-        }
     }
     else if (getType() == MONSTER)
-    {
         color = &guiPalette->getColor(Palette::HIT_PLAYER_MONSTER);
-    }
     else
-    {
         color = &guiPalette->getColor(Palette::HIT_MONSTER_PLAYER);
-    }
 
     if (amount > 0 && type == CRITICAL)
-    {
         particleEngine->addTextSplashEffect("crit!", mPx + 16, mPy + 16,
                                             color, font, true);
-    }
 
     // Show damage number
     particleEngine->addTextSplashEffect(damage, mPx + 16, mPy + 16,

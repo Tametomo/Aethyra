@@ -97,10 +97,8 @@ void ResourceManager::cleanUp(Resource *res)
     if (res->mRefCount > 0)
     {
         logger->log("ResourceManager::~ResourceManager() cleaning up %d "
-                "reference%s to %s",
-                res->mRefCount,
-                (res->mRefCount == 1) ? "" : "s",
-                res->mIdPath.c_str());
+                    "reference%s to %s",  res->mRefCount,
+                   (res->mRefCount == 1) ? "" : "s", res->mIdPath.c_str());
     }
 
     delete res;
@@ -122,7 +120,8 @@ void ResourceManager::cleanOrphans()
         time_t t = res->mTimeStamp;
         if (t >= threshold)
         {
-            if (t < oldest) oldest = t;
+            if (t < oldest)
+                oldest = t;
             ++iter;
         }
         else
@@ -146,7 +145,8 @@ bool ResourceManager::setWriteDir(const std::string &path)
 bool ResourceManager::addToSearchPath(const std::string &path, bool append)
 {
     logger->log("Adding to PhysicsFS: %s", path.c_str());
-    if (!PHYSFS_addToSearchPath(path.c_str(), append ? 1 : 0)) {
+    if (!PHYSFS_addToSearchPath(path.c_str(), append ? 1 : 0))
+    {
         logger->log("Error: %s", PHYSFS_getLastError());
         return false;
     }
@@ -202,14 +202,10 @@ std::string ResourceManager::getPath(const std::string &file)
 
     // if the file is not in the search path, then its NULL
     if (tmp)
-    {
         path = std::string(tmp) + "/" + file;
-    }
+    // if not found in search path return the default path
     else
-    {
-        // if not found in search path return the default path
         path = std::string(PKG_DATADIR) + std::string("data") + "/" + file;
-    }
 
     return path;
 }
@@ -259,7 +255,9 @@ struct ResourceLoader
         ResourceLoader *l = static_cast< ResourceLoader * >(v);
         int fileSize;
         void *buffer = l->manager->loadFile(l->path, fileSize);
-        if (!buffer) return NULL;
+        if (!buffer)
+            return NULL;
+
         Resource *res = l->fun(buffer, fileSize);
         free(buffer);
         return res;
@@ -297,9 +295,12 @@ struct DyedImageLoader
             d = new Dye(path.substr(p + 1));
             path = path.substr(0, p);
         }
+
         int fileSize;
         void *buffer = l->manager->loadFile(path, fileSize);
-        if (!buffer) return NULL;
+        if (!buffer)
+            return NULL;
+
         Resource *res = d ? Image::load(buffer, fileSize, *d)
                           : Image::load(buffer, fileSize);
         free(buffer);
@@ -323,7 +324,9 @@ struct ImageSetLoader
     {
         ImageSetLoader *l = static_cast< ImageSetLoader * >(v);
         Image *img = l->manager->getImage(l->path);
-        if (!img) return NULL;
+        if (!img)
+            return NULL;
+
         ImageSet *res = new ImageSet(img, l->w, l->h);
         img->decRef();
         return res;
@@ -371,7 +374,9 @@ void ResourceManager::release(Resource *res)
     time_t timestamp = tv.tv_sec;
 
     res->mTimeStamp = timestamp;
-    if (mOrphanedResources.empty()) mOldestOrphan = timestamp;
+
+    if (mOrphanedResources.empty())
+        mOldestOrphan = timestamp;
 
     mOrphanedResources.insert(*resIter);
     mResources.erase(resIter);
@@ -396,7 +401,8 @@ void *ResourceManager::loadFile(const std::string &fileName, int &fileSize)
     PHYSFS_file *file = PHYSFS_openRead(fileName.c_str());
 
     // If the handler is an invalid pointer indicate failure
-    if (file == NULL) {
+    if (file == NULL)
+    {
         logger->log("Warning: Failed to load %s: %s",
                 fileName.c_str(), PHYSFS_getLastError());
         return NULL;
@@ -427,6 +433,7 @@ bool ResourceManager::copyFile(const std::string &src, const std::string &dst)
         logger->log("Read error: %s", PHYSFS_getLastError());
         return false;
     }
+
     PHYSFS_file *dstFile = PHYSFS_openWrite(dst.c_str());
     if (!dstFile)
     {
@@ -474,7 +481,8 @@ SDL_Surface *ResourceManager::loadSDLSurface(const std::string& filename)
     void *buffer = loadFile(filename, fileSize);
     SDL_Surface *tmp = NULL;
 
-    if (buffer) {
+    if (buffer)
+    {
         SDL_RWops *rw = SDL_RWFromMem(buffer, fileSize);
         tmp = IMG_Load_RW(rw, 1);
         ::free(buffer);

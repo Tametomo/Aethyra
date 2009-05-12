@@ -67,13 +67,9 @@ void BeingManager::loadParticleEffects()
         Being *being = (*i);
 
         if (typeid(*being) == typeid(NPC))
-        {
             static_cast<NPC*>(being)->loadInitialParticleEffects();
-        }
         else if (typeid(*being) == typeid(Monster))
-        {
             static_cast<Monster*>(being)->loadInitialParticleEffects();
-        }
     }
 }
 

@@ -137,6 +137,7 @@ void SimpleAnimation::setFrame(unsigned int frame)
         frame = 0;
     if (frame >= mAnimation->getLength())
         frame = mAnimation->getLength() - 1;
+
     mAnimationPhase = frame;
     mCurrentFrame = mAnimation->getFrame(mAnimationPhase);
 }

@@ -38,18 +38,16 @@ Action* SpriteDef::getAction(SpriteAction action) const
     Actions::const_iterator i = mActions.find(action);
 
     if (i == mActions.end())
-    {
         logger->log("Warning: no action \"%u\" defined!", action);
-        return NULL;
-    }
 
-    return i->second;
+    return i == mActions.end() ? NULL : i->second;
 }
 
 SpriteDef *SpriteDef::load(std::string const &animationFile, int variant)
 {
     std::string::size_type pos = animationFile.find('|');
     std::string palettes;
+
     if (pos != std::string::npos)
         palettes = animationFile.substr(pos + 1);
 
@@ -60,11 +58,8 @@ SpriteDef *SpriteDef::load(std::string const &animationFile, int variant)
     {
         logger->log("Error, failed to parse %s", animationFile.c_str());
 
-        if (animationFile != "graphics/sprites/error.xml") {
-            return load("graphics/sprites/error.xml", 0);
-        } else {
-            return NULL;
-        }
+        return animationFile == "graphics/sprites/error.xml" ? NULL:
+               load("graphics/sprites/error.xml", 0);
     }
 
     SpriteDef *def = new SpriteDef;
@@ -107,17 +102,11 @@ void SpriteDef::loadSprite(xmlNodePtr spriteNode, int variant,
     for_each_xml_child_node(node, spriteNode)
     {
         if (xmlStrEqual(node->name, BAD_CAST "imageset"))
-        {
             loadImageSet(node, palettes);
-        }
         else if (xmlStrEqual(node->name, BAD_CAST "action"))
-        {
             loadAction(node, variant_offset);
-        }
         else if (xmlStrEqual(node->name, BAD_CAST "include"))
-        {
             includeSprite(node);
-        }
     }
 }
 
@@ -139,9 +128,7 @@ void SpriteDef::loadImageSet(xmlNodePtr node, std::string const &palettes)
     ImageSet *imageSet = resman->getImageSet(imageSrc, width, height);
 
     if (!imageSet)
-    {
         logger->error("Couldn't load imageset!");
-    }
 
     mImageSets[name] = imageSet;
 }
@@ -172,17 +159,13 @@ void SpriteDef::loadAction(xmlNodePtr node, int variant_offset)
 
     // When first action set it as default direction
     if (mActions.empty())
-    {
         mActions[ACTION_DEFAULT] = action;
-    }
 
     // Load animations
     for_each_xml_child_node(animationNode, node)
     {
         if (xmlStrEqual(animationNode->name, BAD_CAST "animation"))
-        {
             loadAnimation(animationNode, action, imageSet, variant_offset);
-        }
     }
 }
 
@@ -291,9 +274,9 @@ void SpriteDef::substituteAction(SpriteAction complete, SpriteAction with)
     if (mActions.find(complete) == mActions.end())
     {
         Actions::iterator i = mActions.find(with);
-        if (i != mActions.end()) {
+
+        if (i != mActions.end())
             mActions[complete] = i->second;
-        }
     }
 }
 
@@ -301,8 +284,8 @@ SpriteDef::~SpriteDef()
 {
     // Actions are shared, so ensure they are deleted only once.
     std::set< Action * > actions;
-    for (Actions::const_iterator i = mActions.begin(),
-         i_end = mActions.end(); i != i_end; ++i)
+    for (Actions::const_iterator i = mActions.begin(), i_end = mActions.end();
+         i != i_end; ++i)
     {
         actions.insert(i->second);
     }
@@ -313,8 +296,7 @@ SpriteDef::~SpriteDef()
         delete *i;
     }
 
-    for (ImageSetIterator i = mImageSets.begin();
-            i != mImageSets.end(); ++i)
+    for (ImageSetIterator i = mImageSets.begin(); i != mImageSets.end(); ++i)
     {
         i->second->decRef();
     }
@@ -322,74 +304,52 @@ SpriteDef::~SpriteDef()
 
 SpriteAction SpriteDef::makeSpriteAction(const std::string& action)
 {
-    if (action.empty() || action == "default") {
+    if (action.empty() || action == "default")
         return ACTION_DEFAULT;
-    }
-    if (action == "stand") {
+    if (action == "stand")
         return ACTION_STAND;
-    }
-    else if (action == "walk") {
+    else if (action == "walk")
         return ACTION_WALK;
-    }
-    else if (action == "run") {
+    else if (action == "run")
         return ACTION_RUN;
-    }
-    else if (action == "attack") {
+    else if (action == "attack")
         return ACTION_ATTACK;
-    }
-    else if (action == "attack_swing") {
+    else if (action == "attack_swing")
         return ACTION_ATTACK_SWING;
-    }
-    else if (action == "attack_stab") {
+    else if (action == "attack_stab")
         return ACTION_ATTACK_STAB;
-    }
-    else if (action == "attack_bow") {
+    else if (action == "attack_bow")
         return ACTION_ATTACK_BOW;
-    }
-    else if (action == "attack_throw") {
+    else if (action == "attack_throw")
         return ACTION_ATTACK_THROW;
-    }
-    else if (action == "cast_magic") {
+    else if (action == "cast_magic")
         return ACTION_CAST_MAGIC;
-    }
-    else if (action == "use_item") {
+    else if (action == "use_item")
         return ACTION_USE_ITEM;
-    }
-    else if (action == "sit") {
+    else if (action == "sit")
         return ACTION_SIT;
-    }
-    else if (action == "sleep") {
+    else if (action == "sleep")
         return ACTION_SLEEP;
-    }
-    else if (action == "hurt") {
+    else if (action == "hurt")
         return ACTION_HURT;
-    }
-    else if (action == "dead") {
+    else if (action == "dead")
         return ACTION_DEAD;
-    }
-    else {
+    else
         return ACTION_INVALID;
-    }
 }
 
 SpriteDirection SpriteDef::makeSpriteDirection(const std::string& direction)
 {
-    if (direction.empty() || direction == "default") {
+    if (direction.empty() || direction == "default")
         return DIRECTION_DEFAULT;
-    }
-    else if (direction == "up") {
+    else if (direction == "up")
         return DIRECTION_UP;
-    }
-    else if (direction == "left") {
+    else if (direction == "left")
         return DIRECTION_LEFT;
-    }
-    else if (direction == "right") {
+    else if (direction == "right")
         return DIRECTION_RIGHT;
-    }
-    else if (direction == "down") {
+    else if (direction == "down")
         return DIRECTION_DOWN;
-    }
-    else {
+    else
         return DIRECTION_INVALID;
-    };
 }

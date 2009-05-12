@@ -58,7 +58,7 @@ void TextPreview::draw(gcn::Graphics* graphics)
         graphics->setColor(gcn::Color((int) mBGColor->r,
                                       (int) mBGColor->g,
                                       (int) mBGColor->b,
-                                      (int)(mAlpha * 255.0f)));
+                                      alpha));
         graphics->fillRectangle(gcn::Rectangle(0, 0, getWidth(), getHeight()));
     }
 
@@ -70,7 +70,7 @@ void TextPreview::draw(gcn::Graphics* graphics)
         graphics->setColor(gcn::Color((int) mTextBGColor->r,
                                       (int) mTextBGColor->g,
                                       (int) mTextBGColor->b,
-                                      (int)(mAlpha * 255.0f)));
+                                      alpha));
         graphics->fillRectangle(gcn::Rectangle(1, 1, x, y));
     }
 
