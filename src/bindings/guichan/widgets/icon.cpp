@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2008  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra.
  *
@@ -26,29 +27,51 @@
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
 
-Icon::Icon(const std::string &file):
-    mImage(0)
+Icon::Icon(const std::string &file, bool fixed):
+    mImage(NULL),
+    mFixed(fixed)
 {
     mImage = ResourceManager::getInstance()->getImage(file);
-    setSize(mImage->getWidth(), mImage->getHeight());
+
+    if (mImage)
+        setSize(mImage->getWidth(), mImage->getHeight());
+    else
+        setSize(0, 0);
 }
 
-Icon::Icon(Image *image):
-    mImage(image)
+Icon::Icon(Image *image, bool fixed):
+    mImage(image),
+    mFixed(fixed)
 {
-    setSize(mImage->getWidth(), mImage->getHeight());
-    mImage->incRef();
+    if (mImage)
+    {
+        mImage->incRef();
+        setSize(mImage->getWidth(), mImage->getHeight());
+    }
+    else
+        setSize(0, 0);
 }
 
 Icon::~Icon()
 {
-    mImage->decRef();
+    if (mImage)
+        mImage->decRef();
 }
 
 void Icon::setImage(Image *image)
 {
+    if (mImage)
+        mImage->decRef();
+
     mImage = image;
-    setSize(mImage->getWidth(), mImage->getHeight());
+
+    if (mImage)
+    {
+        mImage->incRef();
+
+        if (!mFixed)
+            setSize(mImage->getWidth(), mImage->getHeight());
+    }
 }
 
 void Icon::draw(gcn::Graphics *g)

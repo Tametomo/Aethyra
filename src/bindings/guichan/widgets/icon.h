@@ -37,12 +37,12 @@ class Icon : public gcn::Widget
         /**
          * Constructor.
          */
-        Icon(const std::string &filename);
+        Icon(const std::string &filename, bool fixed = false);
 
         /**
          * Constructor, uses an existing Image.
          */
-        Icon(Image *image);
+        Icon(Image *image, bool fixed = false);
 
         ~Icon();
 
@@ -63,6 +63,7 @@ class Icon : public gcn::Widget
 
     private:
         Image *mImage;
+        bool mFixed;        /**< Whether the icon is a fixed size or not */
 };
 
 #endif // ICON_H
