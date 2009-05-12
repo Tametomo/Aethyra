@@ -81,6 +81,8 @@ ProgressBar::ProgressBar(float progress, int width, int height,
         dBorders->decRef();
     }
 
+    mLastUpdate = tick_time;
+
     mInstances++;
 }
 
@@ -98,6 +100,18 @@ ProgressBar::~ProgressBar()
 void ProgressBar::logic()
 {
     if (!isVisible())
+    {
+        mLastUpdate = tick_time;
+        return;
+    }
+
+    // Make the gradients and smooth progress appear consistent regardless of
+    // the framerate.
+    const int updateTicks = get_elapsed_time(mLastUpdate) / 10;
+
+    if (updateTicks)
+        mLastUpdate = tick_time;
+    else
         return;
 
     const size_t index = mProgress * mColors.size();
@@ -112,17 +126,17 @@ void ProgressBar::logic()
     {
         // Smoothly changing the color for a nicer effect.
         if (mColorToGo.r > mColor.r)
-            mColor.r++;
+            mColor.r = std::min(mColorToGo.r, mColor.r + updateTicks);
         if (mColorToGo.g > mColor.g)
-            mColor.g++;
+            mColor.g = std::min(mColorToGo.g, mColor.g + updateTicks);
         if (mColorToGo.b > mColor.b)
-            mColor.b++;
+            mColor.b = std::min(mColorToGo.b, mColor.b + updateTicks);
         if (mColorToGo.r < mColor.r)
-            mColor.r--;
+            mColor.r = std::max(mColorToGo.r, mColor.r - updateTicks);
         if (mColorToGo.g < mColor.g)
-            mColor.g--;
+            mColor.g = std::max(mColorToGo.g, mColor.g - updateTicks);
         if (mColorToGo.b < mColor.b)
-            mColor.b--;
+            mColor.b = std::max(mColorToGo.b, mColor.b - updateTicks);
     }
     else
     {
@@ -133,9 +147,13 @@ void ProgressBar::logic()
     {
         // Smoothly showing the progressbar changes.
         if (mProgressToGo > mProgress)
-            mProgress = std::min(1.0f, mProgress + 0.005f);
+            mProgress = std::min(1.0f, mProgress + (0.005f * updateTicks));
         if (mProgressToGo < mProgress)
-            mProgress = std::max(0.0f, mProgress - 0.005f);
+            mProgress = std::max(0.0f, mProgress - (0.005f * updateTicks));
+    }
+    else
+    {
+        mProgress = mProgressToGo;
     }
 }
 

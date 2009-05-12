@@ -118,9 +118,9 @@ class ProgressBar : public gcn::Widget
         void reset();
 
     private:
-
         float mProgress, mProgressToGo;
         bool mSmoothProgress;
+        int mLastUpdate;
 
         std::vector<gcn::Color> mColors;
         size_t mCurrentColor;
