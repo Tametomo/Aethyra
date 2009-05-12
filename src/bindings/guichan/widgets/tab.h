@@ -49,6 +49,11 @@ class Tab : public gcn::Tab
         void draw(gcn::Graphics *graphics);
 
         /**
+         * Changes the color the default tab text uses.
+         */
+        void setTabColor(const gcn::Color *color);
+
+        /**
          * Set tab highlighted
          */
         void setHighlighted(bool high);
@@ -61,6 +66,7 @@ class Tab : public gcn::Tab
         static int mInstances;         /**< Number of tab instances */
         static float mAlpha;
 
+        const gcn::Color *mTabColor;
         bool mHighlighted;
 };
 
