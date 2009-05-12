@@ -78,6 +78,7 @@ MenuBar::MenuBar():
     {
         gcn::Button *btn = new Button(gettext(*curBtn), *curBtn, &listener);
         btn->setPosition(x, 0);
+        btn->setFocusable(false);
         buttons.push_back(btn);
         add(btn);
         x += btn->getWidth() + 3;

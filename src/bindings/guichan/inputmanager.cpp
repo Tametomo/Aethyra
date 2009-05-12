@@ -123,7 +123,7 @@ void InputManager::handleInput()
     if (joystick)
         joystick->update();
 
-    bool ignoreFocus = false, chatIgnoreFocus = false;
+    bool ignoreFocus = false;
 
     // Events
     SDL_Event event;
@@ -135,22 +135,7 @@ void InputManager::handleInput()
         // The browser box (aka chat box in this case) sometimes gets focus
         // as well. This should also be ignored, but in all cases instead.
         if (widget && typeid(*widget) == typeid(BrowserBox))
-        {
             ignoreFocus = true;
-            chatIgnoreFocus = true;
-        }
-        // Ignore focus for all menu window buttons for nearly everything
-        else if (menuBar)
-        {
-            for (size_t i = 0; i < menuBar->buttons.size(); i++)
-            {
-                if (widget == menuBar->buttons[i])
-                {
-                    ignoreFocus = true;
-                    break;
-                }
-            }
-        }
 
         // Keyboard events (for discontinuous keys)
         if (event.type == SDL_KEYDOWN)
@@ -273,7 +258,7 @@ void InputManager::handleInput()
                         break;
                 }
 
-                if (!gui->isInputFocused() || ignoreFocus)
+                if (!gui->isInputFocused())
                 {
                     if (keyboard.isKeyActive(keyboard.KEY_TOGGLE_CHAT) &&
                         chatWindow)
@@ -287,8 +272,7 @@ void InputManager::handleInput()
                         if (((keyboard.getKeyValue(KeyboardConfig::KEY_TOGGLE_CHAT)
                               != ((int) '\n')) &&
                              (keyboard.getKeyValue(KeyboardConfig::KEY_TOGGLE_CHAT)
-                              != ((int) '\r'))) || !ignoreFocus ||
-                              chatIgnoreFocus)
+                              != ((int) '\r'))) || ignoreFocus)
                         {
                             chatWindow->requestChatFocus();
                             used = true;
@@ -554,7 +538,7 @@ void InputManager::handleInput()
         // there as well (in case we ever use other input libraries. If they're
         // all inside that loop, their implementing logic could be reduced to a
         // single function call)
-        if (mInGame && (!gui->isInputFocused() || ignoreFocus) &&
+        if (mInGame && (!gui->isInputFocused()) &&
             player_node->mAction != Being::DEAD)
         {
             unsigned char direction = 0;
