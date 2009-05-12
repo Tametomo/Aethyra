@@ -304,6 +304,9 @@ bool Gui::isInputFocused()
 {
     gcn::Widget* widget = mFocusHandler->getFocused();
 
+    if (widget && !widget->isVisible())
+        mFocusHandler->focusNone();
+
     return (widget && widget != windowContainer);
 }
 
