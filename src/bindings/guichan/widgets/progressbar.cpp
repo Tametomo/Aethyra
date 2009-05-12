@@ -122,7 +122,7 @@ void ProgressBar::logic()
         mColorToGo = mColors[index];
     }
 
-    if (mSmoothColorChange)
+    if (mSmoothColorChange && mColorToGo != mColor)
     {
         // Smoothly changing the color for a nicer effect.
         if (mColorToGo.r > mColor.r)
@@ -143,7 +143,7 @@ void ProgressBar::logic()
         mColor = mColorToGo;
     }
 
-    if (mSmoothProgress)
+    if (mSmoothProgress && mProgressToGo != mProgress)
     {
         // Smoothly showing the progressbar changes.
         if (mProgressToGo > mProgress)
