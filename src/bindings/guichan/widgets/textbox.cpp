@@ -28,10 +28,15 @@
 
 #include "../palette.h"
 
+#include "../sdl/sdlinput.h"
+
 TextBox::TextBox() :
-        gcn::TextBox(), mTextColor(&guiPalette->getColor(Palette::TEXT))
+    gcn::TextBox(),
+    mTextColor(&guiPalette->getColor(Palette::TEXT))
 {
     setOpaque(false);
+    setFocusable(false);
+    setEditable(false);
     setFrameSize(0);
     mMinWidth = getWidth();
 }
