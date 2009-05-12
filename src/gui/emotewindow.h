@@ -45,6 +45,11 @@ class EmoteWindow : public Window, gcn::ActionListener,
         EmoteWindow();
 
         /**
+         * Logic (updates whether the use button can be used or not)
+         */
+        void logic();
+
+        /**
          * Called when receiving actions from the widgets.
          */
         void action(const gcn::ActionEvent &event);

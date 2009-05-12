@@ -62,6 +62,15 @@ EmoteWindow::EmoteWindow():
     loadWindowState();
 }
 
+void EmoteWindow::logic()
+{
+    Window::logic();
+
+    const int &selectedItem = mEmotes->getSelectedEmote();
+
+    mUseButton->setEnabled(selectedItem != 0);
+}
+
 void EmoteWindow::action(const gcn::ActionEvent &event)
 {
     int emote = mEmotes->getSelectedEmote();
