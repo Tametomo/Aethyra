@@ -26,6 +26,7 @@
 #include "map.h"
 
 #include "bindings/guichan/gui.h"
+#include "bindings/guichan/keyboardconfig.h"
 
 #include "bindings/sdl/sound.h"
 
@@ -89,6 +90,7 @@ bool Engine::changeMap(const std::string &mapPath)
     beingManager->setMap(newMap);
     particleEngine->setMap(newMap);
     viewport->setMap(newMap);
+    keyboard.refreshActiveKeys();
 
     // Initialize map-based particle effects
     newMap->initializeParticleEffects(particleEngine);
