@@ -122,8 +122,7 @@ class Being : public Sprite
             NO_SPEECH = 0,
             TEXT_OVERHEAD,
             NO_NAME_IN_BUBBLE,
-            NAME_IN_BUBBLE,
-            NUM_SPEECH
+            NAME_IN_BUBBLE
         };
 
         enum AttackType
@@ -423,6 +422,7 @@ class Being : public Sprite
 
         Path mPath;
         std::string mSpeech;
+        std::string mOldSpeech;
         Text *mText;
         Uint16 mHairStyle, mHairColor;
         Gender mGender;

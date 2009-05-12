@@ -121,6 +121,7 @@ Being::Being(int id, int job, Map *map):
     mSpeechBubble = NULL;
 
     mSpeech = "";
+    mOldSpeech = "";
     mNameColor = &guiPalette->getColor(Palette::CHAT);
     mText = 0;
 }
@@ -488,26 +489,37 @@ void Being::drawSpeech(int offsetX, int offsetY)
         if (!mSpeechBubble)
             mSpeechBubble = new SpeechBubble();
 
+        const bool hasCaption = (mSpeechBubble->getCaption() != "");
         const bool showName = (speech == NAME_IN_BUBBLE);
-
-        if (mText)
-        {
-            delete mText;
-            mText = NULL;
-        }
-
         const int width = 16;
         const int height = getHeight() - 32;
 
+        if (mOldSpeech != mSpeech || mText)
+        {
+            mSpeechBubble->setText(mSpeech);
+            mSpeechBubble->adjustSize();
+        }
+
+        if (mText)
+            delete mText;
+
+        mText = NULL;
+
+        mOldSpeech = mSpeech;
         mSpeechBubble->setCaption(showName ? mName : "", mNameColor);
 
-        mSpeechBubble->setText(mSpeech, showName);
+        if (hasCaption != showName)
+            mSpeechBubble->adjustSize();
+
         mSpeechBubble->setPosition(px + width - (mSpeechBubble->getWidth() / 2), 
                                    py - height - (mSpeechBubble->getHeight()));
         mSpeechBubble->setVisible(true);
     }
     else if (mSpeechTime > 0 && speech == TEXT_OVERHEAD)
     {
+        if (mSpeech == mOldSpeech && mText && !mSpeechBubble)
+            return;
+
         if (mSpeechBubble)
             delete mSpeechBubble;
 
@@ -516,6 +528,8 @@ void Being::drawSpeech(int offsetX, int offsetY)
         // don't introduce a memory leak
         if (mText)
             delete mText;
+
+        mOldSpeech = mSpeech;
 
         mText = new Text(mSpeech, mPx + X_SPEECH_OFFSET, mPy - Y_SPEECH_OFFSET,
                          gcn::Graphics::CENTER,

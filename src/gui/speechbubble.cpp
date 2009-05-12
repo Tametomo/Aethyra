@@ -53,6 +53,11 @@ SpeechBubble::SpeechBubble():
     loadPopupConfiguration();
 }
 
+const std::string &SpeechBubble::getCaption()
+{
+    return mCaption->getCaption();
+}
+
 void SpeechBubble::setCaption(const std::string &name, const gcn::Color *color)
 {
     mCaption->setFont(gui->getBoldFont());
@@ -61,22 +66,23 @@ void SpeechBubble::setCaption(const std::string &name, const gcn::Color *color)
     mCaption->setForegroundColor(*color);
 }
 
-void SpeechBubble::setText(std::string text, bool showName)
+void SpeechBubble::setText(std::string text)
 {
-    if (text == mText && (mCaption->getWidth() <= mSpeechBox->getMinWidth()))
-        return;
-
-    mSpeechBox->setTextColor(&guiPalette->getColor(Palette::TEXT));
-
     int width = mCaption->getWidth() + 2 * getPadding();
+    mSpeechBox->setTextColor(&guiPalette->getColor(Palette::TEXT));
     mSpeechBox->setTextWrapped(text, 130 > width ? 130 : width);
+}
+
+void SpeechBubble::adjustSize()
+{
+    int width = mCaption->getWidth() + 2 * getPadding();
     const int speechWidth = mSpeechBox->getMinWidth() + 2 * getPadding();
 
     const int fontHeight = getFont()->getHeight();
-    const int nameHeight = showName ? mCaption->getHeight() + 
+    const int nameHeight = getCaption() != "" ? mCaption->getHeight() + 
                            (getPadding() / 2) : 0;
     const int numRows = mSpeechBox->getNumberOfRows();
-    const int height = (numRows * fontHeight) + nameHeight + getPadding();
+    const int height = numRows * fontHeight + nameHeight + getPadding();
 
     if (width < speechWidth)
         width = speechWidth;
@@ -85,8 +91,8 @@ void SpeechBubble::setText(std::string text, bool showName)
 
     setContentSize(width, height);
 
-    const int xPos = ((getWidth() - width) / 2);
-    const int yPos = ((getHeight() - height) / 2) + nameHeight;
+    const int xPos = (getWidth() - width) / 2;
+    const int yPos = (getHeight() - height) / 2 + nameHeight;
 
     mCaption->setPosition(xPos, getPadding());
     mSpeechBox->setPosition(xPos, yPos);

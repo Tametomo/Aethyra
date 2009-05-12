@@ -37,6 +37,8 @@ class SpeechBubble : public Popup
          */
         SpeechBubble();
 
+        const std::string &getCaption();
+
         /**
          * Sets the name displayed for the speech bubble, and in what color.
          */
@@ -46,7 +48,12 @@ class SpeechBubble : public Popup
         /**
          * Sets the text to be displayed.
          */
-        void setText(std::string text, bool showName = true);
+        void setText(std::string text);
+
+        /**
+         * Adjusts the size of the speech bubble.
+         */
+        void adjustSize();
 
         /**
          * Sets the location in which the speech bubble will be displayed.
