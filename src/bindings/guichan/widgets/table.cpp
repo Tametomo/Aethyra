@@ -462,9 +462,18 @@ void Table::mouseWheelMovedDown(gcn::MouseEvent& mouseEvent)
         mouseEvent.consume();
     }
 }
-        
-void Table::mouseDragged(gcn::MouseEvent& mouseEvent)
+
+void Table::mouseDragged(gcn::MouseEvent &event)
 {
+    if (event.getButton() != gcn::MouseEvent::LEFT)
+        return;
+
+    // Make table selection update on drag
+    const int x = std::max(0, event.getX());
+    const int y = std::max(0, event.getY());
+
+    setSelectedRow(getRowForY(y));
+    setSelectedColumn(getColumnForX(x));
 }
 
 // -- TableModelListener notifications
