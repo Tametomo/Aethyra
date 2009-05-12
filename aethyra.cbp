@@ -467,6 +467,7 @@
 		<Unit filename="src\main.h" />
 		<Unit filename="src\map.cpp" />
 		<Unit filename="src\map.h" />
+		<Unit filename="src\options.h" />
 		<Unit filename="src\party.cpp" />
 		<Unit filename="src\party.h" />
 		<Unit filename="src\playerrelations.cpp" />

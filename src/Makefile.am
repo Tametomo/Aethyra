@@ -366,6 +366,7 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      main.h \
 	      map.cpp \
 	      map.h \
+	      options.h \
 	      party.cpp \
 	      party.h \
 	      playerrelations.cpp \

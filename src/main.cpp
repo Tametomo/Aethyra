@@ -35,6 +35,7 @@
 #include "game.h"
 #include "log.h"
 #include "main.h"
+#include "options.h"
 #include "playerrelations.h"
 
 #include "bindings/guichan/graphics.h"
@@ -144,34 +145,6 @@ LoginHandler loginHandler;
 MapLoginHandler mapLoginHandler;
 
 SDL_Surface *icon;
-
-/**
- * A structure holding the values of various options that can be passed from
- * the command line.
- */
-struct Options
-{
-    /**
-     * Constructor.
-     */
-    Options():
-        printHelp(false),
-        printVersion(false),
-        skipUpdate(false),
-        chooseDefault(false)
-    {};
-
-    bool printHelp;
-    bool printVersion;
-    bool skipUpdate;
-    bool chooseDefault;
-    std::string username;
-    std::string password;
-    std::string playername;
-    std::string configPath;
-    std::string updateHost;
-    std::string dataPath;
-};
 
 /**
  * Parse the update host and determine the updates directory
