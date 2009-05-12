@@ -28,19 +28,11 @@
 #include "../bindings/guichan/widgets/window.h"
 
 class Equipment;
+class Icon;
 class Inventory;
 class Item;
 class ItemPopup;
 class PlayerBox;
-
-/**
- * Equipment box.
- */
-struct EquipBox
-{
-    int posX;
-    int posY;
-};
 
 /**
  * Equipment dialog.
@@ -97,7 +89,7 @@ class EquipmentWindow : public Window, public gcn::ActionListener
         Equipment *mEquipment;
         Inventory *mInventory;
         gcn::Button *mUnequip;                  /**< Button for unequipping. */
-        EquipBox mEquipBox[EQUIP_VECTOREND];    /**< Equipment Boxes. */
+        Icon *mEquipIcon[EQUIP_VECTOREND];      /**< Equipment Icons. */
 
         ItemPopup *mItemPopup;
 

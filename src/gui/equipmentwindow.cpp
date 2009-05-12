@@ -37,6 +37,7 @@
 #include "../bindings/guichan/palette.h"
 
 #include "../bindings/guichan/widgets/button.h"
+#include "../bindings/guichan/widgets/icon.h"
 #include "../bindings/guichan/widgets/playerbox.h"
 
 #include "../resources/resourcemanager.h"
@@ -93,8 +94,12 @@ EquipmentWindow::EquipmentWindow():
 
     for (int i = EQUIP_LEGS_SLOT; i < EQUIP_VECTOREND; i++)
     {
-        mEquipBox[i].posX = boxPosition[i][0] + getPadding();
-        mEquipBox[i].posY = boxPosition[i][1] + getTitleBarHeight();
+        mEquipIcon[i] = new Icon(NULL, true);
+        mEquipIcon[i]->setX(boxPosition[i][0]);
+        mEquipIcon[i]->setY(boxPosition[i][1]);
+        mEquipIcon[i]->setWidth(BOX_WIDTH);
+        mEquipIcon[i]->setHeight(BOX_HEIGHT);
+        add(mEquipIcon[i]);
     }
 
     mEquipment = player_node->mEquipment.get();
@@ -114,26 +119,25 @@ void EquipmentWindow::draw(gcn::Graphics *graphics)
     Item* item;
 
     Graphics *g = static_cast<Graphics*>(graphics);
-
-    Window::drawChildren(graphics);
+    g->pushClipArea(getChildrenArea());
 
     for (int i = EQUIP_LEGS_SLOT; i < EQUIP_VECTOREND; i++)
     {
+        const gcn::Rectangle &rect = mEquipIcon[i]->getDimension();
+
         if (i == mSelected)
         {
             const gcn::Color color = guiPalette->getColor(Palette::HIGHLIGHT);
 
             // Set color to the highligh color
             g->setColor(gcn::Color(color.r, color.g, color.b, getGuiAlpha()));
-            g->fillRectangle(gcn::Rectangle(mEquipBox[i].posX, mEquipBox[i].posY,
-                                            BOX_WIDTH, BOX_HEIGHT));
+            g->fillRectangle(rect);
         }
 
         // Set color black.
         g->setColor(gcn::Color(0, 0, 0));
         // Draw box border.
-        g->drawRectangle(gcn::Rectangle(mEquipBox[i].posX, mEquipBox[i].posY,
-                                        BOX_WIDTH, BOX_HEIGHT));
+        g->drawRectangle(rect);
 
         item = (i != EQUIP_AMMO_SLOT) ?
                mInventory->getItem(mEquipment->getEquipment(i)) :
@@ -142,17 +146,25 @@ void EquipmentWindow::draw(gcn::Graphics *graphics)
         {
             // Draw Item.
             Image* image = item->getImage();
-            g->drawImage(image, mEquipBox[i].posX, mEquipBox[i].posY);
+
+            if (image != mEquipIcon[i]->getImage())
+                mEquipIcon[i]->setImage(image);
+
             if (i == EQUIP_AMMO_SLOT)
             {
                 g->setColor(guiPalette->getColor(Palette::TEXT));
                 graphics->drawText(toString(item->getQuantity()),
-                                   mEquipBox[i].posX + (BOX_WIDTH / 2),
-                                   mEquipBox[i].posY - getFont()->getHeight(),
+                                   mEquipIcon[i]->getX() + (mEquipIcon[i]->getWidth() / 2),
+                                   mEquipIcon[i]->getY() - getFont()->getHeight(),
                                    gcn::Graphics::CENTER);
             }
         }
+        else if (mEquipIcon[i]->getImage())
+            mEquipIcon[i]->setImage(NULL);
     }
+    g->popClipArea();
+
+    Window::drawChildren(graphics);
 }
 
 void EquipmentWindow::action(const gcn::ActionEvent &event)
@@ -171,10 +183,10 @@ Item* EquipmentWindow::getItem(const int &x, const int &y)
 {
     for (int i = EQUIP_LEGS_SLOT; i < EQUIP_VECTOREND; i++)
     {
-        gcn::Rectangle tRect(mEquipBox[i].posX, mEquipBox[i].posY,
-                             BOX_WIDTH, BOX_HEIGHT);
+        const int windowX = x - getPadding();
+        const int windowY = y - getTitleBarHeight();
 
-        if (tRect.isPointInRect(x, y))
+        if (mEquipIcon[i]->getDimension().isPointInRect(windowX, windowY))
         {
             return (i != EQUIP_AMMO_SLOT) ?
                     mInventory->getItem(mEquipment->getEquipment(i)) :
@@ -191,34 +203,28 @@ void EquipmentWindow::mousePressed(gcn::MouseEvent& mouseEvent)
     const int x = mouseEvent.getX();
     const int y = mouseEvent.getY();
 
-    Item* item;
+    Item* item = getItem(x, y);
+
+    if (!item)
+        return;
 
     if (mouseEvent.getButton() == gcn::MouseEvent::LEFT)
     {
         // Checks if any of the presses were in the equip boxes.
         for (int i = EQUIP_LEGS_SLOT; i < EQUIP_VECTOREND; i++)
-        {
-            item = (i != EQUIP_AMMO_SLOT) ?
-                    mInventory->getItem(mEquipment->getEquipment(i)) :
-                    mInventory->getItem(mEquipment->getArrows());
-            gcn::Rectangle tRect(mEquipBox[i].posX, mEquipBox[i].posY,
-                                 BOX_WIDTH, BOX_HEIGHT);
-
-            if (tRect.isPointInRect(x, y) && item)
+        {            
+            if (mouseEvent.getSource() == mEquipIcon[i])
                 setSelected(i);
         }
     }
     else if (mouseEvent.getButton() == gcn::MouseEvent::RIGHT)
     {
-        if (Item *item = getItem(x, y))
-        {
-            /* Convert relative to the window coordinates to absolute screen
-             * coordinates.
-             */
-            const int mx = x + getX();
-            const int my = y + getY();
-            viewport->showPopup(mx, my, item);
-        }
+        /* Convert relative to the window coordinates to absolute screen
+         * coordinates.
+         */
+        const int mx = x + getX();
+        const int my = y + getY();
+        viewport->showPopup(mx, my, item);
     }
 }
 
@@ -237,6 +243,7 @@ void EquipmentWindow::mouseMoved(gcn::MouseEvent &event)
 
         if (item->getInfo().getName() != mItemPopup->getItemName())
             mItemPopup->setItem(item->getInfo());
+
         mItemPopup->updateColors();
         mItemPopup->view(x + getX(), y + getY());
     }
