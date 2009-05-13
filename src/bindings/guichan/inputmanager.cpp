@@ -20,8 +20,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <typeinfo>
-
 #include <guichan/exception.hpp>
 
 #include "graphics.h"
@@ -31,7 +29,6 @@
 
 #include "sdl/sdlinput.h"
 
-#include "widgets/browserbox.h"
 #include "widgets/emoteshortcutcontainer.h"
 #include "widgets/itemshortcutcontainer.h"
 
@@ -123,19 +120,11 @@ void InputManager::handleInput()
     if (joystick)
         joystick->update();
 
-    bool ignoreFocus = false;
-
     // Events
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
         bool used = false;
-        gcn::Widget* widget = gui->getFocused();
-
-        // The browser box (aka chat box in this case) sometimes gets focus
-        // as well. This should also be ignored, but in all cases instead.
-        if (widget && typeid(*widget) == typeid(BrowserBox))
-            ignoreFocus = true;
 
         // Keyboard events (for discontinuous keys)
         if (event.type == SDL_KEYDOWN)
@@ -263,20 +252,8 @@ void InputManager::handleInput()
                     if (keyboard.isKeyActive(keyboard.KEY_TOGGLE_CHAT) &&
                         chatWindow)
                     {
-                        // Only allow chat input to steal focus all the time
-                        // when it's not equal to the GUIChan accept input key,
-                        // or \r as well. This is probably due to SDL sending
-                        // enter or return events as \r\n. Since we don't know
-                        // which of the two we'll encounter, it's best to check
-                        // for both.
-                        if (((keyboard.getKeyValue(KeyboardConfig::KEY_TOGGLE_CHAT)
-                              != ((int) '\n')) &&
-                             (keyboard.getKeyValue(KeyboardConfig::KEY_TOGGLE_CHAT)
-                              != ((int) '\r'))) || ignoreFocus)
-                        {
-                            chatWindow->requestChatFocus();
-                            used = true;
-                        }
+                        chatWindow->requestChatFocus();
+                        used = true;
                     }
 
                     if (keyboard.isKeyActive(keyboard.KEY_EMOTE))
@@ -538,8 +515,8 @@ void InputManager::handleInput()
         // there as well (in case we ever use other input libraries. If they're
         // all inside that loop, their implementing logic could be reduced to a
         // single function call)
-        if (mInGame && (!gui->isInputFocused()) &&
-            player_node->mAction != Being::DEAD)
+        if (mInGame && player_node->mAction != Being::DEAD &&
+            !gui->isInputFocused())
         {
             unsigned char direction = 0;
 

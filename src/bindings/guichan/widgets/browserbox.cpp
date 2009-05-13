@@ -39,7 +39,7 @@ BrowserBox::BrowserBox(unsigned int mode, bool opaque):
     mSelectedLink(-1),
     mMaxRows(0)
 {
-    setFocusable(true);
+    setFocusable(false);
     addMouseListener(this);
 }
 
