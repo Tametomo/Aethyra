@@ -190,6 +190,8 @@
 		<Unit filename="src\bindings\guichan\widgets\popup.h" />
 		<Unit filename="src\bindings\guichan\widgets\progressbar.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\progressbar.h" />
+		<Unit filename="src\bindings\guichan\widgets\proxywidget.cpp" />
+		<Unit filename="src\bindings\guichan\widgets\proxywidget.h" />
 		<Unit filename="src\bindings\guichan\widgets\radiobutton.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\radiobutton.h" />
 		<Unit filename="src\bindings\guichan\widgets\resizegrip.cpp" />

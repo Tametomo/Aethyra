@@ -39,6 +39,7 @@
 
 #include "../bindings/guichan/widgets/browserbox.h"
 #include "../bindings/guichan/widgets/chatinput.h"
+#include "../bindings/guichan/widgets/proxywidget.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/windowcontainer.h"
 
@@ -68,9 +69,11 @@ ChatWindow::ChatWindow():
 
     mItemLinkHandler = new ItemLinkHandler();
 
-    mChatInput = new ChatInput;
+    mChatInput = new ChatInput();
     mChatInput->setActionEventId("chatinput");
     mChatInput->addActionListener(this);
+
+    mProxy = new ProxyWidget(mChatInput, FOCUS_WHEN_HIDDEN);
 
     mTextOutput = new BrowserBox(BrowserBox::AUTO_WRAP);
     mTextOutput->setOpaque(false);
@@ -85,6 +88,7 @@ ChatWindow::ChatWindow():
 
     place(0, 0, mScrollArea, 5, 5).setPadding(0);
     place(0, 5, mChatInput, 5).setPadding(1);
+    place(0, 6, mProxy).setPadding(0);
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);

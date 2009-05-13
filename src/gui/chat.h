@@ -34,6 +34,7 @@
 class BrowserBox;
 class Recorder;
 class Party;
+class ProxyWidget;
 class ScrollArea;
 class ItemLinkHandler;
 
@@ -236,6 +237,9 @@ class ChatWindow : public Window, public gcn::ActionListener,
         ScrollArea *mScrollArea;    /**< Scroll area around text output */
         ItemLinkHandler *mItemLinkHandler; /** Used for showing item popup on
                                                clicking links **/
+        ProxyWidget *mProxy;        /**< Proxy used to get focus for the chat
+                                         input field when tabbing */
+
         typedef std::list<std::string> History;
         typedef History::iterator HistoryIterator;
         History mHistory;           /**< Command history */

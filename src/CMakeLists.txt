@@ -137,6 +137,8 @@ SET(SRCS
     bindings/guichan/widgets/popup.h
     bindings/guichan/widgets/progressbar.cpp
     bindings/guichan/widgets/progressbar.h
+    bindings/guichan/widgets/proxywidget.cpp
+    bindings/guichan/widgets/proxywidget.h
     bindings/guichan/widgets/radiobutton.cpp
     bindings/guichan/widgets/radiobutton.h
     bindings/guichan/widgets/resizegrip.cpp
