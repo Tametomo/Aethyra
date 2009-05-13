@@ -30,6 +30,7 @@
 #include "../log.h"
 
 #include "../gui/chat.h"
+#include "../gui/inventorywindow.h"
 
 #include "../resources/sprite/localplayer.h"
 
@@ -142,6 +143,7 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
 
             item = inventory->getItem(index);
             player_node->mEquipment->setEquipment(position, index);
+            inventoryWindow->updateButtons();
             break;
 
         case SMSG_PLAYER_UNEQUIP:
@@ -178,6 +180,8 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
             else
                 player_node->mEquipment->removeEquipment(position);
 
+            inventoryWindow->updateButtons();
+
             if (debugEquipment)
             {
                 logger->log("Unequipping: %i %i(%i) %i",
@@ -203,6 +207,7 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
             {
                 item->setEquipped(true);
                 player_node->mEquipment->setArrows(index);
+                inventoryWindow->updateButtons();
                 logger->log("Arrows equipped: %i", index);
             }
             break;

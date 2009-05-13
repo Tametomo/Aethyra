@@ -93,6 +93,7 @@ EmoteContainer::~EmoteContainer()
 void EmoteContainer::draw(gcn::Graphics *graphics)
 {
     int columns = getWidth() / gridWidth;
+    int emoteCount = 0;
 
     // Have at least 1 column
     if (columns < 1)
@@ -111,8 +112,15 @@ void EmoteContainer::draw(gcn::Graphics *graphics)
         }
 
         // Draw emote icon
-        mEmoteImg[i]->draw(static_cast<Graphics*>(graphics), emoteX, emoteY);
+        if (mEmoteImg[i])
+        {
+            emoteCount++;
+            mEmoteImg[i]->draw(static_cast<Graphics*>(graphics), emoteX, emoteY);
+        }
     }
+
+    if (!emoteCount)
+        selectNone();
 }
 
 void EmoteContainer::widgetResized(const gcn::Event &event)
@@ -152,6 +160,8 @@ void EmoteContainer::setSelectedEmoteIndex(int index)
         mSelectedEmoteIndex = NO_EMOTE;
     else
         mSelectedEmoteIndex = index;
+
+    distributeValueChangedEvent();
 }
 
 void EmoteContainer::distributeValueChangedEvent()

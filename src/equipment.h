@@ -38,8 +38,7 @@ class Equipment
         /**
          * Get equipment at the given slot.
          */
-        int getEquipment(int index) const
-        { return mEquipment[index]; }
+        int getEquipment(int index) const { return mEquipment[index]; }
 
         /**
          * Set equipment at the given slot.

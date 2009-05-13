@@ -50,11 +50,6 @@ class InventoryWindow : public Window, gcn::ActionListener,
         InventoryWindow(int invSize = (INVENTORY_SIZE - 2));
 
         /**
-         * Destructor.
-         */
-        ~InventoryWindow();
-
-        /**
          * Logic (updates buttons and weight information).
          */
         void logic();
@@ -69,11 +64,16 @@ class InventoryWindow : public Window, gcn::ActionListener,
          */
         Item* getSelectedItem() const;
 
+        /**
+         * Updates button states.
+         */
+        void updateButtons();
+
         void mouseClicked(gcn::MouseEvent &event);
 
-    private:
-        void updateButtons();    /**< Updates button states. */
+        void valueChanged(const gcn::SelectionEvent &event);
 
+    private:
         ItemContainer *mItems;
 
         std::string mWeight;

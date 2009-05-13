@@ -42,7 +42,7 @@ void Equipment::setEquipment(int index, int inventoryIndex)
 
 void Equipment::removeEquipment(int index)
 {
-     if (index >= 0 && index < EQUIPMENT_SIZE)
-         mEquipment[index] = -1;
+    if (index >= 0 && index < EQUIPMENT_SIZE)
+        mEquipment[index] = -1;
 }
 

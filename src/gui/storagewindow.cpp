@@ -115,10 +115,6 @@ void StorageWindow::logic()
 
         mSlotsBar->setText(strprintf("%d/%d", mUsedSlots, mMaxSlots));
     }
-
-    const Item *selectedItem = mItems->getSelectedItem();
-
-    mRetrieveButton->setEnabled(selectedItem != 0);
 }
 
 void StorageWindow::action(const gcn::ActionEvent &event)
@@ -140,6 +136,12 @@ void StorageWindow::action(const gcn::ActionEvent &event)
             new ItemAmountWindow(AMOUNT_STORE_REMOVE, this, item);
         }
     }
+}
+
+void StorageWindow::valueChanged(const gcn::SelectionEvent &event)
+{
+    if (event.getSource() == mItems)
+        mRetrieveButton->setEnabled(mItems->getSelectedItem() != 0);
 }
 
 void StorageWindow::mouseClicked(gcn::MouseEvent &event)

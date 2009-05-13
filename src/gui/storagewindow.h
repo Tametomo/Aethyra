@@ -62,6 +62,8 @@ class StorageWindow : public Window, gcn::ActionListener, gcn::SelectionListener
          */
         void action(const gcn::ActionEvent &event);
 
+        void valueChanged(const gcn::SelectionEvent &event);
+
         /**
          * Returns the selected item.
          */

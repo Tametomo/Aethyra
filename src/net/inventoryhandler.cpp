@@ -202,10 +202,13 @@ void InventoryHandler::handleMessage(MessageIn *msg)
                     player_node->pickedUp(itemInfo.getName());
                 }
 
-                if (Item *item = inventory->getItem(index)) {
+                if (Item *item = inventory->getItem(index))
+                {
                     item->setId(itemId);
                     item->increaseQuantity(amount);
-                } else {
+                }
+                else
+                {
                     inventory->setItem(index, itemId, amount, equipType != 0);
                 }
             }

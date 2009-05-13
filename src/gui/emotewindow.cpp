@@ -44,6 +44,7 @@ EmoteWindow::EmoteWindow():
     setDefaultSize(322, 200, ImageRect::CENTER);
 
     mUseButton = new Button(_("Use"), "use", this);
+    mUseButton->setEnabled(false);
 
     mEmotes = new EmoteContainer("use", this);
     mEmotes->addSelectionListener(this);
@@ -57,18 +58,7 @@ EmoteWindow::EmoteWindow():
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
 
-    mUseButton->setSize(60, mUseButton->getHeight());
-
     loadWindowState();
-}
-
-void EmoteWindow::logic()
-{
-    Window::logic();
-
-    const int &selectedItem = mEmotes->getSelectedEmote();
-
-    mUseButton->setEnabled(selectedItem != 0);
 }
 
 void EmoteWindow::action(const gcn::ActionEvent &event)
@@ -84,4 +74,10 @@ void EmoteWindow::action(const gcn::ActionEvent &event)
 int EmoteWindow::getSelectedEmote() const
 {
     return mEmotes->getSelectedEmote();
+}
+
+void EmoteWindow::valueChanged(const gcn::SelectionEvent &event)
+{
+    if (event.getSource() == mEmotes)
+        mUseButton->setEnabled(mEmotes->getSelectedEmote() != 0);
 }

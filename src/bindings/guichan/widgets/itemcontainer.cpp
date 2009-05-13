@@ -110,6 +110,7 @@ void ItemContainer::draw(gcn::Graphics *graphics)
         return;
 
     int columns = getWidth() / gridWidth;
+    int itemCount = 0;
 
     // Have at least 1 column
     if (columns < 1)
@@ -121,6 +122,8 @@ void ItemContainer::draw(gcn::Graphics *graphics)
 
         if (!item || item->getQuantity() <= 0)
             continue;
+
+        itemCount++;
 
         int itemX = (i % columns) * gridWidth;
         int itemY = (i / columns) * gridHeight;
@@ -144,6 +147,9 @@ void ItemContainer::draw(gcn::Graphics *graphics)
                 itemX + gridWidth / 2, itemY + gridHeight - 11,
                 gcn::Graphics::CENTER);
     }
+
+    if (!itemCount)
+        selectNone();
 }
 
 void ItemContainer::widgetResized(const gcn::Event &event)

@@ -24,6 +24,7 @@
 
 #include <guichan/font.hpp>
 #include <guichan/mouseinput.hpp>
+#include <guichan/selectionlistener.hpp>
 
 #include "inventorywindow.h"
 #include "itemamount.h"
@@ -70,8 +71,13 @@ InventoryWindow::InventoryWindow(int invSize):
     }
 
     mStoreButton = new Button(_("Store"), "store", this);
+    mStoreButton->setEnabled(false);
+
     mUseButton = new Button(longestUseString, "use", this);
+    mUseButton->setEnabled(false);
+
     mDropButton = new Button(_("Drop"), "drop", this);
+    mDropButton->setEnabled(false);
 
     mItems = new ItemContainer(player_node->getInventory(), "use", this);
     mItems->addSelectionListener(this);
@@ -111,10 +117,6 @@ InventoryWindow::InventoryWindow(int invSize):
     mStoreButton->setVisible(false);
 }
 
-InventoryWindow::~InventoryWindow()
-{
-}
-
 void InventoryWindow::logic()
 {
     if (!isVisible())
@@ -122,25 +124,25 @@ void InventoryWindow::logic()
 
     Window::logic();
 
-    // It would be nicer if this update could be event based, needs some
-    // redesign of InventoryWindow and ItemContainer probably.
-    updateButtons();
-
     const int usedSlots = player_node->getInventory()->getNumberOfSlotsUsed();
 
     if (mMaxWeight != player_node->mMaxWeight ||
-        mTotalWeight != player_node->mTotalWeight || mUsedSlots != usedSlots)
+        mTotalWeight != player_node->mTotalWeight)
     {
         mTotalWeight = player_node->mTotalWeight;
         mMaxWeight = player_node->mMaxWeight;
+
+        // Adjust weight progress bar
+        mWeightBar->setProgress((float) mTotalWeight / mMaxWeight);
+        mWeightBar->setText(strprintf("%dg/%dg", mTotalWeight, mMaxWeight));
+    }
+
+    if (mUsedSlots != usedSlots)
+    {
         mUsedSlots = usedSlots;
 
-        // Adjust progress bars
         mSlotsBar->setProgress((float) mUsedSlots / mMaxSlots);
-        mWeightBar->setProgress((float) mTotalWeight / mMaxWeight);
-
         mSlotsBar->setText(strprintf("%d/%d", mUsedSlots, mMaxSlots));
-        mWeightBar->setText(strprintf("%dg/%dg", mTotalWeight, mMaxWeight));
     }
 
     mStoreButton->setVisible(storageWindow->isVisible());
@@ -217,5 +219,11 @@ void InventoryWindow::updateButtons()
 Item* InventoryWindow::getSelectedItem() const
 {
     return mItems->getSelectedItem();
+}
+
+void InventoryWindow::valueChanged(const gcn::SelectionEvent &event)
+{
+    if (event.getSource() == mItems)
+        updateButtons();
 }
 
