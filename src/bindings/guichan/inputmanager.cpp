@@ -247,6 +247,18 @@ void InputManager::handleInput()
                         break;
                 }
 
+                if (keyboard.isKeyActive(keyboard.KEY_EMOTE))
+                {
+                    const int emotion = keyboard.getKeyEmoteOffset(event.key.keysym.sym);
+
+                    if (emotion)
+                    {
+                        emoteShortcut->useEmote(emotion);
+                        used = true;
+                        break;
+                    }
+                }
+
                 if (!gui->isInputFocused())
                 {
                     if (keyboard.isKeyActive(keyboard.KEY_TOGGLE_CHAT) &&
@@ -254,18 +266,6 @@ void InputManager::handleInput()
                     {
                         chatWindow->requestChatFocus();
                         used = true;
-                    }
-
-                    if (keyboard.isKeyActive(keyboard.KEY_EMOTE))
-                    {
-                        const int emotion = keyboard.getKeyEmoteOffset(event.key.keysym.sym);
-
-                        if (emotion)
-                        {
-                            emoteShortcut->useEmote(emotion);
-                            used = true;
-                            break;
-                        }
                     }
 
                     // Player actions
