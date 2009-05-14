@@ -228,12 +228,18 @@ void DropDown::keyPressed(gcn::KeyEvent& keyEvent)
 
 void DropDown::mouseWheelMovedUp(gcn::MouseEvent& mouseEvent)
 {
-    setSelected(getSelected() - 1);
-    mouseEvent.consume();
+    if (!mDroppedDown)
+    {
+        setSelected(getSelected() - 1);
+        mouseEvent.consume();
+    }
 }
 
 void DropDown::mouseWheelMovedDown(gcn::MouseEvent& mouseEvent)
 {
-    setSelected(getSelected() + 1);
-    mouseEvent.consume();
+    if (!mDroppedDown)
+    {
+        setSelected(getSelected() + 1);
+        mouseEvent.consume();
+    }
 }
