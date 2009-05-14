@@ -161,6 +161,18 @@ void EmoteContainer::setSelectedEmoteIndex(int index)
     else
         mSelectedEmoteIndex = index;
 
+    gcn::Rectangle scroll;
+    const int columns = getWidth() / gridWidth;
+    const int emoteY = mSelectedEmoteIndex / columns;
+
+    if (mSelectedEmoteIndex == NO_EMOTE)
+        scroll.y = 0;
+    else
+        scroll.y = gridHeight * emoteY;
+
+    scroll.height = gridHeight;
+    showPart(scroll);
+
     distributeValueChangedEvent();
 }
 

@@ -227,6 +227,18 @@ void ItemContainer::setSelectedItemIndex(int index)
         else
             mLastSelectedItemId = mInventory->getItem(index)->getId();
 
+        gcn::Rectangle scroll;
+        const int columns = getWidth() / gridWidth;
+        const int itemY = mSelectedItemIndex / columns;
+
+        if (mSelectedItemIndex == NO_ITEM)
+            scroll.y = 0;
+        else
+            scroll.y = gridHeight * itemY;
+
+        scroll.height = gridHeight;
+        showPart(scroll);
+
         distributeValueChangedEvent();
     }
 }
