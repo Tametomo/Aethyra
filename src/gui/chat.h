@@ -32,6 +32,7 @@
 #include "../bindings/guichan/widgets/window.h"
 
 class BrowserBox;
+class ChatInput;
 class Recorder;
 class Party;
 class ProxyWidget;
@@ -232,7 +233,7 @@ class ChatWindow : public Window, public gcn::ActionListener,
         /** Constructs failed messages for actions */
         std::string const_msg(CHATSKILL);
 
-        gcn::TextField *mChatInput; /**< Input box for typing chat messages */
+        ChatInput *mChatInput;      /**< Input box for typing chat messages */
         BrowserBox *mTextOutput;    /**< Text box for displaying chat history */
         ScrollArea *mScrollArea;    /**< Scroll area around text output */
         ItemLinkHandler *mItemLinkHandler; /** Used for showing item popup on

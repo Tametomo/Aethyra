@@ -27,6 +27,8 @@
 
 #include "textfield.h"
 
+class ProxyWidget;
+
 /**
  * The chat input hides when it loses focus. It is also invisible by default.
  */
@@ -38,11 +40,22 @@ class ChatInput : public TextField, public gcn::FocusListener
          */
         ChatInput();
 
+        void setProxy(ProxyWidget* proxy) { mProxy = proxy; }
+
+        /**
+         * Called if the chat input gains focus. If a proxy class is available
+         * to this input, disable it while focused.
+         */
+        void focusGained(const gcn::Event &event);
+
         /**
          * Called if the chat input loses focus. It will set itself to
          * invisible as result.
          */
         void focusLost(const gcn::Event &event);
+
+    private:
+        ProxyWidget* mProxy;
 };
 
 #endif

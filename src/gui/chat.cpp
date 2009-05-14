@@ -74,6 +74,7 @@ ChatWindow::ChatWindow():
     mChatInput->addActionListener(this);
 
     mProxy = new ProxyWidget(mChatInput, FOCUS_WHEN_HIDDEN);
+    mChatInput->setProxy(mProxy);
 
     mTextOutput = new BrowserBox(BrowserBox::AUTO_WRAP);
     mTextOutput->setOpaque(false);

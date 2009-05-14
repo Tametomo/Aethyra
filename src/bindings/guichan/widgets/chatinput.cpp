@@ -21,15 +21,26 @@
  */
 
 #include "chatinput.h"
+#include "proxywidget.h"
 
-ChatInput::ChatInput()
+ChatInput::ChatInput() :
+    mProxy(NULL)
 {
     setVisible(false);
 
     addFocusListener(this);
 }
 
+void ChatInput::focusGained(const gcn::Event &event)
+{
+    if (mProxy)
+        mProxy->setFocusable(false);
+}
+
 void ChatInput::focusLost(const gcn::Event &event)
 {
+    if (mProxy)
+        mProxy->setFocusable(true);
+
     setVisible(false);
 }
