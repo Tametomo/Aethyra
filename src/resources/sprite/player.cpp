@@ -80,26 +80,25 @@ void Player::handleAttack(Being *victim, int damage, AttackType type)
 
 void Player::setName(const std::string &name)
 {
-    if (!mName)
+    if (mName)
+        delete mName;
+
+    if (mIsGM)
     {
-        if (mIsGM)
-        {
-            mNameColor = &guiPalette->getColor(Palette::GM);
-            mName = new FlashText("(GM) " + name, mPx + NAME_X_OFFSET, mPy +
-                                  NAME_Y_OFFSET, gcn::Graphics::CENTER,
-                                  &guiPalette->getColor(Palette::GM_NAME));
-        }
-        else
-        {
-            mNameColor = &guiPalette->getColor(Palette::PLAYER);
-            mName = new FlashText(name, mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET,
-                                  gcn::Graphics::CENTER,
-                                  (this == player_node) ?
-                                  &guiPalette->getColor(Palette::SELF) :
-                                  &guiPalette->getColor(Palette::PC));
-        }
-        Being::setName(name);
+        mNameColor = &guiPalette->getColor(Palette::GM);
+        mName = new FlashText("(GM) " + name, mPx + NAME_X_OFFSET, mPy +
+                              NAME_Y_OFFSET, gcn::Graphics::CENTER,
+                              &guiPalette->getColor(Palette::GM_NAME));
     }
+    else
+    {
+        mNameColor = &guiPalette->getColor(Palette::PLAYER);
+        mName = new FlashText(name, mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET,
+                              gcn::Graphics::CENTER, (this == player_node) ?
+                              &guiPalette->getColor(Palette::SELF) :
+                              &guiPalette->getColor(Palette::PC));
+    }
+    Being::setName(name);
 }
 
 void Player::logic()
