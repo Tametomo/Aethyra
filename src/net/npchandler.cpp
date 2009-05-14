@@ -54,6 +54,9 @@ void NPCHandler::handleMessage(MessageIn *msg)
 {
     int id;
 
+    if (player_node && player_node->mAction == Being::WALK)
+        player_node->setAction(Being::STAND);
+
     switch (msg->getId())
     {
         case SMSG_NPC_CHOICE:
