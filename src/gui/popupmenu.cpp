@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  The Mana World Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -27,6 +28,7 @@
 #include "itemamount.h"
 #include "popupmenu.h"
 #include "storagewindow.h"
+#include "trade.h"
 
 #include "../item.h"
 #include "../playerrelations.h"
@@ -80,6 +82,12 @@ void PopupMenu::handleLink(const std::string& link)
     {
         player_node->trade(mBeing);
         tradePartnerName = mBeing->getName();
+    }
+
+    else if (link == "tradeitem" && mItem && tradeWindow &&
+             tradeWindow->isVisible())
+    {
+        new ItemAmountWindow(AMOUNT_TRADE_ADD, inventoryWindow, mItem);
     }
 
     // Attack action
@@ -151,10 +159,9 @@ void PopupMenu::handleLink(const std::string& link)
         new ItemAmountWindow(AMOUNT_ITEM_DROP, inventoryWindow, mItem);
     }
 
-    else if (link == "store")
+    else if (link == "store" && storageWindow && storageWindow->isVisible())
     {
-        if (storageWindow && storageWindow->isVisible())
-            new ItemAmountWindow(AMOUNT_STORE_ADD, inventoryWindow, mItem);
+        new ItemAmountWindow(AMOUNT_STORE_ADD, inventoryWindow, mItem);
     }
 
     else if (link == "retrieve")
@@ -216,6 +223,9 @@ void PopupMenu::showPopup(int x, int y)
                 mBrowserBox->addRow(_("@@use|Use@@"));
 
             mBrowserBox->addRow(_("@@drop|Drop@@"));
+
+            if (tradeWindow && tradeWindow->isVisible())
+                mBrowserBox->addRow(_("@@tradeitem|Trade@@"));
 
             if (storageWindow && storageWindow->isVisible())
                 mBrowserBox->addRow(_("@@store|Store@@"));
