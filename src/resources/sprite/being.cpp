@@ -518,7 +518,10 @@ void Being::drawSpeech(int offsetX, int offsetY)
     else if (mSpeechTime > 0 && speech == TEXT_OVERHEAD)
     {
         if (mSpeech == mOldSpeech && mText && !mSpeechBubble)
+        {
+            mText->adviseXY(mPx + X_SPEECH_OFFSET, mPy - Y_SPEECH_OFFSET);
             return;
+        }
 
         if (mSpeechBubble)
             delete mSpeechBubble;
