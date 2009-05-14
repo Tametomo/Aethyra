@@ -25,6 +25,8 @@
 #include "tab.h"
 #include "tabbedarea.h"
 
+#include "../sdl/sdlinput.h"
+
 TabbedArea::TabbedArea() : gcn::TabbedArea()
 {
     mWidgetContainer->setOpaque(false);
@@ -150,4 +152,35 @@ void TabbedArea::logic()
         return;
 
     logicChildren();
+}
+
+void TabbedArea::keyPressed(gcn::KeyEvent& keyEvent)
+{
+    if (keyEvent.isConsumed() || !isFocused())
+        return;
+
+    if (keyEvent.getKey().getValue() == Key::LEFT)
+    {
+        int index = getSelectedTabIndex();
+        index--;
+
+        if (index < 0)
+            setSelectedTab(mTabs[mTabs.size() - 1].first);
+        else
+            setSelectedTab(mTabs[index].first);
+
+        keyEvent.consume();
+    }
+    else if (keyEvent.getKey().getValue() == Key::RIGHT)
+    {
+        int index = getSelectedTabIndex();
+        index++;
+
+        if (index >= (int) mTabs.size())
+            setSelectedTab(mTabs[0].first);
+        else
+            setSelectedTab(mTabs[index].first);
+
+        keyEvent.consume();
+    }
 }
