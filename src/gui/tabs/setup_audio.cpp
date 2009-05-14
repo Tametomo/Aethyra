@@ -20,23 +20,24 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "okdialog.h"
 #include "setup_audio.h"
 
-#include "../configuration.h"
-#include "../engine.h"
-#include "../log.h"
-#include "../map.h"
+#include "../okdialog.h"
 
-#include "../bindings/guichan/layouthelper.h"
+#include "../../configuration.h"
+#include "../../engine.h"
+#include "../../log.h"
+#include "../../map.h"
 
-#include "../bindings/guichan/widgets/checkbox.h"
-#include "../bindings/guichan/widgets/label.h"
-#include "../bindings/guichan/widgets/slider.h"
+#include "../../bindings/guichan/layouthelper.h"
 
-#include "../bindings/sdl/sound.h"
+#include "../../bindings/guichan/widgets/checkbox.h"
+#include "../../bindings/guichan/widgets/label.h"
+#include "../../bindings/guichan/widgets/slider.h"
 
-#include "../utils/gettext.h"
+#include "../../bindings/sdl/sound.h"
+
+#include "../../utils/gettext.h"
 
 Setup_Audio::Setup_Audio():
     mMusicVolume((int)config.getValue("musicVolume", 60)),

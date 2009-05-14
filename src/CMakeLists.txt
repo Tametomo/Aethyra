@@ -173,6 +173,16 @@ SET(SRCS
     bindings/sdl/joystick.h
     bindings/sdl/sound.cpp
     bindings/sdl/sound.h
+    gui/tabs/setup_audio.cpp
+    gui/tabs/setup_audio.h
+    gui/tabs/setup_colors.cpp
+    gui/tabs/setup_colors.h
+    gui/tabs/setup_input.cpp
+    gui/tabs/setup_input.h
+    gui/tabs/setup_players.cpp
+    gui/tabs/setup_players.h
+    gui/tabs/setup_video.cpp
+    gui/tabs/setup_video.h
     gui/buy.cpp
     gui/buy.h
     gui/buysell.cpp
@@ -229,16 +239,6 @@ SET(SRCS
     gui/sell.h
     gui/setup.cpp
     gui/setup.h
-    gui/setup_audio.cpp
-    gui/setup_audio.h
-    gui/setup_colors.cpp
-    gui/setup_colors.h
-    gui/setup_input.cpp
-    gui/setup_input.h
-    gui/setup_players.cpp
-    gui/setup_players.h
-    gui/setup_video.cpp
-    gui/setup_video.h
     gui/shortcutwindow.cpp
     gui/shortcutwindow.h
     gui/skill.cpp

@@ -27,14 +27,11 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
-#include <guichan/widgets/label.hpp>
-#include <guichan/widgets/listbox.hpp>
+#include "../../bindings/guichan/guichanfwd.h"
 
-#include "../bindings/guichan/guichanfwd.h"
-
-#include "../bindings/guichan/widgets/setuptabcontainer.h"
-#include "../bindings/guichan/widgets/textfield.h"
-#include "../bindings/guichan/widgets/textpreview.h"
+#include "../../bindings/guichan/widgets/setuptabcontainer.h"
+#include "../../bindings/guichan/widgets/textfield.h"
+#include "../../bindings/guichan/widgets/textpreview.h"
 
 class BrowserBox;
 

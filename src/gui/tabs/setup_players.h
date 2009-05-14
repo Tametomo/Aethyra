@@ -25,9 +25,11 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "../bindings/guichan/widgets/setuptabcontainer.h"
+#include "../../bindings/guichan/guichanfwd.h"
 
-#include "../playerrelations.h"
+#include "../../bindings/guichan/widgets/setuptabcontainer.h"
+
+#include "../../playerrelations.h"
 
 class Table;
 class PlayerTableModel;

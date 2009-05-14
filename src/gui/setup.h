@@ -37,8 +37,7 @@ class SetupTabContainer;
  *
  * @see Setup_Audio
  * @see Setup_Colors
- * @see Setup_Joystick
- * @see Setup_Keyboard
+ * @see Setup_Input
  * @see Setup_Players
  * @see Setup_Video
  *

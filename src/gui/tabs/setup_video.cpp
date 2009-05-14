@@ -27,39 +27,40 @@
 #include <guichan/key.hpp>
 #include <guichan/widget.hpp>
 
-#include "desktop.h"
-#include "menubar.h"
-#include "okdialog.h"
 #include "setup_video.h"
 
-#include "../configuration.h"
-#include "../engine.h"
-#include "../log.h"
-#include "../main.h"
-#include "../map.h"
+#include "../desktop.h"
+#include "../menubar.h"
+#include "../okdialog.h"
 
-#include "../bindings/guichan/graphics.h"
-#include "../bindings/guichan/gui.h"
-#include "../bindings/guichan/layouthelper.h"
+#include "../../configuration.h"
+#include "../../engine.h"
+#include "../../log.h"
+#include "../../main.h"
+#include "../../map.h"
 
-#include "../bindings/guichan/models/modelistmodel.h"
+#include "../../bindings/guichan/graphics.h"
+#include "../../bindings/guichan/gui.h"
+#include "../../bindings/guichan/layouthelper.h"
 
-#include "../bindings/guichan/widgets/checkbox.h"
-#include "../bindings/guichan/widgets/label.h"
-#include "../bindings/guichan/widgets/listbox.h"
-#include "../bindings/guichan/widgets/scrollarea.h"
-#include "../bindings/guichan/widgets/slider.h"
-#include "../bindings/guichan/widgets/textfield.h"
-#include "../bindings/guichan/widgets/windowcontainer.h"
+#include "../../bindings/guichan/models/modelistmodel.h"
 
-#include "../resources/beingmanager.h"
+#include "../../bindings/guichan/widgets/checkbox.h"
+#include "../../bindings/guichan/widgets/label.h"
+#include "../../bindings/guichan/widgets/listbox.h"
+#include "../../bindings/guichan/widgets/scrollarea.h"
+#include "../../bindings/guichan/widgets/slider.h"
+#include "../../bindings/guichan/widgets/textfield.h"
+#include "../../bindings/guichan/widgets/windowcontainer.h"
 
-#include "../resources/particle/particle.h"
+#include "../../resources/beingmanager.h"
 
-#include "../resources/sprite/localplayer.h"
+#include "../../resources/particle/particle.h"
 
-#include "../utils/gettext.h"
-#include "../utils/stringutils.h"
+#include "../../resources/sprite/localplayer.h"
+
+#include "../../utils/gettext.h"
+#include "../../utils/stringutils.h"
 
 Setup_Video::Setup_Video():
     mFullScreenEnabled(config.getValue("screen", false)),

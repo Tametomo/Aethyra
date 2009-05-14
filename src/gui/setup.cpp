@@ -21,11 +21,12 @@
  */
 
 #include "setup.h"
-#include "setup_audio.h"
-#include "setup_colors.h"
-#include "setup_input.h"
-#include "setup_players.h"
-#include "setup_video.h"
+
+#include "tabs/setup_audio.h"
+#include "tabs/setup_colors.h"
+#include "tabs/setup_input.h"
+#include "tabs/setup_players.h"
+#include "tabs/setup_video.h"
 
 #include "../main.h"
 

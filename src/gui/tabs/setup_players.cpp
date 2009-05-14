@@ -23,25 +23,26 @@
 #include <string>
 #include <vector>
 
-#include "okdialog.h"
 #include "setup_players.h"
 
-#include "../configuration.h"
+#include "../okdialog.h"
 
-#include "../bindings/guichan/layouthelper.h"
+#include "../../configuration.h"
 
-#include "../bindings/guichan/models/ignorechoiceslistmodel.h"
-#include "../bindings/guichan/models/playertablemodel.h"
-#include "../bindings/guichan/models/statictablemodel.h"
+#include "../../bindings/guichan/layouthelper.h"
 
-#include "../bindings/guichan/widgets/button.h"
-#include "../bindings/guichan/widgets/checkbox.h"
-#include "../bindings/guichan/widgets/dropdown.h"
-#include "../bindings/guichan/widgets/label.h"
-#include "../bindings/guichan/widgets/scrollarea.h"
-#include "../bindings/guichan/widgets/table.h"
+#include "../../bindings/guichan/models/ignorechoiceslistmodel.h"
+#include "../../bindings/guichan/models/playertablemodel.h"
+#include "../../bindings/guichan/models/statictablemodel.h"
 
-#include "../utils/gettext.h"
+#include "../../bindings/guichan/widgets/button.h"
+#include "../../bindings/guichan/widgets/checkbox.h"
+#include "../../bindings/guichan/widgets/dropdown.h"
+#include "../../bindings/guichan/widgets/label.h"
+#include "../../bindings/guichan/widgets/scrollarea.h"
+#include "../../bindings/guichan/widgets/table.h"
+
+#include "../../utils/gettext.h"
 
 #define COLUMNS_NR 2 // name plus listbox
 
