@@ -59,6 +59,10 @@ class Slider : public gcn::Slider {
          */
         void drawMarker(gcn::Graphics *graphics);
 
+        // Inherited from KeyListener
+
+        void keyPressed(gcn::KeyEvent &keyEvent);
+
     private:
         /**
          * Used to initialize instances.

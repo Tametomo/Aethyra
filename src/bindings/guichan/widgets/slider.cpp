@@ -24,6 +24,8 @@
 
 #include "../graphics.h"
 
+#include "../sdl/sdlinput.h"
+
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -154,3 +156,40 @@ void Slider::drawMarker(gcn::Graphics *graphics)
     static_cast<Graphics*>(graphics)->
        drawImage(hGrip, getMarkerPosition(), (getHeight() - hGrip->getHeight()) / 2);
 }
+
+void Slider::keyPressed(gcn::KeyEvent &keyEvent)
+{
+    gcn::Key key = keyEvent.getKey();
+
+    if (getOrientation() == HORIZONTAL)
+    {
+        if (key.getValue() == Key::RIGHT)
+        {
+            setValue(getValue() + getStepLength());
+            distributeActionEvent();
+            keyEvent.consume();
+        }
+        else if (key.getValue() == Key::LEFT)
+        {
+            setValue(getValue() - getStepLength());
+            distributeActionEvent();
+            keyEvent.consume();
+        }            
+    }
+    else
+    {
+        if (key.getValue() == Key::UP)
+        {
+            setValue(getValue() + getStepLength());
+            distributeActionEvent();
+            keyEvent.consume();
+        }
+        else if (key.getValue() == Key::DOWN)
+        {
+            setValue(getValue() - getStepLength());
+            distributeActionEvent();
+            keyEvent.consume();
+        }
+    }
+}
+
