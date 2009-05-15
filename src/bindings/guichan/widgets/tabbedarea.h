@@ -85,7 +85,13 @@ class TabbedArea : public gcn::TabbedArea
          */
         void logic();
 
+        // Inherited from KeyListener
+
         void keyPressed(gcn::KeyEvent &event);
+
+        // Inherited from MouseListener
+
+        void mousePressed(gcn::MouseEvent &mouseEvent);
     private:
         typedef std::vector< std::pair<gcn::Tab*, gcn::Widget*> > TabContainer;
 };

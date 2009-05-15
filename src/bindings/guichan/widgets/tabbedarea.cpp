@@ -154,6 +154,19 @@ void TabbedArea::logic()
     logicChildren();
 }
 
+void TabbedArea::mousePressed(gcn::MouseEvent &mouseEvent)
+{
+    if (mouseEvent.getButton() == gcn::MouseEvent::LEFT)
+    {
+        gcn::Widget* widget = mTabContainer->getWidgetAt(mouseEvent.getX(),
+                                                         mouseEvent.getY());
+        gcn::Tab* tab = dynamic_cast<gcn::Tab*>(widget);
+
+        if (tab != NULL)
+            setSelectedTab(tab);
+    }
+}
+
 void TabbedArea::keyPressed(gcn::KeyEvent& keyEvent)
 {
     if (keyEvent.isConsumed() || !isFocused())
