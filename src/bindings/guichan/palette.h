@@ -103,7 +103,7 @@ class Palette : public gcn::ListModel
 
         /** Colors can be static or can alter over time. */
         enum GradientType {
-            STATIC,
+            STATIC = 0,
             PULSE,
             SPECTRUM,
             RAINBOW

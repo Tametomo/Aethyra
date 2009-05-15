@@ -28,6 +28,7 @@
 #include <guichan/selectionlistener.hpp>
 
 #include "../../bindings/guichan/guichanfwd.h"
+#include "../../bindings/guichan/palette.h"
 
 #include "../../bindings/guichan/widgets/setuptabcontainer.h"
 
@@ -47,6 +48,8 @@ class Setup_Colors : public SetupTabContainer, public gcn::ActionListener,
         void action(const gcn::ActionEvent &event);
 
         void valueChanged(const gcn::SelectionEvent &event);
+
+        void setGradTypeText(const Palette::GradientType &value);
 
     private:
         static const std::string rawmsg;

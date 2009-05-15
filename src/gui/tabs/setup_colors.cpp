@@ -26,7 +26,6 @@
 
 #include "../../bindings/guichan/gui.h"
 #include "../../bindings/guichan/layouthelper.h"
-#include "../../bindings/guichan/palette.h"
 
 #include "../../bindings/guichan/handlers/itemlinkhandler.h"
 
@@ -73,6 +72,7 @@ Setup_Colors::Setup_Colors() :
 
     mGradTypeSlider = new Slider(0, 3);
     mGradTypeSlider->setWidth(180);
+    mGradTypeSlider->setStepLength(1.0);
     mGradTypeSlider->setActionEventId("slider_grad");
     mGradTypeSlider->setValue(0);
     mGradTypeSlider->addActionListener(this);
@@ -102,6 +102,7 @@ Setup_Colors::Setup_Colors() :
 
     mGradDelaySlider = new Slider(20, 100);
     mGradDelaySlider->setWidth(180);
+    mGradDelaySlider->setStepLength(1.0);
     mGradDelaySlider->setValue(mGradDelayText->getValue());
     mGradDelaySlider->setActionEventId("slider_graddelay");
     mGradDelaySlider->addActionListener(this);
@@ -118,6 +119,7 @@ Setup_Colors::Setup_Colors() :
 
     mRedSlider = new Slider(0, 255);
     mRedSlider->setWidth(180);
+    mRedSlider->setStepLength(1.0);
     mRedSlider->setValue(mRedText->getValue());
     mRedSlider->setActionEventId("slider_red");
     mRedSlider->addActionListener(this);
@@ -134,6 +136,7 @@ Setup_Colors::Setup_Colors() :
 
     mGreenSlider = new Slider(0, 255);
     mGreenSlider->setWidth(180);
+    mGreenSlider->setStepLength(1.0);
     mGreenSlider->setValue(mGreenText->getValue());
     mGreenSlider->setActionEventId("slider_green");
     mGreenSlider->addActionListener(this);
@@ -150,6 +153,7 @@ Setup_Colors::Setup_Colors() :
 
     mBlueSlider = new Slider(0, 255);
     mBlueSlider->setWidth(180);
+    mBlueSlider->setStepLength(1.0);
     mBlueSlider->setValue(mBlueText->getValue());
     mBlueSlider->setActionEventId("slider_blue");
     mBlueSlider->addActionListener(this);
@@ -399,10 +403,7 @@ void Setup_Colors::updateGradType()
     Palette::ColorType type = guiPalette->getColorTypeAt(mSelected);
     Palette::GradientType grad = guiPalette->getGradientType(type);
 
-    mGradTypeText->setCaption(
-            (grad == Palette::STATIC) ? _("Static") :
-            (grad == Palette::PULSE) ? _("Pulse") :
-            (grad == Palette::RAINBOW) ? _("Rainbow") : _("Spectrum"));
+    setGradTypeText(grad);
 
     const bool enable = (grad == Palette::STATIC || grad == Palette::PULSE);
     const bool delayEnable = (grad != Palette::STATIC);
@@ -418,17 +419,36 @@ void Setup_Colors::updateGradType()
     mBlueSlider->setEnabled(enable);
 }
 
+void Setup_Colors::setGradTypeText(const Palette::GradientType &value)
+{
+    switch (value)
+    {              
+        case 0:
+            mGradTypeText->setCaption(_("Static"));
+            break;
+        case 1:
+            mGradTypeText->setCaption(_("Pulse"));
+            break;
+        case 2:
+            mGradTypeText->setCaption(_("Rainbow"));
+            break;
+        case 3:
+            mGradTypeText->setCaption( _("Spectrum"));
+            break;
+    }
+}
+
 void Setup_Colors::updateColor()
 {
     if (mSelected == -1)
         return;
 
     Palette::ColorType type = guiPalette->getColorTypeAt(mSelected);
-    Palette::GradientType grad =
-            (Palette::GradientType) mGradTypeSlider->getValue();
-    int delay = (int) mGradDelaySlider->getValue();
+    const Palette::GradientType grad = (Palette::GradientType) mGradTypeSlider->getValue();
+    const int delay = (int) mGradDelaySlider->getValue();
     guiPalette->setGradient(type, grad);
     guiPalette->setGradientDelay(type, delay);
+    updateGradType();
 
     if (grad == Palette::STATIC)
     {

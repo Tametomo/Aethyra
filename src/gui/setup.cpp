@@ -48,7 +48,7 @@ Setup::Setup():
     int height = 340 + 2 * getPadding() + getTitleBarHeight();
 
     static const char *buttonNames[] = {
-        N_("Apply"), N_("Cancel"), N_("Reset Windows"), 0
+        N_("Reset Windows"), N_("Cancel"), N_("Apply"), 0
     };
 
     TabbedArea *panel = new TabbedArea;
@@ -72,7 +72,7 @@ Setup::Setup():
     for (int i = 0; buttonNames[i] != NULL; ++i)
     {
         Button *btn = new Button(gettext(buttonNames[i]), buttonNames[i], this);
-        place(6 - i, 6, btn);
+        place(i + 4, 6, btn);
 
         // Store this button, as it needs to be enabled/disabled
         if (!strcmp(buttonNames[i], N_("Reset Windows")))

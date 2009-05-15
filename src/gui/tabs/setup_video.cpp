@@ -168,6 +168,12 @@ Setup_Video::Setup_Video():
     setParticleDetailLabel(mParticleDetail);
     mParticleDetailSlider->setValue(mParticleDetail);
 
+    mFpsSlider->setStepLength(1.0);
+    mFontSizeSlider->setStepLength(1.0);
+    mSpeechSlider->setStepLength(1.0);
+    mOverlayDetailSlider->setStepLength(1.0);
+    mParticleDetailSlider->setStepLength(1.0);
+
     // Do the layout
     LayoutHelper h(this);
     ContainerPlacer place = h.getPlacer(0, 0);
