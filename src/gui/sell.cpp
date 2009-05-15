@@ -60,25 +60,19 @@ SellDialog::SellDialog():
     mScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
 
     mSlider = new Slider(1.0);
+    mSlider->setStepLength(1.0);
 
     mQuantityLabel = new Label(strprintf("%d / %d", mAmountItems, mMaxItems));
     mQuantityLabel->setAlignment(gcn::Graphics::CENTER);
     mMoneyLabel = new Label(
         strprintf(_("Price: %d GP / Total: %d GP"), 0, 0));
 
-    mIncreaseButton = new Button("+", "+", this);
-    mDecreaseButton = new Button("-", "-", this);
     mSellButton = new Button(_("Sell"), "sell", this);
     mQuitButton = new Button(_("Quit"), "quit", this);
     mAddMaxButton = new Button(_("Max"), "max", this);
     mItemDescLabel = new Label(strprintf(_("Description: %s"), ""));
     mItemEffectLabel = new Label(strprintf(_("Effect: %s"), ""));
 
-    mDecreaseButton->adjustSize();
-    mDecreaseButton->setWidth(mIncreaseButton->getWidth());
-
-    mIncreaseButton->setEnabled(false);
-    mDecreaseButton->setEnabled(false);
     mSellButton->setEnabled(false);
     mSlider->setEnabled(false);
 
@@ -91,9 +85,7 @@ SellDialog::SellDialog():
     place = getPlacer(0, 0);
 
     place(0, 0, mScrollArea, 8, 5).setPadding(3);
-    place(0, 5, mDecreaseButton);
-    place(1, 5, mSlider, 3);
-    place(4, 5, mIncreaseButton);
+    place(0, 5, mSlider, 5);
     place(5, 5, mQuantityLabel, 2);
     place(7, 5, mAddMaxButton);
     place(0, 6, mMoneyLabel, 8);
@@ -156,18 +148,6 @@ void SellDialog::action(const gcn::ActionEvent &event)
     if (event.getId() == "slider")
     {
         mAmountItems = (int) mSlider->getValue();
-        updateButtonsAndLabels();
-    }
-    else if (event.getId() == "+" && mAmountItems < mMaxItems)
-    {
-        mAmountItems++;
-        mSlider->setValue(mAmountItems);
-        updateButtonsAndLabels();
-    }
-    else if (event.getId() == "-" && mAmountItems > 1)
-    {
-        mAmountItems--;
-        mSlider->setValue(mAmountItems);
         updateButtonsAndLabels();
     }
     else if (event.getId() == "max")
@@ -270,8 +250,6 @@ void SellDialog::updateButtonsAndLabels()
 
     // Update Buttons and slider
     mSellButton->setEnabled(mAmountItems > 0);
-    mDecreaseButton->setEnabled(mAmountItems > 1);
-    mIncreaseButton->setEnabled(mAmountItems < mMaxItems);
     mSlider->setEnabled(mMaxItems > 1);
 
     // Update the quantity and money labels

@@ -55,6 +55,7 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
 
     // Slider
     mItemAmountSlide = new Slider(1.0, mMax);
+    mItemAmountSlide->setStepLength(1.0);
     mItemAmountSlide->setHeight(10);
     mItemAmountSlide->setActionEventId("Slide");
     mItemAmountSlide->addActionListener(this);
@@ -63,19 +64,13 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     Image *image = item->getImage();
     mItemIcon = new Icon(image);
 
-
     mItemPopup = new ItemPopup();
     mItemPopup->setOpaque(false);
 
     // Buttons
-    Button *minusButton = new Button("-", "Minus", this);
-    Button *plusButton = new Button("+", "Plus", this);
     Button *okButton = new Button(_("Ok"), "Ok", this);
     Button *cancelButton = new Button(_("Cancel"), "Cancel", this);
     Button *addAllButton = new Button(_("All"), "All", this);
-
-    minusButton->adjustSize();
-    minusButton->setWidth(plusButton->getWidth());
 
     // If only one item is available, then the window isn't needed, so move on
     // To prevent problems, we still build the gui elements
@@ -90,9 +85,7 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     place = getPlacer(0, 0);
 
     place(0, 0, mItemIcon, 1, 3);
-    place(1, 1, minusButton);
-    place(2, 1, mItemAmountSlide, 3);
-    place(5, 1, plusButton);
+    place(1, 1, mItemAmountSlide, 5);
     place(6, 1, mItemAmountLabel, 2);
     place(8, 1, addAllButton);
     place = getPlacer(0, 3);
@@ -125,6 +118,7 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     setVisible(true);
 
     mItemIcon->addMouseListener(this);
+    mItemAmountSlide->requestFocus();
 }
 
 // Show ItemTooltip
@@ -153,10 +147,6 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
 
     if (event.getId() == "Cancel")
         close();
-    else if (event.getId() == "Plus" && amount < mMax)
-        amount++;
-    else if (event.getId() == "Minus" && amount > 1)
-        amount--;
     else if (event.getId() == "Slide")
         amount = static_cast<int>(mItemAmountSlide->getValue());
     else if (event.getId() == "Ok" || event.getId() == "All")

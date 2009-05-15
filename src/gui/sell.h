@@ -97,8 +97,6 @@ class SellDialog : public Window, gcn::ActionListener, gcn::SelectionListener
         gcn::Button *mSellButton;
         gcn::Button *mQuitButton;
         gcn::Button *mAddMaxButton;
-        gcn::Button *mIncreaseButton;
-        gcn::Button *mDecreaseButton;
         ShopListBox *mShopItemList;
         gcn::ScrollArea *mScrollArea;
         gcn::Label *mMoneyLabel;
