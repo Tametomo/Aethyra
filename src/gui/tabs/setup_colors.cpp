@@ -36,6 +36,7 @@
 #include "../../bindings/guichan/widgets/scrollarea.h"
 #include "../../bindings/guichan/widgets/slider.h"
 #include "../../bindings/guichan/widgets/textfield.h"
+#include "../../bindings/guichan/widgets/textpreview.h"
 
 #include "../../configuration.h"
 
@@ -97,6 +98,7 @@ Setup_Colors::Setup_Colors() :
     mGradDelayText->setRange(20, 100);
     mGradDelayText->setNumeric(true);
     mGradDelayText->setEnabled(false);
+    mGradDelayText->setFocusable(false);
 
     mGradDelaySlider = new Slider(20, 100);
     mGradDelaySlider->setWidth(180);
@@ -112,6 +114,7 @@ Setup_Colors::Setup_Colors() :
     mRedText->setRange(0, 255);
     mRedText->setNumeric(true);
     mRedText->setEnabled(false);
+    mRedText->setFocusable(false);
 
     mRedSlider = new Slider(0, 255);
     mRedSlider->setWidth(180);
@@ -127,6 +130,7 @@ Setup_Colors::Setup_Colors() :
     mGreenText->setRange(0, 255);
     mGreenText->setNumeric(true);
     mGreenText->setEnabled(false);
+    mGreenText->setFocusable(false);
 
     mGreenSlider = new Slider(0, 255);
     mGreenSlider->setWidth(180);
@@ -142,6 +146,7 @@ Setup_Colors::Setup_Colors() :
     mBlueText->setRange(0, 255);
     mBlueText->setNumeric(true);
     mBlueText->setEnabled(false);
+    mBlueText->setFocusable(false);
 
     mBlueSlider = new Slider(0, 255);
     mBlueSlider->setWidth(180);

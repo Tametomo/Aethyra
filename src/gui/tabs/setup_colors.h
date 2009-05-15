@@ -30,10 +30,10 @@
 #include "../../bindings/guichan/guichanfwd.h"
 
 #include "../../bindings/guichan/widgets/setuptabcontainer.h"
-#include "../../bindings/guichan/widgets/textfield.h"
-#include "../../bindings/guichan/widgets/textpreview.h"
 
 class BrowserBox;
+class TextField;
+class TextPreview;
 
 class Setup_Colors : public SetupTabContainer, public gcn::ActionListener,
                      public gcn::SelectionListener
