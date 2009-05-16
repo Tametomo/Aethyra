@@ -91,8 +91,8 @@ SellDialog::SellDialog():
     place(0, 6, mMoneyLabel, 8);
     place(0, 7, mItemEffectLabel, 8);
     place(0, 8, mItemDescLabel, 8);
-    place(6, 9, mSellButton);
-    place(7, 9, mQuitButton);
+    place(6, 9, mQuitButton);
+    place(7, 9, mSellButton);
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
