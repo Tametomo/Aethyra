@@ -53,7 +53,5 @@ Image* ImageSet::get(size_type i) const
         return NULL;
     }
     else
-    {
         return mImages[i];
-    }
 }

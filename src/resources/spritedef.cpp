@@ -31,6 +31,7 @@
 #include "spritedef.h"
 
 #include "../log.h"
+
 #include "../utils/xml.h"
 
 Action* SpriteDef::getAction(SpriteAction action) const
@@ -62,7 +63,7 @@ SpriteDef *SpriteDef::load(std::string const &animationFile, int variant)
                load("graphics/sprites/error.xml", 0);
     }
 
-    SpriteDef *def = new SpriteDef;
+    SpriteDef *def = new SpriteDef();
     def->loadSprite(rootNode, variant, palettes);
     def->substituteActions();
     return def;

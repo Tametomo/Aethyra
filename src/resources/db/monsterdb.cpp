@@ -144,7 +144,5 @@ const MonsterInfo &MonsterDB::get(int id)
         return mUnknown;
     }
     else
-    {
         return *(i->second);
-    }
 }

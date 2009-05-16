@@ -66,6 +66,6 @@ void AmbientOverlay::update(int timePassed, float dx, float dy)
 
 void AmbientOverlay::draw(Graphics *graphics, int x, int y)
 {
-    graphics->drawImagePattern(mImage,
-            (int) -mPosX, (int) -mPosY, x + (int) mPosX, y + (int) mPosY);
+    graphics->drawImagePattern(mImage, (int) -mPosX, (int) -mPosY, x +
+                              (int) mPosX, y + (int) mPosY);
 }

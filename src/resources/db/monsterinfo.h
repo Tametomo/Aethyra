@@ -68,11 +68,9 @@ class MonsterInfo
 
         void addParticleEffect(std::string filename);
 
-        const std::string& getName() const
-        { return mName; }
+        const std::string& getName() const { return mName; }
 
-        const std::list<std::string>& getSprites() const
-        { return mSprites; }
+        const std::list<std::string>& getSprites() const { return mSprites; }
 
         Being::TargetCursorSize getTargetCursorSize() const
         { return mTargetCursorSize; }

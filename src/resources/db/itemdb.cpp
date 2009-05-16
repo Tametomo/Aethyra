@@ -77,9 +77,7 @@ void ItemDB::load()
             continue;
         }
         else if (mItemInfos.find(id) != mItemInfos.end())
-        {
             logger->log("ItemDB: Redefinition of item ID %d", id);
-        }
 
         std::string type = XML::getProperty(node, "type", "other");
         int weight = XML::getProperty(node, "weight", 0);
@@ -115,9 +113,7 @@ void ItemDB::load()
                     loadSpriteRef(itemInfo, itemChild);
                 }
                 else if (xmlStrEqual(itemChild->name, BAD_CAST "sound"))
-                {
                     loadSoundRef(itemInfo, itemChild);
-                }
             }
 
             mItemInfos[id] = itemInfo;
@@ -127,15 +123,12 @@ void ItemDB::load()
                 toLower(trim(temp));
 
                 NamedItemInfoIterator itr = mNamedItemInfos.find(temp);
+
                 if (itr == mNamedItemInfos.end())
-                {
                     mNamedItemInfos[temp] = itemInfo;
-                }
                 else
-                {
                     logger->log("ItemDB: Duplicate name of item found item %d",
                                 id);
-                }
             }
         }
 
@@ -184,9 +177,7 @@ const ItemInfo& ItemDB::get(int id)
         return *mUnknown;
     }
     else
-    {
         return *(i->second);
-    }
 }
 
 const ItemInfo& ItemDB::get(const std::string &name)
@@ -201,9 +192,7 @@ const ItemInfo& ItemDB::get(const std::string &name)
         return *mUnknown;
     }
     else
-    {
         return *(i->second);
-    }
 }
 
 void loadSpriteRef(ItemInfo *itemInfo, xmlNodePtr node)

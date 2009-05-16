@@ -39,7 +39,7 @@ void NPCDB::load()
     if (mLoaded)
         return;
 
-    NPCsprite *unknownSprite = new NPCsprite;
+    NPCsprite *unknownSprite = new NPCsprite();
     unknownSprite->sprite = "error.xml";
     unknownSprite->variant = 0;
     mUnknown.sprites.push_back(unknownSprite);
@@ -65,20 +65,20 @@ void NPCDB::load()
             continue;
         }
 
-        NPCInfo *currentInfo = new NPCInfo;
+        NPCInfo *currentInfo = new NPCInfo();
 
         for_each_xml_child_node(spriteNode, npcNode)
         {
             if (xmlStrEqual(spriteNode->name, BAD_CAST "sprite"))
             {
-                NPCsprite *currentSprite = new NPCsprite;
-                currentSprite->sprite = (const char*)spriteNode->xmlChildrenNode->content;
+                NPCsprite *currentSprite = new NPCsprite();
+                currentSprite->sprite = (const char*) spriteNode->xmlChildrenNode->content;
                 currentSprite->variant = XML::getProperty(spriteNode, "variant", 0);
                 currentInfo->sprites.push_back(currentSprite);
             }
             else if (xmlStrEqual(spriteNode->name, BAD_CAST "particlefx"))
             {
-                std::string particlefx = (const char*)spriteNode->xmlChildrenNode->content;
+                std::string particlefx = (const char*) spriteNode->xmlChildrenNode->content;
                 currentInfo->particles.push_back(particlefx);
             }
         }
@@ -121,7 +121,5 @@ const NPCInfo& NPCDB::get(int id)
         return mUnknown;
     }
     else
-    {
         return *(i->second);
-    }
 }

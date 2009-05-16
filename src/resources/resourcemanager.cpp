@@ -353,8 +353,7 @@ struct SpriteDefLoader
     }
 };
 
-SpriteDef *ResourceManager::getSprite
-    (std::string const &path, int variant)
+SpriteDef *ResourceManager::getSprite(std::string const &path, int variant)
 {
     SpriteDefLoader l = { path, variant };
     std::stringstream ss;
@@ -385,7 +384,9 @@ void ResourceManager::release(Resource *res)
 ResourceManager *ResourceManager::getInstance()
 {
     // Create a new instance if necessary.
-    if (instance == NULL) instance = new ResourceManager();
+    if (instance == NULL)
+        instance = new ResourceManager();
+
     return instance;
 }
 

@@ -51,9 +51,8 @@ SimpleAnimation::SimpleAnimation(xmlNodePtr animationNode):
     );
 
     // Get animation frames
-    for (   xmlNodePtr frameNode = animationNode->xmlChildrenNode;
-            frameNode;
-            frameNode = frameNode->next)
+    for (xmlNodePtr frameNode = animationNode->xmlChildrenNode; frameNode;
+         frameNode = frameNode->next)
     {
         int delay = XML::getProperty(frameNode, "delay", 0);
         int offsetX = XML::getProperty(frameNode, "offsetX", 0);
@@ -107,9 +106,7 @@ SimpleAnimation::SimpleAnimation(xmlNodePtr animationNode):
             }
         }
         else if (xmlStrEqual(frameNode->name, BAD_CAST "end"))
-        {
             mAnimation->addTerminator();
-        }
     }
 
     mCurrentFrame = mAnimation->getFrame(0);

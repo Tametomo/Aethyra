@@ -46,9 +46,7 @@ Resource *Music::load(void *buffer, unsigned bufferSize)
     Mix_Chunk *tmpMusic = Mix_LoadWAV_RW(rw, 1);
 
     if (tmpMusic)
-    {
         return new Music(tmpMusic);
-    }
     else
     {
         logger->log("Error, failed to load music: %s", Mix_GetError());
@@ -74,14 +72,12 @@ bool Music::play(int loops)
 void Music::stop()
 {
     /*
-     * Warning: very dungerous trick, it could try to stop channels occupied
+     * Warning: very dangerous trick, it could try to stop channels occupied
      * by samples rather than the current music file
      */
 
     //Mix_HaltMusic();
 
     if (mChannel != -1)
-    {
         Mix_HaltChannel(mChannel);
-    }
 }

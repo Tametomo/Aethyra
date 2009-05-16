@@ -422,9 +422,8 @@ int Image::powerOfTwo(int input)
             value <<= 1;
     }
     else
-    {
         value = input;
-    }
+
     return value >= mTextureSize ? mTextureSize : value;
 }
 #endif

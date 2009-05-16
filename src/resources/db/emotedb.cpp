@@ -77,7 +77,7 @@ void EmoteDB::load()
         {
             if (xmlStrEqual(spriteNode->name, BAD_CAST "sprite"))
             {
-                EmoteSprite *currentSprite = new EmoteSprite;
+                EmoteSprite *currentSprite = new EmoteSprite();
                 std::string file = "graphics/sprites/" + (std::string)
                             (const char*) spriteNode->xmlChildrenNode->content;
                 currentSprite->sprite = AnimatedSprite::load(file,
@@ -91,7 +91,9 @@ void EmoteDB::load()
             }
         }
         mEmoteInfos[id] = currentInfo;
-        if (id > mLastEmote) mLastEmote = id;
+
+        if (id > mLastEmote)
+            mLastEmote = id;
     }
 
     mLoaded = true;
@@ -99,9 +101,7 @@ void EmoteDB::load()
 
 void EmoteDB::unload()
 {
-    for (   EmoteInfosIterator i = mEmoteInfos.begin();
-            i != mEmoteInfos.end();
-            i++)
+    for (EmoteInfosIterator i = mEmoteInfos.begin(); i != mEmoteInfos.end(); i++)
     {
         while (!i->second->sprites.empty())
         {

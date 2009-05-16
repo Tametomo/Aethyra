@@ -74,9 +74,7 @@ void ColorDB::load()
             int id = XML::getProperty(node, "id", 0);
 
             if (mColors.find(id) != mColors.end())
-            {
                 logger->log("ColorDB: Redefinition of dye ID %d", id);
-            }
 
             mColors[id] = TMWHair ? XML::getProperty(node, "value", mFail) :
                                     XML::getProperty(node, "dye", mFail);
@@ -109,9 +107,7 @@ std::string& ColorDB::get(int id)
         return mFail;
     }
     else
-    {
         return i->second;
-    }
 }
 
 int ColorDB::size()

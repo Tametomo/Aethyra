@@ -38,9 +38,7 @@ Resource *SoundEffect::load(void *buffer, unsigned bufferSize)
     Mix_Chunk *tmpSoundEffect = Mix_LoadWAV_RW(rw, 1);
 
     if (tmpSoundEffect)
-    {
         return new SoundEffect(tmpSoundEffect);
-    }
     else
     {
         logger->log("Error, failed to load sound effect: %s", Mix_GetError());
