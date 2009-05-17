@@ -133,6 +133,9 @@
 		<Unit filename="src\bindings\guichan\handlers\linkhandler.h" />
 		<Unit filename="src\bindings\guichan\models\ignorechoiceslistmodel.h" />
 		<Unit filename="src\bindings\guichan\models\keylistmodel.h" />
+		<Unit filename="src\bindings\guichan\models\linkmappedlistmodel.cpp" />
+		<Unit filename="src\bindings\guichan\models\linkmappedlistmodel.h" />
+		<Unit filename="src\bindings\guichan\models\mappedlistmodel.h" />
 		<Unit filename="src\bindings\guichan\models\modelistmodel.cpp" />
 		<Unit filename="src\bindings\guichan\models\modelistmodel.h" />
 		<Unit filename="src\bindings\guichan\models\playerrelationlistmodel.h" />
@@ -182,6 +185,8 @@
 		<Unit filename="src\bindings\guichan\widgets\label.h" />
 		<Unit filename="src\bindings\guichan\widgets\listbox.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\listbox.h" />
+		<Unit filename="src\bindings\guichan\widgets\mappedlistbox.cpp" />
+		<Unit filename="src\bindings\guichan\widgets\mappedlistbox.h" />
 		<Unit filename="src\bindings\guichan\widgets\passwordfield.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\passwordfield.h" />
 		<Unit filename="src\bindings\guichan\widgets\playerbox.cpp" />

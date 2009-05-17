@@ -32,6 +32,9 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/handlers/linkhandler.h \
 	      bindings/guichan/models/ignorechoiceslistmodel.h \
 	      bindings/guichan/models/keylistmodel.h \
+	      bindings/guichan/models/linkmappedlistmodel.cpp \
+	      bindings/guichan/models/linkmappedlistmodel.h \
+	      bindings/guichan/models/mappedlistmodel.h \
 	      bindings/guichan/models/modelistmodel.cpp \
 	      bindings/guichan/models/modelistmodel.h \
 	      bindings/guichan/models/playerrelationlistmodel.h \
@@ -81,6 +84,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/widgets/label.h \
 	      bindings/guichan/widgets/listbox.cpp \
 	      bindings/guichan/widgets/listbox.h \
+	      bindings/guichan/widgets/mappedlistbox.cpp \
+	      bindings/guichan/widgets/mappedlistbox.h \
 	      bindings/guichan/widgets/passwordfield.cpp \
 	      bindings/guichan/widgets/passwordfield.h \
 	      bindings/guichan/widgets/playerbox.cpp \

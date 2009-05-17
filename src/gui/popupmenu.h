@@ -23,13 +23,15 @@
 #ifndef POPUP_MENU_H
 #define POPUP_MENU_H
 
-#include "../bindings/guichan/handlers/linkhandler.h"
+#include <guichan/actionlistener.hpp>
+
 #include "../bindings/guichan/widgets/popup.h"
 
 class Being;
-class BrowserBox;
 class FloorItem;
 class Item;
+class LinkMappedListModel;
+class MappedListBox;
 
 enum MenuType {
     FLOOR_ITEM,
@@ -43,7 +45,7 @@ enum MenuType {
 /**
  * Window showing popup menu.
  */
-class PopupMenu : public Popup, public LinkHandler
+class PopupMenu : public Popup, public gcn::ActionListener
 {
     public:
         /**
@@ -59,7 +61,7 @@ class PopupMenu : public Popup, public LinkHandler
         /**
          * Handles link action.
          */
-        void handleLink(const std::string& link);
+        void action(const gcn::ActionEvent &event);
 
         /**
          * Changes the type of popups this PopupMenu handles.
@@ -82,7 +84,8 @@ class PopupMenu : public Popup, public LinkHandler
         void setBeing(Being *being) { mBeing = being; }
 
     private:
-        BrowserBox* mBrowserBox;
+        MappedListBox* mMappedListBox;
+        LinkMappedListModel* mModel;
 
         Being *mBeing;
         FloorItem *mFloorItem;

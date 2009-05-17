@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/actionevent.hpp>
+
 #include "popupmenu.h"
 #include "viewport.h"
 
@@ -378,7 +380,9 @@ void Viewport::showPopup(int x, int y, Being *being)
 
 void Viewport::closePopupMenu()
 {
-    mPopupMenu->handleLink("cancel");
+    gcn::ActionEvent actionEvent(this, "cancel");
+
+    mPopupMenu->action(actionEvent);
 }
 
 void Viewport::optionChanged(const std::string &name)
