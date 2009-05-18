@@ -85,8 +85,7 @@ class ItemShortcut
          *
          * @param itemId The ID of the item that is to be assigned.
          */
-        void setItemSelected(int itemId)
-        { mItemSelected = itemId; }
+        void setItemSelected(int itemId) { mItemSelected = itemId; }
 
         /**
          * A flag to check if the item is selected.

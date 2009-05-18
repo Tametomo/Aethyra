@@ -248,6 +248,8 @@ SET(SRCS
     gui/shortcutwindow.h
     gui/skill.cpp
     gui/skill.h
+    gui/slotselection.cpp
+    gui/slotselection.h
     gui/speechbubble.cpp
     gui/speechbubble.h
     gui/status.cpp

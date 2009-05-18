@@ -27,6 +27,7 @@
 #include "inventorywindow.h"
 #include "itemamount.h"
 #include "popupmenu.h"
+#include "slotselection.h"
 #include "storagewindow.h"
 #include "trade.h"
 
@@ -94,6 +95,11 @@ void PopupMenu::action(const gcn::ActionEvent &event)
              tradeWindow->isVisible())
     {
         new ItemAmountWindow(AMOUNT_TRADE_ADD, inventoryWindow, mItem);
+    }
+
+    else if (event.getId() == "slotitem" && mItem)
+    {
+        new SlotSelectionWindow(ITEM_SHORTCUT, inventoryWindow, mItem->getId());
     }
 
     // Attack action
@@ -242,6 +248,8 @@ void PopupMenu::showPopup(int x, int y)
 
             if (storageWindow && storageWindow->isVisible())
                 mModel->addLink("store", _("Store"));
+
+            mModel->addLink("slotitem", _("Add to Item Shortcuts"));
         }
         else if (mType == STORAGE)
         {

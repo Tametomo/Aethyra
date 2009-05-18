@@ -301,6 +301,8 @@
 		<Unit filename="src\gui\shortcutwindow.h" />
 		<Unit filename="src\gui\skill.cpp" />
 		<Unit filename="src\gui\skill.h" />
+		<Unit filename="src\gui\slotselection.cpp" />
+		<Unit filename="src\gui\slotselection.h" />
 		<Unit filename="src\gui\speechbubble.cpp" />
 		<Unit filename="src\gui\speechbubble.h" />
 		<Unit filename="src\gui\status.cpp" />
