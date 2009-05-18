@@ -215,11 +215,16 @@ void BuyDialog::updateButtonsAndLabels()
 
         // Calculate price of pending purchase
         price = mAmountItems * itemPrice;
+
+        mAddMaxButton->setEnabled(mMaxItems > 1);
+        mBuyButton->setEnabled(mMaxItems);
     }
     else
     {
         mItemDescLabel->setCaption(strprintf(_("Description: %s"), ""));
         mItemEffectLabel->setCaption(strprintf(_("Effect: %s"), ""));
+        mAddMaxButton->setEnabled(false);
+        mBuyButton->setEnabled(false);
         mMaxItems = 0;
         mAmountItems = 0;
     }

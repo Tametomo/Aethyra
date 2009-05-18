@@ -239,11 +239,16 @@ void SellDialog::updateButtonsAndLabels()
             mAmountItems = mMaxItems;
 
         income = mAmountItems * mShopListModel->at(selectedItem)->getPrice();
+
+        mAddMaxButton->setEnabled(mMaxItems > 1);
+        mSellButton->setEnabled(mMaxItems);
     }
     else
     {
         mItemDescLabel->setCaption(strprintf(_("Description: %s"), ""));
         mItemEffectLabel->setCaption(strprintf(_("Effect: %s"), ""));
+        mAddMaxButton->setEnabled(false);
+        mSellButton->setEnabled(false);
         mMaxItems = 0;
         mAmountItems = 0;
     }
