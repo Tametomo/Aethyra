@@ -34,9 +34,10 @@ class LinkMappedListModel;
 class MappedListBox;
 
 enum MenuType {
+    ITEM_SHORTCUT,
+    INVENTORY,
     FLOOR_ITEM,
     TRADE,
-    INVENTORY,
     STORAGE,
     BEING,
     UNKNOWN

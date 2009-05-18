@@ -221,7 +221,7 @@ void PopupMenu::showPopup(int x, int y)
 
     if (mType < BEING)
     {
-        if (mType == FLOOR_ITEM)
+        if (mFloorItem && mType == FLOOR_ITEM)
             mItem = mFloorItem->getItem();
 
         if (!mItem)
@@ -229,7 +229,7 @@ void PopupMenu::showPopup(int x, int y)
 
         const std::string &name = mItem->getName();
 
-        if (mType == INVENTORY)
+        if (mType <= INVENTORY)
         {
             if (mItem->isEquipment())
             {
@@ -249,7 +249,8 @@ void PopupMenu::showPopup(int x, int y)
             if (storageWindow && storageWindow->isVisible())
                 mModel->addLink("store", _("Store"));
 
-            mModel->addLink("slotitem", _("Add to Item Shortcuts"));
+            if (mType == INVENTORY)
+                mModel->addLink("slotitem", _("Add to Item Shortcuts"));
         }
         else if (mType == STORAGE)
         {
@@ -257,8 +258,7 @@ void PopupMenu::showPopup(int x, int y)
         }
         else if (mType == FLOOR_ITEM)
         {
-            mModel->addLink("pickup",
-                                    strprintf(_("Pick Up %s"), name.c_str()));
+            mModel->addLink("pickup", strprintf(_("Pick Up %s"), name.c_str()));
         }
 
         mModel->addLink("chat", _("Add to Chat"));

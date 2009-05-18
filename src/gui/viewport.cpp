@@ -366,7 +366,7 @@ void Viewport::mouseReleased(gcn::MouseEvent &event)
 
 void Viewport::showPopup(int x, int y, Item *item)
 {
-    mPopupMenu->setType(INVENTORY);
+    mPopupMenu->setType(ITEM_SHORTCUT);
     mPopupMenu->setItem(item);
     mPopupMenu->showPopup(x, y);
 }
