@@ -100,9 +100,9 @@ ChatWindow::ChatWindow():
     mScrollArea->setOpaque(false);
 
     place(0, 0, mScrollArea, 5, 5).setPadding(0);
-    place(0, 5, mChatInput, 4).setPadding(1);
+    place(0, 5, mChatInput, 3).setPadding(1);
+    place(3, 5, mProxy).setPadding(0);
     place(4, 5, mRecordButton).setPadding(1);
-    place(0, 6, mProxy).setPadding(0);
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
