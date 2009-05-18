@@ -119,7 +119,7 @@ Setup_Colors::Setup_Colors() :
 
     mRedSlider = new Slider(0, 255);
     mRedSlider->setWidth(180);
-    mRedSlider->setStepLength(1.0);
+    mRedSlider->setStepLength(8.0);
     mRedSlider->setValue(mRedText->getValue());
     mRedSlider->setActionEventId("slider_red");
     mRedSlider->addActionListener(this);
@@ -136,7 +136,7 @@ Setup_Colors::Setup_Colors() :
 
     mGreenSlider = new Slider(0, 255);
     mGreenSlider->setWidth(180);
-    mGreenSlider->setStepLength(1.0);
+    mGreenSlider->setStepLength(8.0);
     mGreenSlider->setValue(mGreenText->getValue());
     mGreenSlider->setActionEventId("slider_green");
     mGreenSlider->addActionListener(this);
@@ -153,7 +153,7 @@ Setup_Colors::Setup_Colors() :
 
     mBlueSlider = new Slider(0, 255);
     mBlueSlider->setWidth(180);
-    mBlueSlider->setStepLength(1.0);
+    mBlueSlider->setStepLength(8.0);
     mBlueSlider->setValue(mBlueText->getValue());
     mBlueSlider->setActionEventId("slider_blue");
     mBlueSlider->addActionListener(this);
