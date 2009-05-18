@@ -33,19 +33,15 @@ float ImageButton::mAlpha = 1.0;
 ImageButton::ImageButton(const std::string &image,
                          const std::string &actionEventId,
                          gcn::ActionListener *listener, unsigned int padding):
-    Button()
+    Button(),
+    mPadding(padding)
 {
     mImage = ResourceManager::getInstance()->getImage(image);
 
     if (mImage)
-    {
-        mImage->setAlpha(mAlpha);
-        setSize(mImage->getWidth() + padding, mImage->getHeight() + padding);
-    }
+        setSize(mImage->getWidth() + 2 * mPadding, mImage->getHeight() + 2 * mPadding);
     else
-    {
-        setSize(padding, padding);
-    }
+        setSize(2 * mPadding, 2 * mPadding);
 
     setActionEventId(actionEventId);
 
@@ -55,20 +51,18 @@ ImageButton::ImageButton(const std::string &image,
 
 ImageButton::ImageButton(Image *image, const std::string &actionEventId,
                          gcn::ActionListener *listener, unsigned int padding):
-    Button()
+    Button(),
+    mPadding(padding)
 {
     mImage = image;
 
     if (mImage)
     {
         mImage->incRef();
-        mImage->setAlpha(mAlpha);
-        setSize(mImage->getWidth() + padding, mImage->getHeight() + padding);
+        setSize(mImage->getWidth() + 2 * mPadding, mImage->getHeight() + 2 * mPadding);
     }
     else
-    {
-        setSize(padding, padding);
-    }
+        setSize(2 * mPadding, 2 * mPadding);
 
     setActionEventId(actionEventId);
 
@@ -80,6 +74,35 @@ ImageButton::~ImageButton()
 {
     if (mImage)
         mImage->decRef();
+}
+
+void ImageButton::changeImage(Image *image)
+{
+    if (mImage)
+        mImage->decRef();
+
+    mImage = image;
+
+    if (mImage)
+    {
+        mImage->incRef();
+        setSize(mImage->getWidth() + 2 * mPadding, mImage->getHeight() + 2 * mPadding);
+    }
+    else
+        setSize(2 * mPadding, 2 * mPadding);
+}
+
+void ImageButton::changeImage(const std::string &image)
+{
+    if (mImage)
+        mImage->decRef();
+
+    mImage = ResourceManager::getInstance()->getImage(image);
+
+    if (mImage)
+        setSize(mImage->getWidth() + 2 * mPadding, mImage->getHeight() + 2 * mPadding);
+    else
+        setSize(2 * mPadding, 2 * mPadding);
 }
 
 void ImageButton::draw(gcn::Graphics *graphics)

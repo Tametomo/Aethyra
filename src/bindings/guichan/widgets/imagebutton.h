@@ -55,12 +55,23 @@ class ImageButton : public Button
         ~ImageButton();
 
         /**
+         * Change the image displayed on the button.
+         */
+        void changeImage(Image *image);
+
+        /**
+         * Change the image displayed on the button by file name.
+         */
+        void changeImage(const std::string &image);
+
+        /**
          * Draws the ImageButton.
          */
         void draw(gcn::Graphics *graphics);
 
     private:
         Image* mImage;         /**< Image to display on the button */
+        int mPadding;
         static float mAlpha;
 };
 

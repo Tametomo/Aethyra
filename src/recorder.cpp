@@ -21,62 +21,40 @@
 
 #include <physfs.h>
 
-#include "chat.h"
 #include "recorder.h"
 
-#include "../bindings/guichan/layout.h"
+#include "gui/chat.h"
 
-#include "../bindings/guichan/widgets/button.h"
-#include "../bindings/guichan/widgets/windowcontainer.h"
+#include "utils/gettext.h"
+#include "utils/stringutils.h"
 
-#include "../utils/stringutils.h"
-
-Recorder::Recorder(ChatWindow *chat, const std::string &title,
-                   const std::string &buttonTxt) :
-    Window(title)
+Recorder::Recorder(ChatWindow *chat) :
+    mChat(chat)
 {
-    setWindowName("Recorder");
-    const int offsetX = 2 * getPadding() + 10;
-    const int offsetY = getTitleBarHeight() + getPadding() + 10;
-
-    mChat = chat;
-    Button *button = new Button(buttonTxt, "activate", this);
-
-    // 123 is the default chat window height. If you change this in Chat, please
-    // change it here as well
-    setDefaultSize(button->getWidth() + offsetX, button->getHeight() +
-                   offsetY, ImageRect::LOWER_LEFT, 0, 123);
-
-    place(0, 0, button);
-
-    Layout &layout = getLayout();
-    layout.setRowHeight(0, Layout::AUTO_SET);
-
-    loadWindowState();
-    setVisible(false);
 }
 
 Recorder::~Recorder()
 {
+    if (isRecording())
+        changeRecordingStatus("");
 }
 
 void Recorder::record(const std::string &msg)
 {
-    if (mStream.is_open())
+    if (isRecording())
         mStream << msg << std::endl;
 }
 
 void Recorder::changeRecordingStatus(const std::string &msg)
 {
-    std::string msgCopy = msg;
-    trim(msgCopy);
+    mFileName = msg;
+    trim(mFileName);
 
-    if (msgCopy.empty())
+    if (mFileName.empty())
     {
         if (mStream.is_open())
         {
             mStream.close();
-            setVisible(false);
 
             /*
              * Message should go after mStream is closed so that it isn't
@@ -85,14 +63,10 @@ void Recorder::changeRecordingStatus(const std::string &msg)
             mChat->chatLog(_("Finishing recording."), BY_SERVER);
         }
         else
-        {
             mChat->chatLog(_("Not currently recording."), BY_SERVER);
-        }
     }
     else if (mStream.is_open())
-    {
         mChat->chatLog(_("Already recording."), BY_SERVER);
-    }
     else
     {
         /*
@@ -100,18 +74,11 @@ void Recorder::changeRecordingStatus(const std::string &msg)
          * recorded.
          */
         mChat->chatLog(_("Starting to record..."), BY_SERVER);
-        std::string file = std::string(PHYSFS_getUserDir()) + "/.aethyra/" + msgCopy;
+        std::string file = std::string(PHYSFS_getUserDir()) + "/.aethyra/" + mFileName;
 
         mStream.open(file.c_str(), std::ios_base::trunc);
 
-        if (mStream.is_open())
-            setVisible(true);
-        else
+        if (!mStream.is_open())
             mChat->chatLog(_("Failed to start recording."), BY_SERVER);
     }
-}
-
-void Recorder::action(const gcn::ActionEvent &event)
-{
-    changeRecordingStatus("");
 }

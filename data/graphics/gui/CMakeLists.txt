@@ -4,6 +4,8 @@ SET (FILES
     buttonhi.png
     buttonpress.png
     checkbox.png
+    circle-green.png
+    circle-red.png
     close_button.png
     deepbox.png
     default.png

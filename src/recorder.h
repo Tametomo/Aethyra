@@ -25,19 +25,12 @@
 #include <fstream>
 #include <string>
 
-#include <guichan/actionlistener.hpp>
-
-#include "../bindings/guichan/widgets/window.h"
-
-#include "../utils/gettext.h"
-
 class ChatWindow;
 
-class Recorder : public Window, public gcn::ActionListener
+class Recorder
 {
     public:
-        Recorder(ChatWindow *chat, const std::string &title = _("Recording..."),
-                 const std::string &buttonTxt = _("Stop recording"));
+        Recorder(ChatWindow *chat);
 
         virtual ~Recorder();
 
@@ -58,18 +51,12 @@ class Recorder : public Window, public gcn::ActionListener
         /*
          * Whether or not the recorder is in use.
          */
-        bool isRecording() {return (bool) mStream.is_open();}
-
-        /*
-         * called when the button is pressed
-         *
-         * @param event is the event that is generated
-         */
-        void action(const gcn::ActionEvent &event);
+        bool isRecording() { return (bool) mStream.is_open(); }
 
     private:
         ChatWindow *mChat;
 
+        std::string mFileName;
         std::ofstream mStream;
 };
 

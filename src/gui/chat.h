@@ -33,11 +33,13 @@
 
 class BrowserBox;
 class ChatInput;
-class Recorder;
+class ImageButton;
+class ItemLinkHandler;
 class Party;
 class ProxyWidget;
+class Recorder;
+class RecorderInput;
 class ScrollArea;
-class ItemLinkHandler;
 
 #define BY_GM         0   // those should be self-explanatory =)
 #define BY_PLAYER     1
@@ -121,12 +123,6 @@ class ChatWindow : public Window, public gcn::ActionListener,
         ~ChatWindow();
 
         /**
-         * Reset the chat window and recorder window attached to it to their
-         * default positions.
-         */
-        void resetToDefaultSize();
-
-        /**
          * Adds a line of text to our message list. Parameters:
          *
          * @param line Text message.
@@ -148,6 +144,11 @@ class ChatWindow : public Window, public gcn::ActionListener,
          * Request focus for typing chat message.
          */
         void requestChatFocus();
+
+        /**
+         * Updates the recorder state.
+         */
+        void updateRecorder(const std::string &mes);
 
         /**
          * Checks whether ChatWindow is Focused or not.
@@ -238,6 +239,9 @@ class ChatWindow : public Window, public gcn::ActionListener,
         ScrollArea *mScrollArea;    /**< Scroll area around text output */
         ItemLinkHandler *mItemLinkHandler; /** Used for showing item popup on
                                                clicking links **/
+        RecorderInput *mRecorderInput; /**< Dialog for getting a string for the
+                                            recorder */
+        ImageButton *mRecordButton; /**< Button used for recording */
         ProxyWidget *mProxy;        /**< Proxy used to get focus for the chat
                                          input field when tabbing */
 

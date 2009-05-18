@@ -238,8 +238,8 @@ SET(SRCS
     gui/okdialog.h
     gui/popupmenu.cpp
     gui/popupmenu.h
-    gui/recorder.cpp
-    gui/recorder.h
+    gui/recorderinput.cpp
+    gui/recorderinput.h
     gui/register.cpp
     gui/register.h
     gui/sell.cpp
@@ -431,6 +431,8 @@ SET(SRCS
     playerrelations.cpp
     playerrelations.h
     properties.h
+    recorder.cpp
+    recorder.h
     shopitem.cpp
     shopitem.h
     tileset.h

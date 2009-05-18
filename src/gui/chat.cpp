@@ -25,11 +25,12 @@
 #include <guichan/focushandler.hpp>
 
 #include "chat.h"
-#include "recorder.h"
+#include "recorderinput.h"
 
 #include "../configuration.h"
 #include "../game.h"
 #include "../party.h"
+#include "../recorder.h"
 
 #include "../bindings/guichan/layout.h"
 
@@ -39,6 +40,7 @@
 
 #include "../bindings/guichan/widgets/browserbox.h"
 #include "../bindings/guichan/widgets/chatinput.h"
+#include "../bindings/guichan/widgets/imagebutton.h"
 #include "../bindings/guichan/widgets/proxywidget.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/windowcontainer.h"
@@ -76,6 +78,12 @@ ChatWindow::ChatWindow():
     mProxy = new ProxyWidget(mChatInput, FOCUS_WHEN_HIDDEN);
     mChatInput->setProxy(mProxy);
 
+    mRecorderInput = new RecorderInput();
+    mRecorderInput->addActionListener(this);
+
+    mRecordButton = new ImageButton("graphics/gui/circle-green.png", "record",
+                                    this, 3);
+
     mTextOutput = new BrowserBox(BrowserBox::AUTO_WRAP);
     mTextOutput->setOpaque(false);
     mTextOutput->setMaxRow((int) config.getValue("ChatLogLength", 0));
@@ -88,7 +96,8 @@ ChatWindow::ChatWindow():
     mScrollArea->setOpaque(false);
 
     place(0, 0, mScrollArea, 5, 5).setPadding(0);
-    place(0, 5, mChatInput, 5).setPadding(1);
+    place(0, 5, mChatInput, 4).setPadding(1);
+    place(4, 5, mRecordButton).setPadding(1);
     place(0, 6, mProxy).setPadding(0);
 
     Layout &layout = getLayout();
@@ -120,15 +129,10 @@ ChatWindow::~ChatWindow()
     *partyPrefix = mPartyPrefix;
     config.setValue("PartyPrefix", partyPrefix);
     config.setValue("ReturnToggles", mReturnToggles ? "1" : "0");
+    delete mRecorderInput;
     delete mRecorder;
     delete mItemLinkHandler;
     delete mParty;
-}
-
-void ChatWindow::resetToDefaultSize()
-{
-    mRecorder->resetToDefaultSize();
-    Window::resetToDefaultSize();
 }
 
 void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
@@ -154,9 +158,7 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
     {
         // Fix the owner of welcome message.
         if (line.substr(0, 7) == "Welcome")
-        {
             own = BY_SERVER;
-        }
     }
 
     // *implements actions in a backwards compatible way*
@@ -225,9 +227,7 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
     }
 
     if (tmp.nick.empty() && tmp.text.substr(0, 17) == "Visible GM status")
-    {
         player_node->setGM();
-    }
 
     // Get the current system time
     time_t t;
@@ -312,9 +312,8 @@ void ChatWindow::action(const gcn::ActionEvent & event)
         {
             // If message different from previous, put it in the history
             if (mHistory.empty() || message != mHistory.back())
-            {
                 mHistory.push_back(message);
-            }
+
             // Reset history iterator
             mCurHist = mHistory.end();
 
@@ -336,6 +335,20 @@ void ChatWindow::action(const gcn::ActionEvent & event)
                 setVisible(false);
         }
     }
+    else if (event.getId() == "record")
+    {
+        if (!mRecorder->isRecording())
+        {
+            mRecorderInput->setVisible(true);
+            mRecorderInput->requestFocus();
+        }
+        else
+            updateRecorder("");
+    }
+    else if (event.getId() == "ok")
+        updateRecorder(mRecorderInput->getValue());
+    else if (event.getId() == "cancel")
+        mRecorderInput->setVisible(false);
 }
 
 void ChatWindow::requestChatFocus()
@@ -361,6 +374,16 @@ void ChatWindow::requestChatFocus()
 bool ChatWindow::isInputFocused()
 {
     return isVisible() ? mChatInput->isFocused() : false;
+}
+
+void ChatWindow::updateRecorder(const std::string &mes)
+{
+    mRecorder->changeRecordingStatus(mes);
+    mRecordButton->changeImage(strprintf("graphics/gui/%s",
+                              (mRecorder->isRecording() ? "circle-red.png" :
+                               "circle-green.png")));
+    mRecorderInput->reset();
+    mRecorderInput->setVisible(false);
 }
 
 void ChatWindow::whisper(const std::string &nick, std::string msg)
@@ -402,8 +425,7 @@ void ChatWindow::whisper(const std::string &nick, std::string msg)
     outMsg.writeString(recvnick, 24);
     outMsg.writeString(msg, msg.length());
 
-    chatLog(strprintf(_("Whispering to %s: %s"),
-                        recvnick.c_str(), msg.c_str()),
+    chatLog(strprintf(_("Whispering to %s: %s"), recvnick.c_str(), msg.c_str()),
                         BY_PLAYER);
 }
 
@@ -455,9 +477,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
     std::string command = msg.substr(0, space);
 
     if (space == std::string::npos)
-    {
         msg = "";
-    }
     else
     {
         msg = msg.substr(space);
@@ -477,9 +497,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
         std::string msg1;
 
         if (space == std::string::npos)
-        {
             msg1 = "";
-        }
         else
         {
             msg1 = msg.substr(space + 1, msg.length());
@@ -487,9 +505,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
         }
 
         if (!msg.empty() && msg.at(0) == '/')
-        {
             msg.erase(0, 1);
-        }
 
         trim(msg1);
         help(msg, msg1);
@@ -502,15 +518,13 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
         chatLog(where.str(), BY_SERVER);
     }
     else if (command == "who")
-    {
         MessageOut outMsg(0x00c1);
-    }
     else if (command == "clear")
         mTextOutput->clearRows();
     else if (command == "whisper" || command == "msg" || command == "w")
         whisper(nick, msg);
     else if (command == "record")
-        mRecorder->changeRecordingStatus(msg);
+        updateRecorder(msg);
     else if (command == "toggle")
     {
         if (msg.empty())
@@ -522,16 +536,13 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
 
         msg = msg.substr(0, 1);
 
-        if (msg == "1" ||
-            msg == "y" || msg == "Y" ||
-            msg == "t" || msg == "T")
+        if (msg == "1" || msg == "y" || msg == "Y" || msg == "t" || msg == "T")
         {
             chatLog(_("Return now toggles chat."), BY_SERVER);
             mReturnToggles = true;
             return;
         }
-        else if (msg == "0" ||
-                 msg == "n" || msg == "N" ||
+        else if (msg == "0" || msg == "n" || msg == "N" ||
                  msg == "f" || msg == "F")
         {
             chatLog(_("Message now closes chat."), BY_SERVER);

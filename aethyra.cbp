@@ -291,8 +291,8 @@
 		<Unit filename="src\gui\okdialog.h" />
 		<Unit filename="src\gui\popupmenu.cpp" />
 		<Unit filename="src\gui\popupmenu.h" />
-		<Unit filename="src\gui\recorder.cpp" />
-		<Unit filename="src\gui\recorder.h" />
+		<Unit filename="src\gui\recorderinput.cpp" />
+		<Unit filename="src\gui\recorderinput.h" />
 		<Unit filename="src\gui\register.cpp" />
 		<Unit filename="src\gui\register.h" />
 		<Unit filename="src\gui\sell.cpp" />
@@ -484,6 +484,8 @@
 		<Unit filename="src\playerrelations.cpp" />
 		<Unit filename="src\playerrelations.h" />
 		<Unit filename="src\properties.h" />
+		<Unit filename="src\recorder.cpp" />
+		<Unit filename="src\recorder.h" />
 		<Unit filename="src\shopitem.cpp" />
 		<Unit filename="src\shopitem.h" />
 		<Unit filename="src\tileset.h" />
