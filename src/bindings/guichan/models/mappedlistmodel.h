@@ -75,6 +75,11 @@ class MappedListModel
         virtual void setSelectedByY(int y) = 0;
 
         /**
+         * Clears the list model of all list elements.
+         */
+        virtual void clear() = 0;
+
+        /**
          * Returns the action ID of the current selected element.
          *
          * @return The current selection. NULL if nothing selected.
