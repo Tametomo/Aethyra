@@ -48,8 +48,15 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
 {
     setCloseButton(true);
 
-    // Integer field
+    // If only one item is available, then the window isn't needed, so move on
+    // To prevent problems, we still build the gui elements
+    if (mMax <= 1)
+    {
+        action(gcn::ActionEvent(this, "All"));
+        return;
+    }
 
+    // Integer field
     mItemAmountLabel = new Label(strprintf("%d / %d", 1, mMax));
     mItemAmountLabel->setAlignment(gcn::Graphics::CENTER);
 
@@ -71,14 +78,6 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     Button *okButton = new Button(_("Ok"), "Ok", this);
     Button *cancelButton = new Button(_("Cancel"), "Cancel", this);
     Button *addAllButton = new Button(_("All"), "All", this);
-
-    // If only one item is available, then the window isn't needed, so move on
-    // To prevent problems, we still build the gui elements
-    if (mMax <= 1)
-    {
-        action(gcn::ActionEvent(this, "All"));
-        return;
-    }
 
     // Set positions
     ContainerPlacer place;
@@ -143,16 +142,21 @@ void ItemAmountWindow::resetAmount()
 
 void ItemAmountWindow::action(const gcn::ActionEvent &event)
 {
-    int amount = mItemAmountSlide->getValue();
+    int amount = 0;
 
     if (event.getId() == "Cancel")
+    {
         close();
+        return;
+    }
     else if (event.getId() == "Slide")
         amount = static_cast<int>(mItemAmountSlide->getValue());
     else if (event.getId() == "Ok" || event.getId() == "All")
     {
         if (event.getId() == "All") 
             amount = mMax;
+        else
+            amount = mItemAmountSlide->getValue();
 
         switch (mUsage)
         {
@@ -169,7 +173,6 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
                 storageWindow->removeStore(mItem, amount);
                 break;
             default:
-                return;
                 break;
         }
 
@@ -184,5 +187,6 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
 void ItemAmountWindow::close()
 {
     delete mItemPopup;
+    mItemPopup = NULL;
     scheduleDelete();
 }
