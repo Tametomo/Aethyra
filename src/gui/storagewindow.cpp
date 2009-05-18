@@ -63,6 +63,8 @@ StorageWindow::StorageWindow(int invSize):
     mRetrieveButton = new Button(_("Retrieve"), "retrieve", this);
     mRetrieveButton->setEnabled(false);
 
+    Button *closeButton = new Button(_("Close"), "close", this);
+
     mItems = new ItemContainer(player_node->getStorage(), "showpopup", this);
     mItems->addSelectionListener(this);
 
@@ -83,6 +85,7 @@ StorageWindow::StorageWindow(int invSize):
     place(0, 0, mSlotsLabel).setPadding(3);
     place(1, 0, mSlotsBar, 3);
     place(0, 1, mInvenScroll, 4, 4);
+    place(2, 5, closeButton);
     place(3, 5, mRetrieveButton);
 
     Layout &layout = getLayout();
@@ -118,7 +121,9 @@ void StorageWindow::logic()
 
 void StorageWindow::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == "retrieve")
+    if (event.getId() == "close")
+        close();
+    else if (event.getId() == "retrieve")
     {
         Item *item = mItems->getSelectedItem();
 
@@ -126,14 +131,10 @@ void StorageWindow::action(const gcn::ActionEvent &event)
             return;
 
         if (item->getQuantity() == 1)
-        {
             removeStore(item, 1);
-        }
+        // Choose amount of items to retrieve
         else
-        {
-            // Choose amount of items to trade
             new ItemAmountWindow(AMOUNT_STORE_REMOVE, this, item);
-        }
     }
     else if (event.getId() == "showpopup")
         mItems->showPopup(STORAGE, false);
