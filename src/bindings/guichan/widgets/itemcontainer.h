@@ -109,7 +109,10 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
             mListeners.remove(listener);
         }
 
-        void showPopup(MenuType type);
+        /**
+         * Shows a PopupMenu over the selected item.
+         */
+        void showPopup(MenuType type, bool useMouseCoordinates = true);
 
     private:
         // KeyListener

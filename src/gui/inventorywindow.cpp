@@ -79,7 +79,7 @@ InventoryWindow::InventoryWindow(int invSize):
     mDropButton = new Button(_("Drop"), "drop", this);
     mDropButton->setEnabled(false);
 
-    mItems = new ItemContainer(player_node->getInventory(), "use", this);
+    mItems = new ItemContainer(player_node->getInventory(), "showpopup", this);
     mItems->addSelectionListener(this);
 
     mInvenScroll = new ScrollArea(mItems);
@@ -186,6 +186,8 @@ void InventoryWindow::action(const gcn::ActionEvent &event)
         else
             new ItemAmountWindow(AMOUNT_ITEM_DROP, this, item);
     }
+    else if (event.getId() == "showpopup")
+        mItems->showPopup(INVENTORY, false);
 }
 
 void InventoryWindow::mouseClicked(gcn::MouseEvent &event)

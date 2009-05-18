@@ -20,12 +20,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/font.hpp>
 #include <guichan/mouseinput.hpp>
 #include <guichan/selectionlistener.hpp>
 
 #include "itemcontainer.h"
 
 #include "../graphics.h"
+#include "../gui.h"
 #include "../palette.h"
 
 #include "../sdl/sdlinput.h"
@@ -286,6 +288,7 @@ void ItemContainer::keyPressed(gcn::KeyEvent &event)
                 setSelectedItemIndex(((itemY + 1) * columns) + itemX);
             break;
         case Key::ENTER:
+        case Key::SPACE:
             distributeActionEvent();
             break;
     }
@@ -312,16 +315,33 @@ void ItemContainer::mousePressed(gcn::MouseEvent &event)
     }
 }
 
-void ItemContainer::showPopup(MenuType type)
+void ItemContainer::showPopup(MenuType type, bool useMouseCoordinates)
 {
     Item *item = getSelectedItem();
+    int x = viewport->getMouseX();
+    int y = viewport->getMouseY();
 
     if (!item)
         return;
 
+    if (!useMouseCoordinates)
+    {
+        int columns = getWidth() / gridWidth;
+        const int itemX = mSelectedItemIndex % columns;
+        const int itemY = mSelectedItemIndex / columns;
+        const int xPos = itemX * gridWidth + (gridWidth / 2);
+        const int yPos = itemY * gridHeight + (gridHeight / 2) + gui->getFont()->getHeight();
+
+        if (columns > mInventory->getNumberOfSlotsUsed())
+            columns = mInventory->getNumberOfSlotsUsed();
+
+        x = getParent()->getParent()->getX() + getParent()->getX() + getX() + xPos;
+        y = getParent()->getParent()->getY() + getParent()->getY() + getY() + yPos;
+    }
+
     mPopupMenu->setType(type);
     mPopupMenu->setItem(item);
-    mPopupMenu->showPopup(viewport->getMouseX(), viewport->getMouseY());
+    mPopupMenu->showPopup(x, y);
 }
 
 // Show ItemTooltip
@@ -333,6 +353,7 @@ void ItemContainer::mouseMoved(gcn::MouseEvent &event)
     {
         if (item->getInfo().getName() != mItemPopup->getItemName())
             mItemPopup->setItem(item->getInfo());
+
         mItemPopup->updateColors();
         mItemPopup->view(viewport->getMouseX(), viewport->getMouseY());
     }
