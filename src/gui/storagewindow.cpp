@@ -58,13 +58,12 @@ StorageWindow::StorageWindow(int invSize):
     setResizable(true);
     setCloseButton(true);
 
-    // If you adjust these defaults, don't forget to adjust the trade window's.
     setDefaultSize(375, 300, ImageRect::CENTER);
 
     mRetrieveButton = new Button(_("Retrieve"), "retrieve", this);
     mRetrieveButton->setEnabled(false);
 
-    mItems = new ItemContainer(player_node->getStorage(), "retrieve", this);
+    mItems = new ItemContainer(player_node->getStorage(), "showpopup", this);
     mItems->addSelectionListener(this);
 
     mInvenScroll = new ScrollArea(mItems);
@@ -136,6 +135,8 @@ void StorageWindow::action(const gcn::ActionEvent &event)
             new ItemAmountWindow(AMOUNT_STORE_REMOVE, this, item);
         }
     }
+    else if (event.getId() == "showpopup")
+        mItems->showPopup(STORAGE, false);
 }
 
 void StorageWindow::valueChanged(const gcn::SelectionEvent &event)

@@ -68,13 +68,13 @@ TradeWindow::TradeWindow():
     mAddButton = new Button(_("Add"), "add", this);
     mOkButton = new Button(longestName, "ok", this);
 
-    mMyItemContainer = new ItemContainer(mMyInventory.get());
+    mMyItemContainer = new ItemContainer(mMyInventory.get(), "showpopupmine", this);
     mMyItemContainer->setWidth(160);
     mMyItemContainer->addSelectionListener(this);
 
     mMyScroll = new ScrollArea(mMyItemContainer);
 
-    mPartnerItemContainer = new ItemContainer(mPartnerInventory.get());
+    mPartnerItemContainer = new ItemContainer(mPartnerInventory.get(), "showpopuptheirs", this);
     mPartnerItemContainer->setWidth(160);
     mPartnerItemContainer->addSelectionListener(this);
 
@@ -276,6 +276,10 @@ void TradeWindow::action(const gcn::ActionEvent &event)
     {
         MessageOut outMsg(CMSG_TRADE_OK);
     }
+    else if (event.getId() == "showpopupmine")
+        mMyItemContainer->showPopup(TRADE, false);
+    else if (event.getId() == "showpopuptheirs")
+        mPartnerItemContainer->showPopup(TRADE, false);
 }
 
 void TradeWindow::close()

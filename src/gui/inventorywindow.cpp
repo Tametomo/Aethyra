@@ -57,7 +57,6 @@ InventoryWindow::InventoryWindow(int invSize):
     setResizable(true);
     setCloseButton(true);
 
-    // If you adjust these defaults, don't forget to adjust the trade window's.
     setDefaultSize(375, 300, ImageRect::CENTER);
 
     std::string longestUseString = getFont()->getWidth(_("Equip")) >
