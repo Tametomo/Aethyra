@@ -36,8 +36,6 @@ SpeechBubble::SpeechBubble():
     mText("")
 {
     setContentSize(140, 46);
-    setMinWidth(29);
-    setMinHeight(29);
 
     mCaption = new gcn::Label("");
     mCaption->setFont(gui->getBoldFont());

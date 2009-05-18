@@ -183,7 +183,7 @@ unsigned int ItemPopup::getNumRows() const
 void ItemPopup::view(int x, int y)
 {
     if (graphics->getWidth() < (x + getWidth() + 5))
-       x = graphics->getWidth() - getWidth();
+        x = graphics->getWidth() - getWidth();
 
     y = y - getHeight() - 10;
 

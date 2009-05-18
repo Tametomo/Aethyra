@@ -1,8 +1,9 @@
 /*
  *  Aethyra
- *  Copyright (C) 2008, The Legend of Mazzeroth Development Team
+ *  Copyright (C) 2008,  The Legend of Mazzeroth Development Team
+ *  Copyright (C) 2009,  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
+ *  This file is part of Aethyra derived from original code
  *  from The Legend of Mazzeroth.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,32 +21,24 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef SPEECHBUBBLE_H
-#define SPEECHBUBBLE_H
+#ifndef TOOLTIP_H
+#define TOOLTIP_H
 
 #include <string>
 
-#include "../bindings/guichan/palette.h"
+#include "popup.h"
 
-#include "../bindings/guichan/widgets/popup.h"
+#include "../palette.h"
 
 class TextBox;
 
-class SpeechBubble : public Popup
+class ToolTip : public Popup
 {
     public:
         /**
-         * Constructor. Initializes the speech bubble.
+         * Constructor.
          */
-        SpeechBubble();
-
-        const std::string &getCaption();
-
-        /**
-         * Sets the name displayed for the speech bubble, and in what color.
-         */
-        void setCaption(const std::string &name, const gcn::Color *color =
-                        &guiPalette->getColor(Palette::TEXT));
+        ToolTip();
 
         /**
          * Sets the text to be displayed.
@@ -57,10 +50,14 @@ class SpeechBubble : public Popup
          */
         void adjustSize();
 
+        /**
+         * Sets the location to display the tooltip.
+         */
+        void view(int x, int y);
+
     private:
         std::string mText;
-        gcn::Label *mCaption;
-        TextBox *mSpeechBox;
+        TextBox *mToolTipBox;
 };
 
 #endif

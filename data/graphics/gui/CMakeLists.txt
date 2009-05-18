@@ -31,6 +31,8 @@ SET (FILES
     target-cursor-red-l.png
     target-cursor-red-m.png
     target-cursor-red-s.png
+    tooltip.png
+    tooltip.xml
     unknown-item.png
     vscroll_blue.png
     vscroll_down_default.png

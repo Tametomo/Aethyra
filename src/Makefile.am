@@ -122,6 +122,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/widgets/textfield.h \
 	      bindings/guichan/widgets/textpreview.cpp \
 	      bindings/guichan/widgets/textpreview.h \
+	      bindings/guichan/widgets/tooltip.cpp \
+	      bindings/guichan/widgets/tooltip.h \
 	      bindings/guichan/widgets/window.cpp \
 	      bindings/guichan/widgets/window.h \
 	      bindings/guichan/widgets/windowcontainer.cpp \

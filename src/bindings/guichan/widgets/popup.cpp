@@ -36,8 +36,6 @@
 Popup::Popup(const std::string& name, const std::string& skin):
     mPopupName(name),
     mDefaultSkinPath(skin),
-    mMinWidth(100),
-    mMinHeight(40),
     mMaxWidth(graphics->getWidth()),
     mMaxHeight(graphics->getHeight())
 {
@@ -53,6 +51,9 @@ Popup::Popup(const std::string& name, const std::string& skin):
 
     // Loads the skin
     mSkin = skinLoader->load(skin, mDefaultSkinPath);
+
+    mMinWidth = mSkin->getMinWidth();
+    mMinHeight = mSkin->getMinHeight();
 
     // Add this window to the window container
     windowContainer->add(this);

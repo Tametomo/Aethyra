@@ -223,6 +223,8 @@
 		<Unit filename="src\bindings\guichan\widgets\textfield.h" />
 		<Unit filename="src\bindings\guichan\widgets\textpreview.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\textpreview.h" />
+		<Unit filename="src\bindings\guichan\widgets\tooltip.cpp" />
+		<Unit filename="src\bindings\guichan\widgets\tooltip.h" />
 		<Unit filename="src\bindings\guichan\widgets\window.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\window.h" />
 		<Unit filename="src\bindings\guichan\widgets\windowcontainer.cpp" />
