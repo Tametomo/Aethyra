@@ -40,6 +40,7 @@ class ProxyWidget;
 class Recorder;
 class RecorderInput;
 class ScrollArea;
+class ToolTip;
 
 #define BY_GM         0   // those should be self-explanatory =)
 #define BY_PLAYER     1
@@ -184,6 +185,9 @@ class ChatWindow : public Window, public gcn::ActionListener,
         /** Called when key is pressed */
         void keyPressed(gcn::KeyEvent &event);
 
+        /** Shows a tooltip over the record button */
+        void mouseMoved(gcn::MouseEvent &event);
+
         /** Add the given text to the chat input */
         void addInputText(const std::string &text);
 
@@ -244,6 +248,10 @@ class ChatWindow : public Window, public gcn::ActionListener,
         ImageButton *mRecordButton; /**< Button used for recording */
         ProxyWidget *mProxy;        /**< Proxy used to get focus for the chat
                                          input field when tabbing */
+
+        ToolTip *mToolTip;          /**< A tooltip to let the user know what
+                                         pressing the record image button will
+                                         do during its various states. */
 
         typedef std::list<std::string> History;
         typedef History::iterator HistoryIterator;

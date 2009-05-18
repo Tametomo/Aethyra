@@ -55,12 +55,12 @@ void ToolTip::adjustSize()
     const int width = mToolTipBox->getMinWidth() + getPadding();
     const int fontHeight = getFont()->getHeight();
     const int numRows = mToolTipBox->getNumberOfRows();
-    const int height = numRows * fontHeight;
+    const int height = numRows * fontHeight + (getPadding() / 2);
 
     setContentSize(width, height);
 
     const int xPos = (getWidth() - width) / 2 - getPadding();
-    const int yPos = (getHeight() - height) / 2;
+    const int yPos = (getHeight() - height) / 2 - (getPadding() / 2);
 
     mToolTipBox->setPosition(xPos, yPos);
 }
@@ -70,6 +70,7 @@ void ToolTip::view(int x, int y)
     if (graphics->getWidth() < (x + getWidth() + 5))
         x = graphics->getWidth() - getWidth();
 
+    x = x - getWidth() / 2;
     y = y - getHeight() - 10;
 
     setPosition(x, y);

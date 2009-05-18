@@ -26,6 +26,7 @@
 
 #include "chat.h"
 #include "recorderinput.h"
+#include "viewport.h"
 
 #include "../configuration.h"
 #include "../game.h"
@@ -43,6 +44,7 @@
 #include "../bindings/guichan/widgets/imagebutton.h"
 #include "../bindings/guichan/widgets/proxywidget.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
+#include "../bindings/guichan/widgets/tooltip.h"
 #include "../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../net/messageout.h"
@@ -83,6 +85,8 @@ ChatWindow::ChatWindow():
 
     mRecordButton = new ImageButton("graphics/gui/circle-green.png", "record",
                                     this, 3);
+
+    mToolTip = new ToolTip();
 
     mTextOutput = new BrowserBox(BrowserBox::AUTO_WRAP);
     mTextOutput->setOpaque(false);
@@ -133,6 +137,7 @@ ChatWindow::~ChatWindow()
     delete mRecorder;
     delete mItemLinkHandler;
     delete mParty;
+    delete mToolTip;
 }
 
 void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
@@ -782,6 +787,24 @@ void ChatWindow::keyPressed(gcn::KeyEvent & event)
         mCurHist--;
         mChatInput->setText(*mCurHist);
         mChatInput->setCaretPosition(mChatInput->getText().length());
+    }
+}
+
+// Show Tooltip
+void ChatWindow::mouseMoved(gcn::MouseEvent &event)
+{
+    if (event.getSource() == mRecordButton)
+    {
+        std::string tip = (mRecorder->isRecording() ? _("Stop Recording") :
+                                                      _("Start Recording"));
+
+        mToolTip->setText(tip);
+        mToolTip->adjustSize();
+        mToolTip->view(viewport->getMouseX(), viewport->getMouseY());
+    }
+    else
+    {
+        mToolTip->setVisible(false);
     }
 }
 
