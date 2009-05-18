@@ -46,7 +46,7 @@ EmoteWindow::EmoteWindow():
     mUseButton = new Button(_("Use"), "use", this);
     mUseButton->setEnabled(false);
 
-    mEmotes = new EmoteContainer("use", this);
+    mEmotes = new EmoteContainer("showpopup", this);
     mEmotes->addSelectionListener(this);
 
     mEmoteScroll = new ScrollArea(mEmotes);
@@ -63,12 +63,17 @@ EmoteWindow::EmoteWindow():
 
 void EmoteWindow::action(const gcn::ActionEvent &event)
 {
-    int emote = mEmotes->getSelectedEmote();
+    if (event.getId() == "use")
+    {
+        int emote = mEmotes->getSelectedEmote();
 
-    if (!emote)
-        return;
+        if (emote == -1)
+            return;
 
-    player_node->emote(emote);
+        player_node->emote(emote);
+    }
+    else if (event.getId() == "showpopup")
+        mEmotes->showPopup(false);
 }
 
 int EmoteWindow::getSelectedEmote() const
@@ -80,4 +85,13 @@ void EmoteWindow::valueChanged(const gcn::SelectionEvent &event)
 {
     if (event.getSource() == mEmotes)
         mUseButton->setEnabled(mEmotes->getSelectedEmote() != 0);
+}
+
+void EmoteWindow::mouseClicked(gcn::MouseEvent &event)
+{
+    Window::mouseClicked(event);
+
+    if (event.getButton() == gcn::MouseEvent::RIGHT &&
+        event.getSource() == mEmotes)
+        mEmotes->showPopup();
 }

@@ -40,6 +40,7 @@ enum MenuType {
     TRADE,
     STORAGE,
     BEING,
+    EMOTE,
     UNKNOWN
 };
 
@@ -84,6 +85,11 @@ class PopupMenu : public Popup, public gcn::ActionListener
          */
         void setBeing(Being *being) { mBeing = being; }
 
+        /**
+         * Sets the internal emote id to use.
+         */
+        void setEmote(int emote) { mEmote = emote; }
+
     private:
         MappedListBox* mMappedListBox;
         LinkMappedListModel* mModel;
@@ -91,6 +97,7 @@ class PopupMenu : public Popup, public gcn::ActionListener
         Being *mBeing;
         FloorItem *mFloorItem;
         Item *mItem;
+        int mEmote;
         MenuType mType;
 };
 

@@ -20,18 +20,23 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/font.hpp>
 #include <guichan/mouseinput.hpp>
 #include <guichan/selectionlistener.hpp>
 
 #include "emotecontainer.h"
 
 #include "../graphics.h"
+#include "../gui.h"
 
 #include "../sdl/sdlinput.h"
 
 #include "../../../configuration.h"
 #include "../../../emoteshortcut.h"
 #include "../../../log.h"
+
+#include "../../../gui/popupmenu.h"
+#include "../../../gui/viewport.h"
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
@@ -60,6 +65,8 @@ EmoteContainer::EmoteContainer(const std::string &actionEventId,
 
     setFocusable(true);
 
+    mPopupMenu = new PopupMenu(EMOTE);
+
     ResourceManager *resman = ResourceManager::getInstance();
 
     // Setup emote sprites
@@ -84,10 +91,9 @@ EmoteContainer::EmoteContainer(const std::string &actionEventId,
 EmoteContainer::~EmoteContainer()
 {
     if (mSelImg)
-    {
        mSelImg->decRef();
-       mSelImg = NULL;
-    }
+
+    delete mPopupMenu;
 }
 
 void EmoteContainer::draw(gcn::Graphics *graphics)
@@ -143,9 +149,6 @@ void EmoteContainer::recalculateHeight()
 
 int EmoteContainer::getSelectedEmote()
 {
-    if (mSelectedEmoteIndex == NO_EMOTE)
-        return 0;
-
     return 1 + mSelectedEmoteIndex;
 }
 
@@ -186,6 +189,31 @@ void EmoteContainer::distributeValueChangedEvent()
     {
         (*i)->valueChanged(event);
     }
+}
+
+void EmoteContainer::showPopup(bool useMouseCoordinates)
+{
+    const int emote = mSelectedEmoteIndex;
+    int x = viewport->getMouseX();
+    int y = viewport->getMouseY();
+
+    if (emote == NO_EMOTE)
+        return;
+
+    if (!useMouseCoordinates)
+    {
+        int columns = getWidth() / gridWidth;
+        const int emoteX = emote % columns;
+        const int emoteY = emote / columns;
+        const int xPos = emoteX * gridWidth + (gridWidth / 2);
+        const int yPos = emoteY * gridHeight + (gridHeight / 2) + gui->getFont()->getHeight();
+
+        x = getParent()->getParent()->getX() + getParent()->getX() + getX() + xPos;
+        y = getParent()->getParent()->getY() + getParent()->getY() + getY() + yPos;
+    }
+
+    mPopupMenu->setEmote(getSelectedEmote());
+    mPopupMenu->showPopup(x, y);
 }
 
 void EmoteContainer::keyPressed(gcn::KeyEvent &event)

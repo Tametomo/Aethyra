@@ -24,6 +24,7 @@
 #include <cassert>
 
 #include "chat.h"
+#include "emotewindow.h"
 #include "inventorywindow.h"
 #include "itemamount.h"
 #include "popupmenu.h"
@@ -60,6 +61,7 @@ PopupMenu::PopupMenu(MenuType type):
     mBeing(NULL),
     mFloorItem(NULL),
     mItem(NULL),
+    mEmote(-1),
     mType(type)
 {
     mModel = new LinkMappedListModel();
@@ -100,6 +102,11 @@ void PopupMenu::action(const gcn::ActionEvent &event)
     else if (event.getId() == "slotitem" && mItem)
     {
         new SlotSelectionWindow(ITEM_SHORTCUT, inventoryWindow, mItem->getId());
+    }
+
+    else if (event.getId() == "slotemote" && mEmote != -1)
+    {
+        new SlotSelectionWindow(EMOTE_SHORTCUT, emoteWindow, mEmote);
     }
 
     // Attack action
@@ -165,6 +172,12 @@ void PopupMenu::action(const gcn::ActionEvent &event)
         }
     }
 
+    else if (event.getId() == "useemote")
+    {
+        if (mEmote != -1)
+            player_node->emote(mEmote);
+    }
+
     else if (event.getId() == "chat")
     {
         chatWindow->addItemText(mItem->getInfo().getName());
@@ -210,6 +223,7 @@ void PopupMenu::action(const gcn::ActionEvent &event)
 
     setVisible(false);
 
+    mEmote = -1;
     mBeing = NULL;
     mFloorItem = NULL;
     mItem = NULL;
@@ -262,6 +276,14 @@ void PopupMenu::showPopup(int x, int y)
         }
 
         mModel->addLink("chat", _("Add to Chat"));
+    }
+    else if (mType == EMOTE)
+    {
+        if (mEmote != -1)
+        {
+            mModel->addLink("useemote", _("Use"));
+            mModel->addLink("slotemote", _("Add to Emote Shortcuts"));
+        }
     }
     else if (mType == BEING)
     {

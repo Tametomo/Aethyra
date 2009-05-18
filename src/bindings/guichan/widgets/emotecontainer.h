@@ -33,6 +33,7 @@
 
 class AnimatedSprite;
 class Image;
+class PopupMenu;
 
 namespace gcn {
     class SelectionListener;
@@ -101,6 +102,11 @@ class EmoteContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
             mListeners.remove(listener);
         }
 
+        /**
+         * Shows a PopupMenu over the selected item.
+         */
+        void showPopup(bool useMouseCoordinates = true);
+
     private:
         // KeyListener
         void keyPressed(gcn::KeyEvent &event);
@@ -131,6 +137,8 @@ class EmoteContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         int mSelectedEmoteIndex;
 
         int mMaxEmote;
+
+        PopupMenu *mPopupMenu;
 
         std::list<gcn::SelectionListener*> mListeners;
 

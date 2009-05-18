@@ -56,6 +56,8 @@ class EmoteWindow : public Window, gcn::ActionListener,
 
         void valueChanged(const gcn::SelectionEvent &event);
 
+        void mouseClicked(gcn::MouseEvent &event);
+
     private:
         EmoteContainer *mEmotes;
 
