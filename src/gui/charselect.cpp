@@ -139,6 +139,7 @@ void CharSelectDialog::action(const gcn::ActionEvent &event)
         mSelectButton->setEnabled(false);
         mPreviousButton->setEnabled(false);
         mNextButton->setEnabled(false);
+        mCancelButton->setEnabled(false);
         mCharSelected = true;
         attemptCharSelect();
     }
