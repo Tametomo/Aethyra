@@ -36,7 +36,6 @@
 #include "../../../log.h"
 
 #include "../../../gui/popupmenu.h"
-#include "../../../gui/viewport.h"
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
@@ -194,8 +193,8 @@ void EmoteContainer::distributeValueChangedEvent()
 void EmoteContainer::showPopup(bool useMouseCoordinates)
 {
     const int emote = mSelectedEmoteIndex;
-    int x = viewport->getMouseX();
-    int y = viewport->getMouseY();
+    int x = gui->getMouseX();
+    int y = gui->getMouseY();
 
     if (emote == NO_EMOTE)
         return;

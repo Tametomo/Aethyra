@@ -29,6 +29,7 @@
 #include "../map.h"
 
 #include "../bindings/guichan/graphics.h"
+#include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/keyboardconfig.h"
 #include "../bindings/guichan/textmanager.h"
 
@@ -46,8 +47,6 @@ extern volatile int tick_time;
 
 Viewport::Viewport():
     mMap(0),
-    mMouseX(0),
-    mMouseY(0),
     mPixelViewX(0.0f),
     mPixelViewY(0.0f),
     mTileViewX(0),
@@ -169,10 +168,10 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
         if (mShowDebugPath)
         {
             // Get the current mouse position
-            SDL_GetMouseState(&mMouseX, &mMouseY);
-
-            int mouseTileX = mMouseX / 32 + mTileViewX;
-            int mouseTileY = mMouseY / 32 + mTileViewY;
+            const int mouseX = gui->getMouseX();
+            const int mouseY = gui->getMouseY();
+            const int mouseTileX = mouseX / 32 + mTileViewX;
+            const int mouseTileY = mouseY / 32 + mTileViewY;
 
             Path debugPath = mMap->findPath(player_node->mX, player_node->mY,
                                             mouseTileX, mouseTileY);
@@ -223,13 +222,15 @@ void Viewport::logic()
     if (!mMap || !player_node)
         return;
 
-    Uint8 button = SDL_GetMouseState(&mMouseX, &mMouseY);
+    const int mouseX = gui->getMouseX();
+    const int mouseY = gui->getMouseY();
+    const Uint8 button = gui->getButtonState();
 
     if (mPlayerFollowMouse && button & SDL_BUTTON(1) &&
         mWalkTime != player_node->mWalkTime)
     {
-        player_node->setDestination(mMouseX / 32 + mTileViewX,
-                                    mMouseY / 32 + mTileViewY);
+        player_node->setDestination(mouseX / 32 + mTileViewX,
+                                    mouseY / 32 + mTileViewY);
         mWalkTime = player_node->mWalkTime;
     }
 }

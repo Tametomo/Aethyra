@@ -99,8 +99,8 @@ void DebugWindow::logic()
         return;
 
     // Get the current mouse position
-    const int mouseTileX = (viewport->getMouseX() + viewport->getCameraX()) / 32;
-    const int mouseTileY = (viewport->getMouseY() + viewport->getCameraY()) / 32;
+    const int mouseTileX = (gui->getMouseX() + viewport->getCameraX()) / 32;
+    const int mouseTileY = (gui->getMouseY() + viewport->getCameraY()) / 32;
 
     mTileMouseLabel->setCaption(strprintf(_("Tile: (%d, %d)"), mouseTileX,
                                             mouseTileY));

@@ -26,13 +26,13 @@
 
 #include "chat.h"
 #include "recorderinput.h"
-#include "viewport.h"
 
 #include "../configuration.h"
 #include "../game.h"
 #include "../party.h"
 #include "../recorder.h"
 
+#include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/layout.h"
 
 #include "../bindings/guichan/handlers/itemlinkhandler.h"
@@ -120,6 +120,9 @@ ChatWindow::ChatWindow():
     mReturnToggles = config.getValue("ReturnToggles", "0") == "1";
     mRecorder = new Recorder(this);
     mParty = new Party(this);
+
+    // Initialize several widgets depending on the recorder class.
+    updateRecorder("");
 
     // If the player had @assert on in the last session, ask the server to
     // run the @assert command for the player again. Convenience for GMs.
@@ -389,6 +392,12 @@ void ChatWindow::updateRecorder(const std::string &mes)
                                "circle-green.png")));
     mRecorderInput->reset();
     mRecorderInput->setVisible(false);
+
+    const std::string tip = (mRecorder->isRecording() ? _("Stop Recording") :
+                                                        _("Start Recording"));
+
+    mToolTip->setText(tip);
+    mToolTip->adjustSize();
 }
 
 void ChatWindow::whisper(const std::string &nick, std::string msg)
@@ -794,18 +803,9 @@ void ChatWindow::keyPressed(gcn::KeyEvent & event)
 void ChatWindow::mouseMoved(gcn::MouseEvent &event)
 {
     if (event.getSource() == mRecordButton)
-    {
-        std::string tip = (mRecorder->isRecording() ? _("Stop Recording") :
-                                                      _("Start Recording"));
-
-        mToolTip->setText(tip);
-        mToolTip->adjustSize();
-        mToolTip->view(viewport->getMouseX(), viewport->getMouseY());
-    }
+        mToolTip->view(gui->getMouseX(), gui->getMouseY());
     else
-    {
         mToolTip->setVisible(false);
-    }
 }
 
 void ChatWindow::addInputText(const std::string &text)

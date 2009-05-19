@@ -38,7 +38,6 @@
 #include "../../../log.h"
 
 #include "../../../gui/itempopup.h"
-#include "../../../gui/viewport.h"
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
@@ -320,8 +319,8 @@ void ItemContainer::mousePressed(gcn::MouseEvent &event)
 void ItemContainer::showPopup(MenuType type, bool useMouseCoordinates)
 {
     Item *item = getSelectedItem();
-    int x = viewport->getMouseX();
-    int y = viewport->getMouseY();
+    int x = gui->getMouseX();
+    int y = gui->getMouseY();
 
     if (!item)
         return;
@@ -357,7 +356,7 @@ void ItemContainer::mouseMoved(gcn::MouseEvent &event)
             mItemPopup->setItem(item->getInfo());
 
         mItemPopup->updateColors();
-        mItemPopup->view(viewport->getMouseX(), viewport->getMouseY());
+        mItemPopup->view(gui->getMouseX(), gui->getMouseY());
     }
     else
     {

@@ -24,10 +24,10 @@
 #include "itempopup.h"
 #include "storagewindow.h"
 #include "trade.h"
-#include "viewport.h"
 
 #include "../item.h"
 
+#include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/layout.h"
 
 #include "../bindings/guichan/widgets/button.h"
@@ -127,7 +127,7 @@ void ItemAmountWindow::mouseMoved(gcn::MouseEvent &event)
     {
         mItemPopup->setItem(mItem->getInfo());
         mItemPopup->updateColors();
-        mItemPopup->view(viewport->getMouseX(), viewport->getMouseY());
+        mItemPopup->view(gui->getMouseX(), gui->getMouseY());
     }
     else
     {

@@ -23,6 +23,7 @@
 #include "itemshortcutcontainer.h"
 
 #include "../graphics.h"
+#include "../gui.h"
 #include "../keyboardconfig.h"
 #include "../palette.h"
 
@@ -112,7 +113,7 @@ void ItemShortcutContainer::draw(gcn::Graphics *graphics)
                     item->isEquipped() ? "Eq." : toString(item->getQuantity());
 
                 graphics->setColor(guiPalette->getColor(item->isEquipped() ? 
-                                       Palette::ITEM_EQUIPPED : Palette::TEXT));
+                                   Palette::ITEM_EQUIPPED : Palette::TEXT));
 
                 g->drawImage(image, itemX, itemY);
                 g->drawText(label, itemX + mBoxWidth / 2,
@@ -131,7 +132,7 @@ void ItemShortcutContainer::draw(gcn::Graphics *graphics)
             const int tPosY = mCursorPosY - (image->getHeight() / 2);
 
             graphics->setColor(guiPalette->getColor(mItemMoved->isEquipped() ? 
-                                   Palette::ITEM_EQUIPPED : Palette::TEXT));
+                               Palette::ITEM_EQUIPPED : Palette::TEXT));
 
             g->drawImage(image, tPosX, tPosY);
             g->drawText(toString(mItemMoved->getQuantity()),
@@ -197,7 +198,7 @@ void ItemShortcutContainer::mousePressed(gcn::MouseEvent &event)
 
         // Convert relative to the window coordinates to absolute screen
         // coordinates.
-        viewport->showPopup(viewport->getMouseX(), viewport->getMouseY(), item);
+        viewport->showPopup(gui->getMouseX(), gui->getMouseY(), item);
     }
 }
 
@@ -245,7 +246,7 @@ void ItemShortcutContainer::mouseMoved(gcn::MouseEvent &event)
         if (item->getInfo().getName() != mItemPopup->getItemName())
             mItemPopup->setItem(item->getInfo());
         mItemPopup->updateColors();
-        mItemPopup->view(viewport->getMouseX(), viewport->getMouseY());
+        mItemPopup->view(gui->getMouseX(), gui->getMouseY());
     }
     else
     {

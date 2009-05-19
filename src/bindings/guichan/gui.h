@@ -25,6 +25,8 @@
 
 #include <guichan/gui.hpp>
 
+#include <SDL_types.h>
+
 #include <string>
 
 #include "guichanfwd.h"
@@ -132,6 +134,21 @@ class Gui : public gcn::Gui
         void resize(Graphics *graphics);
 
         /**
+         * Returns mouse x in pixels.
+         */
+        const int &getMouseX() const { return mMouseX; }
+
+        /**
+         * Returns mouse y in pixels.
+         */
+        const int &getMouseY() const { return mMouseY; }
+
+        /**
+         * Returns the current mouse button state.
+         */
+        const Uint8 &getButtonState() const { return mButtonState; }
+
+        /**
          * Cursors are in graphic order from left to right.
          * CURSOR_POINTER should be left untouched.
          * CURSOR_TOTAL should always be last.
@@ -159,6 +176,11 @@ class Gui : public gcn::Gui
         float mMouseCursorAlpha;              /**< Current cursor opacity/transparency.
                                                    Changes as the cursor fades
                                                    out due to inactivity. */
+        int mMouseX;                          /**< Current mouse X position in
+                                                   pixels. */
+        int mMouseY;                          /**< Current mouse Y position in
+                                                   pixels. */
+        Uint8 mButtonState;                   /**< Current mouse button state */        
         int mMouseInactivityTimer;
         int mCursorType;
 

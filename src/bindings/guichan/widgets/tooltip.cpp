@@ -74,6 +74,7 @@ void ToolTip::view(int x, int y)
     y = y - getHeight() - 10;
 
     setPosition(x, y);
+
     setVisible(true);
     requestMoveToTop();
 }

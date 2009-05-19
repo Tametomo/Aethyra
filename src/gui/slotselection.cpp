@@ -68,14 +68,6 @@ SlotSelectionWindow::SlotSelectionWindow(int use, Window *parent, int id):
     Button *okButton = new Button(_("Ok"), "Ok", this);
     Button *cancelButton = new Button(_("Cancel"), "Cancel", this);
 
-    // If only one item is available, then the window isn't needed, so move on
-    // To prevent problems, we still build the gui elements
-    if (mMaxSlot <= 1)
-    {
-        action(gcn::ActionEvent(this, "All"));
-        return;
-    }
-
     // Set positions
     ContainerPlacer place;
     place = getPlacer(0, 0);
@@ -96,6 +88,7 @@ SlotSelectionWindow::SlotSelectionWindow(int use, Window *parent, int id):
 
 void SlotSelectionWindow::resetAmount()
 {
+    mSlotSlide->setValue(1);
     mSlotLabel->setCaption(strprintf("%d / %d", 1, mMaxSlot));
 }
 

@@ -123,6 +123,9 @@ Gui::Gui(Graphics *graphics):
     mMouseCursors(NULL),
     mMaxMouseCursorAlpha(1.0f),
     mMouseCursorAlpha(1.0f),
+    mMouseX(0),
+    mMouseY(0),
+    mButtonState(0),
     mMouseInactivityTimer(0),
     mCursorType(CURSOR_POINTER)
 {
@@ -284,17 +287,16 @@ void Gui::draw()
     mGraphics->pushClipArea(getTop()->getDimension());
     getTop()->draw(mGraphics);
 
-    int mouseX, mouseY;
-    Uint8 button = SDL_GetMouseState(&mouseX, &mouseY);
+    mButtonState = SDL_GetMouseState(&mMouseX, &mMouseY);
 
-    if ((SDL_GetAppState() & SDL_APPMOUSEFOCUS || button & SDL_BUTTON(1)) &&
-         mCustomCursor && mMouseCursorAlpha > 0.0f)
+    if ((SDL_GetAppState() & SDL_APPMOUSEFOCUS || mButtonState & SDL_BUTTON(1))
+         && mCustomCursor && mMouseCursorAlpha > 0.0f)
     {
         Image *mouseCursor = mMouseCursors->get(mCursorType);
         mouseCursor->setAlpha(mMouseCursorAlpha);
 
-        static_cast<Graphics*>(mGraphics)->drawImage(mouseCursor, mouseX - 15,
-                                                     mouseY - 17);
+        static_cast<Graphics*>(mGraphics)->drawImage(mouseCursor, mMouseX - 15,
+                                                     mMouseY - 17);
     }
 
     mGraphics->popClipArea();

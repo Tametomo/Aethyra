@@ -25,8 +25,9 @@
 
 #include "itemlinkhandler.h"
 
+#include "../gui.h"
+
 #include "../../../gui/itempopup.h"
-#include "../../../gui/viewport.h"
 
 #include "../../../resources/db/iteminfo.h"
 #include "../../../resources/db/itemdb.h"
@@ -62,7 +63,7 @@ void ItemLinkHandler::handleLink(const std::string &link)
         else
         {
             mItemPopup->updateColors();
-            mItemPopup->view(viewport->getMouseX(), viewport->getMouseY());
+            mItemPopup->view(gui->getMouseX(), gui->getMouseY());
         }
     }
 }
