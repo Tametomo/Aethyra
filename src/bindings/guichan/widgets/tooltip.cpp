@@ -25,23 +25,43 @@
 
 #include "textbox.h"
 #include "tooltip.h"
+#include "windowcontainer.h"
 
 #include "../gui.h"
 #include "../graphics.h"
+#include "../palette.h"
+
+#include "../../../configuration.h"
 
 ToolTip::ToolTip():
-    Popup("Tooltip", "graphics/gui/tooltip.xml"),
+    Container(),
     mText("")
 {
-    setContentSize(5, 5);
-
     mToolTipBox = new TextBox();
     mToolTipBox->setEditable(false);
     mToolTipBox->setOpaque(false);
 
     add(mToolTipBox);
+    windowContainer->add(this);
 
-    loadPopupConfiguration();
+    setVisible(false);
+}
+
+void ToolTip::draw(gcn::Graphics *graphics)
+{
+    const int alpha = (int) (config.getValue("guialpha", 0.8) * 255.0f);
+    Graphics *g = static_cast<Graphics*>(graphics);
+
+    g->setColor(gcn::Color(245, 245, 181, alpha));
+    g->fillRectangle(gcn::Rectangle(1, 1, getWidth() - 6, getHeight() - 6));
+
+    g->setColor(gcn::Color(186, 186, 69, alpha));
+    g->drawLine(0, 0, getWidth() - 5, 0);
+    g->drawLine(0, 1, 0, getHeight() - 5);
+    g->drawLine(getWidth() - 5, 1, getWidth() - 5, getHeight() - 5);
+    g->drawLine(0, getHeight() - 5, getWidth() - 6, getHeight() - 5);
+
+    drawChildren(graphics);
 }
 
 void ToolTip::setText(std::string text)
@@ -52,15 +72,15 @@ void ToolTip::setText(std::string text)
 
 void ToolTip::adjustSize()
 {
-    const int width = mToolTipBox->getMinWidth() + getPadding();
+    const int width = mToolTipBox->getMinWidth() + 9;
     const int fontHeight = getFont()->getHeight();
     const int numRows = mToolTipBox->getNumberOfRows();
-    const int height = numRows * fontHeight + (getPadding() / 2);
+    const int height = numRows * fontHeight + 7;
 
-    setContentSize(width, height);
+    setSize(width, height);
 
-    const int xPos = (getWidth() - width) / 2 - getPadding();
-    const int yPos = (getHeight() - height) / 2 - (getPadding() / 2);
+    const int xPos = (getWidth() - width) / 2 + 1;
+    const int yPos = (getHeight() - height) / 2 + 1;
 
     mToolTipBox->setPosition(xPos, yPos);
 }

@@ -26,19 +26,22 @@
 
 #include <string>
 
-#include "popup.h"
-
-#include "../palette.h"
+#include "container.h"
 
 class TextBox;
 
-class ToolTip : public Popup
+class ToolTip : public Container
 {
     public:
         /**
          * Constructor.
          */
         ToolTip();
+
+        /**
+         * Draws the tooltip.
+         */
+        void draw(gcn::Graphics *graphics);
 
         /**
          * Sets the text to be displayed.
