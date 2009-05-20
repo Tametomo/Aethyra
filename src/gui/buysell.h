@@ -48,7 +48,7 @@ class BuySellDialog : public Window, public gcn::ActionListener
          */
         void logic();
 
-        void setVisible(bool visible);
+        void widgetShown(const gcn::Event& event);
 
         /**
          * Called when receiving actions from the widgets.

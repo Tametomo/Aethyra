@@ -829,16 +829,19 @@ void ChatWindow::addItemText(const std::string &item)
     addInputText(text.str());
 }
 
-void ChatWindow::setVisible(bool isVisible)
+void ChatWindow::widgetShown(const gcn::Event& event)
 {
-    Window::setVisible(isVisible);
-
     /*
      * For whatever reason, if setVisible is called, the mTmpVisible effect
      * should be disabled.
      */
 
     mTmpVisible = false;
+}
+
+void ChatWindow::widgetHidden(const gcn::Event& event)
+{
+    widgetShown(event);
 }
 
 void ChatWindow::party(const std::string & command, const std::string & rest)

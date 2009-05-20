@@ -101,9 +101,12 @@ void HelpWindow::loadFile(const std::string &file)
     }
 }
 
-void HelpWindow::requestFocus()
+void HelpWindow::widgetShown(const gcn::Event& event)
 {
-    if (isVisible())
-        mOkButton->requestFocus();
+    mOkButton->requestFocus();
 }
 
+void HelpWindow::widgetHidden(const gcn::Event& event)
+{
+    loadHelp("index");
+}

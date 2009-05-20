@@ -69,12 +69,9 @@ void BuySellDialog::logic()
         setVisible(false);
 }
 
-void BuySellDialog::setVisible(bool visible)
+void BuySellDialog::widgetShown(const gcn::Event& event)
 {
-    Window::setVisible(visible);
-
-    if (visible)
-        buyButton->requestFocus();
+    buyButton->requestFocus();
 }
 
 void BuySellDialog::action(const gcn::ActionEvent &event)

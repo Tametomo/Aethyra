@@ -159,15 +159,7 @@ void InputManager::handleInput()
             {
                 // In-game Help
                 case KeyboardConfig::KEY_WINDOW_HELP:
-                    if (helpWindow->isVisible())
-                        helpWindow->setVisible(false);
-                    else
-                    {
-                        helpWindow->loadHelp("index");
-                        helpWindow->requestFocus();
-                        helpWindow->requestMoveToTop();
-                    }
-                    used = true;
+                    requestedWindow = helpWindow;
                     break;
                 // Quitting confirmation dialog
                 case KeyboardConfig::KEY_QUIT:
@@ -186,12 +178,7 @@ void InputManager::handleInput()
                     used = true;
                     break;
                 case KeyboardConfig::KEY_WINDOW_DEBUG:
-                    debugWindow->setVisible(!debugWindow->isVisible());
-         
-                    if (debugWindow->isVisible())
-                        debugWindow->requestMoveToTop();
-
-                    used = true;
+                    requestedWindow = debugWindow;
                     break;
                 case KeyboardConfig::KEY_WINDOW_SETUP:
                     requestedWindow = setupWindow;

@@ -239,12 +239,9 @@ void BuyDialog::updateButtonsAndLabels()
         (strprintf(_("Price: %d GP / Total: %d GP"), price, mMoney - price));
 }
 
-void BuyDialog::setVisible(bool visible)
+void BuyDialog::widgetShown(const gcn::Event& event)
 {
-    Window::setVisible(visible);
-
-    if (visible)
-        mShopItemList->requestFocus();
+    mShopItemList->requestFocus();
 }
 
 void BuyDialog::close()

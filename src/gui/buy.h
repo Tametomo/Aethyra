@@ -96,9 +96,9 @@ class BuyDialog : public Window, public gcn::ActionListener,
         void updateButtonsAndLabels();
 
         /**
-         * Sets the visibility of this window.
+         * Allows the shop item list to request focus on opening.
          */
-        void setVisible(bool visible);
+        void widgetShown(const gcn::Event& event);
 
         /**
          * Closes the Buy Window, as well as resetting the current npc.

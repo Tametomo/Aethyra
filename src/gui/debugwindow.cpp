@@ -64,10 +64,8 @@ DebugWindow::DebugWindow():
     loadWindowState();
 }
 
-void DebugWindow::setVisible(bool visible)
+void DebugWindow::widgetShown(const gcn::Event& event)
 {
-    Window::setVisible(visible);
-
     if (!engine)
     {
         mTileMouseLabel->setVisible(false);
@@ -75,7 +73,7 @@ void DebugWindow::setVisible(bool visible)
         mMapLabel->setVisible(false);
         mMiniMapLabel->setVisible(false);
     }
-    else if (visible)
+    else
     {
         mTileMouseLabel->setVisible(true);
         mParticleCountLabel->setVisible(true);

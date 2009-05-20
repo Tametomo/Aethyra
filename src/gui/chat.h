@@ -194,8 +194,9 @@ class ChatWindow : public Window, public gcn::ActionListener,
         /** Called to add item to chat */
         void addItemText(const std::string &item);
 
-        /** Override to reset mTmpVisible */
-        void setVisible(bool visible);
+        /** Used to reset mTmpVisible */
+        void widgetShown(const gcn::Event& event);
+        void widgetHidden(const gcn::Event& event);
 
        /**
         * Scrolls the chat window

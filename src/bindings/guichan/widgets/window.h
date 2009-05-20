@@ -135,6 +135,14 @@ class Window : public gcn::Window, gcn::WidgetListener
         void widgetResized(const gcn::Event &event);
 
         /**
+         * These two functions allow children widgets which inherit from this
+         * class to perform visibility events, rather than hacking setVisible(),
+         * since this is the proper way to handle these events in GUIChan.
+         */
+        virtual void widgetHidden(const gcn::Event& event) { }
+        virtual void widgetShown(const gcn::Event& event) { }
+
+        /**
          * Sets whether or not the window has a close button.
          */
         void setCloseButton(bool flag);
@@ -260,12 +268,6 @@ class Window : public gcn::Window, gcn::WidgetListener
          * Hides/unhides a window
          */
         virtual void hide();
-
-        /**
-         * Allow for overriding the setVisible function. Not used for the Window
-         * class, but used in a few windows that use this widget.
-         */
-        virtual void setVisible(bool visible) { gcn::Window::setVisible(visible); }
 
         /**
          * Set the default win pos and size.

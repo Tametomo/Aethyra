@@ -59,11 +59,10 @@ class StatusWindow : public Window, public gcn::ActionListener
         void update();
 
         /**
-         * Overloads window setVisible by Guichan to allow for progress bars to
-         * reset on invisibility. This is done more for a "bling" reason, not a
-         * necessary reason.
+         * Allows for progress bars to reset on visibility. This is done more
+         * for a "bling" reason, not a necessary reason.
          */
-        void setVisible(bool visible);
+        void widgetShown(const gcn::Event& event);
 
     private:
         LocalPlayer *mPlayer;

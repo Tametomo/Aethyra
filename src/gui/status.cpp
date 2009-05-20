@@ -281,15 +281,10 @@ void StatusWindow::action(const gcn::ActionEvent &event)
     }
 }
 
-void StatusWindow::setVisible(bool visible)
+void StatusWindow::widgetShown(const gcn::Event& event)
 {
-    Window::setVisible(visible);
-
-    if (visible)
-    {
-        mHpBar->reset();
-        mMpBar->reset();
-        mXpBar->reset();
-        mJobBar->reset();
-    }
+    mHpBar->reset();
+    mMpBar->reset();
+    mXpBar->reset();
+    mJobBar->reset();
 }

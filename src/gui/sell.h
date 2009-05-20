@@ -80,9 +80,9 @@ class SellDialog : public Window, gcn::ActionListener, gcn::SelectionListener
         void setMoney(int amount);
 
         /**
-         * Sets the visibility of this window.
+         * Focuses on the shop item list when shown.
          */
-        void setVisible(bool visible);
+        void widgetShown(const gcn::Event& event);
 
         /**
          * Closes the Buy Window, as well as resetting the current npc.

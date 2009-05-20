@@ -46,10 +46,10 @@ class DebugWindow : public Window
         void logic();
 
         /**
-         * Overloads window setVisible by Guichan to disable some labels which
-         * aren't needed outside of game.
+         * Disable some labels which aren't needed outside of game on shown
+         * events.
          */
-        void setVisible(bool visible);
+        void widgetShown(const gcn::Event& event);
 
     private:
         gcn::Label *mMusicFileLabel, *mMapLabel, *mMiniMapLabel;

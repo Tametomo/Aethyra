@@ -264,12 +264,9 @@ void SellDialog::updateButtonsAndLabels()
                    income, mPlayerMoney + income));
 }
 
-void SellDialog::setVisible(bool visible)
+void SellDialog::widgetShown(const gcn::Event& event)
 {
-    Window::setVisible(visible);
-
-    if (visible)
-        mShopItemList->requestFocus();
+    mShopItemList->requestFocus();
 }
 
 void SellDialog::close()
