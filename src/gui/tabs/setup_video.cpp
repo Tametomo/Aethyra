@@ -370,10 +370,7 @@ void Setup_Video::action(const gcn::ActionEvent &event)
             new OkDialog(_("Screen resolution changed"),
                          _("Restart your client for the change to take effect."));
 #else
-            typedef std::list<gcn::Widget*> Widgets;
             Widgets widgets = windowContainer->getWidgetList();
-
-            typedef Widgets::iterator WidgetIterator;
             WidgetIterator iter;
 
             // First save the window positions, adaptToNewSize will position

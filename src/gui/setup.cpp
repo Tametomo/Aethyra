@@ -107,10 +107,7 @@ void Setup::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "Reset Windows")
     {
-        typedef std::list<gcn::Widget*> Widgets;
         Widgets widgets = windowContainer->getWidgetList();
-
-        typedef Widgets::iterator WidgetIterator;
         WidgetIterator iter;
 
         for (iter = widgets.begin(); iter != widgets.end(); ++iter)
