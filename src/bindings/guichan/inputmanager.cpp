@@ -22,15 +22,11 @@
 
 #include <guichan/exception.hpp>
 
-#include "graphics.h"
 #include "gui.h"
 #include "inputmanager.h"
 #include "keyboardconfig.h"
 
 #include "sdl/sdlinput.h"
-
-#include "widgets/emoteshortcutcontainer.h"
-#include "widgets/itemshortcutcontainer.h"
 
 #include "../sdl/joystick.h"
 
@@ -40,8 +36,6 @@
 #include "../../main.h"
 #include "../../playerrelations.h"
 
-#include "../../gui/buy.h"
-#include "../../gui/buysell.h"
 #include "../../gui/chat.h"
 #include "../../gui/confirmdialog.h"
 #include "../../gui/debugwindow.h"
@@ -49,20 +43,13 @@
 #include "../../gui/equipmentwindow.h"
 #include "../../gui/help.h"
 #include "../../gui/inventorywindow.h"
-#include "../../gui/menubar.h"
 #include "../../gui/minimap.h"
 #include "../../gui/ministatus.h"
-#include "../../gui/npcintegerdialog.h"
-#include "../../gui/npclistdialog.h"
-#include "../../gui/npcstringdialog.h"
-#include "../../gui/npctext.h"
 #include "../../gui/okdialog.h"
-#include "../../gui/sell.h"
 #include "../../gui/setup.h"
 #include "../../gui/shortcutwindow.h"
 #include "../../gui/skill.h"
 #include "../../gui/status.h"
-#include "../../gui/storagewindow.h"
 #include "../../gui/trade.h"
 #include "../../gui/viewport.h"
 
@@ -70,6 +57,7 @@
 #include "../../resources/flooritemmanager.h"
 
 #include "../../resources/sprite/localplayer.h"
+#include "../../resources/sprite/npc.h"
 
 #include "../../utils/gettext.h"
 
