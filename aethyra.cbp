@@ -126,6 +126,12 @@
 		<Unit filename="src\bindings\guichan\textrenderer.h" />
 		<Unit filename="src\bindings\guichan\truetypefont.cpp" />
 		<Unit filename="src\bindings\guichan\truetypefont.h" />
+		<Unit filename="src\bindings\guichan\dialogs\confirmdialog.cpp" />
+		<Unit filename="src\bindings\guichan\dialogs\confirmdialog.h" />
+		<Unit filename="src\bindings\guichan\dialogs\okdialog.cpp" />
+		<Unit filename="src\bindings\guichan\dialogs\okdialog.h" />
+		<Unit filename="src\bindings\guichan\dialogs\textinputdialog.cpp" />
+		<Unit filename="src\bindings\guichan\dialogs\textinputdialog.h" />
 		<Unit filename="src\bindings\guichan\handlers\focushandler.cpp" />
 		<Unit filename="src\bindings\guichan\handlers\focushandler.h" />
 		<Unit filename="src\bindings\guichan\handlers\itemlinkhandler.cpp" />
@@ -253,8 +259,6 @@
 		<Unit filename="src\gui\charserver.h" />
 		<Unit filename="src\gui\chat.cpp" />
 		<Unit filename="src\gui\chat.h" />
-		<Unit filename="src\gui\confirmdialog.cpp" />
-		<Unit filename="src\gui\confirmdialog.h" />
 		<Unit filename="src\gui\debugwindow.cpp" />
 		<Unit filename="src\gui\debugwindow.h" />
 		<Unit filename="src\gui\desktop.cpp" />
@@ -287,12 +291,8 @@
 		<Unit filename="src\gui\npcstringdialog.h" />
 		<Unit filename="src\gui\npctext.cpp" />
 		<Unit filename="src\gui\npctext.h" />
-		<Unit filename="src\gui\okdialog.cpp" />
-		<Unit filename="src\gui\okdialog.h" />
 		<Unit filename="src\gui\popupmenu.cpp" />
 		<Unit filename="src\gui\popupmenu.h" />
-		<Unit filename="src\gui\recorderinput.cpp" />
-		<Unit filename="src\gui\recorderinput.h" />
 		<Unit filename="src\gui\register.cpp" />
 		<Unit filename="src\gui\register.h" />
 		<Unit filename="src\gui\sell.cpp" />

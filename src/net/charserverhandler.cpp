@@ -29,8 +29,9 @@
 #include "../log.h"
 #include "../main.h"
 
+#include "../bindings/guichan/dialogs/okdialog.h"
+
 #include "../gui/charselect.h"
-#include "../gui/okdialog.h"
 
 #include "../resources/sprite/localplayer.h"
 

@@ -26,6 +26,9 @@
 #include "inputmanager.h"
 #include "keyboardconfig.h"
 
+#include "dialogs/confirmdialog.h"
+#include "dialogs/okdialog.h"
+
 #include "sdl/sdlinput.h"
 
 #include "../sdl/joystick.h"
@@ -37,7 +40,6 @@
 #include "../../playerrelations.h"
 
 #include "../../gui/chat.h"
-#include "../../gui/confirmdialog.h"
 #include "../../gui/debugwindow.h"
 #include "../../gui/emotewindow.h"
 #include "../../gui/equipmentwindow.h"
@@ -45,7 +47,6 @@
 #include "../../gui/inventorywindow.h"
 #include "../../gui/minimap.h"
 #include "../../gui/ministatus.h"
-#include "../../gui/okdialog.h"
 #include "../../gui/setup.h"
 #include "../../gui/shortcutwindow.h"
 #include "../../gui/skill.h"

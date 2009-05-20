@@ -19,19 +19,19 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef RECORDER_INPUT_H
-#define RECORDER_INPUT_H
+#ifndef TEXT_INPUT_DIALOG_H
+#define TEXT_INPUT_DIALOG_H
 
 #include <guichan/actionlistener.hpp>
 
-#include "../bindings/guichan/widgets/window.h"
+#include "../widgets/window.h"
 
 /**
  * The npc integer input dialog.
  *
  * \ingroup Interface
  */
-class RecorderInput : public Window, public gcn::ActionListener
+class TextInputDialog : public Window, public gcn::ActionListener
 {
     public:
         /**
@@ -39,12 +39,12 @@ class RecorderInput : public Window, public gcn::ActionListener
          *
          * @see Window::Window
          */
-        RecorderInput(std::string caption = "");
+        TextInputDialog(std::string caption = "");
 
         /**
          * Called when receiving actions from the widgets.
          */
-        void action(const gcn::ActionEvent &event);
+        virtual void action(const gcn::ActionEvent &event);
 
         /**
          * Returns the current value.
@@ -68,15 +68,8 @@ class RecorderInput : public Window, public gcn::ActionListener
          */
         void requestFocus();
 
-        /**
-         * Overridden close() method which allows the text input dialog to clean
-         * up after itself on close or lost visibility.
-         */
-        void close();
-
-    private:
+    protected:
         gcn::TextField *mValueField;
-        gcn::Label *mCaption;
         gcn::Button *mOkButton;
         gcn::Button *mCancelButton;
 };

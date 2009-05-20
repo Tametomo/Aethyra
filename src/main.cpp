@@ -44,6 +44,8 @@
 #include "bindings/guichan/keyboardconfig.h"
 #include "bindings/guichan/palette.h"
 
+#include "bindings/guichan/dialogs/okdialog.h"
+
 #ifdef USE_OPENGL
 #include "bindings/guichan/opengl/openglgraphics.h"
 #endif
@@ -59,7 +61,6 @@
 #include "gui/desktop.h"
 #include "gui/help.h"
 #include "gui/login.h"
-#include "gui/okdialog.h"
 #include "gui/register.h"
 #include "gui/setup.h"
 #include "gui/updatewindow.h"

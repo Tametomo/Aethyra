@@ -25,13 +25,14 @@
 #include <guichan/font.hpp>
 
 #include "charselect.h"
-#include "confirmdialog.h"
-#include "okdialog.h"
 
 #include "../game.h"
 #include "../main.h"
 
 #include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/dialogs/confirmdialog.h"
+#include "../bindings/guichan/dialogs/okdialog.h"
 
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/label.h"

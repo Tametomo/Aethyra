@@ -28,8 +28,9 @@
 #include "../item.h"
 #include "../playerrelations.h"
 
+#include "../bindings/guichan/dialogs/confirmdialog.h"
+
 #include "../gui/chat.h"
-#include "../gui/confirmdialog.h"
 #include "../gui/trade.h"
 
 #include "../resources/sprite/localplayer.h"

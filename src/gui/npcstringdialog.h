@@ -23,16 +23,14 @@
 #ifndef GUI_NPCSTRINGDIALOG_H
 #define GUI_NPCSTRINGDIALOG_H
 
-#include <guichan/actionlistener.hpp>
-
-#include "../bindings/guichan/widgets/window.h"
+#include "../bindings/guichan/dialogs/textinputdialog.h"
 
 /**
  * The npc integer input dialog.
  *
  * \ingroup Interface
  */
-class NpcStringDialog : public Window, public gcn::ActionListener
+class NpcStringDialog : public TextInputDialog
 {
     public:
         /**
@@ -48,37 +46,10 @@ class NpcStringDialog : public Window, public gcn::ActionListener
         void action(const gcn::ActionEvent &event);
 
         /**
-         * Returns the current value.
-         */
-        std::string getValue();
-
-        /**
-         * Chnages the current value.
-         *
-         * @param value The new value
-         */
-        void setValue(const std::string &value);
-
-        /**
-         * Checks whether NpcStringDialog is Focused or not.
-         */
-        bool isInputFocused();
-
-        /**
-         * Requests the textfield to take focus for input.
-         */
-        void requestFocus();
-
-        /**
          * Overridden close() method which allows the NPC String dialog to clean
          * up after itself on close or lost visibility.
          */
         void close();
-
-    private:
-        gcn::TextField *mValueField;
-        gcn::Button *okButton;
-        gcn::Button *cancelButton;
 };
 
 extern NpcStringDialog *npcStringDialog;

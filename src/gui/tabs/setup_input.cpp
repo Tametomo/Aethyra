@@ -24,12 +24,12 @@
 
 #include "setup_input.h"
 
-#include "../okdialog.h"
-
 #include "../../configuration.h"
 
 #include "../../bindings/guichan/keyboardconfig.h"
 #include "../../bindings/guichan/layouthelper.h"
+
+#include "../../bindings/guichan/dialogs/okdialog.h"
 
 #include "../../bindings/guichan/models/keylistmodel.h"
 

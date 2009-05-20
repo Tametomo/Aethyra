@@ -20,21 +20,21 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef OPTION_DIALOG_H
-#define OPTION_DIALOG_H
+#ifndef OK_DIALOG_H
+#define OK_DIALOG_H
 
 #include <guichan/actionlistener.hpp>
 
-#include "../bindings/guichan/widgets/window.h"
+#include "../widgets/window.h"
 
 class TextBox;
 
 /**
- * An option dialog.
+ * An 'Ok' button dialog.
  *
  * \ingroup GUI
  */
-class ConfirmDialog : public Window, public gcn::ActionListener
+class OkDialog : public Window, public gcn::ActionListener
 {
     public:
         /**
@@ -42,8 +42,8 @@ class ConfirmDialog : public Window, public gcn::ActionListener
          *
          * @see Window::Window
          */
-        ConfirmDialog(const std::string &title, const std::string &msg,
-                      Window *parent = NULL);
+        OkDialog(const std::string &title, const std::string &msg,
+                 Window *parent = NULL);
 
         unsigned int getNumRows();
 

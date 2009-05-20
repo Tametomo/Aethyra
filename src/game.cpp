@@ -33,6 +33,8 @@
 #include "bindings/guichan/gui.h"
 #include "bindings/guichan/inputmanager.h"
 
+#include "bindings/guichan/dialogs/okdialog.h"
+
 #include "bindings/guichan/widgets/browserbox.h"
 #include "bindings/guichan/widgets/emoteshortcutcontainer.h"
 #include "bindings/guichan/widgets/itemshortcutcontainer.h"
@@ -50,7 +52,6 @@
 #include "gui/npclistdialog.h"
 #include "gui/npcstringdialog.h"
 #include "gui/npctext.h"
-#include "gui/okdialog.h"
 #include "gui/sell.h"
 #include "gui/shortcutwindow.h"
 #include "gui/skill.h"

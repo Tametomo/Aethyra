@@ -25,6 +25,12 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/textrenderer.h \
 	      bindings/guichan/truetypefont.cpp \
 	      bindings/guichan/truetypefont.h \
+	      bindings/guichan/dialogs/confirmdialog.cpp \
+	      bindings/guichan/dialogs/confirmdialog.h \
+	      bindings/guichan/dialogs/okdialog.cpp \
+	      bindings/guichan/dialogs/okdialog.h \
+	      bindings/guichan/dialogs/textinputdialog.cpp \
+	      bindings/guichan/dialogs/textinputdialog.h \
 	      bindings/guichan/handlers/focushandler.cpp \
 	      bindings/guichan/handlers/focushandler.h \
 	      bindings/guichan/handlers/itemlinkhandler.cpp \
@@ -152,8 +158,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      gui/charserver.h \
 	      gui/chat.cpp \
 	      gui/chat.h \
-	      gui/confirmdialog.cpp \
-	      gui/confirmdialog.h \
 	      gui/debugwindow.cpp \
 	      gui/debugwindow.h \
 	      gui/desktop.cpp \
@@ -186,12 +190,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      gui/npcstringdialog.h \
 	      gui/npctext.cpp \
 	      gui/npctext.h \
-	      gui/okdialog.cpp \
-	      gui/okdialog.h \
 	      gui/popupmenu.cpp \
 	      gui/popupmenu.h \
-	      gui/recorderinput.cpp \
-	      gui/recorderinput.h \
 	      gui/register.cpp \
 	      gui/register.h \
 	      gui/sell.cpp \

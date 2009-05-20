@@ -31,7 +31,6 @@
 
 #include "../desktop.h"
 #include "../menubar.h"
-#include "../okdialog.h"
 
 #include "../../configuration.h"
 #include "../../engine.h"
@@ -42,6 +41,8 @@
 #include "../../bindings/guichan/graphics.h"
 #include "../../bindings/guichan/gui.h"
 #include "../../bindings/guichan/layouthelper.h"
+
+#include "../../bindings/guichan/dialogs/okdialog.h"
 
 #include "../../bindings/guichan/models/modelistmodel.h"
 

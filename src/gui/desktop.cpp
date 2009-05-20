@@ -23,12 +23,13 @@
 #include <guichan/actionlistener.hpp>
 
 #include "desktop.h"
-#include "okdialog.h"
 #include "setup.h"
 
 #include "../configuration.h"
 #include "../log.h"
 #include "../main.h"
+
+#include "../bindings/guichan/dialogs/okdialog.h"
 
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/label.h"

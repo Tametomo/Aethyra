@@ -22,46 +22,22 @@
 
 #include "npcstringdialog.h"
 
-#include "../bindings/guichan/layout.h"
-
-#include "../bindings/guichan/widgets/button.h"
-#include "../bindings/guichan/widgets/textfield.h"
-
 #include "../net/messageout.h"
 #include "../net/protocol.h"
+
+#include "../bindings/guichan/widgets/textfield.h"
 
 #include "../resources/sprite/npc.h"
 
 #include "../utils/gettext.h"
 
 NpcStringDialog::NpcStringDialog():
-    Window(_("NPC Input"))
+    TextInputDialog(_("NPC Input"))
 {
     setWindowName("NPCInput");
 
-    mValueField = new TextField("", "ok", this);
-
-    setDefaultSize(175, 75, ImageRect::CENTER);
-
-    okButton = new Button(_("OK"), "ok", this);
-    cancelButton = new Button(_("Cancel"), "cancel", this);
-
-    place(0, 0, mValueField, 3);
-    place(1, 1, cancelButton);
-    place(2, 1, okButton);
-
     loadWindowState();
     setVisible(false);
-}
-
-std::string NpcStringDialog::getValue()
-{
-    return mValueField->getText();
-}
-
-void NpcStringDialog::setValue(const std::string &value)
-{
-    mValueField->setText(value);
 }
 
 void NpcStringDialog::action(const gcn::ActionEvent &event)
@@ -70,17 +46,6 @@ void NpcStringDialog::action(const gcn::ActionEvent &event)
         mValueField->setText("");
 
     close();
-}
-
-bool NpcStringDialog::isInputFocused()
-{
-    return mValueField->isFocused();
-}
-
-void NpcStringDialog::requestFocus()
-{
-    setVisible(true);
-    mValueField->requestFocus();
 }
 
 void NpcStringDialog::close()

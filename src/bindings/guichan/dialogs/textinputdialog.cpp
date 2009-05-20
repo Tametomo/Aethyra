@@ -19,55 +19,52 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "recorderinput.h"
+#include "textinputdialog.h"
 
-#include "../bindings/guichan/layout.h"
+#include "../layout.h"
 
-#include "../bindings/guichan/widgets/button.h"
-#include "../bindings/guichan/widgets/label.h"
-#include "../bindings/guichan/widgets/textfield.h"
+#include "../widgets/button.h"
+#include "../widgets/textfield.h"
 
-#include "../utils/gettext.h"
+#include "../../../utils/gettext.h"
 
-RecorderInput::RecorderInput(std::string caption):
-    Window(_("Recorder Input"))
+TextInputDialog::TextInputDialog(std::string caption):
+    Window(caption)
 {
-    setWindowName("RecorderInput");
+    setWindowName("TextInputDialog");
 
     mValueField = new TextField("", "ok", this);
 
-    setDefaultSize(175, 90, ImageRect::CENTER);
+    setDefaultSize(175, 75, ImageRect::CENTER);
 
-    mCaption = new Label(_("File name to record to:"));
     mOkButton = new Button(_("OK"), "ok", this);
     mCancelButton = new Button(_("Cancel"), "cancel", this);
 
-    place(0, 0, mCaption, 3);
-    place(0, 1, mValueField, 3);
-    place(1, 2, mCancelButton);
-    place(2, 2, mOkButton);
+    place(0, 0, mValueField, 3);
+    place(1, 1, mCancelButton);
+    place(2, 1, mOkButton);
 
     loadWindowState();
     setVisible(false);
 }
 
-std::string RecorderInput::getValue()
+std::string TextInputDialog::getValue()
 {
     return mValueField->getText();
 }
 
-void RecorderInput::setValue(const std::string &value)
+void TextInputDialog::setValue(const std::string &value)
 {
     mValueField->setText(value);
 }
 
-void RecorderInput::reset()
+void TextInputDialog::reset()
 {
     mValueField->setText("");
     requestFocus();
 }
 
-void RecorderInput::action(const gcn::ActionEvent &event)
+void TextInputDialog::action(const gcn::ActionEvent &event)
 {
     // Proxy button events to our listeners
     ActionListenerIterator i;
@@ -77,13 +74,9 @@ void RecorderInput::action(const gcn::ActionEvent &event)
     }
 }
 
-void RecorderInput::requestFocus()
+void TextInputDialog::requestFocus()
 {
     setVisible(true);
     mValueField->requestFocus();
 }
 
-void RecorderInput::close()
-{
-    Window::close();
-}

@@ -21,12 +21,13 @@
  */
 
 #include "login.h"
-#include "okdialog.h"
 
 #include "../main.h"
 #include "../configuration.h"
 
 #include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/dialogs/okdialog.h"
 
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/checkbox.h"

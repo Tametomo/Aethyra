@@ -22,12 +22,12 @@
 
 #include "setup_audio.h"
 
-#include "../okdialog.h"
-
 #include "../../configuration.h"
 #include "../../engine.h"
 #include "../../log.h"
 #include "../../map.h"
+
+#include "../../bindings/guichan/dialogs/okdialog.h"
 
 #include "../../bindings/guichan/layouthelper.h"
 

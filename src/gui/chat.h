@@ -38,8 +38,8 @@ class ItemLinkHandler;
 class Party;
 class ProxyWidget;
 class Recorder;
-class RecorderInput;
 class ScrollArea;
+class TextInputDialog;
 class ToolTip;
 
 #define BY_GM         0   // those should be self-explanatory =)
@@ -244,8 +244,8 @@ class ChatWindow : public Window, public gcn::ActionListener,
         ScrollArea *mScrollArea;    /**< Scroll area around text output */
         ItemLinkHandler *mItemLinkHandler; /** Used for showing item popup on
                                                clicking links **/
-        RecorderInput *mRecorderInput; /**< Dialog for getting a string for the
-                                            recorder */
+        TextInputDialog *mRecorderInput; /**< Dialog for getting a string for the
+                                              recorder */
         ImageButton *mRecordButton; /**< Button used for recording */
         ProxyWidget *mProxy;        /**< Proxy used to get focus for the chat
                                          input field when tabbing */

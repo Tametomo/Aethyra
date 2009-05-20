@@ -25,11 +25,11 @@
 
 #include "setup_players.h"
 
-#include "../okdialog.h"
-
 #include "../../configuration.h"
 
 #include "../../bindings/guichan/layouthelper.h"
+
+#include "../../bindings/guichan/dialogs/okdialog.h"
 
 #include "../../bindings/guichan/models/ignorechoiceslistmodel.h"
 #include "../../bindings/guichan/models/playertablemodel.h"

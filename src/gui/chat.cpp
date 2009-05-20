@@ -25,7 +25,6 @@
 #include <guichan/focushandler.hpp>
 
 #include "chat.h"
-#include "recorderinput.h"
 
 #include "../configuration.h"
 #include "../game.h"
@@ -34,6 +33,8 @@
 
 #include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/layout.h"
+
+#include "../bindings/guichan/dialogs/textinputdialog.h"
 
 #include "../bindings/guichan/handlers/itemlinkhandler.h"
 
@@ -80,7 +81,7 @@ ChatWindow::ChatWindow():
     mProxy = new ProxyWidget(mChatInput, FOCUS_WHEN_HIDDEN);
     mChatInput->setProxy(mProxy);
 
-    mRecorderInput = new RecorderInput();
+    mRecorderInput = new TextInputDialog(_("File name to record to:"));
     mRecorderInput->addActionListener(this);
 
     mRecordButton = new ImageButton("graphics/gui/circle-green.png", "record",
@@ -345,10 +346,12 @@ void ChatWindow::action(const gcn::ActionEvent & event)
     }
     else if (event.getId() == "record")
     {
-        if (!mRecorder->isRecording())
-        {
-            mRecorderInput->setVisible(true);
+        if (!mRecorder->isRecording() && !mRecorderInput->isVisible())
             mRecorderInput->requestFocus();
+        else if (!mRecorder->isRecording() && mRecorderInput->isVisible())
+        {
+            mRecorderInput->reset();
+            mRecorderInput->setVisible(false);
         }
         else
             updateRecorder("");
@@ -356,7 +359,10 @@ void ChatWindow::action(const gcn::ActionEvent & event)
     else if (event.getId() == "ok")
         updateRecorder(mRecorderInput->getValue());
     else if (event.getId() == "cancel")
+    {
+        mRecorderInput->reset();
         mRecorderInput->setVisible(false);
+    }
 }
 
 void ChatWindow::requestChatFocus()

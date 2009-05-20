@@ -28,6 +28,8 @@
 #include "../engine.h"
 #include "../log.h"
 
+#include "../bindings/guichan/dialogs/okdialog.h"
+
 #include "../gui/buy.h"
 #include "../gui/buysell.h"
 #include "../gui/chat.h"
@@ -35,7 +37,6 @@
 #include "../gui/npcintegerdialog.h"
 #include "../gui/npclistdialog.h"
 #include "../gui/npcstringdialog.h"
-#include "../gui/okdialog.h"
 #include "../gui/sell.h"
 #include "../gui/skill.h"
 #include "../gui/storagewindow.h"

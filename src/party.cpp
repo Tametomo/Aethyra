@@ -21,8 +21,9 @@
 
 #include "party.h"
 
+#include "bindings/guichan/dialogs/confirmdialog.h"
+
 #include "gui/chat.h"
-#include "gui/confirmdialog.h"
 
 #include "net/messageout.h"
 #include "net/protocol.h"
