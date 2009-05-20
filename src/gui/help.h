@@ -58,10 +58,13 @@ class HelpWindow : public Window, public LinkHandler,
         void loadHelp(const std::string &helpFile);
 
         /**
-         * Loads help file on hiding, as well as requesting focus for the
-         * close button on show events.
+         * Focuses on the close button on gaining focus.
          */
-        void widgetShown(const gcn::Event& event);
+        void requestFocus();
+
+        /**
+         * Loads help index file on hiding.
+         */
         void widgetHidden(const gcn::Event& event);
 
     private:

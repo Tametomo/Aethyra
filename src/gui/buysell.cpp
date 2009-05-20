@@ -69,7 +69,7 @@ void BuySellDialog::logic()
         setVisible(false);
 }
 
-void BuySellDialog::widgetShown(const gcn::Event& event)
+void BuySellDialog::requestFocus()
 {
     buyButton->requestFocus();
 }

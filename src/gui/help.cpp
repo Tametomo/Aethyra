@@ -101,7 +101,7 @@ void HelpWindow::loadFile(const std::string &file)
     }
 }
 
-void HelpWindow::widgetShown(const gcn::Event& event)
+void HelpWindow::requestFocus()
 {
     mOkButton->requestFocus();
 }

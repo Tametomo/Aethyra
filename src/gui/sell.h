@@ -80,9 +80,9 @@ class SellDialog : public Window, gcn::ActionListener, gcn::SelectionListener
         void setMoney(int amount);
 
         /**
-         * Focuses on the shop item list when shown.
+         * Focus on the shop item list on dialog focus.
          */
-        void widgetShown(const gcn::Event& event);
+        void requestFocus();
 
         /**
          * Closes the Buy Window, as well as resetting the current npc.

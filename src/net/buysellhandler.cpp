@@ -66,6 +66,7 @@ void BuySellHandler::handleMessage(MessageIn *msg)
             sellDialog->reset();
             current_npc = msg->readInt32();
             buySellDialog->setVisible(true);
+            buySellDialog->requestFocus();
             break;
 
         case SMSG_NPC_BUY:
@@ -74,6 +75,7 @@ void BuySellHandler::handleMessage(MessageIn *msg)
             buyDialog->reset();
             buyDialog->setMoney(player_node->mGp);
             buyDialog->setVisible(true);
+            buyDialog->requestFocus();
 
             for (int k = 0; k < n_items; k++)
             {
@@ -93,6 +95,7 @@ void BuySellHandler::handleMessage(MessageIn *msg)
                 sellDialog->setMoney(player_node->mGp);
                 sellDialog->reset();
                 sellDialog->setVisible(true);
+                sellDialog->requestFocus();
 
                 for (int k = 0; k < n_items; k++)
                 {

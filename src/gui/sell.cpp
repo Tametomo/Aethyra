@@ -264,7 +264,7 @@ void SellDialog::updateButtonsAndLabels()
                    income, mPlayerMoney + income));
 }
 
-void SellDialog::widgetShown(const gcn::Event& event)
+void SellDialog::requestFocus()
 {
     mShopItemList->requestFocus();
 }

@@ -96,9 +96,9 @@ class BuyDialog : public Window, public gcn::ActionListener,
         void updateButtonsAndLabels();
 
         /**
-         * Allows the shop item list to request focus on opening.
+         * Focus on the shop item list on dialog focus.
          */
-        void widgetShown(const gcn::Event& event);
+        void requestFocus();
 
         /**
          * Closes the Buy Window, as well as resetting the current npc.
