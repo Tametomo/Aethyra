@@ -122,7 +122,7 @@ ChatWindow::ChatWindow():
     mParty = new Party(this);
 
     // Initialize several widgets depending on the recorder class.
-    updateRecorder("");
+    updateRecorder(config.getValue(getWindowName() + "Record", ""));
 
     // If the player had @assert on in the last session, ask the server to
     // run the @assert command for the player again. Convenience for GMs.
@@ -136,11 +136,11 @@ ChatWindow::~ChatWindow()
     *partyPrefix = mPartyPrefix;
     config.setValue("PartyPrefix", partyPrefix);
     config.setValue("ReturnToggles", mReturnToggles ? "1" : "0");
-    delete mRecorderInput;
     delete mRecorder;
+    delete mRecorderInput;
+    delete mToolTip;
     delete mItemLinkHandler;
     delete mParty;
-    delete mToolTip;
 }
 
 void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)

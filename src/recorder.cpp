@@ -21,6 +21,7 @@
 
 #include <physfs.h>
 
+#include "configuration.h"
 #include "recorder.h"
 
 #include "gui/chat.h"
@@ -35,6 +36,8 @@ Recorder::Recorder(ChatWindow *chat) :
 
 Recorder::~Recorder()
 {
+    config.setValue(mChat->getWindowName() + "Record", mFileName);
+
     if (isRecording())
         changeRecordingStatus("");
 }
@@ -76,7 +79,7 @@ void Recorder::changeRecordingStatus(const std::string &msg)
         mChat->chatLog(_("Starting to record..."), BY_SERVER);
         std::string file = std::string(PHYSFS_getUserDir()) + "/.aethyra/" + mFileName;
 
-        mStream.open(file.c_str(), std::ios_base::trunc);
+        mStream.open(file.c_str(), std::ios_base::app);
 
         if (!mStream.is_open())
             mChat->chatLog(_("Failed to start recording."), BY_SERVER);
