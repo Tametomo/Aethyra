@@ -111,6 +111,8 @@ class ScrollArea : public gcn::ScrollArea
 
         bool mOpaque;
         bool mGC;
+
+        int mLastUpdate;
 };
 
 #endif
