@@ -2,7 +2,7 @@
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
  *
- *  This file is part of Aethyra based on original code
+ *  This file is part of Aethyra derived from original code
  *  from The Mana World.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -96,26 +96,26 @@ Engine *engine = NULL;
 
 OkDialog *disconnectedDialog = NULL;
 
-ChatWindow *chatWindow;
-MenuBar *menuBar;
-StatusWindow *statusWindow;
-MiniStatusWindow *miniStatusWindow;
 BuyDialog *buyDialog;
-SellDialog *sellDialog;
 BuySellDialog *buySellDialog;
-InventoryWindow *inventoryWindow;
+ChatWindow *chatWindow;
 EmoteWindow *emoteWindow;
+EquipmentWindow *equipmentWindow;
+InventoryWindow *inventoryWindow;
+MenuBar *menuBar;
+Minimap *minimap;
+MiniStatusWindow *miniStatusWindow;
 NpcIntegerDialog *npcIntegerDialog;
 NpcListDialog *npcListDialog;
-NpcTextDialog *npcTextDialog;
 NpcStringDialog *npcStringDialog;
-SkillDialog *skillDialog;
-Minimap *minimap;
-EquipmentWindow *equipmentWindow;
-TradeWindow *tradeWindow;
-ShortcutWindow *itemShortcutWindow;
+NpcTextDialog *npcTextDialog;
+SellDialog *sellDialog;
 ShortcutWindow *emoteShortcutWindow;
+ShortcutWindow *itemShortcutWindow;
+SkillDialog *skillDialog;
+StatusWindow *statusWindow;
 StorageWindow *storageWindow;
+TradeWindow *tradeWindow;
 
 BeingManager *beingManager = NULL;
 FloorItemManager *floorItemManager = NULL;
@@ -149,28 +149,28 @@ void createGuiWindows()
     emoteShortcut = new EmoteShortcut();
 
     // Create dialogs
-    chatWindow = new ChatWindow();
-    menuBar = new MenuBar();
-    statusWindow = new StatusWindow(player_node);
-    miniStatusWindow = new MiniStatusWindow();
     buyDialog = new BuyDialog();
-    sellDialog = new SellDialog();
     buySellDialog = new BuySellDialog();
-    inventoryWindow = new InventoryWindow();
+    chatWindow = new ChatWindow();
+    emoteShortcutWindow = new ShortcutWindow("emoteShortcut",
+                                             new EmoteShortcutContainer());
     emoteWindow = new EmoteWindow();
-    npcTextDialog = new NpcTextDialog();
+    equipmentWindow = new EquipmentWindow();
+    inventoryWindow = new InventoryWindow();
+    itemShortcutWindow = new ShortcutWindow("ItemShortcut",
+                                            new ItemShortcutContainer());
+    menuBar = new MenuBar();
+    minimap = new Minimap();
+    miniStatusWindow = new MiniStatusWindow();
     npcIntegerDialog = new NpcIntegerDialog();
     npcListDialog = new NpcListDialog();
     npcStringDialog = new NpcStringDialog();
+    npcTextDialog = new NpcTextDialog();
+    sellDialog = new SellDialog();
     skillDialog = new SkillDialog();
-    minimap = new Minimap();
-    equipmentWindow = new EquipmentWindow();
-    tradeWindow = new TradeWindow();
-    itemShortcutWindow = new ShortcutWindow("ItemShortcut",
-                                            new ItemShortcutContainer);
-    emoteShortcutWindow = new ShortcutWindow("emoteShortcut",
-                                             new EmoteShortcutContainer);
+    statusWindow = new StatusWindow(player_node);
     storageWindow = new StorageWindow();
+    tradeWindow = new TradeWindow();
 }
 
 /**
@@ -179,38 +179,38 @@ void createGuiWindows()
 static void destroyGuiWindows()
 {
     logger->setChatWindow(NULL);
-    delete chatWindow;
-    delete statusWindow;
-    delete miniStatusWindow;
-    delete menuBar;
     delete buyDialog;
-    delete sellDialog;
     delete buySellDialog;
-    delete inventoryWindow;
+    delete chatWindow;
+    delete emoteShortcutWindow;
     delete emoteWindow;
+    delete equipmentWindow;
+    delete inventoryWindow;
+    delete itemShortcutWindow;
+    delete menuBar;
+    delete minimap;
+    delete miniStatusWindow;
     delete npcIntegerDialog;
     delete npcListDialog;
-    delete npcTextDialog;
     delete npcStringDialog;
+    delete npcTextDialog;
+    delete sellDialog;
     delete skillDialog;
-    delete minimap;
-    delete equipmentWindow;
-    delete tradeWindow;
-    delete itemShortcutWindow;
-    delete emoteShortcutWindow;
+    delete statusWindow;
     delete storageWindow;
+    delete tradeWindow;
 
-    delete itemShortcut;
     delete emoteShortcut;
+    delete itemShortcut;
 
     // Unload XML databases
     ColorDB::unload();
+    EffectDB::unload();
     EmoteDB::unload();
     ItemDB::unload();
     MonsterDB::unload();
     NPCDB::unload();
     SkillDB::unload();
-    EffectDB::unload();
 }
 
 Game::Game(Network *network):
