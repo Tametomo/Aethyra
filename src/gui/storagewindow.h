@@ -72,6 +72,12 @@ class StorageWindow : public Window, gcn::ActionListener, gcn::SelectionListener
         void mouseClicked(gcn::MouseEvent &event);
 
         /**
+         * Allows for progress bars to reset on visibility. This is done more
+         * for a "bling" reason, not a necessary reason.
+         */
+        void widgetShown(const gcn::Event& event);
+
+        /**
          * Add the specified ammount of the specified item to storage
          */
         void addStore(Item* item, int amount);

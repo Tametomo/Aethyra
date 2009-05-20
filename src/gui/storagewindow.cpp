@@ -160,6 +160,11 @@ Item* StorageWindow::getSelectedItem() const
     return mItems->getSelectedItem();
 }
 
+void StorageWindow::widgetShown(const gcn::Event& event)
+{
+    mSlotsBar->reset();
+}
+
 void StorageWindow::addStore(Item *item, int amount)
 {
     MessageOut outMsg(CMSG_MOVE_TO_STORAGE);
@@ -178,4 +183,3 @@ void StorageWindow::close()
 {
     MessageOut outMsg(CMSG_CLOSE_STORAGE);
 }
-

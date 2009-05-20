@@ -73,6 +73,12 @@ class InventoryWindow : public Window, gcn::ActionListener,
 
         void valueChanged(const gcn::SelectionEvent &event);
 
+        /**
+         * Allows for progress bars to reset on visibility. This is done more
+         * for a "bling" reason, not a necessary reason.
+         */
+        void widgetShown(const gcn::Event& event);
+
     private:
         ItemContainer *mItems;
 
