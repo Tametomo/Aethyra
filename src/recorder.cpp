@@ -19,6 +19,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <sstream>
+
 #include <physfs.h>
 
 #include "configuration.h"
@@ -77,9 +79,17 @@ void Recorder::changeRecordingStatus(const std::string &msg)
          * recorded.
          */
         mChat->chatLog(_("Starting to record..."), BY_SERVER);
-        std::string file = std::string(PHYSFS_getUserDir()) + "/.aethyra/" + mFileName;
 
-        mStream.open(file.c_str(), std::ios_base::app);
+        std::stringstream file;
+        file << PHYSFS_getUserDir();
+#if (defined __USE_UNIX98 || defined __FreeBSD__)
+        file << ".aethyra/";
+#elif defined __APPLE__
+        file << "Desktop/";
+#endif
+        file << mFileName;
+
+        mStream.open(file.str().c_str(), std::ios_base::app);
 
         if (!mStream.is_open())
             mChat->chatLog(_("Failed to start recording."), BY_SERVER);
