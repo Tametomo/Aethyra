@@ -7,6 +7,7 @@ gui_DATA =				\
 	buttonhi.png			\
 	buttonpress.png			\
 	checkbox.png			\
+	checkboxhi.png			\
 	circle-green.png		\
 	circle-red.png			\
 	close_button.png		\
@@ -26,6 +27,7 @@ gui_DATA =				\
 	resize.png			\
 	selection.png			\
 	slider.png			\
+	sliderhi.png			\
 	speech_bubble.png		\
 	speechbubble.xml		\
 	tab.png				\

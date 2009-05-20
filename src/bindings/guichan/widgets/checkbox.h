@@ -59,7 +59,9 @@ class CheckBox : public gcn::CheckBox
         static int instances;
         static float mAlpha;
         static Image *checkBoxNormal;
+        static Image *checkBoxNormalHighlight;
         static Image *checkBoxChecked;
+        static Image *checkBoxCheckedHighlight;
         static Image *checkBoxDisabled;
         static Image *checkBoxDisabledChecked;
 };

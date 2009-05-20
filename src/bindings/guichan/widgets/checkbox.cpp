@@ -33,7 +33,9 @@
 int CheckBox::instances = 0;
 float CheckBox::mAlpha = 1.0;
 Image *CheckBox::checkBoxNormal;
+Image *CheckBox::checkBoxNormalHighlight;
 Image *CheckBox::checkBoxChecked;
+Image *CheckBox::checkBoxCheckedHighlight;
 Image *CheckBox::checkBoxDisabled;
 Image *CheckBox::checkBoxDisabledChecked;
 
@@ -48,11 +50,17 @@ CheckBox::CheckBox(const std::string& caption, bool selected):
         checkBoxChecked = checkBox->getSubImage(9, 0, 9, 10);
         checkBoxDisabled = checkBox->getSubImage(18, 0, 9, 10);
         checkBoxDisabledChecked = checkBox->getSubImage(27, 0, 9, 10);
+        Image *highlight = resman->getImage("graphics/gui/checkboxhi.png");
+        checkBoxNormalHighlight = highlight->getSubImage(0, 0, 9, 10);
+        checkBoxCheckedHighlight = highlight->getSubImage(9, 0, 9, 10);
         checkBoxNormal->setAlpha(mAlpha);
+        checkBoxNormalHighlight->setAlpha(mAlpha);
         checkBoxChecked->setAlpha(mAlpha);
+        checkBoxCheckedHighlight->setAlpha(mAlpha);
         checkBoxDisabled->setAlpha(mAlpha);
         checkBoxDisabledChecked->setAlpha(mAlpha);
         checkBox->decRef();
+        highlight->decRef();
     }
 
     instances++;
@@ -65,7 +73,9 @@ CheckBox::~CheckBox()
     if (instances == 0)
     {
         delete checkBoxNormal;
+        delete checkBoxNormalHighlight;
         delete checkBoxChecked;
+        delete checkBoxCheckedHighlight;
         delete checkBoxDisabled;
         delete checkBoxDisabledChecked;
     }
@@ -89,12 +99,16 @@ void CheckBox::drawBox(gcn::Graphics* graphics)
 
     if (isSelected())
     {
-        if (isEnabled())
+        if (isEnabled() && isFocused())
+            box = checkBoxCheckedHighlight;
+        else if (isEnabled() && !isFocused())
             box = checkBoxChecked;
         else
             box = checkBoxDisabledChecked;
     }
-    else if (isEnabled())
+    else if (isEnabled() && isFocused())
+        box = checkBoxNormalHighlight;
+    else if (isEnabled() && !isFocused())
         box = checkBoxNormal;
     else
         box = checkBoxDisabled;
@@ -103,7 +117,9 @@ void CheckBox::drawBox(gcn::Graphics* graphics)
     {
         mAlpha = config.getValue("guialpha", 0.8);
         checkBoxNormal->setAlpha(mAlpha);
+        checkBoxNormalHighlight->setAlpha(mAlpha);
         checkBoxChecked->setAlpha(mAlpha);
+        checkBoxCheckedHighlight->setAlpha(mAlpha);
         checkBoxDisabled->setAlpha(mAlpha);
         checkBoxDisabledChecked->setAlpha(mAlpha);
     }

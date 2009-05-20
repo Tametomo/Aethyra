@@ -33,6 +33,8 @@
 
 Image *Slider::hStart, *Slider::hMid, *Slider::hEnd, *Slider::hGrip;
 Image *Slider::vStart, *Slider::vMid, *Slider::vEnd, *Slider::vGrip;
+Image *Slider::hStartHi, *Slider::hMidHi, *Slider::hEndHi, *Slider::hGripHi;
+Image *Slider::vStartHi, *Slider::vMidHi, *Slider::vEndHi, *Slider::vGripHi;
 float Slider::mAlpha = 1.0;
 int Slider::mInstances = 0;
 
@@ -55,13 +57,21 @@ Slider::~Slider()
     if (mInstances == 0)
     {
         delete hStart;
+        delete hStartHi;
         delete hMid;
+        delete hMidHi;
         delete hEnd;
+        delete hEndHi;
         delete hGrip;
+        delete hGripHi;
         delete vStart;
+        delete vStartHi;
         delete vMid;
+        delete vMidHi;
         delete vEnd;
+        delete vEndHi;
         delete vGrip;
+        delete vGripHi;
     }
 }
 
@@ -75,40 +85,58 @@ void Slider::init()
     {
         ResourceManager *resman = ResourceManager::getInstance();
         Image *slider = resman->getImage("graphics/gui/slider.png");
+        Image *highlight = resman->getImage("graphics/gui/sliderhi.png");
 
         x = 0; y = 0;
         w = 15; h = 6;
         o1 = 4; o2 = 11;
         hStart = slider->getSubImage(x, y, o1 - x, h);
+        hStartHi = highlight->getSubImage(x, y, o1 - x, h);
         hMid = slider->getSubImage(o1, y, o2 - o1, h);
+        hMidHi = highlight->getSubImage(o1, y, o2 - o1, h);
         hEnd = slider->getSubImage(o2, y, w - o2 + x, h);
+        hEndHi = highlight->getSubImage(o2, y, w - o2 + x, h);
 
         x = 6; y = 8;
         w = 9; h = 10;
         hGrip = slider->getSubImage(x, y, w, h);
+        hGripHi = highlight->getSubImage(x, y, w, h);
 
         x = 0; y = 6;
         w = 6; h = 21;
         o1 = 10; o2 = 18;
         vStart = slider->getSubImage(x, y, w, o1 - y);
+        vStartHi = highlight->getSubImage(x, y, w, o1 - y);
         vMid = slider->getSubImage(x, o1, w, o2 - o1);
+        vMidHi = highlight->getSubImage(x, o1, w, o2 - o1);
         vEnd = slider->getSubImage(x, o2, w, h - o2 + y);
+        vEndHi = highlight->getSubImage(x, o2, w, h - o2 + y);
 
         x = 6; y = 8;
         w = 9; h = 10;
         vGrip = slider->getSubImage(x, y, w, h);
+        vGripHi = highlight->getSubImage(x, y, w, h);
 
         slider->decRef();
+        highlight->decRef();
 
         hStart->setAlpha(mAlpha);
+        hStartHi->setAlpha(mAlpha);
         hMid->setAlpha(mAlpha);
+        hMidHi->setAlpha(mAlpha);
         hEnd->setAlpha(mAlpha);
+        hEndHi->setAlpha(mAlpha);
         hGrip->setAlpha(mAlpha);
+        hGripHi->setAlpha(mAlpha);
 
         vStart->setAlpha(mAlpha);
+        vStartHi->setAlpha(mAlpha);
         vMid->setAlpha(mAlpha);
+        vMidHi->setAlpha(mAlpha);
         vEnd->setAlpha(mAlpha);
+        vEndHi->setAlpha(mAlpha);
         vGrip->setAlpha(mAlpha);
+        vGripHi->setAlpha(mAlpha);
     }
 
     mInstances++;
@@ -127,34 +155,59 @@ void Slider::draw(gcn::Graphics *graphics)
     {
         mAlpha = config.getValue("guialpha", 0.8);
         hStart->setAlpha(mAlpha);
+        hStartHi->setAlpha(mAlpha);
         hMid->setAlpha(mAlpha);
+        hMidHi->setAlpha(mAlpha);
         hEnd->setAlpha(mAlpha);
+        hEndHi->setAlpha(mAlpha);
         hGrip->setAlpha(mAlpha);
+        hGripHi->setAlpha(mAlpha);
 
         vStart->setAlpha(mAlpha);
+        vStartHi->setAlpha(mAlpha);
         vMid->setAlpha(mAlpha);
+        vMidHi->setAlpha(mAlpha);
         vEnd->setAlpha(mAlpha);
+        vEndHi->setAlpha(mAlpha);
         vGrip->setAlpha(mAlpha);
+        vGripHi->setAlpha(mAlpha);
     }
 
-    static_cast<Graphics*>(graphics)->drawImage(hStart, x, y);
+    if (isFocused())
+        static_cast<Graphics*>(graphics)->drawImage(hStartHi, x, y);
+    else
+        static_cast<Graphics*>(graphics)->drawImage(hStart, x, y);
 
     w -= hStart->getWidth() + hEnd->getWidth();
     x += hStart->getWidth();
 
-    static_cast<Graphics*>(graphics)->
-        drawImagePattern(hMid, x, y, w, hMid->getHeight());
+    if (isFocused())
+        static_cast<Graphics*>(graphics)->drawImagePattern(hMidHi, x, y, w,
+                                                           hMidHi->getHeight());
+    else
+        static_cast<Graphics*>(graphics)->drawImagePattern(hMid, x, y, w,
+                                                           hMid->getHeight());
 
     x += w;
-    static_cast<Graphics*>(graphics)->drawImage(hEnd, x, y);
+
+    if (isFocused())
+        static_cast<Graphics*>(graphics)->drawImage(hEndHi, x, y);
+    else
+        static_cast<Graphics*>(graphics)->drawImage(hEnd, x, y);
 
     drawMarker(graphics);
 }
 
 void Slider::drawMarker(gcn::Graphics *graphics)
 {
-    static_cast<Graphics*>(graphics)->
-       drawImage(hGrip, getMarkerPosition(), (getHeight() - hGrip->getHeight()) / 2);
+    if (isFocused())
+        static_cast<Graphics*>(graphics)->drawImage(hGripHi, getMarkerPosition(),
+                                                   (getHeight() -
+                                                    hGripHi->getHeight()) / 2);
+    else
+        static_cast<Graphics*>(graphics)->drawImage(hGrip, getMarkerPosition(),
+                                                   (getHeight() -
+                                                    hGrip->getHeight()) / 2);
 }
 
 void Slider::keyPressed(gcn::KeyEvent &keyEvent)

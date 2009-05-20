@@ -71,6 +71,8 @@ class Slider : public gcn::Slider {
 
         static Image *hStart, *hMid, *hEnd, *hGrip;
         static Image *vStart, *vMid, *vEnd, *vGrip;
+        static Image *hStartHi, *hMidHi, *hEndHi, *hGripHi;
+        static Image *vStartHi, *vMidHi, *vEndHi, *vGripHi;
         static float mAlpha;
         static int mInstances;
 };

@@ -4,6 +4,7 @@ SET (FILES
     buttonhi.png
     buttonpress.png
     checkbox.png
+    checkboxhi.png
     circle-green.png
     circle-red.png
     close_button.png
@@ -23,6 +24,7 @@ SET (FILES
     resize.png
     selection.png
     slider.png
+    sliderhi.png
     speech_bubble.png
     speech_bubble.xml
     tab.png
