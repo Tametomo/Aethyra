@@ -45,7 +45,7 @@ Window::Window(const std::string& caption, bool modal, Window *parent,
                const std::string& skin, bool visible):
     gcn::Window(caption),
     mOldVisibility(false),
-    mGrip(0),
+    mGrip(NULL),
     mParent(parent),
     mLayout(NULL),
     mWindowName("window"),
@@ -312,7 +312,8 @@ void Window::setMaxHeight(int height)
 
 void Window::setResizable(bool r)
 {
-    if ((bool) mGrip == r) return;
+    if ((bool) mGrip == r)
+        return;
 
     if (r)
     {
@@ -325,7 +326,7 @@ void Window::setResizable(bool r)
     {
         remove(mGrip);
         delete mGrip;
-        mGrip = 0;
+        mGrip = NULL;
     }
 }
 

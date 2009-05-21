@@ -59,6 +59,10 @@ struct PlayerRelation
     relation mRelation; // bitmask for all of the above
 };
 
+typedef std::pair<std::string, PlayerRelation *> RelationPair;
+typedef std::map<std::string, PlayerRelation *> RelationMap;
+typedef RelationMap::const_iterator RelationMapIterator;
+
 /**
  * Ignore strategy: describes how we should handle ignores.
  */
@@ -76,6 +80,8 @@ public:
     virtual void ignore(Player *player, unsigned int flags) = 0;
 };
 
+typedef std::vector<PlayerIgnoreStrategy *> IgnoreStrategies;
+
 class PlayerRelationsListener
 {
 public:
@@ -84,6 +90,11 @@ public:
 
     virtual void updatedPlayer(const std::string &name) = 0;
 };
+
+typedef std::list<PlayerRelationsListener *> RelationListeners;
+typedef RelationListeners::const_iterator RelationListenersIterator;
+typedef std::vector<std::string> PlayerNames;
+typedef std::vector<std::string>::const_iterator PlayerNamesIterator;
 
 /**
  * Player relations class, represents any particular relations and/or
@@ -131,8 +142,7 @@ public:
     /**
      * Updates the relationship with this player.
      */
-    void setRelation(const std::string &name,
-                     PlayerRelation::relation relation);
+    void setRelation(const std::string &name, PlayerRelation::relation relation);
 
     /**
      * Updates the relationship with this player.
@@ -160,7 +170,7 @@ public:
      * The player ignore strategies are allocated statically and must not be
      * deleted.
      */
-    std::vector<PlayerIgnoreStrategy *> *getPlayerIgnoreStrategies();
+    IgnoreStrategies *getPlayerIgnoreStrategies();
 
     /**
      * Return the current player ignore strategy.
@@ -168,17 +178,13 @@ public:
      * \return A player ignore strategy, or NULL
      */
     PlayerIgnoreStrategy *getPlayerIgnoreStrategy() const
-    {
-        return mIgnoreStrategy;
-    }
+    { return mIgnoreStrategy; }
 
     /**
      * Sets the strategy to call when ignoring players.
      */
     void setPlayerIgnoreStrategy(PlayerIgnoreStrategy *strategy)
-    {
-        mIgnoreStrategy = strategy;
-    }
+    { mIgnoreStrategy = strategy; }
 
     /**
      * For a given ignore strategy short name, find the appropriate index in
@@ -193,7 +199,7 @@ public:
      * Retrieves a sorted vector of all players for which we have any relations
      * recorded.
      */
-    std::vector<std::string> *getPlayers();
+    PlayerNames *getPlayers();
 
     /**
      * Removes all recorded player info.
@@ -213,14 +219,10 @@ public:
     void setPersistIgnores(bool value) { mPersistIgnores = value; }
 
     void addListener(PlayerRelationsListener *listener)
-    {
-        mListeners.push_back(listener);
-    }
+    { mListeners.push_back(listener); }
 
     void removeListener(PlayerRelationsListener *listener)
-    {
-        mListeners.remove(listener);
-    }
+    { mListeners.remove(listener); }
 
 private:
     void signalUpdate(const std::string &name);
@@ -229,13 +231,12 @@ private:
     unsigned int mDefaultPermissions;
 
     PlayerIgnoreStrategy *mIgnoreStrategy;
-    std::map<std::string, PlayerRelation *> mRelations;
-    std::list<PlayerRelationsListener *> mListeners;
-    std::vector<PlayerIgnoreStrategy *> mIgnoreStrategies;
+    RelationMap mRelations;
+    RelationListeners mListeners;
+    IgnoreStrategies mIgnoreStrategies;
 };
 
-
-extern PlayerRelationsManager player_relations; // singleton representation of player relations
-
+extern PlayerRelationsManager player_relations; // singleton representation of
+                                                // player relations
 
 #endif /* !defined(PLAYER_RELATIONS_H) */
