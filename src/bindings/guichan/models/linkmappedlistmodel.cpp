@@ -112,6 +112,7 @@ std::string LinkMappedListModel::getSelectedByY(int y)
 
 void LinkMappedListModel::draw(gcn::Graphics *graphics)
 {
+    graphics->setFont(gui->getFont());
     const int fontHeight = gui->getFont()->getHeight();
     const int alpha = (int) (config.getValue("guialpha", 0.8) * 255.0f);
     int y = 0;
