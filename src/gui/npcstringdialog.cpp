@@ -43,7 +43,7 @@ NpcStringDialog::NpcStringDialog():
 void NpcStringDialog::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "cancel")
-        mValueField->setText("");
+        reset();
 
     close();
 }
@@ -53,8 +53,8 @@ void NpcStringDialog::close()
     Window::close();
     NPC::mTalking = false;
 
-    std::string text = mValueField->getText();
-    mValueField->setText("");
+    std::string text = getValue();
+    reset();
 
     MessageOut outMsg(CMSG_NPC_STR_RESPONSE);
     outMsg.writeInt16(text.length() + 9);

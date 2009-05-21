@@ -68,7 +68,7 @@ class TextInputDialog : public Window, public gcn::ActionListener
          */
         void requestFocus();
 
-    protected:
+    private:
         gcn::TextField *mValueField;
         gcn::Button *mOkButton;
         gcn::Button *mCancelButton;

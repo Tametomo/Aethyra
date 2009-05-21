@@ -61,17 +61,15 @@ void TextInputDialog::setValue(const std::string &value)
 void TextInputDialog::reset()
 {
     mValueField->setText("");
-    requestFocus();
 }
 
 void TextInputDialog::action(const gcn::ActionEvent &event)
 {
     // Proxy button events to our listeners
     ActionListenerIterator i;
+
     for (i = mActionListeners.begin(); i != mActionListeners.end(); ++i)
-    {
         (*i)->action(event);
-    }
 }
 
 void TextInputDialog::requestFocus()
