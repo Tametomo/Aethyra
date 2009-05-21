@@ -57,6 +57,12 @@ class SpeechBubble : public Popup
          */
         void adjustSize();
 
+        /**
+         * Overridden to ensure that the viewport deletes this popup, not the
+         * window container.
+         */
+        void scheduleDelete();
+
     private:
         std::string mText;
         gcn::Label *mCaption;

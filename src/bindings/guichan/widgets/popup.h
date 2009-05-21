@@ -151,20 +151,30 @@ class Popup : public Container
         void setPadding(int padding) { mPadding = padding; }
 
         /**
-         * Sets the name of the popup. This is only useful for debug purposes.
-         */
-        void setPopupName(const std::string &name) { mPopupName = name; }
-
-        /**
          * Returns the name of the popup. This is only useful for debug purposes.
          */
         const std::string& getPopupName() { return mPopupName; }
 
         /**
+         * Sets the name of the popup. This is only useful for debug purposes.
+         */
+        void setPopupName(const std::string &name) { mPopupName = name; }
+
+        /**
+         * Returns the default skin path of the popup.
+         */
+        const std::string& getDefaultSkinPath() { return mDefaultSkinPath; }
+
+        /**
+         * Sets the default skin path of the popup.
+         */
+        void setDefaultSkinPath(const std::string &path) { mDefaultSkinPath = path; }
+
+        /**
          * Schedule this popup for deletion. It will be deleted at the start
          * of the next logic update.
          */
-        void scheduleDelete();
+        virtual void scheduleDelete();
 
         // Inherited from BasicContainer
 

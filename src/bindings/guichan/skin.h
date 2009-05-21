@@ -80,9 +80,21 @@ class Skin
          */
         void updateAlpha();
 
+        /**
+         * Updates the alpha value of the skin using a maximum percentage.
+         */
+        void updateAlpha(float maxPercent);
+
+        /**
+         * Sets the maximum alpha to use for this skin.
+         */
+        void setMaxAlphaPercent(float maxPercent);
+
         int instances;
 
     private:
+        float mMaxAlphaPercent;    /**< What alpha percent to modify the alpha
+                                        updates by. */
         std::string mFilePath;     /**< File name path for the skin */
         std::string mName;         /**< Name of the skin to use */
         ImageRect border;          /**< The window border and background */

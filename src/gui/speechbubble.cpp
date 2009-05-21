@@ -20,21 +20,40 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/exception.hpp>
 #include <guichan/font.hpp>
 
 #include <guichan/widgets/label.hpp>
 
 #include "speechbubble.h"
+#include "viewport.h"
 
 #include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/graphics.h"
+#include "../bindings/guichan/skin.h"
 
 #include "../bindings/guichan/widgets/textbox.h"
 
 SpeechBubble::SpeechBubble():
-    Popup("Speech", "graphics/gui/speechbubble.xml"),
     mText("")
 {
+    setPopupName("Speech");
+    setDefaultSkinPath("graphics/gui/speechbubble.xml");
+
+    if (!viewport)
+        throw GCN_EXCEPTION("SpeechBubble::SpeechBubble(): no viewport set");
+
+    if (!skinLoader)
+        skinLoader = new SkinLoader();
+
+    setPadding(3);
+
+    // Add this speech bubble to the viewport
+    viewport->add(this);
+
+    // SpeechBubbles are invisible by default
+    setVisible(false);
+
     setContentSize(140, 46);
 
     mCaption = new gcn::Label("");
@@ -49,6 +68,12 @@ SpeechBubble::SpeechBubble():
     add(mSpeechBox);
 
     loadPopupConfiguration();
+    mSkin->setMaxAlphaPercent(0.5f);
+    mSkin->updateAlpha();
+    setMinWidth(mSkin->getMinWidth());
+    setMinHeight(mSkin->getMinHeight());
+
+    requestMoveToBottom();
 }
 
 const std::string &SpeechBubble::getCaption()
@@ -94,5 +119,10 @@ void SpeechBubble::adjustSize()
 
     mCaption->setPosition(xPos, getPadding());
     mSpeechBox->setPosition(xPos, yPos);
+}
+
+void SpeechBubble::scheduleDelete()
+{
+    viewport->scheduleDelete(this);
 }
 
