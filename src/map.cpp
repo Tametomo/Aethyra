@@ -141,6 +141,9 @@ void MapLayer::draw(Graphics *graphics, int startX, int startY,
 
     Sprites::const_iterator si = sprites.begin();
 
+    graphics->pushClipArea(gcn::Rectangle(0, 0, graphics->getWidth(),
+                                          graphics->getHeight()));
+
     for (int y = startY; y < endY; y++)
     {
         // If drawing the fringe layer, make sure all sprites above this row of
@@ -171,10 +174,16 @@ void MapLayer::draw(Graphics *graphics, int startX, int startY,
     {
         while (si != sprites.end())
         {
-            (*si)->draw(graphics, -scrollX, -scrollY);
+            if (-scrollX >= 0 && -scrollX <= graphics->getWidth() &&
+                -scrollY >= 0 && -scrollY <= graphics->getHeight())
+            {
+                (*si)->draw(graphics, -scrollX, -scrollY);
+            }
             si++;
         }
     }
+
+    graphics->popClipArea();
 }
 
 Map::Map(int width, int height, int tileWidth, int tileHeight):

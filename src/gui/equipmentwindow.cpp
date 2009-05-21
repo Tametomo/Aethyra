@@ -118,8 +118,7 @@ void EquipmentWindow::draw(gcn::Graphics *graphics)
 
     Item* item;
 
-    Graphics *g = static_cast<Graphics*>(graphics);
-    g->pushClipArea(getChildrenArea());
+    graphics->pushClipArea(getChildrenArea());
 
     for (int i = EQUIP_LEGS_SLOT; i < EQUIP_VECTOREND; i++)
     {
@@ -130,14 +129,14 @@ void EquipmentWindow::draw(gcn::Graphics *graphics)
             const gcn::Color color = guiPalette->getColor(Palette::HIGHLIGHT);
 
             // Set color to the highligh color
-            g->setColor(gcn::Color(color.r, color.g, color.b, getGuiAlpha()));
-            g->fillRectangle(rect);
+            graphics->setColor(gcn::Color(color.r, color.g, color.b, getGuiAlpha()));
+            graphics->fillRectangle(rect);
         }
 
         // Set color black.
-        g->setColor(gcn::Color(0, 0, 0));
+        graphics->setColor(gcn::Color(0, 0, 0));
         // Draw box border.
-        g->drawRectangle(rect);
+        graphics->drawRectangle(rect);
 
         item = (i != EQUIP_AMMO_SLOT) ?
                mInventory->getItem(mEquipment->getEquipment(i)) :
@@ -152,7 +151,7 @@ void EquipmentWindow::draw(gcn::Graphics *graphics)
 
             if (i == EQUIP_AMMO_SLOT)
             {
-                g->setColor(guiPalette->getColor(Palette::TEXT));
+                graphics->setColor(guiPalette->getColor(Palette::TEXT));
                 graphics->drawText(toString(item->getQuantity()),
                                    mEquipIcon[i]->getX() + (mEquipIcon[i]->getWidth() / 2),
                                    mEquipIcon[i]->getY() - getFont()->getHeight(),
@@ -162,7 +161,7 @@ void EquipmentWindow::draw(gcn::Graphics *graphics)
         else if (mEquipIcon[i]->getImage())
             mEquipIcon[i]->setImage(NULL);
     }
-    g->popClipArea();
+    graphics->popClipArea();
 
     Window::drawChildren(graphics);
 }
