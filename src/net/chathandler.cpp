@@ -75,10 +75,10 @@ void ChatHandler::handleMessage(MessageIn *msg)
                     //chatWindow->chatLog("Whisper sent", BY_SERVER);
                     break;
                 case 0x01:
-                    chatWindow->chatLog(_("Whisper could not be sent, user is offline"), BY_SERVER);
+                    chatWindow->chatLog(_("Whisper could not be sent, user is offline."), BY_SERVER);
                     break;
                 case 0x02:
-                    chatWindow->chatLog(_("Whisper could not be sent, ignored by user"), BY_SERVER);
+                    chatWindow->chatLog(_("Whisper could not be sent, ignored by user."), BY_SERVER);
                     break;
             }
             break;
@@ -97,22 +97,19 @@ void ChatHandler::handleMessage(MessageIn *msg)
 
             if (nick == SERVER_NAME)
                 chatWindow->chatLog(chatMsg, BY_SERVER);
-            else {
-                if (player_relations.hasPermission(nick, PlayerRelation::WHISPER))
-                    chatWindow->chatLog(chatMsg, ACT_WHISPER);
-            }
+            else if (player_relations.hasPermission(nick, PlayerRelation::WHISPER))
+                chatWindow->chatLog(chatMsg, ACT_WHISPER);
 
             break;
 
         // Received speech from being
-        case SMSG_BEING_CHAT: {
+        case SMSG_BEING_CHAT:
+        {
             chatMsgLength = msg->readInt16() - 8;
             being = beingManager->findBeing(msg->readInt32());
 
             if (!being || chatMsgLength <= 0)
-            {
                 break;
-            }
 
             chatMsg = msg->readString(chatMsgLength);
 
@@ -135,13 +132,12 @@ void ChatHandler::handleMessage(MessageIn *msg)
         }
 
         case SMSG_PLAYER_CHAT:
-        case SMSG_GM_CHAT: {
+        case SMSG_GM_CHAT:
+        {
             chatMsgLength = msg->readInt16() - 4;
 
             if (chatMsgLength <= 0)
-            {
                 break;
-            }
 
             chatMsg = msg->readString(chatMsgLength);
             std::string::size_type pos = chatMsg.find(" : ", 0);
@@ -158,21 +154,19 @@ void ChatHandler::handleMessage(MessageIn *msg)
                 player_node->setSpeech(chatMsg, SPEECH_TIME);
             }
             else
-            {
                 chatWindow->chatLog(chatMsg, BY_GM);
-            }
             break;
         }
 
         case SMSG_WHO_ANSWER:
-            chatWindow->chatLog("Online users: " + toString(msg->readInt32()),
-                    BY_SERVER);
+            chatWindow->chatLog(strprintf(_("Online users: %d"),
+                                msg->readInt32()), BY_SERVER);
             break;
 
         case 0x010c:
             // Display MVP player
             msg->readInt32(); // id
-            chatWindow->chatLog("MVP player", BY_SERVER);
+            chatWindow->chatLog(_("MVP player"), BY_SERVER);
             break;
     }
 }

@@ -104,7 +104,7 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
     mPreviousButton = new Button(_("Previous"), "previous", this);
     mNextButton = new Button(_("Next"), "next", this);
     mNewDelCharButton = new Button(tempString, "newdel", this);
-    mSelectButton = new Button(_("Ok"), "ok", this);
+    mSelectButton = new Button(_("OK"), "ok", this);
     mCancelButton = new Button(_("Cancel"), "cancel", this);
 
     ContainerPlacer place;

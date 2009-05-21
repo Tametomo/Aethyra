@@ -80,17 +80,17 @@ TradeWindow::TradeWindow():
 
     mPartnerScroll = new ScrollArea(mPartnerItemContainer);
 
-    mMoneyLabel = new Label(strprintf(_("You get %d GP."), 0));
-    mMoneyLabel2 = new Label(_("You give:"));
+    mPartnerMoneyLabel = new Label(strprintf(_("You get %d GP."), 0));
+    mOwnMoneyLabel = new Label(_("You give:"));
     mMoneyField = new TextField;
     mMoneyField->setWidth(50);
 
-    place(1, 0, mMoneyLabel);
+    place(1, 0, mPartnerMoneyLabel);
     place(0, 1, mMyScroll).setPadding(3);
     place(1, 1, mPartnerScroll).setPadding(3);
     ContainerPlacer place;
     place = getPlacer(0, 0);
-    place(0, 0, mMoneyLabel2);
+    place(0, 0, mOwnMoneyLabel);
     place(1, 0, mMoneyField);
     place = getPlacer(0, 2);
     place(6, 0, mAddButton);
@@ -114,8 +114,8 @@ TradeWindow::~TradeWindow()
 
 void TradeWindow::addMoney(int amount)
 {
-    mMoneyLabel->setCaption(strprintf(_("You get %d GP."), amount));
-    mMoneyLabel->adjustSize();
+    mPartnerMoneyLabel->setCaption(strprintf(_("You get %d GP."), amount));
+    mPartnerMoneyLabel->adjustSize();
 }
 
 void TradeWindow::addItem(int id, bool own, int quantity, bool equipment)
@@ -165,7 +165,7 @@ void TradeWindow::reset()
     mOkButton->setEnabled(true);
     mOkOther = false;
     mOkMe = false;
-    mMoneyLabel->setCaption(strprintf(_("You get %d GP."), 0));
+    mPartnerMoneyLabel->setCaption(strprintf(_("You get %d GP."), 0));
     mMoneyField->setEnabled(true);
     mMoneyField->setText("");
 }
@@ -223,7 +223,8 @@ void TradeWindow::action(const gcn::ActionEvent &event)
 
     if (event.getId() == "add")
     {
-        if (!inventoryWindow->isVisible()) return;
+        if (!inventoryWindow->isVisible())
+            return;
 
         if (!item)
             return;
@@ -240,14 +241,10 @@ void TradeWindow::action(const gcn::ActionEvent &event)
         }
 
         if (item->getQuantity() == 1)
-        {
             tradeItem(item, 1);
-        }
+        // Choose amount of items to trade
         else
-        {
-            // Choose amount of items to trade
             new ItemAmountWindow(AMOUNT_TRADE_ADD, this, item);
-        }
     }
     else if (event.getId() == "cancel")
     {
@@ -266,16 +263,13 @@ void TradeWindow::action(const gcn::ActionEvent &event)
             outMsg.writeInt32(tempInt);
         }
         else
-        {
             mMoneyField->setText("");
-        }
+
         mMoneyField->setEnabled(false);
         MessageOut outMsg(CMSG_TRADE_ADD_COMPLETE);
     }
     else if (event.getId() == "trade")
-    {
         MessageOut outMsg(CMSG_TRADE_OK);
-    }
     else if (event.getId() == "showpopupmine")
         mMyItemContainer->showPopup(TRADE, false);
     else if (event.getId() == "showpopuptheirs")

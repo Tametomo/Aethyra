@@ -108,7 +108,7 @@ void BuySellHandler::handleMessage(MessageIn *msg)
             }
             else
             {
-                chatWindow->chatLog(_("Nothing to sell"), BY_SERVER);
+                chatWindow->chatLog(_("Nothing to sell."), BY_SERVER);
                 current_npc = 0;
             }
             break;
@@ -116,23 +116,22 @@ void BuySellHandler::handleMessage(MessageIn *msg)
         case SMSG_NPC_BUY_RESPONSE:
             if (msg->readInt8() == 0)
             {
-                chatWindow->chatLog(_("Thanks for buying"), BY_SERVER);
+                chatWindow->chatLog(_("Thanks for buying."), BY_SERVER);
             }
             else
             {
                 // Reset player money since buy dialog already assumed purchase
                 // would go fine
                 buyDialog->setMoney(player_node->mGp);
-                chatWindow->chatLog(_("Unable to buy"), BY_SERVER);
+                chatWindow->chatLog(_("Unable to buy."), BY_SERVER);
             }
             break;
 
         case SMSG_NPC_SELL_RESPONSE:
             if (msg->readInt8() == 0)
-                chatWindow->chatLog(_("Thanks for selling"), BY_SERVER);
+                chatWindow->chatLog(_("Thanks for selling."), BY_SERVER);
             else
-                chatWindow->chatLog(_("Unable to sell"), BY_SERVER);
-
+                chatWindow->chatLog(_("Unable to sell."), BY_SERVER);
             break;
     }
 }

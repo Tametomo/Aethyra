@@ -64,7 +64,7 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     mItemAmountSlide = new Slider(1.0, mMax);
     mItemAmountSlide->setStepLength(1.0);
     mItemAmountSlide->setHeight(10);
-    mItemAmountSlide->setActionEventId("Slide");
+    mItemAmountSlide->setActionEventId("slide");
     mItemAmountSlide->addActionListener(this);
 
     //Item icon
@@ -75,9 +75,9 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     mItemPopup->setOpaque(false);
 
     // Buttons
-    Button *okButton = new Button(_("Ok"), "Ok", this);
-    Button *cancelButton = new Button(_("Cancel"), "Cancel", this);
-    Button *addAllButton = new Button(_("All"), "All", this);
+    Button *okButton = new Button(_("OK"), "ok", this);
+    Button *cancelButton = new Button(_("Cancel"), "cancel", this);
+    Button *addAllButton = new Button(_("All"), "all", this);
 
     // Set positions
     ContainerPlacer place;
@@ -144,16 +144,16 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
 {
     int amount = 0;
 
-    if (event.getId() == "Cancel")
+    if (event.getId() == "cancel")
     {
         close();
         return;
     }
-    else if (event.getId() == "Slide")
+    else if (event.getId() == "slide")
         amount = static_cast<int>(mItemAmountSlide->getValue());
-    else if (event.getId() == "Ok" || event.getId() == "All")
+    else if (event.getId() == "ok" || event.getId() == "all")
     {
-        if (event.getId() == "All") 
+        if (event.getId() == "all") 
             amount = mMax;
         else
             amount = mItemAmountSlide->getValue();

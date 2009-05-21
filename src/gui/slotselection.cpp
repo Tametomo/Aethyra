@@ -61,12 +61,12 @@ SlotSelectionWindow::SlotSelectionWindow(int use, Window *parent, int id):
     mSlotSlide = new Slider(1.0, mMaxSlot);
     mSlotSlide->setStepLength(1.0);
     mSlotSlide->setHeight(10);
-    mSlotSlide->setActionEventId("Slide");
+    mSlotSlide->setActionEventId("slide");
     mSlotSlide->addActionListener(this);
 
     // Buttons
-    Button *okButton = new Button(_("Ok"), "Ok", this);
-    Button *cancelButton = new Button(_("Cancel"), "Cancel", this);
+    Button *okButton = new Button(_("OK"), "ok", this);
+    Button *cancelButton = new Button(_("Cancel"), "cancel", this);
 
     // Set positions
     ContainerPlacer place;
@@ -96,9 +96,9 @@ void SlotSelectionWindow::action(const gcn::ActionEvent &event)
 {
     int amount = mSlotSlide->getValue();
 
-    if (event.getId() == "Cancel")
+    if (event.getId() == "cancel")
         close();
-    else if (event.getId() == "Ok")
+    else if (event.getId() == "ok")
     {
         switch (mUsage)
         {

@@ -247,9 +247,8 @@ static void init_engine(const Options &options)
             (errno != EEXIST))
 #endif
     {
-        std::cout << homeDir
-                  << _(" can't be created, but it doesn't exist! Exiting.")
-                  << std::endl;
+        std::cout << strprintf(_("%s can't be created, but it doesn't exist! "
+                                 "Exiting."), homeDir.c_str()) << std::endl;
         exit(1);
     }
 
@@ -257,9 +256,9 @@ static void init_engine(const Options &options)
     logger->setLogFile(homeDir + std::string("/aethyra.log"));
 
 #ifdef PACKAGE_VERSION
-    logger->log("Starting Aethyra Version %s", PACKAGE_VERSION);
+    logger->log("Starting Aethyra Version %s.", PACKAGE_VERSION);
 #else
-    logger->log("Starting Aethyra - Version not defined"));
+    logger->log("Starting Aethyra - Version not defined.");
 #endif
 
     // Initialize SDL
@@ -279,9 +278,8 @@ static void init_engine(const Options &options)
 
     if (!resman->setWriteDir(homeDir))
     {
-        std::cout << homeDir
-                  << _(" couldn't be set as home directory! Exiting.")
-                  << std::endl;
+        std::cout << strprintf(_("%s couldn't be set as home directory! "
+                                 "Exiting."), homeDir.c_str()) << std::endl;
         exit(1);
     }
 
@@ -300,7 +298,7 @@ static void init_engine(const Options &options)
     if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path,
                                           PATH_MAX))
     {
-        fprintf(stderr, _("Can't find Resources directory\n"));
+        fprintf(stderr, _("Can't find Resources directory!\n"));
     }
     CFRelease(resourcesURL);
     strncat(path, "/data", PATH_MAX - 1);
@@ -349,8 +347,8 @@ static void init_engine(const Options &options)
 
     if (configFile == NULL)
     {
-        std::cout << "Can't create " << configPath << ". "
-            "Using Defaults." << std::endl;
+        std::cout << strprintf("Can't create %s. Using Defaults.",
+                               configPath.c_str()) << std::endl;
     }
     else
     {
@@ -485,11 +483,9 @@ static void printHelp()
 static void printVersion()
 {
 #ifdef PACKAGE_VERSION
-    std::cout << _("Aethyra version ") << PACKAGE_VERSION << std::endl;
+    std::cout << strprintf(_("Aethyra version %s"), PACKAGE_VERSION) << std::endl;
 #else
-    std::cout << _("Aethyra version ")
-              << _("(local build?, PACKAGE_VERSION is not defined)")
-              << std::endl;
+    std::cout << _("Aethyra - Version not defined.") << std::endl;
 #endif
 }
 

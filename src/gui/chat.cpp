@@ -549,8 +549,8 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
     {
         if (msg.empty())
         {
-            chatLog(mReturnToggles ? _("Return toggles chat.")
-                    : _("Message closes chat."), BY_SERVER);
+            chatLog(mReturnToggles ? _("Return toggles chat.") :
+                                     _("Message closes chat."), BY_SERVER);
             return;
         }
 
@@ -578,7 +578,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
         if (msg.empty())
         {
             chatLog(_("Unknown party command... Type \"/help\" party for more "
-                    "information."), BY_SERVER);
+                      "information."), BY_SERVER);
             return;
         }
 
@@ -643,7 +643,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
             }
         }
 
-        sprintf(cpc,_("%u players are present."), playercount);
+        sprintf(cpc, _("%u players are present."), playercount);
         if (mRecorder->isRecording())
         {
             // Get the current system time
@@ -658,8 +658,8 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
                 << (int) ((t / 60) % 60)
                 << "] ";
 
-            mRecorder->record(timeStr.str() + _("Present: ") + response + "; " +
-                              cpc);
+            mRecorder->record(timeStr.str() + strprintf(_("Present: %s; %s"),
+                             response.c_str(), cpc));
             chatLog(_("Attendance written to record log."), BY_SERVER, true);
         }
         else
@@ -675,7 +675,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
     }
     else
     {
-        chatLog(_("Unknown command"), BY_SERVER);
+        chatLog(_("Unknown command."), BY_SERVER);
     }
 }
 
@@ -854,7 +854,7 @@ void ChatWindow::widgetHidden(const gcn::Event& event)
     widgetShown(event);
 }
 
-void ChatWindow::party(const std::string & command, const std::string & rest)
+void ChatWindow::party(const std::string &command, const std::string &rest)
 {
     if (command == "prefix")
     {
@@ -862,8 +862,8 @@ void ChatWindow::party(const std::string & command, const std::string & rest)
         {
             char temp[2] = ".";
             *temp = mPartyPrefix;
-            chatLog(_("The current party prefix is ") + std::string(temp),
-                    BY_SERVER);
+            chatLog(strprintf(_("The current party prefix is %s."),
+                                std::string(temp).c_str()), BY_SERVER);
         }
         else if (rest.length() != 1)
         {
@@ -878,7 +878,8 @@ void ChatWindow::party(const std::string & command, const std::string & rest)
             else
             {
                 mPartyPrefix = rest.at(0);
-                chatLog(_("Changing prefix to ") + rest, BY_SERVER);
+                chatLog(strprintf(_("Changing prefix to %s."), rest.c_str()),
+                                  BY_SERVER);
             }
         }
     }
@@ -886,36 +887,36 @@ void ChatWindow::party(const std::string & command, const std::string & rest)
         mParty->respond(command, rest);
 }
 
-void ChatWindow::help(const std::string & msg1, const std::string & msg2)
+void ChatWindow::help(const std::string &msg1, const std::string &msg2)
 {
     chatLog(_("-- Help --"), BY_SERVER);
     if (msg1.empty())
     {
-        chatLog(_("/announce: Global announcement (GM only)"), BY_SERVER);
-        chatLog(_("/clear: Clears this window"), BY_SERVER);
-        chatLog(_("/help: Display this help"), BY_SERVER);
-        chatLog(_("/me <message>: Tell something about yourself"), BY_SERVER);
-        chatLog(_("/msg <nick> <message>: Alternate form for /whisper"),
-                BY_SERVER);
-        chatLog(_("/party <command> <params>: Party commands"), BY_SERVER);
-        chatLog(_("/present: Get list of players present"), BY_SERVER);
+        chatLog(_("/announce: Global announcement (GM only)."), BY_SERVER);
+        chatLog(_("/clear: Clears this window."), BY_SERVER);
+        chatLog(_("/help: Display this help."), BY_SERVER);
+        chatLog(_("/me <message>: Tell something about yourself."), BY_SERVER);
+        chatLog(_("/msg <nick> <message>: Alternate form for /whisper."),
+                  BY_SERVER);
+        chatLog(_("/party <command> <params>: Party commands."), BY_SERVER);
+        chatLog(_("/present: Get list of players present."), BY_SERVER);
         chatLog(_("/record <filename>: Start recording the chat to an "
-                  "external file"), BY_SERVER);
-        chatLog(_("/toggle: Determine whether <return> toggles the chat log"),
-                BY_SERVER);
-        chatLog(_("/w <nick> <message>: Short form for /whisper"), BY_SERVER);
-        chatLog(_("/where: Display map name"), BY_SERVER);
+                  "external file."), BY_SERVER);
+        chatLog(_("/toggle: Determine whether <return> toggles the chat log."),
+                  BY_SERVER);
+        chatLog(_("/w <nick> <message>: Short form for /whisper."), BY_SERVER);
+        chatLog(_("/where: Display map name."), BY_SERVER);
         chatLog(_("/whisper <nick> <message>: Sends a private <message> "
-                    "to <nick>"), BY_SERVER);
-        chatLog(_("/who: Display number of online users"), BY_SERVER);
-        chatLog(_("For more information, type /help <command>"), BY_SERVER);
+                  "to <nick>."), BY_SERVER);
+        chatLog(_("/who: Display number of online users."), BY_SERVER);
+        chatLog(_("For more information, type /help <command>."), BY_SERVER);
     }
     else if (msg1 == "announce")
     {
-        chatLog(_("Command: /announce <msg>"), BY_SERVER);
+        chatLog(_("Command: /announce <msg>."), BY_SERVER);
         chatLog(_("*** only available to a GM ***"), BY_SERVER);
         chatLog(_("This command sends the message <msg> to "
-                    "all players currently online."), BY_SERVER);
+                  "all players currently online."), BY_SERVER);
     }
     else if (msg1 == "clear")
     {
@@ -927,7 +928,7 @@ void ChatWindow::help(const std::string & msg1, const std::string & msg2)
     {
         chatLog(_("Command: /help"), BY_SERVER);
         chatLog(_("This command displays a list of all commands available."),
-                BY_SERVER);
+                  BY_SERVER);
         chatLog(_("Command: /help <command>"), BY_SERVER);
         chatLog(_("This command displays help on <command>."), BY_SERVER);
     }
@@ -935,7 +936,7 @@ void ChatWindow::help(const std::string & msg1, const std::string & msg2)
     {
         chatLog(_("Command: /me <msg>"), BY_SERVER);
         chatLog(_("This command tell others you are (doing) <msg>."),
-                BY_SERVER);
+                  BY_SERVER);
     }
     else if (msg1 == "party")
     {
@@ -967,13 +968,13 @@ void ChatWindow::help(const std::string & msg1, const std::string & msg2)
                   "toggle off."), BY_SERVER);
         chatLog(_("Command: /toggle"), BY_SERVER);
         chatLog(_("This command displays the return toggle status."),
-                BY_SERVER);
+                  BY_SERVER);
     }
     else if (msg1 == "where")
     {
         chatLog(_("Command: /where"), BY_SERVER);
         chatLog(_("This command displays the name of the current map."),
-                BY_SERVER);
+                  BY_SERVER);
     }
     else if (msg1 == "whisper" || msg1 == "msg" || msg1 == "w")
     {
@@ -981,7 +982,7 @@ void ChatWindow::help(const std::string & msg1, const std::string & msg2)
         chatLog(_("Command: /whisper <nick> <msg>"), BY_SERVER);
         chatLog(_("Command: /w <nick> <msg>"), BY_SERVER);
         chatLog(_("This command sends the message <msg> to <nick>."),
-                BY_SERVER);
+                  BY_SERVER);
         chatLog(_("If the <nick> has spaces in it, enclose it in "
                   "double quotes (\")."), BY_SERVER);
     }

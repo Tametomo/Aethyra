@@ -296,9 +296,9 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                         Uint32 curGp = player_node->mGp;
                         player_node->mGp = msg->readInt32();
                         if (player_node->mGp > curGp)
-                            chatWindow->chatLog(_("You picked up ") +
-                                toString(player_node->mGp - curGp) + " GP",
-                                BY_SERVER);
+                            chatWindow->chatLog(strprintf(
+                                _("You picked up %d GP"),
+                                player_node->mGp - curGp), BY_SERVER);
                     }
                     break;
                 case 0x0016:
@@ -423,7 +423,7 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                 switch (type)
                 {
                     case 0:
-                        chatWindow->chatLog(_("Equip arrows first"),
+                        chatWindow->chatLog(_("Equip arrows first."),
                                              BY_SERVER);
                         break;
                     default:
@@ -434,3 +434,4 @@ void PlayerHandler::handleMessage(MessageIn *msg)
             break;
     }
 }
+

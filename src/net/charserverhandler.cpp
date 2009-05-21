@@ -70,22 +70,22 @@ void CharServerHandler::handleMessage(MessageIn *msg)
 
             switch (code) {
                 case 0:
-                    errorMessage = _("Authentication failed");
+                    errorMessage = _("Authentication failed.");
                     break;
                 case 1:
-                    errorMessage = _("Map server(s) offline");
+                    errorMessage = _("Map server(s) offline.");
                     break;
                 case 2:
-                    errorMessage = _("This account is already logged in");
+                    errorMessage = _("This account is already logged in.");
                     break;
                 case 3:
-                    errorMessage = _("Speed hack detected");
+                    errorMessage = _("Speed hack detected.");
                     break;
                 case 8:
-                    errorMessage = _("Duplicated login");
+                    errorMessage = _("Duplicated login.");
                     break;
                 default:
-                    errorMessage = _("Unknown connection error");
+                    errorMessage = _("Unknown connection error.");
                     break;
             }
             state = ERROR_STATE;
@@ -115,13 +115,13 @@ void CharServerHandler::handleMessage(MessageIn *msg)
         case 0x006c:
             switch (msg->readInt8()) {
                 case 0:
-                    errorMessage = _("Access denied");
+                    errorMessage = _("Access denied.");
                     break;
                 case 1:
-                    errorMessage = _("Cannot use this ID");
+                    errorMessage = _("Cannot use this ID.");
                     break;
                 default:
-                    errorMessage = _("Unknown failure to select character");
+                    errorMessage = _("Unknown failure to select character.");
                     break;
             }
             mCharInfo->unlock();
@@ -143,9 +143,8 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             break;
 
         case 0x006e:
-            new OkDialog(_("Error"), _("Failed to create character. Most likely"
-                                       " the name is already taken."));
-
+            new OkDialog(_("Error"), _("Failed to create character. Most "
+                                       "likely the name is already taken."));
             if (mCharCreateDialog)
                 mCharCreateDialog->unlock();
             break;
@@ -155,7 +154,7 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             mCharInfo->setEntry(0);
             mCharInfo->unlock();
             n_character--;
-            new OkDialog(_("Info"), _("Player deleted"));
+            new OkDialog(_("Info"), _("Character deleted."));
             break;
 
         case 0x0070:
