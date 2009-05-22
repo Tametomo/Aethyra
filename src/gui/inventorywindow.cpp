@@ -48,6 +48,9 @@
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
 
+extern Window *equipmentWindow;
+extern Window *itemShortcutWindow;
+
 InventoryWindow::InventoryWindow(int invSize):
     Window(_("Inventory")),
     mMaxSlots(invSize),
@@ -78,6 +81,8 @@ InventoryWindow::InventoryWindow(int invSize):
     mDropButton = new Button(_("Drop"), "drop", this);
     mDropButton->setEnabled(false);
 
+    mShortcutButton = new Button(_("Shortcuts"), "shortcuts", this);
+
     mItems = new ItemContainer(player_node->getInventory(), "showpopup", this);
     mItems->addSelectionListener(this);
 
@@ -104,6 +109,7 @@ InventoryWindow::InventoryWindow(int invSize):
     place(6, 0, mSlotsLabel).setPadding(3);
     place(7, 0, mSlotsBar, 2);
     place(0, 1, mInvenScroll, 9, 4);
+    place(0, 5, mShortcutButton);
     place(6, 5, mStoreButton);
     place(7, 5, mDropButton);
     place(8, 5, mUseButton);
@@ -149,6 +155,16 @@ void InventoryWindow::logic()
 
 void InventoryWindow::action(const gcn::ActionEvent &event)
 {
+    if (event.getId() == "shortcuts")
+    {
+        itemShortcutWindow->setVisible(!itemShortcutWindow->isVisible());
+
+        if (itemShortcutWindow->isVisible())
+            itemShortcutWindow->requestMoveToTop();
+
+        return;
+    }
+
     Item *item = mItems->getSelectedItem();
 
     if (!item)

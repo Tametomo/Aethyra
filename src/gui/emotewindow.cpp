@@ -33,6 +33,8 @@
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
 
+extern Window *emoteShortcutWindow;
+
 EmoteWindow::EmoteWindow():
     Window(_("Emote"))
 {
@@ -49,10 +51,13 @@ EmoteWindow::EmoteWindow():
     mEmotes = new EmoteContainer("showpopup", this);
     mEmotes->addSelectionListener(this);
 
+    mShortcutButton = new Button(_("Shortcuts"), "shortcuts", this);
+
     mEmoteScroll = new ScrollArea(mEmotes);
     mEmoteScroll->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
 
     place(0, 0, mEmoteScroll, 5, 4);
+    place(0, 4, mShortcutButton);
     place(4, 4, mUseButton);
 
     Layout &layout = getLayout();
@@ -74,6 +79,13 @@ void EmoteWindow::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "showpopup")
         mEmotes->showPopup(false);
+    else if (event.getId() == "shortcuts")
+    {
+        emoteShortcutWindow->setVisible(!emoteShortcutWindow->isVisible());
+
+        if (emoteShortcutWindow->isVisible())
+            emoteShortcutWindow->requestMoveToTop();
+    }
 }
 
 int EmoteWindow::getSelectedEmote() const

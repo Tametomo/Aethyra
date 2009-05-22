@@ -61,7 +61,7 @@ class EmoteWindow : public Window, gcn::ActionListener,
     private:
         EmoteContainer *mEmotes;
 
-        gcn::Button *mUseButton;
+        gcn::Button *mShortcutButton, *mUseButton;
         gcn::ScrollArea *mEmoteScroll;
 };
 
