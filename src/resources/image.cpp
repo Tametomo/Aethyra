@@ -22,6 +22,8 @@
 
 #include <SDL_image.h>
 
+#include <guichan/color.hpp>
+
 #include "dye.h"
 #include "image.h"
 
@@ -115,13 +117,15 @@ Resource *Image::load(void *buffer, unsigned bufferSize, Dye const &dye)
     for (Uint32 *p_end = pixels + surf->w * surf->h; pixels != p_end; ++pixels)
     {
         int alpha = *pixels & 255;
-        if (!alpha) continue;
-        int v[3];
-        v[0] = (*pixels >> 24) & 255;
-        v[1] = (*pixels >> 16) & 255;
-        v[2] = (*pixels >> 8 ) & 255;
+        if (!alpha)
+            continue;
+        gcn::Color *v = new gcn::Color();
+        v->r = (*pixels >> 24) & 255;
+        v->g = (*pixels >> 16) & 255;
+        v->b = (*pixels >> 8 ) & 255;
         dye.update(v);
-        *pixels = (v[0] << 24) | (v[1] << 16) | (v[2] << 8) | alpha;
+        *pixels = (v->r << 24) | (v->g << 16) | (v->b << 8) | alpha;
+        delete v;
     }
 
     Image *image = load(surf);

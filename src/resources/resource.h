@@ -56,8 +56,7 @@ class Resource
         /**
          * Return the path identifying this resource.
          */
-        const std::string&
-        getIdPath() { return mIdPath; }
+        const std::string& getIdPath() { return mIdPath; }
 
     protected:
         /**

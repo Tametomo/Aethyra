@@ -26,6 +26,8 @@
 #include <string>
 #include <vector>
 
+#include "../bindings/guichan/guichanfwd.h"
+
 /**
  * Class for performing a linear interpolation between colors.
  */
@@ -40,16 +42,15 @@ class DyePalette
          */
         DyePalette(const std::string &pallete);
 
+        ~DyePalette();
+
         /**
          * Gets a pixel color depending on its intensity.
          */
-        void getColor(int intensity, int color[3]) const;
+        void getColor(int intensity, gcn::Color* color) const;
 
     private:
-
-        struct Color { unsigned char value[3]; };
-
-        std::vector< Color > mColors;
+        std::vector<gcn::Color*> mColors;
 };
 
 /**
@@ -75,7 +76,7 @@ class Dye
         /**
          * Modifies a pixel color.
          */
-        void update(int color[3]) const;
+        void update(gcn::Color *color) const;
 
         /**
          * Fills the blank in a dye placeholder with some palette names.
