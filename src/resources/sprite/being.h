@@ -74,6 +74,7 @@ class Being : public Sprite
         enum Type
         {
             UNKNOWN,
+            WARP,
             PLAYER,
             NPC,
             MONSTER

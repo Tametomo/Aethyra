@@ -210,14 +210,8 @@ void InputManager::handleInput()
                     case KeyboardConfig::KEY_WINDOW_CHAT:
                         requestedWindow = chatWindow;
                         break;
-                    case KeyboardConfig::KEY_WINDOW_SHORTCUT:
-                        requestedWindow = itemShortcutWindow;
-                        break;
                     case KeyboardConfig::KEY_WINDOW_EMOTE:
                         requestedWindow = emoteWindow;
-                        break;
-                    case KeyboardConfig::KEY_WINDOW_EMOTE_SHORTCUT:
-                        requestedWindow = emoteShortcutWindow;
                         break;
                     default:
                         break;
@@ -299,17 +293,6 @@ void InputManager::handleInput()
                                 used = true;
                             }
 
-                            if (keyboard.isKeyActive(keyboard.KEY_BEING_MENU) &&
-                                target)
-                            {
-                                viewport->showPopup(target->mX * 32 -
-                                                    viewport->getCameraX() + 16,
-                                                    target->mY * 32 -
-                                                    viewport->getCameraY(),
-                                                    target);
-                                used = true;
-                            }
-
                             if ((keyboard.isKeyActive(keyboard.KEY_ATTACK) ||
                                 (joystick && joystick->buttonPressed(0))) && 
                                  target && target->getType() != Being::NPC)
@@ -324,15 +307,20 @@ void InputManager::handleInput()
                             player_node->stopAttack();
                         }
 
-                        // Talk to the nearest NPC
-                        if (keyboard.isKeyActive(keyboard.KEY_TALK))
+                        if (keyboard.isKeyActive(keyboard.KEY_BEING_MENU))
                         {
                             if (!target)
                                 target = beingManager->findNearestLivingBeing(
-                                                       x, y, 20, Being::NPC);
+                                                       x, y, 20);
 
-                            if (target && target->getType() == Being::NPC)
-                                static_cast<NPC*>(target)->talk();
+                            if (target)
+                            {
+                                viewport->showPopup(target->mX * 32 -
+                                                    viewport->getCameraX() + 16,
+                                                    target->mY * 32 -
+                                                    viewport->getCameraY(),
+                                                    target);
+                            }
                             used = true;
                         }
 
@@ -397,6 +385,12 @@ void InputManager::handleInput()
 
                     switch (tKey)
                     {
+                        case KeyboardConfig::KEY_ITEM_SHORTCUT:
+                            requestedWindow = itemShortcutWindow;
+                            break;
+                        case KeyboardConfig::KEY_EMOTE_SHORTCUT:
+                            requestedWindow = emoteShortcutWindow;
+                            break;
                         // Hide certain windows
                         case KeyboardConfig::KEY_HIDE_WINDOWS:
                             statusWindow->hide();

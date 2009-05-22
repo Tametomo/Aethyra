@@ -233,7 +233,8 @@ Being *BeingManager::findNearestLivingBeing(int x, int y, int maxdist,
         Being *being = (*itr);
         int d = abs(being->mX - x) + abs(being->mY - y);
 
-        if ((being->getType() == type || type == Being::UNKNOWN)
+        if ((being->getType() == type || (type == Being::UNKNOWN &&
+             being->getType() != Being::WARP))
                 && (d < dist || closestBeing == NULL)   // it is closer
                 && being->mAction != Being::DEAD        // no dead beings
                 && being != player_node)                // it is not you

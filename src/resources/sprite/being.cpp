@@ -554,7 +554,10 @@ void Being::drawSpeech(int offsetX, int offsetY)
 
 Being::Type Being::getType() const
 {
-    return UNKNOWN;
+    if (mId >= 110000000)
+        return WARP;
+    else
+        return UNKNOWN;
 }
 
 int Being::getOffset(char pos, char neg) const
