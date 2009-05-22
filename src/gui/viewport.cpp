@@ -210,9 +210,6 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
         (*i)->drawSpeech((int) mPixelViewX, (int) mPixelViewY);
         (*i)->drawEmotion(graphics, (int) mPixelViewX, (int) mPixelViewY);
     }
-
-    // Draw contained widgets
-    WindowContainer::draw(gcnGraphics);
 }
 
 void Viewport::logic()

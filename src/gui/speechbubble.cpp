@@ -68,8 +68,6 @@ SpeechBubble::SpeechBubble():
     add(mSpeechBox);
 
     loadPopupConfiguration();
-    mSkin->setMaxAlphaPercent(0.5f);
-    mSkin->updateAlpha();
     setMinWidth(mSkin->getMinWidth());
     setMinHeight(mSkin->getMinHeight());
 
