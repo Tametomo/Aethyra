@@ -216,6 +216,7 @@ void BrowserBox::clearRows()
     mTextRows.clear();
     mLinks.clear();
     setWidth(0);
+    setHeight(0);
     mSelectedLink = -1;
 }
 
