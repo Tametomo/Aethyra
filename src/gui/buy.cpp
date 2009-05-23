@@ -242,6 +242,7 @@ void BuyDialog::updateButtonsAndLabels()
 void BuyDialog::requestFocus()
 {
     mShopItemList->requestFocus();
+    mShopItemList->setSelected(0);
 }
 
 void BuyDialog::close()

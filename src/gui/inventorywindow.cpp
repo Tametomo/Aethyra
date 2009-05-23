@@ -158,10 +158,6 @@ void InventoryWindow::action(const gcn::ActionEvent &event)
     if (event.getId() == "shortcuts")
     {
         itemShortcutWindow->setVisible(!itemShortcutWindow->isVisible());
-
-        if (itemShortcutWindow->isVisible())
-            itemShortcutWindow->requestMoveToTop();
-
         return;
     }
 
@@ -242,6 +238,11 @@ void InventoryWindow::valueChanged(const gcn::SelectionEvent &event)
 {
     if (event.getSource() == mItems)
         updateButtons();
+}
+
+void InventoryWindow::requestFocus()
+{
+    mItems->requestFocus();
 }
 
 void InventoryWindow::widgetShown(const gcn::Event& event)

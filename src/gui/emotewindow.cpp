@@ -107,3 +107,8 @@ void EmoteWindow::mouseClicked(gcn::MouseEvent &event)
         event.getSource() == mEmotes)
         mEmotes->showPopup();
 }
+
+void EmoteWindow::requestFocus()
+{
+    mEmotes->requestFocus();
+}

@@ -170,3 +170,9 @@ void SkillDialog::cleanList()
     mSkillList.clear();
 }
 
+void SkillDialog::requestFocus()
+{
+    mTable->requestFocus();
+    mTable->setSelectedRow(0);
+}
+

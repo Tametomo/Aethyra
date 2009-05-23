@@ -58,6 +58,11 @@ class EmoteWindow : public Window, gcn::ActionListener,
 
         void mouseClicked(gcn::MouseEvent &event);
 
+        /**
+         * Focuses on the emote container on gaining focus.
+         */
+        void requestFocus();
+
     private:
         EmoteContainer *mEmotes;
 

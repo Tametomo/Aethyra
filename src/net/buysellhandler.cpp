@@ -73,7 +73,6 @@ void BuySellHandler::handleMessage(MessageIn *msg)
             n_items = (msg->getLength() - 4) / 11;
             buyDialog->reset();
             buyDialog->setMoney(player_node->mGp);
-            buyDialog->setVisible(true);
 
             for (int k = 0; k < n_items; k++)
             {
@@ -83,6 +82,7 @@ void BuySellHandler::handleMessage(MessageIn *msg)
                 int itemId = msg->readInt16();
                 buyDialog->addItem(itemId, value);
             }
+            buyDialog->setVisible(true);
             break;
 
         case SMSG_NPC_SELL:
@@ -92,7 +92,6 @@ void BuySellHandler::handleMessage(MessageIn *msg)
             {
                 sellDialog->setMoney(player_node->mGp);
                 sellDialog->reset();
-                sellDialog->setVisible(true);
 
                 for (int k = 0; k < n_items; k++)
                 {
@@ -105,6 +104,7 @@ void BuySellHandler::handleMessage(MessageIn *msg)
                     if (item && !(item->isEquipped()))
                         sellDialog->addItem(item, value);
                 }
+                sellDialog->setVisible(true);
             }
             else
             {

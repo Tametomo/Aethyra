@@ -30,6 +30,7 @@
 #include "../bindings/guichan/widgets/window.h"
 
 class SetupTabContainer;
+class TabbedArea;
 
 /**
  * The setup dialog. Displays several tabs for configuring different aspects
@@ -60,7 +61,13 @@ class Setup : public Window, public gcn::ActionListener
          */
         void logic();
 
+        /**
+         * Focuses on the tabbed area on gaining focus.
+         */
+        void requestFocus();
+
     private:
+        TabbedArea *mPanel;
         std::list<SetupTabContainer*> mTabs;
         gcn::Button* mResetWindows;
 };

@@ -267,6 +267,7 @@ void SellDialog::updateButtonsAndLabels()
 void SellDialog::requestFocus()
 {
     mShopItemList->requestFocus();
+    mShopItemList->setSelected(0);
 }
 
 void SellDialog::close()

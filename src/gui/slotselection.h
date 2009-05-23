@@ -50,9 +50,9 @@ class SlotSelectionWindow : public Window, public gcn::ActionListener
         void action(const gcn::ActionEvent &event);
 
         /**
-         * Sets default amount value.
+         * Reselects the first slot.
          */
-        void resetAmount();
+        void reset();
 
         /**
          * Schedules the slot selection window for deletion.

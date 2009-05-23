@@ -112,6 +112,11 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
 
         void mouseClicked(gcn::MouseEvent &event);
 
+        /**
+         * Focuses on the add button on gaining focus.
+         */
+        void requestFocus();
+
     private:
         typedef const std::auto_ptr<Inventory> InventoryPtr;
         InventoryPtr mMyInventory;

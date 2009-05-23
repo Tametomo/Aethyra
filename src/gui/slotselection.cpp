@@ -86,7 +86,7 @@ SlotSelectionWindow::SlotSelectionWindow(int use, Window *parent, int id):
     mSlotSlide->requestFocus();
 }
 
-void SlotSelectionWindow::resetAmount()
+void SlotSelectionWindow::reset()
 {
     mSlotSlide->setValue(1);
     mSlotLabel->setCaption(strprintf("%d / %d", 1, mMaxSlot));

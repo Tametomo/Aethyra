@@ -93,6 +93,11 @@ class StorageWindow : public Window, gcn::ActionListener, gcn::SelectionListener
          */
         void close();
 
+        /**
+         * Focuses on the item container on gaining focus.
+         */
+        void requestFocus();
+
     private:
         ItemContainer *mItems;
 

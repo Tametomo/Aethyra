@@ -68,6 +68,11 @@ class SkillDialog : public Window, public gcn::ActionListener
 
         const std::vector<SKILL*>& getSkills(void) const { return mSkillList; }
 
+        /**
+         * Focuses on the table on gaining focus.
+         */
+        void requestFocus();
+
     private:
         Table *mTable;
         ScrollArea *skillScrollArea;

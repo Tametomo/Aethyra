@@ -74,6 +74,11 @@ class InventoryWindow : public Window, gcn::ActionListener,
         void valueChanged(const gcn::SelectionEvent &event);
 
         /**
+         * Focuses on the item container on gaining focus.
+         */
+        void requestFocus();
+
+        /**
          * Allows for progress bars to reset on visibility. This is done more
          * for a "bling" reason, not a necessary reason.
          */

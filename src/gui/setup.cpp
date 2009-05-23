@@ -51,8 +51,8 @@ Setup::Setup():
         N_("Reset Windows"), N_("Cancel"), N_("Apply"), 0
     };
 
-    TabbedArea *panel = new TabbedArea;
-    panel->setDimension(gcn::Rectangle(5, 5, width - 10, height - 40));
+    mPanel = new TabbedArea();
+    mPanel->setDimension(gcn::Rectangle(5, 5, width - 10, height - 40));
 
     mTabs.push_back(new Setup_Video());
     mTabs.push_back(new Setup_Audio());
@@ -64,10 +64,10 @@ Setup::Setup():
          i_end = mTabs.end(); i != i_end; ++i)
     {
         SetupTabContainer *tab = *i;
-        panel->addTab(tab->getName(), tab);
+        mPanel->addTab(tab->getName(), tab);
     }
 
-    place(0, 0, panel, 7, 6).setPadding(2);
+    place(0, 0, mPanel, 7, 6).setPadding(2);
 
     for (int i = 0; buttonNames[i] != NULL; ++i)
     {
@@ -125,5 +125,10 @@ void Setup::logic()
     Window::logic();
 
     mResetWindows->setEnabled(mInGame);
+}
+
+void Setup::requestFocus()
+{
+    mPanel->requestFocus();
 }
 

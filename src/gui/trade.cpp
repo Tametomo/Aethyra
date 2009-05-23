@@ -299,3 +299,8 @@ void TradeWindow::mouseClicked(gcn::MouseEvent &event)
              event.getSource() == mPartnerItemContainer)
         mPartnerItemContainer->showPopup(TRADE);
 }
+
+void TradeWindow::requestFocus()
+{
+    mAddButton->requestFocus();
+}

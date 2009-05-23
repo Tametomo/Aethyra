@@ -114,7 +114,6 @@ void StorageWindow::logic()
         mUsedSlots = usedSlots;
 
         mSlotsBar->setProgress((float) mUsedSlots / mMaxSlots);
-
         mSlotsBar->setText(strprintf("%d/%d", mUsedSlots, mMaxSlots));
     }
 }
@@ -184,4 +183,9 @@ void StorageWindow::removeStore(Item *item, int amount)
 void StorageWindow::close()
 {
     MessageOut outMsg(CMSG_CLOSE_STORAGE);
+}
+
+void StorageWindow::requestFocus()
+{
+    mItems->requestFocus();
 }

@@ -108,10 +108,5 @@ void MenuBarListener::action(const gcn::ActionEvent &event)
         window = setupWindow;
 
     if (window)
-    {
         window->setVisible(!window->isVisible());
-
-        if (window->isVisible())
-            window->requestMoveToTop();
-    }
 }
