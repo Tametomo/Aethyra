@@ -347,7 +347,7 @@ void ChatWindow::action(const gcn::ActionEvent & event)
     else if (event.getId() == "record")
     {
         if (!mRecorder->isRecording() && !mRecorderInput->isVisible())
-            mRecorderInput->requestFocus();
+            mRecorderInput->setVisible(true);
         else if (!mRecorder->isRecording() && mRecorderInput->isVisible())
         {
             mRecorderInput->reset();
@@ -837,6 +837,8 @@ void ChatWindow::addItemText(const std::string &item)
 
 void ChatWindow::widgetShown(const gcn::Event& event)
 {
+    Window::widgetShown(event);
+
     /*
      * For whatever reason, if setVisible is called, the mTmpVisible effect
      * should be disabled.
@@ -847,6 +849,8 @@ void ChatWindow::widgetShown(const gcn::Event& event)
 
 void ChatWindow::widgetHidden(const gcn::Event& event)
 {
+    Window::widgetHidden(event);
+
     widgetShown(event);
 }
 

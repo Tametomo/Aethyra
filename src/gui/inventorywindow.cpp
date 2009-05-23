@@ -246,6 +246,8 @@ void InventoryWindow::valueChanged(const gcn::SelectionEvent &event)
 
 void InventoryWindow::widgetShown(const gcn::Event& event)
 {
+    Window::widgetShown(event);
+
     mWeightBar->reset();
     mSlotsBar->reset();
 }

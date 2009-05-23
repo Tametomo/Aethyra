@@ -122,14 +122,15 @@ void NpcListDialog::action(const gcn::ActionEvent &event)
 
 void NpcListDialog::requestFocus()
 {
-    if (!isVisible())
-    {
-        loadWindowState();
-        setVisible(true);
-    }
-
     mItemList->requestFocus();
     mItemList->setSelected(0);
+}
+
+void NpcListDialog::widgetShown(const gcn::Event& event)
+{
+    Window::widgetShown(event);
+
+    loadWindowState();
 }
 
 void NpcListDialog::close()

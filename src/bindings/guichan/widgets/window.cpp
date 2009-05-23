@@ -346,6 +346,14 @@ void Window::widgetResized(const gcn::Event &event)
     }
 }
 
+void Window::widgetShown(const gcn::Event& event)
+{
+    mVisible = true;
+
+    requestFocus();
+    requestMoveToTop();
+}
+
 void Window::setCloseButton(bool flag)
 {
     mCloseButton = flag;

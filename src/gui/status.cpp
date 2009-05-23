@@ -283,6 +283,8 @@ void StatusWindow::action(const gcn::ActionEvent &event)
 
 void StatusWindow::widgetShown(const gcn::Event& event)
 {
+    Window::widgetShown(event);
+
     mHpBar->reset();
     mMpBar->reset();
     mXpBar->reset();

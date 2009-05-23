@@ -68,11 +68,6 @@ class NpcIntegerDialog : public Window, public gcn::ActionListener
         void setRange(const int min, const int max);
 
         /**
-         * Checks whether NpcStringDialog is Focused or not.
-         */
-        bool isInputFocused();
-
-        /**
          * Requests the textfield to take focus for input.
          */
         void requestFocus();

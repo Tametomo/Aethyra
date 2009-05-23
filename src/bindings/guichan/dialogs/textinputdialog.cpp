@@ -74,7 +74,6 @@ void TextInputDialog::action(const gcn::ActionEvent &event)
 
 void TextInputDialog::requestFocus()
 {
-    setVisible(true);
     mValueField->requestFocus();
 }
 

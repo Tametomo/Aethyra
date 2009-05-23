@@ -80,6 +80,12 @@ class NpcListDialog : public Window, public gcn::ActionListener,
         void requestFocus();
 
         /**
+         * Readjust the window dimensions in case the NPC text dialog was
+         * resized.
+         */
+        void widgetShown(const gcn::Event& event);
+
+        /**
          * Overridden close() method which cleans up the NPC List dialog on
          * close or losing visibility.
          */

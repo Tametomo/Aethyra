@@ -66,6 +66,8 @@ DebugWindow::DebugWindow():
 
 void DebugWindow::widgetShown(const gcn::Event& event)
 {
+    Window::widgetShown(event);
+
     if (!engine)
     {
         mTileMouseLabel->setVisible(false);

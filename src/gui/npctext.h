@@ -97,6 +97,12 @@ class NpcTextDialog : public Window, public gcn::ActionListener
          */
         void widgetResized(const gcn::Event &event);
 
+        /**
+         * Readjust the window dimensions in case the NPC list dialog was
+         * resized.
+         */
+        void widgetShown(const gcn::Event& event);
+
     private:
         gcn::ScrollArea *mScrollArea;
         TextBox *mTextBox;

@@ -108,5 +108,7 @@ void HelpWindow::requestFocus()
 
 void HelpWindow::widgetHidden(const gcn::Event& event)
 {
+    Window::widgetHidden(event);
+
     loadHelp("index");
 }

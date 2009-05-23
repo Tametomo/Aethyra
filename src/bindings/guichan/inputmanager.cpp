@@ -448,11 +448,6 @@ void InputManager::handleInput()
             if (requestedWindow)
             {
                 requestedWindow->setVisible(!requestedWindow->isVisible());
-
-                requestedWindow->requestFocus();
-                if (requestedWindow->isVisible())
-                    requestedWindow->requestMoveToTop();
-
                 used = true;
             }
         }
