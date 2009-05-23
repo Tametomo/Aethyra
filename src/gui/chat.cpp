@@ -274,19 +274,13 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
                 temp[i] = (char) tolower(temp[i]);
             }
 
-            // Do not parse an empty string (it crashes the client)
-            if (!temp.empty())
+            const ItemInfo itemInfo = ItemDB::get(temp);
+            if (itemInfo.getName() != _("Unknown item"))
             {
-                toLower(trim(temp));
-
-                const ItemInfo itemInfo = ItemDB::get(temp);
-                if (itemInfo.getName() != _("Unknown item"))
-                {
-                    tmp.text.insert(end, "@@");
-                    tmp.text.insert(start+1, "|");
-                    tmp.text.insert(start+1, toString(itemInfo.getId()));
-                    tmp.text.insert(start+1, "@@");
-                }
+                tmp.text.insert(end, "@@");
+                tmp.text.insert(start+1, "|");
+                tmp.text.insert(start+1, toString(itemInfo.getId()));
+                tmp.text.insert(start+1, "@@");
             }
         }
         start = tmp.text.find('[', start + 1);

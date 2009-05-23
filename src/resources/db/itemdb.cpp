@@ -182,7 +182,7 @@ const ItemInfo& ItemDB::get(int id)
 
 const ItemInfo& ItemDB::get(const std::string &name)
 {
-    assert(mLoaded && !name.empty());
+    assert(mLoaded);
 
     NamedItemInfoIterator i = mNamedItemInfos.find(name);
 
