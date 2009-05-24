@@ -31,6 +31,8 @@
 #include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/palette.h"
 
+#include "../bindings/guichan/handlers/wordtextwraphandler.h"
+
 #include "../bindings/guichan/widgets/textbox.h"
 
 #include "../resources/db/iteminfo.h"
@@ -51,17 +53,17 @@ ItemPopup::ItemPopup():
     const int fontHeight = getFont()->getHeight();
 
     // Item Description
-    mItemDesc = new TextBox();
+    mItemDesc = new TextBox(new WordTextWrapHandler());
     mItemDesc->setEditable(false);
     mItemDesc->setPosition(getPadding(), fontHeight);
 
     // Item Effect
-    mItemEffect = new TextBox();
+    mItemEffect = new TextBox(new WordTextWrapHandler());
     mItemEffect->setEditable(false);
     mItemEffect->setPosition(getPadding(), 2 * fontHeight + 2 * getPadding());
 
     // Item Weight
-    mItemWeight = new TextBox();
+    mItemWeight = new TextBox(new WordTextWrapHandler());
     mItemWeight->setEditable(false);
     mItemWeight->setPosition(getPadding(), 3 * fontHeight + 4 * getPadding());
 

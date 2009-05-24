@@ -33,7 +33,6 @@
 class Item;
 class ItemContainer;
 class ProgressBar;
-class TextBox;
 
 /**
  * Inventory dialog.

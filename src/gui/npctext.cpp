@@ -24,6 +24,8 @@
 
 #include "../bindings/guichan/layout.h"
 
+#include "../bindings/guichan/handlers/wordtextwraphandler.h"
+
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/textbox.h"
@@ -46,7 +48,7 @@ NpcTextDialog::NpcTextDialog():
 
     setDefaultSize(260, 200, ImageRect::CENTER);
 
-    mTextBox = new TextBox;
+    mTextBox = new TextBox(new WordTextWrapHandler());
     mTextBox->setEditable(false);
     mTextBox->setOpaque(false);
 

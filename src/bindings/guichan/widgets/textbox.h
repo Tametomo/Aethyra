@@ -25,10 +25,13 @@
 
 #include <guichan/widgets/textbox.hpp>
 
+#include "../handlers/textwraphandler.h"
+
 /**
  * A text box, meant to be used inside a scroll area. Same as the Guichan text
  * box except this one doesn't have a background or border, instead completely
- * relying on the scroll area.
+ * relying on the scroll area, as well as being able to supply the TextBox with
+ * different text wrapping algorithms.
  *
  * \ingroup GUI
  */
@@ -38,14 +41,16 @@ class TextBox : public gcn::TextBox
         /**
          * Constructor.
          */
-        TextBox();
+        TextBox(TextWrapHandler *wrapHandler = NULL);
+
+        ~TextBox();
 
         inline void setTextColor(const gcn::Color* color) { mTextColor = color; }
 
         /**
          * Sets the text after wrapping it to the current width of the widget.
          */
-        void setTextWrapped(const std::string &text, int minDimension);
+        void setTextWrapped(const std::string &text, int maxDimension = 100);
 
         /**
          * Get the minimum text width for the text box.
@@ -63,6 +68,9 @@ class TextBox : public gcn::TextBox
 
     private:
         int mMinWidth;
+
+        TextWrapHandler *mWrapHandler;
+
         const gcn::Color* mTextColor;
 };
 

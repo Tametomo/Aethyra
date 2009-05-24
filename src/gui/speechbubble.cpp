@@ -32,6 +32,8 @@
 #include "../bindings/guichan/graphics.h"
 #include "../bindings/guichan/skin.h"
 
+#include "../bindings/guichan/handlers/wordtextwraphandler.h"
+
 #include "../bindings/guichan/widgets/textbox.h"
 
 SpeechBubble::SpeechBubble():
@@ -59,7 +61,7 @@ SpeechBubble::SpeechBubble():
     mCaption = new gcn::Label("");
     mCaption->setFont(gui->getBoldFont());
 
-    mSpeechBox = new TextBox();
+    mSpeechBox = new TextBox(new WordTextWrapHandler());
     mSpeechBox->setEditable(false);
     mSpeechBox->setOpaque(false);
     mSpeechBox->setTextColor(&guiPalette->getColor(Palette::CHAT));

@@ -26,6 +26,8 @@
 
 #include "../gui.h"
 
+#include "../handlers/wordtextwraphandler.h"
+
 #include "../widgets/button.h"
 #include "../widgets/textbox.h"
 
@@ -35,7 +37,7 @@ OkDialog::OkDialog(const std::string &title, const std::string &msg,
                    Window *parent):
     Window(title, true, parent)
 {
-    mTextBox = new TextBox();
+    mTextBox = new TextBox(new WordTextWrapHandler());
     mTextBox->setEditable(false);
     mTextBox->setOpaque(false);
     mTextBox->setTextWrapped(msg, 260);

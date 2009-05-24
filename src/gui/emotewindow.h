@@ -28,7 +28,6 @@
 #include "../bindings/guichan/widgets/window.h"
 
 class EmoteContainer;
-class TextBox;
 
 /**
  * Emote dialog.

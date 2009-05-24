@@ -31,13 +31,15 @@
 #include "../graphics.h"
 #include "../palette.h"
 
+#include "../handlers/wordtextwraphandler.h"
+
 #include "../../../configuration.h"
 
 ToolTip::ToolTip():
     Container(),
     mText("")
 {
-    mToolTipBox = new TextBox();
+    mToolTipBox = new TextBox(new WordTextWrapHandler());
     mToolTipBox->setEditable(false);
     mToolTipBox->setOpaque(false);
 

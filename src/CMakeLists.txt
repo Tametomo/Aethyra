@@ -84,6 +84,9 @@ SET(SRCS
     bindings/guichan/handlers/itemlinkhandler.cpp
     bindings/guichan/handlers/itemlinkhandler.h
     bindings/guichan/handlers/linkhandler.h
+    bindings/guichan/handlers/textwraphandler.h
+    bindings/guichan/handlers/wordtextwraphandler.cpp
+    bindings/guichan/handlers/wordtextwraphandler.h
     bindings/guichan/models/ignorechoiceslistmodel.h
     bindings/guichan/models/keylistmodel.h
     bindings/guichan/models/linkmappedlistmodel.cpp

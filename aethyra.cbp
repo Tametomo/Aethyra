@@ -137,6 +137,9 @@
 		<Unit filename="src\bindings\guichan\handlers\itemlinkhandler.cpp" />
 		<Unit filename="src\bindings\guichan\handlers\itemlinkhandler.h" />
 		<Unit filename="src\bindings\guichan\handlers\linkhandler.h" />
+		<Unit filename="src\bindings\guichan\handlers\textwraphandler.h" />
+		<Unit filename="src\bindings\guichan\handlers\wordtextwraphandler.cpp" />
+		<Unit filename="src\bindings\guichan\handlers\wordtextwraphandler.h" />
 		<Unit filename="src\bindings\guichan\models\ignorechoiceslistmodel.h" />
 		<Unit filename="src\bindings\guichan\models\keylistmodel.h" />
 		<Unit filename="src\bindings\guichan\models\linkmappedlistmodel.cpp" />
