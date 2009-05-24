@@ -45,6 +45,12 @@ namespace
 static void loadSpriteRef(ItemInfo *itemInfo, xmlNodePtr node);
 static void loadSoundRef(ItemInfo *itemInfo, xmlNodePtr node);
 
+static std::string normalized(const std::string &name)
+{
+    std::string normalized = name;
+    return toLower(trim(normalized));
+}
+
 void ItemDB::load()
 {
     if (mLoaded)
@@ -119,8 +125,7 @@ void ItemDB::load()
             mItemInfos[id] = itemInfo;
             if (!name.empty())
             {
-                std::string temp = name;
-                toLower(trim(temp));
+                const std::string &temp = normalized(name);
 
                 NamedItemInfoIterator itr = mNamedItemInfos.find(temp);
 
@@ -184,7 +189,7 @@ const ItemInfo& ItemDB::get(const std::string &name)
 {
     assert(mLoaded);
 
-    NamedItemInfoIterator i = mNamedItemInfos.find(name);
+    NamedItemInfoIterator i = mNamedItemInfos.find(normalized(name));
 
     if (i == mNamedItemInfos.end())
     {
