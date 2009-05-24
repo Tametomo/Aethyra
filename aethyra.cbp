@@ -136,6 +136,8 @@
 		<Unit filename="src\bindings\guichan\handlers\focushandler.h" />
 		<Unit filename="src\bindings\guichan\handlers\itemlinkhandler.cpp" />
 		<Unit filename="src\bindings\guichan\handlers\itemlinkhandler.h" />
+		<Unit filename="src\bindings\guichan\handlers\lettertextwraphandler.cpp" />
+		<Unit filename="src\bindings\guichan\handlers\lettertextwraphandler.h" />
 		<Unit filename="src\bindings\guichan\handlers\linkhandler.h" />
 		<Unit filename="src\bindings\guichan\handlers\textwraphandler.h" />
 		<Unit filename="src\bindings\guichan\handlers\wordtextwraphandler.cpp" />

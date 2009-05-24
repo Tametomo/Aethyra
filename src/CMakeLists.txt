@@ -83,6 +83,8 @@ SET(SRCS
     bindings/guichan/handlers/focushandler.h
     bindings/guichan/handlers/itemlinkhandler.cpp
     bindings/guichan/handlers/itemlinkhandler.h
+    bindings/guichan/handlers/lettertextwraphandler.cpp
+    bindings/guichan/handlers/lettertextwraphandler.h
     bindings/guichan/handlers/linkhandler.h
     bindings/guichan/handlers/textwraphandler.h
     bindings/guichan/handlers/wordtextwraphandler.cpp
