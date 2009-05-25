@@ -29,14 +29,19 @@
 #include "container.h"
 
 class TextBox;
+class ToolTipConfigListener;
 
 class ToolTip : public Container
 {
     public:
+        friend class ToolTipConfigListener;
+
         /**
          * Constructor.
          */
         ToolTip();
+
+        ~ToolTip();
 
         /**
          * Draws the tooltip.
@@ -59,6 +64,8 @@ class ToolTip : public Container
         void view(int x, int y);
 
     private:
+        ToolTipConfigListener *mConfigListener;
+
         std::string mText;
         TextBox *mToolTipBox;
 };

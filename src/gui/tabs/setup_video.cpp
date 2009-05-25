@@ -269,9 +269,9 @@ void Setup_Video::apply()
     {
         const int val = (int) mFontSizeSlider->getValue();
 
-        config.setValue("fontSize", val);
-
         gui->changeFontSize(val);
+
+        config.setValue("fontSize", val);
     }
 
     if (mFpsCheckBox->isSelected())
