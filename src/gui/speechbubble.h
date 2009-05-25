@@ -29,20 +29,20 @@
 
 #include "../bindings/guichan/widgets/popup.h"
 
-class SpeechBubbleConfigListener;
 class TextBox;
 
 class SpeechBubble : public Popup
 {
     public:
-        friend class SpeechBubbleConfigListener;
-
         /**
          * Constructor. Initializes the speech bubble.
          */
         SpeechBubble();
 
-        ~SpeechBubble();
+        /**
+         * Adjusts the cached speech bubble area on font size change.
+         */
+        virtual void fontChanged();
 
         const std::string &getCaption();
 
@@ -69,8 +69,6 @@ class SpeechBubble : public Popup
         void scheduleDelete();
 
     private:
-        SpeechBubbleConfigListener *mConfigListener;
-
         std::string mText;
         gcn::Label *mCaption;
         TextBox *mSpeechBox;

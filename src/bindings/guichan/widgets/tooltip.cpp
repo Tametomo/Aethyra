@@ -34,34 +34,11 @@
 #include "../handlers/wordtextwraphandler.h"
 
 #include "../../../configuration.h"
-#include "../../../configlistener.h"
-
-class ToolTipConfigListener : public ConfigListener
-{
-    public:
-        ToolTipConfigListener(ToolTip *tt):
-            mToolTip(tt)
-        {}
-
-        void optionChanged(const std::string &name)
-        {
-            if (name == "fontSize")
-            {
-                mToolTip->setText(mToolTip->mText);
-                mToolTip->adjustSize();
-            }
-        }
-    private:
-        ToolTip *mToolTip;
-};
 
 ToolTip::ToolTip():
     Container(),
     mText("")
 {
-    mConfigListener = new ToolTipConfigListener(this);
-    config.addListener("fontSize", mConfigListener);
-
     mToolTipBox = new TextBox(new WordTextWrapHandler());
     mToolTipBox->setEditable(false);
     mToolTipBox->setOpaque(false);
@@ -70,12 +47,6 @@ ToolTip::ToolTip():
     windowContainer->add(this);
 
     setVisible(false);
-}
-
-ToolTip::~ToolTip()
-{
-    config.removeListener("fontSize", mConfigListener);
-    delete mConfigListener;
 }
 
 void ToolTip::draw(gcn::Graphics *graphics)
@@ -93,6 +64,12 @@ void ToolTip::draw(gcn::Graphics *graphics)
     g->drawLine(0, getHeight() - 5, getWidth() - 6, getHeight() - 5);
 
     drawChildren(graphics);
+}
+
+void ToolTip::fontChanged()
+{
+    setText(mText);
+    adjustSize();
 }
 
 void ToolTip::setText(std::string text)
