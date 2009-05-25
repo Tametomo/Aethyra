@@ -47,6 +47,16 @@ class TextInputDialog : public Window, public gcn::ActionListener
         virtual void action(const gcn::ActionEvent &event);
 
         /**
+         * Adjusts the size of the text input dialog.
+         */
+        void adjustSize();
+
+        /**
+         * Reflows the TextInputDialog's layout on font size changes.
+         */
+        virtual void fontChanged();
+
+        /**
          * Returns the current value.
          */
         std::string getValue();

@@ -35,7 +35,6 @@ class LayoutCell;
 class ContainerPlacer
 {
     public:
-
         ContainerPlacer(gcn::Container *c = NULL, LayoutCell *l = NULL):
             mContainer(c), mCell(l)
         {}
@@ -43,8 +42,7 @@ class ContainerPlacer
         /**
          * Gets the pointed cell.
          */
-        LayoutCell &getCell()
-        { return *mCell; }
+        LayoutCell &getCell() { return *mCell; }
 
         /**
          * Returns a placer for the same container but to an inner cell.
@@ -59,7 +57,6 @@ class ContainerPlacer
             (int x, int y, gcn::Widget *, int w = 1, int h = 1);
 
     private:
-
         gcn::Container *mContainer;
         LayoutCell *mCell;
 };
@@ -72,7 +69,6 @@ class LayoutArray
     friend class LayoutCell;
 
     public:
-
         LayoutArray();
 
         ~LayoutArray();
@@ -178,26 +174,22 @@ class LayoutCell
         /**
          * Sets the padding around the cell content.
          */
-        LayoutCell &setPadding(int p)
-        { mPadding = p; return *this; }
+        LayoutCell &setPadding(int p) { mPadding = p; return *this; }
 
         /**
          * Sets the horizontal alignment of the cell content.
          */
-        LayoutCell &setHAlign(Alignment a)
-        { mAlign[0] = a; return *this; }
+        LayoutCell &setHAlign(Alignment a) { mAlign[0] = a; return *this; }
 
         /**
          * Sets the vertical alignment of the cell content.
          */
-        LayoutCell &setVAlign(Alignment a)
-        { mAlign[1] = a; return *this; }
+        LayoutCell &setVAlign(Alignment a) { mAlign[1] = a; return *this; }
 
         /**
          * @see LayoutArray::at
          */
-        LayoutCell &at(int x, int y)
-        { return getArray().at(x, y); }
+        LayoutCell &at(int x, int y) { return getArray().at(x, y); }
 
         /**
          * @see LayoutArray::place
@@ -208,20 +200,17 @@ class LayoutCell
         /**
          * @see LayoutArray::matchColWidth
          */
-        void matchColWidth(int n1, int n2)
-        { getArray().matchColWidth(n1, n2); }
+        void matchColWidth(int n1, int n2) { getArray().matchColWidth(n1, n2); }
 
         /**
          * @see LayoutArray::setColWidth
          */
-        void setColWidth(int n, int w)
-        { getArray().setColWidth(n, w); }
+        void setColWidth(int n, int w) { getArray().setColWidth(n, w); }
 
         /**
          * @see LayoutArray::setRowHeight
          */
-        void setRowHeight(int n, int h)
-        { getArray().setRowHeight(n, h); }
+        void setRowHeight(int n, int h) { getArray().setRowHeight(n, h); }
 
         /**
          * @see LayoutArray::extend.
@@ -287,14 +276,12 @@ class LayoutCell
 class Layout: public LayoutCell
 {
     public:
-
         Layout();
 
         /**
          * Sets the margin around the layout.
          */
-        void setMargin(int m)
-        { setPadding(m); }
+        void setMargin(int m) { setPadding(m); }
 
         /**
          * Sets the positions of all the widgets.
@@ -314,7 +301,6 @@ class Layout: public LayoutCell
         };
 
     private:
-
         bool mComputed;
 };
 
