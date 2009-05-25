@@ -28,6 +28,9 @@
 #include "speechbubble.h"
 #include "viewport.h"
 
+#include "../configuration.h"
+#include "../configlistener.h"
+
 #include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/graphics.h"
 #include "../bindings/guichan/skin.h"
@@ -35,6 +38,27 @@
 #include "../bindings/guichan/handlers/wordtextwraphandler.h"
 
 #include "../bindings/guichan/widgets/textbox.h"
+
+class SpeechBubbleConfigListener : public ConfigListener
+{
+    public:
+        SpeechBubbleConfigListener(SpeechBubble *speech):
+            mSpeechBubble(speech)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "fontSize")
+            {
+                mSpeechBubble->mCaption->setFont(gui->getBoldFont());
+                mSpeechBubble->mCaption->adjustSize();
+                mSpeechBubble->setText(mSpeechBubble->mText);
+                mSpeechBubble->adjustSize();
+            }
+        }
+    private:
+        SpeechBubble *mSpeechBubble;
+};
 
 SpeechBubble::SpeechBubble():
     mText("")
@@ -58,6 +82,9 @@ SpeechBubble::SpeechBubble():
 
     setContentSize(140, 46);
 
+    mConfigListener = new SpeechBubbleConfigListener(this);
+    config.addListener("fontSize", mConfigListener);
+
     mCaption = new gcn::Label("");
     mCaption->setFont(gui->getBoldFont());
 
@@ -76,6 +103,12 @@ SpeechBubble::SpeechBubble():
     requestMoveToBottom();
 }
 
+SpeechBubble::~SpeechBubble()
+{
+    config.removeListener("fontSize", mConfigListener);
+    delete mConfigListener;
+}
+
 const std::string &SpeechBubble::getCaption()
 {
     return mCaption->getCaption();
@@ -91,6 +124,8 @@ void SpeechBubble::setCaption(const std::string &name, const gcn::Color *color)
 
 void SpeechBubble::setText(std::string text)
 {
+    mText = text;
+
     int width = mCaption->getWidth() + 2 * getPadding();
     mSpeechBox->setTextColor(&guiPalette->getColor(Palette::TEXT));
     mSpeechBox->setTextWrapped(text, 130 > width ? 130 : width);
