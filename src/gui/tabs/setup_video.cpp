@@ -271,6 +271,12 @@ void Setup_Video::apply()
 
         gui->changeFontSize(val);
 
+        if (menuBar)
+            menuBar->adjustSizeAndPosition();
+
+        if (!mInGame && desktop)
+            desktop->resize();
+
         config.setValue("fontSize", val);
     }
 
@@ -387,10 +393,9 @@ void Setup_Video::action(const gcn::ActionEvent &event)
 
             // The menuBar is a Popup, not a subclass of Window
             if (menuBar)
-                menuBar->setPosition(graphics->getWidth() - menuBar->getWidth() -
-                                     3, 3);
+                menuBar->adjustSizeAndPosition();
 
-            if (!mInGame)
+            if (!mInGame && desktop)
                 desktop->resize();
 
             // Reposition all the open sub-windows. The rest of the windows will

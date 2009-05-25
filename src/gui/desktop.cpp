@@ -128,6 +128,15 @@ void Desktop::resize()
     const int newScreenWidth = graphics->getWidth();
     const int newScreenHeight = graphics->getHeight();
 
+#ifdef PACKAGE_VERSION
+    versionLabel->adjustSize();
+#endif
+
+    progressLabel->adjustSize();
+
+    setup->adjustSize();
+    setup->setPosition(getWidth() - setup->getWidth() - 3, 3);
+
     if (getWidth() != newScreenWidth || getHeight() != newScreenHeight)
     {
         setWidth(newScreenWidth);
@@ -152,7 +161,6 @@ void Desktop::resize()
                                  progressBar->getHeight());
         progressLabel->setPosition(15 + progressBar->getWidth(), 4 +
                                    progressBar->getY());
-        setup->setPosition(getWidth() - setup->getWidth() - 3, 3);
 
         positionDialog(currentDialog);
     }

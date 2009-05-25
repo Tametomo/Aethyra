@@ -68,17 +68,28 @@ MenuBar::MenuBar():
         N_("Setup"),
         0
     };
-    int x = 0, h = 0;
 
     for (const char **curBtn = buttonNames; *curBtn; curBtn++)
     {
         gcn::Button *btn = new Button(gettext(*curBtn), *curBtn, &listener);
-        btn->setPosition(x, 0);
         btn->setFocusable(false);
         buttons.push_back(btn);
         add(btn);
-        x += btn->getWidth() + 3;
-        h = btn->getHeight();
+    }
+
+    adjustSizeAndPosition();
+}
+
+void MenuBar::adjustSizeAndPosition()
+{
+    int x = 0, h = 0;
+
+    for (size_t i = 0; i < buttons.size(); i++)
+    {
+        buttons[i]->setPosition(x, 0);
+        buttons[i]->adjustSize();
+        x += buttons[i]->getWidth() + 3;
+        h = buttons[i]->getHeight();
     }
 
     setPosition(graphics->getWidth() - x - 3, 3);

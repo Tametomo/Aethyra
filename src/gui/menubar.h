@@ -43,6 +43,11 @@ class MenuBar : public Popup
         MenuBar();
 
         /**
+         * Reflows the menu bar on resolution changing and font size changing.
+         */
+        void adjustSizeAndPosition();
+
+        /**
          * Draw this window
          */
         void draw(gcn::Graphics *graphics);
