@@ -199,18 +199,33 @@ void Being::setSpeech(const std::string &text, int time)
         }
 
         std::string::size_type position = mSpeech.find('|');
-        if (mSpeech[start + 1] == '@' && mSpeech[start + 2] == '@')
+        if (end > 2 && mSpeech[start + 1] == '@' && mSpeech[start + 2] == '@' &&
+            mSpeech[end - 1] == '@' && mSpeech[end - 2] == '@' &&
+            position != std::string::npos)
         {
             mSpeech.erase(end, 1);
-            mSpeech.erase(start, (position - start) + 1);
+            mSpeech.erase(start, position - start + 1);
         }
+        else
+        {
+            std::string temp = mSpeech.substr(start + 1, end - start - 1);
+            trim(temp);
+
+            const ItemInfo itemInfo = ItemDB::get(temp);
+
+            if (itemInfo.getName() != _("Unknown item"))
+            {
+                mSpeech.erase(start, 1);
+                mSpeech.erase(end - 1, 1);
+            }
+        }
+
         position = mSpeech.find('@');
 
-        while (position != std::string::npos)
-        {
+        if (position != std::string::npos && position > 0 &&
+            mSpeech[position - 1] != '[' && mSpeech[position] == '@' &&
+            mSpeech[position + 1] == '@')
             mSpeech.erase(position, 2);
-            position = mSpeech.find('@');
-        }
 
         start = mSpeech.find('[', start + 1);
         end = mSpeech.find(']', start);
