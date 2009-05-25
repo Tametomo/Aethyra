@@ -28,21 +28,44 @@
 #include "textmanager.h"
 #include "textrenderer.h"
 
+#include "../../configlistener.h"
+#include "../../configuration.h"
+
 int Text::mInstances = 0;
+
+class TextConfigListener : public ConfigListener
+{
+    public:
+        TextConfigListener(Text *t):
+            mText(t)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "fontSize")
+                mText->resize();
+        }
+    private:
+        Text *mText;
+};
 
 Text::Text(const std::string &text, int x, int y,
            gcn::Graphics::Alignment alignment, const gcn::Color* color) :
+    mAlignment(alignment),
     mText(text),
     mColor(color)
 {
     if (textManager == 0)
         textManager = new TextManager();
 
+    mConfigListener = new TextConfigListener(this);
+    config.addListener("fontSize", mConfigListener);
+
     ++mInstances;
     mHeight = gui->getBoldFont()->getHeight();
     mWidth = gui->getBoldFont()->getWidth(text);
 
-    switch (alignment)
+    switch (mAlignment)
     {
         case gcn::Graphics::LEFT:
             mXOffset = 0;
@@ -65,9 +88,35 @@ void Text::adviseXY(int x, int y)
     textManager->moveText(this, x - mXOffset, y);
 }
 
+void Text::resize()
+{
+    mHeight = gui->getBoldFont()->getHeight();
+    mWidth = gui->getBoldFont()->getWidth(mText);
+
+    const int oldXOffset = mXOffset;
+
+    switch (mAlignment)
+    {
+        case gcn::Graphics::LEFT:
+            mXOffset = 0;
+            break;
+        case gcn::Graphics::CENTER:
+            mXOffset = mWidth / 2;
+            break;
+        case gcn::Graphics::RIGHT:
+            mXOffset = mWidth;
+            break;
+    }
+
+    adviseXY(mX + oldXOffset, mY);
+}
+
 Text::~Text()
 {
     textManager->removeText(this);
+
+    config.removeListener("fontSize", mConfigListener);
+    delete mConfigListener;
 
     if (--mInstances == 0)
     {

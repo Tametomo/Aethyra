@@ -28,6 +28,7 @@
 
 #include "guichanfwd.h"
 
+class TextConfigListener;
 class TextManager;
 
 class Text
@@ -53,11 +54,19 @@ class Text
         void adviseXY(int x, int y);
 
         /**
+         * Resize the width and height when they change in the font.
+         */
+        void resize();
+
+        /**
          * Draws the text.
          */
         virtual void draw(gcn::Graphics *graphics, int xOff, int yOff);
 
     private:
+        TextConfigListener *mConfigListener;
+        gcn::Graphics::Alignment mAlignment;
+
         int mX;                /**< Actual x-value of left of text written. */
         int mY;                /**< Actual y-value of top of text written. */
         int mWidth;            /**< The width of the text. */

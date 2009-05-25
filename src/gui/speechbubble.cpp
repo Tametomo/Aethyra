@@ -28,8 +28,8 @@
 #include "speechbubble.h"
 #include "viewport.h"
 
-#include "../configuration.h"
 #include "../configlistener.h"
+#include "../configuration.h"
 
 #include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/graphics.h"
