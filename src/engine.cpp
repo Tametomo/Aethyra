@@ -28,6 +28,8 @@
 #include "bindings/guichan/gui.h"
 #include "bindings/guichan/keyboardconfig.h"
 
+#include "bindings/guichan/dialogs/okdialog.h"
+
 #include "bindings/sdl/sound.h"
 
 #include "gui/minimap.h"
@@ -42,6 +44,7 @@
 
 #include "resources/sprite/localplayer.h"
 
+#include "utils/gettext.h"
 #include "utils/stringutils.h"
 
 Engine::Engine():
@@ -67,7 +70,7 @@ bool Engine::changeMap(const std::string &mapPath)
     // Unset the map of the player so that its particles are cleared before
     // being deleted in the next step
     if (player_node)
-        player_node->setMap(0);
+        player_node->setMap(NULL);
 
     particleEngine->clear();
 
@@ -83,7 +86,11 @@ bool Engine::changeMap(const std::string &mapPath)
     Map *newMap = MapReader::readMap(map_path);
 
     if (!newMap)
-        logger->error("Could not find map file");
+    {
+        logger->log("Error while loading %s", map_path.c_str());
+        new OkDialog(_("Could not load map"),
+                     strprintf(_("Error while loading %s"), map_path.c_str()));
+    }
 
     // Notify the minimap and beingManager about the map change
     minimap->setMap(newMap);
@@ -93,21 +100,18 @@ bool Engine::changeMap(const std::string &mapPath)
     keyboard.refreshActiveKeys();
 
     // Initialize map-based particle effects
-    newMap->initializeParticleEffects(particleEngine);
+    if (newMap)
+        newMap->initializeParticleEffects(particleEngine);
 
     // Start playing new music file when necessary
-    std::string oldMusic = "";
-
-    if (mCurrentMap)
-    {
-        oldMusic = mCurrentMap->getProperty("music");
-        delete mCurrentMap;
-    }
-
-    std::string newMusic = newMap->getProperty("music");
+    std::string oldMusic = mCurrentMap ? mCurrentMap->getMusicFile() : "";
+    std::string newMusic = newMap ? newMap->getMusicFile() : "";
 
     if (newMusic != oldMusic)
         sound.playMusic(newMusic);
+
+    if (mCurrentMap)
+        delete mCurrentMap;
 
     mCurrentMap = newMap;
 

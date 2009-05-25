@@ -299,7 +299,8 @@ void Game::logic()
 
     while (mInGame)
     {
-        engine->getCurrentMap()->update(get_elapsed_time(gameTime));
+        if (engine->getCurrentMap())
+            engine->getCurrentMap()->update(get_elapsed_time(gameTime));
 
         // Handle all necessary game logic
         while (get_elapsed_time(gameTime) > 0)

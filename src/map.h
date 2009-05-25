@@ -191,7 +191,7 @@ class Map : public Properties
         /**
          * Finds the tile set that a tile with the given global id is part of.
          */
-        Tileset* getTilesetWithGid(int gid) const;
+        Tileset *getTilesetWithGid(int gid) const;
 
         /**
          * Get tile reference.
@@ -209,12 +209,12 @@ class Map : public Properties
         bool tileCollides(int x, int y) const;
 
         /**
-         * Returns the width of this map.
+         * Returns the width of this map in tiles.
          */
         int getWidth() const { return mWidth; }
 
         /**
-         * Returns the height of this map.
+         * Returns the height of this map in tiles.
          */
         int getHeight() const { return mHeight; }
 
@@ -227,6 +227,9 @@ class Map : public Properties
          * Returns the tile height used by this map.
          */
         int getTileHeight() const { return mTileHeight; }
+
+        const std::string &getMusicFile() const;
+        const std::string &getName() const;
 
         /**
          * Find a path from one location to the next.

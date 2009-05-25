@@ -84,7 +84,12 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
     static int lastTick = tick_time;
 
     if (!mMap || !player_node)
+    {
+        gcnGraphics->setColor(gcn::Color(64, 64, 64));
+        gcnGraphics->fillRectangle(
+                gcn::Rectangle(0, 0, getWidth(), getHeight()));
         return;
+    }
 
     Graphics *graphics = static_cast<Graphics*>(gcnGraphics);
 
@@ -216,12 +221,12 @@ void Viewport::logic()
 {
     WindowContainer::logic();
 
-    if (!mMap || !player_node)
-        return;
-
     const int mouseX = gui->getMouseX();
     const int mouseY = gui->getMouseY();
     const Uint8 button = gui->getButtonState();
+
+    if (!mMap || !player_node)
+        return;
 
     if (mPlayerFollowMouse && button & SDL_BUTTON(1) &&
         mWalkTime != player_node->mWalkTime)

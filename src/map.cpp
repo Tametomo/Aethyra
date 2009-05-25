@@ -396,6 +396,19 @@ void Map::removeSprite(SpriteIterator iterator)
     mSprites.erase(iterator);
 }
 
+const std::string &Map::getMusicFile() const
+{
+    return getProperty("music");
+}
+
+const std::string &Map::getName() const
+{
+    if (hasProperty("name"))
+        return getProperty("name");
+
+    return getProperty("mapname");
+}
+
 Path Map::findPath(int startX, int startY, int destX, int destY)
 {
     // Path to be built up (empty by default)
