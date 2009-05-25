@@ -63,9 +63,9 @@ class HelpWindow : public Window, public LinkHandler,
         void requestFocus();
 
         /**
-         * Loads help index file on hiding.
+         * Loads help index file on close.
          */
-        void widgetHidden(const gcn::Event& event);
+        void close();
 
     private:
         void loadFile(const std::string &file);

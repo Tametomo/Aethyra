@@ -196,7 +196,7 @@ class ChatWindow : public Window, public gcn::ActionListener,
 
         /** Used to reset mTmpVisible */
         void widgetShown(const gcn::Event& event);
-        void widgetHidden(const gcn::Event& event);
+        void close();
 
        /**
         * Scrolls the chat window

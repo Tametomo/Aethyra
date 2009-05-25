@@ -70,7 +70,7 @@ HelpWindow::HelpWindow():
 void HelpWindow::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "close")
-        setVisible(false);
+        close();
 }
 
 void HelpWindow::handleLink(const std::string& link)
@@ -106,9 +106,9 @@ void HelpWindow::requestFocus()
     mOkButton->requestFocus();
 }
 
-void HelpWindow::widgetHidden(const gcn::Event& event)
+void HelpWindow::close()
 {
-    Window::widgetHidden(event);
+    Window::close();
 
     loadHelp("index");
 }

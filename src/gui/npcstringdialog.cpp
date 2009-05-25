@@ -56,6 +56,9 @@ void NpcStringDialog::close()
     std::string text = getValue();
     reset();
 
+    if (!current_npc)
+        return;
+
     MessageOut outMsg(CMSG_NPC_STR_RESPONSE);
     outMsg.writeInt16(text.length() + 9);
     outMsg.writeInt32(current_npc);

@@ -847,11 +847,10 @@ void ChatWindow::widgetShown(const gcn::Event& event)
     mTmpVisible = false;
 }
 
-void ChatWindow::widgetHidden(const gcn::Event& event)
+void ChatWindow::close()
 {
-    Window::widgetHidden(event);
-
-    widgetShown(event);
+    Window::close();
+    mTmpVisible = false;
 }
 
 void ChatWindow::party(const std::string &command, const std::string &rest)

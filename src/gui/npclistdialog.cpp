@@ -134,6 +134,9 @@ void NpcListDialog::close()
     saveWindowState();
     reset();
 
+    if (!current_npc)
+        return;
+
     if (mChoice == 0)
         mChoice = 0xff;
 
