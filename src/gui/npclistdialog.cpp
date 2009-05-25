@@ -42,6 +42,7 @@ NpcListDialog::NpcListDialog():
 {
     setWindowName(_("NPC"));
     setResizable(true);
+    saveVisibility(false);
 
     setMinWidth(200);
     setMinHeight(150);
@@ -67,7 +68,6 @@ NpcListDialog::NpcListDialog():
     layout.setRowHeight(0, Layout::AUTO_SET);
 
     loadWindowState();
-    setVisible(false);
 }
 
 int NpcListDialog::getNumberOfElements()
@@ -109,15 +109,10 @@ void NpcListDialog::action(const gcn::ActionEvent &event)
             mChoice = selectedIndex + 1;
     }
     else if (event.getId() == "cancel")
-    {
         mChoice = 0xff; // 0xff means cancel
-    }
 
     if (mChoice)
-    {
-        setVisible(false);
         close();
-    }
 }
 
 void NpcListDialog::requestFocus()

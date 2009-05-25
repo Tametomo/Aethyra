@@ -47,6 +47,7 @@ SellDialog::SellDialog():
 {
     setWindowName("Sell");
     setResizable(true);
+    saveVisibility(false);
     setCloseButton(true);
     setMinWidth(260);
     setMinHeight(230);
@@ -98,7 +99,6 @@ SellDialog::SellDialog():
     layout.setRowHeight(0, Layout::AUTO_SET);
 
     loadWindowState();
-    setVisible(false);
 }
 
 SellDialog::~SellDialog()

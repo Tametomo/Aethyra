@@ -42,6 +42,7 @@ NpcTextDialog::NpcTextDialog():
 {
     setWindowName("NPC");
     setResizable(true);
+    saveVisibility(false);
 
     setMinWidth(200);
     setMinHeight(150);
@@ -66,7 +67,6 @@ NpcTextDialog::NpcTextDialog():
     layout.setRowHeight(0, Layout::AUTO_SET);
 
     loadWindowState();
-    setVisible(false);
 }
 
 void NpcTextDialog::setText(const std::string &text)
@@ -91,7 +91,7 @@ void NpcTextDialog::action(const gcn::ActionEvent &event)
     if (event.getId() == "ok")
     {
         clearText();
-        setVisible(false);
+        close();
         saveWindowState();
 
         if (current_npc)

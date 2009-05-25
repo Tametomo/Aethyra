@@ -56,6 +56,7 @@ StorageWindow::StorageWindow(int invSize):
 {
     setWindowName("Storage");
     setResizable(true);
+    saveVisibility(false);
     setCloseButton(true);
 
     setDefaultSize(375, 300, ImageRect::CENTER);
@@ -92,7 +93,6 @@ StorageWindow::StorageWindow(int invSize):
     layout.setRowHeight(0, mRetrieveButton->getHeight());
 
     loadWindowState();
-    setVisible(false);
 }
 
 StorageWindow::~StorageWindow()

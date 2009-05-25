@@ -54,6 +54,7 @@ Window::Window(const std::string& caption, bool modal, Window *parent,
     mModal(modal),
     mCloseButton(false),
     mDefaultVisible(visible),
+    mSaveVisibility(true),
     mMinWinWidth(100),
     mMinWinHeight(40),
     mMaxWinWidth(graphics->getWidth()),
@@ -584,8 +585,11 @@ void Window::loadWindowState()
         setLocationRelativeTo(mDefaultPosition, mDefaultOffsetX, mDefaultOffsetY);
     }
 
-    setVisible((bool) config.getValue(name + "Visible", mDefaultVisible));
-    mOldVisibility = (bool) config.getValue(name + "Hidden", false);
+    if (mSaveVisibility)
+    {
+        setVisible((bool) config.getValue(name + "Visible", mDefaultVisible));
+        mOldVisibility = (bool) config.getValue(name + "Hidden", false);
+    }
 
     if (skinName.compare(mSkin->getFilePath()) != 0)
     {
@@ -599,9 +603,18 @@ void Window::saveWindowState()
     // Saving coordinates and Width and Height for resizables in the config
     if (!mWindowName.empty() && mWindowName != "window")
     {
-        config.setValue(mWindowName + "Visible", isVisible());
+        if (mSaveVisibility)
+        {
+            config.setValue(mWindowName + "Visible", isVisible());
+            config.setValue(mWindowName + "Hidden", mOldVisibility);
+        }
+        else
+        {
+            config.removeValue(mWindowName + "Visible");
+            config.removeValue(mWindowName + "Hidden");
+        }
+
         config.setValue(mWindowName + "Skin", mSkin->getFilePath());
-        config.setValue(mWindowName + "Hidden", mOldVisibility);
 
         saveRelativeLocation(getX(), getY());
 

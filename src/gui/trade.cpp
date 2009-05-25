@@ -56,6 +56,7 @@ TradeWindow::TradeWindow():
     setWindowName("Trade");
     setDefaultSize(342, 209, ImageRect::CENTER);
     setResizable(true);
+    saveVisibility(false);
     setCloseButton(true);
 
     setMinWidth(342);
@@ -105,7 +106,6 @@ TradeWindow::TradeWindow():
     mOkButton->setCaption(_("OK"));
 
     loadWindowState();
-    setVisible(false);
 }
 
 TradeWindow::~TradeWindow()

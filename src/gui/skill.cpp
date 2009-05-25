@@ -104,7 +104,7 @@ void SkillDialog::action(const gcn::ActionEvent &event)
                                info->modifiable);
     }
     else if (event.getId() == "close")
-        setVisible(false);
+        close();
 }
 
 void SkillDialog::update()

@@ -35,6 +35,7 @@ BuySellDialog::BuySellDialog():
     Window(_("Shop"))
 {
     setWindowName("BuySell");
+    saveVisibility(false);
 
     buyButton = NULL;
     static const char *buttonNames[] = {
@@ -58,7 +59,6 @@ BuySellDialog::BuySellDialog():
                    getTitleBarHeight()), ImageRect::CENTER);
 
     loadWindowState();
-    setVisible(false);
 }
 
 void BuySellDialog::logic()

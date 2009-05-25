@@ -38,6 +38,7 @@ NpcIntegerDialog::NpcIntegerDialog():
     Window(_("NPC Input"))
 {
     setWindowName("NPCInput");
+    saveVisibility(false);
 
     mValueField = new IntTextField(0, "ok", this);
 
@@ -58,7 +59,6 @@ NpcIntegerDialog::NpcIntegerDialog():
     setDefaultSize(175, 75, ImageRect::CENTER);
 
     loadWindowState();
-    setVisible(false);
 }
 
 void NpcIntegerDialog::setRange(const int min, const int max)

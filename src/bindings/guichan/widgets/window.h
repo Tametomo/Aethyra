@@ -198,6 +198,11 @@ class Window : public gcn::Window, gcn::WidgetListener
         void setShowTitle(bool flag) { mShowTitle = flag; }
 
         /**
+         * Sets flag to save visibility or not.
+         */
+        void saveVisibility(bool save) { mSaveVisibility = save; }
+
+        /**
          * Returns the parent window.
          *
          * @return The parent window or <code>NULL</code> if there is none.
@@ -377,6 +382,7 @@ class Window : public gcn::Window, gcn::WidgetListener
         bool mModal;                  /**< Window is modal */
         bool mCloseButton;            /**< Window has a close button */
         bool mDefaultVisible;         /**< Default visibility */
+        bool mSaveVisibility;         /**< If the windo saves visibility */
         int mMinWinWidth;             /**< Minimum window width */
         int mMinWinHeight;            /**< Minimum window height */
         int mMaxWinWidth;             /**< Maximum window width */

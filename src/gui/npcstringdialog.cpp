@@ -35,9 +35,9 @@ NpcStringDialog::NpcStringDialog():
     TextInputDialog(_("NPC Input"))
 {
     setWindowName("NPCInput");
+    saveVisibility(false);
 
     loadWindowState();
-    setVisible(false);
 }
 
 void NpcStringDialog::action(const gcn::ActionEvent &event)

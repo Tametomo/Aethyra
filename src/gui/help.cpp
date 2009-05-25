@@ -40,6 +40,7 @@ HelpWindow::HelpWindow():
     setContentSize(455, 350);
     setWindowName(_("Help"));
     setResizable(true);
+    saveVisibility(false);
     setCloseButton(true);
 
     setDefaultSize(500, 400, ImageRect::CENTER);
@@ -63,7 +64,7 @@ HelpWindow::HelpWindow():
     layout.setRowHeight(0, Layout::AUTO_SET);
 
     loadWindowState();
-    setVisible(false);
+    loadHelp("index");
 }
 
 void HelpWindow::action(const gcn::ActionEvent &event)
@@ -86,7 +87,6 @@ void HelpWindow::loadHelp(const std::string &helpFile)
     loadFile(helpFile);
 
     mScrollArea->setVerticalScrollAmount(0);
-    setVisible(true);
 }
 
 void HelpWindow::loadFile(const std::string &file)

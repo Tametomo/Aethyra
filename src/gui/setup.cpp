@@ -43,6 +43,7 @@ Setup::Setup():
     Window(_("Setup"))
 {
     setWindowName("Setup");
+    saveVisibility(false);
     setCloseButton(true);
     int width = 340 + 2 * getPadding();
     int height = 340 + 2 * getPadding() + getTitleBarHeight();
@@ -85,7 +86,6 @@ Setup::Setup():
     layout.setRowHeight(0, Layout::AUTO_SET);
 
     loadWindowState();
-    setVisible(false);
 }
 
 Setup::~Setup()
