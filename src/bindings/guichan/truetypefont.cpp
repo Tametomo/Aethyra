@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -105,6 +106,12 @@ TrueTypeFont::~TrueTypeFont()
 
     if (fontCounter == 0)
         TTF_Quit();
+}
+
+TrueTypeFont *TrueTypeFont::load(const std::string &fileName, int fontSize,
+                                 int style)
+{
+    return new TrueTypeFont(fileName, fontSize, style);
 }
 
 void TrueTypeFont::drawString(gcn::Graphics *graphics,

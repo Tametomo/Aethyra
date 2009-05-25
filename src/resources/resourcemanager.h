@@ -35,6 +35,7 @@ class Resource;
 class SoundEffect;
 class SpriteDef;
 struct SDL_Surface;
+class TrueTypeFont;
 
 /**
  * A class for loading and managing resources.
@@ -116,7 +117,7 @@ class ResourceManager
          * @return A valid resource or <code>NULL</code> if the resource could
          *         not be generated.
          */
-        Resource *get(std::string const &idPath, generator fun, void *data);
+        Resource *get(const std::string &idPath, generator fun, void *data);
 
         /**
          * Loads a resource from a file and adds it to the resource map.
@@ -126,7 +127,7 @@ class ResourceManager
          * @return A valid resource or <code>NULL</code> if the resource could
          *         not be loaded.
          */
-        Resource *load(std::string const &path, loader fun);
+        Resource *load(const std::string &path, loader fun);
 
         /**
         * Copies a file from one place to another (useful for extracting
@@ -158,6 +159,11 @@ class ResourceManager
         SoundEffect *getSoundEffect(const std::string &idPath);
 
         /**
+         * Creates a new TrueTypeFont based on the size and style given.
+         */
+        TrueTypeFont *getFont(const std::string &path, int size, int style = 0);
+
+        /**
          * Creates a image set based on the image referenced by the given
          * path and the supplied sprite sizes
          */
@@ -167,7 +173,7 @@ class ResourceManager
          * Creates a sprite definition based on a given path and the supplied
          * variant.
          */
-        SpriteDef *getSprite(std::string const &path, int variant = 0);
+        SpriteDef *getSprite(const std::string &path, int variant = 0);
 
         /**
          * Releases a resource, placing it in the set of orphaned resources.

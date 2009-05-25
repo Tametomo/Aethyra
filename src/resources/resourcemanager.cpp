@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -36,6 +37,8 @@
 #include "spritedef.h"
 
 #include "../log.h"
+
+#include "../bindings/guichan/truetypefont.h"
 
 ResourceManager *ResourceManager::instance = NULL;
 
@@ -210,7 +213,7 @@ std::string ResourceManager::getPath(const std::string &file)
     return path;
 }
 
-Resource *ResourceManager::get(std::string const &idPath, generator fun,
+Resource *ResourceManager::get(const std::string &idPath, generator fun,
                                void *data)
 {
     // Check if the id exists, and return the value if it does.
@@ -264,7 +267,7 @@ struct ResourceLoader
     }
 };
 
-Resource *ResourceManager::load(std::string const &path, loader fun)
+Resource *ResourceManager::load(const std::string &path, loader fun)
 {
     ResourceLoader l = { this, path, fun };
     return get(path, ResourceLoader::load, &l);
@@ -278,6 +281,26 @@ Music *ResourceManager::getMusic(const std::string &idPath)
 SoundEffect *ResourceManager::getSoundEffect(const std::string &idPath)
 {
     return static_cast<SoundEffect*>(load(idPath, SoundEffect::load));
+}
+
+struct FontLoader
+{
+    std::string path;
+    int size, style;
+    static Resource *load(void* v)
+    {
+        FontLoader *l = static_cast< FontLoader * >(v);
+        return TrueTypeFont::load(l->path, l->size, l->style);
+    }
+};
+
+TrueTypeFont *ResourceManager::getFont(const std::string &path, int size,
+                                       int style)
+{
+    FontLoader l = { path, size, style };
+    std::stringstream ss;
+    ss << path << "[" << size << ", " << style << "]";
+    return static_cast<TrueTypeFont*>(get(ss.str(), FontLoader::load, &l));
 }
 
 struct DyedImageLoader
@@ -309,7 +332,7 @@ struct DyedImageLoader
     }
 };
 
-Image *ResourceManager::getImage(std::string const &idPath)
+Image *ResourceManager::getImage(const std::string &idPath)
 {
     DyedImageLoader l = { this, idPath };
     return static_cast<Image*>(get(idPath, DyedImageLoader::load, &l));
@@ -353,7 +376,7 @@ struct SpriteDefLoader
     }
 };
 
-SpriteDef *ResourceManager::getSprite(std::string const &path, int variant)
+SpriteDef *ResourceManager::getSprite(const std::string &path, int variant)
 {
     SpriteDefLoader l = { path, variant };
     std::stringstream ss;

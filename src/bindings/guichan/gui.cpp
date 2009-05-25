@@ -1,8 +1,9 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
+ *  This file is part of Aethyra derived from original code
  *  from The Mana World.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -165,9 +166,9 @@ Gui::Gui(Graphics *graphics):
     try
     {
         const int fontSize = (int) config.getValue("fontSize", 11);
-        mGuiFont = new TrueTypeFont(path, fontSize);
-        mInfoParticleFont = new TrueTypeFont(path, fontSize, 1);
-        mBoldFont = new TrueTypeFont(path, fontSize, 1);
+        mGuiFont = resman->getFont(path, fontSize);
+        mInfoParticleFont = resman->getFont(path, fontSize, 1);
+        mBoldFont = resman->getFont(path, fontSize, 1);
     }
     catch (gcn::Exception e)
     {
@@ -201,9 +202,9 @@ Gui::~Gui()
     if (mMouseCursors)
         mMouseCursors->decRef();
 
-    delete mGuiFont;
-    delete mBoldFont;
-    delete mInfoParticleFont;
+    mGuiFont->decRef();
+    mBoldFont->decRef();
+    mInfoParticleFont->decRef();
     delete getTop();
 
     delete guiInput;
@@ -319,6 +320,21 @@ gcn::Widget* Gui::getFocused()
     return (widget);
 }
 
+gcn::Font* Gui::getFont() const
+{
+    return mGuiFont;
+}
+
+gcn::Font* Gui::getBoldFont() const
+{
+    return mBoldFont;
+}
+
+gcn::Font* Gui::getInfoParticleFont() const
+{
+    return mInfoParticleFont;
+}
+
 void Gui::setUseCustomCursor(bool customCursor)
 {
     if (customCursor != mCustomCursor)
@@ -362,4 +378,22 @@ void Gui::handleMouseMoved(const gcn::MouseInput &mouseInput)
 const int Gui::getFontHeight() const
 {
     return mGuiFont->getHeight();
+}
+
+void Gui::changeFontSize(const int &size)
+{
+    ResourceManager *resman = ResourceManager::getInstance();
+    const std::string path = resman->getPath("fonts/dejavusans.ttf");
+
+    TrueTypeFont *guiFont = static_cast<TrueTypeFont*>(getTop()->getFont());
+    TrueTypeFont *boldFont = static_cast<TrueTypeFont*>(getBoldFont());
+    TrueTypeFont *infoParticleFont = static_cast<TrueTypeFont*>(getInfoParticleFont());
+
+    guiFont->decRef();
+    mGuiFont = resman->getFont(path, size);
+    getTop()->setGlobalFont(mGuiFont);
+    boldFont->decRef();
+    mBoldFont = resman->getFont(path, size, 1);
+    infoParticleFont->decRef();
+    mInfoParticleFont = resman->getFont(path, size, 1);
 }

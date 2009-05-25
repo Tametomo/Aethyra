@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -33,6 +34,8 @@
 #include <SDL_ttf.h>
 #endif
 
+#include "../../resources/resource.h"
+
 class TextChunk;
 
 /**
@@ -40,17 +43,9 @@ class TextChunk;
  *
  * <b>NOTE:</b> This class initializes SDL_ttf as necessary.
  */
-class TrueTypeFont : public gcn::Font
+class TrueTypeFont : public gcn::Font, public Resource
 {
     public:
-        /**
-         * Constructor.
-         *
-         * @param filename  Font filename.
-         * @param size      Font size.
-         */
-        TrueTypeFont(const std::string &filename, int size, int style = 0);
-
         /**
          * Destructor.
          */
@@ -60,6 +55,9 @@ class TrueTypeFont : public gcn::Font
 
         virtual int getHeight() const;
 
+        static TrueTypeFont *load(const std::string &fileName, int fontSize,
+                                  int style);
+
         /**
          * @see Font::drawString
          */
@@ -67,6 +65,14 @@ class TrueTypeFont : public gcn::Font
                         int x, int y);
 
     private:
+        /**
+         * Constructor.
+         *
+         * @param filename  Font filename.
+         * @param size      Font size.
+         */
+        TrueTypeFont(const std::string &filename, int size, int style = 0);
+
         TTF_Font *mFont;
 
         // Word surfaces cache

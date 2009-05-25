@@ -271,9 +271,7 @@ void Setup_Video::apply()
 
         config.setValue("fontSize", val);
 
-        // TODO: Fix font resizing so that it doesn't need a restart.
-        new OkDialog(_("Font size changed"),
-                     _("Restart your client for the change to take effect."));
+        gui->changeFontSize(val);
     }
 
     if (mFpsCheckBox->isSelected())

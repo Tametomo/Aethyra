@@ -1,8 +1,9 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
+ *  This file is part of Aethyra derived from original code
  *  from The Mana World.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -36,6 +37,7 @@ class Graphics;
 class GuiConfigListener;
 class ImageSet;
 class SDLInput;
+class TrueTypeFont;
 
 extern volatile int fps;
 extern volatile int tick_time;
@@ -90,23 +92,23 @@ class Gui : public gcn::Gui
         /**
          * Return game font.
          */
-        gcn::Font* getFont() const { return mGuiFont; }
+        gcn::Font* getFont() const;
 
         /**
          * Return bolded game font.
          */
-        gcn::Font* getBoldFont() const { return mBoldFont; }
-
-        /**
-         * Return game font height.
-         */
-        const int getFontHeight() const;
+        gcn::Font* getBoldFont() const;
 
         /**
          * Return the Font used for "Info Particles", i.e. ones showing, what
          * you picked up, etc.
          */
-        gcn::Font* getInfoParticleFont() const { return mInfoParticleFont; }
+        gcn::Font* getInfoParticleFont() const;
+
+        /**
+         * Return game font height.
+         */
+        const int getFontHeight() const;
 
         /**
          * Sets whether a custom cursor should be rendered.
@@ -162,14 +164,19 @@ class Gui : public gcn::Gui
             CURSOR_TOTAL
         };
 
+        /**
+         * Changes the in game font size.
+         */
+        void changeFontSize(const int &size);
+
     protected:
         void handleMouseMoved(const gcn::MouseInput &mouseInput);
 
     private:
         GuiConfigListener *mConfigListener;
-        gcn::Font *mGuiFont;                  /**< The global GUI font */
-        gcn::Font *mInfoParticleFont;         /**< Font for Info Particles*/
-        gcn::Font *mBoldFont;                 /**< Font for bolded text*/
+        TrueTypeFont *mGuiFont;               /**< The global GUI font */
+        TrueTypeFont *mInfoParticleFont;      /**< Font for Info Particles*/
+        TrueTypeFont *mBoldFont;              /**< Font for bolded text*/
         bool mCustomCursor;                   /**< Show custom cursor */
         ImageSet *mMouseCursors;              /**< Mouse cursor images */
         float mMaxMouseCursorAlpha;           /**< Cursor opacity/transparency. */
