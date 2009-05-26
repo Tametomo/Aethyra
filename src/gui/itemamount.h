@@ -50,6 +50,8 @@ class ItemAmountWindow : public Window, public gcn::ActionListener
          */
         ItemAmountWindow(int usage, Window *parent, Item *item);
 
+        ~ItemAmountWindow();
+
         /**
          * Called when receiving actions from widget.
          */

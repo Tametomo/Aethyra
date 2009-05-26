@@ -43,19 +43,22 @@
 
 ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     Window("", true, parent),
+    mItemAmountLabel(NULL),
     mItem(item),
+    mItemIcon(NULL),
     mMax(item->getQuantity()),
-    mUsage(usage)
+    mUsage(usage),
+    mItemPopup(NULL),
+    mItemAmountSlide(NULL)
 {
-    setCloseButton(true);
-
     // If only one item is available, then the window isn't needed, so move on
-    // To prevent problems, we still build the gui elements
     if (mMax <= 1)
     {
-        action(gcn::ActionEvent(this, "All"));
+        action(gcn::ActionEvent(this, "all"));
         return;
     }
+
+    setCloseButton(true);
 
     // Integer field
     mItemAmountLabel = new Label(strprintf("%d / %d", 1, mMax));
@@ -121,9 +124,18 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     mItemAmountSlide->requestFocus();
 }
 
+ItemAmountWindow::~ItemAmountWindow()
+{
+    delete mItemPopup;
+    mItemPopup = NULL;
+}
+
 // Show ItemTooltip
 void ItemAmountWindow::mouseMoved(gcn::MouseEvent &event)
 {
+    if (!isVisible())
+        return;
+
     if (event.getSource() == mItemIcon)
     {
         mItemPopup->setItem(mItem->getInfo());
@@ -201,7 +213,5 @@ void ItemAmountWindow::close()
             break;
     }
 
-    delete mItemPopup;
-    mItemPopup = NULL;
     scheduleDelete();
 }
