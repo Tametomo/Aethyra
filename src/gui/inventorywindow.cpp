@@ -83,7 +83,7 @@ InventoryWindow::InventoryWindow(int invSize):
 
     mShortcutButton = new Button(_("Shortcuts"), "shortcuts", this);
 
-    mItems = new ItemContainer(player_node->getInventory(), "showpopup", this);
+    mItems = new ItemContainer(player_node->getInventory(), "showpopupmenu", this);
     mItems->addSelectionListener(this);
 
     mInvenScroll = new ScrollArea(mItems);
@@ -197,8 +197,8 @@ void InventoryWindow::action(const gcn::ActionEvent &event)
         else
             new ItemAmountWindow(AMOUNT_ITEM_DROP, this, item);
     }
-    else if (event.getId() == "showpopup")
-        mItems->showPopup(INVENTORY, false);
+    else if (event.getId() == "showpopupmenu")
+        mItems->showPopupMenu(INVENTORY, false);
 }
 
 void InventoryWindow::mouseClicked(gcn::MouseEvent &event)
@@ -207,7 +207,7 @@ void InventoryWindow::mouseClicked(gcn::MouseEvent &event)
 
     if (event.getButton() == gcn::MouseEvent::RIGHT &&
         event.getSource() == mItems)
-        mItems->showPopup(INVENTORY);
+        mItems->showPopupMenu(INVENTORY);
 }
 
 void InventoryWindow::updateButtons()
@@ -252,4 +252,3 @@ void InventoryWindow::widgetShown(const gcn::Event& event)
     mWeightBar->reset();
     mSlotsBar->reset();
 }
-

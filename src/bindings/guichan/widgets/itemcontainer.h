@@ -30,16 +30,15 @@
 #include <guichan/widget.hpp>
 #include <guichan/widgetlistener.hpp>
 
+#include "../guichanfwd.h"
+
 #include "../../../gui/popupmenu.h"
 
 class Image;
 class Inventory;
 class Item;
+class ItemContainerConfigListener;
 class ItemPopup;
-
-namespace gcn {
-    class SelectionListener;
-}
 
 /**
  * An item container. Used to show items in inventory and trade dialog.
@@ -112,7 +111,24 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         /**
          * Shows a PopupMenu over the selected item.
          */
-        void showPopup(MenuType type, bool useMouseCoordinates = true);
+        void showPopupMenu(MenuType type, bool useMouseCoordinates = true);
+
+        /**
+         * Shows the item popup for a given item. Used in keyboard control.
+         */
+        void showItemPopup();
+
+        /**
+         * Hides the item popup.
+         */
+        void hideItemPopup();
+
+        /**
+         * Gets the location to tell a popup to draw, and then store it in
+         * x and y. The useMouseCoordinates boolean determines whether the
+         * selected item index should be used, or the mouse coordinates.
+         */
+        void getPopupLocation(bool useMouseCoordinates, int &x, int &y);
 
     private:
         // KeyListener
@@ -151,8 +167,12 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          */
         int getSlotIndex(const int posX, const int posY) const;
 
+        ItemContainerConfigListener *mConfigListener;
+
         Inventory *mInventory;
         Image *mSelImg;
+
+        bool mShowItemInfo;
 
         int mSelectedItemIndex;
         int mLastSelectedItemId;  // last selected item ID. If we lose the item, find again by ID.

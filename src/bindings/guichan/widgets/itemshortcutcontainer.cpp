@@ -43,8 +43,27 @@
 
 #include "../../../utils/stringutils.h"
 
+class ItemShortcutContainerConfigListener : public ConfigListener
+{
+    public:
+        ItemShortcutContainerConfigListener(ItemShortcutContainer *container):
+            mItemContainer(container)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            bool show = config.getValue("showItemPopups", true);
+
+            if (name == "showItemPopups")
+                mItemContainer->showItemPopup(show);
+        }
+    private:
+        ItemShortcutContainer *mItemContainer;
+};
+
 ItemShortcutContainer::ItemShortcutContainer():
     ShortcutContainer(),
+    mShowItemInfo(false),
     mItemClicked(false),
     mItemMoved(NULL)
 {
@@ -53,6 +72,10 @@ ItemShortcutContainer::ItemShortcutContainer():
 
     mItemPopup = new ItemPopup();
     mItemPopup->setOpaque(false);
+
+    mShowItemInfo = config.getValue("showItemPopups", true);
+    mConfigListener = new ItemShortcutContainerConfigListener(this);
+    config.addListener("showItemPopups", mConfigListener);
 
     ResourceManager *resman = ResourceManager::getInstance();
 
@@ -67,6 +90,9 @@ ItemShortcutContainer::ItemShortcutContainer():
 
 ItemShortcutContainer::~ItemShortcutContainer()
 {
+    config.removeListener("showItemPopups", mConfigListener);
+    delete mConfigListener;
+
     mBackgroundImg->decRef();
     delete mItemPopup;
 }
@@ -233,6 +259,9 @@ void ItemShortcutContainer::mouseReleased(gcn::MouseEvent &event)
 // Show ItemTooltip
 void ItemShortcutContainer::mouseMoved(gcn::MouseEvent &event)
 {
+    if (!mShowItemInfo)
+        return;
+
     const int index = getIndexFromGrid(event.getX(), event.getY());
     const int itemId = itemShortcut->getItem(index);
 
@@ -258,5 +287,13 @@ void ItemShortcutContainer::mouseMoved(gcn::MouseEvent &event)
 void ItemShortcutContainer::mouseExited(gcn::MouseEvent &event)
 {
     mItemPopup->setVisible(false);
+}
+
+void ItemShortcutContainer::showItemPopup(bool show)
+{
+    mShowItemInfo = show;
+
+    if (!show)
+        mItemPopup->setVisible(false);
 }
 

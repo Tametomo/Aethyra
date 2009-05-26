@@ -36,9 +36,9 @@ class MappedListBox;
 enum MenuType {
     ITEM_SHORTCUT,
     INVENTORY,
-    FLOOR_ITEM,
     TRADE,
     STORAGE,
+    FLOOR_ITEM,
     BEING,
     EMOTE,
     UNKNOWN

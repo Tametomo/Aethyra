@@ -32,6 +32,7 @@
 #include "storagewindow.h"
 #include "trade.h"
 
+#include "../configuration.h"
 #include "../item.h"
 #include "../playerrelations.h"
 
@@ -102,6 +103,16 @@ void PopupMenu::action(const gcn::ActionEvent &event)
                                                       inventoryWindow, mItem);
         temp->requestFocus();
         mPreviousFocus = gui->getFocused();
+    }
+
+    else if (event.getId() == "showitempopup")
+    {
+        config.setValue("showItemPopups", true);
+    }
+
+    else if (event.getId() == "hideitempopup")
+    {
+        config.setValue("showItemPopups", false);
     }
 
     else if (event.getId() == "slotitem" && mItem)
@@ -295,12 +306,16 @@ void PopupMenu::showPopup(int x, int y)
                 mModel->addLink("slotitem", _("Add to Item Shortcuts"));
         }
         else if (mType == STORAGE)
-        {
             mModel->addLink("retrieve", _("Retrieve"));
-        }
         else if (mType == FLOOR_ITEM)
-        {
             mModel->addLink("pickup", strprintf(_("Pick Up %s"), name.c_str()));
+
+        if (mType < FLOOR_ITEM)
+        {
+            if (config.getValue("showItemPopups", true))
+                mModel->addLink("hideitempopup", _("Hide Item Info"));
+            else
+                mModel->addLink("showitempopup", _("Show Item Info"));
         }
 
         mModel->addLink("chat", _("Add to Chat"));

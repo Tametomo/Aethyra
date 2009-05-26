@@ -66,7 +66,7 @@ StorageWindow::StorageWindow(int invSize):
 
     Button *closeButton = new Button(_("Close"), "close", this);
 
-    mItems = new ItemContainer(player_node->getStorage(), "showpopup", this);
+    mItems = new ItemContainer(player_node->getStorage(), "showpopupmenu", this);
     mItems->addSelectionListener(this);
 
     mInvenScroll = new ScrollArea(mItems);
@@ -135,8 +135,8 @@ void StorageWindow::action(const gcn::ActionEvent &event)
         else
             new ItemAmountWindow(AMOUNT_STORE_REMOVE, this, item);
     }
-    else if (event.getId() == "showpopup")
-        mItems->showPopup(STORAGE, false);
+    else if (event.getId() == "showpopupmenu")
+        mItems->showPopupMenu(STORAGE, false);
 }
 
 void StorageWindow::valueChanged(const gcn::SelectionEvent &event)
@@ -151,7 +151,7 @@ void StorageWindow::mouseClicked(gcn::MouseEvent &event)
 
     if (event.getButton() == gcn::MouseEvent::RIGHT &&
         event.getSource() == mItems)
-        mItems->showPopup(STORAGE);
+        mItems->showPopupMenu(STORAGE);
 }
 
 Item* StorageWindow::getSelectedItem() const

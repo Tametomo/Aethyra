@@ -69,13 +69,13 @@ TradeWindow::TradeWindow():
     mAddButton = new Button(_("Add"), "add", this);
     mOkButton = new Button(longestName, "ok", this);
 
-    mMyItemContainer = new ItemContainer(mMyInventory.get(), "showpopupmine", this);
+    mMyItemContainer = new ItemContainer(mMyInventory.get(), "showpopupmenumine", this);
     mMyItemContainer->setWidth(160);
     mMyItemContainer->addSelectionListener(this);
 
     mMyScroll = new ScrollArea(mMyItemContainer);
 
-    mPartnerItemContainer = new ItemContainer(mPartnerInventory.get(), "showpopuptheirs", this);
+    mPartnerItemContainer = new ItemContainer(mPartnerInventory.get(), "showpopupmenutheirs", this);
     mPartnerItemContainer->setWidth(160);
     mPartnerItemContainer->addSelectionListener(this);
 
@@ -270,10 +270,10 @@ void TradeWindow::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "trade")
         MessageOut outMsg(CMSG_TRADE_OK);
-    else if (event.getId() == "showpopupmine")
-        mMyItemContainer->showPopup(TRADE, false);
-    else if (event.getId() == "showpopuptheirs")
-        mPartnerItemContainer->showPopup(TRADE, false);
+    else if (event.getId() == "showpopupmenumine")
+        mMyItemContainer->showPopupMenu(TRADE, false);
+    else if (event.getId() == "showpopupmenutheirs")
+        mPartnerItemContainer->showPopupMenu(TRADE, false);
 }
 
 void TradeWindow::close()
@@ -287,11 +287,11 @@ void TradeWindow::mouseClicked(gcn::MouseEvent &event)
 
     if (event.getButton() == gcn::MouseEvent::RIGHT &&
         event.getSource() == mMyItemContainer)
-        mMyItemContainer->showPopup(TRADE);
+        mMyItemContainer->showPopupMenu(TRADE);
 
     else if (event.getButton() == gcn::MouseEvent::RIGHT &&
              event.getSource() == mPartnerItemContainer)
-        mPartnerItemContainer->showPopup(TRADE);
+        mPartnerItemContainer->showPopupMenu(TRADE);
 }
 
 void TradeWindow::requestFocus()

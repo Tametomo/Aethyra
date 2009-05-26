@@ -32,6 +32,8 @@
 
 #include "../sdl/sdlinput.h"
 
+#include "../../../configlistener.h"
+#include "../../../configuration.h"
 #include "../../../inventory.h"
 #include "../../../item.h"
 #include "../../../itemshortcut.h"
@@ -51,6 +53,25 @@ const int ItemContainer::gridHeight = 42; // item icon height + 10
 
 static const int NO_ITEM = -1;
 
+class ItemContainerConfigListener : public ConfigListener
+{
+    public:
+        ItemContainerConfigListener(ItemContainer *container):
+            mItemContainer(container)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            bool show = config.getValue("showItemPopups", true);
+
+            if (name == "showItemPopups")
+                show ? mItemContainer->showItemPopup() :
+                       mItemContainer->hideItemPopup();
+        }
+    private:
+        ItemContainer *mItemContainer;
+};
+
 ItemContainer::ItemContainer(Inventory *inventory,
                              const std::string &actionEventId,
                              gcn::ActionListener *listener):
@@ -68,6 +89,10 @@ ItemContainer::ItemContainer(Inventory *inventory,
     mItemPopup->setOpaque(false);
     setFocusable(true);
 
+    mShowItemInfo = config.getValue("showItemPopups", true);
+    mConfigListener = new ItemContainerConfigListener(this);
+    config.addListener("showItemPopups", mConfigListener);
+
     mPopupMenu = new PopupMenu(TRADE);
 
     ResourceManager *resman = ResourceManager::getInstance();
@@ -84,6 +109,9 @@ ItemContainer::ItemContainer(Inventory *inventory,
 
 ItemContainer::~ItemContainer()
 {
+    config.removeListener("showItemPopups", mConfigListener);
+    delete mConfigListener;
+
     if (mSelImg)
         mSelImg->decRef();
 
@@ -221,6 +249,7 @@ void ItemContainer::setSelectedItemIndex(int index)
         newSelectedItemIndex = NO_ITEM;
     else
         newSelectedItemIndex = index;
+
     if (mSelectedItemIndex != newSelectedItemIndex)
     {
         mSelectedItemIndex = newSelectedItemIndex;
@@ -243,6 +272,9 @@ void ItemContainer::setSelectedItemIndex(int index)
         showPart(scroll);
 
         distributeValueChangedEvent();
+
+        if (mShowItemInfo)
+            showItemPopup();
     }
 }
 
@@ -253,8 +285,75 @@ void ItemContainer::distributeValueChangedEvent()
     std::list<gcn::SelectionListener*>::iterator i;
 
     for (i = mListeners.begin(); i != i_end; ++i)
-    {
         (*i)->valueChanged(event);
+}
+
+void ItemContainer::showPopupMenu(MenuType type, bool useMouseCoordinates)
+{
+    int x = 0;
+    int y = 0;
+
+    getPopupLocation(useMouseCoordinates, x, y);
+
+    Item *item = getSelectedItem();
+
+    if (!item)
+        return;
+
+    mPopupMenu->setType(type);
+    mPopupMenu->setItem(item);
+    mPopupMenu->showPopup(x, y);
+}
+
+void ItemContainer::showItemPopup()
+{
+    int x = 0;
+    int y = 0;
+
+    mShowItemInfo = true;
+
+    Item *item = getSelectedItem();
+
+    if (!item)
+        return;
+
+    if (item->getInfo().getName() != mItemPopup->getItemName())
+        mItemPopup->setItem(item->getInfo());
+
+    getPopupLocation(false, x, y);
+
+    mItemPopup->updateColors();
+    mItemPopup->view(x, y);
+}
+
+void ItemContainer::hideItemPopup()
+{
+    mShowItemInfo = false;
+    mItemPopup->setVisible(false);
+}
+
+void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
+{
+    Item *item = getSelectedItem();
+    x = gui->getMouseX();
+    y = gui->getMouseY();
+
+    if (!item)
+        return;
+
+    if (!useMouseCoordinates)
+    {
+        int columns = getWidth() / gridWidth;
+        const int itemX = mSelectedItemIndex % columns;
+        const int itemY = mSelectedItemIndex / columns;
+        const int xPos = itemX * gridWidth + (gridWidth / 2);
+        const int yPos = itemY * gridHeight + (gridHeight / 2) + gui->getFont()->getHeight();
+
+        if (columns > mInventory->getNumberOfSlotsUsed())
+            columns = mInventory->getNumberOfSlotsUsed();
+
+        x = getParent()->getParent()->getX() + getParent()->getX() + getX() + xPos;
+        y = getParent()->getParent()->getY() + getParent()->getY() + getY() + yPos;
     }
 }
 
@@ -316,38 +415,12 @@ void ItemContainer::mousePressed(gcn::MouseEvent &event)
     }
 }
 
-void ItemContainer::showPopup(MenuType type, bool useMouseCoordinates)
-{
-    Item *item = getSelectedItem();
-    int x = gui->getMouseX();
-    int y = gui->getMouseY();
-
-    if (!item)
-        return;
-
-    if (!useMouseCoordinates)
-    {
-        int columns = getWidth() / gridWidth;
-        const int itemX = mSelectedItemIndex % columns;
-        const int itemY = mSelectedItemIndex / columns;
-        const int xPos = itemX * gridWidth + (gridWidth / 2);
-        const int yPos = itemY * gridHeight + (gridHeight / 2) + gui->getFont()->getHeight();
-
-        if (columns > mInventory->getNumberOfSlotsUsed())
-            columns = mInventory->getNumberOfSlotsUsed();
-
-        x = getParent()->getParent()->getX() + getParent()->getX() + getX() + xPos;
-        y = getParent()->getParent()->getY() + getParent()->getY() + getY() + yPos;
-    }
-
-    mPopupMenu->setType(type);
-    mPopupMenu->setItem(item);
-    mPopupMenu->showPopup(x, y);
-}
-
-// Show ItemTooltip
+// Show ItemPopup
 void ItemContainer::mouseMoved(gcn::MouseEvent &event)
 {
+    if (!mShowItemInfo)
+        return;
+
     Item *item = mInventory->getItem(getSlotIndex(event.getX(), event.getY()));
 
     if (item)
@@ -359,12 +432,10 @@ void ItemContainer::mouseMoved(gcn::MouseEvent &event)
         mItemPopup->view(gui->getMouseX(), gui->getMouseY());
     }
     else
-    {
         mItemPopup->setVisible(false);
-    }
 }
 
-// Hide ItemTooltip
+// Hide ItemPopup
 void ItemContainer::mouseExited(gcn::MouseEvent &event)
 {
     mItemPopup->setVisible(false);
@@ -375,6 +446,5 @@ int ItemContainer::getSlotIndex(const int posX, const int posY) const
     int columns = getWidth() / gridWidth;
     int index = posX / gridWidth + ((posY / gridHeight) * columns);
 
-    return (index);
+    return index;
 }
-
