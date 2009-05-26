@@ -99,7 +99,7 @@ ProgressBar::~ProgressBar()
 
 void ProgressBar::logic()
 {
-    if (!isVisible())
+    if (!isVisible() || !getParent()->isVisible())
     {
         mLastUpdate = tick_time;
         return;
