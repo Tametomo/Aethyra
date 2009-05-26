@@ -40,7 +40,7 @@ StatusWindow::StatusWindow(LocalPlayer *player):
 {
     setWindowName("Status");
     setCloseButton(true);
-    setDefaultSize(400, 345, ImageRect::CENTER);
+    setDefaultSize(400, 315, ImageRect::CENTER);
 
     // ----------------------
     // Status Part
@@ -129,9 +129,9 @@ StatusWindow::StatusWindow(LocalPlayer *player):
     place(7, 2, mJobBar, 3);
     place.getCell().matchColWidth(0, 1);
     place = getPlacer(0, 3);
-    place(0, 0, mStatsTitleLabel, 5);
-    place(5, 1, mStatsTotalLabel, 5);
-    place(12, 1, mStatsCostLabel, 5);
+    place(0, 1, mStatsTitleLabel, 5).setPadding(5);
+    place(5, 1, mStatsTotalLabel, 5).setPadding(5);
+    place(12, 1, mStatsCostLabel, 5).setPadding(5);
     for (int i = 0; i < 6; i++)
     {
         place(0, 2 + i, mStatsLabel[i], 7).setPadding(5);
