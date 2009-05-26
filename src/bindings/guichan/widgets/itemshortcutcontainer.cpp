@@ -52,10 +52,10 @@ class ItemShortcutContainerConfigListener : public ConfigListener
 
         void optionChanged(const std::string &name)
         {
-            bool show = config.getValue("showItemPopups", true);
+            bool enable = config.getValue("showItemPopups", true);
 
             if (name == "showItemPopups")
-                mItemContainer->showItemPopup(show);
+                mItemContainer->enableItemPopup(enable);
         }
     private:
         ItemShortcutContainer *mItemContainer;
@@ -289,11 +289,11 @@ void ItemShortcutContainer::mouseExited(gcn::MouseEvent &event)
     mItemPopup->setVisible(false);
 }
 
-void ItemShortcutContainer::showItemPopup(bool show)
+void ItemShortcutContainer::enableItemPopup(bool enable)
 {
-    mShowItemInfo = show;
+    mShowItemInfo = enable;
 
-    if (!show)
+    if (!enable)
         mItemPopup->setVisible(false);
 }
 

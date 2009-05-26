@@ -65,8 +65,7 @@ class ItemContainerConfigListener : public ConfigListener
             bool show = config.getValue("showItemPopups", true);
 
             if (name == "showItemPopups")
-                show ? mItemContainer->showItemPopup() :
-                       mItemContainer->hideItemPopup();
+                mItemContainer->enableItemPopup(show);
         }
     private:
         ItemContainer *mItemContainer;
@@ -273,8 +272,7 @@ void ItemContainer::setSelectedItemIndex(int index)
 
         distributeValueChangedEvent();
 
-        if (mShowItemInfo)
-            showItemPopup();
+        enableItemPopup(mShowItemInfo);
     }
 }
 
@@ -305,8 +303,15 @@ void ItemContainer::showPopupMenu(MenuType type, bool useMouseCoordinates)
     mPopupMenu->showPopup(x, y);
 }
 
-void ItemContainer::showItemPopup()
+void ItemContainer::enableItemPopup(bool enable)
 {
+    if (!enable)
+    {
+        mShowItemInfo = false;
+        mItemPopup->setVisible(false);
+        return;
+    }
+
     int x = 0;
     int y = 0;
 
@@ -326,10 +331,9 @@ void ItemContainer::showItemPopup()
     mItemPopup->view(x, y);
 }
 
-void ItemContainer::hideItemPopup()
+void ItemContainer::setItemPopupVisibility(bool visible)
 {
-    mShowItemInfo = false;
-    mItemPopup->setVisible(false);
+    mItemPopup->setVisible(visible);
 }
 
 void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)

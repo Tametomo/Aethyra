@@ -114,21 +114,14 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         void showPopupMenu(MenuType type, bool useMouseCoordinates = true);
 
         /**
-         * Shows the item popup for a given item. Used in keyboard control.
+         * Sets whether the item popup should be shown or not.
          */
-        void showItemPopup();
+        void enableItemPopup(bool enable);
 
         /**
-         * Hides the item popup.
+         * Changes the item popup's visibility.
          */
-        void hideItemPopup();
-
-        /**
-         * Gets the location to tell a popup to draw, and then store it in
-         * x and y. The useMouseCoordinates boolean determines whether the
-         * selected item index should be used, or the mouse coordinates.
-         */
-        void getPopupLocation(bool useMouseCoordinates, int &x, int &y);
+        void setItemPopupVisibility(bool visible);
 
     private:
         // KeyListener
@@ -136,6 +129,13 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
 
         void mouseExited(gcn::MouseEvent &event);
         void mouseMoved(gcn::MouseEvent &event);
+
+        /**
+         * Gets the location to tell a popup to draw, and then store it in
+         * x and y. The useMouseCoordinates boolean determines whether the
+         * selected item index should be used, or the mouse coordinates.
+         */
+        void getPopupLocation(bool useMouseCoordinates, int &x, int &y);
 
         /**
 

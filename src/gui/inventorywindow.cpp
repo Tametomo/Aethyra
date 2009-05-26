@@ -252,3 +252,10 @@ void InventoryWindow::widgetShown(const gcn::Event& event)
     mWeightBar->reset();
     mSlotsBar->reset();
 }
+
+void InventoryWindow::widgetHidden(const gcn::Event& event)
+{
+    Window::widgetHidden(event);
+
+    mItems->setItemPopupVisibility(false);
+}

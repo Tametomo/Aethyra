@@ -71,9 +71,9 @@ class ItemShortcutContainer : public ShortcutContainer
         void mouseReleased(gcn::MouseEvent &event);
 
         /**
-         * Shows the item popup for a given item. Used in keyboard control.
+         * Sets whether or not item popups should be shown.
          */
-        void showItemPopup(bool show);
+        void enableItemPopup(bool enable);
 
     private:
         ItemShortcutContainerConfigListener *mConfigListener;
