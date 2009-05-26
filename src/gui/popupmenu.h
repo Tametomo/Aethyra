@@ -90,7 +90,16 @@ class PopupMenu : public Popup, public gcn::ActionListener
          */
         void setEmote(int emote) { mEmote = emote; }
 
+        /**
+         * Overloaded requestFocus(), in order to get the mappedListBox to
+         * take focus, as well as keeping track of what should gain focus on
+         * losing focus.
+         */
+        void requestFocus();
+
     private:
+        gcn::Widget *mPreviousFocus;
+
         MappedListBox* mMappedListBox;
         LinkMappedListModel* mModel;
 

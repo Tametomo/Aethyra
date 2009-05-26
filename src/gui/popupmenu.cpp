@@ -36,6 +36,7 @@
 #include "../playerrelations.h"
 
 #include "../bindings/guichan/graphics.h"
+#include "../bindings/guichan/gui.h"
 
 #include "../bindings/guichan/models/linkmappedlistmodel.h"
 
@@ -58,6 +59,7 @@ extern std::string tradePartnerName;
 
 PopupMenu::PopupMenu(MenuType type):
     Popup("PopupMenu"),
+    mPreviousFocus(NULL),
     mBeing(NULL),
     mFloorItem(NULL),
     mItem(NULL),
@@ -96,17 +98,27 @@ void PopupMenu::action(const gcn::ActionEvent &event)
     else if (event.getId() == "tradeitem" && mItem && tradeWindow &&
              tradeWindow->isVisible())
     {
-        new ItemAmountWindow(AMOUNT_TRADE_ADD, inventoryWindow, mItem);
+        ItemAmountWindow *temp = new ItemAmountWindow(AMOUNT_TRADE_ADD,
+                                                      inventoryWindow, mItem);
+        temp->requestFocus();
+        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "slotitem" && mItem)
     {
-        new SlotSelectionWindow(ITEM_SHORTCUT, inventoryWindow, mItem->getId());
+        SlotSelectionWindow *temp = new SlotSelectionWindow(ITEM_SHORTCUT,
+                                                            inventoryWindow,
+                                                            mItem->getId());
+        temp->requestFocus();
+        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "slotemote" && mEmote != -1)
     {
-        new SlotSelectionWindow(EMOTE_SHORTCUT, emoteWindow, mEmote);
+        SlotSelectionWindow *temp = new SlotSelectionWindow(EMOTE_SHORTCUT,
+                                                            emoteWindow, mEmote);
+        temp->requestFocus();
+        mPreviousFocus = gui->getFocused();
     }
 
     // Attack action
@@ -181,22 +193,33 @@ void PopupMenu::action(const gcn::ActionEvent &event)
     else if (event.getId() == "chat")
     {
         chatWindow->addItemText(mItem->getInfo().getName());
+        chatWindow->requestChatFocus();
+        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "drop")
     {
-        new ItemAmountWindow(AMOUNT_ITEM_DROP, inventoryWindow, mItem);
+        ItemAmountWindow *temp = new ItemAmountWindow(AMOUNT_ITEM_DROP,
+                                                      inventoryWindow, mItem);
+        temp->requestFocus();
+        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "store" && storageWindow &&
              storageWindow->isVisible())
     {
-        new ItemAmountWindow(AMOUNT_STORE_ADD, inventoryWindow, mItem);
+        ItemAmountWindow *temp = new ItemAmountWindow(AMOUNT_STORE_ADD,
+                                                      inventoryWindow, mItem);
+        temp->requestFocus();
+        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "retrieve")
     {
-        new ItemAmountWindow(AMOUNT_STORE_REMOVE, storageWindow, mItem);
+        ItemAmountWindow *temp = new ItemAmountWindow(AMOUNT_STORE_REMOVE,
+                                                      storageWindow, mItem);
+        temp->requestFocus();
+        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "party" && mBeing &&
@@ -213,6 +236,8 @@ void PopupMenu::action(const gcn::ActionEvent &event)
                                   mBeing->getName().size() - 6) :
                                   mBeing->getName();
         chatWindow->addInputText(name);
+        chatWindow->requestChatFocus();
+        mPreviousFocus = gui->getFocused();
     }
 
     // Unknown actions
@@ -222,6 +247,9 @@ void PopupMenu::action(const gcn::ActionEvent &event)
     }
 
     setVisible(false);
+
+    if (mPreviousFocus)
+        mPreviousFocus->requestFocus();
 
     mEmote = -1;
     mBeing = NULL;
@@ -367,6 +395,13 @@ void PopupMenu::showPopup(int x, int y)
 
     setPosition(x, y);
     setVisible(true);
-    mMappedListBox->requestFocus();
+    requestFocus();
     requestMoveToTop();
+}
+
+void PopupMenu::requestFocus()
+{
+    mPreviousFocus = gui->getFocused();
+
+    mMappedListBox->requestFocus();
 }
