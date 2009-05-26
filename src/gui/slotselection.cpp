@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "emotewindow.h"
+#include "inventorywindow.h"
 #include "slotselection.h"
 
 #include "../emoteshortcut.h"
@@ -118,5 +120,15 @@ void SlotSelectionWindow::action(const gcn::ActionEvent &event)
 
 void SlotSelectionWindow::close()
 {
+    switch (mUsage)
+    {
+        case ITEM_SHORTCUT:
+            inventoryWindow->requestFocus();
+            break;
+        case EMOTE_SHORTCUT:
+            emoteWindow->requestFocus();
+            break;
+    }
+
     scheduleDelete();
 }

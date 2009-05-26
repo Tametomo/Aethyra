@@ -20,6 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "inventorywindow.h"
 #include "itemamount.h"
 #include "itempopup.h"
 #include "storagewindow.h"
@@ -130,9 +131,7 @@ void ItemAmountWindow::mouseMoved(gcn::MouseEvent &event)
         mItemPopup->view(gui->getMouseX(), gui->getMouseY());
     }
     else
-    {
         mItemPopup->setVisible(false);
-    }
 }
 
 void ItemAmountWindow::resetAmount()
@@ -186,6 +185,22 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
 
 void ItemAmountWindow::close()
 {
+    switch (mUsage)
+    {
+        case AMOUNT_TRADE_ADD:
+            tradeWindow->requestFocus();
+            break;
+        case AMOUNT_ITEM_DROP:
+            inventoryWindow->requestFocus();
+            break;
+        case AMOUNT_STORE_ADD:
+        case AMOUNT_STORE_REMOVE:
+            storageWindow->requestFocus();
+            break;
+        default:
+            break;
+    }
+
     delete mItemPopup;
     mItemPopup = NULL;
     scheduleDelete();
