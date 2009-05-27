@@ -130,8 +130,6 @@ void SimpleAnimation::reset()
 
 void SimpleAnimation::setFrame(unsigned int frame)
 {
-    if (frame < 0)
-        frame = 0;
     if (frame >= mAnimation->getLength())
         frame = mAnimation->getLength() - 1;
 

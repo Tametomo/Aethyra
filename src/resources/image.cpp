@@ -320,7 +320,7 @@ void Image::setAlpha(float alpha)
             SDL_GetRGBA(((Uint32*) mImage->pixels)[i], mImage->format, &r, 
                                                        &g, &b, &a);
 
-            a = (Uint8) mStoredAlpha[i] * mAlpha;
+            a = (Uint8) (mStoredAlpha[i] * mAlpha);
 
             ((Uint32 *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format, r,
                                                           g, b, a);
@@ -505,7 +505,7 @@ void SubImage::setAlpha(float alpha)
                 SDL_GetRGBA(((Uint32*) mImage->pixels)[i], mImage->format, &r, 
                                                            &g, &b, &a);
 
-                a = (Uint8) mParent->mStoredAlpha[i] * mAlpha;
+                a = (Uint8) (mParent->mStoredAlpha[i] * mAlpha);
 
                 ((Uint32 *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format, r,
                                                               g, b, a);

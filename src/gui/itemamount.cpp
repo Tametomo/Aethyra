@@ -167,7 +167,7 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
         if (event.getId() == "all") 
             amount = mMax;
         else
-            amount = mItemAmountSlide->getValue();
+            amount = (int) mItemAmountSlide->getValue();
 
         switch (mUsage)
         {

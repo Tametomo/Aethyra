@@ -42,7 +42,7 @@
 
 #include "../utils/gettext.h"
 
-unsigned char error = NULL;
+unsigned char error = '\0';
 
 namespace
 {

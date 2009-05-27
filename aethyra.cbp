@@ -426,10 +426,12 @@
 		<Unit filename="src\resources\particle\particleemitter.cpp" />
 		<Unit filename="src\resources\particle\particleemitter.h" />
 		<Unit filename="src\resources\particle\particleemitterprop.h" />
-		<Unit filename="src\resources\particle\rotationalparticle.h" />
+		<Unit filename="src\resources\particle\rotationalparticle.cpp" />
 		<Unit filename="src\resources\particle\rotationalparticle.h" />
 		<Unit filename="src\resources\particle\textparticle.cpp" />
 		<Unit filename="src\resources\particle\textparticle.h" />
+		<Unit filename="src\resources\sprite\animatedsprite.cpp" />
+		<Unit filename="src\resources\sprite\animatedsprite.h" />
 		<Unit filename="src\resources\sprite\being.cpp" />
 		<Unit filename="src\resources\sprite\being.h" />
 		<Unit filename="src\resources\sprite\flooritem.cpp" />
@@ -458,8 +460,6 @@
 		<Unit filename="src\utils\xml.h" />
 		<Unit filename="src\utils\vector.cpp" />
 		<Unit filename="src\utils\vector.h" />
-		<Unit filename="src\animatedsprite.cpp" />
-		<Unit filename="src\animatedsprite.h" />
 		<Unit filename="src\configlistener.h" />
 		<Unit filename="src\configuration.cpp" />
 		<Unit filename="src\configuration.h" />

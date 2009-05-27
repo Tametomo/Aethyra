@@ -27,8 +27,6 @@
 #include "being.h"
 #include "localplayer.h"
 
-#include "gui/viewport.h"
-
 #include "../image.h"
 #include "../resourcemanager.h"
 #include "../simpleanimation.h"
@@ -54,6 +52,7 @@
 #include "../../bindings/sdl/sound.h"
 
 #include "../../gui/speechbubble.h"
+#include "../../gui/viewport.h"
 
 #include "../../net/messageout.h"
 #include "../../net/protocol.h"

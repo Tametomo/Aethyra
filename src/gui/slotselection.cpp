@@ -96,7 +96,7 @@ void SlotSelectionWindow::reset()
 
 void SlotSelectionWindow::action(const gcn::ActionEvent &event)
 {
-    int amount = mSlotSlide->getValue();
+    int amount = (int) mSlotSlide->getValue();
 
     if (event.getId() == "cancel")
         close();

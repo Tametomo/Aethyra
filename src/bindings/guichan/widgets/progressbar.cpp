@@ -114,7 +114,7 @@ void ProgressBar::logic()
     else
         return;
 
-    const size_t index = mProgress * mColors.size();
+    const size_t index = (size_t) (mProgress * mColors.size());
 
     if (mCurrentColor != index && index < mColors.size())
     {
