@@ -28,6 +28,7 @@
 #include "../bindings/guichan/widgets/window.h"
 
 class Equipment;
+class EquipmentConfigListener;
 class Icon;
 class Inventory;
 class Item;
@@ -42,6 +43,8 @@ class PlayerBox;
 class EquipmentWindow : public Window, public gcn::ActionListener
 {
     public:
+        friend class EquipmentConfigListener;
+
         /**
          * Constructor.
          */
@@ -85,6 +88,9 @@ class EquipmentWindow : public Window, public gcn::ActionListener
         Item* getItem(const int &x, const int &y);
 
         void setSelected(int index);
+
+        bool mShowItemInfo;
+        EquipmentConfigListener *mConfigListener;
 
         Equipment *mEquipment;
         Inventory *mInventory;

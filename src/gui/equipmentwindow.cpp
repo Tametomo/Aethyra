@@ -29,6 +29,8 @@
 #include "itempopup.h"
 #include "viewport.h"
 
+#include "../configlistener.h"
+#include "../configuration.h"
 #include "../equipment.h"
 #include "../inventory.h"
 #include "../item.h"
@@ -64,6 +66,21 @@ static const int boxPosition[][2] = {
     {129, 78}    // EQUIP_AMMO_SLOT
 };
 
+class EquipmentConfigListener : public ConfigListener
+{
+    public:
+        EquipmentConfigListener()
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            bool show = config.getValue("showItemPopups", true);
+
+            if (name == "showItemPopups")
+                equipmentWindow->mShowItemInfo = show;
+        }
+};
+
 EquipmentWindow::EquipmentWindow():
     Window(_("Equipment")),
     mSelected(-1)
@@ -73,9 +90,13 @@ EquipmentWindow::EquipmentWindow():
     mItemPopup->setOpaque(false);
 
     // Control that shows the Player
-    mPlayerBox = new PlayerBox;
+    mPlayerBox = new PlayerBox();
     mPlayerBox->setDimension(gcn::Rectangle(50, 80, 74, 123));
     mPlayerBox->setPlayer(player_node);
+
+    mShowItemInfo = config.getValue("showItemPopups", true);
+    mConfigListener = new EquipmentConfigListener();
+    config.addListener("showItemPopups", mConfigListener);
 
     setWindowName("Equipment");
     setCloseButton(true);
@@ -109,6 +130,9 @@ EquipmentWindow::EquipmentWindow():
 EquipmentWindow::~EquipmentWindow()
 {
     delete mItemPopup;
+
+    config.removeListener("showItemPopups", mConfigListener);
+    delete mConfigListener;
 }
 
 void EquipmentWindow::draw(gcn::Graphics *graphics)
@@ -230,6 +254,12 @@ void EquipmentWindow::mousePressed(gcn::MouseEvent& mouseEvent)
 // Show ItemTooltip
 void EquipmentWindow::mouseMoved(gcn::MouseEvent &event)
 {
+    if (!mShowItemInfo)
+    {
+        mItemPopup->setVisible(false);
+        return;
+    }
+
     const int x = event.getX();
     const int y = event.getY();
 
@@ -247,9 +277,7 @@ void EquipmentWindow::mouseMoved(gcn::MouseEvent &event)
         mItemPopup->view(x + getX(), y + getY());
     }
     else
-    {
         mItemPopup->setVisible(false);
-    }
 }
 
 // Hide ItemTooltip

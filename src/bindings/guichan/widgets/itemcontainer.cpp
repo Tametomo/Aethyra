@@ -97,7 +97,9 @@ ItemContainer::ItemContainer(Inventory *inventory,
     ResourceManager *resman = ResourceManager::getInstance();
 
     mSelImg = resman->getImage("graphics/gui/selection.png");
-    if (!mSelImg) logger->error("Unable to load selection.png");
+
+    if (!mSelImg)
+        logger->error("Unable to load selection.png");
 
     mMaxItems = mInventory->getLastUsedSlot(); // Count from 0, usage from 2
 
