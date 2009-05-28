@@ -122,7 +122,7 @@ void StorageWindow::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "close")
         close();
-    else if (event.getId() == "retrieve")
+    else if (event.getId() == "retrieve" || event.getId() == "default")
     {
         Item *item = mItems->getSelectedItem();
 

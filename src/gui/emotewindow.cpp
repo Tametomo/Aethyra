@@ -68,7 +68,7 @@ EmoteWindow::EmoteWindow():
 
 void EmoteWindow::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == "use")
+    if (event.getId() == "use" || event.getId() == "default")
     {
         int emote = mEmotes->getSelectedEmote();
 

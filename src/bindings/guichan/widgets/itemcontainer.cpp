@@ -395,7 +395,15 @@ void ItemContainer::keyPressed(gcn::KeyEvent &event)
             break;
         case Key::ENTER:
         case Key::SPACE:
-            distributeActionEvent();
+            if (event.isShiftPressed())
+            {
+                const std::string actionEventId = getActionEventId();
+                setActionEventId("default");
+                distributeActionEvent();
+                setActionEventId(actionEventId);
+            }
+            else
+                distributeActionEvent();
             break;
     }
 }

@@ -246,7 +246,16 @@ void EmoteContainer::keyPressed(gcn::KeyEvent &event)
                 setSelectedEmoteIndex(((emoteY + 1) * columns) + emoteX);
             break;
         case Key::ENTER:
-            distributeActionEvent();
+        case Key::SPACE:
+            if (event.isShiftPressed())
+            {
+                const std::string actionEventId = getActionEventId();
+                setActionEventId("default");
+                distributeActionEvent();
+                setActionEventId(actionEventId);
+            }
+            else
+                distributeActionEvent();
             break;
     }
 }
@@ -254,16 +263,18 @@ void EmoteContainer::keyPressed(gcn::KeyEvent &event)
 void EmoteContainer::mousePressed(gcn::MouseEvent &event)
 {
     int button = event.getButton();
+
     if (button == gcn::MouseEvent::LEFT || button == gcn::MouseEvent::RIGHT)
     {
         int columns = getWidth() / gridWidth;
         int mx = event.getX();
         int my = event.getY();
         int index = mx / gridWidth + ((my / gridHeight) * columns);
+
         if (index < mMaxEmote)
         {
-           setSelectedEmoteIndex(index);
-           emoteShortcut->setEmoteSelected(index + 1);
+            setSelectedEmoteIndex(index);
+            emoteShortcut->setEmoteSelected(index + 1);
         }
     }
 }

@@ -177,7 +177,7 @@ void InventoryWindow::action(const gcn::ActionEvent &event)
         else
             new ItemAmountWindow(AMOUNT_STORE_ADD, this, item);
     }
-    else if (event.getId() == "use")
+    else if (event.getId() == "use" || event.getId() == "default")
     {
         if (item->isEquipment())
         {
