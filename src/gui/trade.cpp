@@ -68,6 +68,7 @@ TradeWindow::TradeWindow():
 
     mAddButton = new Button(_("Add"), "add", this);
     mOkButton = new Button(longestName, "ok", this);
+    mCancelButton = new Button(_("Cancel"), "cancel", this);
 
     mMyItemContainer = new ItemContainer(mMyInventory.get(), "showpopupmenumine", this);
     mMyItemContainer->setWidth(160);
@@ -94,6 +95,7 @@ TradeWindow::TradeWindow():
     place(0, 0, mOwnMoneyLabel);
     place(1, 0, mMoneyField);
     place = getPlacer(0, 2);
+    place(5, 0, mCancelButton);
     place(6, 0, mAddButton);
     place(7, 0, mOkButton);
     Layout &layout = getLayout();
@@ -160,6 +162,7 @@ void TradeWindow::reset()
 {
     mMyInventory->clear();
     mPartnerInventory->clear();
+    mAddButton->setEnabled(true);
     mOkButton->setCaption(_("OK"));
     mOkButton->setActionEventId("ok");
     mOkButton->setEnabled(true);
@@ -223,13 +226,8 @@ void TradeWindow::action(const gcn::ActionEvent &event)
 
     if (event.getId() == "add")
     {
-        if (!inventoryWindow->isVisible())
-            return;
-
-        if (!item)
-            return;
-
-        if (mMyInventory->getFreeSlot() < 0)
+        if (!inventoryWindow->isVisible() || !item || !mAddButton->isEnabled() ||
+            mMyInventory->getFreeSlot() < 0)
             return;
 
         if (mMyInventory->contains(item))
@@ -248,7 +246,7 @@ void TradeWindow::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "cancel")
     {
-        MessageOut outMsg(CMSG_TRADE_CANCEL_REQUEST);
+        close();
     }
     else if (event.getId() == "ok")
     {
@@ -266,6 +264,7 @@ void TradeWindow::action(const gcn::ActionEvent &event)
             mMoneyField->setText("");
 
         mMoneyField->setEnabled(false);
+        mAddButton->setEnabled(false);
         MessageOut outMsg(CMSG_TRADE_ADD_COMPLETE);
     }
     else if (event.getId() == "trade")

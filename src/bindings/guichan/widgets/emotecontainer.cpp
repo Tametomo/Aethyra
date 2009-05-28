@@ -74,6 +74,9 @@ EmoteContainer::EmoteContainer(const std::string &actionEventId,
         mEmoteImg.push_back(EmoteDB::getAnimation(i));
     }
 
+    if (mEmoteImg.size() == 0)
+        setEnabled(false);
+
     mSelImg = resman->getImage("graphics/gui/selection.png");
     if (!mSelImg)
         logger->error("Unable to load selection.png");

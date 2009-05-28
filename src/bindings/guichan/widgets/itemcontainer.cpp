@@ -127,6 +127,11 @@ void ItemContainer::logic()
 
     gcn::Widget::logic();
 
+    if (mInventory->getNumberOfSlotsUsed() == 0)
+        setEnabled(false);
+    else
+        setEnabled(true);
+
     int i = mInventory->getLastUsedSlot();
 
     if (i != mMaxItems)

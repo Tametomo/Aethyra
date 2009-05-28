@@ -131,7 +131,7 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
         ItemContainer *mPartnerItemContainer;
 
         gcn::Label *mPartnerMoneyLabel, *mOwnMoneyLabel;
-        gcn::Button *mAddButton, *mOkButton;
+        gcn::Button *mAddButton, *mOkButton, *mCancelButton;
         ScrollArea *mMyScroll, *mPartnerScroll;
         gcn::TextField *mMoneyField;
         bool mOkOther, mOkMe;
