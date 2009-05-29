@@ -32,6 +32,7 @@
 #include "sdl/sdlinput.h"
 
 #include "../sdl/joystick.h"
+#include "../sdl/sound.h"
 
 #include "../../emoteshortcut.h"
 #include "../../itemshortcut.h"
@@ -79,6 +80,8 @@ namespace
         {
             if (event.getId() == "yes" || event.getId() == "ok")
             {
+                sound.fadeOutMusic(1000);
+
                 mInGame = false;
 
                 state = EXIT_STATE;

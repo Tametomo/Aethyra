@@ -176,15 +176,10 @@ static Mix_Music* loadMusic(const std::string &filename)
 
 void Sound::playMusic(const std::string &filename)
 {
-    mCurrentMusicFile = filename;
+    if (mCurrentMusicFile != "")
+        fadeOutMusic(1000);
 
-    if (!mInstalled)
-        return;
-
-    haltMusic();
-
-    if ((mMusic = loadMusic(filename)))
-        Mix_PlayMusic(mMusic, -1); // Loop forever
+    fadeInMusic(filename, 1000);
 }
 
 void Sound::stopMusic()
@@ -217,8 +212,6 @@ void Sound::fadeInMusic(const std::string &path, int ms)
 
 void Sound::fadeOutMusic(int ms)
 {
-    mCurrentMusicFile.clear();
-
     if (!mInstalled)
         return;
 
@@ -251,7 +244,7 @@ void Sound::close()
     if (!mInstalled)
         return;
 
-    haltMusic();
+    fadeOutMusic(1000);
     logger->log("Sound::close() Shutting down sound...");
     Mix_CloseAudio();
 
