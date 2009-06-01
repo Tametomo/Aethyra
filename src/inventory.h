@@ -44,7 +44,7 @@ class Inventory
         /**
          * Returns the size that this instance is configured for
          */
-        int getSize() { return mSize; }
+        int getSize() const { return mSize; }
 
         /**
          * Returns the item at the specified index.

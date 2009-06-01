@@ -38,9 +38,9 @@ class Game
         Game(Network *network);
         ~Game();
 
-        void logic();
+        void logic() const;
 
-        bool isInGame() { return mInGame; }
+        bool isInGame() const { return mInGame; }
 
         void setInGame(bool inGame) { mInGame = inGame; }
 

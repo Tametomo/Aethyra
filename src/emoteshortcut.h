@@ -88,7 +88,7 @@ class EmoteShortcut
         /**
          * A flag to check if the Emote is selected.
          */
-        bool isEmoteSelected() { return mEmoteSelected; }
+        bool isEmoteSelected() const { return mEmoteSelected; }
 
         /**
          * Remove an Emote from the shortcut.
@@ -100,13 +100,13 @@ class EmoteShortcut
          *
          * @param index Index of the emote shortcut.
          */
-        void useEmote(int index);
+        void useEmote(int index) const;
 
     private:
         /**
          * Save the configuration information.
          */
-        void save();
+        void save() const;
 
         int mEmotes[SHORTCUT_EMOTES];  /**< The emote stored. */
         int mEmoteSelected;            /**< The emote held by cursor. */

@@ -90,7 +90,7 @@ class ItemShortcut
         /**
          * A flag to check if the item is selected.
          */
-        bool isItemSelected() { return mItemSelected > -1; }
+        bool isItemSelected() const { return mItemSelected > -1; }
 
         /**
          * Remove a item from the shortcut.
@@ -108,7 +108,7 @@ class ItemShortcut
         /**
          * Save the configuration information.
          */
-        void save();
+        void save() const;
 
         int mItems[SHORTCUT_ITEMS];     /**< The items stored. */
         int mItemSelected;              /**< The item held by cursor. */

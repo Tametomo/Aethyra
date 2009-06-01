@@ -42,7 +42,8 @@ class ShopItem : public Item
          * @param quantity number of available copies of the item
          * @param price price of the item
          */
-        ShopItem(int inventoryIndex, int id, int quantity, int price);
+        ShopItem(const int &inventoryIndex, const int &id, const int &quantity,
+                 const int &price);
 
         /**
          * Constructor. Creates a new ShopItem. Inventory index will be set to
@@ -51,7 +52,7 @@ class ShopItem : public Item
          * @param id the id of the item
          * @param price price of the item
          */
-        ShopItem(int id, int price);
+        ShopItem(const int &id, const int &price);
 
         /**
          * Destructor.
@@ -64,7 +65,7 @@ class ShopItem : public Item
          * @param inventoryIndex the inventory index of the item
          * @param quantity number of available copies of the item
          */
-        void addDuplicate (int inventoryIndex, int quantity);
+        void addDuplicate (const int &inventoryIndex, const int &quantity);
 
         /**
          * Add a duplicate. Id and price will be taken from this item.
@@ -78,9 +79,8 @@ class ShopItem : public Item
          *
          * @return the quantity of the currently topmost duplicate
          */
-        int getCurrentQuantity() {
-            return mDuplicates.empty() ? 0 : mDuplicates.top()->quantity;
-        }
+        int getCurrentQuantity()
+        { return mDuplicates.empty() ? 0 : mDuplicates.top()->quantity; }
 
         /**
          * Gets the inventory index of the currently topmost duplicate.
@@ -103,23 +103,21 @@ class ShopItem : public Item
          *
          * @return the amount, that actually was sold.
          */
-        int sellCurrentDuplicate(int quantity);
+        int sellCurrentDuplicate(const int &quantity);
 
         /**
          * Gets the price of the item.
          *
          * @return the price of the item
          */
-        int getPrice() const
-        { return mPrice; }
+        int getPrice() const { return mPrice; }
 
         /**
          * Gets the display name for the item in the shop list.
          *
          * @return the display name for the item in the shop list
          */
-        const std::string& getDisplayName() const
-        { return mDisplayName; }
+        const std::string& getDisplayName() const { return mDisplayName; }
 
     protected:
         int mPrice;

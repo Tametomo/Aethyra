@@ -100,7 +100,8 @@ void TileAnimation::update(int ticks)
     }
 }
 
-MapLayer::MapLayer(int x, int y, int width, int height, bool isFringeLayer):
+MapLayer::MapLayer(const int &x, const int &y, const int &width, const int &height,
+                   const bool &isFringeLayer):
     mX(x), mY(y),
     mWidth(width), mHeight(height),
     mIsFringeLayer(isFringeLayer)
@@ -115,12 +116,12 @@ MapLayer::~MapLayer()
     delete[] mTiles;
 }
 
-void MapLayer::setTile(int x, int y, Image *img)
+void MapLayer::setTile(const int &x, const int &y, Image *img)
 {
     setTile(x + y * mWidth, img);
 }
 
-Image* MapLayer::getTile(int x, int y) const
+Image* MapLayer::getTile(const int &x, const int &y) const
 {
     return mTiles[x + y * mWidth];
 }
@@ -186,7 +187,8 @@ void MapLayer::draw(Graphics *graphics, int startX, int startY,
     graphics->popClipArea();
 }
 
-Map::Map(int width, int height, int tileWidth, int tileHeight):
+Map::Map(const int &width, const int &height, const int &tileWidth,
+         const int &tileHeight):
     mWidth(width), mHeight(height),
     mTileWidth(tileWidth), mTileHeight(tileHeight),
     mMaxTileHeight(height),
@@ -289,8 +291,8 @@ void Map::draw(Graphics *graphics, int scrollX, int scrollY)
             (int) config.getValue("OverlayDetail", 2));
 }
 
-void Map::drawOverlay(Graphics *graphics,
-                      float scrollX, float scrollY, int detail)
+void Map::drawOverlay(Graphics *graphics, const float &scrollX,
+                      const float &scrollY, const int &detail)
 {
     static int lastTick = tick_time;
 
@@ -340,7 +342,7 @@ class ContainsGidFunctor
         int gid;
 } containsGid;
 
-Tileset* Map::getTilesetWithGid(int gid) const
+Tileset* Map::getTilesetWithGid(const int &gid) const
 {
     containsGid.gid = gid;
 
@@ -350,12 +352,12 @@ Tileset* Map::getTilesetWithGid(int gid) const
     return (i == mTilesets.end()) ? NULL : *i;
 }
 
-void Map::setWalk(int x, int y, bool walkable)
+void Map::setWalk(const int &x, const int &y, const bool &walkable)
 {
     mMetaTiles[x + y * mWidth].walkable = walkable;
 }
  
-bool Map::occupied(int x, int y) const
+bool Map::occupied(const int &x, const int &y) const
 {
     const Beings &beings = beingManager->getAll();
     for (Beings::const_iterator i = beings.begin(); i != beings.end(); i++)
@@ -370,17 +372,17 @@ bool Map::occupied(int x, int y) const
     return false;
 }
 
-bool Map::tileCollides(int x, int y) const
+bool Map::tileCollides(const int &x, const int &y) const
 {
      return !(contains(x, y) && mMetaTiles[x + y * mWidth].walkable);
 }
 
-bool Map::contains(int x, int y) const
+bool Map::contains(const int &x, const int &y) const
 {
     return x >= 0 && y >= 0 && x < mWidth && y < mHeight;
 }
 
-MetaTile* Map::getMetaTile(int x, int y)
+MetaTile* Map::getMetaTile(const int &x, const int &y)
 {
     return &mMetaTiles[x + y * mWidth];
 }
@@ -409,7 +411,8 @@ const std::string &Map::getName() const
     return getProperty("mapname");
 }
 
-Path Map::findPath(int startX, int startY, int destX, int destY)
+Path Map::findPath(const int &startX, const int &startY, const int &destX,
+                   const int &destY)
 {
     // Path to be built up (empty by default)
     Path path;
@@ -562,7 +565,8 @@ Path Map::findPath(int startX, int startY, int destX, int destY)
     return path;
 }
 
-void Map::addParticleEffect(const std::string &effectFile, int x, int y)
+void Map::addParticleEffect(const std::string &effectFile, const int &x,
+                            const int &y)
 {
     ParticleEffectData newEffect;
     newEffect.file = effectFile;
@@ -586,15 +590,12 @@ void Map::initializeParticleEffects(Particle* particleEngine)
     }
 }
 
-TileAnimation* Map::getAnimationForGid(int gid)
+TileAnimation* Map::getAnimationForGid(const int &gid)
 {
     std::map<int, TileAnimation*>::iterator i = mTileAnimations.find(gid);
+
     if (i == mTileAnimations.end())
-    {
         return NULL;
-    }
     else
-    {
         return i->second;
-    }
 }

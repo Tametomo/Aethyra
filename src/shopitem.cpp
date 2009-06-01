@@ -24,7 +24,8 @@
 
 #include "utils/stringutils.h"
 
-ShopItem::ShopItem (int inventoryIndex, int id, int quantity, int price) :
+ShopItem::ShopItem (const int &inventoryIndex, const int &id,
+                    const int &quantity, const int &price) :
     Item (id, 0),
     mPrice(price)
 {
@@ -33,7 +34,9 @@ ShopItem::ShopItem (int inventoryIndex, int id, int quantity, int price) :
     addDuplicate(inventoryIndex, quantity);
 }
 
-ShopItem::ShopItem (int id, int price) : Item (id, 0), mPrice(price)
+ShopItem::ShopItem (const int &id, const int &price):
+    Item (id, 0),
+    mPrice(price)
 {
     mDisplayName = getInfo().getName() + " (" + toString(mPrice) + " GP)";
     setInvIndex(-1);
@@ -50,7 +53,7 @@ ShopItem::~ShopItem()
     }
 }
 
-void ShopItem::addDuplicate(int inventoryIndex, int quantity)
+void ShopItem::addDuplicate(const int &inventoryIndex, const int &quantity)
 {
     DuplicateItem* di = new DuplicateItem;
     di->inventoryIndex = inventoryIndex;
@@ -68,7 +71,7 @@ void ShopItem::addDuplicate()
     mDuplicates.push(di);
 }
 
-int ShopItem::sellCurrentDuplicate(int quantity)
+int ShopItem::sellCurrentDuplicate(const int &quantity)
 {
     DuplicateItem* dupl = mDuplicates.top();
     int sellCount = quantity <= dupl->quantity ? quantity : dupl->quantity;

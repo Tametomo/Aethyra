@@ -293,7 +293,7 @@ Game::~Game()
     floorItemManager = NULL;
 }
 
-void Game::logic()
+void Game::logic() const
 {
     int gameTime = tick_time;
 

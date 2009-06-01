@@ -26,7 +26,6 @@
 
 #include "charselect.h"
 
-#include "../game.h"
 #include "../main.h"
 
 #include "../bindings/guichan/layout.h"

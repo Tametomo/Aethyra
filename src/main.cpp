@@ -558,7 +558,9 @@ static void parseOptions(int argc, char *argv[], Options &options)
  */
 static void loadUpdates()
 {
-    if (updatesDir.empty()) return;
+    if (updatesDir.empty())
+        return;
+
     const std::string updatesFile = "/" + updatesDir + "/resources2.txt";
     ResourceManager *resman = ResourceManager::getInstance();
     std::vector<std::string> lines = resman->loadTextFile(updatesFile);

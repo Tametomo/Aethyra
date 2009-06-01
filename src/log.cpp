@@ -44,9 +44,7 @@ Logger::Logger():
 Logger::~Logger()
 {
     if (mLogFile.is_open())
-    {
         mLogFile.close();
-    }
 }
 
 void Logger::setLogFile(const std::string &logFilename)
@@ -54,18 +52,14 @@ void Logger::setLogFile(const std::string &logFilename)
     mLogFile.open(logFilename.c_str(), std::ios_base::trunc);
 
     if (!mLogFile.is_open())
-    {
         std::cout << "Warning: error while opening " << logFilename <<
-            " for writing.\n";
-    }
+                     " for writing.\n";
 }
 
 void Logger::log(const char *log_text, ...)
 {
     if (!mLogFile.is_open())
-    {
         return;
-    }
 
     char* buf = new char[1024];
     va_list ap;
@@ -98,14 +92,10 @@ void Logger::log(const char *log_text, ...)
     mLogFile << timeStr.str() << buf << std::endl;
 
     if (mLogToStandardOut)
-    {
         std::cout << timeStr.str() << buf << std::endl;
-    }
 
     if (mChatWindow)
-    {
         mChatWindow->chatLog(buf, BY_LOGGER);
-    }
 
     // Delete temporary buffer
     delete[] buf;

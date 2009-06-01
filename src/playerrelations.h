@@ -77,7 +77,7 @@ public:
     /**
      * Handle the ignoring of the indicated action by the indicated player.
      */
-    virtual void ignore(Player *player, unsigned int flags) = 0;
+    virtual void ignore(Player *player, const unsigned int &flags) = 0;
 };
 
 typedef std::vector<PlayerIgnoreStrategy *> IgnoreStrategies;
@@ -121,28 +121,34 @@ public:
     /**
      * Save configuration to our config file.
      */
-    void store();
+    void store() const;
 
     /**
      * Determines whether the player in question is being ignored, filtered by
      * the specified flags.
      */
     unsigned int checkPermissionSilently(const std::string &player_name,
-                                         unsigned int flags);
+                                         const unsigned int flags);
 
     /**
      * Tests whether the player in question is being ignored for any of the
      * actions in the specified flags. If so, trigger appropriate side effects
      * if requested by the player.
      */
-    bool hasPermission(Being *being, unsigned int flags);
+    bool hasPermission(Being *being, const unsigned int flags);
 
-    bool hasPermission(const std::string &being, unsigned int flags);
+    bool hasPermission(const std::string &name, const unsigned int flags);
 
     /**
-     * Updates the relationship with this player.
+     * Retrieves a sorted vector of all players for which we have any relations
+     * recorded.
      */
-    void setRelation(const std::string &name, PlayerRelation::relation relation);
+    PlayerNames *getPlayers() const;
+
+    /**
+     * Deletes the information recorded for a player.
+     */
+    void removePlayer(const std::string &name);
 
     /**
      * Updates the relationship with this player.
@@ -150,9 +156,9 @@ public:
     PlayerRelation::relation getRelation(const std::string &name);
 
     /**
-     * Deletes the information recorded for a player.
+     * Updates the relationship with this player.
      */
-    void removePlayer(const std::string &name);
+    void setRelation(const std::string &name, PlayerRelation::relation relation);
 
     /**
      * Retrieves the default permissions.
@@ -162,7 +168,7 @@ public:
     /**
      * Sets the default permissions.
      */
-    void setDefault(unsigned int permissions);
+    void setDefault(const unsigned int &permissions);
 
     /**
      * Retrieves all known player ignore strategies.
@@ -194,12 +200,6 @@ public:
      * \return The appropriate index, or -1
      */
     int getPlayerIgnoreStrategyIndex(const std::string &shortname);
-
-    /**
-     * Retrieves a sorted vector of all players for which we have any relations
-     * recorded.
-     */
-    PlayerNames *getPlayers();
 
     /**
      * Removes all recorded player info.

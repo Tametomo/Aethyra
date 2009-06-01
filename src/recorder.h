@@ -51,7 +51,7 @@ class Recorder
         /*
          * Whether or not the recorder is in use.
          */
-        bool isRecording() { return (bool) mStream.is_open(); }
+        bool isRecording() const { return (bool) mStream.is_open(); }
 
     private:
         ChatWindow *mChat;

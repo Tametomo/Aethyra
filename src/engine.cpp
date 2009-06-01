@@ -118,7 +118,7 @@ bool Engine::changeMap(const std::string &mapPath)
     return true;
 }
 
-void Engine::logic()
+void Engine::logic() const
 {
     beingManager->logic();
     particleEngine->update();

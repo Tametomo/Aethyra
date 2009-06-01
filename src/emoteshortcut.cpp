@@ -45,13 +45,14 @@ void EmoteShortcut::load()
 {
     for (int i = 0; i < SHORTCUT_EMOTES; i++)
     {
-        int emoteId = (int) config.getValue("emoteshortcut" + toString(i), i + 1);
+        const int emoteId = (int) config.getValue("emoteshortcut" + toString(i),
+                                                  i + 1);
 
         mEmotes[i] = emoteId;
     }
 }
 
-void EmoteShortcut::save()
+void EmoteShortcut::save() const
 {
     for (int i = 0; i < SHORTCUT_EMOTES; i++)
     {
@@ -60,7 +61,7 @@ void EmoteShortcut::save()
     }
 }
 
-void EmoteShortcut::useEmote(int index)
+void EmoteShortcut::useEmote(int index) const
 {
     if ((index > 0) && (index <= SHORTCUT_EMOTES))
     {

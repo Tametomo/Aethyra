@@ -40,13 +40,13 @@ class Party
         void leave(const std::string &args);
 
         void createResponse(bool ok);
-        void inviteResponse(const std::string &nick, int status);
+        void inviteResponse(const std::string &nick, int status) const;
         void invitedAsk(const std::string &nick, int gender,
                         const std::string &partyName);
-        void leftResponse(const std::string &nick);
-        void receiveChat(Being *being, const std::string &msg);
+        void leftResponse(const std::string &nick) const;
+        void receiveChat(Being *being, const std::string &msg) const;
 
-        void help(const std::string &msg);
+        void help(const std::string &msg) const;
 
     private:
         ChatWindow *mChat;

@@ -59,7 +59,7 @@ class Engine
         /**
          * Performs engine logic.
          */
-        void logic();
+        void logic() const;
 
     private:
         Map *mCurrentMap;

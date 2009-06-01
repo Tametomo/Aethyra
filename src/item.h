@@ -36,8 +36,8 @@ class Item
         /**
          * Constructor.
          */
-        Item(int id = -1, int quantity = 0,
-             bool equipment = false, bool equipped = false);
+        Item(int id = -1, int quantity = 0, bool equipment = false,
+             bool equipped = false);
 
         /**
          * Destructor.
@@ -57,7 +57,7 @@ class Item
         /**
          * Returns the item image.
          */
-        Image* getImage() { return mImage; }
+        Image* getImage() const { return mImage; }
 
         /**
          * Sets the number of items.

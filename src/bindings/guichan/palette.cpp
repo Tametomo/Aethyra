@@ -26,7 +26,6 @@
 #include "gui.h"
 
 #include "../../configuration.h"
-#include "../../game.h"
 
 #include "../../utils/gettext.h"
 #include "../../utils/stringutils.h"

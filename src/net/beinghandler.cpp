@@ -113,7 +113,8 @@ void BeingHandler::handleMessage(MessageIn *msg)
             }
 
             // Prevent division by 0 when calculating frame
-            if (speed == 0) { speed = 150; }
+            if (speed == 0)
+                speed = 150;
 
             dstBeing->setWalkSpeed(speed);
             dstBeing->mJob = job;
@@ -136,8 +137,8 @@ void BeingHandler::handleMessage(MessageIn *msg)
             msg->readInt16();  // manner
             msg->readInt16();  // karma
             msg->readInt8();   // unknown
-            dstBeing->setGender(
-                    (msg->readInt8() == 0) ? GENDER_FEMALE : GENDER_MALE);
+            dstBeing->setGender((msg->readInt8() == 0) ? GENDER_FEMALE :
+                                                         GENDER_MALE);
 
             // Set these after the gender, as the sprites may be gender-specific
             dstBeing->setSprite(Being::BOTTOMCLOTHES_SPRITE, headBottom);
@@ -238,10 +239,10 @@ void BeingHandler::handleMessage(MessageIn *msg)
                 case Being::FLEE: // Lucky Dodge
                     if (dstBeing)
                         dstBeing->takeDamage(srcBeing, param1,
-                                (Being::AttackType)type);
+                                            (Being::AttackType) type);
                     if (srcBeing)
                         srcBeing->handleAttack(dstBeing, param1,
-                                (Being::AttackType)type);
+                                              (Being::AttackType) type);
                     break;
 
                 case 0x02: // Sit

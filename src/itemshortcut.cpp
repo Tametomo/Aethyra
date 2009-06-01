@@ -46,13 +46,13 @@ void ItemShortcut::load()
 {
     for (int i = 0; i < SHORTCUT_ITEMS; i++)
     {
-        int itemId = (int) config.getValue("shortcut" + toString(i), -1);
+        const int itemId = (int) config.getValue("shortcut" + toString(i), -1);
 
         mItems[i] = itemId;
     }
 }
 
-void ItemShortcut::save()
+void ItemShortcut::save() const
 {
     for (int i = 0; i < SHORTCUT_ITEMS; i++)
     {

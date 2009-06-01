@@ -24,6 +24,7 @@
 #include "configuration.h"
 #include "log.h"
 
+#include "utils/dtor.h"
 #include "utils/stringutils.h"
 #include "utils/xml.h"
 
@@ -57,12 +58,12 @@ void Configuration::setValue(const std::string &key, std::string value)
 
     // Notify listeners
     ListenerMapIterator list = mListenerMap.find(key);
-    if (list != mListenerMap.end()) {
+    if (list != mListenerMap.end())
+    {
         Listeners listeners = list->second;
+
         for (ListenerIterator i = listeners.begin(); i != listeners.end(); i++)
-        {
             (*i)->optionChanged(key);
-        }
     }
 }
 
@@ -80,18 +81,15 @@ float ConfigurationObject::getValue(const std::string &key, float deflt)
 
 void ConfigurationObject::deleteList(const std::string &name)
 {
-    for (ConfigurationList::const_iterator
-             it = mContainerOptions[name].begin(); it != mContainerOptions[name].end(); it++)
-        delete *it;
-
-    mContainerOptions[name].clear();
+    delete_all(mContainerOptions[name]);
 }
 
 void ConfigurationObject::clear(void)
 {
-    for (std::map<std::string, ConfigurationList>::const_iterator
-             it = mContainerOptions.begin(); it != mContainerOptions.end(); it++)
+    for (ContainerOptionsConstIter it = mContainerOptions.begin();
+         it != mContainerOptions.end(); it++)
         deleteList(it->first);
+
     mOptions.clear();
 }
 
@@ -106,7 +104,8 @@ void ConfigurationObject::initFromXML(xmlNodePtr parent_node)
 
     for_each_xml_child_node(node, parent_node)
     {
-        if (xmlStrEqual(node->name, BAD_CAST "list")) {
+        if (xmlStrEqual(node->name, BAD_CAST "list"))
+        {
             // list option handling
 
             std::string name = XML::getProperty(node, "name", std::string());
@@ -114,7 +113,8 @@ void ConfigurationObject::initFromXML(xmlNodePtr parent_node)
             for_each_xml_child_node(subnode, node)
             {
                 if (xmlStrEqual(subnode->name, BAD_CAST name.c_str())
-                    && subnode->type == XML_ELEMENT_NODE) {
+                    && subnode->type == XML_ELEMENT_NODE)
+                {
                     ConfigurationObject *cobj = new ConfigurationObject();
 
                     cobj->initFromXML(subnode); // recurse
@@ -123,7 +123,9 @@ void ConfigurationObject::initFromXML(xmlNodePtr parent_node)
                 }
             }
 
-        } else if (xmlStrEqual(node->name, BAD_CAST "option")) {
+        }
+        else if (xmlStrEqual(node->name, BAD_CAST "option"))
+        {
             // single option handling
 
             std::string name = XML::getProperty(node, "name", std::string());
@@ -141,20 +143,21 @@ void Configuration::init(const std::string &filename)
 
     // Do not attempt to read config from non-existant file
     FILE *testFile = fopen(filename.c_str(), "r");
-    if (!testFile) {
+
+    if (!testFile)
         return;
-    }
-    else {
+    else
         fclose(testFile);
-    }
 
     xmlDocPtr doc = xmlReadFile(filename.c_str(), NULL, 0);
 
-    if (!doc) return;
+    if (!doc)
+        return;
 
     xmlNodePtr rootNode = xmlDocGetRootElement(doc);
 
-    if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "configuration")) {
+    if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "configuration"))
+    {
         logger->log("Warning: No configuration file (%s)", filename.c_str());
         xmlFreeDoc(doc);
         return;
@@ -177,16 +180,18 @@ void ConfigurationObject::writeToXML(xmlTextWriterPtr writer)
         xmlTextWriterEndElement(writer);
     }
 
-    for (std::map<std::string, ConfigurationList>::const_iterator
-             it = mContainerOptions.begin(); it != mContainerOptions.end(); it++) {
+    for (ContainerOptionsConstIter it = mContainerOptions.begin();
+         it != mContainerOptions.end(); it++)
+    {
         const char *name = it->first.c_str();
 
         xmlTextWriterStartElement(writer, BAD_CAST "list");
         xmlTextWriterWriteAttribute(writer, BAD_CAST "name", BAD_CAST name);
 
         // recurse on all elements
-        for (ConfigurationList::const_iterator
-                 elt_it = it->second.begin(); elt_it != it->second.end(); elt_it++) {
+        for (ConfigurationList::const_iterator elt_it = it->second.begin();
+             elt_it != it->second.end(); elt_it++)
+        {
 
             xmlTextWriterStartElement(writer, BAD_CAST name);
             (*elt_it)->writeToXML(writer);
@@ -201,18 +206,19 @@ void Configuration::write()
 {
     // Do not attempt to write to file that cannot be opened for writing
     FILE *testFile = fopen(mConfigPath.c_str(), "w");
-    if (!testFile) {
+    if (!testFile)
+    {
         logger->log("Configuration::write() couldn't open %s for writing",
                     mConfigPath.c_str());
         return;
     }
-    else {
+    else
         fclose(testFile);
-    }
 
     xmlTextWriterPtr writer = xmlNewTextWriterFilename(mConfigPath.c_str(), 0);
 
-    if (!writer) {
+    if (!writer)
+    {
         logger->log("Configuration::write() error while creating writer");
         return;
     }
@@ -229,14 +235,12 @@ void Configuration::write()
     xmlFreeTextWriter(writer);
 }
 
-void Configuration::addListener(
-        const std::string &key, ConfigListener *listener)
+void Configuration::addListener(const std::string &key, ConfigListener *listener)
 {
     mListenerMap[key].push_front(listener);
 }
 
-void Configuration::removeListener(
-        const std::string &key, ConfigListener *listener)
+void Configuration::removeListener(const std::string &key, ConfigListener *listener)
 {
     mListenerMap[key].remove(listener);
 }
