@@ -82,13 +82,9 @@ void BuySellDialog::action(const gcn::ActionEvent &event)
     NPC::mTalking = false;
 
     if (event.getId() == "Buy")
-    {
         action = 0;
-    }
     else if (event.getId() == "Sell")
-    {
         action = 1;
-    }
     else if (event.getId() == "Cancel")
     {
         current_npc = 0;

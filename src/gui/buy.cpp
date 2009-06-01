@@ -247,6 +247,6 @@ void BuyDialog::requestFocus()
 
 void BuyDialog::close()
 {
-    setVisible(false);
+    Window::close();
     current_npc = 0;
 }

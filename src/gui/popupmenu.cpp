@@ -99,10 +99,10 @@ void PopupMenu::action(const gcn::ActionEvent &event)
     else if (event.getId() == "tradeitem" && mItem && tradeWindow &&
              tradeWindow->isVisible())
     {
+        mPreviousFocus = gui->getFocused();
         ItemAmountWindow *temp = new ItemAmountWindow(AMOUNT_TRADE_ADD,
                                                       inventoryWindow, mItem);
         temp->requestFocus();
-        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "showitempopup")
@@ -117,19 +117,19 @@ void PopupMenu::action(const gcn::ActionEvent &event)
 
     else if (event.getId() == "slotitem" && mItem)
     {
+        mPreviousFocus = gui->getFocused();
         SlotSelectionWindow *temp = new SlotSelectionWindow(ITEM_SHORTCUT,
                                                             inventoryWindow,
                                                             mItem->getId());
         temp->requestFocus();
-        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "slotemote" && mEmote != -1)
     {
+        mPreviousFocus = gui->getFocused();
         SlotSelectionWindow *temp = new SlotSelectionWindow(EMOTE_SHORTCUT,
                                                             emoteWindow, mEmote);
         temp->requestFocus();
-        mPreviousFocus = gui->getFocused();
     }
 
     // Attack action
@@ -203,34 +203,34 @@ void PopupMenu::action(const gcn::ActionEvent &event)
 
     else if (event.getId() == "chat")
     {
+        mPreviousFocus = gui->getFocused();
         chatWindow->addItemText(mItem->getInfo().getName());
         chatWindow->requestChatFocus();
-        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "drop")
     {
+        mPreviousFocus = gui->getFocused();
         ItemAmountWindow *temp = new ItemAmountWindow(AMOUNT_ITEM_DROP,
                                                       inventoryWindow, mItem);
         temp->requestFocus();
-        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "store" && storageWindow &&
              storageWindow->isVisible())
     {
+        mPreviousFocus = gui->getFocused();
         ItemAmountWindow *temp = new ItemAmountWindow(AMOUNT_STORE_ADD,
                                                       inventoryWindow, mItem);
         temp->requestFocus();
-        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "retrieve")
     {
+        mPreviousFocus = gui->getFocused();
         ItemAmountWindow *temp = new ItemAmountWindow(AMOUNT_STORE_REMOVE,
                                                       storageWindow, mItem);
         temp->requestFocus();
-        mPreviousFocus = gui->getFocused();
     }
 
     else if (event.getId() == "party" && mBeing &&
@@ -242,13 +242,13 @@ void PopupMenu::action(const gcn::ActionEvent &event)
 
     else if (event.getId() == "name" && mBeing)
     {
+        mPreviousFocus = gui->getFocused();
         const std::string &name = mBeing->getType() == Being::NPC ?
                                   mBeing->getName().substr(0,
                                   mBeing->getName().size() - 6) :
                                   mBeing->getName();
         chatWindow->addInputText(name);
         chatWindow->requestChatFocus();
-        mPreviousFocus = gui->getFocused();
     }
 
     // Unknown actions
@@ -263,6 +263,7 @@ void PopupMenu::action(const gcn::ActionEvent &event)
         mPreviousFocus->requestFocus();
 
     mEmote = -1;
+    mPreviousFocus = NULL;
     mBeing = NULL;
     mFloorItem = NULL;
     mItem = NULL;

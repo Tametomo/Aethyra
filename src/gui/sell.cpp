@@ -272,6 +272,6 @@ void SellDialog::requestFocus()
 
 void SellDialog::close()
 {
-    setVisible(false);
+    Window::close();
     current_npc = 0;
 }
