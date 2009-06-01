@@ -63,7 +63,7 @@ namespace XML
              * Returns the root node of the document (or NULL if there was a
              * load error).
              */
-            xmlNodePtr rootNode();
+            xmlNodePtr rootNode() const;
 
         private:
             xmlDocPtr mDoc;

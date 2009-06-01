@@ -37,8 +37,8 @@ public:
     Mutex();
     ~Mutex();
 
-    void lock();
-    void unlock();
+    void lock() const;
+    void unlock() const;
 
 private:
     Mutex(const Mutex&);  // prevent copying
@@ -71,13 +71,13 @@ inline Mutex::~Mutex()
     SDL_DestroyMutex(mMutex);
 }
 
-inline void Mutex::lock()
+inline void Mutex::lock() const
 {
     if (SDL_mutexP(mMutex) == -1)
         logger->log("Mutex locking failed: %s", SDL_GetError());
 }
 
-inline void Mutex::unlock()
+inline void Mutex::unlock() const
 {
     if (SDL_mutexV(mMutex) == -1)
         logger->log("Mutex unlocking failed: %s", SDL_GetError());

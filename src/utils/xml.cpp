@@ -35,15 +35,16 @@ namespace XML
         ResourceManager *resman = ResourceManager::getInstance();
         char *data = (char*) resman->loadFile(filename.c_str(), size);
 
-        if (data) {
+        if (data)
+        {
             mDoc = xmlParseMemory(data, size);
             free(data);
 
             if (!mDoc)
                 logger->log("Error parsing XML file %s", filename.c_str());
-        } else {
-            logger->log("Error loading %s", filename.c_str());
         }
+        else
+            logger->log("Error loading %s", filename.c_str());
     }
 
     Document::Document(const char *data, int size)
@@ -57,7 +58,7 @@ namespace XML
             xmlFreeDoc(mDoc);
     }
 
-    xmlNodePtr Document::rootNode()
+    xmlNodePtr Document::rootNode() const
     {
         return mDoc ? xmlDocGetRootElement(mDoc) : 0;
     }
@@ -67,7 +68,8 @@ namespace XML
         int &ret = def;
 
         xmlChar *prop = xmlGetProp(node, BAD_CAST name);
-        if (prop) {
+        if (prop)
+        {
             ret = atoi((char*)prop);
             xmlFree(prop);
         }
@@ -80,7 +82,8 @@ namespace XML
         double &ret = def;
 
         xmlChar *prop = xmlGetProp(node, BAD_CAST name);
-        if (prop) {
+        if (prop)
+        {
             ret = atof((char*)prop);
             xmlFree(prop);
         }
@@ -91,7 +94,8 @@ namespace XML
     std::string getProperty(xmlNodePtr node, const char *name, const std::string &def)
     {
         xmlChar *prop = xmlGetProp(node, BAD_CAST name);
-        if (prop) {
+        if (prop)
+        {
             std::string val = (char*)prop;
             xmlFree(prop);
             return val;

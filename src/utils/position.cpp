@@ -22,13 +22,13 @@
 
 #include "position.h"
 
-std::ostream& operator <<(std::ostream &os, const Position &p)
+inline std::ostream& operator <<(std::ostream &os, const Position &p)
 {
     os << "(" << p.x << ", " << p.y << ")";
     return os;
 }
 
-std::ostream& operator <<(std::ostream &os, const Path &path)
+inline std::ostream& operator <<(std::ostream &os, const Path &path)
 {
     Path::const_iterator i = path.begin();
 

@@ -7,7 +7,10 @@
  * Unfortunately the original creator of this function seems to be unknown.
  */
 
-float fastInvSqrt(float x)
+#ifndef FAST_SQRT_H
+#define FAST_SQRT_H
+
+static inline float fastInvSqrt(float x)
 {
     union { int i; float x; } tmp;
     float xhalf = 0.5f * x;
@@ -18,7 +21,9 @@ float fastInvSqrt(float x)
     return x;
 }
 
-float fastSqrt(float x)
+static inline float fastSqrt(float x)
 {
     return 1.0f / fastInvSqrt(x);
 }
+
+#endif

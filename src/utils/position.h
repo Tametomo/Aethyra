@@ -48,12 +48,12 @@ typedef Path::iterator PathIterator;
 /**
  * Appends a string representation of a position to the output stream.
  */
-std::ostream& operator <<(std::ostream &os, const Position &p);
+inline std::ostream& operator <<(std::ostream &os, const Position &p);
 
 /**
  * Appends a string representation of a path (sequence of positions) to the
  * output stream.
  */
-std::ostream& operator <<(std::ostream &os, const Path &path);
+inline std::ostream& operator <<(std::ostream &os, const Path &path);
 
 #endif // POSITION_H
