@@ -22,6 +22,8 @@
 
 #include "focushandler.h"
 
+#include "../widgets/window.h"
+
 void FocusHandler::requestModalFocus(gcn::Widget *widget)
 {
     /* If there is another widget with modal focus, remove its modal focus
@@ -60,4 +62,39 @@ void FocusHandler::remove(gcn::Widget *widget)
     releaseModalFocus(widget);
 
     gcn::FocusHandler::remove(widget);
+}
+
+void FocusHandler::tabNext()
+{
+    gcn::FocusHandler::tabNext();
+
+    checkForWindow();
+}
+
+void FocusHandler::tabPrevious()
+{
+    gcn::FocusHandler::tabPrevious();
+
+    checkForWindow();
+}
+
+void FocusHandler::checkForWindow()
+{
+    if (mFocusedWidget)
+    {
+        gcn::Widget *widget = mFocusedWidget->getParent();
+
+        while (widget)
+        {
+            Window *window = dynamic_cast<Window*>(widget);
+
+            if (window)
+            {
+                window->requestMoveToTop();
+                break;
+            }
+
+            widget = widget->getParent();
+        }
+    }
 }
