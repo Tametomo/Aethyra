@@ -79,7 +79,7 @@ TileAnimation::~TileAnimation()
     delete mAnimation;
 }
 
-void TileAnimation::update(int ticks)
+void TileAnimation::update(const int &ticks)
 {
     if (!mAnimation)
         return;
@@ -252,7 +252,7 @@ bool spriteCompare(const Sprite *a, const Sprite *b)
     return a->getPixelY() < b->getPixelY();
 }
 
-void Map::update(int ticks)
+void Map::update(const int &ticks)
 {
     //update animated tiles
     for (std::map<int, TileAnimation*>::iterator iAni = mTileAnimations.begin();

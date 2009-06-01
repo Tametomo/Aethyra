@@ -40,7 +40,7 @@ class BeingManager
         /**
          * Load particle effects.
          */
-        void loadParticleEffects();
+        void loadParticleEffects() const;
 
         /**
          * Sets the map on which beings are created.

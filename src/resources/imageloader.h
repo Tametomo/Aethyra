@@ -40,14 +40,13 @@ class ProxyImage : public gcn::Image
         int getWidth() const;
         int getHeight() const;
         gcn::Color getPixel(int x, int y);
-        void putPixel(int x, int y, gcn::Color const &color);
+        void putPixel(int x, int y, const gcn::Color &color);
         void convertToDisplayFormat();
 
         /**
          * Gets the image handled by this proxy.
          */
-        ::Image *getImage() const
-        { return mImage; }
+        ::Image *getImage() const { return mImage; }
 
     private:
         ::Image *mImage; /**< The real image. */
@@ -62,7 +61,7 @@ class ProxyImage : public gcn::Image
 class ImageLoader : public gcn::ImageLoader
 {
     public:
-        gcn::Image *load(std::string const &filename, bool convertToDisplayFormat);
+        gcn::Image *load(const std::string &filename, bool convertToDisplayFormat);
 };
 
 #endif

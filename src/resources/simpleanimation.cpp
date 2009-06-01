@@ -54,15 +54,15 @@ SimpleAnimation::SimpleAnimation(xmlNodePtr animationNode):
     for (xmlNodePtr frameNode = animationNode->xmlChildrenNode; frameNode;
          frameNode = frameNode->next)
     {
-        int delay = XML::getProperty(frameNode, "delay", 0);
-        int offsetX = XML::getProperty(frameNode, "offsetX", 0);
-        int offsetY = XML::getProperty(frameNode, "offsetY", 0);
-        offsetY -= imageset->getHeight() - 32;
-        offsetX -= imageset->getWidth() / 2 - 16;
+        const int delay = XML::getProperty(frameNode, "delay", 0);
+        const int offsetX = XML::getProperty(frameNode, "offsetX", 0) - 
+                            imageset->getHeight() - 32;
+        const int offsetY = XML::getProperty(frameNode, "offsetY", 0) -
+                            imageset->getWidth() / 2 - 16;
 
         if (xmlStrEqual(frameNode->name, BAD_CAST "frame"))
         {
-            int index = XML::getProperty(frameNode, "index", -1);
+            const int index = XML::getProperty(frameNode, "index", -1);
 
             if (index < 0)
             {
@@ -83,7 +83,7 @@ SimpleAnimation::SimpleAnimation(xmlNodePtr animationNode):
         else if (xmlStrEqual(frameNode->name, BAD_CAST "sequence"))
         {
             int start = XML::getProperty(frameNode, "start", -1);
-            int end = XML::getProperty(frameNode, "end", -1);
+            const int end = XML::getProperty(frameNode, "end", -1);
 
             if (start < 0 || end < 0)
             {
@@ -112,7 +112,7 @@ SimpleAnimation::SimpleAnimation(xmlNodePtr animationNode):
     mCurrentFrame = mAnimation->getFrame(0);
 }
 
-bool SimpleAnimation::draw(Graphics* graphics, int posX, int posY) const
+bool SimpleAnimation::draw(Graphics* graphics, const int &posX, const int &posY) const
 {
     if (!mCurrentFrame || !mCurrentFrame->image)
         return false;
@@ -137,7 +137,7 @@ void SimpleAnimation::setFrame(unsigned int frame)
     mCurrentFrame = mAnimation->getFrame(mAnimationPhase);
 }
 
-void SimpleAnimation::update(unsigned int timePassed)
+void SimpleAnimation::update(const unsigned int &timePassed)
 {
     mAnimationTime += timePassed;
 

@@ -44,8 +44,8 @@ const unsigned int DEFAULT_TILE_HEIGHT = 32;
  * Inflates either zlib or gzip deflated memory. The inflated memory is
  * expected to be freed by the caller.
  */
-int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char *&out,
-                  unsigned int &outLength)
+int inflateMemory(unsigned char *in, const unsigned int &inLength,
+                  unsigned char *&out, unsigned int &outLength)
 {
     int bufferSize = 256 * 1024;
     int ret;
@@ -109,10 +109,11 @@ int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char *&out,
     return ret == Z_STREAM_END ? Z_OK : Z_DATA_ERROR;
 }
 
-int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char *&out)
+int inflateMemory(unsigned char *in, const unsigned int &inLength,
+                  unsigned char *&out)
 {
     unsigned int outLength = 0;
-    int ret = inflateMemory(in, inLength, out, outLength);
+    const int ret = inflateMemory(in, inLength, out, outLength);
 
     if (ret != Z_OK || out == NULL)
     {
@@ -177,23 +178,22 @@ Map *MapReader::readMap(const std::string &filename)
     xmlNodePtr node = doc.rootNode();
 
     // Parse the inflated map data
-    if (node) {
-        if (!xmlStrEqual(node->name, BAD_CAST "map")) {
+    if (node)
+    {
+        if (!xmlStrEqual(node->name, BAD_CAST "map"))
             logger->log("Error: Not a map file (%s)!", filename.c_str());
-        }
-        else {
+        else
             map = readMap(node, filename);
-        }
-    } else {
-        logger->log("Error while parsing map file (%s)!", filename.c_str());
     }
+    else
+        logger->log("Error while parsing map file (%s)!", filename.c_str());
 
     if (map) map->setProperty("_filename", filename);
 
     return map;
 }
 
-Map *MapReader::readMap(xmlNodePtr node, const std::string &path)
+Map *MapReader::readMap(const xmlNodePtr &node, const std::string &path)
 {
     // Take the filename off the path
     const std::string pathDir = path.substr(0, path.rfind("/") + 1);
@@ -272,7 +272,7 @@ Map *MapReader::readMap(xmlNodePtr node, const std::string &path)
     return map;
 }
 
-void MapReader::readProperties(xmlNodePtr node, Properties *props)
+void MapReader::readProperties(const xmlNodePtr &node, Properties *props)
 {
     for_each_xml_child_node(childNode, node)
     {
@@ -288,13 +288,14 @@ void MapReader::readProperties(xmlNodePtr node, Properties *props)
     }
 }
 
-static void setTile(Map *map, MapLayer *layer, int x, int y, int gid)
+static void setTile(Map *map, MapLayer *layer, const int &x,
+                    const int &y, const int &gid)
 {
-    const Tileset * const set = map->getTilesetWithGid(gid);
+    const Tileset* set = map->getTilesetWithGid(gid);
     if (layer)
     {
         // Set regular tile on a layer
-        Image * const img = set ? set->get(gid - set->getFirstGid()) : 0;
+        Image* img = set ? set->get(gid - set->getFirstGid()) : 0;
         layer->setTile(x, y, img);
     }
     else
@@ -304,7 +305,7 @@ static void setTile(Map *map, MapLayer *layer, int x, int y, int gid)
     }
 }
 
-void MapReader::readLayer(xmlNodePtr node, Map *map)
+void MapReader::readLayer(const xmlNodePtr &node, Map *map)
 {
     // Layers are not necessarily the same size as the map
     const int w = XML::getProperty(node, "width", map->getWidth());
@@ -353,7 +354,7 @@ void MapReader::readLayer(xmlNodePtr node, Map *map)
             if (!dataChild)
                 continue;
  
-            int len = strlen((const char*)dataChild->content) + 1;
+            const int len = strlen((const char*)dataChild->content) + 1;
             unsigned char *charData = new unsigned char[len + 1];
             const char *charStart = (const char*)dataChild->content;
             unsigned char *charIndex = charData;
@@ -453,8 +454,7 @@ void MapReader::readLayer(xmlNodePtr node, Map *map)
     }
 }
 
-Tileset *MapReader::readTileset(xmlNodePtr node,
-                                const std::string &path,
+Tileset *MapReader::readTileset(xmlNodePtr node, const std::string &path,
                                 Map *map)
 {
     int firstGid = XML::getProperty(node, "firstgid", 0);

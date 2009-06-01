@@ -38,7 +38,7 @@ class ImageSet : public Resource
         /*
          * Cuts the passed image in a grid of sub images.
          */
-        ImageSet(Image *img, int w, int h);
+        ImageSet(Image *img, const int &w, const int &h);
 
         /**
          * Destructor.
@@ -56,7 +56,7 @@ class ImageSet : public Resource
         int getHeight() const { return mHeight; };
 
         typedef std::vector<Image*>::size_type size_type;
-        Image* get(size_type i) const;
+        Image* get(const size_type &i) const;
 
         size_type size() const { return mImages.size(); }
 

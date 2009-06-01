@@ -77,8 +77,8 @@ class TileAnimation
     public:
         TileAnimation(Animation *ani);
         ~TileAnimation();
-        void update(int ticks = 1);
-        void addAffectedTile(MapLayer *layer, const int index)
+        void update(const int &ticks = 1);
+        void addAffectedTile(MapLayer *layer, const int &index)
         { mAffected.push_back(std::make_pair(layer, index)); }
     private:
         std::list<std::pair<MapLayer*, int> > mAffected;
@@ -166,7 +166,7 @@ class Map : public Properties
         /**
          * Updates animations. Called as needed.
          */
-        void update(int ticks = 1);
+        void update(const int &ticks = 1);
 
         /**
          * Draws the map to the given graphics output. This method draws all

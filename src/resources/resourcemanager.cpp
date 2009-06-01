@@ -133,7 +133,8 @@ void ResourceManager::cleanOrphans()
             ResourceIterator toErase = iter;
             ++iter;
             mOrphanedResources.erase(toErase);
-            delete res; // delete only after removal from list, to avoid issues in recursion
+            delete res; // delete only after removal from list,
+                        // to avoid issues in recursion
         }
     }
 
@@ -145,7 +146,8 @@ bool ResourceManager::setWriteDir(const std::string &path)
     return (bool) PHYSFS_setWriteDir(path.c_str());
 }
 
-bool ResourceManager::addToSearchPath(const std::string &path, bool append)
+bool ResourceManager::addToSearchPath(const std::string &path,
+                                      const bool &append)
 {
     logger->log("Adding to PhysicsFS: %s", path.c_str());
     if (!PHYSFS_addToSearchPath(path.c_str(), append ? 1 : 0))
@@ -158,7 +160,7 @@ bool ResourceManager::addToSearchPath(const std::string &path, bool append)
 
 void ResourceManager::searchAndAddArchives(const std::string &path,
                                            const std::string &ext,
-                                           bool append)
+                                           const bool &append)
 {
     const char *dirSep = PHYSFS_getDirSeparator();
     char **list = PHYSFS_enumerateFiles(path.c_str());
@@ -294,8 +296,8 @@ struct FontLoader
     }
 };
 
-TrueTypeFont *ResourceManager::getFont(const std::string &path, int size,
-                                       int style)
+TrueTypeFont *ResourceManager::getFont(const std::string &path, const int &size,
+                                       const int &style)
 {
     FontLoader l = { path, size, style };
     std::stringstream ss;
@@ -357,7 +359,7 @@ struct ImageSetLoader
 };
 
 ImageSet *ResourceManager::getImageSet(const std::string &imagePath,
-                                       int w, int h)
+                                       const int &w, const int &h)
 {
     ImageSetLoader l = { this, imagePath, w, h };
     std::stringstream ss;
@@ -376,7 +378,8 @@ struct SpriteDefLoader
     }
 };
 
-SpriteDef *ResourceManager::getSprite(const std::string &path, int variant)
+SpriteDef *ResourceManager::getSprite(const std::string &path,
+                                      const int &variant)
 {
     SpriteDefLoader l = { path, variant };
     std::stringstream ss;

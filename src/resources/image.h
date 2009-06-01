@@ -54,6 +54,8 @@ class Image : public Resource
     friend class OpenGLGraphics;
 #endif
 
+    friend class SubImage;
+
     public:
         /**
          * Destructor.
@@ -110,24 +112,25 @@ class Image : public Resource
          * @return <code>NULL</code> if creation failed and a valid
          *         object otherwise.
          */
-        virtual Image *getSubImage(int x, int y, int width, int height);
+        virtual Image *getSubImage(const int &x, const int &y, const int &width,
+                                   const int &height);
 
         /**
          * Sets the alpha value of this image.
          */
-        virtual void setAlpha(float alpha);
+        virtual void setAlpha(const float &alpha);
 
         /**
          * Returns the alpha value of this image.
          */
-        float getAlpha();
+        float getAlpha() const;
 
 #ifdef USE_OPENGL
         /**
          * Sets the target image format. Use <code>false</code> for SDL and
          * <code>true</code> for OpenGL.
          */
-        static void setLoadAsOpenGL(bool useOpenGL);
+        static void setLoadAsOpenGL(const bool &useOpenGL);
 
         int getTextureWidth() const { return mTexWidth; }
         int getTextureHeight() const { return mTexHeight; }
@@ -143,24 +146,24 @@ class Image : public Resource
          */
         Image* merge(Image* image, const int& x, const int& y);
 
+    protected:
         /**
          * Returns the current alpha value at a given pixel. Used to compute
          * what the alpha value should be for a given pixel in SDL mode.
          */
         Uint8* mStoredAlpha;
 
-    protected:
         /**
          * Constructor.
          */
 #ifdef USE_OPENGL
-        Image(GLuint glimage, int width, int height,
-              int texWidth, int texHeight);
+        Image(const GLuint &glimage, const int &width, const int &height,
+              const int &texWidth, const int &texHeight);
 
         /**
          * Returns the first power of two equal or bigger than the input.
          */
-        static int powerOfTwo(int input);
+        static int powerOfTwo(const int &input);
 #endif
         Image(SDL_Surface *image, Uint8* alphas = NULL);
 
@@ -188,11 +191,12 @@ class SubImage : public Image
         /**
          * Constructor.
          */
-        SubImage(Image *parent, SDL_Surface *image,
-                 int x, int y, int width, int height);
+        SubImage(Image *parent, SDL_Surface *image, const int &x, const int &y,
+                 const int &width, const int &height);
 #ifdef USE_OPENGL
-        SubImage(Image *parent, GLuint image, int x, int y,
-                 int width, int height, int texWidth, int textHeight);
+        SubImage(Image *parent, const GLuint &image, const int &x, const int &y,
+                 const int &width, const int &height, const int &texWidth,
+                 const int &textHeight);
 #endif
 
         /**
@@ -206,13 +210,13 @@ class SubImage : public Image
          * @return <code>NULL</code> if creation failed and a valid
          *         image otherwise.
          */
-        Image *getSubImage(int x, int y, int width, int height);
+        Image *getSubImage(const int &x, const int &y, const int &width,
+                           const int &height);
 
         /**
          * Sets the alpha value of this image.
          */
-        virtual void setAlpha(float alpha);
-
+        virtual void setAlpha(const float &alpha);
 
     private:
         Image *mParent;

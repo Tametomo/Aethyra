@@ -37,17 +37,17 @@ class AmbientOverlay
          * @param speedX scrolling speed in x-direction
          * @param speedY scrolling speed in y-direction
          */
-        AmbientOverlay(Image *img, float parallax,
-                       float speedX, float speedY);
+        AmbientOverlay(Image *img, const float &parallax,
+                       const float &speedX, const float &speedY);
 
         /**
          * Destructor.
          */
         ~AmbientOverlay();
 
-        void update(int timePassed, float dx, float dy);
+        void update(const int &timePassed, const float &dx, const float &dy);
 
-        void draw(Graphics *graphics, int x, int y);
+        void draw(Graphics *graphics, const int &x, const int &y);
 
     private:
         Image *mImage;

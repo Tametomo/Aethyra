@@ -53,9 +53,9 @@ class SimpleAnimation
 
         int getLength();
 
-        void update(unsigned int timePassed);
+        void update(const unsigned int &timePassed);
 
-        bool draw(Graphics* graphics, int posX, int posY) const;
+        bool draw(Graphics* graphics, const int &posX, const int &posY) const;
 
         /**
          * Resets the animation.

@@ -59,7 +59,7 @@ BeingManager::~BeingManager()
     clear();
 }
 
-void BeingManager::loadParticleEffects()
+void BeingManager::loadParticleEffects() const
 {
     for (Beings::const_iterator i = mBeings.begin(), i_end = mBeings.end();
          i != i_end; ++i)
@@ -123,6 +123,7 @@ Being *BeingManager::findBeing(int id) const
          i != i_end; ++i)
     {
         Being *being = (*i);
+
         if (being->getId() == id)
             return being;
     }
@@ -201,9 +202,7 @@ void BeingManager::logic()
             i = mBeings.erase(i);
         }
         else
-        {
             ++i;
-        }
     }
 }
 

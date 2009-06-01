@@ -69,7 +69,7 @@ gcn::Color ProxyImage::getPixel(int x, int y)
     return gcn::SDLgetPixel(mSDLImage, x, y);
 }
 
-void ProxyImage::putPixel(int x, int y, gcn::Color const &color)
+void ProxyImage::putPixel(int x, int y, const gcn::Color &color)
 {
     assert(mSDLImage);
     gcn::SDLputPixel(mSDLImage, x, y, color);
@@ -88,12 +88,13 @@ void ProxyImage::convertToDisplayFormat()
     mSDLImage = NULL;
 }
 
-gcn::Image *ImageLoader::load(std::string const &filename, bool convert)
+gcn::Image *ImageLoader::load(const std::string &filename, bool convert)
 {
     ResourceManager *resman = ResourceManager::getInstance();
     ProxyImage *i = new ProxyImage(resman->loadSDLSurface(filename));
 
     if (convert)
         i->convertToDisplayFormat();
+
     return i;
 }

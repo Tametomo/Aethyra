@@ -27,7 +27,7 @@
 
 #include "../utils/dtor.h"
 
-ImageSet::ImageSet(Image *img, int width, int height)
+ImageSet::ImageSet(Image *img, const int &width, const int &height)
 {
     for (int y = 0; y + height <= img->getHeight(); y += height)
     {
@@ -45,7 +45,7 @@ ImageSet::~ImageSet()
     delete_all(mImages);
 }
 
-Image* ImageSet::get(size_type i) const
+Image* ImageSet::get(const size_type &i) const
 {
     if (i >= mImages.size())
     {

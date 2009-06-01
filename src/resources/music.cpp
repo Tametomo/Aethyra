@@ -54,7 +54,7 @@ Resource *Music::load(void *buffer, unsigned bufferSize)
     }
 }
 
-bool Music::play(int loops)
+bool Music::play(const int &loops)
 {
     /*
      * Warning: loops should be always set to -1 (infinite) with current

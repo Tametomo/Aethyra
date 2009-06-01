@@ -27,7 +27,8 @@ Animation::Animation():
 {
 }
 
-void Animation::addFrame(Image *image, unsigned int delay, int offsetX, int offsetY)
+void Animation::addFrame(Image *image, const unsigned int &delay,
+                         const int &offsetX, const int &offsetY)
 {
     Frame frame = { image, delay, offsetX, offsetY };
     mFrames.push_back(frame);

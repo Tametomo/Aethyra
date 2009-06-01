@@ -32,7 +32,8 @@
 
 DyePalette::DyePalette(const std::string &description)
 {
-    int size = description.length();
+    const int size = description.length();
+
     if (size == 0 || description[0] != '#')
         // TODO: load palette from file.
         return;
@@ -64,7 +65,7 @@ DyePalette::~DyePalette()
     delete_all(mColors);
 }
 
-void DyePalette::getColor(int intensity, gcn::Color* color) const
+void DyePalette::getColor(const int &intensity, gcn::Color* color) const
 {
     if (intensity == 0)
     {
@@ -74,18 +75,20 @@ void DyePalette::getColor(int intensity, gcn::Color* color) const
         return;
     }
 
-    int last = mColors.size();
+    const int last = mColors.size();
+
     if (last == 0)
         return;
 
-    int i = intensity * last / 255;
-    int t = intensity * last % 255;
+    const int i = intensity * last / 255;
+    const int t = intensity * last % 255;
 
-    int j = t != 0 ? i : i - 1;
+    const int j = t != 0 ? i : i - 1;
+
     // Get the exact color if any, the next color otherwise.
-    int r2 = mColors[j]->r,
-        g2 = mColors[j]->g,
-        b2 = mColors[j]->b;
+    const int r2 = mColors[j]->r,
+              g2 = mColors[j]->g,
+              b2 = mColors[j]->b;
 
     if (t == 0)
     {
@@ -164,18 +167,18 @@ Dye::~Dye()
 
 void Dye::update(gcn::Color *color) const
 {
-    int cmax = std::max(color->r, std::max(color->g, color->b));
+    const int cmax = std::max(color->r, std::max(color->g, color->b));
     if (cmax == 0)
         return;
 
-    int cmin = std::min(color->r, std::min(color->g, color->b));
-    int intensity = color->r + color->g + color->b;
+    const int cmin = std::min(color->r, std::min(color->g, color->b));
+    const int intensity = color->r + color->g + color->b;
 
     // not pure
     if (cmin != cmax && (cmin != 0 || (intensity != cmax && intensity != 2 * cmax)))
         return;
 
-    int i = (color->r != 0) | ((color->g != 0) << 1) | ((color->b != 0) << 2);
+    const int i = (color->r != 0) | ((color->g != 0) << 1) | ((color->b != 0) << 2);
 
     if (mDyePalettes[i - 1])
         mDyePalettes[i - 1]->getColor(cmax, color);

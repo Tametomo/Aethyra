@@ -44,7 +44,7 @@ class MapReader
          * Read an XML map from a parsed XML tree. The path is used to find the
          * location of referenced tileset images.
          */
-        static Map *readMap(xmlNodePtr node, const std::string &path);
+        static Map *readMap(const xmlNodePtr &node, const std::string &path);
 
     private:
         /**
@@ -54,12 +54,12 @@ class MapReader
          * @param props The Properties instance to which the properties will
          *              be assigned.
          */
-        static void readProperties(xmlNodePtr node, Properties* props);
+        static void readProperties(const xmlNodePtr &node, Properties* props);
 
         /**
          * Reads a map layer and adds it to the given map.
          */
-        static void readLayer(xmlNodePtr node, Map *map);
+        static void readLayer(const xmlNodePtr &node, Map *map);
 
         /**
          * Reads a tile set.
@@ -70,7 +70,8 @@ class MapReader
         /**
          * Gets an integer property from an xmlNodePtr.
          */
-        static int getProperty(xmlNodePtr node, const char* name, int def);
+        static int getProperty(const xmlNodePtr &node, const char* name,
+                               const int &def);
 };
 
 #endif
