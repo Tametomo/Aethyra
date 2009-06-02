@@ -58,7 +58,7 @@ LocalPlayer *player_node = NULL;
 static const int NAME_X_OFFSET = 15;
 static const int NAME_Y_OFFSET = 30;
 
-LocalPlayer::LocalPlayer(Uint32 id, Uint16 job, Map *map):
+LocalPlayer::LocalPlayer(const Uint32 &id, const Uint16 &job, Map *map):
     Player(id, job, map),
     mCharId(0),
     mJobXp(0),
@@ -198,7 +198,7 @@ void LocalPlayer::logic()
     Being::logic();
 }
  
-void LocalPlayer::setAction(Action action)
+void LocalPlayer::setAction(const Action &action)
 {
     if (action == DEAD)
     {
@@ -210,7 +210,7 @@ void LocalPlayer::setAction(Action action)
     Player::setAction(action);
 }
 
-void LocalPlayer::setDirection(Uint8 direction)
+void LocalPlayer::setDirection(const Uint8 &direction)
 {
     Being::setDirection(direction);
 
@@ -298,7 +298,7 @@ void LocalPlayer::useItem(Item *item)
     // Note: id is dest of item, usually player_node->account_ID ??
 }
 
-void LocalPlayer::dropItem(Item *item, int quantity)
+void LocalPlayer::dropItem(Item *item, const int &quantity)
 {
     // TODO: Fix wrong coordinates of drops, serverside?
     MessageOut outMsg(CMSG_PLAYER_INVENTORY_DROP);
@@ -325,7 +325,7 @@ void LocalPlayer::pickUp(FloorItem *item)
     }
 }
 
-void LocalPlayer::walk(unsigned char dir)
+void LocalPlayer::walk(const unsigned char &dir)
 {
     if (!mMap || !dir)
         return;
@@ -407,7 +407,7 @@ void LocalPlayer::setTarget(Being *target)
         static_cast<Monster *>(target)->showName(true);
 }
 
-void LocalPlayer::setDestination(Uint16 x, Uint16 y)
+void LocalPlayer::setDestination(const Uint16 &x, const Uint16 &y)
 {
     // Only send a new message to the server when destination changes
     if (x != mDestX || y != mDestY)
@@ -423,7 +423,7 @@ void LocalPlayer::setDestination(Uint16 x, Uint16 y)
     Being::setDestination(x, y);
 }
 
-void LocalPlayer::setWalkingDir(int dir)
+void LocalPlayer::setWalkingDir(const int &dir)
 {
     if (mWalkingDir != dir)
         mWalkingDir = dir;
@@ -433,7 +433,7 @@ void LocalPlayer::setWalkingDir(int dir)
         walk(dir);
 }
 
-void LocalPlayer::raiseAttribute(Attribute attr)
+void LocalPlayer::raiseAttribute(const Attribute &attr)
 {
     MessageOut outMsg(CMSG_STAT_UPDATE_REQUEST);
 
@@ -466,7 +466,7 @@ void LocalPlayer::raiseAttribute(Attribute attr)
     outMsg.writeInt8(1);
 }
 
-void LocalPlayer::raiseSkill(Uint16 skillId)
+void LocalPlayer::raiseSkill(const Uint16 &skillId)
 {
     if (mSkillPoint <= 0)
         return;
@@ -494,7 +494,7 @@ void LocalPlayer::toggleSit()
     outMsg.writeInt8(type);
 }
 
-void LocalPlayer::emote(Uint8 emotion)
+void LocalPlayer::emote(const Uint8 &emotion)
 {
     if (mLastAction != -1)
         return;
@@ -504,7 +504,7 @@ void LocalPlayer::emote(Uint8 emotion)
     outMsg.writeInt8(emotion);
 }
 
-void LocalPlayer::tradeReply(bool accept)
+void LocalPlayer::tradeReply(const bool &accept)
 {
     if (!accept)
         mTrading = false;
@@ -524,7 +524,7 @@ bool LocalPlayer::tradeRequestOk() const
     return !mTrading;
 }
 
-void LocalPlayer::attack(Being *target, bool keep)
+void LocalPlayer::attack(Being *target, const bool &keep)
 {
     mKeepAttacking = keep;
 
@@ -601,7 +601,7 @@ void LocalPlayer::revive()
     outMsg.writeInt8(0);
 }
 
-void LocalPlayer::setXp(int xp)
+void LocalPlayer::setXp(const int &xp)
 {
     if (mMap && xp > mXp)
     {
@@ -615,7 +615,7 @@ void LocalPlayer::setXp(int xp)
     mXp = xp;
 }
 
-void LocalPlayer::pickedUp(std::string item)
+void LocalPlayer::pickedUp(const std::string &item)
 {
     if (mMap)
     {
@@ -659,9 +659,10 @@ void LocalPlayer::initTargetCursor()
                      true, TC_LARGE);
 }
 
-void LocalPlayer::loadTargetCursor(const std::string &filename, int width,
-                                   int height, bool outRange,
-                                   TargetCursorSize size)
+void LocalPlayer::loadTargetCursor(const std::string &filename,
+                                   const int &width, const int &height,
+                                   const bool &outRange,
+                                   const TargetCursorSize &size)
 {
     assert(size > -1);
     assert(size < 3);
@@ -686,7 +687,7 @@ void LocalPlayer::loadTargetCursor(const std::string &filename, int width,
     mTargetCursor[index][size] = currentCursor;
 }
 
-void LocalPlayer::setInStorage(bool inStorage)
+void LocalPlayer::setInStorage(const bool &inStorage)
 {
     mInStorage = inStorage;
 

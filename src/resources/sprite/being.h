@@ -154,7 +154,7 @@ class Being : public Sprite
         /**
          * Constructor.
          */
-        Being(int id, int job, Map *map);
+        Being(const int &id, const int &job, Map *map);
 
         /**
          * Destructor.
@@ -169,7 +169,7 @@ class Being : public Sprite
         /**
          * Sets a new destination for this being to walk to.
          */
-        virtual void setDestination(Uint16 destX, Uint16 destY);
+        virtual void setDestination(const Uint16 &destX, const Uint16 &destY);
 
         /**
          * Puts a "speech balloon" above this being for the specified amount
@@ -178,7 +178,7 @@ class Being : public Sprite
          * @param text The text that should appear.
          * @param time The amount of time the text should stay in milliseconds.
          */
-        void setSpeech(const std::string &text, int time = 500);
+        void setSpeech(const std::string &text, const int &time = 500);
 
         /**
          * Puts a damage bubble above this being.
@@ -187,7 +187,8 @@ class Being : public Sprite
          * @param damage the amount of damage recieved (0 means miss)
          * @param type the attack type
          */
-        virtual void takeDamage(Being *attacker, int damage, AttackType type);
+        virtual void takeDamage(const Being *attacker, const int &damage,
+                                const AttackType &type);
 
         /**
          * Handles an attack of another being by this being.
@@ -196,7 +197,8 @@ class Being : public Sprite
          * @param damage the amount of damage dealt (0 means miss)
          * @param type the attack type
          */
-        virtual void handleAttack(Being *victim, int damage, AttackType type);
+        virtual void handleAttack(Being *victim, const int &damage,
+                                  const AttackType &type);
 
         /**
          * Returns the name of the being.
@@ -223,27 +225,28 @@ class Being : public Sprite
         /**
          * Get the number of hairstyles implemented
          */
-        static int getNumOfHairstyles() { return mNumberOfHairstyles; }
+        static const int &getNumOfHairstyles() { return mNumberOfHairstyles; }
 
         /**
          * Sets the hair style and color for this being.
          */
-        virtual void setHairStyle(int style, int color);
+        virtual void setHairStyle(const int &style, const int &color);
 
         /**
          * Sets visible equipments for this being.
          */
-        virtual void setSprite(int slot, int id, std::string color = "");
+        virtual void setSprite(const int &slot, const int &id,
+                               const std::string &color = "");
 
         /**
          * Sets the gender of this being.
          */
-        virtual void setGender(Gender gender) { mGender = gender; }
+        virtual void setGender(const Gender &gender) { mGender = gender; }
 
         /**
          * Gets the gender of this being.
          */
-        Gender getGender() const { return mGender; }
+        const Gender &getGender() const { return mGender; }
 
         /**
          * Makes this being take the next step of his path.
@@ -258,12 +261,13 @@ class Being : public Sprite
         /**
          * Draws the speech text above the being.
          */
-        void drawSpeech(int offsetX, int offsetY);
+        void drawSpeech(const int &offsetX, const int &offsetY);
 
         /**
          * Draws the emotion picture above the being.
          */
-        void drawEmotion(Graphics *graphics, int offsetX, int offsetY);
+        void drawEmotion(Graphics *graphics, const int &offsetX,
+                         const int &offsetY);
 
         /**
          * Returns the type of the being.
@@ -278,7 +282,7 @@ class Being : public Sprite
         /**
          * Sets the walk speed.
          */
-        void setWalkSpeed(Uint16 speed) { mWalkSpeed = speed; }
+        void setWalkSpeed(const Uint16 &speed) { mWalkSpeed = speed; }
 
         /**
          * Gets the sprite id.
@@ -288,7 +292,7 @@ class Being : public Sprite
         /**
          * Sets the sprite id.
          */
-        void setId(int id) { mId = id; }
+        void setId(const int &id) { mId = id; }
 
         /**
          * Sets the map the being is on
@@ -298,7 +302,7 @@ class Being : public Sprite
         /**
          * Sets the current action.
          */
-        virtual void setAction(Action action);
+        virtual void setAction(const Action &action);
 
         /**
          * Returns the current direction.
@@ -308,7 +312,7 @@ class Being : public Sprite
         /**
          * Sets the current direction.
          */
-        virtual void setDirection(Uint8 direction);
+        virtual void setDirection(const Uint8 &direction);
 
         /**
          * Gets the current action.
@@ -325,12 +329,13 @@ class Being : public Sprite
          *
          * @see Sprite::draw(Graphics, int, int)
          */
-        virtual void draw(Graphics *graphics, int offsetX, int offsetY) const;
+        virtual void draw(Graphics *graphics, const int &offsetX,
+                          const int &offsetY) const;
 
         /**
          * Returns the pixel X coordinate.
          */
-        int getPixelX() const { return mPx; }
+        const int &getPixelX() const { return mPx; }
 
         /**
          * Returns the pixel Y coordinate.
@@ -386,13 +391,13 @@ class Being : public Sprite
          */
         void untarget() { mUsedTargetCursor = NULL; }
 
-        void setEmote(Uint8 emotion, Uint8 emote_time)
+        void setEmote(const Uint8 &emotion, const Uint8 &emote_time)
         {
             mEmotion = emotion;
             mEmotionTime = emote_time;
         }
 
-        virtual AnimatedSprite* getSprite(int index) const
+        virtual AnimatedSprite* getSprite(const int &index) const
             { return mSprites[index]; }
 
         static void load();
@@ -443,7 +448,7 @@ class Being : public Sprite
          * Calculates the offset in the given directions.
          * If walking in direction 'neg' the value is negated.
          */
-        int getOffset(char pos, char neg) const;
+        int getOffset(const char &pos, const char &neg) const;
 
         // Speech Bubble components
         SpeechBubble *mSpeechBubble;

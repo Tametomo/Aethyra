@@ -35,8 +35,7 @@ class Sprite
         /**
          * Destructor.
          */
-        virtual
-        ~Sprite() {}
+        virtual ~Sprite() {}
 
         /**
          * Draws the sprite to the given graphics context.
@@ -45,21 +44,20 @@ class Sprite
          * would support setting a translation offset. It already does this
          * partly with the clipping rectangle support.
          */
-        virtual void draw(Graphics *graphics, int offsetX, int offsetY) const = 0;
+        virtual void draw(Graphics *graphics, const int &offsetX,
+                          const int &offsetY) const = 0;
 
         /**
          * Returns the horizontal size of the sprites graphical representation
          * in pixels or 0 when it is undefined.
          */
-        virtual int getWidth() const
-        { return 0; }
+        virtual int getWidth() const { return 0; }
 
         /**
          * Returns the vertical size of the sprites graphical representation
          * in pixels or 0 when it is undefined.
          */
-        virtual int getHeight() const
-        { return 0; }
+        virtual int getHeight() const { return 0; }
 
         /**
          * Returns the pixel Y coordinate of the sprite.

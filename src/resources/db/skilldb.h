@@ -47,9 +47,9 @@ namespace SkillDB
      */
     void unload();
 
-    SkillInfo* get(int id);
+    const SkillInfo* get(const int &id);
 
-    bool modifiable(int id);
+    bool modifiable(const int &id);
 
     int size();
 

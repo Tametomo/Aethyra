@@ -51,7 +51,8 @@ class AnimatedSprite
          * @param filename the file of the sprite to animate
          * @param variant  the sprite variant
          */
-        static AnimatedSprite *load(std::string const &filename, int variant = 0);
+        static AnimatedSprite *load(const std::string &filename,
+                                    const int &variant = 0);
 
         /**
          * Destructor.
@@ -66,19 +67,19 @@ class AnimatedSprite
         /**
          * Plays an action using the current direction
          */
-        void play(SpriteAction action);
+        void play(const SpriteAction &action);
 
         /**
          * Inform the animation of the passed time so that it can output the
          * correct animation frame.
          */
-        void update(int time);
+        void update(const int &time);
 
         /**
          * Draw the current animation frame at the coordinates given in screen
          * pixels.
          */
-        bool draw(Graphics* graphics, int posX, int posY) const;
+        bool draw(Graphics* graphics, const int &posX, const int &posY) const;
 
         /**
          * gets the width in pixels of the image of the current frame
@@ -93,10 +94,10 @@ class AnimatedSprite
         /**
          * Sets the direction.
          */
-        void setDirection(SpriteDirection direction);
+        void setDirection(const SpriteDirection &direction);
 
     private:
-        bool updateCurrentAnimation(unsigned int dt);
+        bool updateCurrentAnimation(const unsigned int &dt);
 
         SpriteDirection mDirection;    /**< The sprite direction. */
         int mLastTime;                 /**< The last time update was called. */

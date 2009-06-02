@@ -43,17 +43,18 @@ template <typename T> struct ParticleEmitterProp
     {
     }
 
-    void set(T min, T max)
+    void set(const T &min, const T &max)
     {
         minVal=min; maxVal=max;
     }
 
-    void set(T val)
+    void set(const T &val)
     {
         set(val, val);
     }
 
-    void setFunction(ChangeFunc func, T amplitude, int period, int phase)
+    void setFunction(ChangeFunc func, const T &amplitude, const int &period,
+                     const int &phase)
     {
         changeFunc = func;
         changeAmplitude = amplitude;
@@ -69,19 +70,23 @@ template <typename T> struct ParticleEmitterProp
         switch (changeFunc)
         {
             case FUNC_SINE:
-                val += (T) std::sin(M_PI * 2 * ((double)(tick%changePeriod) / (double)changePeriod)) * changeAmplitude;
+                val += (T) std::sin(M_PI * 2 * ((double) (tick % changePeriod) / 
+                       (double) changePeriod)) * changeAmplitude;
                 break;
             case FUNC_SAW:
-                val += (T) (changeAmplitude * ((double)(tick%changePeriod) / (double)changePeriod)) * 2 - changeAmplitude;
+                val += (T) (changeAmplitude * ((double) (tick % changePeriod) /
+                       (double) changePeriod)) * 2 - changeAmplitude;
                 break;
             case FUNC_TRIANGLE:
-                if ((tick%changePeriod) * 2 < changePeriod)
-                    val += changeAmplitude - (T)((tick%changePeriod) / (double)changePeriod) * changeAmplitude * 4;
+                if ((tick % changePeriod) * 2 < changePeriod)
+                    val += changeAmplitude - (T)((tick % changePeriod) /
+                           (double) changePeriod) * changeAmplitude * 4;
                 else // I have no idea why this works but it does
-                    val += changeAmplitude * -3 + (T)((tick%changePeriod) / (double)changePeriod) * changeAmplitude * 4;
+                    val += changeAmplitude * -3 + (T)((tick % changePeriod) /
+                           (double) changePeriod) * changeAmplitude * 4;
                 break;
             case FUNC_SQUARE:
-                if ((tick%changePeriod) * 2 < changePeriod)
+                if ((tick % changePeriod) * 2 < changePeriod)
                     val += changeAmplitude;
                 else
                     val -= changeAmplitude;

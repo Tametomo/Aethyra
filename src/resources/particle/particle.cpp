@@ -90,9 +90,9 @@ Particle::~Particle()
 
 void Particle::setupEngine()
 {
-    Particle::maxCount = (int)config.getValue("particleMaxCount", 3000);
-    Particle::fastPhysics = (int)config.getValue("particleFastPhysics", 0);
-    Particle::emitterSkip = (int)config.getValue("particleEmitterSkip", 1) + 1;
+    Particle::maxCount = (int) config.getValue("particleMaxCount", 3000);
+    Particle::fastPhysics = (int) config.getValue("particleFastPhysics", 0);
+    Particle::emitterSkip = (int) config.getValue("particleEmitterSkip", 1) + 1;
     disableAutoDelete();
     logger->log("Particle engine set up");
 }
@@ -105,7 +105,7 @@ bool Particle::update()
     if (mLifetimeLeft == 0)
         mAlive = false;
 
-    Vector oldPos = mPos;
+    const Vector oldPos = mPos;
 
     if (mAlive)
     {
@@ -122,16 +122,16 @@ bool Particle::update()
             switch (Particle::fastPhysics)
             {
                 case 1:
-                    invHypotenuse = fastInvSqrt(
-                        dist.x * dist.x + dist.y * dist.y + dist.z * dist.z);
+                    invHypotenuse = fastInvSqrt(dist.x * dist.x + dist.y * 
+                                                dist.y + dist.z * dist.z);
                     break;
                 case 2:
-                    invHypotenuse = 2.0f /
-                        fabs(dist.x) + fabs(dist.y) + fabs(dist.z);
+                    invHypotenuse = 2.0f / fabs(dist.x) + fabs(dist.y) +
+                                    fabs(dist.z);
                     break;
                 default:
-                    invHypotenuse = 1.0f / sqrt(
-                        dist.x * dist.x + dist.y * dist.y + dist.z * dist.z);
+                    invHypotenuse = 1.0f / sqrt(dist.x * dist.x + dist.y *
+                                    dist.y + dist.z * dist.z);
                     break;
             }
 
@@ -140,16 +140,19 @@ bool Particle::update()
                 if (mInvDieDistance > 0.0f && invHypotenuse > mInvDieDistance)
                     mAlive = false;
 
-                float accFactor = invHypotenuse * mAcceleration;
+                const float accFactor = invHypotenuse * mAcceleration;
                 mVelocity -= dist * accFactor;
             }
         }
 
         if (mRandomness > 0)
         {
-            mVelocity.x += (rand()%mRandomness - rand()%mRandomness) / 1000.0f;
-            mVelocity.y += (rand()%mRandomness - rand()%mRandomness) / 1000.0f;
-            mVelocity.z += (rand()%mRandomness - rand()%mRandomness) / 1000.0f;
+            mVelocity.x += (rand() % mRandomness - rand() % mRandomness) /
+                           1000.0f;
+            mVelocity.y += (rand() % mRandomness - rand() % mRandomness) /
+                           1000.0f;
+            mVelocity.z += (rand() % mRandomness - rand() % mRandomness) /
+                           1000.0f;
         }
 
         mVelocity.z -= mGravity;
@@ -233,18 +236,19 @@ void Particle::moveBy(const Vector &change)
     }
 }
 
-void Particle::moveTo(float x, float y)
+void Particle::moveTo(const float &x, const float &y)
 {
     moveTo(Vector(x, y, mPos.z));
 }
 
 Particle* Particle::addEffect(const std::string &particleEffectFile,
-                              int pixelX, int pixelY, int rotation)
+                              const int &pixelX, const int &pixelY,
+                              const int &rotation)
 {
     Particle *newParticle = NULL;
 
-    XML::Document doc(particleEffectFile);
-    xmlNodePtr rootNode = doc.rootNode();
+    const XML::Document doc(particleEffectFile);
+    const xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "effect"))
     {
@@ -266,14 +270,12 @@ Particle* Particle::addEffect(const std::string &particleEffectFile,
 
         // Animation
         if ((node = XML::findFirstChildByName(effectChildNode, "animation")))
-        {
             newParticle = new AnimationParticle(mMap, node);
-        }
+
         // Rotational
         else if ((node = XML::findFirstChildByName(effectChildNode, "rotation")))
-        {
             newParticle = new RotationalParticle(mMap, node);
-        }
+
         // Image
         else if ((node = XML::findFirstChildByName(effectChildNode, "image")))
         {
@@ -284,16 +286,14 @@ Particle* Particle::addEffect(const std::string &particleEffectFile,
         }
         // Other
         else
-        {
             newParticle = new Particle(mMap);
-        }
 
         // Read and set the basic properties of the particle
         float offsetX = XML::getFloatProperty(effectChildNode, "position-x", 0);
         float offsetY = XML::getFloatProperty(effectChildNode, "position-y", 0);
         float offsetZ = XML::getFloatProperty(effectChildNode, "position-z", 0);
-        Vector position (mPos.x + (float)pixelX + offsetX,
-                         mPos.y + (float)pixelY + offsetY, mPos.z + offsetZ);
+        Vector position (mPos.x + (float) pixelX + offsetX,
+                         mPos.y + (float) pixelY + offsetY, mPos.z + offsetZ);
         newParticle->moveTo(position);
 
         int lifetime = XML::getProperty(effectChildNode, "lifetime", -1);
@@ -317,9 +317,9 @@ Particle* Particle::addEffect(const std::string &particleEffectFile,
     return newParticle;
 }
 
-Particle *Particle::addTextSplashEffect(const std::string &text, int x, int y,
-                                        const gcn::Color *color,
-                                        gcn::Font *font, bool outline)
+Particle *Particle::addTextSplashEffect(const std::string &text, const int &x,
+                                        const int &y, const gcn::Color *color,
+                                        gcn::Font *font, const bool &outline)
 {
     Particle *newParticle = new TextParticle(mMap, text, color, font, outline);
     newParticle->moveTo(x, y);
@@ -336,9 +336,11 @@ Particle *Particle::addTextSplashEffect(const std::string &text, int x, int y,
     return newParticle;
 }
 
-Particle *Particle::addTextRiseFadeOutEffect(const std::string &text, int x,
-                                             int y, const gcn::Color *color,
-                                             gcn::Font *font, bool outline)
+Particle *Particle::addTextRiseFadeOutEffect(const std::string &text,
+                                             const int &x, const int &y,
+                                             const gcn::Color *color,
+                                             gcn::Font *font,
+                                             const bool &outline)
 {
     Particle *newParticle = new TextParticle(mMap, text, color, font, outline);
     newParticle->moveTo(x, y);

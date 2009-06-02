@@ -42,15 +42,15 @@ void EmoteDB::load()
 
     mLastEmote = 0;
 
-    EmoteSprite *unknownSprite = new EmoteSprite;
+    EmoteSprite *unknownSprite = new EmoteSprite();
     unknownSprite->sprite = AnimatedSprite::load("error.xml");
     unknownSprite->name = "unknown";
     mUnknown.sprites.push_back(unknownSprite);
 
     logger->log("Initializing emote database...");
 
-    XML::Document doc("emotes.xml");
-    xmlNodePtr rootNode = doc.rootNode();
+    const XML::Document doc("emotes.xml");
+    const xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "emotes"))
     {
@@ -64,7 +64,8 @@ void EmoteDB::load()
         if (!xmlStrEqual(emoteNode->name, BAD_CAST "emote"))
             continue;
 
-        int id = XML::getProperty(emoteNode, "id", -1);
+        const int id = XML::getProperty(emoteNode, "id", -1);
+
         if (id == -1)
         {
             logger->log("Emote Database: Emote with missing ID in emotes.xml!");
@@ -124,7 +125,7 @@ void EmoteDB::unload()
     mLoaded = false;
 }
 
-const EmoteInfo *EmoteDB::get(int id)
+const EmoteInfo *EmoteDB::get(const int &id)
 {
     EmoteInfosIterator i = mEmoteInfos.find(id);
 
@@ -134,12 +135,10 @@ const EmoteInfo *EmoteDB::get(int id)
         return &mUnknown;
     }
     else
-    {
         return i->second;
-    }
 }
 
-const AnimatedSprite* EmoteDB::getAnimation(int id)
+const AnimatedSprite* EmoteDB::getAnimation(const int &id)
 {
     const EmoteInfo *info = get(id);
     return info->sprites.front()->sprite;

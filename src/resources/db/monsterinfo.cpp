@@ -35,7 +35,8 @@ MonsterInfo::~MonsterInfo()
     mSounds.clear();
 }
 
-void MonsterInfo::addSound(MonsterSoundEvent event, std::string filename)
+void MonsterInfo::addSound(const MonsterSoundEvent &event,
+                           const std::string &filename)
 {
     if (mSounds.find(event) == mSounds.end())
         mSounds[event] = new std::vector<std::string>;
@@ -43,20 +44,17 @@ void MonsterInfo::addSound(MonsterSoundEvent event, std::string filename)
     mSounds[event]->push_back("sfx/" + filename);
 }
 
-
-std::string MonsterInfo::getSound(MonsterSoundEvent event) const
+std::string MonsterInfo::getSound(const MonsterSoundEvent &event) const
 {
     std::map<MonsterSoundEvent, std::vector<std::string>* >::const_iterator i;
 
     i = mSounds.find(event);
 
-    if (i == mSounds.end())
-        return "";
-    else
-        return i->second->at(rand()%i->second->size());
+    return (i == mSounds.end() ? "" :
+                                 i->second->at(rand() % i->second->size()));
 }
 
-void MonsterInfo::addParticleEffect(std::string filename)
+void MonsterInfo::addParticleEffect(const std::string &filename)
 {
     mParticleEffects.push_back(filename);
 }

@@ -38,13 +38,14 @@ ImageParticle::~ImageParticle()
     if (mImage) mImage->decRef();
 }
 
-void ImageParticle::draw(Graphics *graphics, int offsetX, int offsetY) const
+void ImageParticle::draw(Graphics *graphics, const int &offsetX, const int &offsetY) const
 {
     if (!mAlive || !mImage)
         return;
 
-    int screenX = (int) mPos.x + offsetX - mImage->getWidth() / 2;
-    int screenY = (int) mPos.y - (int)mPos.z + offsetY - mImage->getHeight()/2;
+    const int screenX = (int) mPos.x + offsetX - mImage->getWidth() / 2;
+    const int screenY = (int) mPos.y - (int) mPos.z + offsetY -
+                         mImage->getHeight() / 2;
 
     // Check if on screen
     if (screenX + mImage->getWidth() < 0 ||

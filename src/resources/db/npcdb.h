@@ -50,7 +50,7 @@ namespace NPCDB
 
     void unload();
 
-    const NPCInfo& get(int id);
+    const NPCInfo& get(const int &id);
 
     typedef NPCInfos::iterator NPCInfosIterator;
 }

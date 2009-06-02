@@ -38,7 +38,7 @@
 static const int NAME_X_OFFSET = 15;
 static const int NAME_Y_OFFSET = 30;
 
-Player::Player(int id, int job, Map *map):
+Player::Player(const int &id, const int &job, Map *map):
     Being(id, job, map),
     mName(0),
     mIsGM(false),
@@ -51,7 +51,8 @@ Player::~Player()
     delete mName;
 }
 
-void Player::handleAttack(Being *victim, int damage, AttackType type)
+void Player::handleAttack(Being *victim, const int &damage,
+                          const AttackType &type)
 {
     if (this != player_node)
         setAction(Being::ATTACK);
@@ -172,13 +173,13 @@ Being::Type Player::getType() const
     return PLAYER;
 }
 
-void Player::flash(int time)
+void Player::flash(const int &time)
 {
     if (mName)
         mName->flash(time);
 }
 
-void Player::setGender(Gender gender)
+void Player::setGender(const Gender &gender)
 {
     if (gender != mGender)
     {
@@ -199,20 +200,15 @@ void Player::setGender(Gender gender)
     }
 }
 
-void Player::setHairStyle(int style, int color)
+void Player::setHairStyle(const int &style, const int &color)
 {
-    style = style < 0 ? mHairStyle : style % mNumberOfHairstyles;
-    color = color < 0 ? mHairColor : color % ColorDB::size();
-    if (style == mHairStyle && color == mHairColor) return;
-
     Being::setHairStyle(style, color);
 
     setSprite(HAIR_SPRITE, style * -1, ColorDB::get(color));
-
     setAction(mAction);
 }
 
-void Player::setSprite(int slot, int id, std::string color)
+void Player::setSprite(const int &slot, const int &id, const std::string &color)
 {
     // id = 0 means unequip
     if (id == 0)

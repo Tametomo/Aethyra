@@ -31,7 +31,7 @@ class Text;
 class NPC : public Player
 {
     public:
-        NPC(int id, int job, Map *map);
+        NPC(const int &id, const int &job, Map *map);
 
         ~NPC();
 
@@ -41,8 +41,8 @@ class NPC : public Player
         void loadInitialParticleEffects();
 
         void setName(const std::string &name);
-        void setGender(Gender gender);
-        void setSprite(int slot, int id, std::string color);
+        void setGender(const Gender &gender);
+        void setSprite(const int &slot, const int &id, const std::string &color);
 
         virtual Type getType() const;
 

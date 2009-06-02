@@ -43,7 +43,7 @@ int current_npc = 0;
 static const int NAME_X_OFFSET = 15;
 static const int NAME_Y_OFFSET = 30;
 
-NPC::NPC(int id, int job, Map *map):
+NPC::NPC(const int &id, const int &job, Map *map):
     Player(id, job, map)
 {
     this->job = job;
@@ -102,12 +102,12 @@ void NPC::setName(const std::string &name)
     Being::setName(displayName + " (NPC)");
 }
 
-void NPC::setGender(Gender gender)
+void NPC::setGender(const Gender &gender)
 {
     Being::setGender(gender);
 }
 
-void NPC::setSprite(int slot, int id, std::string color)
+void NPC::setSprite(const int &slot, const int &id, const std::string &color)
 {
     // Fix this later should it not be adequate enough.
     Being::setSprite(slot, id, color);

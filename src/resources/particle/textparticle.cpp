@@ -27,8 +27,8 @@
 #include "../../bindings/guichan/textrenderer.h"
 
 TextParticle::TextParticle(Map *map, const std::string &text,
-                           const gcn::Color *color,
-                           gcn::Font *font, bool outline):
+                           const gcn::Color *color, gcn::Font *font,
+                           const bool &outline):
     Particle(map),
     mText(text),
     mTextFont(font),
@@ -37,13 +37,14 @@ TextParticle::TextParticle(Map *map, const std::string &text,
 {
 }
 
-void TextParticle::draw(Graphics *graphics, int offsetX, int offsetY) const
+void TextParticle::draw(Graphics *graphics, const int &offsetX,
+                        const int &offsetY) const
 {
     if (!mAlive)
         return;
 
-    int screenX = (int) mPos.x + offsetX;
-    int screenY = (int) mPos.y - (int) mPos.z + offsetY;
+    const int screenX = (int) mPos.x + offsetX;
+    const int screenY = (int) mPos.y - (int) mPos.z + offsetY;
 
     float alpha = mAlpha * 255.0f;
 
@@ -56,7 +57,7 @@ void TextParticle::draw(Graphics *graphics, int offsetX, int offsetY) const
     gcn::Color color = *mColor;
     color.a = (int) alpha;
 
-    TextRenderer::renderText(graphics, mText,
-            screenX, screenY, gcn::Graphics::CENTER,
-            color, mTextFont, mOutline, false, (int) alpha);
+    TextRenderer::renderText(graphics, mText, screenX, screenY,
+                             gcn::Graphics::CENTER, color, mTextFont, mOutline,
+                             false, (int) alpha);
 }

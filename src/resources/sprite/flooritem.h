@@ -43,7 +43,8 @@ class FloorItem : public Sprite
         /**
          * Constructor.
          */
-        FloorItem(int id, int itemId, int x, int y, Map *map);
+        FloorItem(const int &id, const int &itemId, const int &x, const int &y,
+                  Map *map);
 
         /**
          * Destructor.
@@ -53,7 +54,7 @@ class FloorItem : public Sprite
         /**
          * Returns instance id of this item.
          */
-        int getId() const { return mId; }
+        const int &getId() const { return mId; }
 
         /**
          * Returns the item id.
@@ -69,12 +70,12 @@ class FloorItem : public Sprite
         /**
          * Returns the x coordinate.
          */
-        int getX() const { return mX; }
+        const int &getX() const { return mX; }
 
         /**
          * Returns the y coordinate.
          */
-        int getY() const { return mY; }
+        const int &getY() const { return mY; }
 
         /**
          * Returns the pixel y coordinate.
@@ -88,7 +89,8 @@ class FloorItem : public Sprite
          *
          * @see Sprite::draw(Graphics, int, int)
          */
-        void draw(Graphics *graphics, int offsetX, int offsetY) const;
+        void draw(Graphics *graphics, const int &offsetX,
+                  const int &offsetY) const;
 
     private:
         int mId;

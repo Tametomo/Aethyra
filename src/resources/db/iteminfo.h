@@ -55,67 +55,56 @@ class ItemInfo
         {
         }
 
-        void setId(int id)
-        { mId = id; }
+        void setId(const int &id) { mId = id; }
 
-        int getId() const
-        { return mId; }
+        const int &getId() const { return mId; }
 
-        void setName(const std::string &name)
-        { mName = name; }
+        void setName(const std::string &name) { mName = name; }
 
-        const std::string& getName() const
-        { return mName; }
+        const std::string& getName() const { return mName; }
 
         void setParticleEffect(const std::string &particleEffect)
         { mParticle = particleEffect; }
 
-        std::string getParticleEffect() const { return mParticle; }
+        const std::string &getParticleEffect() const { return mParticle; }
 
         void setImageName(const std::string &imageName)
         { mImageName = imageName; }
 
-        const std::string& getImageName() const
-        { return mImageName; }
+        const std::string& getImageName() const { return mImageName; }
 
         void setDescription(const std::string &description)
         { mDescription = description; }
 
-        const std::string& getDescription() const
-        { return mDescription; }
+        const std::string& getDescription() const { return mDescription; }
 
-        void setEffect(const std::string &effect)
-        { mEffect = effect; }
+        void setEffect(const std::string &effect) { mEffect = effect; }
 
         const std::string& getEffect() const { return mEffect; }
 
-        void setType(const std::string& type)
-        { mType = type; }
+        void setType(const std::string& type) { mType = type; }
 
         const std::string& getType() const { return mType; }
 
-        void setWeight(short weight)
-        { mWeight = weight; }
+        void setWeight(const short &weight) { mWeight = weight; }
 
-        short getWeight() const
-        { return mWeight; }
+        const short &getWeight() const { return mWeight; }
 
-        void setView(int view)
-        { mView = view; }
+        void setView(const int &view) { mView = view; }
 
-        void setSprite(const std::string &animationFile, Gender gender)
+        void setSprite(const std::string &animationFile, const Gender &gender)
         { mAnimationFiles[gender] = animationFile; }
 
-        const std::string& getSprite(Gender gender) const;
+        const std::string& getSprite(const Gender &gender) const;
 
-        void setWeaponType(int);
+        void setWeaponType(const int&);
 
-        SpriteAction getAttackType() const
-        { return mAttackType; }
+        const SpriteAction &getAttackType() const { return mAttackType; }
 
-        void addSound(EquipmentSoundEvent event, const std::string &filename);
+        void addSound(const EquipmentSoundEvent &event,
+                      const std::string &filename);
 
-        const std::string& getSound(EquipmentSoundEvent event) const;
+        const std::string &getSound(const EquipmentSoundEvent &event) const;
 
     protected:
         std::string mImageName;      /**< The filename of the icon image. */

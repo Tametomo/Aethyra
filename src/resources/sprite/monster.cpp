@@ -38,7 +38,7 @@
 static const int NAME_X_OFFSET = 16;
 static const int NAME_Y_OFFSET = 16;
 
-Monster::Monster(int id, Uint16 job, Map *map):
+Monster::Monster(const int &id, const Uint16 &job, Map *map):
     Being(id, job, map),
     mText(0)
 {
@@ -112,7 +112,7 @@ Being::Type Monster::getType() const
     return MONSTER;
 }
 
-void Monster::setAction(Action action)
+void Monster::setAction(const Action &action)
 {
     SpriteAction currentAction = ACTION_INVALID;
     int rotation = 0;
@@ -168,7 +168,8 @@ void Monster::setAction(Action action)
     }
 }
 
-void Monster::handleAttack(Being *victim, int damage, AttackType type)
+void Monster::handleAttack(Being *victim, const int &damage,
+                           const AttackType &type)
 {
     Being::handleAttack(victim, damage, type);
 
@@ -177,7 +178,8 @@ void Monster::handleAttack(Being *victim, int damage, AttackType type)
                 MONSTER_EVENT_HIT : MONSTER_EVENT_MISS));
 }
 
-void Monster::takeDamage(Being *attacker, int amount, AttackType type)
+void Monster::takeDamage(const Being *attacker, const int &amount,
+                         const AttackType &type)
 {
     if (amount > 0)
         sound.playSfx(getInfo().getSound(MONSTER_EVENT_HURT));
@@ -195,7 +197,7 @@ const MonsterInfo &Monster::getInfo() const
     return MonsterDB::get(mJob - 1002);
 }
 
-void Monster::showName(bool show)
+void Monster::showName(const bool &show)
 {
     if (mText)
         delete mText;
@@ -208,9 +210,7 @@ void Monster::showName(bool show)
                          &guiPalette->getColor(Palette::MONSTER));
     }
     else
-    {
         mText = 0;
-    }
 }
 
 void Monster::updateCoords()

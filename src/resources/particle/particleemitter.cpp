@@ -37,7 +37,8 @@
 #define SIN45 0.707106781f
 #define DEG_RAD_FACTOR 0.017453293f
 
-ParticleEmitter::ParticleEmitter(xmlNodePtr emitterNode, Particle *target, Map *map, int rotation):
+ParticleEmitter::ParticleEmitter(const xmlNodePtr &emitterNode, Particle *target,
+                                 Map *map, const int &rotation):
     mOutputPauseLeft(0),
     mParticleImage(0)
 {
@@ -72,9 +73,7 @@ ParticleEmitter::ParticleEmitter(xmlNodePtr emitterNode, Particle *target, Map *
             std::string name = XML::getProperty(propertyNode, "name", "");
 
             if (name == "position-x")
-            {
                 mParticlePosX = readParticleEmitterProp(propertyNode, 0.0f);
-            }
             else if (name == "position-y")
             {
 
@@ -117,21 +116,13 @@ ParticleEmitter::ParticleEmitter(xmlNodePtr emitterNode, Particle *target, Map *
                 mParticleAngleVertical.changeAmplitude *= DEG_RAD_FACTOR;
             }
             else if (name == "power")
-            {
                 mParticlePower = readParticleEmitterProp(propertyNode, 0.0f);
-            }
             else if (name == "gravity")
-            {
                 mParticleGravity = readParticleEmitterProp(propertyNode, 0.0f);
-            }
             else if (name == "randomnes" || name == "randomness") // legacy bug
-            {
                 mParticleRandomness = readParticleEmitterProp(propertyNode, 0);
-            }
             else if (name == "bounce")
-            {
                 mParticleBounce = readParticleEmitterProp(propertyNode, 0.0f);
-            }
             else if (name == "lifetime")
             {
                 mParticleLifetime = readParticleEmitterProp(propertyNode, 0);
@@ -148,38 +139,23 @@ ParticleEmitter::ParticleEmitter(xmlNodePtr emitterNode, Particle *target, Map *
                 mOutputPauseLeft = mOutputPause.value(0);
             }
             else if (name == "acceleration")
-            {
                 mParticleAcceleration = readParticleEmitterProp(propertyNode, 0.0f);
-            }
             else if (name == "die-distance")
-            {
                 mParticleDieDistance = readParticleEmitterProp(propertyNode, 0.0f);
-            }
             else if (name == "momentum")
-            {
                 mParticleMomentum = readParticleEmitterProp(propertyNode, 1.0f);
-            }
             else if (name == "fade-out")
-            {
                 mParticleFadeOut = readParticleEmitterProp(propertyNode, 0);
-            }
             else if (name == "fade-in")
-            {
                 mParticleFadeIn = readParticleEmitterProp(propertyNode, 0);
-            }
             else if (name == "alpha")
-            {
                 mParticleAlpha = readParticleEmitterProp(propertyNode, 1.0f);
-            }
             else if (name == "follow-parent")
-            {
                 mParticleFollow = true;
-            }
             else
             {
                 logger->log("Particle Engine: Warning, unknown emitter property \"%s\"",
-                            name.c_str()
-                           );
+                            name.c_str());
             }
         }
         else if (xmlStrEqual(propertyNode->name, BAD_CAST "emitter"))
@@ -192,8 +168,7 @@ ParticleEmitter::ParticleEmitter(xmlNodePtr emitterNode, Particle *target, Map *
             ImageSet *imageset = ResourceManager::getInstance()->getImageSet(
                 XML::getProperty(propertyNode, "imageset", ""),
                 XML::getProperty(propertyNode, "width", 0),
-                XML::getProperty(propertyNode, "height", 0)
-            );
+                XML::getProperty(propertyNode, "height", 0));
 
             // Get animation frames
             for_each_xml_child_node(frameNode, propertyNode)
@@ -250,9 +225,8 @@ ParticleEmitter::ParticleEmitter(xmlNodePtr emitterNode, Particle *target, Map *
                     }
                 }
                 else if (xmlStrEqual(frameNode->name, BAD_CAST "end"))
-                {
                     mParticleRotation.addTerminator();
-                }
+
             } // for frameNode
         }
         else if (xmlStrEqual(propertyNode->name, BAD_CAST "animation"))
@@ -260,8 +234,7 @@ ParticleEmitter::ParticleEmitter(xmlNodePtr emitterNode, Particle *target, Map *
             ImageSet *imageset = ResourceManager::getInstance()->getImageSet(
                 XML::getProperty(propertyNode, "imageset", ""),
                 XML::getProperty(propertyNode, "width", 0),
-                XML::getProperty(propertyNode, "height", 0)
-            );
+                XML::getProperty(propertyNode, "height", 0));
 
             // Get animation frames
             for_each_xml_child_node(frameNode, propertyNode)
@@ -318,9 +291,8 @@ ParticleEmitter::ParticleEmitter(xmlNodePtr emitterNode, Particle *target, Map *
                     }
                 }
                 else if (xmlStrEqual(frameNode->name, BAD_CAST "end"))
-                {
                     mParticleAnimation.addTerminator();
-                }
+
             } // for frameNode
         }
     }
@@ -366,12 +338,10 @@ ParticleEmitter & ParticleEmitter::operator=(const ParticleEmitter &o)
     return *this;
 }
 
-
 ParticleEmitter::~ParticleEmitter()
 {
     if (mParticleImage) mParticleImage->decRef();
 }
-
 
 template <typename T> ParticleEmitterProp<T>
 ParticleEmitter::readParticleEmitterProp(xmlNodePtr propertyNode, T def)
@@ -382,25 +352,24 @@ ParticleEmitter::readParticleEmitterProp(xmlNodePtr propertyNode, T def)
     retval.set((T) XML::getFloatProperty(propertyNode, "min", (double) def),
                (T) XML::getFloatProperty(propertyNode, "max", (double) def));
 
-     std::string change = XML::getProperty(propertyNode, "change-func", "none");
-     T amplitude = (T) XML::getFloatProperty(propertyNode, "change-amplitude", 0.0);
-     int period = XML::getProperty(propertyNode, "change-period", 0);
-     int phase = XML::getProperty(propertyNode, "change-phase", 0);
-     if (change == "saw" || change == "sawtooth") {
-         retval.setFunction(FUNC_SAW, amplitude, period, phase);
-     } else if (change == "sine" || change == "sinewave") {
-         retval.setFunction(FUNC_SINE, amplitude, period, phase);
-     } else if (change == "triangle") {
-         retval.setFunction(FUNC_TRIANGLE, amplitude, period, phase);
-     } else if (change == "square"){
-         retval.setFunction(FUNC_SQUARE, amplitude, period, phase);
-     }
+    std::string change = XML::getProperty(propertyNode, "change-func", "none");
+    T amplitude = (T) XML::getFloatProperty(propertyNode, "change-amplitude", 0.0);
+    const int period = XML::getProperty(propertyNode, "change-period", 0);
+    const int phase = XML::getProperty(propertyNode, "change-phase", 0);
+
+    if (change == "saw" || change == "sawtooth")
+        retval.setFunction(FUNC_SAW, amplitude, period, phase);
+    else if (change == "sine" || change == "sinewave")
+        retval.setFunction(FUNC_SINE, amplitude, period, phase);
+    else if (change == "triangle")
+        retval.setFunction(FUNC_TRIANGLE, amplitude, period, phase);
+    else if (change == "square")
+        retval.setFunction(FUNC_SQUARE, amplitude, period, phase);
 
     return retval;
 }
 
-
-std::list<Particle *> ParticleEmitter::createParticles(int tick)
+std::list<Particle *> ParticleEmitter::createParticles(const int &tick)
 {
     std::list<Particle *> newParticles;
 
@@ -418,9 +387,7 @@ std::list<Particle *> ParticleEmitter::createParticles(int tick)
 
         Particle *newParticle;
         if (mParticleImage)
-        {
             newParticle = new ImageParticle(mMap, mParticleImage);
-        }
         else if (mParticleRotation.getLength() > 0)
         {
             Animation *newAnimation = new Animation(mParticleRotation);
@@ -432,9 +399,7 @@ std::list<Particle *> ParticleEmitter::createParticles(int tick)
             newParticle = new AnimationParticle(mMap, newAnimation);
         }
         else
-        {
             newParticle = new Particle(mMap);
-        }
 
         Vector position(mParticlePosX.value(tick),
                         mParticlePosY.value(tick),
@@ -444,10 +409,9 @@ std::list<Particle *> ParticleEmitter::createParticles(int tick)
         float angleH = mParticleAngleHorizontal.value(tick);
         float angleV = mParticleAngleVertical.value(tick);
         float power = mParticlePower.value(tick);
-        newParticle->setVelocity(
-                cos(angleH) * cos(angleV) * power,
-                sin(angleH) * cos(angleV) * power,
-                sin(angleV) * power);
+        newParticle->setVelocity(cos(angleH) * cos(angleV) * power,
+                                 sin(angleH) * cos(angleV) * power,
+                                 sin(angleV) * power);
 
         newParticle->setRandomness(mParticleRandomness.value(tick));
         newParticle->setGravity(mParticleGravity.value(tick));
@@ -456,8 +420,7 @@ std::list<Particle *> ParticleEmitter::createParticles(int tick)
 
         newParticle->setDestination(mParticleTarget,
                                     mParticleAcceleration.value(tick),
-                                    mParticleMomentum.value(tick)
-                                   );
+                                    mParticleMomentum.value(tick));
         newParticle->setDieDistance(mParticleDieDistance.value(tick));
 
         newParticle->setLifetime(mParticleLifetime.value(tick));
@@ -466,8 +429,7 @@ std::list<Particle *> ParticleEmitter::createParticles(int tick)
         newParticle->setAlpha(mParticleAlpha.value(tick));
 
         for (std::list<ParticleEmitter>::iterator i = mParticleChildEmitters.begin();
-             i != mParticleChildEmitters.end();
-             i++)
+             i != mParticleChildEmitters.end(); i++)
         {
             newParticle->addEmitter(new ParticleEmitter(*i));
         }

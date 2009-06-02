@@ -86,7 +86,8 @@ class Particle : public Sprite
         /**
          * Draws the particle image.
          */
-        virtual void draw(Graphics *graphics, int offsetX, int offsetY) const {}
+        virtual void draw(Graphics *graphics, const int &offsetX,
+                          const int &offsetY) const {}
 
         /**
          * Necessary for sorting with the other sprites.
@@ -103,21 +104,25 @@ class Particle : public Sprite
          * particleEffectFile.
          */
         Particle *addEffect(const std::string &particleEffectFile,
-                            int pixelX, int pixelY, int rotation = 0);
+                            const int &pixelX, const int &pixelY,
+                            const int &rotation = 0);
 
         /**
          * Creates a standalone text particle.
          */
-        Particle *addTextSplashEffect(const std::string &text, int x, int y,
-                                      const gcn::Color *color, gcn::Font *font,
-                                      bool outline = false);
+        Particle *addTextSplashEffect(const std::string &text, const int &x,
+                                      const int &y, const gcn::Color *color,
+                                      gcn::Font *font,
+                                      const bool &outline = false);
 
         /**
          * Creates a standalone text particle.
          */
-        Particle *addTextRiseFadeOutEffect(const std::string &text, int x,
-                                           int y, const gcn::Color *color,
-                                           gcn::Font *font, bool outline = false);
+        Particle *addTextRiseFadeOutEffect(const std::string &text,
+                                           const int &x, const int &y,
+                                           const gcn::Color *color,
+                                           gcn::Font *font,
+                                           const bool &outline = false);
 
         /**
          * Adds an emitter to the particle.
@@ -133,7 +138,7 @@ class Particle : public Sprite
         /**
          * Sets the position in 2 dimensional space in pixels relative to map.
          */
-        void moveTo(float x, float y);
+        void moveTo(const float &x, const float &y);
 
         /**
          * Returns the particle position.
@@ -148,25 +153,25 @@ class Particle : public Sprite
         /**
          * Sets the time in game ticks until the particle is destroyed.
          */
-        void setLifetime(int lifetime)
+        void setLifetime(const int &lifetime)
         { mLifetimeLeft = lifetime; mLifetimePast = 0; }
 
         /**
          * Sets the age of the pixel in game ticks where the particle has
          * faded in completely.
          */
-        void setFadeOut(int fadeOut) { mFadeOut = fadeOut; }
+        void setFadeOut(const int &fadeOut) { mFadeOut = fadeOut; }
 
         /**
          * Sets the remaining particle lifetime where the particle starts to
          * fade out.
          */
-        void setFadeIn(int fadeIn) { mFadeIn = fadeIn; }
+        void setFadeIn(const int &fadeIn) { mFadeIn = fadeIn; }
 
         /**
          * Sets the alpha value of the particle
          */
-        void setAlpha(float alpha) { mAlpha = alpha; }
+        void setAlpha(const float &alpha) { mAlpha = alpha; }
 
         /**
          * Sets the sprite iterator of the particle on the current map to make
@@ -178,35 +183,35 @@ class Particle : public Sprite
         /**
          * Gets the sprite iterator of the particle on the current map.
          */
-        std::list<Sprite*>::iterator getSpriteIterator() const
+        const std::list<Sprite*>::iterator &getSpriteIterator() const
         { return mSpriteIterator; }
 
         /**
          * Sets the current velocity in 3 dimensional space.
          */
-        void setVelocity(float x, float y, float z)
+        void setVelocity(const float &x, const float &y, const float &z)
         { mVelocity.x = x; mVelocity.y = y; mVelocity.z = z; }
 
         /**
          * Sets the downward acceleration.
          */
-        void setGravity(float gravity) { mGravity = gravity; }
+        void setGravity(const float &gravity) { mGravity = gravity; }
 
         /**
-         * Sets the ammount of random vector changes
+         * Sets the amount of random vector changes
          */
-        void setRandomness(int r) { mRandomness = r; }
+        void setRandomness(const int &r) { mRandomness = r; }
 
         /**
-         * Sets the ammount of velocity particles retain after
+         * Sets the amount of velocity particles retain after
          * hitting the ground.
          */
-        void setBounce(float bouncieness) { mBounce = bouncieness; }
+        void setBounce(const float &bouncieness) { mBounce = bouncieness; }
 
         /**
          * Sets the flag if the particle is supposed to be moved by its parent
          */
-        void setFollow(bool follow) { mFollow = follow; }
+        void setFollow(const bool &follow) { mFollow = follow; }
 
         /**
          * Gets the flag if the particle is supposed to be moved by its parent
@@ -217,7 +222,8 @@ class Particle : public Sprite
          * Makes the particle move toward another particle with a
          * given acceleration and momentum
          */
-        void setDestination(Particle *target, float accel, float moment)
+        void setDestination(Particle *target, const float &accel,
+                            const float &moment)
         { mTarget = target; mAcceleration = accel; mMomentum = moment; }
 
         /**
@@ -225,7 +231,7 @@ class Particle : public Sprite
          * particle before it is destroyed. Does only make sense after a target
          * particle has been set using setDestination.
          */
-        void setDieDistance(float dist) { mInvDieDistance = 1.0f / dist; }
+        void setDieDistance(const float &dist) { mInvDieDistance = 1.0f / dist; }
 
         bool isAlive() { return mAlive; }
 
@@ -273,7 +279,7 @@ class Particle : public Sprite
         Vector mVelocity;           /**< Speed in pixels per game-tick. */
         float mGravity;             /**< Downward acceleration in pixels per
                                          game-tick. */
-        int mRandomness;            /**< Ammount of random vector change */
+        int mRandomness;            /**< amount of random vector change */
         float mBounce;              /**< How much the particle bounces off when
                                          hitting the ground */
         bool mFollow;               /**< is this particle moved when its parent

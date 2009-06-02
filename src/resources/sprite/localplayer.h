@@ -51,7 +51,7 @@ class LocalPlayer : public Player
         /**
          * Constructor.
          */
-        LocalPlayer(Uint32 id, Uint16 job, Map *map);
+        LocalPlayer(const Uint32 &id, const Uint16 &job, Map *map);
 
         /**
          * Destructor.
@@ -61,12 +61,12 @@ class LocalPlayer : public Player
         virtual void setName(const std::string &name);
         virtual void logic();
 
-        virtual void setAction(Action action);
+        virtual void setAction(const Action &action);
 
         /**
          * Sets the current direction.
          */
-        virtual void setDirection(Uint8 direction);
+        virtual void setDirection(const Uint8 &direction);
 
         /**
          * Adds a new step when walking before calling super. Also, when
@@ -95,13 +95,13 @@ class LocalPlayer : public Player
         void unequipItem(Item *item);
 
         void useItem(Item *item);
-        void dropItem(Item *item, int quantity);
+        void dropItem(Item *item, const int &quantity);
         void pickUp(FloorItem *item);
 
         /**
          * Sets the attack range.
          */
-        void setAttackRange(int range) { mAttackRange = range; }
+        void setAttackRange(const int &range) { mAttackRange = range; }
 
         /**
          * Gets the attack range.
@@ -116,7 +116,7 @@ class LocalPlayer : public Player
         /**
          * Accept or decline a trade offer
          */
-        void tradeReply(bool accept);
+        void tradeReply(const bool &accept);
 
         /**
          * Returns true when the player is ready to accept a trade offer.
@@ -128,9 +128,9 @@ class LocalPlayer : public Player
          * Sets the trading state of the player, i.e. whether or not he is
          * currently involved into some trade.
          */
-        void setTrading(bool trading) { mTrading = trading; }
+        void setTrading(const bool &trading) { mTrading = trading; }
 
-        void attack(Being *target = NULL, bool keep = false);
+        void attack(Being *target = NULL, const bool &keep = false);
 
         /**
          * Triggers whether or not to show the name as a GM name.
@@ -151,7 +151,8 @@ class LocalPlayer : public Player
          * @param damage the amount of damage dealt (0 means miss)
          * @param type the attack type
          */
-        virtual void handleAttack(Being *victim, int damage, AttackType type) {}
+        virtual void handleAttack(Being *victim, const int &damage,
+                                  const AttackType &type) {}
         /**
          * Returns the current target of the player. Returns 0 if no being is
          * currently targeted.
@@ -166,12 +167,12 @@ class LocalPlayer : public Player
         /**
          * Sets a new destination for this being to walk to.
          */
-        virtual void setDestination(Uint16 x, Uint16 y);
+        virtual void setDestination(const Uint16 &x, const Uint16 &y);
 
         /**
          * Sets a new direction to keep walking in.
          */
-        void setWalkingDir(int dir);
+        void setWalkingDir(const int &dir);
 
         /**
          * Sets going to being to attack
@@ -183,11 +184,11 @@ class LocalPlayer : public Player
          */
         bool withinAttackRange(Being *target);
 
-        void raiseAttribute(Attribute attr);
-        void raiseSkill(Uint16 skillId);
+        void raiseAttribute(const Attribute &attr);
+        void raiseSkill(const Uint16 &skillId);
 
         void toggleSit();
-        void emote(Uint8 emotion);
+        void emote(const Uint8 &emotion);
 
         void revive();
 
@@ -195,23 +196,23 @@ class LocalPlayer : public Player
          * Accessors for mInStorage
          */
         bool getInStorage() { return mInStorage; }
-        void setInStorage(bool inStorage);
+        void setInStorage(const bool &inStorage);
 
         /**
          * Sets the amount of XP. Shows XP gaining effect if the player is on
          * a map.
          */
-        void setXp(int xp);
+        void setXp(const int &xp);
 
         /**
          * Shows item pickup effect if the player is on a map.
          */
-        void pickedUp(std::string item);
+        void pickedUp(const std::string &item);
 
         /**
          * Returns the amount of experience points.
          */
-        int getXp() const { return mXp; }
+        const int &getXp() const { return mXp; }
 
         Uint32 mCharId;     /**< Used only during character selection. */
 
@@ -240,7 +241,7 @@ class LocalPlayer : public Player
         const std::auto_ptr<Equipment> mEquipment;
 
     protected:
-        void walk(unsigned char dir);
+        void walk(const unsigned char &dir);
 
         int mXp;            /**< Experience points. */
 
@@ -267,8 +268,9 @@ class LocalPlayer : public Player
         /**
          * Helper function for loading target cursors
          */
-        void loadTargetCursor(const std::string &filename, int width, int height,
-                              bool outRange, Being::TargetCursorSize size);
+        void loadTargetCursor(const std::string &filename, const int &width,
+                              const int &height, const bool &outRange,
+                              const Being::TargetCursorSize &size);
 
         /** Images of the target cursor. */
         ImageSet *mTargetCursorImages[2][NUM_TC];

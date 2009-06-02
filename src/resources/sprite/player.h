@@ -37,7 +37,7 @@ class Map;
 class Player : public Being
 {
     public:
-        Player(int id, int job, Map *map);
+        Player(const int &id, const int &job, Map *map);
 
         ~Player();
 
@@ -48,7 +48,8 @@ class Player : public Being
          * @param damage the amount of damage dealt (0 means miss)
          * @param type the attack type
          */
-        virtual void handleAttack(Being *victim, int damage, AttackType type);
+        virtual void handleAttack(Being *victim, const int &damage,
+                                  const AttackType &type);
 
         /**
          * Set up mName to be the character's name
@@ -59,7 +60,7 @@ class Player : public Being
 
         virtual Type getType() const;
 
-        virtual void setGender(Gender gender);
+        virtual void setGender(const Gender &gender);
 
         /**
          * Whether or not this player is a GM.
@@ -73,25 +74,19 @@ class Player : public Being
 
         /**
          * Sets the hair style and color for this player.
-         *
-         * Only for convenience in 0.0 client. When porting
-         * this to the trunk remove this function and
-         * call setSprite directly instead. The server should
-         * provide the hair ID and coloring in the same way
-         * it does for other equipment pieces.
-         *
          */
-        void setHairStyle(int style, int color);
+        void setHairStyle(const int &style, const int &color);
 
         /**
          * Sets visible equipments for this player.
          */
-        virtual void setSprite(int slot, int id, std::string color = "");
+        virtual void setSprite(const int &slot, const int &id,
+                               const std::string &color = "");
 
         /**
          * Flash the player's name
          */
-        void flash(int time);
+        void flash(const int &time);
 
     protected:
         virtual void updateCoords();

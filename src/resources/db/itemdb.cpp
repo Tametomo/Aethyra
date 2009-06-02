@@ -64,8 +64,8 @@ void ItemDB::load()
     mUnknown->setSprite("error.xml", GENDER_MALE);
     mUnknown->setSprite("error.xml", GENDER_FEMALE);
 
-    XML::Document doc("items.xml");
-    xmlNodePtr rootNode = doc.rootNode();
+    const XML::Document doc("items.xml");
+    const xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "items"))
         logger->error("ItemDB: Error while loading items.xml!");
@@ -170,11 +170,11 @@ void ItemDB::unload()
     mLoaded = false;
 }
 
-const ItemInfo& ItemDB::get(int id)
+const ItemInfo& ItemDB::get(const int &id)
 {
     assert(mLoaded);
 
-    ItemInfoIterator i = mItemInfos.find(id);
+    const ItemInfoIterator i = mItemInfos.find(id);
 
     if (i == mItemInfos.end())
     {
@@ -189,7 +189,7 @@ const ItemInfo& ItemDB::get(const std::string &name)
 {
     assert(mLoaded);
 
-    NamedItemInfoIterator i = mNamedItemInfos.find(normalized(name));
+    const NamedItemInfoIterator i = mNamedItemInfos.find(normalized(name));
 
     if (i == mNamedItemInfos.end())
     {
@@ -202,8 +202,8 @@ const ItemInfo& ItemDB::get(const std::string &name)
 
 void loadSpriteRef(ItemInfo *itemInfo, xmlNodePtr node)
 {
-    std::string gender = XML::getProperty(node, "gender", "unisex");
-    std::string filename = (const char*) node->xmlChildrenNode->content;
+    const std::string gender = XML::getProperty(node, "gender", "unisex");
+    const std::string filename = (const char*) node->xmlChildrenNode->content;
 
     if (gender == "male" || gender == "unisex")
         itemInfo->setSprite(filename, GENDER_MALE);
@@ -213,8 +213,8 @@ void loadSpriteRef(ItemInfo *itemInfo, xmlNodePtr node)
 
 void loadSoundRef(ItemInfo *itemInfo, xmlNodePtr node)
 {
-    std::string event = XML::getProperty(node, "event", "");
-    std::string filename = (const char*) node->xmlChildrenNode->content;
+    const std::string event = XML::getProperty(node, "event", "");
+    const std::string filename = (const char*) node->xmlChildrenNode->content;
 
     if (event == "hit")
         itemInfo->addSound(EQUIP_EVENT_HIT, filename);

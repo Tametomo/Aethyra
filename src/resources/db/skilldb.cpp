@@ -31,15 +31,15 @@
 static SkillInfo fakeSkillInfo = {"???", false };
 static bool mLoaded = false;
 
-void SkillDB::load(void)
+void SkillDB::load()
 {
     if (mLoaded)
         return;
 
-    SkillInfo emptySkillInfo = { "", false };
+    const SkillInfo emptySkillInfo = { "", false };
 
-    XML::Document doc(SKILLS_FILE);
-    xmlNodePtr root = doc.rootNode();
+    const XML::Document doc(SKILLS_FILE);
+    const xmlNodePtr root = doc.rootNode();
 
     if (!root || !xmlStrEqual(root->name, BAD_CAST "skills"))
     {
@@ -54,9 +54,9 @@ void SkillDB::load(void)
     {
         if (xmlStrEqual(node->name, BAD_CAST "skill"))
         {
-            int index = atoi(XML::getProperty(node, "id", "-1").c_str());
-            std::string name = XML::getProperty(node, "name", "");
-            bool modifiable = !atoi(XML::getProperty(node, "fixed", "0").c_str());
+            const int index = atoi(XML::getProperty(node, "id", "-1").c_str());
+            const std::string name = XML::getProperty(node, "name", "");
+            const bool modifiable = !atoi(XML::getProperty(node, "fixed", "0").c_str());
 
             if (index >= 0)
             {
@@ -78,20 +78,14 @@ void SkillDB::unload()
     mLoaded = false;
 }
 
-SkillInfo* SkillDB::get(int id)
+const SkillInfo* SkillDB::get(const int &id)
 {
-    if (id >= 0 && id < size())
-        return &skill_db[id];
-    else
-        return &fakeSkillInfo;
+    return (id >= 0 && id < size() ? &skill_db[id] : &fakeSkillInfo);
 }
 
-bool SkillDB::modifiable(int id)
+bool SkillDB::modifiable(const int &id)
 {
-    if (id >= 0 && id < size())
-        return &skill_db[id].modifiable;
-    else
-        return false;
+    return (id >= 0 && id < size() ? &skill_db[id].modifiable : false);
 }
 
 int SkillDB::size()

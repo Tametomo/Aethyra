@@ -45,7 +45,8 @@ class ParticleEmitter
         /**
          * Constructor.
          */
-        ParticleEmitter(xmlNodePtr emitterNode,  Particle *target, Map *map, int rotation = 0);
+        ParticleEmitter(const xmlNodePtr &emitterNode,  Particle *target,
+                        Map *map, const int &rotation = 0);
 
         /**
          * Copy Constructor (necessary for reference counting of particle images)
@@ -66,16 +67,16 @@ class ParticleEmitter
          * Spawns new particles
          * @return: a list of created particles
          */
-        std::list<Particle *> createParticles(int tick);
+        std::list<Particle *> createParticles(const int &tick);
 
         /**
          * Sets the target of the particles that are created
          */
-        void setTarget(Particle *target)
-        { mParticleTarget = target; };
+        void setTarget(Particle *target) { mParticleTarget = target; };
 
     private:
-        template <typename T> ParticleEmitterProp<T> readParticleEmitterProp(xmlNodePtr propertyNode, T def);
+        template <typename T>
+        ParticleEmitterProp<T> readParticleEmitterProp(xmlNodePtr propertyNode, T def);
 
         /**
          * initial position of particles:

@@ -44,8 +44,8 @@ void EffectDB::load()
     if (!mLoaded)
         return;
     
-    XML::Document doc("effects.xml");
-    xmlNodePtr root = doc.rootNode();
+    const XML::Document doc("effects.xml");
+    const xmlNodePtr root = doc.rootNode();
 
     if (!root || !xmlStrEqual(root->name, BAD_CAST "being-effects"))
     {
@@ -53,9 +53,7 @@ void EffectDB::load()
         return;
     }
     else
-    {
         logger->log("Effects are now loading");
-    }
 
     for_each_xml_child_node(node, root)
     {
@@ -82,7 +80,7 @@ void EffectDB::unload()
     mLoaded = false;
 }
 
-bool EffectDB::trigger(int id, Being* being)
+bool EffectDB::trigger(const int &id, Being* being)
 {
     bool rValue = false;
     for (std::list<EffectDescription>::iterator i = mEffects.begin();
@@ -105,7 +103,7 @@ bool EffectDB::trigger(int id, Being* being)
     return rValue;
 }
 
-bool EffectDB::trigger(int id, int x, int y)
+bool EffectDB::trigger(const int &id, const int &x, const int &y)
 {
     bool rValue = false;
     for (std::list<EffectDescription>::iterator i = mEffects.begin();
@@ -114,10 +112,12 @@ bool EffectDB::trigger(int id, int x, int y)
         if ((*i).id == id)
         {
             rValue = true;
+
             if (!(*i).GFX.empty())
                 particleEngine->addEffect((*i).GFX, x, y);
             if (!(*i).SFX.empty())
                 sound.playSfx((*i).SFX);
+
             break;
         }
     }

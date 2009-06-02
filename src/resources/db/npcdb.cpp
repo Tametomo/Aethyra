@@ -46,8 +46,8 @@ void NPCDB::load()
 
     logger->log("Initializing NPC database...");
 
-    XML::Document doc("npcs.xml");
-    xmlNodePtr rootNode = doc.rootNode();
+    const XML::Document doc("npcs.xml");
+    const xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "npcs"))
         logger->error(_("NPC Database: Error while loading npcs.xml!"));
@@ -58,7 +58,8 @@ void NPCDB::load()
         if (!xmlStrEqual(npcNode->name, BAD_CAST "npc"))
             continue;
 
-        int id = XML::getProperty(npcNode, "id", 0);
+        const int id = XML::getProperty(npcNode, "id", 0);
+
         if (id == 0)
         {
             logger->log("NPC Database: NPC with missing ID in npcs.xml!");
@@ -111,7 +112,7 @@ void NPCDB::unload()
     mLoaded = false;
 }
 
-const NPCInfo& NPCDB::get(int id)
+const NPCInfo& NPCDB::get(const int &id)
 {
     NPCInfosIterator i = mNPCInfos.find(id);
 

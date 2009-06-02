@@ -38,11 +38,13 @@ class ParticleContainer
 public:
     /**
      * Constructs a new particle container and assumes responsibility for
-     * its parent (for all operations defined herein, except when ending in `Locally')
+     * its parent (for all operations defined herein, except when ending in
+     * `Locally')
      *
      * delParent means that the destructor should also free the parent.
      */
-    ParticleContainer(ParticleContainer *parent = NULL, bool delParent = true);
+    ParticleContainer(ParticleContainer *parent = NULL,
+                      const bool &delParent = true);
     virtual ~ParticleContainer();
 
     /**
@@ -58,11 +60,11 @@ public:
     /**
      * Sets the positions of all elements
      */
-    virtual void moveTo(float x, float y);
+    virtual void moveTo(const float &x, const float &y);
 
 protected:
-    bool mDelParent;			/**< Delete mNext in destructor */
-    ParticleContainer *mNext;		/**< Contained container, if any */
+    const bool mDelParent;             /**< Delete mNext in destructor */
+    ParticleContainer *mNext;          /**< Contained container, if any */
 };
 
 /**
@@ -71,25 +73,25 @@ protected:
 class ParticleList : public ParticleContainer
 {
 public:
-    ParticleList(ParticleContainer *parent = NULL, bool delParent = true);
+    ParticleList(ParticleContainer *parent = NULL, const bool &delParent = true);
     virtual ~ParticleList();
 
     /**
      * Takes control of and adds a particle
      */
-    void addLocally(Particle *);
+    void addLocally(Particle*);
 
     /**
      * `kills' and removes a particle
      */
-    void removeLocally(Particle *);
+    void removeLocally(Particle*);
 
     virtual void clearLocally();
 
-    virtual void moveTo(float x, float y);
+    virtual void moveTo(const float &x, const float &y);
 
 protected:
-    std::list<Particle *> mElements;	/**< Contained particle effects */
+    std::list<Particle*> mElements;    /**< Contained particle effects */
 };
 
 /**
@@ -98,25 +100,25 @@ protected:
 class ParticleVector : public ParticleContainer
 {
 public:
-    ParticleVector(ParticleContainer *parent = NULL, bool delParent = true);
+    ParticleVector(ParticleContainer *parent = NULL, const bool &delParent = true);
     virtual ~ParticleVector();
 
     /**
      * Sets a particle at a specified index.  Kills the previous particle
      * there, if needed.
      */
-    virtual void setLocally(int index, Particle *particle);
+    virtual void setLocally(const int &index, Particle *particle);
 
     /**
      * Removes a particle at a specified index
      */
-    virtual void delLocally(int index);
+    virtual void delLocally(const int &index);
 
     virtual void clearLocally();
-    virtual void moveTo(float x, float y);
+    virtual void moveTo(const float &x, const float &y);
 
 protected:
-    std::vector<Particle *> mIndexedElements;
+    std::vector<Particle*> mIndexedElements;
 };
 
 #endif

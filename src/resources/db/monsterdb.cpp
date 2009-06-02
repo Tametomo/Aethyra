@@ -46,8 +46,8 @@ void MonsterDB::load()
 
     logger->log("Initializing monster database...");
 
-    XML::Document doc("monsters.xml");
-    xmlNodePtr rootNode = doc.rootNode();
+    const XML::Document doc("monsters.xml");
+    const xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "monsters"))
         logger->error("Monster Database: Error while loading monster.xml!");
@@ -134,7 +134,7 @@ void MonsterDB::unload()
 }
 
 
-const MonsterInfo &MonsterDB::get(int id)
+const MonsterInfo &MonsterDB::get(const int &id)
 {
     MonsterInfoIterator i = mMonsterInfos.find(id);
 
