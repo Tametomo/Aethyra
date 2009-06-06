@@ -24,6 +24,7 @@
 #define ITEMCONTAINER_H
 
 #include <list>
+#include <string>
 
 #include <guichan/keylistener.hpp>
 #include <guichan/mouselistener.hpp>
@@ -123,6 +124,12 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          */
         void setItemPopupVisibility(bool visible);
 
+        /**
+         * Display only items of a given type.
+         * Clear the filter by setting it to "".
+         */
+        void setTypeFilter(const std::string& type);
+
     private:
         // KeyListener
         void keyPressed(gcn::KeyEvent &event);
@@ -167,6 +174,11 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          */
         int getSlotIndex(const int posX, const int posY) const;
 
+        /**
+         * Whether the item should be shown.
+         */
+        bool passesFilter(const Item* item) const;
+
         ItemContainerConfigListener *mConfigListener;
 
         Inventory *mInventory;
@@ -186,6 +198,8 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
 
         static const int gridWidth;
         static const int gridHeight;
+
+        std::string mTypeFilter;    // if not "", display only items of this type
 };
 
 #endif

@@ -160,6 +160,9 @@ void ItemContainer::draw(gcn::Graphics *graphics)
         if (!item || item->getQuantity() <= 0)
             continue;
 
+        if (!passesFilter(item))
+            continue;
+
         itemCount++;
 
         int itemX = (i % columns) * gridWidth;
@@ -251,7 +254,9 @@ void ItemContainer::setSelectedItemIndex(int index)
 {
     int newSelectedItemIndex;
 
-    if (index < 0 || index > mMaxItems || mInventory->getItem(index) == NULL)
+    if (index < 0 || index > mMaxItems
+      || mInventory->getItem(index) == NULL
+      || !passesFilter(mInventory->getItem(index)))
         newSelectedItemIndex = NO_ITEM;
     else
         newSelectedItemIndex = index;
@@ -442,7 +447,7 @@ void ItemContainer::mouseMoved(gcn::MouseEvent &event)
 
     Item *item = mInventory->getItem(getSlotIndex(event.getX(), event.getY()));
 
-    if (item)
+    if (item && passesFilter(item))
     {
         if (item->getInfo().getName() != mItemPopup->getItemName())
             mItemPopup->setItem(item->getInfo());
@@ -466,4 +471,16 @@ int ItemContainer::getSlotIndex(const int posX, const int posY) const
     int index = posX / gridWidth + ((posY / gridHeight) * columns);
 
     return index;
+}
+
+void ItemContainer::setTypeFilter(const std::string& type)
+{
+    mTypeFilter = type;
+}
+
+bool ItemContainer::passesFilter(const Item* item) const
+{
+    if (mTypeFilter.empty())
+        return true;
+    return (item->getInfo().getType() == mTypeFilter);
 }
