@@ -485,7 +485,7 @@ void InputManager::handleInput()
         // all inside that loop, their implementing logic could be reduced to a
         // single function call)
         if (mInGame && player_node->mAction != Being::DEAD &&
-            !gui->isInputFocused())
+            !gui->isInputFocused() && keyboard.isEnabled())
         {
             unsigned char direction = 0;
 
