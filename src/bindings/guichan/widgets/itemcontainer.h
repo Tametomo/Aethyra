@@ -166,13 +166,36 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         void distributeValueChangedEvent(void);
 
         /**
-         * Gets the slot index based on the cursor position.
+         * Gets the item at the cursor position.
+         * (The returned item is owned by mInventory).
          *
-         * @param posX The X Coordinate position.
-         * @param posY The Y Coordinate position.
-         * @return The slot index on success, -1 on failure.
+         * @param posX The X Coordinate position (pixels).
+         * @param posY The Y Coordinate position (pixels).
+         * @return The item on success, NULL on failure.
          */
-        int getSlotIndex(const int posX, const int posY) const;
+        Item* getItem(const int posX, const int posY);
+
+        /**
+         * Gets the item in a visible slot.  This only finds items
+         * that can be seen with the current filter.
+         * (The returned item is owned by mInventory).
+         *
+         * Will handle gridslot being out of range (returns NULL).
+         *
+         * @param gridslot The position (in slots, Y*columns+X).
+         * @return The item on success, NULL on failure.
+         */
+        Item* getItemInVisibleSlot(const int gridslot);
+
+        /**
+         * Finds the position where this item would be drawn,
+         * taking account of any active filter.  The caller must convert this
+         * back to rows and columns.
+         *
+         * @param searchItem The item to find.
+         * @return The position if this item is visible, otherwise -1.
+         */
+        int getVisibleSlotForItem(const Item* searchItem) const;
 
         /**
          * Whether the item should be shown.

@@ -147,7 +147,7 @@ void ItemContainer::draw(gcn::Graphics *graphics)
         return;
 
     int columns = getWidth() / gridWidth;
-    int itemCount = 0;
+    int gridSlot = 0;   // The visible slot for drawing this item
 
     // Have at least 1 column
     if (columns < 1)
@@ -163,10 +163,9 @@ void ItemContainer::draw(gcn::Graphics *graphics)
         if (!passesFilter(item))
             continue;
 
-        itemCount++;
-
-        int itemX = (i % columns) * gridWidth;
-        int itemY = (i / columns) * gridHeight;
+        // Work out the object's position,
+        int itemX = (gridSlot % columns) * gridWidth;
+        int itemY = (gridSlot / columns) * gridHeight;
 
         // Draw selection image below selected item
         if (mSelectedItemIndex == i)
@@ -186,9 +185,14 @@ void ItemContainer::draw(gcn::Graphics *graphics)
                 (item->isEquipped() ? "Eq." : toString(item->getQuantity())),
                 itemX + gridWidth / 2, itemY + gridHeight - 11,
                 gcn::Graphics::CENTER);
+
+        // Move on to the next visible slot
+        gridSlot++;
     }
 
-    if (!itemCount)
+    // If there are no visible items, make sure nothing is selected;
+    // and inform the selection-listeners.
+    if (!gridSlot)
         selectNone();
 }
 
@@ -375,33 +379,37 @@ void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
 
 void ItemContainer::keyPressed(gcn::KeyEvent &event)
 {
-    int columns = getWidth() / gridWidth;
-    const int rows = mInventory->getNumberOfSlotsUsed() / columns;
-    const int itemX = mSelectedItemIndex % columns;
-    const int itemY = mSelectedItemIndex / columns;
+    const int columns = getWidth() / gridWidth;
+    const int itemXY = getVisibleSlotForItem(mInventory->getItem(mSelectedItemIndex));
+    int itemX = itemXY % columns;
+    int itemY = itemXY / columns;
 
-    if (columns > mInventory->getNumberOfSlotsUsed())
-        columns = mInventory->getNumberOfSlotsUsed();
-
+    // Handling direction keys: all of these set selectNewItem, and change
+    // itemX or itemY checking only that the selection doesn't go off the top,
+    // left or right of the grid.  The block below the switch statement then
+    // checks that there's an item in that slot (implictly bounds-checking that
+    // the selection didn't go off the bottom of the grid).
+    bool selectNewItem = false;
     switch (event.getKey().getValue())
     {
         case Key::LEFT:
             if (itemX != 0)
-                setSelectedItemIndex((itemY * columns) + itemX - 1);
+                itemX--;
+                selectNewItem = true;
             break;
         case Key::RIGHT:
-            if (itemX < (columns - 1) &&
-               ((itemY * columns) + itemX + 1) < mInventory->getNumberOfSlotsUsed())
-                setSelectedItemIndex((itemY * columns) + itemX + 1);
+            if (itemX < (columns - 1))
+                itemX++;
+                selectNewItem = true;
             break;
         case Key::UP:
             if (itemY != 0)
-                setSelectedItemIndex(((itemY - 1) * columns) + itemX);
+                itemY--;
+                selectNewItem = true;
             break;
         case Key::DOWN:
-            if (itemY < rows &&
-               (((itemY + 1) * columns) + itemX) < mInventory->getNumberOfSlotsUsed())
-                setSelectedItemIndex(((itemY + 1) * columns) + itemX);
+                itemY++;
+                selectNewItem = true;
             break;
         case Key::ENTER:
         case Key::SPACE:
@@ -416,6 +424,14 @@ void ItemContainer::keyPressed(gcn::KeyEvent &event)
                 distributeActionEvent();
             break;
     }
+
+    if (selectNewItem)
+    {
+        Item* selection =
+            getItemInVisibleSlot(itemX + columns*itemY);
+        if (selection)
+            setSelectedItemIndex(selection->getInvIndex());
+    }
 }
 
 void ItemContainer::mousePressed(gcn::MouseEvent &event)
@@ -424,18 +440,18 @@ void ItemContainer::mousePressed(gcn::MouseEvent &event)
 
     if (button == gcn::MouseEvent::LEFT || button == gcn::MouseEvent::RIGHT)
     {
-        int columns = getWidth() / gridWidth;
-        int mx = event.getX();
-        int my = event.getY();
-        int index = mx / gridWidth + ((my / gridHeight) * columns);
-
-        itemShortcut->setItemSelected(-1);
-        setSelectedItemIndex(index);
-
-        Item *item = mInventory->getItem(index);
+        Item *item = getItem(event.getX(), event.getY());
 
         if (item)
+        {
+            setSelectedItemIndex(item->getInvIndex());
             itemShortcut->setItemSelected(item->getId());
+        }
+        else
+        {
+            setSelectedItemIndex(NO_ITEM);
+            itemShortcut->setItemSelected(-1);
+        }
     }
 }
 
@@ -445,7 +461,7 @@ void ItemContainer::mouseMoved(gcn::MouseEvent &event)
     if (!mShowItemInfo)
         return;
 
-    Item *item = mInventory->getItem(getSlotIndex(event.getX(), event.getY()));
+    Item *item = getItem(event.getX(), event.getY());
 
     if (item && passesFilter(item))
     {
@@ -465,12 +481,55 @@ void ItemContainer::mouseExited(gcn::MouseEvent &event)
     mItemPopup->setVisible(false);
 }
 
-int ItemContainer::getSlotIndex(const int posX, const int posY) const
+Item* ItemContainer::getItem(const int posX, const int posY)
 {
     int columns = getWidth() / gridWidth;
-    int index = posX / gridWidth + ((posY / gridHeight) * columns);
+    int gridslot = posX / gridWidth + ((posY / gridHeight) * columns);
+    return getItemInVisibleSlot(gridslot);
+}
 
-    return index;
+Item* ItemContainer::getItemInVisibleSlot(const int gridslot)
+{
+    int itemCount = -1;
+    for (int i = 0; i < mInventory->getSize(); i++)
+    {
+        Item *item = mInventory->getItem(i);
+
+        if (!item || item->getQuantity() <= 0)
+            continue;
+
+        if (!passesFilter(item))
+            continue;
+
+        itemCount++;
+
+        if (itemCount == gridslot)
+            return item;
+    }
+
+    return NULL;
+}
+
+int ItemContainer::getVisibleSlotForItem(const Item* searchItem) const
+{
+    int itemCount = -1;
+    for (int i = 0; i < mInventory->getSize(); i++)
+    {
+        Item *item = mInventory->getItem(i);
+
+        if (!item || item->getQuantity() <= 0)
+            continue;
+
+        if (!passesFilter(item))
+            continue;
+
+        itemCount++;
+
+        if (searchItem == item)
+            return itemCount;
+    }
+
+    return -1;
 }
 
 void ItemContainer::setTypeFilter(const std::string& type)
