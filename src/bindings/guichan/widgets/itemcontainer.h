@@ -195,7 +195,7 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          * @param searchItem The item to find.
          * @return The position if this item is visible, otherwise -1.
          */
-        int getVisibleSlotForItem(const Item* searchItem) const;
+        int getVisibleSlot(const Item* searchItem) const;
 
         /**
          * Whether the item should be shown.

@@ -275,7 +275,7 @@ void ItemContainer::setSelectedItemIndex(int index)
 
         gcn::Rectangle scroll;
         const int columns = getWidth() / gridWidth;
-        const int itemY = getVisibleSlotForItem(item) / columns;
+        const int itemY = getVisibleSlot(item) / columns;
 
         if (mSelectedItemIndex == NO_ITEM)
             scroll.y = 0;
@@ -363,7 +363,7 @@ void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
     if (!useMouseCoordinates)
     {
         const int columns = getWidth() / gridWidth;
-        const int gridSlot = getVisibleSlotForItem(item);
+        const int gridSlot = getVisibleSlot(item);
         const int itemX = gridSlot % columns;
         const int itemY = gridSlot / columns;
         const int xPos = itemX * gridWidth + (gridWidth / 2);
@@ -377,7 +377,7 @@ void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
 void ItemContainer::keyPressed(gcn::KeyEvent &event)
 {
     const int columns = getWidth() / gridWidth;
-    const int gridSlot = getVisibleSlotForItem(getSelectedItem());
+    const int gridSlot = getVisibleSlot(getSelectedItem());
     int itemX = gridSlot % columns;
     int itemY = gridSlot / columns;
 
@@ -507,7 +507,7 @@ Item* ItemContainer::getItemInVisibleSlot(const int gridSlot)
     return NULL;
 }
 
-int ItemContainer::getVisibleSlotForItem(const Item* searchItem) const
+int ItemContainer::getVisibleSlot(const Item* searchItem) const
 {
     int itemCount = -1;
     for (int i = 0; i < mInventory->getSize(); i++)
@@ -532,6 +532,10 @@ int ItemContainer::getVisibleSlotForItem(const Item* searchItem) const
 void ItemContainer::setTypeFilter(const std::string& type)
 {
     mTypeFilter = type;
+    if (getSelectedItem() && !passesFilter(getSelectedItem()))
+    {
+        selectNone();
+    }
 }
 
 bool ItemContainer::passesFilter(const Item* item) const
