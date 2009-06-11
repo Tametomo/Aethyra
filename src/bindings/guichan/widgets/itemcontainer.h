@@ -180,12 +180,12 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          * that can be seen with the current filter.
          * (The returned item is owned by mInventory).
          *
-         * Will handle gridslot being out of range (returns NULL).
+         * Will handle gridSlot being out of range (returns NULL).
          *
-         * @param gridslot The position (in slots, Y*columns+X).
+         * @param gridSlot The position (in slots, Y*columns+X).
          * @return The item on success, NULL on failure.
          */
-        Item* getItemInVisibleSlot(const int gridslot);
+        Item* getItemInVisibleSlot(const int gridSlot);
 
         /**
          * Finds the position where this item would be drawn,

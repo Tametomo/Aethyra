@@ -257,13 +257,12 @@ void ItemContainer::refindSelectedItem()
 void ItemContainer::setSelectedItemIndex(int index)
 {
     int newSelectedItemIndex;
+    Item* item = mInventory->getItem(index);
 
-    if (index < 0 || index > mMaxItems
-      || mInventory->getItem(index) == NULL
-      || !passesFilter(mInventory->getItem(index)))
-        newSelectedItemIndex = NO_ITEM;
-    else
+    if (item && passesFilter(item))
         newSelectedItemIndex = index;
+    else
+        newSelectedItemIndex = NO_ITEM;
 
     if (mSelectedItemIndex != newSelectedItemIndex)
     {
@@ -272,11 +271,11 @@ void ItemContainer::setSelectedItemIndex(int index)
         if (mSelectedItemIndex == NO_ITEM)
             mLastSelectedItemId = NO_ITEM;
         else
-            mLastSelectedItemId = mInventory->getItem(index)->getId();
+            mLastSelectedItemId = item->getId();
 
         gcn::Rectangle scroll;
         const int columns = getWidth() / gridWidth;
-        const int itemY = mSelectedItemIndex / columns;
+        const int itemY = getVisibleSlotForItem(item) / columns;
 
         if (mSelectedItemIndex == NO_ITEM)
             scroll.y = 0;
@@ -363,14 +362,12 @@ void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
 
     if (!useMouseCoordinates)
     {
-        int columns = getWidth() / gridWidth;
-        const int itemX = mSelectedItemIndex % columns;
-        const int itemY = mSelectedItemIndex / columns;
+        const int columns = getWidth() / gridWidth;
+        const int gridSlot = getVisibleSlotForItem(item);
+        const int itemX = gridSlot % columns;
+        const int itemY = gridSlot / columns;
         const int xPos = itemX * gridWidth + (gridWidth / 2);
         const int yPos = itemY * gridHeight + (gridHeight / 2) + gui->getFont()->getHeight();
-
-        if (columns > mInventory->getNumberOfSlotsUsed())
-            columns = mInventory->getNumberOfSlotsUsed();
 
         x = getParent()->getParent()->getX() + getParent()->getX() + getX() + xPos;
         y = getParent()->getParent()->getY() + getParent()->getY() + getY() + yPos;
@@ -380,9 +377,9 @@ void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
 void ItemContainer::keyPressed(gcn::KeyEvent &event)
 {
     const int columns = getWidth() / gridWidth;
-    const int itemXY = getVisibleSlotForItem(mInventory->getItem(mSelectedItemIndex));
-    int itemX = itemXY % columns;
-    int itemY = itemXY / columns;
+    const int gridSlot = getVisibleSlotForItem(getSelectedItem());
+    int itemX = gridSlot % columns;
+    int itemY = gridSlot / columns;
 
     // Handling direction keys: all of these set selectNewItem, and change
     // itemX or itemY checking only that the selection doesn't go off the top,
@@ -484,11 +481,11 @@ void ItemContainer::mouseExited(gcn::MouseEvent &event)
 Item* ItemContainer::getItem(const int posX, const int posY)
 {
     int columns = getWidth() / gridWidth;
-    int gridslot = posX / gridWidth + ((posY / gridHeight) * columns);
-    return getItemInVisibleSlot(gridslot);
+    int gridSlot = posX / gridWidth + ((posY / gridHeight) * columns);
+    return getItemInVisibleSlot(gridSlot);
 }
 
-Item* ItemContainer::getItemInVisibleSlot(const int gridslot)
+Item* ItemContainer::getItemInVisibleSlot(const int gridSlot)
 {
     int itemCount = -1;
     for (int i = 0; i < mInventory->getSize(); i++)
@@ -503,7 +500,7 @@ Item* ItemContainer::getItemInVisibleSlot(const int gridslot)
 
         itemCount++;
 
-        if (itemCount == gridslot)
+        if (itemCount == gridSlot)
             return item;
     }
 
