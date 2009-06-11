@@ -125,10 +125,16 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         void setItemPopupVisibility(bool visible);
 
         /**
-         * Display only items of a given type.
+         * Display only items of this type.
          * Clear the filter by setting it to "".
          */
         void setTypeFilter(const std::string& type);
+
+        /**
+         * Display only items of these types.
+         * An empty list clears the filter.
+         */
+        void setTypeFilter(const std::list<std::string>& types);
 
     private:
         // KeyListener
@@ -222,7 +228,10 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         static const int gridWidth;
         static const int gridHeight;
 
-        std::string mTypeFilter;    // if not "", display only items of this type
+        /**
+         * If non-empty, display only items of these types.
+         */
+        std::list<std::string> mTypeFilter;
 };
 
 #endif

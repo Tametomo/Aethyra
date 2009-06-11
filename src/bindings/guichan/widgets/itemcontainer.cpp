@@ -531,7 +531,23 @@ int ItemContainer::getVisibleSlot(const Item* searchItem) const
 
 void ItemContainer::setTypeFilter(const std::string& type)
 {
-    mTypeFilter = type;
+    mTypeFilter.clear();
+    if (!type.empty())
+    {
+        // "" is special-cased to remove the filter
+        mTypeFilter.push_back(type);
+    }
+
+    if (getSelectedItem() && !passesFilter(getSelectedItem()))
+    {
+        selectNone();
+    }
+}
+
+void ItemContainer::setTypeFilter(const std::list<std::string>& types)
+{
+    mTypeFilter = types;
+
     if (getSelectedItem() && !passesFilter(getSelectedItem()))
     {
         selectNone();
@@ -542,5 +558,13 @@ bool ItemContainer::passesFilter(const Item* item) const
 {
     if (mTypeFilter.empty())
         return true;
-    return (item->getInfo().getType() == mTypeFilter);
+
+    const std::string& itemType = item->getInfo().getType();
+    for (std::list<std::string>::const_iterator iter = mTypeFilter.begin();
+         iter != mTypeFilter.end(); iter++)
+    {
+        if (*iter == itemType)
+            return true;
+    }
+    return false;
 }
