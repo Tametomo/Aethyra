@@ -244,6 +244,9 @@ void Viewport::logic()
 
 void Viewport::mousePressed(gcn::MouseEvent &event)
 {
+    if (event.getSource() != this)
+        return;
+
     // Check if we are alive and kickin'
     if (!mMap || !player_node || player_node->mAction == Being::DEAD)
         return;
