@@ -320,6 +320,11 @@ gcn::Widget* Gui::getFocused()
     return (widget);
 }
 
+void Gui::focusNone()
+{
+    mFocusHandler->focusNone();
+}
+
 gcn::Font* Gui::getFont() const
 {
     return mGuiFont;

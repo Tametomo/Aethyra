@@ -90,6 +90,11 @@ class Gui : public gcn::Gui
         gcn::Widget* getFocused();
 
         /**
+         * Calls focusNone() on the internal focus handler.
+         */
+        void focusNone();
+
+        /**
          * Return game font.
          */
         gcn::Font* getFont() const;
