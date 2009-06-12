@@ -30,6 +30,7 @@
 #include <guichan/mouselistener.hpp>
 #include <guichan/widget.hpp>
 #include <guichan/widgetlistener.hpp>
+#include <guichan/selectionlistener.hpp>
 
 #include "../guichanfwd.h"
 
