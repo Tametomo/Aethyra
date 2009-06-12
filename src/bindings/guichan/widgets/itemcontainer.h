@@ -24,6 +24,7 @@
 #define ITEMCONTAINER_H
 
 #include <list>
+#include <string>
 
 #include <guichan/keylistener.hpp>
 #include <guichan/mouselistener.hpp>
@@ -123,6 +124,18 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          */
         void setItemPopupVisibility(bool visible);
 
+        /**
+         * Display only items of this type.
+         * Clear the filter by setting it to "".
+         */
+        void setTypeFilter(const std::string& type);
+
+        /**
+         * Display only items of these types.
+         * An empty list clears the filter.
+         */
+        void setTypeFilter(const std::list<std::string>& types);
+
     private:
         // KeyListener
         void keyPressed(gcn::KeyEvent &event);
@@ -159,13 +172,41 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         void distributeValueChangedEvent(void);
 
         /**
-         * Gets the slot index based on the cursor position.
+         * Gets the item at the cursor position.
+         * (The returned item is owned by mInventory).
          *
-         * @param posX The X Coordinate position.
-         * @param posY The Y Coordinate position.
-         * @return The slot index on success, -1 on failure.
+         * @param posX The X Coordinate position (pixels).
+         * @param posY The Y Coordinate position (pixels).
+         * @return The item on success, NULL on failure.
          */
-        int getSlotIndex(const int posX, const int posY) const;
+        Item* getItem(const int posX, const int posY);
+
+        /**
+         * Gets the item in a visible slot.  This only finds items
+         * that can be seen with the current filter.
+         * (The returned item is owned by mInventory).
+         *
+         * Will handle gridSlot being out of range (returns NULL).
+         *
+         * @param gridSlot The position (in slots, Y*columns+X).
+         * @return The item on success, NULL on failure.
+         */
+        Item* getItemInVisibleSlot(const int gridSlot);
+
+        /**
+         * Finds the position where this item would be drawn,
+         * taking account of any active filter.  The caller must convert this
+         * back to rows and columns.
+         *
+         * @param searchItem The item to find.
+         * @return The position if this item is visible, otherwise -1.
+         */
+        int getVisibleSlot(const Item* searchItem) const;
+
+        /**
+         * Whether the item should be shown.
+         */
+        bool passesFilter(const Item* item) const;
 
         ItemContainerConfigListener *mConfigListener;
 
@@ -186,6 +227,11 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
 
         static const int gridWidth;
         static const int gridHeight;
+
+        /**
+         * If non-empty, display only items of these types.
+         */
+        std::list<std::string> mTypeFilter;
 };
 
 #endif

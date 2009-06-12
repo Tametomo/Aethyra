@@ -48,6 +48,9 @@ class Inventory
 
         /**
          * Returns the item at the specified index.
+         *
+         * This bounds-checks, and also checks that (quantity > 0),
+         * returning NULL in either case.
          */
         Item* getItem(int index) const;
 
