@@ -23,7 +23,6 @@
 #include <guichan/exception.hpp>
 
 #include "popup.h"
-#include "windowcontainer.h"
 
 #include "../graphics.h"
 #include "../skin.h"
@@ -33,16 +32,15 @@
 
 #include "../../../resources/image.h"
 
-Popup::Popup(const std::string& name, const std::string& skin):
+Popup::Popup(const std::string &name, const std::string &skin,
+             gcn::Container *parent):
+    mParentContainer(parent),
     mPopupName(name),
     mDefaultSkinPath(skin),
     mMaxWidth(graphics->getWidth()),
     mMaxHeight(graphics->getHeight())
 {
     logger->log("Popup::Popup(\"%s\")", name.c_str());
-
-    if (!windowContainer)
-        throw GCN_EXCEPTION("Popup::Popup(): no windowContainer set");
 
     if (!skinLoader)
         skinLoader = new SkinLoader();
@@ -55,8 +53,8 @@ Popup::Popup(const std::string& name, const std::string& skin):
     mMinWidth = mSkin->getMinWidth();
     mMinHeight = mSkin->getMinHeight();
 
-    // Add this window to the window container
-    windowContainer->add(this);
+    if (mParentContainer)
+        mParentContainer->add(this);
 
     // Popups are invisible by default
     setVisible(false);
@@ -71,9 +69,15 @@ Popup::~Popup()
     mSkin->instances--;
 }
 
-void Popup::setWindowContainer(WindowContainer *wc)
+void Popup::setParentContainer(gcn::Container *container)
 {
-    windowContainer = wc;
+    if (mParentContainer)
+        mParentContainer->remove(this);
+
+    mParentContainer = container;
+
+    if (mParentContainer)
+        mParentContainer->add(this);
 }
 
 void Popup::loadPopupConfiguration()
@@ -89,6 +93,9 @@ void Popup::loadPopupConfiguration()
     {
         mSkin->instances--;
         mSkin = skinLoader->load(skinName, mDefaultSkinPath);
+
+        setMinWidth(mSkin->getMinWidth());
+        setMinHeight(mSkin->getMinHeight());
     }
 }
 
@@ -170,6 +177,9 @@ void Popup::setMaxHeight(int height)
 
 void Popup::scheduleDelete()
 {
-    windowContainer->scheduleDelete(this);
+    WindowContainer *container = dynamic_cast<WindowContainer*>(mParentContainer);
+
+    if (container)
+        container->scheduleDelete(this);
 }
 

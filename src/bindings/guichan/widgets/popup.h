@@ -24,12 +24,12 @@
 #define POPUP_H
 
 #include "container.h"
+#include "windowcontainer.h"
 
 #include "../guichanfwd.h"
 
 class Skin;
 class SkinLoader;
-class WindowContainer;
 
 /**
  * A rather reduced down version of the Window class that is particularly suited
@@ -51,9 +51,11 @@ class Popup : public Container
          * @param name    A human readable name for the popup. Only useful for
          *                debugging purposes.
          * @param skin    The location where the Popup's skin XML can be found.
+         * @param parent  The container that will hold this Popup.
          */
-        Popup(const std::string& name = "",
-              const std::string &skin = "graphics/gui/gui.xml");
+        Popup(const std::string &name = "",
+              const std::string &skin = "graphics/gui/gui.xml",
+              gcn::Container *parent = windowContainer);
 
         /**
          * Destructor. Deletes all the added widgets.
@@ -61,9 +63,9 @@ class Popup : public Container
         ~Popup();
 
         /**
-         * Sets the window container to be used by new popups.
+         * Sets the parent container to be used by this popups.
          */
-        static void setWindowContainer(WindowContainer *windowContainer);
+        void setParentContainer(gcn::Container *container);
 
         /**
          * Changes the popup's skin to use the skin defined in the saved
@@ -184,6 +186,8 @@ class Popup : public Container
         Skin* mSkin;                  /**< Skin in use by this popup */
 
     private:
+        gcn::Container *mParentContainer;
+
         std::string mPopupName;       /**< Name of the popup */
         std::string mDefaultSkinPath; /**< Default skin path for this popup */
         int mMinWidth;                /**< Minimum popup width */

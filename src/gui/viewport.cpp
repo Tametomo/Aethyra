@@ -66,7 +66,10 @@ Viewport::Viewport():
     config.addListener("ScrollLaziness", this);
     config.addListener("ScrollRadius", this);
 
-    mPopupMenu = new PopupMenu();
+    mPopupMenu = new PopupMenu(UNKNOWN, this);
+
+    setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
+                                      graphics->getHeight()));
 }
 
 Viewport::~Viewport()
@@ -215,6 +218,8 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
         (*i)->drawSpeech((int) mPixelViewX, (int) mPixelViewY);
         (*i)->drawEmotion(graphics, (int) mPixelViewX, (int) mPixelViewY);
     }
+
+    drawChildren(graphics);
 }
 
 void Viewport::logic()

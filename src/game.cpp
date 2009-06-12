@@ -229,8 +229,6 @@ Game::Game(Network *network):
 {
     // Create the viewport
     viewport = new Viewport();
-    viewport->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
-                                          graphics->getHeight()));
 
     gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
     top->add(viewport);

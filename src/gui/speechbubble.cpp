@@ -39,25 +39,9 @@
 #include "../bindings/guichan/widgets/textbox.h"
 
 SpeechBubble::SpeechBubble():
+    Popup("Speech", "graphics/gui/speechbubble.xml", viewport),
     mText("")
 {
-    setPopupName("Speech");
-    setDefaultSkinPath("graphics/gui/speechbubble.xml");
-
-    if (!viewport)
-        throw GCN_EXCEPTION("SpeechBubble::SpeechBubble(): no viewport set");
-
-    if (!skinLoader)
-        skinLoader = new SkinLoader();
-
-    setPadding(3);
-
-    // Add this speech bubble to the viewport
-    viewport->add(this);
-
-    // SpeechBubbles are invisible by default
-    setVisible(false);
-
     setContentSize(140, 46);
 
     mCaption = new gcn::Label("");
@@ -66,14 +50,11 @@ SpeechBubble::SpeechBubble():
     mSpeechBox = new TextBox(new WordTextWrapHandler());
     mSpeechBox->setEditable(false);
     mSpeechBox->setOpaque(false);
-    mSpeechBox->setTextColor(&guiPalette->getColor(Palette::CHAT));
 
     add(mCaption);
     add(mSpeechBox);
 
     loadPopupConfiguration();
-    setMinWidth(mSkin->getMinWidth());
-    setMinHeight(mSkin->getMinHeight());
 
     requestMoveToBottom();
 }
@@ -131,10 +112,5 @@ void SpeechBubble::adjustSize()
 
     mCaption->setPosition(xPos, getPadding());
     mSpeechBox->setPosition(xPos, yPos);
-}
-
-void SpeechBubble::scheduleDelete()
-{
-    viewport->scheduleDelete(this);
 }
 

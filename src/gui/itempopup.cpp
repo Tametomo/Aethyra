@@ -40,8 +40,8 @@
 #include "../utils/gettext.h"
 #include "../utils/stringutils.h"
 
-ItemPopup::ItemPopup():
-    Popup("ItemPopup")
+ItemPopup::ItemPopup(gcn::Container *parent):
+    Popup("ItemPopup", "graphics/gui/gui.xml", parent)
 {
     mItemType = "";
 

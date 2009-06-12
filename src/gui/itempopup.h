@@ -25,6 +25,7 @@
 #define ITEMPOPUP_H
 
 #include "../bindings/guichan/widgets/popup.h"
+#include "../bindings/guichan/widgets/windowcontainer.h"
 
 class ItemInfo;
 class TextBox;
@@ -35,7 +36,7 @@ class ItemPopup : public Popup
         /**
          * Constructor. Initializes the item popup.
          */
-        ItemPopup();
+        ItemPopup(gcn::Container *parent = windowContainer);
 
         /**
          * Destructor. Cleans up the item popup on deletion.

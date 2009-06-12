@@ -58,8 +58,8 @@
 
 extern std::string tradePartnerName;
 
-PopupMenu::PopupMenu(MenuType type):
-    Popup("PopupMenu"),
+PopupMenu::PopupMenu(MenuType type, gcn::Container *parent):
+    Popup("PopupMenu", "graphics/gui/gui.xml", parent),
     mPreviousFocus(NULL),
     mBeing(NULL),
     mFloorItem(NULL),

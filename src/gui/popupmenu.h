@@ -26,6 +26,7 @@
 #include <guichan/actionlistener.hpp>
 
 #include "../bindings/guichan/widgets/popup.h"
+#include "../bindings/guichan/widgets/windowcontainer.h"
 
 class Being;
 class FloorItem;
@@ -53,7 +54,7 @@ class PopupMenu : public Popup, public gcn::ActionListener
         /**
          * Constructor.
          */
-        PopupMenu(MenuType type = UNKNOWN);
+        PopupMenu(MenuType type = UNKNOWN, gcn::Container *parent = windowContainer);
 
         /**
          * Shows a popup menu at the specified mouse coords.
