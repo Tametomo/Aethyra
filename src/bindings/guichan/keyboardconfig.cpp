@@ -188,7 +188,7 @@ int KeyboardConfig::getKeyEmoteOffset(int keyValue) const
 
 bool KeyboardConfig::isKeyActive(int index)
 {
-    return !mActiveKeys ? false : mActiveKeys[mKey[index].value];
+    return !mActiveKeys || !mEnabled ? false : mActiveKeys[mKey[index].value];
 }
 
 void KeyboardConfig::refreshActiveKeys()
