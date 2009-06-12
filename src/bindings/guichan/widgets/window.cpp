@@ -351,8 +351,8 @@ void Window::widgetShown(const gcn::Event& event)
 {
     mVisible = true;
 
-    requestFocus();
     requestMoveToTop();
+    requestFocus();
 }
 
 void Window::setCloseButton(bool flag)

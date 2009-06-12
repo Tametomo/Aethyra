@@ -169,8 +169,6 @@ void StorageWindow::widgetShown(const gcn::Event& event)
 void StorageWindow::widgetHidden(const gcn::Event& event)
 {
     Window::widgetHidden(event);
-
-    mItems->setItemPopupVisibility(false);
 }
 
 void StorageWindow::addStore(Item *item, int amount)

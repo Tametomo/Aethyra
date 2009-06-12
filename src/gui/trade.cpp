@@ -296,9 +296,6 @@ void TradeWindow::mouseClicked(gcn::MouseEvent &event)
 void TradeWindow::widgetHidden(const gcn::Event& event)
 {
     Window::widgetHidden(event);
-
-    mMyItemContainer->setItemPopupVisibility(false);
-    mPartnerItemContainer->setItemPopupVisibility(false);
 }
 
 void TradeWindow::requestFocus()

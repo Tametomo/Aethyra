@@ -26,11 +26,12 @@
 #include <list>
 #include <string>
 
+#include <guichan/focuslistener.hpp>
 #include <guichan/keylistener.hpp>
 #include <guichan/mouselistener.hpp>
+#include <guichan/selectionlistener.hpp>
 #include <guichan/widget.hpp>
 #include <guichan/widgetlistener.hpp>
-#include <guichan/selectionlistener.hpp>
 
 #include "../guichanfwd.h"
 
@@ -48,7 +49,7 @@ class ItemPopup;
  * \ingroup GUI
  */
 class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
-                             gcn::WidgetListener
+                             gcn::FocusListener, gcn::WidgetListener
 {
     public:
         /**
@@ -121,11 +122,6 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         void enableItemPopup(bool enable);
 
         /**
-         * Changes the item popup's visibility.
-         */
-        void setItemPopupVisibility(bool visible);
-
-        /**
          * Display only items of this type.
          * Clear the filter by setting it to "".
          */
@@ -143,6 +139,13 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
 
         void mouseExited(gcn::MouseEvent &event);
         void mouseMoved(gcn::MouseEvent &event);
+
+        /**
+         * Used to hide/show the item popup on focus lost/gain events
+         * respectively.
+         */
+        void focusGained(const gcn::Event &event);
+        void focusLost(const gcn::Event &event);
 
         /**
          * Gets the location to tell a popup to draw, and then store it in

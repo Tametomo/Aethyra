@@ -210,8 +210,18 @@ void EmoteContainer::showPopup(bool useMouseCoordinates)
         const int xPos = emoteX * gridWidth + (gridWidth / 2);
         const int yPos = emoteY * gridHeight + (gridHeight / 2) + gui->getFont()->getHeight();
 
-        x = getParent()->getParent()->getX() + getParent()->getX() + getX() + xPos;
-        y = getParent()->getParent()->getY() + getParent()->getY() + getY() + yPos;
+        x = xPos;
+        y = yPos;
+
+        gcn::Widget *widget = this;
+
+        while (widget)
+        {
+            x += widget->getX();
+            y += widget->getY();
+
+            widget = widget->getParent();
+        }
     }
 
     mPopupMenu->setEmote(getSelectedEmote());

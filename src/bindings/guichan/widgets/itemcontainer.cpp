@@ -86,7 +86,6 @@ ItemContainer::ItemContainer(Inventory *inventory,
 
     mItemPopup = new ItemPopup();
     mItemPopup->setOpaque(false);
-    setFocusable(true);
 
     mShowItemInfo = config.getValue("showItemPopups", true);
     mConfigListener = new ItemContainerConfigListener(this);
@@ -103,9 +102,12 @@ ItemContainer::ItemContainer(Inventory *inventory,
 
     mMaxItems = mInventory->getLastUsedSlot(); // Count from 0, usage from 2
 
+    addFocusListener(this);
     addKeyListener(this);
     addMouseListener(this);
     addWidgetListener(this);
+
+    setFocusable(true);
 }
 
 ItemContainer::~ItemContainer()
@@ -327,9 +329,6 @@ void ItemContainer::enableItemPopup(bool enable)
         return;
     }
 
-    int x = 0;
-    int y = 0;
-
     mShowItemInfo = true;
 
     Item *item = getSelectedItem();
@@ -340,15 +339,13 @@ void ItemContainer::enableItemPopup(bool enable)
     if (item->getInfo().getName() != mItemPopup->getItemName())
         mItemPopup->setItem(item->getInfo());
 
+    int x = 0;
+    int y = 0;
+
     getPopupLocation(false, x, y);
 
     mItemPopup->updateColors();
     mItemPopup->view(x, y);
-}
-
-void ItemContainer::setItemPopupVisibility(bool visible)
-{
-    mItemPopup->setVisible(visible);
 }
 
 void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
@@ -367,10 +364,21 @@ void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
         const int itemX = gridSlot % columns;
         const int itemY = gridSlot / columns;
         const int xPos = itemX * gridWidth + (gridWidth / 2);
-        const int yPos = itemY * gridHeight + (gridHeight / 2) + gui->getFont()->getHeight();
+        const int yPos = itemY * gridHeight + (gridHeight / 2) +
+                         gui->getFont()->getHeight();
 
-        x = getParent()->getParent()->getX() + getParent()->getX() + getX() + xPos;
-        y = getParent()->getParent()->getY() + getParent()->getY() + getY() + yPos;
+        x = xPos;
+        y = yPos;
+
+        gcn::Widget *widget = this;
+
+        while (widget)
+        {
+            x += widget->getX();
+            y += widget->getY();
+
+            widget = widget->getParent();
+        }
     }
 }
 
@@ -455,7 +463,7 @@ void ItemContainer::mousePressed(gcn::MouseEvent &event)
 // Show ItemPopup
 void ItemContainer::mouseMoved(gcn::MouseEvent &event)
 {
-    if (!mShowItemInfo)
+    if (!mShowItemInfo || mPopupMenu->isVisible())
         return;
 
     Item *item = getItem(event.getX(), event.getY());
@@ -474,6 +482,19 @@ void ItemContainer::mouseMoved(gcn::MouseEvent &event)
 
 // Hide ItemPopup
 void ItemContainer::mouseExited(gcn::MouseEvent &event)
+{
+    mItemPopup->setVisible(false);
+}
+
+void ItemContainer::focusGained(const gcn::Event &event)
+{
+    Item *item = getSelectedItem();
+
+    if (mShowItemInfo && item && passesFilter(item))
+        enableItemPopup(true);
+}
+
+void ItemContainer::focusLost(const gcn::Event &event)
 {
     mItemPopup->setVisible(false);
 }

@@ -69,6 +69,9 @@ void FocusHandler::tabNext()
     gcn::FocusHandler::tabNext();
 
     checkForWindow();
+
+    gcn::Event focusEvent(mFocusedWidget);
+    distributeFocusGainedEvent(focusEvent);
 }
 
 void FocusHandler::tabPrevious()
@@ -76,6 +79,9 @@ void FocusHandler::tabPrevious()
     gcn::FocusHandler::tabPrevious();
 
     checkForWindow();
+
+    gcn::Event focusEvent(mFocusedWidget);
+    distributeFocusGainedEvent(focusEvent);
 }
 
 void FocusHandler::checkForWindow()
