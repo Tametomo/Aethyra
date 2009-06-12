@@ -39,6 +39,8 @@ class LetterTextWrapHandler : public TextWrapHandler
         LetterTextWrapHandler(const std::string &hyphen = "-")
         { mHyphen = hyphen; }
 
+        virtual ~LetterTextWrapHandler() {}
+
         /**
          * Wraps the supplied text based on the given maximum dimension.
          */

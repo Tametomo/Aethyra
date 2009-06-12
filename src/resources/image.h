@@ -118,7 +118,7 @@ class Image : public Resource
         /**
          * Sets the alpha value of this image.
          */
-        virtual void setAlpha(const float &alpha);
+        virtual void setAlpha(float alpha);
 
         /**
          * Returns the alpha value of this image.

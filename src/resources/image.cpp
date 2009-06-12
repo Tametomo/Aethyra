@@ -304,7 +304,7 @@ Image *Image::getSubImage(const int &x, const int &y, const int &width,
     return new SubImage(this, mImage, x, y, width, height);
 }
 
-void Image::setAlpha(const float &alpha)
+void Image::setAlpha(float alpha)
 {
     if (mAlpha == alpha)
         return;
