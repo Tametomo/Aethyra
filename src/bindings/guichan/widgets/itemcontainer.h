@@ -117,9 +117,14 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         void showPopupMenu(MenuType type, bool useMouseCoordinates = true);
 
         /**
+         * Shows an ItemPopup over the selected item.
+         */
+        void showItemPopup(bool show);
+
+        /**
          * Sets whether the item popup should be shown or not.
          */
-        void enableItemPopup(bool enable);
+        static void enableItemPopup(bool enable);
 
         /**
          * Display only items of this type.
@@ -212,20 +217,22 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          */
         bool passesFilter(const Item* item) const;
 
-        ItemContainerConfigListener *mConfigListener;
-
         Inventory *mInventory;
-        Image *mSelImg;
 
-        bool mShowItemInfo;
+        static ItemContainerConfigListener *mConfigListener;
+
+        static Image *mSelImg;
+
+        static bool mShowItemInfo;
+        static int mInstances;
 
         int mSelectedItemIndex;
         int mLastSelectedItemId;  // last selected item ID. If we lose the item, find again by ID.
         int mMaxItems;
         int mOffset;
 
-        ItemPopup *mItemPopup;
-        PopupMenu *mPopupMenu;
+        static ItemPopup *mItemPopup;
+        static PopupMenu *mPopupMenu;
 
         std::list<gcn::SelectionListener*> mListeners;
 

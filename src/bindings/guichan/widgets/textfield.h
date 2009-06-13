@@ -27,6 +27,7 @@
 
 class ImageRect;
 class TextField;
+class TextFieldConfigListener;
 
 class TextFieldListener
 {
@@ -42,6 +43,8 @@ class TextFieldListener
 class TextField : public gcn::TextField
 {
     public:
+        friend class TextFieldConfigListener;
+
         /**
          * Constructor, initializes the text field with the given string.
          */
@@ -99,9 +102,12 @@ class TextField : public gcn::TextField
          */
         void addListener(TextFieldListener *listener) { mListener = listener; }
 
+    protected:
+        static float mAlpha;
+        static TextFieldConfigListener *mConfigListener;
+
     private:
         static int instances;
-        static float mAlpha;
         static ImageRect skin;
         bool mNumeric;
         int mMinimum;

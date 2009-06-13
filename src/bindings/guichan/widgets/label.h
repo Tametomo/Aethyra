@@ -37,13 +37,13 @@ class Label : public gcn::Label
         /**
          * Constructor.
          */
-        Label();
+        Label() : gcn::Label() {}
 
         /**
          * Constructor. This version of the constructor sets the label with an
          * inintialization string.
          */
-        Label(const std::string& caption);
+        Label(const std::string& caption) : gcn::Label(caption) {}
 
         /**
          * Draws the label.

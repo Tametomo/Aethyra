@@ -27,6 +27,7 @@
 
 class Image;
 class ImageRect;
+class ScrollAreaConfigListener;
 
 /**
  * A scroll area.
@@ -36,6 +37,8 @@ class ImageRect;
 class ScrollArea : public gcn::ScrollArea
 {
     public:
+        friend class ScrollAreaConfigListener;
+
         /**
          * Constructor that takes no content. Needed for use with the DropDown
          * class.
@@ -103,8 +106,10 @@ class ScrollArea : public gcn::ScrollArea
         void drawVMarker(gcn::Graphics *graphics);
         void drawHMarker(gcn::Graphics *graphics);
 
-        static int instances;
         static float mAlpha;
+        static ScrollAreaConfigListener *mConfigListener;
+
+        static int instances;
         static ImageRect background;
         static ImageRect vMarker;
         static Image *buttons[4][2];

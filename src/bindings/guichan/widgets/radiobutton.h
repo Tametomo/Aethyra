@@ -26,6 +26,7 @@
 #include <guichan/widgets/radiobutton.hpp>
 
 class Image;
+class RadioButtonConfigListener;
 
 /*
  * Guichan based RadioButton with custom look
@@ -33,11 +34,13 @@ class Image;
 class RadioButton : public gcn::RadioButton
 {
     public:
+        friend class RadioButtonConfigListener;
+
         /*
          * Constructor.
          */
         RadioButton(const std::string& caption,const std::string& group,
-                bool marked = false);
+                    bool marked = false);
 
         /**
          * Destructor.
@@ -55,9 +58,13 @@ class RadioButton : public gcn::RadioButton
          */
         void draw(gcn::Graphics* graphics);
 
+    protected:
+        static float mAlpha;
+        static RadioButtonConfigListener *mConfigListener;
+
     private:
         static int instances;
-        static float mAlpha;
+
         static Image *radioNormal;
         static Image *radioChecked;
         static Image *radioDisabled;

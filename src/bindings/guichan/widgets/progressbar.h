@@ -33,6 +33,7 @@
 #include "../guichanfwd.h"
 
 class ImageRect;
+class ProgressBarConfigListener;
 
 /**
  * A progress bar.
@@ -42,6 +43,8 @@ class ImageRect;
 class ProgressBar : public gcn::Widget
 {
     public:
+        friend class ProgressBarConfigListener;
+
         /**
          * Constructor, initializes the progress with the given value.
          */
@@ -132,6 +135,9 @@ class ProgressBar : public gcn::Widget
 
         static ImageRect mBorder;
         static int mInstances;
+
+    protected:
+        static ProgressBarConfigListener *mConfigListener;
         static float mAlpha;
 };
 

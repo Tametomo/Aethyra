@@ -43,6 +43,11 @@
 
 #include "../../../utils/stringutils.h"
 
+int ItemShortcutContainer::mInstances = 0;
+bool ItemShortcutContainer::mShowItemInfo = false;
+ItemPopup *ItemShortcutContainer::mItemPopup = NULL;
+ItemShortcutContainerConfigListener *ItemShortcutContainer::mConfigListener = NULL;
+
 class ItemShortcutContainerConfigListener : public ConfigListener
 {
     public:
@@ -52,10 +57,17 @@ class ItemShortcutContainerConfigListener : public ConfigListener
 
         void optionChanged(const std::string &name)
         {
-            bool enable = config.getValue("showItemPopups", true);
-
             if (name == "showItemPopups")
+            {
+                const bool enable = config.getValue("showItemPopups", true);
                 mItemContainer->enableItemPopup(enable);
+            }
+
+            if (name == "guialpha")
+            {
+                mItemContainer->mAlpha = config.getValue("guialpha", 0.8);
+                mItemContainer->mBackgroundImg->setAlpha(mItemContainer->mAlpha);
+            }
         }
     private:
         ItemShortcutContainer *mItemContainer;
@@ -63,26 +75,33 @@ class ItemShortcutContainerConfigListener : public ConfigListener
 
 ItemShortcutContainer::ItemShortcutContainer():
     ShortcutContainer(),
-    mShowItemInfo(false),
     mItemClicked(false),
     mItemMoved(NULL)
 {
     addMouseListener(this);
     addWidgetListener(this);
 
-    mItemPopup = new ItemPopup();
-    mItemPopup->setOpaque(false);
+    if (mInstances == 0)
+    {
+        mAlpha = config.getValue("guialpha", 0.8);
+        mShowItemInfo = config.getValue("showItemPopups", true);
 
-    mShowItemInfo = config.getValue("showItemPopups", true);
-    mConfigListener = new ItemShortcutContainerConfigListener(this);
-    config.addListener("showItemPopups", mConfigListener);
+        mItemPopup = new ItemPopup();
+        mItemPopup->setOpaque(false);
 
-    ResourceManager *resman = ResourceManager::getInstance();
+        ResourceManager *resman = ResourceManager::getInstance();
 
-    mBackgroundImg = resman->getImage("graphics/gui/item_shortcut_bgr.png");
+        mBackgroundImg = resman->getImage("graphics/gui/item_shortcut_bgr.png");
+        mBackgroundImg->setAlpha(mAlpha);
+
+        mConfigListener = new ItemShortcutContainerConfigListener(this);
+        config.addListener("showItemPopups", mConfigListener);
+        config.addListener("guialpha", mConfigListener);
+    }
+
+    mInstances++;
+
     mMaxItems = itemShortcut->getItemCount();
-
-    mBackgroundImg->setAlpha(config.getValue("guialpha", 0.8));
 
     mBoxHeight = mBackgroundImg->getHeight();
     mBoxWidth = mBackgroundImg->getWidth();
@@ -90,21 +109,21 @@ ItemShortcutContainer::ItemShortcutContainer():
 
 ItemShortcutContainer::~ItemShortcutContainer()
 {
-    config.removeListener("showItemPopups", mConfigListener);
-    delete mConfigListener;
+    mInstances--;
 
-    mBackgroundImg->decRef();
-    delete mItemPopup;
+    if (mInstances == 0)
+    {
+        config.removeListener("showItemPopups", mConfigListener);
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
+        mBackgroundImg->decRef();
+        delete mItemPopup;
+    }
 }
 
 void ItemShortcutContainer::draw(gcn::Graphics *graphics)
 {
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-        mBackgroundImg->setAlpha(mAlpha);
-    }
-
     Graphics *g = static_cast<Graphics*>(graphics);
 
     graphics->setFont(getFont());

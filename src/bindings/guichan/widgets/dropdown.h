@@ -25,6 +25,7 @@
 
 #include <guichan/widgets/dropdown.hpp>
 
+class DropDownConfigListener;
 class Image;
 class ImageRect;
 
@@ -38,6 +39,8 @@ class ImageRect;
 class DropDown : public gcn::DropDown
 {
     public:
+        friend class DropDownConfigListener;
+
         /**
          * Contructor.
          *
@@ -72,11 +75,13 @@ class DropDown : public gcn::DropDown
          */
         void drawButton(gcn::Graphics *graphics);
 
+        static float mAlpha;
+        static DropDownConfigListener *mConfigListener;
+
         // Add own Images.
         static int instances;
         static Image *buttons[2][2];
         static ImageRect skin;
-        static float mAlpha;
 };
 
 #endif // end DROPDOWN_H

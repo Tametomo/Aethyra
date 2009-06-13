@@ -30,6 +30,7 @@
 #include "../palette.h"
 #include "../textrenderer.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -39,6 +40,30 @@ ImageRect ProgressBar::mBorder;
 
 int ProgressBar::mInstances = 0;
 float ProgressBar::mAlpha = 1.0;
+ProgressBarConfigListener *ProgressBar::mConfigListener = NULL;
+
+class ProgressBarConfigListener : public ConfigListener
+{
+    public:
+        ProgressBarConfigListener(ProgressBar *pb):
+            mProgressBar(pb)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mProgressBar->mAlpha = config.getValue("guialpha", 0.8);
+
+                for (int a = 0; a < 9; a++)
+                {
+                    mProgressBar->mBorder.grid[a]->setAlpha(mProgressBar->mAlpha);
+                }
+            }
+        }
+    private:
+        ProgressBar *mProgressBar;
+};
 
 ProgressBar::ProgressBar(float progress, int width, int height,
                          gcn::Color color):
@@ -58,6 +83,8 @@ ProgressBar::ProgressBar(float progress, int width, int height,
 
     if (mInstances == 0)
     {
+        mAlpha = config.getValue("guialpha", 0.8);
+
         ResourceManager *resman = ResourceManager::getInstance();
         Image *dBorders = resman->getImage("graphics/gui/vscroll_grey.png");
         Image *dInsides = resman->getImage("graphics/gui/buttonhi.png");
@@ -79,6 +106,9 @@ ProgressBar::ProgressBar(float progress, int width, int height,
 
         dInsides->decRef();
         dBorders->decRef();
+
+        mConfigListener = new ProgressBarConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
 
     mLastUpdate = tick_time;
@@ -92,6 +122,9 @@ ProgressBar::~ProgressBar()
 
     if (mInstances == 0)
     {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
         for (int i = 0; i < 9; i++)
             delete mBorder.grid[i];
     }
@@ -159,15 +192,6 @@ void ProgressBar::logic()
 
 void ProgressBar::draw(gcn::Graphics *graphics)
 {
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-        for (int i = 0; i < 9; i++)
-        {
-            mBorder.grid[i]->setAlpha(mAlpha);
-        }
-    }
-
     static_cast<Graphics*>(graphics)->
         drawImageRect(0, 0, getWidth(), getHeight(), mBorder);
 

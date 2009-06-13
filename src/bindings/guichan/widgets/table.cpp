@@ -27,10 +27,9 @@
 #include "table.h"
 
 #include "../palette.h"
+#include "../skin.h"
 
 #include "../sdl/sdlinput.h"
-
-#include "../../../configuration.h"
 
 #include "../../../utils/dtor.h"
 
@@ -272,8 +271,8 @@ void Table::draw(gcn::Graphics* graphics)
     if (!mModel)
         return;
 
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-        mAlpha = config.getValue("guialpha", 0.8);
+    if (Skin::getAlpha() != mAlpha)
+        mAlpha = Skin::getAlpha();
 
     if (mOpaque)
     {

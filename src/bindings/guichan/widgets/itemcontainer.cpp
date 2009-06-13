@@ -53,6 +53,13 @@ const int ItemContainer::gridHeight = 42; // item icon height + 10
 
 static const int NO_ITEM = -1;
 
+ItemContainerConfigListener *ItemContainer::mConfigListener = NULL;
+Image *ItemContainer::mSelImg = NULL;
+bool ItemContainer::mShowItemInfo = false;
+int ItemContainer::mInstances = 0;
+ItemPopup *ItemContainer::mItemPopup = NULL;
+PopupMenu *ItemContainer::mPopupMenu = NULL;
+
 class ItemContainerConfigListener : public ConfigListener
 {
     public:
@@ -84,21 +91,26 @@ ItemContainer::ItemContainer(Inventory *inventory,
     if (listener && !actionEventId.empty())
         addActionListener(listener);
 
-    mItemPopup = new ItemPopup();
-    mItemPopup->setOpaque(false);
+    if (mInstances == 0)
+    {
+        mItemPopup = new ItemPopup();
+        mItemPopup->setOpaque(false);
 
-    mShowItemInfo = config.getValue("showItemPopups", true);
-    mConfigListener = new ItemContainerConfigListener(this);
-    config.addListener("showItemPopups", mConfigListener);
+        mShowItemInfo = config.getValue("showItemPopups", true);
+        mConfigListener = new ItemContainerConfigListener(this);
+        config.addListener("showItemPopups", mConfigListener);
 
-    mPopupMenu = new PopupMenu(TRADE);
+        mPopupMenu = new PopupMenu(TRADE);
 
-    ResourceManager *resman = ResourceManager::getInstance();
+        ResourceManager *resman = ResourceManager::getInstance();
 
-    mSelImg = resman->getImage("graphics/gui/selection.png");
+        mSelImg = resman->getImage("graphics/gui/selection.png");
 
-    if (!mSelImg)
-        logger->error("Unable to load selection.png");
+        if (!mSelImg)
+            logger->error("Unable to load selection.png");
+    }
+
+    mInstances++;
 
     mMaxItems = mInventory->getLastUsedSlot(); // Count from 0, usage from 2
 
@@ -112,14 +124,19 @@ ItemContainer::ItemContainer(Inventory *inventory,
 
 ItemContainer::~ItemContainer()
 {
-    config.removeListener("showItemPopups", mConfigListener);
-    delete mConfigListener;
+    mInstances--;
 
-    if (mSelImg)
-        mSelImg->decRef();
+    if (mInstances == 0)
+    {
+        config.removeListener("showItemPopups", mConfigListener);
+        delete mConfigListener;
 
-    delete mItemPopup;
-    delete mPopupMenu;
+        if (mSelImg)
+            mSelImg->decRef();
+
+        delete mItemPopup;
+        delete mPopupMenu;
+    }
 }
 
 void ItemContainer::logic()
@@ -287,9 +304,8 @@ void ItemContainer::setSelectedItemIndex(int index)
         scroll.height = gridHeight;
         showPart(scroll);
 
+        showItemPopup(mShowItemInfo);
         distributeValueChangedEvent();
-
-        enableItemPopup(mShowItemInfo);
     }
 }
 
@@ -320,17 +336,8 @@ void ItemContainer::showPopupMenu(MenuType type, bool useMouseCoordinates)
     mPopupMenu->showPopup(x, y);
 }
 
-void ItemContainer::enableItemPopup(bool enable)
+void ItemContainer::showItemPopup(bool show)
 {
-    if (!enable)
-    {
-        mShowItemInfo = false;
-        mItemPopup->setVisible(false);
-        return;
-    }
-
-    mShowItemInfo = true;
-
     Item *item = getSelectedItem();
 
     if (!item)
@@ -346,6 +353,15 @@ void ItemContainer::enableItemPopup(bool enable)
 
     mItemPopup->updateColors();
     mItemPopup->view(x, y);
+    mItemPopup->setVisible(mShowItemInfo ? show : false);
+}
+
+void ItemContainer::enableItemPopup(bool enable)
+{
+    if (!enable)
+        mItemPopup->setVisible(false);
+
+    mShowItemInfo = enable;
 }
 
 void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
@@ -491,7 +507,7 @@ void ItemContainer::focusGained(const gcn::Event &event)
     Item *item = getSelectedItem();
 
     if (mShowItemInfo && item && passesFilter(item))
-        enableItemPopup(true);
+        showItemPopup(true);
 }
 
 void ItemContainer::focusLost(const gcn::Event &event)

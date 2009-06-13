@@ -92,13 +92,17 @@ class Skin
 
         int instances;
 
+        static float getAlpha() { return mAlpha; }
+
     private:
-        float mMaxAlphaPercent;    /**< What alpha percent to modify the alpha
-                                        updates by. */
-        std::string mFilePath;     /**< File name path for the skin */
-        std::string mName;         /**< Name of the skin to use */
-        ImageRect border;          /**< The window border and background */
-        Image *closeImage;         /**< Close Button Image */
+        static float mAlpha;
+
+        static float mMaxAlphaPercent;    /**< Maximum alpha value to allow
+                                               skins. */
+        std::string mFilePath;            /**< File name path for the skin */
+        std::string mName;                /**< Name of the skin to use */
+        ImageRect border;                 /**< The window border and background */
+        Image *closeImage;                /**< Close Button Image */
 };
 
 // Map containing all window skins

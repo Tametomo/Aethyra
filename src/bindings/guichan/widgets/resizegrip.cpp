@@ -24,29 +24,57 @@
 
 #include "../graphics.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
 
-Image *ResizeGrip::gripImage = 0;
+Image *ResizeGrip::mGripImage = 0;
 int ResizeGrip::mInstances = 0;
-float ResizeGrip::mAlpha = 1.0;
 
-ResizeGrip::ResizeGrip(const std::string &image)
+float ResizeGrip::mAlpha = 1.0;
+ResizeGripConfigListener *ResizeGrip::mConfigListener = NULL;
+
+class ResizeGripConfigListener : public ConfigListener
+{
+    public:
+        ResizeGripConfigListener(ResizeGrip *rg):
+            mResizeGrip(rg)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mResizeGrip->mAlpha = config.getValue("guialpha", 0.8);
+
+                mResizeGrip->mGripImage->setAlpha(mResizeGrip->mAlpha);
+            }
+        }
+    private:
+        ResizeGrip *mResizeGrip;
+};
+
+ResizeGrip::ResizeGrip()
 {
     if (mInstances == 0)
     {
+        mAlpha = config.getValue("guialpha", 0.8);
+
         // Load the grip image
         ResourceManager *resman = ResourceManager::getInstance();
-        gripImage = resman->getImage(image);
-        gripImage->setAlpha(mAlpha);
+        mGripImage = resman->getImage("graphics/gui/resize.png");
+        mGripImage->setAlpha(mAlpha);
+
+        mConfigListener = new ResizeGripConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
 
     mInstances++;
 
-    setWidth(gripImage->getWidth() + 2);
-    setHeight(gripImage->getHeight() + 2);
+    setWidth(mGripImage->getWidth() + 2);
+    setHeight(mGripImage->getHeight() + 2);
 }
 
 ResizeGrip::~ResizeGrip()
@@ -54,16 +82,15 @@ ResizeGrip::~ResizeGrip()
     mInstances--;
 
     if (mInstances == 0)
-        gripImage->decRef();
+    {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
+        mGripImage->decRef();
+    }
 }
 
 void ResizeGrip::draw(gcn::Graphics *graphics)
 {
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-        gripImage->setAlpha(mAlpha);
-    }
-
-    static_cast<Graphics*>(graphics)->drawImage(gripImage, 0, 0);
+    static_cast<Graphics*>(graphics)->drawImage(mGripImage, 0, 0);
 }

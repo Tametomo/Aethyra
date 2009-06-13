@@ -25,10 +25,9 @@
 
 #include "../gui.h"
 #include "../palette.h"
+#include "../skin.h"
 #include "../textrenderer.h"
 #include "../truetypefont.h"
-
-#include "../../../configuration.h"
 
 float TextPreview::mAlpha = 1.0;
 
@@ -45,8 +44,8 @@ TextPreview::TextPreview(const std::string* text)
 
 void TextPreview::draw(gcn::Graphics* graphics)
 {
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-        mAlpha = config.getValue("guialpha", 0.8);
+    if (Skin::getAlpha() != mAlpha)
+        mAlpha = Skin::getAlpha();
 
     const int alpha = (int) (mAlpha * 255.0f);
     const int textAlpha = mTextAlpha ? alpha : 255;

@@ -24,6 +24,7 @@
 
 #include "../graphics.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -31,10 +32,35 @@
 
 int RadioButton::instances = 0;
 float RadioButton::mAlpha = 1.0;
+RadioButtonConfigListener *RadioButton::mConfigListener = NULL;
+
 Image *RadioButton::radioNormal;
 Image *RadioButton::radioChecked;
 Image *RadioButton::radioDisabled;
 Image *RadioButton::radioDisabledChecked;
+
+class RadioButtonConfigListener : public ConfigListener
+{
+    public:
+        RadioButtonConfigListener(RadioButton *button):
+            mRadioButton(button)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mRadioButton->mAlpha = config.getValue("guialpha", 0.8);
+
+                mRadioButton->radioNormal->setAlpha(mRadioButton->mAlpha);
+                mRadioButton->radioChecked->setAlpha(mRadioButton->mAlpha);
+                mRadioButton->radioDisabled->setAlpha(mRadioButton->mAlpha);
+                mRadioButton->radioDisabledChecked->setAlpha(mRadioButton->mAlpha);
+            }
+        }
+    private:
+        RadioButton *mRadioButton;
+};
 
 RadioButton::RadioButton(const std::string& caption, const std::string& group,
         bool marked):
@@ -43,14 +69,20 @@ RadioButton::RadioButton(const std::string& caption, const std::string& group,
     if (instances == 0)
     {
         ResourceManager *resman = ResourceManager::getInstance();
+        mAlpha = config.getValue("guialpha", 0.8);
+
         radioNormal = resman->getImage("graphics/gui/radioout.png");
         radioChecked = resman->getImage("graphics/gui/radioin.png");
         radioDisabled = resman->getImage("graphics/gui/radioout.png");
         radioDisabledChecked = resman->getImage("graphics/gui/radioin.png");
+
         radioNormal->setAlpha(mAlpha);
         radioChecked->setAlpha(mAlpha);
         radioDisabled->setAlpha(mAlpha);
         radioDisabledChecked->setAlpha(mAlpha);
+
+        mConfigListener = new RadioButtonConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
 
     instances++;
@@ -62,6 +94,9 @@ RadioButton::~RadioButton()
 
     if (instances == 0)
     {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
         radioNormal->decRef();
         radioChecked->decRef();
         radioDisabled->decRef();
@@ -71,15 +106,6 @@ RadioButton::~RadioButton()
 
 void RadioButton::drawBox(gcn::Graphics* graphics)
 {
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-        radioNormal->setAlpha(mAlpha);
-        radioChecked->setAlpha(mAlpha);
-        radioDisabled->setAlpha(mAlpha);
-        radioDisabledChecked->setAlpha(mAlpha);
-    }
-
     Image *box = NULL;
 
     if (isSelected())

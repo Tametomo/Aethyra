@@ -37,6 +37,8 @@
 
 SkinLoader* skinLoader = NULL;
 ConfigListener *SkinLoader::skinConfigListener = NULL;
+float Skin::mMaxAlphaPercent = 1.0;
+float Skin::mAlpha = 1.0;
 
 class SkinConfigListener : public ConfigListener
 {
@@ -49,7 +51,6 @@ class SkinConfigListener : public ConfigListener
 
 Skin::Skin(ImageRect skin, Image* close, std::string filePath, std::string name):
     instances(0),
-    mMaxAlphaPercent(1.0f),
     mFilePath(filePath),
     mName(name),
     border(skin),
@@ -76,7 +77,8 @@ void Skin::updateAlpha()
 
 void Skin::updateAlpha(float maxPercent)
 {
-    const float alpha = config.getValue("guialpha", 0.8) * maxPercent;
+    mAlpha = config.getValue("guialpha", 0.8);
+    const float alpha = mAlpha * maxPercent;
 
     for_each(border.grid, border.grid + 9,
              std::bind2nd(std::mem_fun(&Image::setAlpha), alpha));

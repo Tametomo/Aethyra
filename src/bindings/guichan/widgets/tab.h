@@ -26,6 +26,7 @@
 #include <guichan/widgets/tab.hpp>
 
 class ImageRect;
+class TabConfigListener;
 
 /**
  * A tab, the same as the guichan tab in 0.8, but extended to allow transparancy
@@ -33,6 +34,8 @@ class ImageRect;
 class Tab : public gcn::Tab
 {
     public:
+        friend class TabConfigListener;
+
         /**
          * Constructor.
          */
@@ -58,13 +61,16 @@ class Tab : public gcn::Tab
          */
         void setHighlighted(bool high);
 
+    protected:
+        static float mAlpha;
+        static TabConfigListener *mConfigListener;
+
     private:
         /** Load images if no other instances exist yet */
         void init();
 
         static ImageRect tabImg[4];    /**< Tab state graphics */
         static int mInstances;         /**< Number of tab instances */
-        static float mAlpha;
 
         const gcn::Color *mTabColor;
         bool mHighlighted;

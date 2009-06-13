@@ -26,17 +26,56 @@
 
 #include "../sdl/sdlinput.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
 
+int Slider::mInstances = 0;
 Image *Slider::hStart, *Slider::hMid, *Slider::hEnd, *Slider::hGrip;
 Image *Slider::vStart, *Slider::vMid, *Slider::vEnd, *Slider::vGrip;
 Image *Slider::hStartHi, *Slider::hMidHi, *Slider::hEndHi, *Slider::hGripHi;
 Image *Slider::vStartHi, *Slider::vMidHi, *Slider::vEndHi, *Slider::vGripHi;
+
 float Slider::mAlpha = 1.0;
-int Slider::mInstances = 0;
+SliderConfigListener *Slider::mConfigListener = NULL;
+
+class SliderConfigListener : public ConfigListener
+{
+    public:
+        SliderConfigListener(Slider *slider):
+            mSlider(slider)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mSlider->mAlpha = config.getValue("guialpha", 0.8);
+
+                mSlider->hStart->setAlpha(mSlider->mAlpha);
+                mSlider->hStartHi->setAlpha(mSlider->mAlpha);
+                mSlider->hMid->setAlpha(mSlider->mAlpha);
+                mSlider->hMidHi->setAlpha(mSlider->mAlpha);
+                mSlider->hEnd->setAlpha(mSlider->mAlpha);
+                mSlider->hEndHi->setAlpha(mSlider->mAlpha);
+                mSlider->hGrip->setAlpha(mSlider->mAlpha);
+                mSlider->hGripHi->setAlpha(mSlider->mAlpha);
+
+                mSlider->vStart->setAlpha(mSlider->mAlpha);
+                mSlider->vStartHi->setAlpha(mSlider->mAlpha);
+                mSlider->vMid->setAlpha(mSlider->mAlpha);
+                mSlider->vMidHi->setAlpha(mSlider->mAlpha);
+                mSlider->vEnd->setAlpha(mSlider->mAlpha);
+                mSlider->vEndHi->setAlpha(mSlider->mAlpha);
+                mSlider->vGrip->setAlpha(mSlider->mAlpha);
+                mSlider->vGripHi->setAlpha(mSlider->mAlpha);
+            }
+        }
+    private:
+        Slider *mSlider;
+};
 
 Slider::Slider(double scaleEnd):
     gcn::Slider(scaleEnd)
@@ -56,6 +95,9 @@ Slider::~Slider()
 
     if (mInstances == 0)
     {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
         delete hStart;
         delete hStartHi;
         delete hMid;
@@ -83,6 +125,8 @@ void Slider::init()
     // Load resources
     if (mInstances == 0)
     {
+        mAlpha = config.getValue("guialpha", 0.8);
+
         ResourceManager *resman = ResourceManager::getInstance();
         Image *slider = resman->getImage("graphics/gui/slider.png");
         Image *highlight = resman->getImage("graphics/gui/sliderhi.png");
@@ -137,6 +181,9 @@ void Slider::init()
         vEndHi->setAlpha(mAlpha);
         vGrip->setAlpha(mAlpha);
         vGripHi->setAlpha(mAlpha);
+
+        mConfigListener = new SliderConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
 
     mInstances++;
@@ -150,28 +197,6 @@ void Slider::draw(gcn::Graphics *graphics)
     int h = getHeight();
     int x = 0;
     int y = (h - hStart->getHeight()) / 2;
-
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-        hStart->setAlpha(mAlpha);
-        hStartHi->setAlpha(mAlpha);
-        hMid->setAlpha(mAlpha);
-        hMidHi->setAlpha(mAlpha);
-        hEnd->setAlpha(mAlpha);
-        hEndHi->setAlpha(mAlpha);
-        hGrip->setAlpha(mAlpha);
-        hGripHi->setAlpha(mAlpha);
-
-        vStart->setAlpha(mAlpha);
-        vStartHi->setAlpha(mAlpha);
-        vMid->setAlpha(mAlpha);
-        vMidHi->setAlpha(mAlpha);
-        vEnd->setAlpha(mAlpha);
-        vEndHi->setAlpha(mAlpha);
-        vGrip->setAlpha(mAlpha);
-        vGripHi->setAlpha(mAlpha);
-    }
 
     if (isFocused())
         static_cast<Graphics*>(graphics)->drawImage(hStartHi, x, y);

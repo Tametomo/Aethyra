@@ -28,6 +28,7 @@
 #include "shortcutcontainer.h"
 
 class AnimatedSprite;
+class EmoteShortcutContainerConfigListener;
 class Image;
 
 /**
@@ -38,6 +39,8 @@ class Image;
 class EmoteShortcutContainer : public ShortcutContainer
 {
     public:
+        friend class EmoteShortcutContainerConfigListener;
+
         /**
          * Constructor. Initializes the graphic.
          */
@@ -69,7 +72,10 @@ class EmoteShortcutContainer : public ShortcutContainer
         void mouseReleased(gcn::MouseEvent &event);
 
     private:
-        std::vector<const AnimatedSprite*> mEmoteImg;
+        static EmoteShortcutContainerConfigListener *mConfigListener;
+        static int mInstances;
+
+        static std::vector<const AnimatedSprite*> mEmoteImg;
 
         bool mEmoteClicked;
         int mEmoteMoved;

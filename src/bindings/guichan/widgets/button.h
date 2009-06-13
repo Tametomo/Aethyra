@@ -25,6 +25,7 @@
 
 #include <guichan/widgets/button.hpp>
 
+class ButtonConfigListener;
 class ImageRect;
 
 /**
@@ -35,6 +36,8 @@ class ImageRect;
 class Button : public gcn::Button
 {
     public:
+        friend class ButtonConfigListener;
+
         /**
          * Default constructor.
          */
@@ -45,7 +48,7 @@ class Button : public gcn::Button
          * adds the given action listener.
          */
         Button(const std::string &caption, const std::string &actionEventId,
-                gcn::ActionListener *listener);
+               gcn::ActionListener *listener);
 
         /**
          * Destructor.
@@ -57,12 +60,16 @@ class Button : public gcn::Button
          */
         void draw(gcn::Graphics *graphics);
 
+    protected:
+        static float mAlpha;
+
     private:
         void init();
 
+        static ButtonConfigListener *mConfigListener;
+
         static ImageRect button[4];    /**< Button state graphics */
         static int mInstances;         /**< Number of button instances */
-        static float mAlpha;
 };
 
 #endif

@@ -151,7 +151,10 @@ protected:
 
     virtual int getRowHeight(void);
     virtual int getColumnWidth(int i);
-    
+
+protected:
+    static float mAlpha;
+
 private:
 
     int getRowForY(int y); // -1 on error
@@ -160,8 +163,6 @@ private:
     bool mLinewiseMode;
     bool mWrappingEnabled;
     bool mOpaque;
-
-    static float mAlpha;
 
     /**
      * Holds the background color of the table.

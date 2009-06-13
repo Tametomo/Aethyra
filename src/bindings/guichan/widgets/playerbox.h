@@ -27,6 +27,7 @@
 
 class ImageRect;
 class Player;
+class PlayerBoxConfigListener;
 
 /**
  * A box showing a player character.
@@ -36,6 +37,8 @@ class Player;
 class PlayerBox : public gcn::ScrollArea
 {
     public:
+        friend class PlayerBoxConfigListener;
+
         /**
          * Constructor. Takes the initial player character that this box should
          * display, which defaults to <code>NULL</code>.
@@ -64,10 +67,13 @@ class PlayerBox : public gcn::ScrollArea
          */
         void drawFrame(gcn::Graphics *graphics);
 
+    protected:
+        static PlayerBoxConfigListener *mConfigListener;
+        static float mAlpha;
+
     private:
         const Player *mPlayer;       /**< The character used for display */
 
-        static float mAlpha;
         static int instances;
         static ImageRect background;
 };

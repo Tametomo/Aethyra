@@ -28,6 +28,7 @@
 #include "../graphics.h"
 #include "../palette.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -37,6 +38,7 @@
 
 int Button::mInstances = 0;
 float Button::mAlpha = 1.0;
+ButtonConfigListener *Button::mConfigListener = NULL;
 
 enum{
     BUTTON_STANDARD,    // 0
@@ -62,6 +64,32 @@ static ButtonData const data[BUTTON_COUNT] = {
 
 ImageRect Button::button[BUTTON_COUNT];
 
+class ButtonConfigListener : public ConfigListener
+{
+    public:
+        ButtonConfigListener(Button *button):
+            mButton(button)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mButton->mAlpha = config.getValue("guialpha", 0.8);
+
+                for (int a = 0; a < 9; a++)
+                {
+                    mButton->button[BUTTON_DISABLED].grid[a]->setAlpha(mButton->mAlpha);
+                    mButton->button[BUTTON_PRESSED].grid[a]->setAlpha(mButton->mAlpha);
+                    mButton->button[BUTTON_HIGHLIGHTED].grid[a]->setAlpha(mButton->mAlpha);
+                    mButton->button[BUTTON_STANDARD].grid[a]->setAlpha(mButton->mAlpha);
+                }
+            }
+        }
+    private:
+        Button *mButton;
+};
+
 Button::Button()
 {
     init();
@@ -72,6 +100,7 @@ Button::Button(const std::string& caption, const std::string &actionEventId,
     gcn::Button(caption)
 {
     init();
+
     setActionEventId(actionEventId);
 
     if (listener)
@@ -84,6 +113,8 @@ void Button::init()
 
     if (mInstances == 0)
     {
+        mAlpha = config.getValue("guialpha", 0.8);
+
         // Load the skin
         ResourceManager *resman = ResourceManager::getInstance();
         Image *btn[BUTTON_COUNT];
@@ -108,6 +139,9 @@ void Button::init()
             }
             btn[mode]->decRef();
         }
+
+        mConfigListener = new ButtonConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
     mInstances++;
 }
@@ -118,6 +152,9 @@ Button::~Button()
 
     if (mInstances == 0)
     {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
         for (int mode = 0; mode < BUTTON_COUNT; mode++)
         {
             for_each(button[mode].grid, button[mode].grid + 9, dtor<Image*>());
@@ -137,18 +174,6 @@ void Button::draw(gcn::Graphics *graphics)
         mode = BUTTON_HIGHLIGHTED;
     else
         mode = BUTTON_STANDARD;
-
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-        for (int a = 0; a < 9; a++)
-        {
-            button[BUTTON_DISABLED].grid[a]->setAlpha(mAlpha);
-            button[BUTTON_PRESSED].grid[a]->setAlpha(mAlpha);
-            button[BUTTON_HIGHLIGHTED].grid[a]->setAlpha(mAlpha);
-            button[BUTTON_STANDARD].grid[a]->setAlpha(mAlpha);
-        }
-    }
 
     static_cast<Graphics*>(graphics)->
         drawImageRect(0, 0, getWidth(), getHeight(), button[mode]);

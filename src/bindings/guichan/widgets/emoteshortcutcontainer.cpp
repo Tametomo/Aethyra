@@ -26,6 +26,7 @@
 #include "../graphics.h"
 #include "../palette.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 #include "../../../emoteshortcut.h"
 #include "../../../inventory.h"
@@ -41,6 +42,29 @@
 
 static const int MAX_ITEMS = 12;
 
+std::vector<const AnimatedSprite*> EmoteShortcutContainer::mEmoteImg;
+int EmoteShortcutContainer::mInstances = 0;
+EmoteShortcutContainerConfigListener *EmoteShortcutContainer::mConfigListener = NULL;
+
+class EmoteShortcutContainerConfigListener : public ConfigListener
+{
+    public:
+        EmoteShortcutContainerConfigListener(EmoteShortcutContainer *container):
+            mEmoteContainer(container)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mEmoteContainer->mAlpha = config.getValue("guialpha", 0.8);
+                mEmoteContainer->mBackgroundImg->setAlpha(mEmoteContainer->mAlpha);
+            }
+        }
+    private:
+        EmoteShortcutContainer *mEmoteContainer;
+};
+
 EmoteShortcutContainer::EmoteShortcutContainer():
     ShortcutContainer(),
     mEmoteClicked(false),
@@ -49,17 +73,24 @@ EmoteShortcutContainer::EmoteShortcutContainer():
     addMouseListener(this);
     addWidgetListener(this);
 
-    ResourceManager *resman = ResourceManager::getInstance();
-
-    mBackgroundImg = resman->getImage("graphics/gui/item_shortcut_bgr.png");
-
-    mBackgroundImg->setAlpha(config.getValue("guialpha", 0.8));
-
-    // Setup emote sprites
-    for (int i = 0; i <= EmoteDB::getLast(); i++)
+    if (mInstances == 0)
     {
-        mEmoteImg.push_back(EmoteDB::getAnimation(i));
+        ResourceManager *resman = ResourceManager::getInstance();
+
+        mBackgroundImg = resman->getImage("graphics/gui/item_shortcut_bgr.png");
+        mBackgroundImg->setAlpha(config.getValue("guialpha", 0.8));
+
+        // Setup emote sprites
+        for (int i = 0; i <= EmoteDB::getLast(); i++)
+        {
+            mEmoteImg.push_back(EmoteDB::getAnimation(i));
+        }
+
+        mConfigListener = new EmoteShortcutContainerConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
+
+    mInstances++;
 
     mMaxItems = EmoteDB::getLast() < MAX_ITEMS ? EmoteDB::getLast() : MAX_ITEMS;
 
@@ -69,7 +100,15 @@ EmoteShortcutContainer::EmoteShortcutContainer():
 
 EmoteShortcutContainer::~EmoteShortcutContainer()
 {
-    mBackgroundImg->decRef();
+    mInstances--;
+
+    if (mInstances == 0)
+    {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
+        mBackgroundImg->decRef();
+    }
 }
 
 void EmoteShortcutContainer::draw(gcn::Graphics *graphics)

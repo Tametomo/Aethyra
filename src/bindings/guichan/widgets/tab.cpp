@@ -28,6 +28,7 @@
 #include "../graphics.h"
 #include "../palette.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -36,7 +37,9 @@
 #include "../../../utils/dtor.h"
 
 int Tab::mInstances = 0;
+
 float Tab::mAlpha = 1.0;
+TabConfigListener *Tab::mConfigListener = NULL;
 
 enum {
     TAB_STANDARD,    // 0
@@ -62,6 +65,30 @@ static TabData const data[TAB_COUNT] = {
 
 ImageRect Tab::tabImg[TAB_COUNT];
 
+class TabConfigListener : public ConfigListener
+{
+    public:
+        TabConfigListener(Tab *rg):
+            mTab(rg)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mTab->mAlpha = config.getValue("guialpha", 0.8);
+
+                for (int a = 0; a < 9; a++)
+                {
+                    mTab->tabImg[TAB_SELECTED].grid[a]->setAlpha(mTab->mAlpha);
+                    mTab->tabImg[TAB_STANDARD].grid[a]->setAlpha(mTab->mAlpha);
+                }
+            }
+        }
+    private:
+        Tab *mTab;
+};
+
 Tab::Tab() : gcn::Tab(),
     mTabColor(&guiPalette->getColor(Palette::TEXT))
 {
@@ -74,6 +101,9 @@ Tab::~Tab()
 
     if (mInstances == 0)
     {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
         for (int mode = 0; mode < TAB_COUNT; mode++)
         {
             for_each(tabImg[mode].grid, tabImg[mode].grid + 9, dtor<Image*>());
@@ -88,6 +118,8 @@ void Tab::init()
 
     if (mInstances == 0)
     {
+        mAlpha = config.getValue("guialpha", 0.8);
+
         // Load the skin
         ResourceManager *resman = ResourceManager::getInstance();
         Image *tab[TAB_COUNT];
@@ -112,6 +144,9 @@ void Tab::init()
             }
             tab[mode]->decRef();
         }
+
+        mConfigListener = new TabConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
     mInstances++;
 }
@@ -138,16 +173,6 @@ void Tab::draw(gcn::Graphics *graphics)
         else
         {
             mLabel->setForegroundColor(*mTabColor);
-        }
-    }
-
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-        for (int a = 0; a < 9; a++)
-        {
-            tabImg[TAB_SELECTED].grid[a]->setAlpha(mAlpha);
-            tabImg[TAB_STANDARD].grid[a]->setAlpha(mAlpha);
         }
     }
 

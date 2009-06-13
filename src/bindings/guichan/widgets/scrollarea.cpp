@@ -25,6 +25,7 @@
 #include "../graphics.h"
 #include "../gui.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -34,9 +35,35 @@
 
 int ScrollArea::instances = 0;
 float ScrollArea::mAlpha = 1.0;
+ScrollAreaConfigListener *ScrollArea::mConfigListener = NULL;
+
 ImageRect ScrollArea::background;
 ImageRect ScrollArea::vMarker;
 Image *ScrollArea::buttons[4][2];
+
+class ScrollAreaConfigListener : public ConfigListener
+{
+    public:
+        ScrollAreaConfigListener(ScrollArea *sa):
+            mScrollArea(sa)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mScrollArea->mAlpha = config.getValue("guialpha", 0.8);
+
+                for (int a = 0; a < 9; a++)
+                {
+                    mScrollArea->background.grid[a]->setAlpha(mScrollArea->mAlpha);
+                    mScrollArea->vMarker.grid[a]->setAlpha(mScrollArea->mAlpha);
+                }
+            }
+        }
+    private:
+        ScrollArea *mScrollArea;
+};
 
 ScrollArea::ScrollArea(bool gc, bool opaque):
     gcn::ScrollArea(),
@@ -64,6 +91,9 @@ ScrollArea::~ScrollArea()
 
     if (instances == 0)
     {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
         for_each(background.grid, background.grid + 9, dtor<Image*>());
         for_each(vMarker.grid, vMarker.grid + 9, dtor<Image*>());
 
@@ -85,6 +115,8 @@ void ScrollArea::init()
 
     if (instances == 0)
     {
+        mAlpha = config.getValue("guialpha", 0.8);
+
         // Load the background skin
         ResourceManager *resman = ResourceManager::getInstance();
         Image *textbox = resman->getImage("graphics/gui/deepbox.png");
@@ -144,6 +176,9 @@ void ScrollArea::init()
             resman->getImage("graphics/gui/hscroll_left_pressed.png");
         buttons[RIGHT][1] =
             resman->getImage("graphics/gui/hscroll_right_pressed.png");
+
+        mConfigListener = new ScrollAreaConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
 
     mLastUpdate = tick_time;
@@ -232,16 +267,6 @@ void ScrollArea::draw(gcn::Graphics *graphics)
                     getHeight() - mScrollbarWidth,
                     mScrollbarWidth,
                     mScrollbarWidth));
-    }
-
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-        for (int a = 0; a < 9; a++)
-        {
-            background.grid[a]->setAlpha(mAlpha);
-            vMarker.grid[a]->setAlpha(mAlpha);
-        }
     }
 
     drawChildren(graphics);

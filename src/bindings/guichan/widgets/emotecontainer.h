@@ -132,13 +132,15 @@ class EmoteContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          */
         void distributeValueChangedEvent(void);
 
-        std::vector<const AnimatedSprite*> mEmoteImg;
-        Image *mSelImg;
+        static std::vector<const AnimatedSprite*> mEmoteImg;
+        static Image *mSelImg;
+
         int mSelectedEmoteIndex;
 
-        int mMaxEmote;
+        static int mMaxEmote;
+        static int mInstances;
 
-        PopupMenu *mPopupMenu;
+        static PopupMenu *mPopupMenu;
 
         std::list<gcn::SelectionListener*> mListeners;
 

@@ -40,6 +40,8 @@ class ItemShortcutContainerConfigListener;
 class ItemShortcutContainer : public ShortcutContainer
 {
     public:
+        friend class ItemShortcutContainerConfigListener;
+
         /**
          * Constructor. Initializes the graphic.
          */
@@ -73,19 +75,20 @@ class ItemShortcutContainer : public ShortcutContainer
         /**
          * Sets whether or not item popups should be shown.
          */
-        void enableItemPopup(bool enable);
+        static void enableItemPopup(bool enable);
 
     private:
-        ItemShortcutContainerConfigListener *mConfigListener;
+        static ItemShortcutContainerConfigListener *mConfigListener;
+        static int mInstances;
+
+        static bool mShowItemInfo;
+        static ItemPopup *mItemPopup;
 
         void mouseExited(gcn::MouseEvent &event);
         void mouseMoved(gcn::MouseEvent &event);
 
-        bool mShowItemInfo;
         bool mItemClicked;
         Item *mItemMoved;
-
-        ItemPopup *mItemPopup;
 };
 
 #endif

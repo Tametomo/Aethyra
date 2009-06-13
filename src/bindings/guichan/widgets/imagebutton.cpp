@@ -28,8 +28,6 @@
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
 
-float ImageButton::mAlpha = 1.0;
-
 ImageButton::ImageButton(const std::string &image,
                          const std::string &actionEventId,
                          gcn::ActionListener *listener, unsigned int padding):
@@ -112,11 +110,8 @@ void ImageButton::draw(gcn::Graphics *graphics)
     if (!mImage)
         return;
 
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
+    if (mImage->getAlpha() != mAlpha)
         mImage->setAlpha(mAlpha);
-    }
 
     const int x = (getWidth() - mImage->getWidth()) / 2;
     const int y = (getHeight() - mImage->getHeight()) / 2;

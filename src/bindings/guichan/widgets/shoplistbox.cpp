@@ -30,11 +30,7 @@
 
 #include "../models/shoplistmodel.h"
 
-#include "../../../configuration.h"
-
 const int ITEM_ICON_SIZE = 32;
-
-float ShopListBox::mAlpha = 1.0;
 
 ShopListBox::ShopListBox(gcn::ListModel *listModel):
     ListBox(listModel),
@@ -63,10 +59,7 @@ void ShopListBox::draw(gcn::Graphics *gcnGraphics)
     if (!mListModel)
         return;
 
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-        mAlpha = config.getValue("guialpha", 0.8);
-
-    int alpha = (int)(mAlpha * 255.0f);
+    int alpha = (int) (mAlpha * 255.0f);
     const gcn::Color* highlightColor =
             &guiPalette->getColor(Palette::HIGHLIGHT, alpha);
 

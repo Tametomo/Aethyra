@@ -26,21 +26,27 @@
 #include <guichan/widget.hpp>
 
 class Image;
+class ResizeGripConfigListener;
 
 /**
  * Resize grip. The resize grip is part of a resizable Window. It relies on the
  * fact that uncaught mouse events are automatically routed to the parent
  * window.
  *
+ * TODO: Make this widget load its skin through the Skin class, since which
+ *       resize grip to use should be a skin property.
+ *
  * \ingroup GUI
  */
 class ResizeGrip : public gcn::Widget
 {
     public:
+        friend class ResizeGripConfigListener;
+
         /**
          * Constructor.
          */
-        ResizeGrip(const std::string &image = "graphics/gui/resize.png");
+        ResizeGrip();
 
         /**
          * Destructor.
@@ -53,9 +59,12 @@ class ResizeGrip : public gcn::Widget
         void draw(gcn::Graphics *graphics);
 
     private:
-        static Image *gripImage;   /**< Resize grip image */
+        static Image *mGripImage;   /**< Resize grip image */
         static int mInstances;     /**< Number of resize grip instances */
+
+    protected:
         static float mAlpha;
+        static ResizeGripConfigListener *mConfigListener;
 };
 
 #endif

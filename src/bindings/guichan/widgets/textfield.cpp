@@ -29,6 +29,7 @@
 
 #include "../sdl/sdlinput.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -39,8 +40,31 @@
 #undef DELETE //Win32 compatibility hack
 
 int TextField::instances = 0;
-float TextField::mAlpha = 1.0;
 ImageRect TextField::skin;
+
+float TextField::mAlpha = 1.0;
+TextFieldConfigListener *TextField::mConfigListener = NULL;
+
+class TextFieldConfigListener : public ConfigListener
+{
+    public:
+        TextFieldConfigListener(TextField *tf):
+            mTextField(tf)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mTextField->mAlpha = config.getValue("guialpha", 0.8);
+
+                for (int a = 0; a < 9; a++)
+                    mTextField->skin.grid[a]->setAlpha(mTextField->mAlpha);
+            }
+        }
+    private:
+        TextField *mTextField;
+};
 
 TextField::TextField(const std::string& text,
                      const std::string &actionEventId,
@@ -59,6 +83,8 @@ TextField::TextField(const std::string& text,
 
     if (instances == 0)
     {
+        mAlpha = config.getValue("guialpha", 0.8);
+
         // Load the skin
         ResourceManager *resman = ResourceManager::getInstance();
         Image *textbox = resman->getImage("graphics/gui/deepbox.png");
@@ -80,6 +106,9 @@ TextField::TextField(const std::string& text,
         }
 
         textbox->decRef();
+
+        mConfigListener = new TextFieldConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
 
     instances++;
@@ -90,7 +119,12 @@ TextField::~TextField()
     instances--;
 
     if (instances == 0)
+    {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
         for_each(skin.grid, skin.grid + 9, dtor<Image*>());
+    }
 }
 
 void TextField::draw(gcn::Graphics *graphics)
@@ -105,13 +139,6 @@ void TextField::draw(gcn::Graphics *graphics)
     graphics->setColor(guiPalette->getColor(Palette::TEXT));
     graphics->setFont(getFont());
     graphics->drawText(mText, 1 - mXScroll, 1);
-
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-        for (int a = 0; a < 9; a++)
-            skin.grid[a]->setAlpha(mAlpha);
-    }
 }
 
 void TextField::drawFrame(gcn::Graphics *graphics)

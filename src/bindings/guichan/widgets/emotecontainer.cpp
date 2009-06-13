@@ -28,10 +28,10 @@
 
 #include "../graphics.h"
 #include "../gui.h"
+#include "../skin.h"
 
 #include "../sdl/sdlinput.h"
 
-#include "../../../configuration.h"
 #include "../../../emoteshortcut.h"
 #include "../../../log.h"
 
@@ -52,6 +52,12 @@ const int EmoteContainer::gridHeight = 36; // emote icon height + 4
 
 static const int NO_EMOTE = -1;
 
+std::vector<const AnimatedSprite*> EmoteContainer::mEmoteImg;
+Image *EmoteContainer::mSelImg = NULL;
+int EmoteContainer::mInstances = 0;
+int EmoteContainer::mMaxEmote = 0;
+PopupMenu *EmoteContainer::mPopupMenu = NULL;
+
 EmoteContainer::EmoteContainer(const std::string &actionEventId,
                                gcn::ActionListener *listener):
     mSelectedEmoteIndex(NO_EMOTE)
@@ -64,26 +70,29 @@ EmoteContainer::EmoteContainer(const std::string &actionEventId,
 
     setFocusable(true);
 
-    mPopupMenu = new PopupMenu(EMOTE);
-
-    ResourceManager *resman = ResourceManager::getInstance();
-
-    // Setup emote sprites
-    for (int i = 0; i <= EmoteDB::getLast(); i++)
+    if (mInstances == 0)
     {
-        mEmoteImg.push_back(EmoteDB::getAnimation(i));
+        mPopupMenu = new PopupMenu(EMOTE);
+
+        ResourceManager *resman = ResourceManager::getInstance();
+
+        // Setup emote sprites
+        for (int i = 0; i <= EmoteDB::getLast(); i++)
+            mEmoteImg.push_back(EmoteDB::getAnimation(i));
+
+        if (mEmoteImg.size() == 0)
+            setEnabled(false);
+
+        mSelImg = resman->getImage("graphics/gui/selection.png");
+        mSelImg->setAlpha(Skin::getAlpha());
+
+        if (!mSelImg)
+            logger->error("Unable to load selection.png");
+
+        mMaxEmote = EmoteDB::getLast() + 1;
     }
 
-    if (mEmoteImg.size() == 0)
-        setEnabled(false);
-
-    mSelImg = resman->getImage("graphics/gui/selection.png");
-    if (!mSelImg)
-        logger->error("Unable to load selection.png");
-
-    mSelImg->setAlpha(config.getValue("guialpha", 0.8));
-
-    mMaxEmote = EmoteDB::getLast() + 1;
+    mInstances++;
 
     addKeyListener(this);
     addMouseListener(this);
@@ -92,10 +101,15 @@ EmoteContainer::EmoteContainer(const std::string &actionEventId,
 
 EmoteContainer::~EmoteContainer()
 {
-    if (mSelImg)
-       mSelImg->decRef();
+    mInstances--;
 
-    delete mPopupMenu;
+    if (mInstances == 0)
+    {
+        if (mSelImg)
+            mSelImg->decRef();
+
+        delete mPopupMenu;
+    }
 }
 
 void EmoteContainer::draw(gcn::Graphics *graphics)

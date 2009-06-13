@@ -30,10 +30,9 @@
 #include "../gui.h"
 #include "../graphics.h"
 #include "../palette.h"
+#include "../skin.h"
 
 #include "../handlers/wordtextwraphandler.h"
-
-#include "../../../configuration.h"
 
 ToolTip::ToolTip():
     Container(),
@@ -51,7 +50,7 @@ ToolTip::ToolTip():
 
 void ToolTip::draw(gcn::Graphics *graphics)
 {
-    const int alpha = (int) (config.getValue("guialpha", 0.8) * 255.0f);
+    const int alpha = (int) (Skin::getAlpha() * 255.0f);
     Graphics *g = static_cast<Graphics*>(graphics);
 
     g->setColor(gcn::Color(245, 245, 181, alpha));

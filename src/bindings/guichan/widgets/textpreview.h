@@ -126,13 +126,15 @@ class TextPreview : public gcn::Widget
          */
         bool isOpaque() { return mOpaque; }
 
+    protected:
+        static float mAlpha;
+
     private:
         gcn::Font *mFont;
         const std::string* mText;
         const gcn::Color* mTextColor;
         const gcn::Color* mBGColor;
         const gcn::Color* mTextBGColor;
-        static float mAlpha;
         bool mTextAlpha;
         bool mOpaque;
         bool mShadow;

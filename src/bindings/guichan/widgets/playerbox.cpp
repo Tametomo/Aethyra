@@ -24,6 +24,7 @@
 
 #include "../graphics.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -37,6 +38,30 @@
 int PlayerBox::instances = 0;
 float PlayerBox::mAlpha = 1.0;
 ImageRect PlayerBox::background;
+PlayerBoxConfigListener *PlayerBox::mConfigListener = NULL;
+
+class PlayerBoxConfigListener : public ConfigListener
+{
+    public:
+        PlayerBoxConfigListener(PlayerBox *pb):
+            mPlayerBox(pb)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mPlayerBox->mAlpha = config.getValue("guialpha", 0.8);
+
+                for (int a = 0; a < 9; a++)
+                {
+                    mPlayerBox->background.grid[a]->setAlpha(mPlayerBox->mAlpha);
+                }
+            }
+        }
+    private:
+        PlayerBox *mPlayerBox;
+};
 
 PlayerBox::PlayerBox(const Player *player):
     mPlayer(player)
@@ -45,6 +70,8 @@ PlayerBox::PlayerBox(const Player *player):
 
     if (instances == 0)
     {
+        mAlpha = config.getValue("guialpha", 0.8);
+
         // Load the background skin
         ResourceManager *resman = ResourceManager::getInstance();
         Image *textbox = resman->getImage("graphics/gui/deepbox.png");
@@ -52,8 +79,10 @@ PlayerBox::PlayerBox(const Player *player):
         int bggridy[4] = {0, 3, 28, 31};
         int a = 0, x, y;
 
-        for (y = 0; y < 3; y++) {
-            for (x = 0; x < 3; x++) {
+        for (y = 0; y < 3; y++)
+        {
+            for (x = 0; x < 3; x++)
+            {
                 background.grid[a] = textbox->getSubImage(
                         bggridx[x], bggridy[y],
                         bggridx[x + 1] - bggridx[x] + 1,
@@ -64,6 +93,9 @@ PlayerBox::PlayerBox(const Player *player):
         }
 
         textbox->decRef();
+
+        mConfigListener = new PlayerBoxConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
 
     instances++;
@@ -75,6 +107,9 @@ PlayerBox::~PlayerBox()
 
     if (instances == 0)
     {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
         for_each(background.grid, background.grid + 9, dtor<Image*>());
     }
 }
@@ -94,14 +129,6 @@ void PlayerBox::draw(gcn::Graphics *graphics)
             {
                 mPlayer->getSprite(i)->draw(static_cast<Graphics*>(graphics), x, y);
             }
-        }
-    }
-
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        for (int a = 0; a < 9; a++)
-        {
-            background.grid[a]->setAlpha(config.getValue("guialpha", 0.8));
         }
     }
 }

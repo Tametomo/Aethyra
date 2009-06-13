@@ -25,6 +25,7 @@
 #include "../graphics.h"
 #include "../palette.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -32,12 +33,39 @@
 
 int CheckBox::instances = 0;
 float CheckBox::mAlpha = 1.0;
+CheckBoxConfigListener *CheckBox::mConfigListener = NULL;
+
 Image *CheckBox::checkBoxNormal;
 Image *CheckBox::checkBoxNormalHighlight;
 Image *CheckBox::checkBoxChecked;
 Image *CheckBox::checkBoxCheckedHighlight;
 Image *CheckBox::checkBoxDisabled;
 Image *CheckBox::checkBoxDisabledChecked;
+
+class CheckBoxConfigListener : public ConfigListener
+{
+    public:
+        CheckBoxConfigListener(CheckBox *cb):
+            mCheckBox(cb)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mCheckBox->mAlpha = config.getValue("guialpha", 0.8);
+
+                mCheckBox->checkBoxNormal->setAlpha(mCheckBox->mAlpha);
+                mCheckBox->checkBoxNormalHighlight->setAlpha(mCheckBox->mAlpha);
+                mCheckBox->checkBoxChecked->setAlpha(mCheckBox->mAlpha);
+                mCheckBox->checkBoxCheckedHighlight->setAlpha(mCheckBox->mAlpha);
+                mCheckBox->checkBoxDisabled->setAlpha(mCheckBox->mAlpha);
+                mCheckBox->checkBoxDisabledChecked->setAlpha(mCheckBox->mAlpha);
+            }
+        }
+    private:
+        CheckBox *mCheckBox;
+};
 
 CheckBox::CheckBox(const std::string& caption, bool selected):
     gcn::CheckBox(caption, selected)
@@ -53,14 +81,21 @@ CheckBox::CheckBox(const std::string& caption, bool selected):
         Image *highlight = resman->getImage("graphics/gui/checkboxhi.png");
         checkBoxNormalHighlight = highlight->getSubImage(0, 0, 9, 10);
         checkBoxCheckedHighlight = highlight->getSubImage(9, 0, 9, 10);
+
+        mAlpha = config.getValue("guialpha", 0.8);
+
         checkBoxNormal->setAlpha(mAlpha);
         checkBoxNormalHighlight->setAlpha(mAlpha);
         checkBoxChecked->setAlpha(mAlpha);
         checkBoxCheckedHighlight->setAlpha(mAlpha);
         checkBoxDisabled->setAlpha(mAlpha);
         checkBoxDisabledChecked->setAlpha(mAlpha);
+
         checkBox->decRef();
         highlight->decRef();
+
+        mConfigListener = new CheckBoxConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
 
     instances++;
@@ -72,6 +107,9 @@ CheckBox::~CheckBox()
 
     if (instances == 0)
     {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
         delete checkBoxNormal;
         delete checkBoxNormalHighlight;
         delete checkBoxChecked;
@@ -112,17 +150,6 @@ void CheckBox::drawBox(gcn::Graphics* graphics)
         box = checkBoxNormal;
     else
         box = checkBoxDisabled;
-
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-        checkBoxNormal->setAlpha(mAlpha);
-        checkBoxNormalHighlight->setAlpha(mAlpha);
-        checkBoxChecked->setAlpha(mAlpha);
-        checkBoxCheckedHighlight->setAlpha(mAlpha);
-        checkBoxDisabled->setAlpha(mAlpha);
-        checkBoxDisabledChecked->setAlpha(mAlpha);
-    }
 
     static_cast<Graphics*>(graphics)->drawImage(box, 2, 2);
 }

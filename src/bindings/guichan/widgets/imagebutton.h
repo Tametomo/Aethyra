@@ -72,7 +72,6 @@ class ImageButton : public Button
     private:
         Image* mImage;         /**< Image to display on the button */
         int mPadding;
-        static float mAlpha;
 };
 
 #endif

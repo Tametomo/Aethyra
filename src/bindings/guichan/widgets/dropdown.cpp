@@ -31,6 +31,7 @@
 
 #include "../sdl/sdlinput.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 
 #include "../../../resources/image.h"
@@ -42,6 +43,35 @@ int DropDown::instances = 0;
 Image *DropDown::buttons[2][2];
 ImageRect DropDown::skin;
 float DropDown::mAlpha = 1.0;
+DropDownConfigListener *DropDown::mConfigListener = NULL;
+
+class DropDownConfigListener : public ConfigListener
+{
+    public:
+        DropDownConfigListener(DropDown *dd):
+            mDropDown(dd)
+        {}
+
+        void optionChanged(const std::string &name)
+        {
+            if (name == "guialpha")
+            {
+                mDropDown->mAlpha = config.getValue("guialpha", 0.8);
+
+                mDropDown->buttons[0][0]->setAlpha(mDropDown->mAlpha);
+                mDropDown->buttons[0][1]->setAlpha(mDropDown->mAlpha);
+                mDropDown->buttons[1][0]->setAlpha(mDropDown->mAlpha);
+                mDropDown->buttons[1][1]->setAlpha(mDropDown->mAlpha);
+
+                for (int a = 0; a < 9; a++)
+                {
+                    mDropDown->skin.grid[a]->setAlpha(mDropDown->mAlpha);
+                }
+            }
+        }
+    private:
+        DropDown *mDropDown;
+};
 
 DropDown::DropDown(gcn::ListModel *listModel):
     gcn::DropDown::DropDown(listModel,
@@ -53,6 +83,8 @@ DropDown::DropDown(gcn::ListModel *listModel):
     // Initialize graphics
     if (instances == 0)
     {
+        mAlpha = config.getValue("guialpha", 0.8);
+
         // Load the background skin
         ResourceManager *resman = ResourceManager::getInstance();
 
@@ -92,6 +124,9 @@ DropDown::DropDown(gcn::ListModel *listModel):
         }
 
         boxBorder->decRef();
+
+        mConfigListener = new DropDownConfigListener(this);
+        config.addListener("guialpha", mConfigListener);
     }
 
     instances++;
@@ -103,6 +138,9 @@ DropDown::~DropDown()
     // Free images memory
     if (instances == 0)
     {
+        config.removeListener("guialpha", mConfigListener);
+        delete mConfigListener;
+
         buttons[0][0]->decRef();
         buttons[0][1]->decRef();
         buttons[1][0]->decRef();
@@ -122,21 +160,6 @@ void DropDown::draw(gcn::Graphics* graphics)
         h = mFoldedUpHeight;
     else
         h = getHeight();
-
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-    {
-        mAlpha = config.getValue("guialpha", 0.8);
-
-        buttons[0][0]->setAlpha(mAlpha);
-        buttons[0][1]->setAlpha(mAlpha);
-        buttons[1][0]->setAlpha(mAlpha);
-        buttons[1][1]->setAlpha(mAlpha);
-
-        for (int a = 0; a < 9; a++)
-        {
-            skin.grid[a]->setAlpha(mAlpha);
-        }
-    }
 
     const int alpha = (int) (mAlpha * 255.0f);
     gcn::Color faceColor = getBaseColor();

@@ -28,10 +28,9 @@
 #include "listbox.h"
 
 #include "../palette.h"
+#include "../skin.h"
 
 #include "../sdl/sdlinput.h"
-
-#include "../../../configuration.h"
 
 float ListBox::mAlpha = 1.0;
 
@@ -51,11 +50,11 @@ void ListBox::draw(gcn::Graphics *graphics)
     if (!mListModel)
         return;
 
-    if (config.getValue("guialpha", 0.8) != mAlpha)
-        mAlpha = config.getValue("guialpha", 0.8);
+    if (Skin::getAlpha() != mAlpha)
+        mAlpha = Skin::getAlpha();
 
     graphics->setColor(guiPalette->getColor(Palette::HIGHLIGHT,
-            (int)(mAlpha * 255.0f)));
+                                           (int) (mAlpha * 255.0f)));
     graphics->setFont(getFont());
 
     const int fontHeight = getFont()->getHeight();

@@ -25,8 +25,6 @@
 
 #include <guichan/widgets/listbox.hpp>
 
-class SelectionListener;
-
 /**
  * A list box, meant to be used inside a scroll area. Same as the Guichan list
  * box except this one doesn't have a background, instead completely relying
@@ -64,7 +62,7 @@ class ListBox : public gcn::ListBox
 
         void mouseDragged(gcn::MouseEvent &event);
 
-    private:
+    protected:
         static float mAlpha;
 };
 

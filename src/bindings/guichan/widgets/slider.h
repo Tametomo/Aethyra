@@ -26,14 +26,18 @@
 #include <guichan/widgets/slider.hpp>
 
 class Image;
+class SliderConfigListener;
 
 /**
  * Slider widget. Same as the Guichan slider but with custom look.
  *
  * \ingroup GUI
  */
-class Slider : public gcn::Slider {
+class Slider : public gcn::Slider
+{
     public:
+        friend class SliderConfigListener;
+
         /**
          * Constructor with scale start equal to 0.
          */
@@ -69,12 +73,15 @@ class Slider : public gcn::Slider {
          */
         void init();
 
+        static int mInstances;
         static Image *hStart, *hMid, *hEnd, *hGrip;
         static Image *vStart, *vMid, *vEnd, *vGrip;
         static Image *hStartHi, *hMidHi, *hEndHi, *hGripHi;
         static Image *vStartHi, *vMidHi, *vEndHi, *vGripHi;
+
+    protected:
         static float mAlpha;
-        static int mInstances;
+        static SliderConfigListener *mConfigListener;
 };
 
 #endif

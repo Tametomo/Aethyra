@@ -25,6 +25,7 @@
 
 #include <guichan/widgets/checkbox.hpp>
 
+class CheckBoxConfigListener;
 class Image;
 
 /**
@@ -35,6 +36,8 @@ class Image;
 class CheckBox : public gcn::CheckBox
 {
     public:
+        friend class CheckBoxConfigListener;
+
         /**
          * Constructor.
          */
@@ -55,9 +58,14 @@ class CheckBox : public gcn::CheckBox
          */
         void drawBox(gcn::Graphics* graphics);
 
+    protected:
+        static float mAlpha;
+
     private:
         static int instances;
-        static float mAlpha;
+
+        static CheckBoxConfigListener *mConfigListener;
+
         static Image *checkBoxNormal;
         static Image *checkBoxNormalHighlight;
         static Image *checkBoxChecked;

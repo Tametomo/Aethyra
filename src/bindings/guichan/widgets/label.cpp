@@ -23,16 +23,6 @@
 
 #include "../palette.h"
 
-Label::Label() :
-    gcn::Label()
-{
-}
-
-Label::Label(const std::string& caption) :
-    gcn::Label(caption)
-{
-}
-
 void Label::draw(gcn::Graphics* graphics)
 {
     setForegroundColor(guiPalette->getColor(Palette::TEXT));
