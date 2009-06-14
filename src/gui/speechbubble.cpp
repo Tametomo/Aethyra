@@ -55,8 +55,6 @@ SpeechBubble::SpeechBubble():
     add(mSpeechBox);
 
     loadPopupConfiguration();
-
-    requestMoveToBottom();
 }
 
 void SpeechBubble::fontChanged()
@@ -112,5 +110,7 @@ void SpeechBubble::adjustSize()
 
     mCaption->setPosition(xPos, getPadding());
     mSpeechBox->setPosition(xPos, yPos);
+
+    requestMoveToTop();
 }
 
