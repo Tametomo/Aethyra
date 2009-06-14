@@ -27,6 +27,7 @@
 #include "../keyboardconfig.h"
 #include "../palette.h"
 
+#include "../../../configlistener.h"
 #include "../../../configuration.h"
 #include "../../../inventory.h"
 #include "../../../item.h"
@@ -34,7 +35,7 @@
 
 #include "../../../gui/inventorywindow.h"
 #include "../../../gui/itempopup.h"
-#include "../../../gui/viewport.h"
+#include "../../../gui/popupmenu.h"
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
@@ -46,6 +47,7 @@
 int ItemShortcutContainer::mInstances = 0;
 bool ItemShortcutContainer::mShowItemInfo = false;
 ItemPopup *ItemShortcutContainer::mItemPopup = NULL;
+PopupMenu *ItemShortcutContainer::mPopupMenu = NULL;
 ItemShortcutContainerConfigListener *ItemShortcutContainer::mConfigListener = NULL;
 
 class ItemShortcutContainerConfigListener : public ConfigListener
@@ -89,6 +91,8 @@ ItemShortcutContainer::ItemShortcutContainer():
         mItemPopup = new ItemPopup();
         mItemPopup->setOpaque(false);
 
+        mPopupMenu = new PopupMenu(ITEM_SHORTCUT);
+
         ResourceManager *resman = ResourceManager::getInstance();
 
         mBackgroundImg = resman->getImage("graphics/gui/item_shortcut_bgr.png");
@@ -118,7 +122,9 @@ ItemShortcutContainer::~ItemShortcutContainer()
         delete mConfigListener;
 
         mBackgroundImg->decRef();
+
         delete mItemPopup;
+        delete mPopupMenu;
     }
 }
 
@@ -241,9 +247,8 @@ void ItemShortcutContainer::mousePressed(gcn::MouseEvent &event)
         if (!item)
             return;
 
-        // Convert relative to the window coordinates to absolute screen
-        // coordinates.
-        viewport->showPopup(gui->getMouseX(), gui->getMouseY(), item);
+        mPopupMenu->setItem(item);
+        mPopupMenu->showPopup(gui->getMouseX(), gui->getMouseY());
     }
 }
 

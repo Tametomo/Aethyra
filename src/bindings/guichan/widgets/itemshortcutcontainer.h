@@ -31,6 +31,7 @@ class Image;
 class Item;
 class ItemPopup;
 class ItemShortcutContainerConfigListener;
+class PopupMenu;
 
 /**
  * An item shortcut container. Used to quickly use items.
@@ -82,7 +83,9 @@ class ItemShortcutContainer : public ShortcutContainer
         static int mInstances;
 
         static bool mShowItemInfo;
+
         static ItemPopup *mItemPopup;
+        static PopupMenu *mPopupMenu;
 
         void mouseExited(gcn::MouseEvent &event);
         void mouseMoved(gcn::MouseEvent &event);
