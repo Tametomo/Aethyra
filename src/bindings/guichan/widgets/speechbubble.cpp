@@ -31,10 +31,8 @@
 
 #include "../handlers/wordtextwraphandler.h"
 
-extern WindowContainer *viewport;
-
-SpeechBubble::SpeechBubble():
-    Popup("Speech", "graphics/gui/speechbubble.xml", viewport),
+SpeechBubble::SpeechBubble(WindowContainer *wc):
+    Popup("Speech", "graphics/gui/speechbubble.xml", wc),
     mText("")
 {
     setContentSize(140, 46);

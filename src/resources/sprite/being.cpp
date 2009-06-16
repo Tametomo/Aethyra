@@ -506,7 +506,7 @@ void Being::drawSpeech(const int &offsetX, const int &offsetY)
              speech == NO_NAME_IN_BUBBLE))
     {
         if (!mSpeechBubble)
-            mSpeechBubble = new SpeechBubble();
+            mSpeechBubble = new SpeechBubble(viewport);
 
         const bool hasCaption = (mSpeechBubble->getCaption() != "");
         const bool showName = (speech == NAME_IN_BUBBLE);
