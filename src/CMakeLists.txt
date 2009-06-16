@@ -161,8 +161,6 @@ SET(SRCS
     bindings/guichan/widgets/resizegrip.h
     bindings/guichan/widgets/scrollarea.cpp
     bindings/guichan/widgets/scrollarea.h
-    bindings/guichan/widgets/setuptabcontainer.cpp
-    bindings/guichan/widgets/setuptabcontainer.h
     bindings/guichan/widgets/shoplistbox.cpp
     bindings/guichan/widgets/shoplistbox.h
     bindings/guichan/widgets/shortcutcontainer.cpp
@@ -201,6 +199,8 @@ SET(SRCS
     gui/tabs/setup_input.h
     gui/tabs/setup_players.cpp
     gui/tabs/setup_players.h
+    gui/tabs/setuptabcontainer.cpp
+    gui/tabs/setuptabcontainer.h
     gui/tabs/setup_video.cpp
     gui/tabs/setup_video.h
     gui/buy.cpp

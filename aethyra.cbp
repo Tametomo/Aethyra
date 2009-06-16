@@ -212,8 +212,6 @@
 		<Unit filename="src\bindings\guichan\widgets\radiobutton.h" />
 		<Unit filename="src\bindings\guichan\widgets\resizegrip.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\resizegrip.h" />
-		<Unit filename="src\bindings\guichan\widgets\setuptabcontainer.cpp" />
-		<Unit filename="src\bindings\guichan\widgets\setuptabcontainer.h" />
 		<Unit filename="src\bindings\guichan\widgets\scrollarea.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\scrollarea.h" />
 		<Unit filename="src\bindings\guichan\widgets\shoplistbox.cpp" />
@@ -254,6 +252,8 @@
 		<Unit filename="src\gui\tabs\setup_input.h" />
 		<Unit filename="src\gui\tabs\setup_players.cpp" />
 		<Unit filename="src\gui\tabs\setup_players.h" />
+		<Unit filename="src\gui\tabs\setuptabcontainer.cpp" />
+		<Unit filename="src\gui\tabs\setuptabcontainer.h" />
 		<Unit filename="src\gui\tabs\setup_video.cpp" />
 		<Unit filename="src\gui\tabs\setup_video.h" />
 		<Unit filename="src\gui\buy.cpp" />

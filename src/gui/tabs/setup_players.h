@@ -25,9 +25,9 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "../../bindings/guichan/guichanfwd.h"
+#include "setuptabcontainer.h"
 
-#include "../../bindings/guichan/widgets/setuptabcontainer.h"
+#include "../../bindings/guichan/guichanfwd.h"
 
 #include "../../playerrelations.h"
 
