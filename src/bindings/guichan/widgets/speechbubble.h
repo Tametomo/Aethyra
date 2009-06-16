@@ -25,9 +25,9 @@
 
 #include <string>
 
-#include "../bindings/guichan/palette.h"
+#include "popup.h"
 
-#include "../bindings/guichan/widgets/popup.h"
+#include "../palette.h"
 
 class TextBox;
 

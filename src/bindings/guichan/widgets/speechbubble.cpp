@@ -20,23 +20,18 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <guichan/exception.hpp>
 #include <guichan/font.hpp>
 
 #include <guichan/widgets/label.hpp>
 
 #include "speechbubble.h"
-#include "viewport.h"
+#include "textbox.h"
 
-#include "../configuration.h"
+#include "../gui.h"
 
-#include "../bindings/guichan/gui.h"
-#include "../bindings/guichan/graphics.h"
-#include "../bindings/guichan/skin.h"
+#include "../handlers/wordtextwraphandler.h"
 
-#include "../bindings/guichan/handlers/wordtextwraphandler.h"
-
-#include "../bindings/guichan/widgets/textbox.h"
+extern WindowContainer *viewport;
 
 SpeechBubble::SpeechBubble():
     Popup("Speech", "graphics/gui/speechbubble.xml", viewport),

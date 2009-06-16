@@ -169,6 +169,8 @@ SET(SRCS
     bindings/guichan/widgets/shortcutcontainer.h
     bindings/guichan/widgets/slider.cpp
     bindings/guichan/widgets/slider.h
+    bindings/guichan/widgets/speechbubble.cpp
+    bindings/guichan/widgets/speechbubble.h
     bindings/guichan/widgets/tab.cpp
     bindings/guichan/widgets/tab.h
     bindings/guichan/widgets/tabbedarea.cpp
@@ -257,8 +259,6 @@ SET(SRCS
     gui/skill.h
     gui/slotselection.cpp
     gui/slotselection.h
-    gui/speechbubble.cpp
-    gui/speechbubble.h
     gui/status.cpp
     gui/status.h
     gui/storagewindow.cpp

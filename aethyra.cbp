@@ -222,6 +222,8 @@
 		<Unit filename="src\bindings\guichan\widgets\shortcutcontainer.h" />
 		<Unit filename="src\bindings\guichan\widgets\slider.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\slider.h" />
+		<Unit filename="src\bindings\guichan\widgets\speechbubble.cpp" />
+		<Unit filename="src\bindings\guichan\widgets\speechbubble.h" />
 		<Unit filename="src\bindings\guichan\widgets\tab.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\tab.h" />
 		<Unit filename="src\bindings\guichan\widgets\tabbedarea.cpp" />
@@ -310,8 +312,6 @@
 		<Unit filename="src\gui\skill.h" />
 		<Unit filename="src\gui\slotselection.cpp" />
 		<Unit filename="src\gui\slotselection.h" />
-		<Unit filename="src\gui\speechbubble.cpp" />
-		<Unit filename="src\gui\speechbubble.h" />
 		<Unit filename="src\gui\status.cpp" />
 		<Unit filename="src\gui\status.h" />
 		<Unit filename="src\gui\storagewindow.cpp" />

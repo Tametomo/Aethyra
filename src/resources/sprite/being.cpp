@@ -49,9 +49,10 @@
 #include "../../bindings/guichan/palette.h"
 #include "../../bindings/guichan/text.h"
 
+#include "../../bindings/guichan/widgets/speechbubble.h"
+
 #include "../../bindings/sdl/sound.h"
 
-#include "../../gui/speechbubble.h"
 #include "../../gui/viewport.h"
 
 #include "../../net/messageout.h"
