@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  The Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -38,6 +39,59 @@ const std::string& ItemInfo::getSprite(const Gender &gender) const
 
         return (i != mAnimationFiles.end()) ? i->second : empty;
     }
+}
+
+void ItemInfo::setType(const std::string& type)
+{
+    mType = type;
+
+    // All of this will be replaced by getting a
+    // single int from the server.  The only part
+    // of the client that should know the data in
+    // this enum is the equipment window (for
+    // putting the icons in the right place).
+    enum {
+        // Equipment rules:
+        EQUIP_LEGS_SLOT = 0,
+        EQUIP_FIGHT1_SLOT,
+        EQUIP_GLOVES_SLOT,
+        EQUIP_RING2_SLOT,
+        EQUIP_RING1_SLOT,
+        EQUIP_FIGHT2_SLOT,
+        EQUIP_FEET_SLOT,
+        EQUIP_CAPE_SLOT,
+        EQUIP_HEAD_SLOT,
+        EQUIP_TORSO_SLOT,
+        EQUIP_AMMO_SLOT,
+        EQUIP_VECTOREND
+    };
+
+    if (type == "equip-legs")
+        mEquipSlots = 1 << EQUIP_LEGS_SLOT;
+    else if (type == "equip-1hand")
+        mEquipSlots = 1 << EQUIP_FIGHT1_SLOT;
+    else if (type == "equip-arms")
+        mEquipSlots = 1 << EQUIP_GLOVES_SLOT;
+    else if (type == "equip-shield")
+        mEquipSlots = 1 << EQUIP_FIGHT2_SLOT;
+    else if (type == "equip-feet")
+        mEquipSlots = 1 << EQUIP_FEET_SLOT;
+    else if (type == "equip-cape")
+        mEquipSlots = 1 << EQUIP_CAPE_SLOT;
+    else if (type == "equip-head")
+        mEquipSlots = 1 << EQUIP_HEAD_SLOT;
+    else if (type == "equip-torso")
+        mEquipSlots = 1 << EQUIP_TORSO_SLOT;
+    else if (type == "equip-ring")
+        mEquipSlots = (1 << EQUIP_RING1_SLOT)
+                    | (1 << EQUIP_RING2_SLOT);
+    else if (type == "equip-2hand")
+        mEquipSlots = (1 << EQUIP_FIGHT1_SLOT)
+                    | (1 << EQUIP_FIGHT2_SLOT);
+    else if (type == "equip-ammo")
+        mEquipSlots = 1 << EQUIP_AMMO_SLOT;
+    else
+        mEquipSlots = 0;
 }
 
 void ItemInfo::setWeaponType(const int &type)

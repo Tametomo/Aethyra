@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  The Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -82,7 +83,7 @@ class ItemInfo
 
         const std::string& getEffect() const { return mEffect; }
 
-        void setType(const std::string& type) { mType = type; }
+        void setType(const std::string& type);
 
         const std::string& getType() const { return mType; }
 
@@ -106,6 +107,12 @@ class ItemInfo
 
         const std::string &getSound(const EquipmentSoundEvent &event) const;
 
+        /**
+         * A bitmask of which equipment slots will be used by this item.
+         * If the item is not equippable, it returns 0.
+         */
+        int getEquipSlots() const { return mEquipSlots; }
+
     protected:
         std::string mImageName;      /**< The filename of the icon image. */
         std::string mName;
@@ -116,6 +123,7 @@ class ItemInfo
         short mWeight;               /**< Weight in grams. */
         int mView;                   /**< Item ID of how this item looks. */
         int mId;                     /**< Item ID */
+        int mEquipSlots;             /**< Which slots this item gets equipped in (0 for non-equipment) */
 
         // Equipment related members
         SpriteAction mAttackType;    /**< Attack type, in case of weapon. */
