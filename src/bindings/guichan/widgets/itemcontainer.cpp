@@ -83,7 +83,8 @@ ItemContainer::ItemContainer(Inventory *inventory,
                              gcn::ActionListener *listener):
     mInventory(inventory),
     mSelectedItemIndex(NO_ITEM),
-    mLastSelectedItemId(NO_ITEM)
+    mLastSelectedItemId(NO_ITEM),
+    mEquipSlotsFilter(-1)
 {
     if (!actionEventId.empty())
         setActionEventId(actionEventId);
@@ -591,7 +592,33 @@ void ItemContainer::setTypeFilter(const std::list<std::string>& types)
     }
 }
 
+void ItemContainer::setEquipSlotsFilter(signed int slots)
+{
+    mEquipSlotsFilter = slots;
+
+    if (getSelectedItem() && !passesFilter(getSelectedItem()))
+    {
+        selectNone();
+    }
+}
+
 bool ItemContainer::passesFilter(const Item* item) const
+{
+    //The two filters aren't intended to be used together.  For
+    //now let's make it allow only items that pass both filters,
+    //and see what use-cases come up.
+    return (passesEquipSlotsFilter(item)
+        && passesTypeFilter(item));
+}
+
+bool ItemContainer::passesEquipSlotsFilter(const Item* item) const
+{
+   if (mEquipSlotsFilter == NO_EQUIP_SLOTS_FILTER)
+      return true;
+   return (mEquipSlotsFilter & item->getInfo().getEquipSlots());
+}
+
+bool ItemContainer::passesTypeFilter(const Item* item) const
 {
     if (mTypeFilter.empty())
         return true;

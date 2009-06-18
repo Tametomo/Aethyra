@@ -138,6 +138,23 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          */
         void setTypeFilter(const std::list<std::string>& types);
 
+        /**
+         * Display only items that would use at least one of
+         * these slots (argument is a bitmask).
+         *
+         * Setting this to NO_EQUIP_SLOTS_FILTER displays all
+         * items, including non-equippable ones.
+         *
+         * Setting it to 0 allows no items.
+         */
+        void setEquipSlotsFilter(signed int slots);
+
+        /**
+         * Disable the equip slots filter, allowing all items
+         * to be shown (including non-equippable ones).
+         */
+        static const signed int NO_EQUIP_SLOTS_FILTER = -1;
+
     private:
         // KeyListener
         void keyPressed(gcn::KeyEvent &event);
@@ -216,6 +233,8 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          * Whether the item should be shown.
          */
         bool passesFilter(const Item* item) const;
+        bool passesEquipSlotsFilter(const Item* item) const;
+        bool passesTypeFilter(const Item* item) const;
 
         Inventory *mInventory;
 
@@ -243,6 +262,11 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          * If non-empty, display only items of these types.
          */
         std::list<std::string> mTypeFilter;
+
+        /**
+         * (bitmask) Display only items that use at least one of these slots.
+         */
+        signed int mEquipSlotsFilter;
 };
 
 #endif
