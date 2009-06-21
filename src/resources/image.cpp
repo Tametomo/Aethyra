@@ -483,7 +483,7 @@ Image *SubImage::getSubImage(const int &x, const int &y, const int &w,
     return mParent->getSubImage(mBounds.x + x, mBounds.y + y, w, h);
 }
 
-void SubImage::setAlpha(const float &alpha)
+void SubImage::setAlpha(float alpha)
 {
     if (mAlpha == alpha)
         return;

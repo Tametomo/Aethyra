@@ -216,7 +216,7 @@ class SubImage : public Image
         /**
          * Sets the alpha value of this image.
          */
-        virtual void setAlpha(const float &alpha);
+        virtual void setAlpha(float alpha);
 
     private:
         Image *mParent;
