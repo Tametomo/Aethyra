@@ -141,3 +141,9 @@ void ListBox::mouseDragged(gcn::MouseEvent &event)
     int y = std::max(0, event.getY());
     setSelected(y / getRowHeight());
 }
+
+void ListBox::mousePressed(gcn::MouseEvent &mouseEvent)
+{
+    if (mouseEvent.getButton() == gcn::MouseEvent::LEFT)
+        setSelected(mouseEvent.getY() / getRowHeight());
+}
