@@ -216,30 +216,7 @@ void ScrollArea::logic()
     const int updateTicks = get_elapsed_time(mLastUpdate) / 100;
 
     if (updateTicks > 0)
-    {
-        if (mUpButtonPressed)
-        {
-            setVerticalScrollAmount(getVerticalScrollAmount() -
-                                    mUpButtonScrollAmount);
-        }
-        else if (mDownButtonPressed)
-        {
-            setVerticalScrollAmount(getVerticalScrollAmount() +
-                                    mDownButtonScrollAmount);
-        }
-        else if (mLeftButtonPressed)
-        {
-            setHorizontalScrollAmount(getHorizontalScrollAmount() - 
-                                      mLeftButtonScrollAmount);
-        }
-        else if (mRightButtonPressed)
-        {
-            setHorizontalScrollAmount(getHorizontalScrollAmount() +
-                                      mRightButtonScrollAmount);
-        }
-
-        mLastUpdate = tick_time;
-    }
+        scroll();
 }
 
 void ScrollArea::draw(gcn::Graphics *graphics)
@@ -371,4 +348,66 @@ void ScrollArea::drawHMarker(gcn::Graphics *graphics)
 
     static_cast<Graphics*>(graphics)->
         drawImageRect(dim.x, dim.y, dim.width, dim.height, vMarker);
+}
+
+void ScrollArea::scroll()
+{
+    if (mUpButtonPressed)
+        setVerticalScrollAmount(getVerticalScrollAmount() -
+                                mUpButtonScrollAmount);
+    else if (mDownButtonPressed)
+        setVerticalScrollAmount(getVerticalScrollAmount() +
+                                mDownButtonScrollAmount);
+    else if (mLeftButtonPressed)
+        setHorizontalScrollAmount(getHorizontalScrollAmount() -
+                                  mLeftButtonScrollAmount);
+    else if (mRightButtonPressed)
+        setHorizontalScrollAmount(getHorizontalScrollAmount() +
+                                  mRightButtonScrollAmount);
+
+    mLastUpdate = tick_time;}
+
+void ScrollArea::mousePressed(gcn::MouseEvent &mouseEvent)
+{
+    int x = mouseEvent.getX();
+    int y = mouseEvent.getY();
+
+    if (getUpButtonDimension().isPointInRect(x, y))
+        mUpButtonPressed = true;
+    else if (getDownButtonDimension().isPointInRect(x, y))
+        mDownButtonPressed = true;
+    else if (getLeftButtonDimension().isPointInRect(x, y))
+        mLeftButtonPressed = true;
+    else if (getRightButtonDimension().isPointInRect(x, y))
+        mRightButtonPressed = true;
+    else if (getVerticalMarkerDimension().isPointInRect(x, y))
+    {
+        mIsHorizontalMarkerDragged = false;
+        mIsVerticalMarkerDragged = true;
+
+        mVerticalMarkerDragOffset = y - getVerticalMarkerDimension().y;
+    }
+    else if (getVerticalBarDimension().isPointInRect(x,y))
+    {
+        if (y < getVerticalMarkerDimension().y)
+            mUpButtonPressed = true;
+        else
+            mDownButtonPressed = true;
+    }
+    else if (getHorizontalMarkerDimension().isPointInRect(x, y))
+    {
+        mIsHorizontalMarkerDragged = true;
+        mIsVerticalMarkerDragged = false;
+
+        mHorizontalMarkerDragOffset = x - getHorizontalMarkerDimension().x;
+    }
+    else if (getHorizontalBarDimension().isPointInRect(x,y))
+    {
+        if (x < getHorizontalMarkerDimension().x)
+            mLeftButtonPressed = true;
+        else
+            mRightButtonPressed = true;
+    }
+
+    scroll();
 }

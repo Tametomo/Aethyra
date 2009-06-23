@@ -83,6 +83,16 @@ class ScrollArea : public gcn::ScrollArea
          */
         bool isOpaque() const { return mOpaque; }
 
+        /**
+         * Scrolls the scroll area by the scroll amount each call, based on
+         * which button is being held.
+         */
+        virtual void scroll();
+
+        // Inherited from MouseListener
+
+        virtual void mousePressed(gcn::MouseEvent& mouseEvent);
+
     protected:
         enum BUTTON_DIR {
             UP,
