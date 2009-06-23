@@ -76,7 +76,7 @@ class TrueTypeFont : public gcn::Font, public Resource
         TTF_Font *mFont;
 
         // Word surfaces cache
-        std::list<TextChunk> cache;
+        mutable std::list<TextChunk> cache;
 };
 
 #endif

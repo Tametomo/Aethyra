@@ -44,6 +44,11 @@ class TextChunk
             delete img;
         }
 
+        bool operator==(const std::string &str) const
+        {
+            return (str == text);
+        }
+
         bool operator==(const TextChunk &chunk) const
         {
             return (chunk.text == text && chunk.color == color);
@@ -165,6 +170,17 @@ void TrueTypeFont::drawString(gcn::Graphics *graphics,
 
 int TrueTypeFont::getWidth(const std::string& text) const
 {
+    for (CacheIterator i = cache.begin(); i != cache.end(); i++)
+    {
+        if ((*i) == text)
+        {
+            // Raise priority: move it to front
+            // Assumption is that TTF::draw will be called next
+            cache.splice(cache.begin(), cache, i);
+            return i->img->getWidth();
+        }
+    }
+
     int w, h;
     TTF_SizeUTF8(mFont, text.c_str(), &w, &h);
     return w;
