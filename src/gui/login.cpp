@@ -87,7 +87,7 @@ LoginDialog::LoginDialog(LoginData *loginData):
     mPassField->addActionListener(this);
     mServerField->addActionListener(this);
     mPortField->addActionListener(this);
-    mServerDropDown->addActionListener(this);
+    mServerDropDown->addSelectionListener(this);
     mKeepCheck->addActionListener(this);
 
     place(0, 0, userLabel);
@@ -138,12 +138,6 @@ void LoginDialog::action(const gcn::ActionEvent &event)
         mServerList->save(mServerField->getText(), mPortField->getText());
         state = ACCOUNT_STATE;
     }
-    else if (event.getId() == "changeSelection")
-    {
-        int selected = mServerDropDown->getSelected();
-        mServerField->setText(mServerList->getServerAt(selected));
-        mPortField->setText(mServerList->getPortAt(selected));
-    }
     else if (event.getId() == "cancel")
     {
         state = EXIT_STATE;
@@ -163,6 +157,13 @@ void LoginDialog::action(const gcn::ActionEvent &event)
 
         state = REGISTER_STATE;
     }
+}
+
+void LoginDialog::valueChanged(const gcn::SelectionEvent &event)
+{
+    int selected = mServerDropDown->getSelected();
+    mServerField->setText(mServerList->getServerAt(selected));
+    mPortField->setText(mServerList->getPortAt(selected));
 }
 
 void LoginDialog::keyPressed(gcn::KeyEvent &keyEvent)

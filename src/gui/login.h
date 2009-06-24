@@ -29,6 +29,7 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/keylistener.hpp>
 #include <guichan/listmodel.hpp>
+#include <guichan/selectionlistener.hpp>
 
 #include "../bindings/guichan/widgets/window.h"
 
@@ -40,7 +41,7 @@ class LoginData;
  * \ingroup Interface
  */
 class LoginDialog : public Window, public gcn::ActionListener,
-                    public gcn::KeyListener
+                    public gcn::KeyListener, public gcn::SelectionListener
 {
     public:
         /**
@@ -56,6 +57,11 @@ class LoginDialog : public Window, public gcn::ActionListener,
          * Called when receiving actions from the widgets.
          */
         void action(const gcn::ActionEvent &event);
+
+        /**
+         * Called when a value is changed in a widget.
+         */
+        void valueChanged(const gcn::SelectionEvent &event);
 
         /**
          * Called when a key is pressed in one of the text fields.
