@@ -74,6 +74,8 @@ Setup_Video::Setup_Video():
     mMouseOpacity(config.getValue("mousealpha", 0.7)),
     mFps((int) config.getValue("fpslimit", 0)),
     mSpeechMode((int) config.getValue("speech", 3)),
+    mScreenWidth(graphics->getWidth()),
+    mScreenHeight(graphics->getHeight()),
     mModeListModel(new ModeListModel),
     mModeList(new ListBox(mModeListModel, "videomode", this)),
     mFsCheckBox(new CheckBox(_("Full screen"), mFullScreenEnabled)),
@@ -215,6 +217,16 @@ Setup_Video::Setup_Video():
 
 void Setup_Video::apply()
 {
+    const std::string mode = mModeListModel->getElementAt(mModeList->getSelected());
+
+    if (mode.find("x") != std::string::npos)
+    {
+        const int width = atoi(mode.substr(0, mode.find("x")).c_str());
+        const int height = atoi(mode.substr(mode.find("x") + 1).c_str());
+
+        changeResolution(width, height);
+    }
+
     // Full screen changes
     bool fullscreen = mFsCheckBox->isSelected();
     if (fullscreen != (config.getValue("screen", false) == 1))
@@ -292,22 +304,26 @@ void Setup_Video::apply()
 
     // We sync old and new values at apply time
     mFullScreenEnabled = config.getValue("screen", false);
+    mOpenGLEnabled = config.getValue("opengl", false);
     mCustomCursorEnabled = config.getValue("customcursor", true);
     mNameEnabled = config.getValue("showownname", false);
+    mPickupChatEnabled = config.getValue("showpickupchat", true);
+    mPickupParticleEnabled = config.getValue("showpickupparticle", false);
     mSpeechMode = (int) config.getValue("speech", 3);
     mOpacity = config.getValue("guialpha", 0.8);
     mMouseOpacity = config.getValue("mousealpha", 0.7);
+    mScreenWidth = config.getValue("screenwidth", 800);
+    mScreenHeight = config.getValue("screenheight", 600);
     mFontSize = (int) config.getValue("fontSize", 11);
     mOverlayDetail = (int) config.getValue("OverlayDetail", 2);
     mParticleDetail = 3 - (int) config.getValue("particleEmitterSkip", 1);
     config.setValue("particleeffects", mParticleDetail != -1);
-    mOpenGLEnabled = config.getValue("opengl", false);
-    mPickupChatEnabled = config.getValue("showpickupchat", true);
-    mPickupParticleEnabled = config.getValue("showpickupparticle", false);
 }
 
 void Setup_Video::cancel()
 {
+    changeResolution(mScreenWidth, mScreenHeight);
+
     mFpsCheckBox->setSelected(mFps > 0);
     mFsCheckBox->setSelected(mFullScreenEnabled);
     mOpenGLCheckBox->setSelected(mOpenGLEnabled);
@@ -343,15 +359,15 @@ void Setup_Video::cancel()
     changeParticleDetailLevel(mParticleDetail);
 
     config.setValue("screen", mFullScreenEnabled ? true : false);
-    config.setValue("customcursor", mCustomCursorEnabled ? true : false);
-    config.setValue("speech", mSpeechMode);
-    config.setValue("showownname", mNameEnabled ? true : false);
-    config.setValue("guialpha", mOpacity);
-    config.setValue("mousealpha", mMouseOpacity);
     config.setValue("opengl", mOpenGLEnabled ? true : false);
+    config.setValue("customcursor", mCustomCursorEnabled ? true : false);
+    config.setValue("showownname", mNameEnabled ? true : false);
     config.setValue("showpickupchat", mPickupChatEnabled ? true : false);
     config.setValue("showpickupparticle", mPickupParticleEnabled ?
                     true : false);
+    config.setValue("guialpha", mOpacity);
+    config.setValue("mousealpha", mMouseOpacity);
+    config.setValue("speech", mSpeechMode);
 
     if (player_node)
         player_node->mUpdateName = true;
@@ -362,56 +378,14 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     if (event.getId() == "videomode")
     {
         const std::string mode = mModeListModel->getElementAt(mModeList->getSelected());
+
+        if (mode.find("x") == std::string::npos)
+            return;
+
         const int width = atoi(mode.substr(0, mode.find("x")).c_str());
         const int height = atoi(mode.substr(mode.find("x") + 1).c_str());
 
-        if (width != graphics->getWidth() || height != graphics->getHeight())
-        {
-            // TODO: If possible, fix resizing in place on Windows.
-            //
-            // Because: on Windows, the GL context get purged on resize!
-            // (well, not checked, but that what Internet reports)
-#ifdef WIN32
-            new OkDialog(_("Screen resolution changed"),
-                         _("Restart your client for the change to take effect."));
-#else
-            Widgets widgets = windowContainer->getWidgetList();
-            WidgetIterator iter;
-
-            // First save the window positions, adaptToNewSize will position
-            // them based on the saved positions.
-            for (iter = widgets.begin(); iter != widgets.end(); ++iter)
-            {
-                Window* window = dynamic_cast<Window*>(*iter);
-
-                if (window)
-                    window->saveWindowState();
-            }
-
-            graphics->resizeVideoMode(width, height);
-            gui->resize(graphics);
-
-            // The menuBar is a Popup, not a subclass of Window
-            if (menuBar)
-                menuBar->adjustSizeAndPosition();
-
-            if (!mInGame && desktop)
-                desktop->resize();
-
-            // Reposition all the open sub-windows. The rest of the windows will
-            // reposition themselves on opening.
-            for (iter = widgets.begin(); iter != widgets.end(); ++iter)
-            {
-                Window* window = dynamic_cast<Window*>(*iter);
-
-                if (window)
-                    window->adaptToNewSize();
-            }
-#endif
-        }
-
-        config.setValue("screenwidth", width);
-        config.setValue("screenheight", height);
+        changeResolution(width, height);
     }
     else if (event.getId() == "guialpha")
     {
@@ -499,6 +473,60 @@ void Setup_Video::action(const gcn::ActionEvent &event)
 
         mFpsSlider->setEnabled(fps > 0);
         mFpsField->setText(text);
+    }
+}
+
+void Setup_Video::changeResolution(const int &width, const int &height)
+{
+    if (width < 0 || height < 0)
+        return;
+
+    if (width != graphics->getWidth() || height != graphics->getHeight())
+    {
+        // TODO: If possible, fix resizing in place on Windows.
+        //
+        // Because: on Windows, the GL context get purged on resize!
+        // (well, not checked, but that what Internet reports)
+#ifdef WIN32
+        new OkDialog(_("Screen resolution changed"),
+                     _("Restart your client for the change to take effect."));
+#else
+        Widgets widgets = windowContainer->getWidgetList();
+        WidgetIterator iter;
+
+        // First save the window positions, adaptToNewSize will position
+        // them based on the saved positions.
+        for (iter = widgets.begin(); iter != widgets.end(); ++iter)
+        {
+            Window* window = dynamic_cast<Window*>(*iter);
+
+            if (window)
+                window->saveWindowState();
+        }
+
+        graphics->resizeVideoMode(width, height);
+        gui->resize(graphics);
+
+        // The menuBar is a Popup, not a subclass of Window
+        if (menuBar)
+            menuBar->adjustSizeAndPosition();
+
+        if (!mInGame && desktop)
+            desktop->resize();
+
+        // Reposition all the open sub-windows. The rest of the windows will
+        // reposition themselves on opening.
+        for (iter = widgets.begin(); iter != widgets.end(); ++iter)
+        {
+            Window* window = dynamic_cast<Window*>(*iter);
+
+            if (window)
+                window->adaptToNewSize();
+        }
+#endif
+
+        config.setValue("screenwidth", width);
+        config.setValue("screenheight", height);
     }
 }
 

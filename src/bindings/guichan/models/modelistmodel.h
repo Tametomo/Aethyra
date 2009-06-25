@@ -54,7 +54,7 @@ class ModeListModel : public gcn::ListModel
         /**
          * Returns element from container.
          */
-        std::string getElementAt(int i) { return mVideoModes[i]; }
+        std::string getElementAt(int i) { return (i < 0 || i >= (int) mVideoModes.size()) ? "" : mVideoModes[i]; }
 
     private:
         std::vector<std::string> mVideoModes;

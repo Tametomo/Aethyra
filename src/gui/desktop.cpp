@@ -131,11 +131,8 @@ void Desktop::resize()
 #ifdef PACKAGE_VERSION
     versionLabel->adjustSize();
 #endif
-
     progressLabel->adjustSize();
-
     setup->adjustSize();
-    setup->setPosition(getWidth() - setup->getWidth() - 3, 3);
 
     if (getWidth() != newScreenWidth || getHeight() != newScreenHeight)
     {
@@ -164,6 +161,8 @@ void Desktop::resize()
 
         positionDialog(currentDialog);
     }
+
+    setup->setPosition(getWidth() - setup->getWidth() - 3, 3);
 }
 
 void Desktop::reload()

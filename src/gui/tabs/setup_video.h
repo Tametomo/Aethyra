@@ -48,6 +48,8 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
 
         void changeParticleDetailLevel(const int &value);
 
+        void changeResolution(const int &width, const int &height);
+
         bool mFullScreenEnabled;
         bool mOpenGLEnabled;
         bool mCustomCursorEnabled;
@@ -58,6 +60,8 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
         double mMouseOpacity;
         int mFps;
         int mSpeechMode;
+        int mScreenWidth;
+        int mScreenHeight;
 
         ModeListModel *mModeListModel;
 
