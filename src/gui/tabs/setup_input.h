@@ -26,12 +26,14 @@
 #include <string>
 
 #include <guichan/actionlistener.hpp>
+#include <guichan/selectionlistener.hpp>
 
 #include "setuptabcontainer.h"
 
 #include "../../bindings/guichan/guichanfwd.h"
 
-class Setup_Input : public SetupTabContainer, public gcn::ActionListener
+class Setup_Input : public SetupTabContainer, public gcn::ActionListener,
+                    public gcn::SelectionListener
 {
     public:
         /**
@@ -48,6 +50,8 @@ class Setup_Input : public SetupTabContainer, public gcn::ActionListener
         void cancel();
 
         void action(const gcn::ActionEvent &event);
+
+        void valueChanged(const gcn::SelectionEvent &event);
 
         /**
          * Get an update on the assigned key.

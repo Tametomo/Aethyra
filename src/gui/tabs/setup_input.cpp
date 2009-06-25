@@ -50,7 +50,7 @@ Setup_Input::Setup_Input():
     mKeyListModel(new KeyListModel()),
     mCalibrateLabel(new Label(_("Press the button to start calibration"))),
     mJoystickCheckbox(new CheckBox(_("Enable joystick"))),
-    mKeyList(new ListBox(mKeyListModel)),
+    mKeyList(new ListBox(mKeyListModel, "assign", this)),
     mCalibrateButton(new Button(_("Calibrate"), "calibrate", this)),
     mKeySetting(false)
 {
@@ -63,6 +63,7 @@ Setup_Input::Setup_Input():
 
     mJoystickCheckbox->addActionListener(this);
 
+    mKeyList->addSelectionListener(this);
     mKeyList->addActionListener(this);
 
     ScrollArea *scrollArea = new ScrollArea(mKeyList);
@@ -113,6 +114,7 @@ void Setup_Input::apply()
                      _("Resolve them, or gameplay may result in strange "
                        "behavior."));
     }
+
     keyboard.setEnabled(true);
     keyboard.store();
 }
@@ -129,14 +131,14 @@ void Setup_Input::cancel()
     refreshKeys();
 }
 
+void Setup_Input::valueChanged(const gcn::SelectionEvent &event)
+{
+    mAssignKeyButton->setEnabled(!mKeySetting);
+}
+
 void Setup_Input::action(const gcn::ActionEvent &event)
 {
-    if (event.getSource() == mKeyList)
-    {
-        if (!mKeySetting)
-            mAssignKeyButton->setEnabled(true);
-    }
-    else if (event.getId() == "assign")
+    if (event.getId() == "assign")
     {
         mKeySetting = true;
         mAssignKeyButton->setEnabled(false);
@@ -155,9 +157,7 @@ void Setup_Input::action(const gcn::ActionEvent &event)
         return;
 
     if (event.getSource() == mJoystickCheckbox)
-    {
         joystick->setEnabled(mJoystickCheckbox->isSelected());
-    }
     else
     {
         if (joystick->isCalibrating())
@@ -189,6 +189,8 @@ void Setup_Input::newKeyCallback(int index)
     mKeySetting = false;
     refreshAssignedKey(index);
     mAssignKeyButton->setEnabled(true);
+    keyboard.setEnabled(true);
+    mKeyList->requestFocus();
 }
 
 void Setup_Input::refreshKeys()
