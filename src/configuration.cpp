@@ -24,7 +24,6 @@
 #include "configuration.h"
 #include "log.h"
 
-#include "utils/dtor.h"
 #include "utils/stringutils.h"
 #include "utils/xml.h"
 
@@ -81,7 +80,11 @@ float ConfigurationObject::getValue(const std::string &key, float deflt)
 
 void ConfigurationObject::deleteList(const std::string &name)
 {
-    delete_all(mContainerOptions[name]);
+    for (ConfigurationList::const_iterator it = mContainerOptions[name].begin();
+         it != mContainerOptions[name].end(); it++)
+        delete *it;
+
+    mContainerOptions[name].clear();
 }
 
 void ConfigurationObject::clear(void)
