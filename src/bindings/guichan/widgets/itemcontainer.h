@@ -142,10 +142,13 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          * Display only items that would use at least one of
          * these slots (argument is a bitmask).
          *
-         * Setting this to NO_EQUIP_SLOTS_FILTER displays all
-         * items, including non-equippable ones.
+         * Setting this to NO_EQUIP_SLOTS_FILTER clears the filter
+         * and displays all items, including non-equippable ones.
          *
          * Setting it to 0 allows no items.
+         *
+         * Note: the effect of simultaneously using both a type and a slots
+         * filter is undefined for the moment.
          */
         void setEquipSlotsFilter(signed int slots);
 
