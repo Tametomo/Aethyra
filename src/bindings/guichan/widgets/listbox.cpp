@@ -99,7 +99,17 @@ void ListBox::keyPressed(gcn::KeyEvent& keyEvent)
     gcn::Key key = keyEvent.getKey();
 
     if (key.getValue() == Key::ENTER || key.getValue() == Key::SPACE)
-        distributeActionEvent();
+    {
+        if (keyEvent.isShiftPressed())
+        {
+            const std::string actionEventId = getActionEventId();
+            setActionEventId("default");
+            distributeActionEvent();
+            setActionEventId(actionEventId);
+        }
+        else
+            distributeActionEvent();
+    }
     else if (key.getValue() == Key::UP)
         decrementSelected();
     else if (key.getValue() == Key::DOWN)

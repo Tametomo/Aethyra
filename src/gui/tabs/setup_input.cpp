@@ -73,7 +73,7 @@ Setup_Input::Setup_Input():
     mAssignKeyButton->addActionListener(this);
     mAssignKeyButton->setEnabled(false);
 
-    mMakeDefaultButton = new Button(_("Default"), "makeDefault", this);
+    mMakeDefaultButton = new Button(_("Default"), "default", this);
     mMakeDefaultButton->addActionListener(this);
 
     // Do the layout
@@ -147,7 +147,7 @@ void Setup_Input::action(const gcn::ActionEvent &event)
         keyboard.setNewKeyIndex(i);
         mKeyListModel->setElementAt(i, keyboard.getKeyCaption(i) + ": ?");
     }
-    else if (event.getId() == "makeDefault")
+    else if (event.getId() == "default")
     {
         keyboard.makeDefault();
         refreshKeys();
