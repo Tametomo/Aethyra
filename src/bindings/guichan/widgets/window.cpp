@@ -372,7 +372,7 @@ void Window::scheduleDelete()
 
 void Window::close()
 {
-    mVisible = false;
+    setVisible(false);
 }
 
 void Window::hide()
