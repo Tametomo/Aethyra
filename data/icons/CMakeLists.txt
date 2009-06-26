@@ -4,4 +4,4 @@ SET(FILES
 
 INSTALL(FILES ${FILES} DESTINATION ${DATA_DIR}/icons)
 
-INSTALL(FILES "tmw.png" DESTINATION share/pixmaps)
+INSTALL(FILES "aethyra.png" DESTINATION share/pixmaps)
