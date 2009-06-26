@@ -113,11 +113,6 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
         void mouseClicked(gcn::MouseEvent &event);
 
         /**
-         * Ensures the item popup is hidden on window hiding.
-         */
-        void widgetHidden(const gcn::Event& event);
-
-        /**
          * Focuses on the add button on gaining focus.
          */
         void requestFocus();

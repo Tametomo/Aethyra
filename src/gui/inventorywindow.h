@@ -83,11 +83,6 @@ class InventoryWindow : public Window, gcn::ActionListener,
          */
         void widgetShown(const gcn::Event& event);
 
-        /**
-         * Ensures the item popup is hidden on window hiding.
-         */
-        void widgetHidden(const gcn::Event& event);
-
     private:
         ItemContainer *mItems;
 

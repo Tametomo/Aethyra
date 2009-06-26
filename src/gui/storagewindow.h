@@ -78,11 +78,6 @@ class StorageWindow : public Window, gcn::ActionListener, gcn::SelectionListener
         void widgetShown(const gcn::Event& event);
 
         /**
-         * Ensures the item popup is hidden on window hiding.
-         */
-        void widgetHidden(const gcn::Event& event);
-
-        /**
          * Add the specified ammount of the specified item to storage
          */
         void addStore(Item* item, int amount);
