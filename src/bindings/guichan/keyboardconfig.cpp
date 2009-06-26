@@ -100,7 +100,7 @@ static KeyData const keyData[KeyboardConfig::KEY_TOTAL] = {
     {"keyQuit", SDLK_ESCAPE, _("Quit")},
     {"keyIgnoreInput1", SDLK_LSUPER, strprintf(_("Ignore Input %d"), 1)},
     {"keyIgnoreInput2", SDLK_RSUPER, strprintf(_("Ignore Input %d"), 2)},
-    {"keyDropFocus", SDLK_DELETE, _("Drop Keyboard Focus")}
+    {"keyDropFocus", SDLK_KP_PERIOD, _("Drop Keyboard Focus")}
 };
 
 void KeyboardConfig::init()
