@@ -196,9 +196,7 @@ void Setup_Input::newKeyCallback(int index)
 void Setup_Input::refreshKeys()
 {
     for (int i = 0; i < keyboard.KEY_TOTAL; i++)
-    {
         refreshAssignedKey(i);
-    }
 }
 
 void Setup_Input::keyUnresolved()

@@ -23,8 +23,6 @@
 
 #include "../graphics.h"
 
-#include "../../../configuration.h"
-
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
 

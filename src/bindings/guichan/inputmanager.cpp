@@ -59,7 +59,6 @@
 #include "../../resources/flooritemmanager.h"
 
 #include "../../resources/sprite/localplayer.h"
-#include "../../resources/sprite/npc.h"
 
 #include "../../utils/gettext.h"
 

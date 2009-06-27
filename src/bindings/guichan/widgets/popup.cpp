@@ -20,8 +20,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <guichan/exception.hpp>
-
 #include "popup.h"
 
 #include "../graphics.h"
@@ -29,8 +27,6 @@
 
 #include "../../../configuration.h"
 #include "../../../log.h"
-
-#include "../../../resources/image.h"
 
 Popup::Popup(const std::string &name, const std::string &skin,
              gcn::Container *parent):

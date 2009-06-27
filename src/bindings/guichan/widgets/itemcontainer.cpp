@@ -44,8 +44,6 @@
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
 
-#include "../../../resources/sprite/localplayer.h"
-
 #include "../../../utils/stringutils.h"
 
 const int ItemContainer::gridWidth = 36;  // item icon width + 4

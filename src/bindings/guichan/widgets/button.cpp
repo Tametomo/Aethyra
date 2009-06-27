@@ -156,9 +156,7 @@ Button::~Button()
         delete mConfigListener;
 
         for (int mode = 0; mode < BUTTON_COUNT; mode++)
-        {
             for_each(button[mode].grid, button[mode].grid + 9, dtor<Image*>());
-        }
     }
 }
 

@@ -35,10 +35,8 @@
 
 #include "../resources/beingmanager.h"
 #include "../resources/flooritemmanager.h"
-#include "../resources/resourcemanager.h"
 
 #include "../resources/sprite/localplayer.h"
-#include "../resources/sprite/monster.h"
 #include "../resources/sprite/npc.h"
 
 #include "../utils/stringutils.h"
@@ -392,7 +390,6 @@ void Viewport::showPopup(int x, int y, Being *being)
 void Viewport::closePopupMenu()
 {
     gcn::ActionEvent actionEvent(this, "cancel");
-
     mPopupMenu->action(actionEvent);
 }
 

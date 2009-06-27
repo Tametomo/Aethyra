@@ -23,7 +23,6 @@
 
 #include "textinputdialog.h"
 
-#include "../gui.h"
 #include "../layout.h"
 
 #include "../widgets/button.h"

@@ -64,9 +64,7 @@ class DropDownConfigListener : public ConfigListener
                 mDropDown->buttons[1][1]->setAlpha(mDropDown->mAlpha);
 
                 for (int a = 0; a < 9; a++)
-                {
                     mDropDown->skin.grid[a]->setAlpha(mDropDown->mAlpha);
-                }
             }
         }
     private:

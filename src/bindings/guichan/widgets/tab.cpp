@@ -105,9 +105,7 @@ Tab::~Tab()
         delete mConfigListener;
 
         for (int mode = 0; mode < TAB_COUNT; mode++)
-        {
             for_each(tabImg[mode].grid, tabImg[mode].grid + 9, dtor<Image*>());
-        }
     }
 }
 
@@ -171,9 +169,7 @@ void Tab::draw(gcn::Graphics *graphics)
             mLabel->setForegroundColor(guiPalette->getColor(Palette::TAB_HIGHLIGHT));
         }
         else
-        {
             mLabel->setForegroundColor(*mTabColor);
-        }
     }
 
     // draw tab

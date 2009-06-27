@@ -23,9 +23,6 @@
 #include "skilltablemodel.h"
 
 #include "../widgets/label.h"
-#include "../widgets/scrollarea.h"
-
-#include "../../../log.h"
 
 #include "../../../gui/skill.h"
 

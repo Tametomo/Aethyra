@@ -23,7 +23,6 @@
 #include <guichan/font.hpp>
 
 #include "gui.h"
-#include "palette.h"
 #include "text.h"
 #include "textmanager.h"
 #include "textrenderer.h"

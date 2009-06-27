@@ -47,15 +47,12 @@ std::string ShopListModel::getElementAt(int i)
 void ShopListModel::addItem(int inventoryIndex, int id, int quantity, int price)
 {
     ShopItem* item = 0;
+
     if (mMergeDuplicates)
-    {
         item = findItem(id);
-    }
 
     if (item)
-    {
         item->addDuplicate (inventoryIndex, quantity);
-    }
     else
     {
         item = new ShopItem(inventoryIndex, id, quantity, price);
@@ -92,10 +89,9 @@ ShopItem* ShopListModel::findItem(int id)
     for(it = mShopListModel.begin(); it != mShopListModel.end(); it++)
     {
         item = *(it);
+
         if (item->getId() == id)
-        {
             return item;
-        }
     }
 
     return 0;

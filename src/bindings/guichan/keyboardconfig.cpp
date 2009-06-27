@@ -25,7 +25,6 @@
 #include "sdl/sdlinput.h"
 
 #include "../../configuration.h"
-#include "../../log.h"
 
 #include "../../gui/tabs/setup_input.h"
 

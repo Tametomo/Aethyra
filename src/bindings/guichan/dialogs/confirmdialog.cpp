@@ -24,8 +24,6 @@
 
 #include "confirmdialog.h"
 
-#include "../gui.h"
-
 #include "../handlers/wordtextwraphandler.h"
 
 #include "../widgets/button.h"

@@ -21,7 +21,6 @@
  */
 
 #include <guichan/font.hpp>
-#include <guichan/listmodel.hpp>
 
 #include "shoplistbox.h"
 

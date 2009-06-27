@@ -29,8 +29,6 @@
 #include "../../../configlistener.h"
 #include "../../../configuration.h"
 #include "../../../emoteshortcut.h"
-#include "../../../inventory.h"
-#include "../../../log.h"
 
 #include "../../../resources/image.h"
 #include "../../../resources/resourcemanager.h"
@@ -198,9 +196,7 @@ void EmoteShortcutContainer::mousePressed(gcn::MouseEvent &event)
         emoteShortcut->setEmoteSelected(0);
     }
     else if (emoteShortcut->getEmote(index))
-    {
         mEmoteClicked = true;
-    }
 }
 
 void EmoteShortcutContainer::mouseReleased(gcn::MouseEvent &event)
@@ -224,9 +220,7 @@ void EmoteShortcutContainer::mouseReleased(gcn::MouseEvent &event)
             mEmoteMoved = 0;
         }
         else if (emoteShortcut->getEmote(index) && mEmoteClicked)
-        {
             emoteShortcut->useEmote(index + 1);
-        }
 
         if (mEmoteClicked)
             mEmoteClicked = false;

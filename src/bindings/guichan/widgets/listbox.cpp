@@ -21,9 +21,6 @@
  */
 
 #include <guichan/font.hpp>
-#include <guichan/graphics.hpp>
-#include <guichan/key.hpp>
-#include <guichan/listmodel.hpp>
 
 #include "listbox.h"
 

@@ -237,9 +237,8 @@ void BrowserBox::mousePressed(gcn::MouseEvent &event)
     LinkIterator i = find_if(mLinks.begin(), mLinks.end(),
             MouseOverLink(event.getX(), event.getY()));
 
-    if (i != mLinks.end()) {
+    if (i != mLinks.end())
         mLinkHandler->handleLink(i->link);
-    }
 }
 
 void BrowserBox::mouseMoved(gcn::MouseEvent &event)
@@ -262,9 +261,8 @@ void BrowserBox::draw(gcn::Graphics *graphics)
      * (while (x + part..+10 > getWidth() ), which cannot be false)
      */
     if (!isVisible() ||!getWidth()||!getHeight())
-    {
        return;
-    }
+
     // End of Forge's addition
     if (mOpaque)
     {
@@ -281,18 +279,16 @@ void BrowserBox::draw(gcn::Graphics *graphics)
                         mLinks[mSelectedLink].x1,
                         mLinks[mSelectedLink].y1,
                         mLinks[mSelectedLink].x2 - mLinks[mSelectedLink].x1,
-                        mLinks[mSelectedLink].y2 - mLinks[mSelectedLink].y1
-                        ));
+                        mLinks[mSelectedLink].y2 - mLinks[mSelectedLink].y1));
         }
 
         if ((mHighMode & UNDERLINE))
         {
             graphics->setColor(guiPalette->getColor(Palette::HYPERLINK));
-            graphics->drawLine(
-                    mLinks[mSelectedLink].x1,
-                    mLinks[mSelectedLink].y2,
-                    mLinks[mSelectedLink].x2,
-                    mLinks[mSelectedLink].y2);
+            graphics->drawLine(mLinks[mSelectedLink].x1,
+                               mLinks[mSelectedLink].y2,
+                               mLinks[mSelectedLink].x2,
+                               mLinks[mSelectedLink].y2);
         }
     }
 
@@ -352,9 +348,7 @@ void BrowserBox::draw(gcn::Graphics *graphics)
                     const gcn::Color col = guiPalette->getColor(c, valid);
 
                     if (c == '>')
-                    {
                         selColor = prevColor;
-                    }
                     else if (c == '<')
                     {
                         const int size = mLinks[link].x2 - mLinks[link].x1;
@@ -367,9 +361,7 @@ void BrowserBox::draw(gcn::Graphics *graphics)
                         selColor = col;
                     }
                     else if (valid)
-                    {
                         selColor = col;
-                    }
                     else
                     {
                         switch (c)
@@ -391,9 +383,7 @@ void BrowserBox::draw(gcn::Graphics *graphics)
                     start += 3;
 
                     if (start == row.size())
-                    {
                         break;
-                    }
                 }
                 graphics->setColor(selColor);
             }
@@ -403,8 +393,8 @@ void BrowserBox::draw(gcn::Graphics *graphics)
             std::string part = row.substr(start, len);
 
             // Auto wrap mode
-            if (mMode == AUTO_WRAP &&
-                    (x + font->getWidth(part) + 10) > getWidth())
+            if (mMode == AUTO_WRAP && (x + font->getWidth(part) + 10) >
+                getWidth())
             {
                 bool forced = false;
                 char const *hyphen = "~";
@@ -431,6 +421,7 @@ void BrowserBox::draw(gcn::Graphics *graphics)
                     // Skip to the start of the current character
                     while ((row[end] & 192) == 128)
                         end--;
+
                     end--; // And then to the last byte of the previous one
 
                     part = row.substr(start, end - start + 1);

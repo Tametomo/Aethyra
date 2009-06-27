@@ -27,7 +27,6 @@ ChatInput::ChatInput() :
     mProxy(NULL)
 {
     setVisible(false);
-
     addFocusListener(this);
 }
 

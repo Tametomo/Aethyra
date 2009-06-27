@@ -199,39 +199,19 @@ Setup_Colors::~Setup_Colors()
 void Setup_Colors::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "slider_grad")
-    {
         updateGradType();
-        updateColor();
-        return;
-    }
-
-    if (event.getId() == "slider_graddelay")
-    {
+    else if (event.getId() == "slider_graddelay")
         mGradDelayText->setText(toString(std::floor(mGradDelaySlider->getValue())));
-        updateColor();
-        return;
-    }
-
-    if (event.getId() == "slider_red")
-    {
+    else if (event.getId() == "slider_red")
         mRedText->setText(toString(std::floor(mRedSlider->getValue())));
-        updateColor();
-        return;
-    }
-
-    if (event.getId() == "slider_green")
-    {
+    else if (event.getId() == "slider_green")
         mGreenText->setText(toString(std::floor(mGreenSlider->getValue())));
-        updateColor();
-        return;
-    }
-
-    if (event.getId() == "slider_blue")
-    {
+    else if (event.getId() == "slider_blue")
         mBlueText->setText(toString(std::floor(mBlueSlider->getValue())));
-        updateColor();
+    else
         return;
-    }
+
+    updateColor();
 }
 
 void Setup_Colors::valueChanged(const gcn::SelectionEvent &event)
@@ -348,15 +328,12 @@ void Setup_Colors::valueChanged(const gcn::SelectionEvent &event)
             break;
     }
 
+    // If a gradient color, don't display the current, but the committed
+    // color at the sliders
     if (grad != Palette::STATIC && grad != Palette::PULSE)
-    { // If nonstatic color, don't display the current, but the committed
-      // color at the sliders
         col = &guiPalette->getCommittedColor(type);
-    }
     else if (grad == Palette::PULSE)
-    {
         col = &guiPalette->getTestColor(type);
-    }
 
     setEntry(mGradDelaySlider, mGradDelayText, delay);
     setEntry(mRedSlider, mRedText, col->r);

@@ -22,8 +22,8 @@
 
 #include <math.h>
 
-#include "palette.h"
 #include "gui.h"
+#include "palette.h"
 
 #include "../../configuration.h"
 
@@ -194,27 +194,22 @@ void Palette::setGradient(ColorType type, GradientType grad)
         mGradVector.push_back(elem);
     }
 
-    if (elem->grad != grad)
-    {
-        elem->grad = grad;
-    }
+    elem->grad = grad;
 }
 
 std::string Palette::getElementAt(int i)
 {
     if (i < 0 || i >= getNumberOfElements())
-    {
         return "";
-    }
+
     return mColVector[i].text;
 }
 
 Palette::ColorType Palette::getColorTypeAt(int i)
 {
     if (i < 0 || i >= getNumberOfElements())
-    {
         return CHAT;
-    }
+
     return mColVector[i].type;
 }
 
@@ -225,14 +220,11 @@ void Palette::commit(bool commitNonStatic)
     {
         i->committedGrad = i->grad;
         i->committedDelay = i->delay;
+
         if (commitNonStatic || i->grad == STATIC)
-        {
             i->committedColor = i->color;
-        }
         else if (i->grad == PULSE)
-        {
             i->committedColor = i->testColor;
-        }
     }
 }
 
@@ -242,9 +234,8 @@ void Palette::rollback()
          i != iEnd; ++i)
     {
         if (i->grad != i->committedGrad)
-        {
             setGradient(i->type, i->committedGrad);
-        }
+
         setGradientDelay(i->type, i->committedDelay);
         setColor(i->type, i->committedColor.r, i->committedColor.g,
                  i->committedColor.b);
@@ -321,15 +312,11 @@ void Palette::advanceGradient ()
             }
             if (mGradVector[i]->grad == SPECTRUM)
             {
-                if (colIndex % 2)
-                { // falling curve
+                if (colIndex % 2) // falling curve
                     colVal = (int)(255.0 * (cos(M_PI * pos / delay) + 1) / 2);
-                }
-                else
-                { // ascending curve
+                else // ascending curve
                     colVal = (int)(255.0 * (cos(M_PI * (delay - pos) / delay) +
                                    1) / 2);
-                }
 
                 mGradVector[i]->color.r =
                         (colIndex == 0 || colIndex == 5) ? 255 :

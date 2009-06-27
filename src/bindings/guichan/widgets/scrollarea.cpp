@@ -257,8 +257,7 @@ void ScrollArea::drawFrame(gcn::Graphics *graphics)
         const int w = getWidth() + bs * 2;
         const int h = getHeight() + bs * 2;
 
-        static_cast<Graphics*>(graphics)->
-            drawImageRect(0, 0, w, h, background);
+        static_cast<Graphics*>(graphics)->drawImageRect(0, 0, w, h, background);
     }
 }
 
@@ -346,8 +345,8 @@ void ScrollArea::drawHMarker(gcn::Graphics *graphics)
 {
     gcn::Rectangle dim = getHorizontalMarkerDimension();
 
-    static_cast<Graphics*>(graphics)->
-        drawImageRect(dim.x, dim.y, dim.width, dim.height, vMarker);
+    static_cast<Graphics*>(graphics)->drawImageRect(dim.x, dim.y, dim.width,
+                                                    dim.height, vMarker);
 }
 
 void ScrollArea::scroll()

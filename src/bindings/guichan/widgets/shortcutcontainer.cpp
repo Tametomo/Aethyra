@@ -22,12 +22,6 @@
 
 #include "shortcutcontainer.h"
 
-#include "../../../configuration.h"
-
-#include "../../../resources/image.h"
-
-#include "../../../utils/stringutils.h"
-
 float ShortcutContainer::mAlpha = 1.0;
 
 ShortcutContainer::ShortcutContainer():
