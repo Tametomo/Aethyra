@@ -94,7 +94,6 @@ void NPCHandler::handleMessage(MessageIn *msg)
         case SMSG_NPC_STR_INPUT:
             // Request for a string
             current_npc = msg->readInt32();
-            npcStringDialog->setValue("");
             npcStringDialog->setVisible(true);
             break;
     }

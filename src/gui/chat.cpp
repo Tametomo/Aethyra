@@ -346,13 +346,8 @@ void ChatWindow::action(const gcn::ActionEvent & event)
     }
     else if (event.getId() == "record")
     {
-        if (!mRecorder->isRecording() && !mRecorderInput->isVisible())
-            mRecorderInput->setVisible(true);
-        else if (!mRecorder->isRecording() && mRecorderInput->isVisible())
-        {
-            mRecorderInput->reset();
-            mRecorderInput->setVisible(false);
-        }
+        if (!mRecorder->isRecording())
+            mRecorderInput->setVisible(!mRecorderInput->isVisible());
         else
             updateRecorder("");
     }
@@ -396,7 +391,6 @@ void ChatWindow::updateRecorder(const std::string &mes)
     mRecordButton->changeImage(strprintf("graphics/gui/%s",
                               (mRecorder->isRecording() ? "circle-red.png" :
                                "circle-green.png")));
-    mRecorderInput->reset();
     mRecorderInput->setVisible(false);
 
     const std::string tip = (mRecorder->isRecording() ? _("Stop Recording") :

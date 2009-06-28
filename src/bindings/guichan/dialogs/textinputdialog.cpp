@@ -108,3 +108,9 @@ void TextInputDialog::requestFocus()
     mValueField->requestFocus();
 }
 
+void TextInputDialog::widgetShown(const gcn::Event& event)
+{
+    reset();
+    Window::widgetShown(event);
+}
+
