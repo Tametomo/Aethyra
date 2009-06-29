@@ -98,8 +98,7 @@ static KeyData const keyData[KeyboardConfig::KEY_TOTAL] = {
     {"keyChatScrollDown", SDLK_PAGEDOWN, _("Scroll Chat Down")},
     {"keyQuit", SDLK_ESCAPE, _("Quit")},
     {"keyIgnoreInput1", SDLK_LSUPER, strprintf(_("Ignore Input %d"), 1)},
-    {"keyIgnoreInput2", SDLK_RSUPER, strprintf(_("Ignore Input %d"), 2)},
-    {"keyDropFocus", SDLK_KP_PERIOD, _("Drop Keyboard Focus")}
+    {"keyIgnoreInput2", SDLK_RSUPER, strprintf(_("Ignore Input %d"), 2)}
 };
 
 void KeyboardConfig::init()

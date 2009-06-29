@@ -224,7 +224,6 @@ class KeyboardConfig
             KEY_QUIT,
             KEY_IGNORE_INPUT_1,
             KEY_IGNORE_INPUT_2,
-            KEY_DROP_FOCUS,
             KEY_TOTAL
         };
 

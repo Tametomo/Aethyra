@@ -303,26 +303,11 @@ void Gui::draw()
     mGraphics->popClipArea();
 }
 
-bool Gui::isInputFocused()
-{
-    gcn::Widget* widget = mFocusHandler->getFocused();
-
-    if (widget && !widget->isVisible())
-        mFocusHandler->focusNone();
-
-    return (widget && widget != windowContainer);
-}
-
 gcn::Widget* Gui::getFocused()
 {
     gcn::Widget* widget = mFocusHandler->getFocused();
 
     return (widget);
-}
-
-void Gui::focusNone()
-{
-    mFocusHandler->focusNone();
 }
 
 gcn::Font* Gui::getFont() const

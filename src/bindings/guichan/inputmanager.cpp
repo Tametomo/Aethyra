@@ -256,10 +256,6 @@ void InputManager::handleKeyboardInput()
                 case KeyboardConfig::KEY_WINDOW_SETUP:
                     requestedWindow = setupWindow;
                     break;
-                case KeyboardConfig::KEY_DROP_FOCUS:
-                    gui->focusNone();
-                    used = true;
-                    break;
             }
 
             if (mInGame)
