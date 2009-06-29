@@ -22,13 +22,22 @@
 #ifndef INPUT_MANAGER_H
 #define INPUT_MANAGER_H
 
+#include "sdl/sdlinput.h"
+
 class InputManager
 {
     public:
         InputManager();
         ~InputManager();
 
+        void forwardInput(const SDL_Event &event);
+
         void handleInput();
+
+    private:
+        void handleJoystickInput();
+
+        void handleKeyboardInput();
 };
 
 extern InputManager *inputManager;

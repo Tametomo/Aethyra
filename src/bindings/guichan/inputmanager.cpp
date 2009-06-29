@@ -29,8 +29,6 @@
 #include "dialogs/confirmdialog.h"
 #include "dialogs/okdialog.h"
 
-#include "sdl/sdlinput.h"
-
 #include "../sdl/joystick.h"
 #include "../sdl/sound.h"
 
@@ -106,11 +104,90 @@ InputManager::~InputManager()
     joystick = NULL;
 }
 
+void InputManager::forwardInput(const SDL_Event &event)
+{
+    try
+    {
+        guiInput->pushInput(event);
+    }
+    catch (gcn::Exception e)
+    {
+        const char* err = e.getMessage().c_str();
+        logger->log("Warning: guichan input exception: %s", err);
+    }
+}
+
 void InputManager::handleInput()
+{
+    handleJoystickInput();
+    handleKeyboardInput();
+}
+
+void InputManager::handleJoystickInput()
 {
     if (joystick)
         joystick->update();
+    else
+        return;
 
+    if (!mInGame)
+        return;
+
+    // Player actions
+    if (player_node && player_node->mAction != Being::DEAD)
+    {
+        const Uint16 x = player_node->mX;
+        const Uint16 y = player_node->mY;
+
+        if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
+        {
+            Being *target = player_node->getTarget();
+
+            // Target the nearest monster
+            if (joystick->buttonPressed(3))
+            {
+                target = beingManager->findNearestLivingBeing(x, y, 20,
+                                                              Being::MONSTER);
+                player_node->setTarget(target);
+            }
+
+            if (joystick->buttonPressed(0) && target &&
+                target->getType() != Being::NPC)
+            {
+                player_node->attack(target, true);
+            }
+        }
+
+        if (joystick->buttonPressed(1))
+        {
+            FloorItem *item = floorItemManager->findByCoordinates(x, y);
+
+            if (item)
+                player_node->pickUp(item);
+        }
+
+        if (joystick->buttonPressed(2))
+            player_node->toggleSit();
+
+        unsigned char direction = 0;
+
+        // Translate pressed keys to movement and direction
+        if (joystick->isUp())
+            direction |= Being::UP;
+        else if (joystick->isDown())
+            direction |= Being::DOWN;
+
+        if (joystick->isLeft())
+            direction |= Being::LEFT;
+        else if (joystick->isRight())
+            direction |= Being::RIGHT;
+
+        player_node->setWalkingDir(direction);
+    }
+}
+
+void InputManager::handleKeyboardInput()
+{
     // Events
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -133,18 +210,16 @@ void InputManager::handleInput()
             if (!keyboard.isEnabled())
                 return;
 
+            const int tKey = keyboard.getKeyIndex(event.key.keysym.sym);
+
             // Ignore input if either "ignore" key is pressed
             // Stops the character moving about if the user's window manager
             // uses "ignore+arrow key" to switch virtual desktops.
             if (keyboard.isKeyActive(keyboard.KEY_IGNORE_INPUT_1) ||
                 keyboard.isKeyActive(keyboard.KEY_IGNORE_INPUT_2))
-            {
                 return;
-            }
 
             gcn::Window *requestedWindow = NULL;
-
-            const int tKey = keyboard.getKeyIndex(event.key.keysym.sym);
 
             switch (tKey)
             {
@@ -272,8 +347,7 @@ void InputManager::handleInput()
                             bool targetKeyHit = true;
 
                             // Target the nearest monster
-                            if (keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST)
-                               || (joystick && joystick->buttonPressed(3)))
+                            if (keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST))
                             {
                                 target = beingManager->findNearestLivingBeing(
                                                        x, y, 20, Being::MONSTER);
@@ -299,9 +373,8 @@ void InputManager::handleInput()
                                 used = true;
                             }
 
-                            if ((keyboard.isKeyActive(keyboard.KEY_ATTACK) ||
-                                (joystick && joystick->buttonPressed(0))) && 
-                                 target && target->getType() != Being::NPC)
+                            if (keyboard.isKeyActive(keyboard.KEY_ATTACK) && 
+                                target && target->getType() != Being::NPC)
                             {
                                 player_node->attack(target, true);
                                 used = true;
@@ -328,22 +401,6 @@ void InputManager::handleInput()
                                                     target);
                             }
                             used = true;
-                        }
-
-                        if (joystick)
-                        {
-                            if (joystick->buttonPressed(1))
-                            {
-                                FloorItem *item =
-                                    floorItemManager->findByCoordinates(x, y);
-
-                                if (item)
-                                    player_node->pickUp(item);
-                            }
-                            else if (joystick->buttonPressed(2))
-                            {
-                                player_node->toggleSit();
-                            }
                         }
 
                         switch (tKey)
@@ -468,17 +525,7 @@ void InputManager::handleInput()
 
         // Push input to GUI when not used
         if (!used)
-        {
-            try
-            {
-                guiInput->pushInput(event);
-            }
-            catch (gcn::Exception e)
-            {
-                const char* err = e.getMessage().c_str();
-                logger->log("Warning: guichan input exception: %s", err);
-            }
-        }
+            forwardInput(event);
 
         // At the moment, this is the only bit of logic left out of the SDL
         // input poll, because it was causing continuous walking without
@@ -496,27 +543,15 @@ void InputManager::handleInput()
             keyboard.refreshActiveKeys();
 
             // Translate pressed keys to movement and direction
-            if (keyboard.isKeyActive(keyboard.KEY_MOVE_UP) ||
-               (joystick && joystick->isUp()))
-            {
+            if (keyboard.isKeyActive(keyboard.KEY_MOVE_UP))
                 direction |= Being::UP;
-            }
-            else if (keyboard.isKeyActive(keyboard.KEY_MOVE_DOWN) ||
-                    (joystick && joystick->isDown()))
-            {
+            else if (keyboard.isKeyActive(keyboard.KEY_MOVE_DOWN))
                 direction |= Being::DOWN;
-            }
 
-            if (keyboard.isKeyActive(keyboard.KEY_MOVE_LEFT) ||
-               (joystick && joystick->isLeft()))
-            {
+            if (keyboard.isKeyActive(keyboard.KEY_MOVE_LEFT))
                 direction |= Being::LEFT;
-            }
-            else if (keyboard.isKeyActive(keyboard.KEY_MOVE_RIGHT) ||
-                    (joystick && joystick->isRight()))
-            {
+            else if (keyboard.isKeyActive(keyboard.KEY_MOVE_RIGHT))
                 direction |= Being::RIGHT;
-            }
 
             player_node->setWalkingDir(direction);
        }
