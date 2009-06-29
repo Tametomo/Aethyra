@@ -151,9 +151,12 @@ bool KeyboardConfig::hasConflicts()
         for (j = i, j++; j < KEY_TOTAL; j++)
         {
             // Allow for item shortcut and emote keys to overlap, but no other keys
+            // Also don't allow a key to be assigned to tab, since this
+            // can mess up focus handling with the keyboard and cause unexpected
+            // behavior.
             if (!(((i >= KEY_SHORTCUT_1) && (i <= KEY_SHORTCUT_12)) &&
                   ((j >= KEY_EMOTE_1) && (j <= KEY_EMOTE_12))) &&
-                  (mKey[i].value == mKey[j].value))
+                  (mKey[i].value == mKey[j].value || mKey[i].value == SDLK_TAB))
             {
                 return true;
             }
