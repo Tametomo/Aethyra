@@ -30,6 +30,8 @@
 
 #include "../models/mappedlistmodel.h"
 
+class ProtectedFocusListener;
+
 /**
  * An implementation of a mapped list box whose purpose is rather similar to the
  * GUIChan ListBox's purpose, but have completely different model types for
@@ -51,20 +53,15 @@ class MappedListBox :  public gcn::Widget, public gcn::MouseListener,
 
         /**
          * Constructor.
-         */
-        MappedListBox();
-
-        /**
-         * Constructor.
          *
          * @param listModel the list model to use.
          */
-        MappedListBox(MappedListModel *listModel);
+        MappedListBox(MappedListModel *listModel = NULL);
 
         /**
          * Destructor.
          */
-        virtual ~MappedListBox() { }
+        virtual ~MappedListBox();
 
         /**
          * Sets the list model to use.
@@ -201,6 +198,8 @@ class MappedListBox :  public gcn::Widget, public gcn::MouseListener,
          * Typedef.
          */
         typedef SelectionListenerList::iterator SelectionListenerIterator;
+
+        ProtectedFocusListener *mProtFocusListener;
 };
 
 #endif

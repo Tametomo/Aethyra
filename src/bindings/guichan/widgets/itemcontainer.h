@@ -42,6 +42,7 @@ class Inventory;
 class Item;
 class ItemContainerConfigListener;
 class ItemPopup;
+class ProtectedFocusListener;
 
 /**
  * An item container. Used to show items in inventory and trade dialog.
@@ -157,6 +158,9 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          * to be shown (including non-equippable ones).
          */
         static const signed int NO_EQUIP_SLOTS_FILTER = -1;
+
+    protected:
+        ProtectedFocusListener *mProtFocusListener;
 
     private:
         // KeyListener

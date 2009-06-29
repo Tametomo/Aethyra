@@ -26,6 +26,7 @@
 #include <guichan/widgets/slider.hpp>
 
 class Image;
+class ProtectedFocusListener;
 class SliderConfigListener;
 
 /**
@@ -82,6 +83,7 @@ class Slider : public gcn::Slider
     protected:
         static float mAlpha;
         static SliderConfigListener *mConfigListener;
+        ProtectedFocusListener *mProtFocusListener;
 };
 
 #endif

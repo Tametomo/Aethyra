@@ -19,6 +19,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/focushandler.hpp>
 #include <guichan/graphics.hpp>
 #include <guichan/key.hpp>
 #include <guichan/mouseinput.hpp>
@@ -26,21 +27,11 @@
 
 #include "mappedlistbox.h"
 
+#include "../protectedfocuslistener.h"
+
 #include "../models/mappedlistmodel.h"
 
 #include "../sdl/sdlinput.h"
-
-MappedListBox::MappedListBox() :
-    mListModel(NULL),
-    mWrappingEnabled(false),
-    mFollowingMouse(false)
-{
-    setWidth(100);
-    setFocusable(true);
-
-    addMouseListener(this);
-    addKeyListener(this);
-}
 
 MappedListBox::MappedListBox(MappedListModel *listModel) :
     mWrappingEnabled(false),
@@ -52,6 +43,28 @@ MappedListBox::MappedListBox(MappedListModel *listModel) :
 
     addMouseListener(this);
     addKeyListener(this);
+
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_LEFT);
+    mProtFocusListener->blockKey(SDLK_RIGHT);
+    mProtFocusListener->blockKey(SDLK_UP);
+    mProtFocusListener->blockKey(SDLK_DOWN);
+    mProtFocusListener->blockKey(SDLK_SPACE);
+    mProtFocusListener->blockKey(SDLK_RETURN);
+    mProtFocusListener->blockKey(SDLK_HOME);
+    mProtFocusListener->blockKey(SDLK_END);
+}
+
+MappedListBox::~MappedListBox()
+{
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 void MappedListBox::draw(gcn::Graphics* graphics)

@@ -28,6 +28,7 @@
 class DropDownConfigListener;
 class Image;
 class ImageRect;
+class ProtectedFocusListener;
 
 /**
  * A drop down box from which you can select different values.
@@ -88,6 +89,8 @@ class DropDown : public gcn::DropDown
         static int instances;
         static Image *buttons[2][2];
         static ImageRect skin;
+
+        ProtectedFocusListener *mProtFocusListener;
 };
 
 #endif // end DROPDOWN_H

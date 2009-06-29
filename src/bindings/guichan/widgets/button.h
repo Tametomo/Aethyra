@@ -27,6 +27,7 @@
 
 class ButtonConfigListener;
 class ImageRect;
+class ProtectedFocusListener;
 
 /**
  * Button widget. Same as the Guichan button but with custom look.
@@ -62,6 +63,7 @@ class Button : public gcn::Button
 
     protected:
         static float mAlpha;
+        ProtectedFocusListener *mProtFocusListener;
 
     private:
         void init();

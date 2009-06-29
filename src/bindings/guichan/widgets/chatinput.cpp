@@ -24,6 +24,7 @@
 #include "proxywidget.h"
 
 ChatInput::ChatInput() :
+    TextField(),
     mProxy(NULL)
 {
     setVisible(false);

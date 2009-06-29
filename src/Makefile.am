@@ -16,6 +16,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/layouthelper.h \
 	      bindings/guichan/palette.cpp \
 	      bindings/guichan/palette.h \
+	      bindings/guichan/protectedfocuslistener.cpp \
+	      bindings/guichan/protectedfocuslistener.h \
 	      bindings/guichan/skin.cpp \
 	      bindings/guichan/skin.h \
 	      bindings/guichan/text.cpp \

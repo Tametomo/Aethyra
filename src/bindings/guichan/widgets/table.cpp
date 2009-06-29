@@ -21,12 +21,14 @@
  */
 
 #include <guichan/actionlistener.hpp>
+#include <guichan/focushandler.hpp>
 #include <guichan/graphics.hpp>
 #include <guichan/key.hpp>
 
 #include "table.h"
 
 #include "../palette.h"
+#include "../protectedfocuslistener.h"
 #include "../skin.h"
 
 #include "../sdl/sdlinput.h"
@@ -37,20 +39,19 @@ float Table::mAlpha = 1.0;
 
 class TableActionListener : public gcn::ActionListener
 {
-public:
-    TableActionListener(Table *_table, gcn::Widget *_widget, int _row, int _column);
+    public:
+        TableActionListener(Table *_table, gcn::Widget *_widget, int _row, int _column);
 
-    virtual ~TableActionListener(void);
+        virtual ~TableActionListener(void);
 
-    virtual void action(const gcn::ActionEvent& actionEvent);
+        virtual void action(const gcn::ActionEvent& actionEvent);
 
-protected:
-    Table *mTable;
-    int mRow;
-    int mColumn;
-    gcn::Widget *mWidget;
+    protected:
+        Table *mTable;
+        int mRow;
+        int mColumn;
+        gcn::Widget *mWidget;
 };
-
 
 TableActionListener::TableActionListener(Table *table, gcn::Widget *widget, int row, int column) :
     mTable(table),
@@ -97,12 +98,31 @@ Table::Table(TableModel *initial_model, gcn::Color background,
 
     addMouseListener(this);
     addKeyListener(this);
+
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_LEFT);
+    mProtFocusListener->blockKey(SDLK_RIGHT);
+    mProtFocusListener->blockKey(SDLK_UP);
+    mProtFocusListener->blockKey(SDLK_DOWN);
+    mProtFocusListener->blockKey(SDLK_SPACE);
+    mProtFocusListener->blockKey(SDLK_RETURN);
+    mProtFocusListener->blockKey(SDLK_HOME);
+    mProtFocusListener->blockKey(SDLK_END);
 }
 
 Table::~Table(void)
 {
     uninstallActionListeners();
     delete mModel;
+
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 TableModel* Table::getModel(void) const
@@ -190,54 +210,30 @@ int Table::getColumnWidth(int i)
 void Table::setSelectedRow(int selected)
 {
     if (!mModel)
-    {
         mSelectedRow = -1;
-    }
+    else  if (selected < 0 && !mWrappingEnabled)
+        mSelectedRow = -1;
+    else if (selected >= mModel->getRows() && mWrappingEnabled)
+        mSelectedRow = 0;
+    else if ((selected >= mModel->getRows() && !mWrappingEnabled) || 
+             (selected < 0 && mWrappingEnabled))
+        mSelectedRow = mModel->getRows() - 1;
     else
-    {
-        if (selected < 0 && !mWrappingEnabled)
-        {
-            mSelectedRow = -1;
-        }
-        else if (selected >= mModel->getRows() && mWrappingEnabled)
-        {
-            mSelectedRow = 0;
-        }
-        else if ((selected >= mModel->getRows() && !mWrappingEnabled) || 
-                 (selected < 0 && mWrappingEnabled))
-        {
-            mSelectedRow = mModel->getRows() - 1;
-        }
-        else
-        {
-            mSelectedRow = selected;
-        }
-    }
+        mSelectedRow = selected;
 }
 
 void Table::setSelectedColumn(int selected)
 {
     if (!mModel)
-    {
         mSelectedColumn = -1;
-    }
+    else if ((selected >= mModel->getColumns() && mWrappingEnabled) ||
+             (selected < 0 && !mWrappingEnabled))
+        mSelectedColumn = 0;
+    else if ((selected >= mModel->getColumns() && !mWrappingEnabled) || 
+             (selected < 0 && mWrappingEnabled))
+        mSelectedColumn = mModel->getColumns() - 1;
     else
-    {
-        if ((selected >= mModel->getColumns() && mWrappingEnabled) ||
-                 (selected < 0 && !mWrappingEnabled))
-        {
-            mSelectedColumn = 0;
-        }
-        else if ((selected >= mModel->getColumns() && !mWrappingEnabled) || 
-                 (selected < 0 && mWrappingEnabled))
-        {
-            mSelectedColumn = mModel->getColumns() - 1;
-        }
-        else
-        {
-            mSelectedColumn = selected;
-        }
-    }
+        mSelectedColumn = selected;
 }
 
 void Table::uninstallActionListeners(void)
@@ -255,12 +251,14 @@ void Table::installActionListeners(void)
     int columns = mModel->getColumns();
 
     for (int row = 0; row < rows; ++row)
+    {
         for (int column = 0; column < columns; ++column)
         {
             gcn::Widget *widget = mModel->getElementAt(row, column);
             action_listeners.push_back(new TableActionListener(this, widget,
                                                                   row, column));
         }
+    }
 
     _setFocusHandler(_getFocusHandler()); // propagate focus handler to widgets
 }
@@ -382,42 +380,29 @@ void Table::keyPressed(gcn::KeyEvent& keyEvent)
     gcn::Key key = keyEvent.getKey();
 
     if (key.getValue() == Key::ENTER || key.getValue() == Key::SPACE)
-    {
         distributeActionEvent();
-        keyEvent.consume();
-    }
     else if (key.getValue() == Key::UP)
-    {
         setSelectedRow(mSelectedRow - 1);
-        keyEvent.consume();
-    }
     else if (key.getValue() == Key::DOWN)
-    {
         setSelectedRow(mSelectedRow + 1);
-        keyEvent.consume();
-    }
     else if (key.getValue() == Key::LEFT)
-    {
         setSelectedColumn(mSelectedColumn - 1);
-        keyEvent.consume();
-    }
     else if (key.getValue() == Key::RIGHT)
-    {
         setSelectedColumn(mSelectedColumn + 1);
-        keyEvent.consume();
-    }
     else if (key.getValue() == Key::HOME)
     {
         setSelectedRow(0);
         setSelectedColumn(0);
-        keyEvent.consume();
     }
     else if (key.getValue() == Key::END)
     {
         setSelectedRow(mModel->getRows() - 1);
         setSelectedColumn(mModel->getColumns() - 1);
-        keyEvent.consume();
     }
+    else
+        return;
+
+    keyEvent.consume();
 }
 
 // -- MouseListener notifications
@@ -444,9 +429,7 @@ void Table::mouseWheelMovedUp(gcn::MouseEvent& mouseEvent)
     if (isFocused())
     {
         if (getSelectedRow() > 0 || (getSelectedRow() == 0 && mWrappingEnabled))
-        {
             setSelectedRow(getSelectedRow() - 1);
-        }
 
         mouseEvent.consume();
     }
@@ -457,7 +440,6 @@ void Table::mouseWheelMovedDown(gcn::MouseEvent& mouseEvent)
     if (isFocused())
     {
         setSelectedRow(getSelectedRow() + 1);
-
         mouseEvent.consume();
     }
 }
@@ -535,10 +517,7 @@ int Table::getColumnForX(int x)
             break;
     }
 
-    if (column < 0 || column >= mModel->getColumns())
-        return -1;
-    else
-        return column;
+    return (column < 0 || column >= mModel->getColumns()) ? -1 : column;
 }
 
 void Table::_setFocusHandler(gcn::FocusHandler* focusHandler)
@@ -546,11 +525,15 @@ void Table::_setFocusHandler(gcn::FocusHandler* focusHandler)
     gcn::Widget::_setFocusHandler(focusHandler);
 
     if (mModel)
+    {
         for (int r = 0; r < mModel->getRows(); ++r)
+        {
             for (int c = 0; c < mModel->getColumns(); ++c)
             {
                 gcn::Widget *w = mModel->getElementAt(r, c);
                 if (w)
                     w->_setFocusHandler(focusHandler);
             }
+        }
+    }
 }

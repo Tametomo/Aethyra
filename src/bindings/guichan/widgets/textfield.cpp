@@ -20,12 +20,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/focushandler.hpp>
 #include <guichan/font.hpp>
 
 #include "textfield.h"
 
 #include "../graphics.h"
 #include "../palette.h"
+#include "../protectedfocuslistener.h"
 
 #include "../sdl/sdlinput.h"
 
@@ -111,6 +113,21 @@ TextField::TextField(const std::string& text,
         config.addListener("guialpha", mConfigListener);
     }
 
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->setNonFormattingKeyLock(true);
+    mProtFocusListener->blockKey(SDLK_LEFT);
+    mProtFocusListener->blockKey(SDLK_RIGHT);
+    mProtFocusListener->blockKey(SDLK_UP);
+    mProtFocusListener->blockKey(SDLK_DOWN);
+    mProtFocusListener->blockKey(SDLK_DELETE);
+    mProtFocusListener->blockKey(SDLK_BACKSPACE);
+    mProtFocusListener->blockKey(SDLK_RETURN);
+    mProtFocusListener->blockKey(SDLK_HOME);
+    mProtFocusListener->blockKey(SDLK_END);
+
     instances++;
 }
 
@@ -125,6 +142,12 @@ TextField::~TextField()
 
         for_each(skin.grid, skin.grid + 9, dtor<Image*>());
     }
+
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 void TextField::draw(gcn::Graphics *graphics)

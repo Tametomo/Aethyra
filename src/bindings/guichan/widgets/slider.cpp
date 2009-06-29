@@ -20,9 +20,12 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/focushandler.hpp>
+
 #include "slider.h"
 
 #include "../graphics.h"
+#include "../protectedfocuslistener.h"
 
 #include "../sdl/sdlinput.h"
 
@@ -115,6 +118,12 @@ Slider::~Slider()
         delete vGrip;
         delete vGripHi;
     }
+
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 void Slider::init()
@@ -185,6 +194,15 @@ void Slider::init()
         mConfigListener = new SliderConfigListener(this);
         config.addListener("guialpha", mConfigListener);
     }
+
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_LEFT);
+    mProtFocusListener->blockKey(SDLK_RIGHT);
+    mProtFocusListener->blockKey(SDLK_UP);
+    mProtFocusListener->blockKey(SDLK_DOWN);
 
     mInstances++;
 

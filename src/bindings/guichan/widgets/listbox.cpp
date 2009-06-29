@@ -20,11 +20,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/focushandler.hpp>
 #include <guichan/font.hpp>
 
 #include "listbox.h"
 
 #include "../palette.h"
+#include "../protectedfocuslistener.h"
 #include "../skin.h"
 
 #include "../sdl/sdlinput.h"
@@ -40,6 +42,28 @@ ListBox::ListBox(gcn::ListModel *listModel, const std::string &actionEventId,
 
     if (listener && !actionEventId.empty())
         addActionListener(listener);
+
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_LEFT);
+    mProtFocusListener->blockKey(SDLK_RIGHT);
+    mProtFocusListener->blockKey(SDLK_UP);
+    mProtFocusListener->blockKey(SDLK_DOWN);
+    mProtFocusListener->blockKey(SDLK_SPACE);
+    mProtFocusListener->blockKey(SDLK_RETURN);
+    mProtFocusListener->blockKey(SDLK_HOME);
+    mProtFocusListener->blockKey(SDLK_END);
+}
+
+ListBox::~ListBox()
+{
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 void ListBox::draw(gcn::Graphics *graphics)

@@ -27,6 +27,7 @@
 
 class CheckBoxConfigListener;
 class Image;
+class ProtectedFocusListener;
 
 /**
  * Check box widget. Same as the Guichan check box but with custom look.
@@ -60,6 +61,7 @@ class CheckBox : public gcn::CheckBox
 
     protected:
         static float mAlpha;
+        ProtectedFocusListener *mProtFocusListener;
 
     private:
         static int instances;

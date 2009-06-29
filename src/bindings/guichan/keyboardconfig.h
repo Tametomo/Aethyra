@@ -24,6 +24,8 @@
 #define KEYBOARDCONFIG_H
 
 #include <SDL_types.h>
+
+#include <list>
 #include <string>
 
 /**
@@ -71,6 +73,26 @@ class KeyboardConfig
          * Calls a function back so the key re-assignment(s) can be seen.
          */
         void callbackNewKey();
+
+        /**
+         * Sets whether to lock nonformatting keys from input or not.
+         */
+        void setNonFormattingKeyLock(bool lock) { mNonFormatKeyLock = lock; }
+
+        /**
+         * Locks a key from being used outside of GUIChan key calls.
+         */
+        void lockKey(const int &keyValue);
+
+        /**
+         * Unlocks a key from being used outside of GUIChan key calls.
+         */
+        void unlockKey(const int &keyValue);
+
+        /**
+         * Whether input is currently being locked on a key.
+         */
+        bool isKeyLocked(const int &index);
 
         /**
          * Obtain the value stored in memory.
@@ -209,8 +231,14 @@ class KeyboardConfig
     private:
         int mNewKeyIndex;              /**< Index of new key to be assigned */
         bool mEnabled;                 /**< Flag to respond to key input */
+        bool mNonFormatKeyLock;        /**< Flag to state whether a non-formatting
+                                            (character, number, punctuation, etc.)
+                                            key input should be ignored */
 
         Setup_Input *mSetupKey;        /**< Reference to setup window */
+
+        std::list<int> mLockedKeys;    /**< List containing all current
+                                            GUIChan locked keys */
 
         KeyFunction mKey[KEY_TOTAL];   /**< Pointer to all the key data */
 

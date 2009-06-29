@@ -21,12 +21,14 @@
  */
 
 #include <guichan/exception.hpp>
+#include <guichan/focushandler.hpp>
 #include <guichan/font.hpp>
 
 #include "button.h"
 
 #include "../graphics.h"
 #include "../palette.h"
+#include "../protectedfocuslistener.h"
 
 #include "../../../configlistener.h"
 #include "../../../configuration.h"
@@ -143,6 +145,14 @@ void Button::init()
         mConfigListener = new ButtonConfigListener(this);
         config.addListener("guialpha", mConfigListener);
     }
+
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_SPACE);
+    mProtFocusListener->blockKey(SDLK_RETURN);
+
     mInstances++;
 }
 
@@ -158,6 +168,12 @@ Button::~Button()
         for (int mode = 0; mode < BUTTON_COUNT; mode++)
             for_each(button[mode].grid, button[mode].grid + 9, dtor<Image*>());
     }
+
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 void Button::draw(gcn::Graphics *graphics)

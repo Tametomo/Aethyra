@@ -22,12 +22,15 @@
 
 #include <algorithm>
 
+#include <guichan/focushandler.hpp>
+
 #include "dropdown.h"
 #include "listbox.h"
 #include "scrollarea.h"
 
-#include "../palette.h"
 #include "../graphics.h"
+#include "../palette.h"
+#include "../protectedfocuslistener.h"
 
 #include "../sdl/sdlinput.h"
 
@@ -127,6 +130,19 @@ DropDown::DropDown(gcn::ListModel *listModel):
         config.addListener("guialpha", mConfigListener);
     }
 
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_LEFT);
+    mProtFocusListener->blockKey(SDLK_RIGHT);
+    mProtFocusListener->blockKey(SDLK_UP);
+    mProtFocusListener->blockKey(SDLK_DOWN);
+    mProtFocusListener->blockKey(SDLK_SPACE);
+    mProtFocusListener->blockKey(SDLK_RETURN);
+    mProtFocusListener->blockKey(SDLK_HOME);
+    mProtFocusListener->blockKey(SDLK_END);
+
     instances++;
 }
 
@@ -148,6 +164,12 @@ DropDown::~DropDown()
     }
 
     delete mScrollArea;
+
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 void DropDown::draw(gcn::Graphics* graphics)

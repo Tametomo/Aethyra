@@ -113,6 +113,7 @@ void KeyboardConfig::init()
     }
     mNewKeyIndex = KEY_NO_VALUE;
     mEnabled = true;
+    mNonFormatKeyLock = false;
 
     retrieve();
 }
@@ -166,6 +167,54 @@ void KeyboardConfig::callbackNewKey()
     mSetupKey->newKeyCallback(mNewKeyIndex);
 }
 
+void KeyboardConfig::lockKey(const int &keyValue)
+{
+    mLockedKeys.push_back(keyValue);
+}
+
+void KeyboardConfig::unlockKey(const int &keyValue)
+{
+    for (std::list<int>::iterator it = mLockedKeys.begin();
+         it != mLockedKeys.end(); it++)
+    {
+        if (*it == keyValue)
+            it = mLockedKeys.erase(it);
+    }
+}
+
+bool KeyboardConfig::isKeyLocked(const int &index)
+{
+    bool locked = false;
+
+    if (mNonFormatKeyLock)
+    {
+        if ((mKey[index].value & 0xFF80) == 0)
+        {
+            char key = mKey[index].value & 0x7F;
+
+            if (isalpha(key) || isdigit(key) || ispunct(key))
+                locked = true;
+        }
+        else // Unicode character, so lock it
+            locked = true;
+    }
+
+    if (!locked)
+    {
+        for (std::list<int>::iterator it = mLockedKeys.begin();
+             it != mLockedKeys.end(); it++)
+        {
+            if (*it == mKey[index].value)
+            {
+                locked = true;
+                break;
+            }
+        }
+    }
+
+    return mEnabled && locked;
+}
+
 int KeyboardConfig::getKeyIndex(int keyValue) const
 {
     for (int i = 0; i < KEY_TOTAL; i++)
@@ -188,7 +237,8 @@ int KeyboardConfig::getKeyEmoteOffset(int keyValue) const
 
 bool KeyboardConfig::isKeyActive(int index)
 {
-    return !mActiveKeys || !mEnabled ? false : mActiveKeys[mKey[index].value];
+    return mActiveKeys && mEnabled && !isKeyLocked(index) ?
+           mActiveKeys[mKey[index].value] : false;
 }
 
 void KeyboardConfig::refreshActiveKeys()

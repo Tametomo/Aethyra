@@ -26,6 +26,7 @@
 #include <guichan/widgets/radiobutton.hpp>
 
 class Image;
+class ProtectedFocusListener;
 class RadioButtonConfigListener;
 
 /*
@@ -61,6 +62,7 @@ class RadioButton : public gcn::RadioButton
     protected:
         static float mAlpha;
         static RadioButtonConfigListener *mConfigListener;
+        ProtectedFocusListener *mProtFocusListener;
 
     private:
         static int instances;

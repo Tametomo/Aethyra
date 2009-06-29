@@ -20,6 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/focushandler.hpp>
 #include <guichan/font.hpp>
 #include <guichan/mouseinput.hpp>
 #include <guichan/selectionlistener.hpp>
@@ -28,6 +29,7 @@
 
 #include "../graphics.h"
 #include "../gui.h"
+#include "../protectedfocuslistener.h"
 #include "../skin.h"
 
 #include "../sdl/sdlinput.h"
@@ -90,6 +92,17 @@ EmoteContainer::EmoteContainer(const std::string &actionEventId,
         mMaxEmote = EmoteDB::getLast() + 1;
     }
 
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_LEFT);
+    mProtFocusListener->blockKey(SDLK_RIGHT);
+    mProtFocusListener->blockKey(SDLK_UP);
+    mProtFocusListener->blockKey(SDLK_DOWN);
+    mProtFocusListener->blockKey(SDLK_SPACE);
+    mProtFocusListener->blockKey(SDLK_RETURN);
+
     mInstances++;
 
     addKeyListener(this);
@@ -108,6 +121,12 @@ EmoteContainer::~EmoteContainer()
 
         delete mPopupMenu;
     }
+
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 void EmoteContainer::draw(gcn::Graphics *graphics)

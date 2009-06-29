@@ -20,10 +20,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/focushandler.hpp>
+
 #include "checkbox.h"
 
 #include "../graphics.h"
 #include "../palette.h"
+#include "../protectedfocuslistener.h"
 
 #include "../../../configlistener.h"
 #include "../../../configuration.h"
@@ -98,6 +101,13 @@ CheckBox::CheckBox(const std::string& caption, bool selected):
         config.addListener("guialpha", mConfigListener);
     }
 
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_SPACE);
+    mProtFocusListener->blockKey(SDLK_RETURN);
+
     instances++;
 }
 
@@ -117,6 +127,12 @@ CheckBox::~CheckBox()
         delete checkBoxDisabled;
         delete checkBoxDisabledChecked;
     }
+
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 void CheckBox::draw(gcn::Graphics* graphics)

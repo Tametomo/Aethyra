@@ -25,6 +25,8 @@
 
 #include <guichan/widgets/listbox.hpp>
 
+class ProtectedFocusListener;
+
 /**
  * A list box, meant to be used inside a scroll area. Same as the Guichan list
  * box except this one doesn't have a background, instead completely relying
@@ -40,6 +42,8 @@ class ListBox : public gcn::ListBox
          */
         ListBox(gcn::ListModel *listModel, const std::string &actionEventId = "",
                 gcn::ActionListener *listener = NULL);
+
+        virtual ~ListBox();
 
         /**
          * Draws the list box.
@@ -66,6 +70,8 @@ class ListBox : public gcn::ListBox
 
     protected:
         static float mAlpha;
+
+        ProtectedFocusListener *mProtFocusListener;
 };
 
 #endif

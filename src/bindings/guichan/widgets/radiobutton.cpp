@@ -20,9 +20,12 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/focushandler.hpp>
+
 #include "radiobutton.h"
 
 #include "../graphics.h"
+#include "../protectedfocuslistener.h"
 
 #include "../../../configlistener.h"
 #include "../../../configuration.h"
@@ -85,6 +88,13 @@ RadioButton::RadioButton(const std::string& caption, const std::string& group,
         config.addListener("guialpha", mConfigListener);
     }
 
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_SPACE);
+    mProtFocusListener->blockKey(SDLK_RETURN);
+
     instances++;
 }
 
@@ -102,6 +112,12 @@ RadioButton::~RadioButton()
         radioDisabled->decRef();
         radioDisabledChecked->decRef();
     }
+
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 void RadioButton::drawBox(gcn::Graphics* graphics)

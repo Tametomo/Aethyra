@@ -28,6 +28,7 @@
 
 #include <string>
 
+class ProtectedFocusListener;
 class Tab;
 
 /**
@@ -40,6 +41,8 @@ class TabbedArea : public gcn::TabbedArea
          * Constructor.
          */
         TabbedArea();
+
+        virtual ~TabbedArea();
 
         /**
          * Draw the tabbed area.
@@ -92,6 +95,8 @@ class TabbedArea : public gcn::TabbedArea
         // Inherited from MouseListener
 
         void mousePressed(gcn::MouseEvent &mouseEvent);
+    protected:
+        ProtectedFocusListener *mProtFocusListener;
     private:
         typedef std::vector< std::pair<gcn::Tab*, gcn::Widget*> > TabContainer;
 };

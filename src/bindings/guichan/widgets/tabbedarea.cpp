@@ -20,16 +20,39 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/focushandler.hpp>
+
 #include <guichan/widgets/container.hpp>
 
 #include "tab.h"
 #include "tabbedarea.h"
 
+#include "../protectedfocuslistener.h"
+
 #include "../sdl/sdlinput.h"
 
-TabbedArea::TabbedArea() : gcn::TabbedArea()
+TabbedArea::TabbedArea() :
+    gcn::TabbedArea()
 {
     mWidgetContainer->setOpaque(false);
+
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_LEFT);
+    mProtFocusListener->blockKey(SDLK_RIGHT);
+    mProtFocusListener->blockKey(SDLK_UP);
+    mProtFocusListener->blockKey(SDLK_DOWN);
+}
+
+TabbedArea::~TabbedArea()
+{
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 int TabbedArea::getNumberOfTabs()

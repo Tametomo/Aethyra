@@ -117,6 +117,8 @@
 		<Unit filename="src\bindings\guichan\layouthelper.h" />
 		<Unit filename="src\bindings\guichan\palette.cpp" />
 		<Unit filename="src\bindings\guichan\palette.h" />
+		<Unit filename="src\bindings\guichan\protectedfocuslistener.cpp" />
+		<Unit filename="src\bindings\guichan\protectedfocuslistener.h" />
 		<Unit filename="src\bindings\guichan\skin.cpp" />
 		<Unit filename="src\bindings\guichan\skin.h" />
 		<Unit filename="src\bindings\guichan\text.cpp" />

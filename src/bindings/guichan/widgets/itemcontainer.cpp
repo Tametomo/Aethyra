@@ -20,6 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/focushandler.hpp>
 #include <guichan/font.hpp>
 #include <guichan/mouseinput.hpp>
 #include <guichan/selectionlistener.hpp>
@@ -29,6 +30,7 @@
 #include "../graphics.h"
 #include "../gui.h"
 #include "../palette.h"
+#include "../protectedfocuslistener.h"
 
 #include "../sdl/sdlinput.h"
 
@@ -109,6 +111,17 @@ ItemContainer::ItemContainer(Inventory *inventory,
             logger->error("Unable to load selection.png");
     }
 
+    mProtFocusListener = new ProtectedFocusListener();
+
+    addFocusListener(mProtFocusListener);
+
+    mProtFocusListener->blockKey(SDLK_LEFT);
+    mProtFocusListener->blockKey(SDLK_RIGHT);
+    mProtFocusListener->blockKey(SDLK_UP);
+    mProtFocusListener->blockKey(SDLK_DOWN);
+    mProtFocusListener->blockKey(SDLK_SPACE);
+    mProtFocusListener->blockKey(SDLK_RETURN);
+
     mInstances++;
 
     mMaxItems = mInventory->getLastUsedSlot(); // Count from 0, usage from 2
@@ -136,6 +149,12 @@ ItemContainer::~ItemContainer()
         delete mItemPopup;
         delete mPopupMenu;
     }
+
+    if (mFocusHandler && mFocusHandler->isFocused(this))
+        mFocusHandler->focusNone();
+
+    removeFocusListener(mProtFocusListener);
+    delete mProtFocusListener;
 }
 
 void ItemContainer::logic()

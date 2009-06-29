@@ -217,7 +217,14 @@ void InputManager::handleKeyboardInput()
             // uses "ignore+arrow key" to switch virtual desktops.
             if (keyboard.isKeyActive(keyboard.KEY_IGNORE_INPUT_1) ||
                 keyboard.isKeyActive(keyboard.KEY_IGNORE_INPUT_2))
-                return;
+                continue;
+
+            if (keyboard.isKeyLocked(tKey))
+            {
+                used = true;
+                forwardInput(event);
+                continue;
+            }
 
             gcn::Window *requestedWindow = NULL;
 
@@ -310,144 +317,138 @@ void InputManager::handleKeyboardInput()
                     }
                 }
 
-                if (!gui->isInputFocused())
+                if (keyboard.isKeyActive(keyboard.KEY_TOGGLE_CHAT) &&
+                    chatWindow)
                 {
-                    if (keyboard.isKeyActive(keyboard.KEY_TOGGLE_CHAT) &&
-                        chatWindow)
+                    chatWindow->requestChatFocus();
+                    used = true;
+                }
+
+                // Player actions
+                if (player_node && player_node->mAction != Being::DEAD)
+                {
+                    Being *target = player_node->getTarget();
+                    const Uint16 x = player_node->mX;
+                    const Uint16 y = player_node->mY;
+
+                    // Do not activate item shortcuts if tradewindow is visible
+                    if (!tradeWindow->isVisible())
                     {
-                        chatWindow->requestChatFocus();
-                        used = true;
+                        for (int i = KeyboardConfig::KEY_SHORTCUT_1;
+                                 i <= KeyboardConfig::KEY_SHORTCUT_12;
+                                 i++)
+                        {
+                            if (tKey == i)
+                            {
+                                itemShortcut->useItem(i - KeyboardConfig::KEY_SHORTCUT_1);
+                                used = true;
+                                break;
+                            }
+                        }
                     }
 
-                    // Player actions
-                    if (player_node && player_node->mAction != Being::DEAD)
+                    if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
                     {
-                        Being *target = player_node->getTarget();
-                        const Uint16 x = player_node->mX;
-                        const Uint16 y = player_node->mY;
+                        bool targetKeyHit = true;
 
-                        // Do not activate item shortcuts if tradewindow is visible
-                        if (!tradeWindow->isVisible())
+                        // Target the nearest monster
+                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST))
                         {
-                            for (int i = KeyboardConfig::KEY_SHORTCUT_1;
-                                     i <= KeyboardConfig::KEY_SHORTCUT_12;
-                                     i++)
-                            {
-                                if (tKey == i)
-                                {
-                                    itemShortcut->useItem(i - KeyboardConfig::KEY_SHORTCUT_1);
-                                    used = true;
-                                    break;
-                                }
-                            }
+                            target = beingManager->findNearestLivingBeing(
+                                                   x, y, 20, Being::MONSTER);
                         }
-
-                        if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
+                        // Target the nearest player
+                        else if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER))
                         {
-                            bool targetKeyHit = true;
-
-                            // Target the nearest monster
-                            if (keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST))
-                            {
-                                target = beingManager->findNearestLivingBeing(
-                                                       x, y, 20, Being::MONSTER);
-                            }
-                            // Target the nearest player
-                            else if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER))
-                            {
-                                target = beingManager->findNearestLivingBeing(
-                                                       x, y, 20, Being::PLAYER);
-                            }
-                            // Target the nearest npc
-                            else if (keyboard.isKeyActive(keyboard.KEY_TARGET_NPC))
-                            {
-                                target = beingManager->findNearestLivingBeing(
-                                                       x, y, 20, Being::NPC);
-                            }
-                            else
-                                targetKeyHit = false;
-
-                            if (targetKeyHit)
-                            {
-                                player_node->setTarget(target);
-                                used = true;
-                            }
-
-                            if (keyboard.isKeyActive(keyboard.KEY_ATTACK) && 
-                                target && target->getType() != Being::NPC)
-                            {
-                                player_node->attack(target, true);
-                                used = true;
-                            }
+                            target = beingManager->findNearestLivingBeing(
+                                                   x, y, 20, Being::PLAYER);
                         }
-                        // Stop attacking
+                        // Target the nearest npc
+                        else if (keyboard.isKeyActive(keyboard.KEY_TARGET_NPC))
+                        {
+                            target = beingManager->findNearestLivingBeing(
+                                                   x, y, 20, Being::NPC);
+                        }
                         else
-                        {
-                            player_node->stopAttack();
-                        }
+                            targetKeyHit = false;
 
-                        if (keyboard.isKeyActive(keyboard.KEY_BEING_MENU))
+                        if (targetKeyHit)
                         {
-                            if (!target)
-                                target = beingManager->findNearestLivingBeing(
-                                                       x, y, 20);
-
-                            if (target)
-                            {
-                                viewport->showPopup(target->mX * 32 -
-                                                    viewport->getCameraX() + 16,
-                                                    target->mY * 32 -
-                                                    viewport->getCameraY(),
-                                                    target);
-                            }
+                            player_node->setTarget(target);
                             used = true;
                         }
 
-                        switch (tKey)
+                        if (keyboard.isKeyActive(keyboard.KEY_ATTACK) && 
+                            target && target->getType() != Being::NPC)
                         {
-                            case KeyboardConfig::KEY_PICKUP:
-                                {
-                                    Uint16 x = player_node->mX;
-                                    Uint16 y = player_node->mY;
-                                    FloorItem *item = floorItemManager->
-                                                          findByCoordinates(x, y);
-
-                                    // If none below the player, try the tile in
-                                    // front of the player
-                                    if (!item)
-                                    {
-                                        if (player_node->getDirection() &
-                                            Being::UP)
-                                            y--;
-                                        if (player_node->getDirection() &
-                                            Being::DOWN)
-                                            y++;
-                                        if (player_node->getDirection() &
-                                            Being::LEFT)
-                                            x--;
-                                        if (player_node->getDirection() &
-                                            Being::RIGHT)
-                                            x++;
-
-                                        item = floorItemManager->
-                                                   findByCoordinates(x, y);
-                                    }
-
-                                    if (item)
-                                        player_node->pickUp(item);
-                                    used = true;
-                                }
-                                break;
-                            // Player sit action
-                            case KeyboardConfig::KEY_SIT:
-                                player_node->toggleSit();
-                                used = true;
-                                break;
+                            player_node->attack(target, true);
+                            used = true;
                         }
+                    }
+                    // Stop attacking
+                    else
+                    {
+                        player_node->stopAttack();
+                    }
+
+                    if (keyboard.isKeyActive(keyboard.KEY_BEING_MENU))
+                    {
+                        if (!target)
+                            target = beingManager->findNearestLivingBeing(
+                                                   x, y, 20);
+
+                        if (target)
+                        {
+                            viewport->showPopup(target->mX * 32 -
+                                                viewport->getCameraX() + 16,
+                                                target->mY * 32 -
+                                                viewport->getCameraY(),
+                                                target);
+                        }
+                        used = true;
                     }
 
                     switch (tKey)
                     {
+                        case KeyboardConfig::KEY_PICKUP:
+                            {
+                                Uint16 x = player_node->mX;
+                                Uint16 y = player_node->mY;
+                                FloorItem *item = floorItemManager->
+                                                      findByCoordinates(x, y);
+
+                                // If none below the player, try the tile in
+                                // front of the player
+                                if (!item)
+                                {
+                                    if (player_node->getDirection() &
+                                        Being::UP)
+                                        y--;
+                                    if (player_node->getDirection() &
+                                        Being::DOWN)
+                                        y++;
+                                    if (player_node->getDirection() &
+                                        Being::LEFT)
+                                        x--;
+                                    if (player_node->getDirection() &
+                                        Being::RIGHT)
+                                        x++;
+
+                                    item = floorItemManager->
+                                               findByCoordinates(x, y);
+                                }
+
+                                if (item)
+                                    player_node->pickUp(item);
+                                used = true;
+                            }
+                            break;
+                        // Player sit action
+                        case KeyboardConfig::KEY_SIT:
+                            player_node->toggleSit();
+                            used = true;
+                            break;
+
                         case KeyboardConfig::KEY_ITEM_SHORTCUT:
                             requestedWindow = itemShortcutWindow;
                             break;
@@ -534,8 +535,7 @@ void InputManager::handleKeyboardInput()
         // there as well (in case we ever use other input libraries. If they're
         // all inside that loop, their implementing logic could be reduced to a
         // single function call)
-        if (mInGame && player_node->mAction != Being::DEAD &&
-            !gui->isInputFocused())
+        if (mInGame && player_node->mAction != Being::DEAD)
         {
             unsigned char direction = 0;
 

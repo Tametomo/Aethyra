@@ -31,13 +31,12 @@
 #include <guichan/widget.hpp>
 #include <guichan/widgetlistener.hpp>
 
+#include "../guichanfwd.h"
+
 class AnimatedSprite;
 class Image;
 class PopupMenu;
-
-namespace gcn {
-    class SelectionListener;
-}
+class ProtectedFocusListener;
 
 /**
  * An emote container. Used to show emotes in inventory and trade dialog.
@@ -106,6 +105,9 @@ class EmoteContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          * Shows a PopupMenu over the selected item.
          */
         void showPopup(bool useMouseCoordinates = true);
+
+    protected:
+        ProtectedFocusListener *mProtFocusListener;
 
     private:
         // KeyListener

@@ -26,6 +26,7 @@
 #include <guichan/widgets/textfield.hpp>
 
 class ImageRect;
+class ProtectedFocusListener;
 class TextField;
 class TextFieldConfigListener;
 
@@ -105,6 +106,7 @@ class TextField : public gcn::TextField
     protected:
         static float mAlpha;
         static TextFieldConfigListener *mConfigListener;
+        ProtectedFocusListener *mProtFocusListener;
 
     private:
         static int instances;
