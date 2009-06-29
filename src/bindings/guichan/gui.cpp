@@ -303,13 +303,6 @@ void Gui::draw()
     mGraphics->popClipArea();
 }
 
-gcn::Widget* Gui::getFocused()
-{
-    gcn::Widget* widget = mFocusHandler->getFocused();
-
-    return (widget);
-}
-
 gcn::Font* Gui::getFont() const
 {
     return mGuiFont;

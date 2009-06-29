@@ -80,11 +80,6 @@ class Gui : public gcn::Gui
         void draw();
 
         /**
-         * Gets the currently focused widget.
-         */
-        gcn::Widget* getFocused();
-
-        /**
          * Return game font.
          */
         gcn::Font* getFont() const;
