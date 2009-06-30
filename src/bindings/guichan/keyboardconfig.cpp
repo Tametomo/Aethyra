@@ -197,8 +197,14 @@ bool KeyboardConfig::isKeyLocked(const int &index)
             if (isalpha(key) || isdigit(key) || ispunct(key))
                 locked = true;
         }
-        else // Unicode character, so lock it
-            locked = true;
+        /** TODO: Create an else statement which catches Unicode characters, but
+         *        not keys like the function keys (as an example). This version
+         *        below might work for some people, but their are still some
+         *        keys that can still be found in upper mappings besides just
+         *        these (F12 is one such possibility), and because of this, we
+         *        need a better solution.
+        else if (mKey[index].value > SDLK_UNDO) // Unicode character, so lock it
+            locked = true; */
     }
 
     if (!locked)
