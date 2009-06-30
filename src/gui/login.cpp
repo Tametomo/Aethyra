@@ -183,9 +183,8 @@ bool LoginDialog::canSubmit()
 bool LoginDialog::isUShort(const std::string &str)
 {
     if (str.empty())
-    {
         return false;
-    }
+
     unsigned long l = 0;
     for (std::string::const_iterator strPtr = str.begin(), strEnd = str.end();
          strPtr != strEnd; ++strPtr)
@@ -204,11 +203,13 @@ bool LoginDialog::isUShort(const std::string &str)
 unsigned short LoginDialog::getUShort(const std::string &str)
 {
     unsigned long l = 0;
+
     for (std::string::const_iterator strPtr = str.begin(), strEnd = str.end();
          strPtr != strEnd; ++strPtr)
     {
         l = l * 10 + (*strPtr - '0');
     }
+
     return static_cast<unsigned short>(l);
 }
 
@@ -265,11 +266,8 @@ void LoginDialog::DropDownList::save(const std::string &server,
     int position = 0;
     saveEntry(server, port, position);
     for (std::vector<std::string>::const_iterator sPtr = mServers.begin(),
-             sEnd = mServers.end(),
-             pPtr = mPorts.begin(),
-             pEnd = mPorts.end();
-         sPtr != sEnd && pPtr != pEnd;
-         ++sPtr, ++pPtr)
+         sEnd = mServers.end(), pPtr = mPorts.begin(), pEnd = mPorts.end();
+         sPtr != sEnd && pPtr != pEnd; ++sPtr, ++pPtr)
     {
         if (*sPtr != server || *pPtr != port)
             saveEntry(*sPtr, *pPtr, position);
@@ -284,7 +282,7 @@ int LoginDialog::DropDownList::getNumberOfElements()
 std::string LoginDialog::DropDownList::getElementAt(int i)
 {
     if (i < 0 || i >= getNumberOfElements())
-      return "";
+        return "";
 
     return getServerAt(i) + ":" + getPortAt(i);
 }

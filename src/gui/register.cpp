@@ -250,22 +250,18 @@ bool RegisterDialog::canSubmit() const
 bool RegisterDialog::isUShort(const std::string &str)
 {
     if (str.empty())
-    {
         return false;
-    }
+
     unsigned long l = 0;
     for (std::string::const_iterator strPtr = str.begin(), strEnd = str.end();
          strPtr != strEnd; ++strPtr)
     {
         if (*strPtr < '0' || *strPtr > '9')
-        {
             return false;
-        }
+
         l = l * 10 + (*strPtr - '0'); // *strPtr - '0' will never be negative
         if (l > 65535)
-        {
             return false;
-        }
     }
     return true;
 }

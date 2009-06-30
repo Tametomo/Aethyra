@@ -135,8 +135,10 @@ ChatWindow::~ChatWindow()
 {
     char partyPrefix[2] = ".";
     *partyPrefix = mPartyPrefix;
+
     config.setValue("PartyPrefix", partyPrefix);
     config.setValue("ReturnToggles", mReturnToggles ? "1" : "0");
+
     delete mRecorder;
     delete mRecorderInput;
     delete mToolTip;
@@ -629,9 +631,8 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
             if ((*bi)->getType() == Being::PLAYER)
             {
                 if (!response.empty())
-                {
                     response += ", ";
-                }
+
                 response += (*bi)->getName();
                 ++playercount;
             }
@@ -773,8 +774,7 @@ void ChatWindow::scroll(int amount)
 void ChatWindow::keyPressed(gcn::KeyEvent & event)
 {
 
-    if (event.getKey().getValue() == Key::DOWN &&
-            mCurHist != mHistory.end())
+    if (event.getKey().getValue() == Key::DOWN && mCurHist != mHistory.end())
     {
         // Move forward through the history
         HistoryIterator prevHist = mCurHist++;
@@ -785,12 +785,10 @@ void ChatWindow::keyPressed(gcn::KeyEvent & event)
             mChatInput->setCaretPosition(mChatInput->getText().length());
         }
         else
-        {
             mCurHist = prevHist;
-        }
     }
-    else if (event.getKey().getValue() == Key::UP &&
-            mCurHist != mHistory.begin() && mHistory.size() > 0)
+    else if (event.getKey().getValue() == Key::UP && mCurHist !=
+             mHistory.begin() && mHistory.size() > 0)
     {
         // Move backward through the history
         mCurHist--;
@@ -859,15 +857,11 @@ void ChatWindow::party(const std::string &command, const std::string &rest)
                                 std::string(temp).c_str()), BY_SERVER);
         }
         else if (rest.length() != 1)
-        {
             chatLog(_("Party prefix must be one character long."), BY_SERVER);
-        }
         else
         {
             if (rest == "/")
-            {
                 chatLog(_("Cannot use a '/' as the prefix."), BY_SERVER);
-            }
             else
             {
                 mPartyPrefix = rest.at(0);

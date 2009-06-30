@@ -257,7 +257,6 @@ void StatusWindow::update()
 void StatusWindow::draw(gcn::Graphics *g)
 {
     update();
-
     Window::draw(g);
 }
 

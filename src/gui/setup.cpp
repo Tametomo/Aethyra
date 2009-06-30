@@ -123,7 +123,6 @@ void Setup::action(const gcn::ActionEvent &event)
 void Setup::logic()
 {
     Window::logic();
-
     mResetWindows->setEnabled(mInGame);
 }
 

@@ -50,7 +50,6 @@ NpcTextDialog::NpcTextDialog():
     setDefaultSize(260, 200, ImageRect::CENTER);
 
     mTextBox = new TextBox(new WordTextWrapHandler());
-    mTextBox->setEditable(false);
     mTextBox->setOpaque(false);
 
     mScrollArea = new ScrollArea(mTextBox);
@@ -116,7 +115,6 @@ void NpcTextDialog::closeDialog(int npcID)
 void NpcTextDialog::widgetResized(const gcn::Event &event)
 {
     Window::widgetResized(event);
-
     setText(mText);
 }
 
@@ -128,7 +126,6 @@ void NpcTextDialog::requestFocus()
 void NpcTextDialog::widgetShown(const gcn::Event& event)
 {
     Window::widgetShown(event);
-
     loadWindowState();
 }
 

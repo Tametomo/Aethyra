@@ -236,11 +236,9 @@ int UpdaterWindow::updateProgress(void *ptr, double dt, double dn, double ut,
                  "%)");
     uw->setProgress(progress);
 
+    // If the action was canceled return an error code to stop the mThread
     if (state != UPDATE_STATE || uw->mDownloadStatus == UPDATE_ERROR)
-    {
-        // If the action was canceled return an error code to stop the mThread
         return -1;
-    }
 
     return 0;
 }

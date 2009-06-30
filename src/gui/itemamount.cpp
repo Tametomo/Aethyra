@@ -155,13 +155,14 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
 {
     int amount = 0;
 
-    if (event.getId() == "cancel")
+    if (event.getId() == "slide")
     {
-        close();
+        amount = static_cast<int>(mItemAmountSlide->getValue());
+
+        mItemAmountLabel->setCaption(strprintf("%d / %d", amount, mMax));
+        mItemAmountSlide->setValue(amount);
         return;
     }
-    else if (event.getId() == "slide")
-        amount = static_cast<int>(mItemAmountSlide->getValue());
     else if (event.getId() == "ok" || event.getId() == "all")
     {
         if (event.getId() == "all") 
@@ -186,13 +187,9 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
             default:
                 break;
         }
-
-        close();
-        return;
     }
 
-    mItemAmountLabel->setCaption(strprintf("%d / %d", amount, mMax));
-    mItemAmountSlide->setValue(amount);
+    close();
 }
 
 void ItemAmountWindow::close()

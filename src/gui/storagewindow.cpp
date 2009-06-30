@@ -162,7 +162,6 @@ Item* StorageWindow::getSelectedItem() const
 void StorageWindow::widgetShown(const gcn::Event& event)
 {
     Window::widgetShown(event);
-
     mSlotsBar->reset();
 }
 

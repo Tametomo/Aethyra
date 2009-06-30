@@ -128,9 +128,7 @@ void Minimap::setMap(Map *map)
         setVisible(mShow);
     }
     else
-    {
         setVisible(false);
-    }
 }
 
 void Minimap::toggle()

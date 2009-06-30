@@ -54,17 +54,14 @@ ItemPopup::ItemPopup(gcn::Container *parent):
 
     // Item Description
     mItemDesc = new TextBox(new WordTextWrapHandler());
-    mItemDesc->setEditable(false);
     mItemDesc->setPosition(getPadding(), fontHeight);
 
     // Item Effect
     mItemEffect = new TextBox(new WordTextWrapHandler());
-    mItemEffect->setEditable(false);
     mItemEffect->setPosition(getPadding(), 2 * fontHeight + 2 * getPadding());
 
     // Item Weight
     mItemWeight = new TextBox(new WordTextWrapHandler());
-    mItemWeight->setEditable(false);
     mItemWeight->setPosition(getPadding(), 3 * fontHeight + 4 * getPadding());
 
     add(mItemName);
@@ -106,26 +103,16 @@ void ItemPopup::setItem(const ItemInfo &item)
     setWidth(minWidth);
 
     const int numRowsDesc = mItemDesc->getNumberOfRows();
-    const int numRowsEffect = mItemEffect->getNumberOfRows();
+    const int numRowsEffect = item.getEffect().empty() ? 0 : 
+                              mItemEffect->getNumberOfRows();
     const int numRowsWeight = mItemWeight->getNumberOfRows();
     const int height = getFont()->getHeight();
 
-    if (item.getEffect().empty())
-    {
-        setContentSize(minWidth, (numRowsDesc + numRowsWeight + getPadding()) *
-                       height);
+    setContentSize(minWidth, (numRowsDesc + numRowsEffect + numRowsWeight +
+                   getPadding()) * height);
 
-        mItemWeight->setPosition(getPadding(), (numRowsDesc + getPadding()) *
-                                 height);
-    }
-    else
-    {
-        setContentSize(minWidth, (numRowsDesc + numRowsEffect + numRowsWeight +
-                       getPadding()) * height);
-
-        mItemWeight->setPosition(getPadding(), (numRowsDesc + numRowsEffect +
-                                 getPadding()) * height);
-    }
+    mItemWeight->setPosition(getPadding(), (numRowsDesc + numRowsEffect +
+                             getPadding()) * height);
 
     mItemDesc->setPosition(getPadding(), 2 * height);
     mItemEffect->setPosition(getPadding(), (numRowsDesc + getPadding()) * height);

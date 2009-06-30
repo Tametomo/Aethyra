@@ -78,15 +78,13 @@ void NpcIntegerDialog::reset()
 
 void NpcIntegerDialog::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == "reset")
-    {
-        mValueField->reset();
+    if (!(event.getId() == "reset" || event.getId() == "cancel"))
         return;
-    }
-    else if (event.getId() == "cancel")
-        mValueField->reset();
 
-    close();
+    mValueField->reset();
+
+    if (event.getId() == "cancel")
+        close();
 }
 
 void NpcIntegerDialog::requestFocus()
