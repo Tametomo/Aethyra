@@ -217,7 +217,10 @@ void InputManager::handleKeyboardInput()
             // uses "ignore+arrow key" to switch virtual desktops.
             if (keyboard.isKeyActive(keyboard.KEY_IGNORE_INPUT_1) ||
                 keyboard.isKeyActive(keyboard.KEY_IGNORE_INPUT_2))
+            {
+                used = true;
                 continue;
+            }
 
             if (keyboard.isKeyLocked(tKey))
             {
@@ -530,7 +533,7 @@ void InputManager::handleKeyboardInput()
         // there as well (in case we ever use other input libraries. If they're
         // all inside that loop, their implementing logic could be reduced to a
         // single function call)
-        if (mInGame && player_node->mAction != Being::DEAD)
+        if (mInGame && player_node->mAction != Being::DEAD && !used)
         {
             unsigned char direction = 0;
 
