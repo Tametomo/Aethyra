@@ -75,9 +75,9 @@ class KeyboardConfig
         void callbackNewKey();
 
         /**
-         * Sets whether to lock nonformatting keys from input or not.
+         * Sets whether to lock printable keys from input or not.
          */
-        void setNonFormattingKeyLock(bool lock) { mNonFormatKeyLock = lock; }
+        void setPrintableKeyLock(bool lock) { mPrintableKeyLock = lock; }
 
         /**
          * Locks a key from being used outside of GUIChan key calls.
@@ -230,7 +230,7 @@ class KeyboardConfig
     private:
         int mNewKeyIndex;              /**< Index of new key to be assigned */
         bool mEnabled;                 /**< Flag to respond to key input */
-        bool mNonFormatKeyLock;        /**< Flag to state whether a non-formatting
+        bool mPrintableKeyLock;        /**< Flag to state whether a printable
                                             (character, number, punctuation, etc.)
                                             key input should be ignored */
 

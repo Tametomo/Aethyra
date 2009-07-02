@@ -38,7 +38,7 @@ class ProtectedFocusListener : public gcn::FocusListener
         /**
          * Constructor.
          */
-        ProtectedFocusListener() : mNonFormatKeyLock(false) {}
+        ProtectedFocusListener() : mPrintableKeyLock(false) {}
 
         /**
          * Locks keyboard keys that the using widget will use.
@@ -51,9 +51,9 @@ class ProtectedFocusListener : public gcn::FocusListener
         virtual void focusLost(const gcn::Event &event);
 
         /**
-         * Sets whether to lock nonformatting keys from input or not.
+         * Sets whether to lock printable keys from input or not.
          */
-        void setNonFormattingKeyLock(bool lock) { mNonFormatKeyLock = lock; }
+        void setPrintableKeyLock(bool lock) { mPrintableKeyLock = lock; }
 
         /**
          * Adds a key to this listener's block list
@@ -66,7 +66,7 @@ class ProtectedFocusListener : public gcn::FocusListener
         void unblockKey(const int &key);
 
     private:
-        bool mNonFormatKeyLock;        /**< Flag to state whether a non-formatting
+        bool mPrintableKeyLock;        /**< Flag to state whether a printable
                                             (character, number, punctuation, etc.)
                                             key input should be ignored */
 

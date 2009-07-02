@@ -117,14 +117,13 @@ TextField::TextField(const std::string& text,
 
     addFocusListener(mProtFocusListener);
 
-    mProtFocusListener->setNonFormattingKeyLock(true);
+    mProtFocusListener->setPrintableKeyLock(true);
     mProtFocusListener->blockKey(SDLK_LEFT);
     mProtFocusListener->blockKey(SDLK_RIGHT);
     mProtFocusListener->blockKey(SDLK_UP);
     mProtFocusListener->blockKey(SDLK_DOWN);
     mProtFocusListener->blockKey(SDLK_DELETE);
     mProtFocusListener->blockKey(SDLK_BACKSPACE);
-    mProtFocusListener->blockKey(SDLK_SPACE);
     mProtFocusListener->blockKey(SDLK_RETURN);
     mProtFocusListener->blockKey(SDLK_HOME);
     mProtFocusListener->blockKey(SDLK_END);

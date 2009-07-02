@@ -24,7 +24,7 @@
 
 void ProtectedFocusListener::focusGained(const gcn::Event &event)
 {
-    keyboard.setNonFormattingKeyLock(mNonFormatKeyLock);
+    keyboard.setPrintableKeyLock(mPrintableKeyLock);
 
     for (std::list<int>::iterator it = mBlockList.begin();
          it != mBlockList.end(); it++)
@@ -35,7 +35,7 @@ void ProtectedFocusListener::focusGained(const gcn::Event &event)
 
 void ProtectedFocusListener::focusLost(const gcn::Event &event)
 {
-    keyboard.setNonFormattingKeyLock(false);
+    keyboard.setPrintableKeyLock(false);
 
     for (std::list<int>::iterator it = mBlockList.begin();
          it != mBlockList.end(); it++)

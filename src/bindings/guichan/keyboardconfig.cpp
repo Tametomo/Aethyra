@@ -112,7 +112,7 @@ void KeyboardConfig::init()
     }
     mNewKeyIndex = KEY_NO_VALUE;
     mEnabled = true;
-    mNonFormatKeyLock = false;
+    mPrintableKeyLock = false;
 
     retrieve();
 }
@@ -188,13 +188,13 @@ bool KeyboardConfig::isKeyLocked(const int &index)
 {
     bool locked = false;
 
-    if (mNonFormatKeyLock)
+    if (mPrintableKeyLock)
     {
         if ((mKey[index].value & 0xFF80) == 0)
         {
             char key = mKey[index].value & 0x7F;
 
-            if (isalpha(key) || isdigit(key) || ispunct(key))
+            if (isalpha(key) || isdigit(key) || ispunct(key) || key == ' ')
                 locked = true;
         }
         /** TODO: Create an else statement which catches Unicode characters, but
