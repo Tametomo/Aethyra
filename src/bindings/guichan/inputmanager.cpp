@@ -297,6 +297,38 @@ void InputManager::handleKeyboardInput()
                     case KeyboardConfig::KEY_WINDOW_EMOTE:
                         requestedWindow = emoteWindow;
                         break;
+                    case KeyboardConfig::KEY_ITEM_SHORTCUT:
+                        requestedWindow = itemShortcutWindow;
+                        break;
+                    case KeyboardConfig::KEY_EMOTE_SHORTCUT:
+                        requestedWindow = emoteShortcutWindow;
+                        break;
+                    // Hide certain windows
+                    case KeyboardConfig::KEY_HIDE_WINDOWS:
+                        statusWindow->hide();
+                        inventoryWindow->hide();
+                        equipmentWindow->hide();
+                        skillDialog->hide();
+                        chatWindow->hide();
+                        itemShortcutWindow->hide();
+                        setupWindow->hide();
+                        debugWindow->hide();
+                        emoteWindow->hide();
+                        helpWindow->hide();
+                        emoteShortcutWindow->hide();
+                        minimap->hide();
+                        used = true;
+                        break;
+                    // Screenshot (picture, hence the p)
+                    case KeyboardConfig::KEY_SCREENSHOT:
+                        saveScreenshot();
+                        used = true;
+                        break;
+                    // Find path to mouse (debug purpose)
+                    case KeyboardConfig::KEY_PATHFIND:
+                        viewport->toggleDebugPath();
+                        used = true;
+                        break;
                     default:
                         break;
                 }
@@ -442,39 +474,6 @@ void InputManager::handleKeyboardInput()
                         // Player sit action
                         case KeyboardConfig::KEY_SIT:
                             player_node->toggleSit();
-                            used = true;
-                            break;
-
-                        case KeyboardConfig::KEY_ITEM_SHORTCUT:
-                            requestedWindow = itemShortcutWindow;
-                            break;
-                        case KeyboardConfig::KEY_EMOTE_SHORTCUT:
-                            requestedWindow = emoteShortcutWindow;
-                            break;
-                        // Hide certain windows
-                        case KeyboardConfig::KEY_HIDE_WINDOWS:
-                            statusWindow->hide();
-                            inventoryWindow->hide();
-                            equipmentWindow->hide();
-                            skillDialog->hide();
-                            chatWindow->hide();
-                            itemShortcutWindow->hide();
-                            setupWindow->hide();
-                            debugWindow->hide();
-                            emoteWindow->hide();
-                            helpWindow->hide();
-                            emoteShortcutWindow->hide();
-                            minimap->hide();
-                            used = true;
-                            break;
-                        // Screenshot (picture, hence the p)
-                        case KeyboardConfig::KEY_SCREENSHOT:
-                            saveScreenshot();
-                            used = true;
-                            break;
-                        // Find path to mouse (debug purpose)
-                        case KeyboardConfig::KEY_PATHFIND:
-                            viewport->toggleDebugPath();
                             used = true;
                             break;
                         // Toggle accepting of incoming trade requests
