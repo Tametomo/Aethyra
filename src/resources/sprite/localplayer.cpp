@@ -77,8 +77,7 @@ LocalPlayer::LocalPlayer(const Uint32 &id, const Uint16 &job, Map *map):
     mXp(0),
     mTarget(NULL), mPickUpTarget(NULL),
     mTrading(false), mGoingToTarget(false), mKeepAttacking(false),
-    mTargetTime(-1), mLastAction(-1),
-    mLastTarget(-1), mWalkingDir(0),
+    mTargetTime(-1), mLastAction(-1), mWalkingDir(0),
     mDestX(0), mDestY(0),
     mInventory(new Inventory(INVENTORY_SIZE)),
     mStorage(new Inventory(STORAGE_SIZE))
@@ -174,16 +173,11 @@ void LocalPlayer::logic()
     if (get_elapsed_time(mLastAction) >= 1000)
         mLastAction = -1;
 
-    // Targeting allowed 4 times a second
-    if (get_elapsed_time(mLastTarget) >= 250)
-        mLastTarget = -1;
-
     // Remove target if its been on a being for more than a minute
     if (get_elapsed_time(mTargetTime) >= 60000)
     {
         mTargetTime = -1;
         setTarget(NULL);
-        mLastTarget = -1;
     }
 
     if (mTarget)
@@ -213,7 +207,6 @@ void LocalPlayer::setAction(const Action &action)
     {
         mTargetTime = -1;
         setTarget(NULL);
-        mLastTarget = -1;
     }
 
     Player::setAction(action);
@@ -380,10 +373,8 @@ Being* LocalPlayer::getTarget() const
 
 void LocalPlayer::setTarget(Being *target)
 {
-    if (mLastTarget != -1 || target == this)
+    if (target == this)
         return;
-
-    mLastTarget = tick_time;
 
     if (target == mTarget)
         target = NULL;
@@ -514,10 +505,7 @@ void LocalPlayer::attack(Being *target, const bool &keep)
         return;
 
     if ((mTarget != target) || !mTarget)
-    {
-        mLastTarget = -1;
         setTarget(target);
-    }
 
     const int dist_x = target->mX - mX;
     const int dist_y = target->mY - mY;
@@ -568,12 +556,9 @@ void LocalPlayer::attack(Being *target, const bool &keep)
 void LocalPlayer::stopAttack()
 {
     if (mTarget)
-    {
         setAction(STAND);
-        mLastTarget = -1;
-    }
+
     setTarget(NULL);
-    mLastTarget = -1;
 }
 
 void LocalPlayer::revive()
@@ -615,7 +600,6 @@ bool LocalPlayer::withinAttackRange(Being *target)
 
 void LocalPlayer::setGotoTarget(Being *target)
 {
-    mLastTarget = -1;
     setTarget(target);
     mGoingToTarget = true;
     setDestination(target->mX, target->mY);
