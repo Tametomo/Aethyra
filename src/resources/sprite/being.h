@@ -77,7 +77,8 @@ class Being : public Sprite
             WARP,
             PLAYER,
             NPC,
-            MONSTER
+            MONSTER,
+            INVALID
         };
 
         /**

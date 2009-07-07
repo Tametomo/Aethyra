@@ -71,6 +71,8 @@ ConfirmDialog *exitConfirm = NULL;
  */
 namespace
 {
+    bool targetKeyHeld = false;
+
     struct ExitListener : public gcn::ActionListener
     {
         void action(const gcn::ActionEvent &event)
@@ -194,7 +196,7 @@ void InputManager::handleKeyboardInput()
     {
         bool used = false;
 
-        // Keyboard events (for discontinuous keys)
+        // Key press events
         if (event.type == SDL_KEYDOWN)
         {
             if (setupWindow->isVisible() &&
@@ -366,8 +368,7 @@ void InputManager::handleKeyboardInput()
                     if (!tradeWindow->isVisible())
                     {
                         for (int i = KeyboardConfig::KEY_SHORTCUT_1;
-                                 i <= KeyboardConfig::KEY_SHORTCUT_12;
-                                 i++)
+                                 i <= KeyboardConfig::KEY_SHORTCUT_12; i++)
                         {
                             if (tKey == i)
                             {
@@ -378,48 +379,42 @@ void InputManager::handleKeyboardInput()
                         }
                     }
 
-                    if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
+                    if (!keyboard.isKeyActive(keyboard.KEY_TARGET) && !targetKeyHeld)
                     {
-                        bool targetKeyHit = true;
+                        Being::Type type = Being::INVALID;
 
                         // Target the nearest monster
                         if (keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST))
-                        {
-                            target = beingManager->findNearestLivingBeing(
-                                                   x, y, 20, Being::MONSTER);
-                        }
+                            type = Being::MONSTER;
                         // Target the nearest player
                         else if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER))
-                        {
-                            target = beingManager->findNearestLivingBeing(
-                                                   x, y, 20, Being::PLAYER);
-                        }
+                            type = Being::PLAYER;
                         // Target the nearest npc
                         else if (keyboard.isKeyActive(keyboard.KEY_TARGET_NPC))
+                            type = Being::NPC;
+
+                        if (type != Being::INVALID)
                         {
+                            targetKeyHeld = true;
                             target = beingManager->findNearestLivingBeing(
-                                                   x, y, 20, Being::NPC);
-                        }
-                        else
-                            targetKeyHit = false;
+                                                   x, y, 20, type);
 
-                        if (targetKeyHit)
-                        {
                             player_node->setTarget(target);
-                            used = true;
-                        }
 
-                        if (keyboard.isKeyActive(keyboard.KEY_ATTACK) && 
-                            target && target->getType() != Being::NPC)
-                        {
-                            player_node->attack(target, true);
+                            if (keyboard.isKeyActive(keyboard.KEY_ATTACK) && 
+                                target && type != Being::NPC)
+                            {
+                                player_node->attack(target, true);
+                            }
+
                             used = true;
                         }
                     }
                     // Stop attacking
-                    else
+                    else if (keyboard.isKeyActive(keyboard.KEY_TARGET))
                     {
                         player_node->stopAttack();
+                        targetKeyHeld = false;
                     }
 
                     if (keyboard.isKeyActive(keyboard.KEY_BEING_MENU))
@@ -499,7 +494,6 @@ void InputManager::handleKeyboardInput()
                                 }
 
                                 player_relations.setDefault(deflt);
-
                                 used = true;
                             }
                             break;
@@ -513,12 +507,23 @@ void InputManager::handleKeyboardInput()
                 used = true;
             }
         }
+        else if (event.type == SDL_KEYUP)
+        {
+            const int tKey = keyboard.getKeyIndex(event.key.keysym.sym);
+
+            // Stop protecting the target keys
+            if (tKey == KeyboardConfig::KEY_TARGET_CLOSEST ||
+                tKey == KeyboardConfig::KEY_TARGET_PLAYER || 
+                tKey == KeyboardConfig::KEY_TARGET_NPC)
+            {
+                targetKeyHeld = false;
+            }
+        }
 
         // Quit event
         else if (event.type == SDL_QUIT)
         {
             mInGame = false;
-
             state = EXIT_STATE;
         }
 
@@ -552,6 +557,6 @@ void InputManager::handleKeyboardInput()
                 direction |= Being::RIGHT;
 
             player_node->setWalkingDir(direction);
-       }
+        }
     } // End while
 }
