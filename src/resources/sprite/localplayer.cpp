@@ -143,11 +143,20 @@ void LocalPlayer::logic()
             {
                 switch (mDirection)
                 {
-                    case DOWN: rotation = 0; break;
-                    case LEFT: rotation = 90; break;
-                    case UP: rotation = 180; break;
-                    case RIGHT: rotation = 270; break;
-                    default: break;
+                    case DOWN:
+                        rotation = 0;
+                        break;
+                    case LEFT:
+                        rotation = 90;
+                        break;
+                    case UP:
+                        rotation = 180;
+                        break;
+                    case RIGHT:
+                        rotation = 270;
+                        break;
+                    default:
+                        break;
                 }
                 Particle *p;
                 p = particleEngine->addEffect("graphics/particles/" +
@@ -222,9 +231,8 @@ void LocalPlayer::setDirection(const Uint8 &direction)
 void LocalPlayer::setGM()
 {
     mIsGM = !mIsGM;
-    mNameColor = mIsGM ?
-            &guiPalette->getColor(Palette::GM) :
-            &guiPalette->getColor(Palette::PLAYER);
+    mNameColor = mIsGM ? &guiPalette->getColor(Palette::GM) :
+                         &guiPalette->getColor(Palette::PLAYER);
     setName(getName());
     config.setValue(getName() + "GMassert", mIsGM);
 }
@@ -300,7 +308,7 @@ void LocalPlayer::useItem(Item *item)
 
 void LocalPlayer::dropItem(Item *item, const int &quantity)
 {
-    // TODO: Fix wrong coordinates of drops, serverside?
+    // TODO: Fix wrong coordinates of drops
     MessageOut outMsg(CMSG_PLAYER_INVENTORY_DROP);
     outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
     outMsg.writeInt16(quantity);
@@ -359,15 +367,10 @@ void LocalPlayer::walk(const unsigned char &dir)
 
     // Walk to where the player can actually go
     if ((dx || dy) && !mMap->tileCollides(mX + dx, mY + dy))
-    {
         setDestination(mX + dx, mY + dy);
-    }
+    // If the being can't move, just change direction
     else if (dir)
-    {
-        // If the being can't move, just change direction
-        // TODO: Communicate this to the server (waiting on tmwserv)
         setDirection(dir);
-    }
 }
 
 Being* LocalPlayer::getTarget() const
@@ -386,9 +389,7 @@ void LocalPlayer::setTarget(Being *target)
         target = NULL;
 
     if (target || mAction == ATTACK)
-    {
         mTargetTime = tick_time;
-    }
     else
     {
         mKeepAttacking = false;
@@ -436,33 +437,7 @@ void LocalPlayer::setWalkingDir(const int &dir)
 void LocalPlayer::raiseAttribute(const Attribute &attr)
 {
     MessageOut outMsg(CMSG_STAT_UPDATE_REQUEST);
-
-    switch (attr)
-    {
-        case STR:
-            outMsg.writeInt16(0x000d);
-            break;
-
-        case AGI:
-            outMsg.writeInt16(0x000e);
-            break;
-
-        case VIT:
-            outMsg.writeInt16(0x000f);
-            break;
-
-        case INT:
-            outMsg.writeInt16(0x0010);
-            break;
-
-        case DEX:
-            outMsg.writeInt16(0x0011);
-            break;
-
-        case LUK:
-            outMsg.writeInt16(0x0012);
-            break;
-    }
+    outMsg.writeInt16(attr);
     outMsg.writeInt8(1);
 }
 
@@ -479,14 +454,20 @@ void LocalPlayer::toggleSit()
 {
     if (mLastAction != -1)
         return;
+
     mLastAction = tick_time;
 
     char type;
     switch (mAction)
     {
-        case STAND: type = 2; break;
-        case SIT: type = 3; break;
-        default: return;
+        case STAND:
+            type = 2;
+            break;
+        case SIT:
+            type = 3;
+            break;
+        default:
+            return;
     }
 
     MessageOut outMsg(0x0089);
@@ -498,6 +479,7 @@ void LocalPlayer::emote(const Uint8 &emotion)
 {
     if (mLastAction != -1)
         return;
+
     mLastAction = tick_time;
 
     MessageOut outMsg(0x00bf);
@@ -537,8 +519,8 @@ void LocalPlayer::attack(Being *target, const bool &keep)
         setTarget(target);
     }
 
-    int dist_x = target->mX - mX;
-    int dist_y = target->mY - mY;
+    const int dist_x = target->mX - mX;
+    const int dist_y = target->mY - mY;
 
     // Must be standing and be within attack range to continue
     if ((mAction != STAND) || (mAttackRange < abs(dist_x)) ||
@@ -568,13 +550,12 @@ void LocalPlayer::attack(Being *target, const bool &keep)
     if (mEquippedWeapon)
     {
         std::string soundFile = mEquippedWeapon->getSound(EQUIP_EVENT_STRIKE);
+
         if (!soundFile.empty())
             sound.playSfx(soundFile);
     }
     else
-    {
         sound.playSfx("sfx/fist-swish.ogg");
-    }
 
     MessageOut outMsg(0x0089);
     outMsg.writeInt32(target->getId());
@@ -617,19 +598,17 @@ void LocalPlayer::setXp(const int &xp)
 
 void LocalPlayer::pickedUp(const std::string &item)
 {
+    // Show pickup notification
     if (mMap)
-    {
-        // Show pickup notification
         particleEngine->addTextRiseFadeOutEffect(item, mPx + 16, mPy - 16,
                 &guiPalette->getColor(Palette::PICKUP_INFO),
                 gui->getInfoParticleFont (), true);
-    }
 }
 
 bool LocalPlayer::withinAttackRange(Being *target)
 {
-    int dist_x = abs(target->mX - mX);
-    int dist_y = abs(target->mY - mY);
+    const int dist_x = abs(target->mX - mX);
+    const int dist_y = abs(target->mY - mY);
 
     return !(dist_x > getAttackRange() || dist_y > getAttackRange());
 }
@@ -670,7 +649,7 @@ void LocalPlayer::loadTargetCursor(const std::string &filename,
     ResourceManager *resman = ResourceManager::getInstance();
 
     ImageSet *currentImageSet = resman->getImageSet(filename, width, height);
-    Animation *anim = new Animation;
+    Animation *anim = new Animation();
 
     for (unsigned int i = 0; i < currentImageSet->size(); ++i)
     {
@@ -690,6 +669,5 @@ void LocalPlayer::loadTargetCursor(const std::string &filename,
 void LocalPlayer::setInStorage(const bool &inStorage)
 {
     mInStorage = inStorage;
-
     storageWindow->setVisible(inStorage);
 }

@@ -166,6 +166,8 @@ PlayerHandler::PlayerHandler()
 
 void PlayerHandler::handleMessage(MessageIn *msg)
 {
+    const int numOfAttr = LocalPlayer::LUK - LocalPlayer::STR;
+
     switch (msg->getId())
     {
         case SMSG_WALK_RESPONSE:
@@ -310,71 +312,44 @@ void PlayerHandler::handleMessage(MessageIn *msg)
 
         case SMSG_PLAYER_STAT_UPDATE_3:
             {
-                int type = msg->readInt32();
-                int base = msg->readInt32();
-                int bonus = msg->readInt32();
-                int total = base + bonus;
+                const int type = msg->readInt32();
+                const int base = msg->readInt32();
+                const int bonus = msg->readInt32();
+                const int total = base + bonus;
+                const int index = type - LocalPlayer::STR;
 
-                switch (type)
-                {
-                    case 0x000d: player_node->mAttr[LocalPlayer::STR] = total;
-                                 break;
-                    case 0x000e: player_node->mAttr[LocalPlayer::AGI] = total;
-                                 break;
-                    case 0x000f: player_node->mAttr[LocalPlayer::VIT] = total;
-                                 break;
-                    case 0x0010: player_node->mAttr[LocalPlayer::INT] = total;
-                                 break;
-                    case 0x0011: player_node->mAttr[LocalPlayer::DEX] = total;
-                                 break;
-                    case 0x0012: player_node->mAttr[LocalPlayer::LUK] = total;
-                                 break;
-                }
+                if (index >=0 && index <= numOfAttr)
+                    player_node->mAttr[index] = total;
             }
             break;
 
         case SMSG_PLAYER_STAT_UPDATE_4:
             {
-                int type = msg->readInt16();
-                int fail = msg->readInt8();
-                int value = msg->readInt8();
+                const int type = msg->readInt16();
+                const int fail = msg->readInt8();
+                const int value = msg->readInt8();
+                const int index = type - LocalPlayer::STR;
 
                 if (fail != 1)
                     break;
 
-                switch (type)
-                {
-                    case 0x000d: player_node->mAttr[LocalPlayer::STR] = value;
-                                 break;
-                    case 0x000e: player_node->mAttr[LocalPlayer::AGI] = value;
-                                 break;
-                    case 0x000f: player_node->mAttr[LocalPlayer::VIT] = value;
-                                 break;
-                    case 0x0010: player_node->mAttr[LocalPlayer::INT] = value;
-                                 break;
-                    case 0x0011: player_node->mAttr[LocalPlayer::DEX] = value;
-                                 break;
-                    case 0x0012: player_node->mAttr[LocalPlayer::LUK] = value;
-                                 break;
-                }
+                if (index >=0 && index <= numOfAttr)
+                    player_node->mAttr[index] = value;
             }
             break;
 
         // Updates stats and status points
         case SMSG_PLAYER_STAT_UPDATE_5:
             player_node->mStatsPointsToAttribute = msg->readInt16();
-            player_node->mAttr[LocalPlayer::STR] = msg->readInt8();
-            player_node->mAttrUp[LocalPlayer::STR] = msg->readInt8();
-            player_node->mAttr[LocalPlayer::AGI] = msg->readInt8();
-            player_node->mAttrUp[LocalPlayer::AGI] = msg->readInt8();
-            player_node->mAttr[LocalPlayer::VIT] = msg->readInt8();
-            player_node->mAttrUp[LocalPlayer::VIT] = msg->readInt8();
-            player_node->mAttr[LocalPlayer::INT] = msg->readInt8();
-            player_node->mAttrUp[LocalPlayer::INT] = msg->readInt8();
-            player_node->mAttr[LocalPlayer::DEX] = msg->readInt8();
-            player_node->mAttrUp[LocalPlayer::DEX] = msg->readInt8();
-            player_node->mAttr[LocalPlayer::LUK] = msg->readInt8();
-            player_node->mAttrUp[LocalPlayer::LUK] = msg->readInt8();
+
+            for (int i = LocalPlayer::STR; i <= LocalPlayer::LUK; i++)
+            {
+                const int index = i - LocalPlayer::STR;
+
+                player_node->mAttr[index] = msg->readInt8();
+                player_node->mAttrUp[index] = msg->readInt8();
+            }
+
             player_node->ATK       = msg->readInt16();  // ATK
             player_node->ATK_BONUS  = msg->readInt16();  // ATK bonus
             player_node->MATK      = msg->readInt16();  // MATK max
@@ -391,32 +366,19 @@ void PlayerHandler::handleMessage(MessageIn *msg)
             break;
 
         case SMSG_PLAYER_STAT_UPDATE_6:
-            switch (msg->readInt16())
             {
-                case 0x0020:
-                    player_node->mAttrUp[LocalPlayer::STR] = msg->readInt8();
-                    break;
-                case 0x0021:
-                    player_node->mAttrUp[LocalPlayer::AGI] = msg->readInt8();
-                    break;
-                case 0x0022:
-                    player_node->mAttrUp[LocalPlayer::VIT] = msg->readInt8();
-                    break;
-                case 0x0023:
-                    player_node->mAttrUp[LocalPlayer::INT] = msg->readInt8();
-                    break;
-                case 0x0024:
-                    player_node->mAttrUp[LocalPlayer::DEX] = msg->readInt8();
-                    break;
-                case 0x0025:
-                    player_node->mAttrUp[LocalPlayer::LUK] = msg->readInt8();
-                    break;
+                const int index = msg->readInt16() - 0x0020;
+                const int attr = msg->readInt8();
+
+                if (index >=0 && index <= numOfAttr)
+                    player_node->mAttrUp[index] = attr;
             }
+
             break;
 
         case SMSG_PLAYER_ARROW_MESSAGE:
             {
-                int type = msg->readInt16();
+                const int type = msg->readInt16();
 
                 switch (type)
                 {
