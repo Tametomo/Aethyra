@@ -24,8 +24,11 @@
 #define EQUIPMENT_WINDOW_H
 
 #include <guichan/actionlistener.hpp>
+#include <guichan/selectionlistener.hpp>
 
 #include "../bindings/guichan/widgets/window.h"
+#include "../bindings/guichan/widgets/itemcontainer.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
 
 class Equipment;
 class EquipmentConfigListener;
@@ -40,7 +43,9 @@ class PlayerBox;
  *
  * \ingroup Interface
  */
-class EquipmentWindow : public Window, public gcn::ActionListener
+class EquipmentWindow : public Window,
+                        public gcn::ActionListener,
+                        public gcn::SelectionListener
 {
     public:
         friend class EquipmentConfigListener;
@@ -89,19 +94,51 @@ class EquipmentWindow : public Window, public gcn::ActionListener
 
         void setSelected(int index);
 
+        void valueChanged(const gcn::SelectionEvent &event);
+
         bool mShowItemInfo;
         EquipmentConfigListener *mConfigListener;
 
         Equipment *mEquipment;
         Inventory *mInventory;
-        gcn::Button *mUnequip;                  /**< Button for unequipping. */
+        gcn::Button *mEquipButton;              /**< Button for both equipping and unequipping. */
         Icon *mEquipIcon[EQUIP_VECTOREND];      /**< Equipment Icons. */
 
         ItemPopup *mItemPopup;
 
         PlayerBox *mPlayerBox;
 
-        int mSelected;                          /**< Index of selected item. */
+        int mSelected;                          /**< Index of selected slot (the slot may be empty). */
+
+        ItemContainer *mItems;                  /**< Equippable items */
+        gcn::ScrollArea *mInvenScroll;
+
+        /**
+         * The current action that mEquipButton performs.
+         *
+         * Only one thing can be selected at once - either a slot or an item.
+         *
+         * There's no special logic about selecting an empty slot (with nothing
+         * to unequip), that would need to handle items being equipped or
+         * unequipped by other means (inventory window or shortcuts), so it may
+         * as well be kept simple.
+         */
+        typedef enum
+        {
+                STATE_NEITHER,
+                STATE_EQUIP,
+                STATE_UNEQUIP
+        } equipUnequipState;
+        equipUnequipState mEquipUnequipState;
+
+        /**
+         * Sets the text of the button, enables or disables it as appropriate,
+         * sets mEquipUnequipState.
+         *
+         * No other side-effects; specifically does not change what is selected
+         * (as doing so would result in another call to setEquipUnequipState).
+         */
+        void setEquipUnequipState(equipUnequipState state);
 };
 
 extern EquipmentWindow *equipmentWindow;
