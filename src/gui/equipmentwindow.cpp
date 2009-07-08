@@ -104,14 +104,15 @@ EquipmentWindow::EquipmentWindow():
     loadWindowState();
 
     const gcn::Rectangle &area = getChildrenArea();
+    const int &padding = 2 * getPadding();
 
     std::string longestUseString = getFont()->getWidth(_("Equip")) >
                                    getFont()->getWidth(_("Unequip")) ?
                                    _("Equip") : _("Unequip");
 
     mEquipButton = new Button(longestUseString, "equipUnequip", this);
-    mEquipButton->setPosition((area.width  - mEquipButton->getWidth())/2,
-                          area.height - mEquipButton->getHeight() - 5);
+    mEquipButton->setPosition((area.width  - mEquipButton->getWidth()  - padding),
+                               area.height - mEquipButton->getHeight() - padding);
     mEquipButton->setEnabled(false);
 
     add(mPlayerBox);
