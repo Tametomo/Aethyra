@@ -45,7 +45,7 @@ static KeyData const keyData[KeyboardConfig::KEY_TOTAL] = {
     {"keyMoveLeft", SDLK_LEFT, _("Move Left")},
     {"keyMoveRight", SDLK_RIGHT, _("Move Right")},
     {"keyAttack", SDLK_LCTRL, _("Attack")},
-    {"keySmilie", SDLK_LALT, _("Smilie")},
+    {"keySmilie", SDLK_LALT, _("Emote Meta Key")},
     {"keyTarget", SDLK_LSHIFT, _("Stop Attack")},
     {"keyTargetClosest", SDLK_a, _("Target Monster")},
     {"keyTargetNPC", SDLK_n, _("Target NPC")},
@@ -57,30 +57,18 @@ static KeyData const keyData[KeyboardConfig::KEY_TOTAL] = {
     {"keyScreenshot", SDLK_p, _("Screenshot")},
     {"keyTrade", SDLK_r, _("Enable/Disable Trading")},
     {"keyPathfind", SDLK_f, _("Find Path to Mouse")},
-    {"keyItemShortcut", SDLK_i, _("Item Shortcut Window")},
-    {"keyEmoteShortcut", SDLK_e, _("Emote Shortcut Window")},
-    {"keyShortcut1", SDLK_1, strprintf(_("Item Shortcut %d"), 1)},
-    {"keyShortcut2", SDLK_2, strprintf(_("Item Shortcut %d"), 2)},
-    {"keyShortcut3", SDLK_3, strprintf(_("Item Shortcut %d"), 3)},
-    {"keyShortcut4", SDLK_4, strprintf(_("Item Shortcut %d"), 4)},
-    {"keyShortcut5", SDLK_5, strprintf(_("Item Shortcut %d"), 5)},
-    {"keyShortcut6", SDLK_6, strprintf(_("Item Shortcut %d"), 6)},
-    {"keyShortcut7", SDLK_7, strprintf(_("Item Shortcut %d"), 7)},
-    {"keyShortcut8", SDLK_8, strprintf(_("Item Shortcut %d"), 8)},
-    {"keyShortcut9", SDLK_9, strprintf(_("Item Shortcut %d"), 9)},
-    {"keyShortcut10", SDLK_0, strprintf(_("Item Shortcut %d"), 10)},
-    {"keyShortcut11", SDLK_MINUS, strprintf(_("Item Shortcut %d"), 11)},
-    {"keyShortcut12", SDLK_EQUALS, strprintf(_("Item Shortcut %d"), 12)},
-    {"keyWindowHelp", SDLK_F1, _("Help Window")},
-    {"keyWindowStatus", SDLK_F2, _("Status Window")},
-    {"keyWindowInventory", SDLK_F3, _("Inventory Window")},
-    {"keyWindowEquipment", SDLK_F4, _("Equipment Window")},
-    {"keyWindowSkill", SDLK_F5, _("Skill Window")},
-    {"keyWindowMinimap", SDLK_F6, _("Minimap Window")},
     {"keyWindowChat", SDLK_F7, _("Chat Window")},
-    {"keyWindowSetup", SDLK_F9, _("Setup Window")},
     {"keyWindowDebug", SDLK_F10, _("Debug Window")},
     {"keyWindowEmote", SDLK_F11, _("Emote Window")},
+    {"keyEmoteShortcut", SDLK_e, _("Emote Shortcut Window")},
+    {"keyWindowEquipment", SDLK_F4, _("Equipment Window")},
+    {"keyWindowHelp", SDLK_F1, _("Help Window")},
+    {"keyWindowInventory", SDLK_F3, _("Inventory Window")},
+    {"keyItemShortcut", SDLK_i, _("Item Shortcut Window")},
+    {"keyWindowMinimap", SDLK_F6, _("Minimap Window")},
+    {"keyWindowSetup", SDLK_F9, _("Setup Window")},
+    {"keyWindowSkill", SDLK_F5, _("Skill Window")},
+    {"keyWindowStatus", SDLK_F2, _("Status Window")},
     {"keyEmoteShortcut1", SDLK_1, strprintf(_("Emote Shortcut %d"), 1)},
     {"keyEmoteShortcut2", SDLK_2, strprintf(_("Emote Shortcut %d"), 2)},
     {"keyEmoteShortcut3", SDLK_3, strprintf(_("Emote Shortcut %d"), 3)},
@@ -93,6 +81,18 @@ static KeyData const keyData[KeyboardConfig::KEY_TOTAL] = {
     {"keyEmoteShortcut10", SDLK_0, strprintf(_("Emote Shortcut %d"), 10)},
     {"keyEmoteShortcut11", SDLK_MINUS, strprintf(_("Emote Shortcut %d"), 11)},
     {"keyEmoteShortcut12", SDLK_EQUALS, strprintf(_("Emote Shortcut %d"), 12)},
+    {"keyShortcut1", SDLK_1, strprintf(_("Item Shortcut %d"), 1)},
+    {"keyShortcut2", SDLK_2, strprintf(_("Item Shortcut %d"), 2)},
+    {"keyShortcut3", SDLK_3, strprintf(_("Item Shortcut %d"), 3)},
+    {"keyShortcut4", SDLK_4, strprintf(_("Item Shortcut %d"), 4)},
+    {"keyShortcut5", SDLK_5, strprintf(_("Item Shortcut %d"), 5)},
+    {"keyShortcut6", SDLK_6, strprintf(_("Item Shortcut %d"), 6)},
+    {"keyShortcut7", SDLK_7, strprintf(_("Item Shortcut %d"), 7)},
+    {"keyShortcut8", SDLK_8, strprintf(_("Item Shortcut %d"), 8)},
+    {"keyShortcut9", SDLK_9, strprintf(_("Item Shortcut %d"), 9)},
+    {"keyShortcut10", SDLK_0, strprintf(_("Item Shortcut %d"), 10)},
+    {"keyShortcut11", SDLK_MINUS, strprintf(_("Item Shortcut %d"), 11)},
+    {"keyShortcut12", SDLK_EQUALS, strprintf(_("Item Shortcut %d"), 12)},
     {"keyChat", SDLK_RETURN, _("Toggle Chat")},
     {"keyChatScrollUp", SDLK_PAGEUP, _("Scroll Chat Up")},
     {"keyChatScrollDown", SDLK_PAGEDOWN, _("Scroll Chat Down")},
@@ -153,8 +153,8 @@ bool KeyboardConfig::hasConflicts()
             // Also don't allow a key to be assigned to tab, since this
             // can mess up focus handling with the keyboard and cause unexpected
             // behavior.
-            if (!(((i >= KEY_SHORTCUT_1) && (i <= KEY_SHORTCUT_12)) &&
-                  ((j >= KEY_EMOTE_1) && (j <= KEY_EMOTE_12))) &&
+            if (!(((i >= KEY_ITEM_SHORTCUT_1) && (i <= KEY_ITEM_SHORTCUT_12)) &&
+                  ((j >= KEY_EMOTE_SHORTCUT_1) && (j <= KEY_EMOTE_SHORTCUT_12))) &&
                   (mKey[i].value == mKey[j].value || mKey[i].value == SDLK_TAB))
             {
                 return true;
@@ -235,10 +235,10 @@ int KeyboardConfig::getKeyIndex(int keyValue) const
 
 int KeyboardConfig::getKeyEmoteOffset(int keyValue) const
 {
-    for (int i = KEY_EMOTE_1; i <= KEY_EMOTE_12; i++)
+    for (int i = KEY_EMOTE_SHORTCUT_1; i <= KEY_EMOTE_SHORTCUT_12; i++)
     {
         if (keyValue == mKey[i].value)
-            return 1 + i - KEY_EMOTE_1;
+            return 1 + i - KEY_EMOTE_SHORTCUT_1;
     }
     return 0;
 }

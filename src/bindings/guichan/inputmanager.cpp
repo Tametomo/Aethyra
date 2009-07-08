@@ -141,7 +141,7 @@ void InputManager::handleJoystickInput()
         const Uint16 x = player_node->mX;
         const Uint16 y = player_node->mY;
 
-        if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
+        if (!keyboard.isKeyActive(keyboard.KEY_CLEAR_TARGET))
         {
             Being *target = player_node->getTarget();
 
@@ -302,10 +302,10 @@ void InputManager::handleKeyboardInput()
                     case KeyboardConfig::KEY_WINDOW_EMOTE:
                         requestedWindow = emoteWindow;
                         break;
-                    case KeyboardConfig::KEY_ITEM_SHORTCUT:
+                    case KeyboardConfig::KEY_WINDOW_ITEM_SHORTCUT:
                         requestedWindow = itemShortcutWindow;
                         break;
-                    case KeyboardConfig::KEY_EMOTE_SHORTCUT:
+                    case KeyboardConfig::KEY_WINDOW_EMOTE_SHORTCUT:
                         requestedWindow = emoteShortcutWindow;
                         break;
                     // Hide certain windows
@@ -338,7 +338,7 @@ void InputManager::handleKeyboardInput()
                         break;
                 }
 
-                if (keyboard.isKeyActive(keyboard.KEY_EMOTE))
+                if (keyboard.isKeyActive(keyboard.KEY_EMOTE_METAKEY))
                 {
                     const int emotion = keyboard.getKeyEmoteOffset(event.key.keysym.sym);
 
@@ -367,24 +367,24 @@ void InputManager::handleKeyboardInput()
                     // Do not activate item shortcuts if tradewindow is visible
                     if (!tradeWindow->isVisible())
                     {
-                        for (int i = KeyboardConfig::KEY_SHORTCUT_1;
-                                 i <= KeyboardConfig::KEY_SHORTCUT_12; i++)
+                        for (int i = KeyboardConfig::KEY_ITEM_SHORTCUT_1;
+                                 i <= KeyboardConfig::KEY_ITEM_SHORTCUT_12; i++)
                         {
                             if (tKey == i)
                             {
-                                itemShortcut->useItem(i - KeyboardConfig::KEY_SHORTCUT_1);
+                                itemShortcut->useItem(i - KeyboardConfig::KEY_ITEM_SHORTCUT_1);
                                 used = true;
                                 break;
                             }
                         }
                     }
 
-                    if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
+                    if (!keyboard.isKeyActive(keyboard.KEY_CLEAR_TARGET))
                     {
                         Being::Type type = Being::INVALID;
 
                         // Target the nearest monster
-                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_CLOSEST))
+                        if (keyboard.isKeyActive(keyboard.KEY_TARGET_MONSTER))
                             type = Being::MONSTER;
                         // Target the nearest player
                         else if (keyboard.isKeyActive(keyboard.KEY_TARGET_PLAYER))
@@ -416,7 +416,7 @@ void InputManager::handleKeyboardInput()
                         }
                     }
                     // Stop attacking
-                    else if (keyboard.isKeyActive(keyboard.KEY_TARGET))
+                    else if (keyboard.isKeyActive(keyboard.KEY_CLEAR_TARGET))
                     {
                         player_node->stopAttack();
                         targetKeyHeld = false;
@@ -516,7 +516,7 @@ void InputManager::handleKeyboardInput()
             const int tKey = keyboard.getKeyIndex(event.key.keysym.sym);
 
             // Stop protecting the target keys
-            if (tKey == KeyboardConfig::KEY_TARGET_CLOSEST ||
+            if (tKey == KeyboardConfig::KEY_TARGET_MONSTER ||
                 tKey == KeyboardConfig::KEY_TARGET_PLAYER || 
                 tKey == KeyboardConfig::KEY_TARGET_NPC)
             {

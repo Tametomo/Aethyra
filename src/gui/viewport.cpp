@@ -316,7 +316,7 @@ void Viewport::mousePressed(gcn::MouseEvent &event)
                     {
                         player_node->setGotoTarget(being);
                         player_node->attack(being,
-                            !keyboard.isKeyActive(keyboard.KEY_TARGET));
+                            !keyboard.isKeyActive(keyboard.KEY_CLEAR_TARGET));
                     }
                     else
                     {
