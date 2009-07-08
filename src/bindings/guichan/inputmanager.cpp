@@ -409,9 +409,9 @@ void InputManager::handleKeyboardInput()
                         if (keyboard.isKeyActive(keyboard.KEY_ATTACK) && 
                             target && target->getType() != Being::NPC)
                         {
-                            if (player_node->mAction != Being::ATTACK)
-                                player_node->attack(target, true);
-
+                            player_node->attack(player_node->getTarget() ?
+                                                player_node->getTarget() :
+                                                target, true);
                             used = true;
                         }
                     }
