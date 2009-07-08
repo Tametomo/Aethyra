@@ -656,3 +656,9 @@ void LocalPlayer::setInStorage(const bool &inStorage)
     mInStorage = inStorage;
     storageWindow->setVisible(inStorage);
 }
+
+void LocalPlayer::setMap(Map *map)
+{
+    Being::setMap(map);
+    stopAttack();
+}

@@ -219,6 +219,11 @@ class LocalPlayer : public Player
          */
         const bool &isAttacking() const { return mKeepAttacking; }
 
+        /**
+         * Overridden to clear attacking on switching maps.
+         */
+        virtual void setMap(Map *map);
+
         Uint32 mCharId;     /**< Used only during character selection. */
 
         Uint32 mJobXp;

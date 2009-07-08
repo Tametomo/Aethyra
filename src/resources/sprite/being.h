@@ -298,7 +298,7 @@ class Being : public Sprite
         /**
          * Sets the map the being is on
          */
-        void setMap(Map *map);
+        virtual void setMap(Map *map);
 
         /**
          * Sets the current action.
