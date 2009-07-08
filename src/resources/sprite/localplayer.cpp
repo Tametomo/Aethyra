@@ -559,6 +559,7 @@ void LocalPlayer::stopAttack()
         setAction(STAND);
 
     setTarget(NULL);
+    mKeepAttacking = false;
 }
 
 void LocalPlayer::revive()

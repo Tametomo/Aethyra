@@ -379,7 +379,7 @@ void InputManager::handleKeyboardInput()
                         }
                     }
 
-                    if (!keyboard.isKeyActive(keyboard.KEY_TARGET) && !targetKeyHeld)
+                    if (!keyboard.isKeyActive(keyboard.KEY_TARGET))
                     {
                         Being::Type type = Being::INVALID;
 
@@ -393,19 +393,24 @@ void InputManager::handleKeyboardInput()
                         else if (keyboard.isKeyActive(keyboard.KEY_TARGET_NPC))
                             type = Being::NPC;
 
-                        if (type != Being::INVALID)
+                        target = beingManager->findNearestLivingBeing(x, y, 20,
+                                               type != Being::INVALID ? type :
+                                                       Being::UNKNOWN);
+
+                        if (type != Being::INVALID && !targetKeyHeld)
                         {
-                            targetKeyHeld = true;
-                            target = beingManager->findNearestLivingBeing(
-                                                   x, y, 20, type);
-
                             player_node->setTarget(target);
+                            targetKeyHeld = true;
+                            used = true;
+                        }
+                        else if (player_node->isAttacking())
+                            target = NULL;
 
-                            if (keyboard.isKeyActive(keyboard.KEY_ATTACK) && 
-                                target && type != Being::NPC)
-                            {
+                        if (keyboard.isKeyActive(keyboard.KEY_ATTACK) && 
+                            target && target->getType() != Being::NPC)
+                        {
+                            if (player_node->mAction != Being::ATTACK)
                                 player_node->attack(target, true);
-                            }
 
                             used = true;
                         }
@@ -420,16 +425,15 @@ void InputManager::handleKeyboardInput()
                     if (keyboard.isKeyActive(keyboard.KEY_BEING_MENU))
                     {
                         if (!target)
-                            target = beingManager->findNearestLivingBeing(
-                                                   x, y, 20);
+                            target = beingManager->findNearestLivingBeing(x, y,
+                                                                          20);
 
                         if (target)
                         {
                             viewport->showPopup(target->mX * 32 -
                                                 viewport->getCameraX() + 16,
                                                 target->mY * 32 -
-                                                viewport->getCameraY(),
-                                                target);
+                                                viewport->getCameraY(), target);
                         }
                         used = true;
                     }

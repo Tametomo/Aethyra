@@ -214,6 +214,11 @@ class LocalPlayer : public Player
          */
         const int &getXp() const { return mXp; }
 
+        /**
+         * Returns whether the player is still attacking or not.
+         */
+        const bool &isAttacking() const { return mKeepAttacking; }
+
         Uint32 mCharId;     /**< Used only during character selection. */
 
         Uint32 mJobXp;
