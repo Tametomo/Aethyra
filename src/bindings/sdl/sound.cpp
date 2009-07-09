@@ -166,10 +166,8 @@ static Mix_Music* loadMusic(const std::string &filename)
     Mix_Music *music = Mix_LoadMUS(path.c_str());
 
     if (!music)
-    {
         logger->log("Mix_LoadMUS() Error loading '%s': %s", path.c_str(),
                     Mix_GetError());
-    }
 
     return music;
 }

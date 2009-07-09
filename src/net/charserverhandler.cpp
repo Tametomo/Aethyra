@@ -68,7 +68,8 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             code = msg->readInt8();
             logger->log("Connection problem: %i", code);
 
-            switch (code) {
+            switch (code)
+            {
                 case 0:
                     errorMessage = _("Authentication failed.");
                     break;
@@ -113,7 +114,8 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             break;
 
         case 0x006c:
-            switch (msg->readInt8()) {
+            switch (msg->readInt8())
+            {
                 case 0:
                     errorMessage = _("Access denied.");
                     break;
@@ -192,8 +194,7 @@ void CharServerHandler::handleMessage(MessageIn *msg)
 LocalPlayer *CharServerHandler::readPlayerData(MessageIn &msg, int &slot)
 {
     LocalPlayer *tempPlayer = new LocalPlayer(mLoginData->account_ID, 0, NULL);
-    tempPlayer->setGender(
-            (mLoginData->sex == 0) ? GENDER_FEMALE : GENDER_MALE);
+    tempPlayer->setGender((mLoginData->sex == 0) ? GENDER_FEMALE : GENDER_MALE);
 
     tempPlayer->mCharId = msg.readInt32();
     tempPlayer->setXp(msg.readInt32());
@@ -207,16 +208,15 @@ LocalPlayer *CharServerHandler::readPlayerData(MessageIn &msg, int &slot)
     msg.readInt32();                       // option
     msg.readInt32();                       // karma
     msg.readInt32();                       // manner
-    msg.skip(2);                          // unknown
+    msg.skip(2);                           // unknown
     tempPlayer->mHp = msg.readInt16();
     tempPlayer->mMaxHp = msg.readInt16();
     tempPlayer->mMp = msg.readInt16();
     tempPlayer->mMaxMp = msg.readInt16();
-    msg.readInt16();                       // speed
-    msg.readInt16();                       // class
+    tempPlayer->setWalkSpeed(msg.readInt16());  // speed
+    msg.readInt16();                            // class
     int hairStyle = msg.readInt16();
-    Uint16 weapon = msg.readInt16();
-    tempPlayer->setSprite(Being::WEAPON_SPRITE, weapon);
+    tempPlayer->setSprite(Being::WEAPON_SPRITE, msg.readInt16());
     tempPlayer->mLevel = msg.readInt16();
     msg.readInt16();                       // skill point
     tempPlayer->setSprite(Being::BOTTOMCLOTHES_SPRITE, msg.readInt16()); // head bottom
@@ -227,11 +227,12 @@ LocalPlayer *CharServerHandler::readPlayerData(MessageIn &msg, int &slot)
     tempPlayer->setHairStyle(hairStyle, hairColor);
     tempPlayer->setSprite(Being::MISC2_SPRITE, msg.readInt16());
     tempPlayer->setName(msg.readString(24));
-    for (int i = 0; i < 6; i++) {
+
+    for (int i = 0; i < 6; i++)
         tempPlayer->mAttr[i] = msg.readInt8();
-    }
+
     slot = msg.readInt8(); // character slot
-    msg.readInt8();                        // unknown
+    msg.readInt8();        // unknown
 
     return tempPlayer;
 }

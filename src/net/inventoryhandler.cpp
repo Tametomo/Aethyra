@@ -112,28 +112,23 @@ void InventoryHandler::handleMessage(MessageIn *msg)
                          INVENTORY_OFFSET : STORAGE_OFFSET;
 
                 if (debugInventory)
-                {
                     logger->log("Index: %d, ID: %d, Type: %d, Identified: %d, "
                                 "Qty: %d, Cards: %d, %d, %d, %d",
                                 index, itemId, itemType, identified, amount,
                                 cards[0], cards[1], cards[2], cards[3]);
-                }
 
                 if (msg->getId() == SMSG_PLAYER_INVENTORY)
                 {
                     inventory->setItem(index, itemId, amount, false);
 
+                    Item *item = inventory->getItem(index);
+
                     // Trick because arrows are not considered equipment
-                    if (arrow & 0x8000)
-                    {
-                        if (Item *item = inventory->getItem(index))
-                            item->setEquipment(true);
-                    }
+                    if (item && arrow & 0x8000)
+                        item->setEquipment(true);
                 }
                 else
-                {
                     storage->setItem(index, itemId, amount, false);
-                }
             }
             break;
 
@@ -156,12 +151,10 @@ void InventoryHandler::handleMessage(MessageIn *msg)
                     cards[i] = msg->readInt16();
 
                 if (debugInventory)
-                {
                     logger->log("Index: %d, ID: %d, Type: %d, Identified: %d, "
                                 "Qty: %d, Cards: %d, %d, %d, %d",
                                 index, itemId, itemType, identified, amount,
                                 cards[0], cards[1], cards[2], cards[3]);
-                }
 
                 storage->setItem(index, itemId, amount, false);
             }
@@ -174,16 +167,15 @@ void InventoryHandler::handleMessage(MessageIn *msg)
             identified = msg->readInt8();
             msg->readInt8();  // attribute
             msg->readInt8();  // refine
+
             for (int i = 0; i < 4; i++)
                 cards[i] = msg->readInt16();
+
             equipType = msg->readInt16();
             itemType = msg->readInt8();
 
-            if (msg->readInt8() > 0)
-            {
-                if (config.getValue("showpickupchat", true))
-                    chatWindow->chatLog(_("Unable to pick up item."), BY_SERVER);
-            }
+            if (msg->readInt8() > 0 && config.getValue("showpickupchat", true))
+                chatWindow->chatLog(_("Unable to pick up item."), BY_SERVER);
             else
             {
                 const ItemInfo &itemInfo = ItemDB::get(itemId);
@@ -198,9 +190,7 @@ void InventoryHandler::handleMessage(MessageIn *msg)
                 }
 
                 if (config.getValue("showpickupparticle", false))
-                {
                     player_node->pickedUp(itemInfo.getName());
-                }
 
                 if (Item *item = inventory->getItem(index))
                 {
@@ -208,9 +198,7 @@ void InventoryHandler::handleMessage(MessageIn *msg)
                     item->increaseQuantity(amount);
                 }
                 else
-                {
                     inventory->setItem(index, itemId, amount, equipType != 0);
-                }
             }
             break;
 
@@ -220,6 +208,7 @@ void InventoryHandler::handleMessage(MessageIn *msg)
             if (Item *item = inventory->getItem(index))
             {
                 item->increaseQuantity(-amount);
+
                 if (item->getQuantity() == 0)
                     inventory->removeItemAt(index);
             }
@@ -234,18 +223,18 @@ void InventoryHandler::handleMessage(MessageIn *msg)
 
             if (Item *item = inventory->getItem(index))
                 item->setQuantity(amount);
+
             break;
 
         case SMSG_ITEM_USE_RESPONSE:
             index = msg->readInt16() - INVENTORY_OFFSET;
             amount = msg->readInt16();
 
-            if (msg->readInt8() == 0) {
+            if (msg->readInt8() == 0)
                 chatWindow->chatLog(_("Failed to use item."), BY_SERVER);
-            } else {
-                if (Item *item = inventory->getItem(index))
-                    item->setQuantity(amount);
-            }
+            else if (Item *item = inventory->getItem(index))
+                item->setQuantity(amount);
+
             break;
 
         case SMSG_PLAYER_STORAGE_STATUS:
@@ -278,9 +267,8 @@ void InventoryHandler::handleMessage(MessageIn *msg)
                 item->increaseQuantity(amount);
             }
             else
-            {
                 storage->setItem(index, itemId, amount, false);
-            }
+
             break;
 
         case SMSG_PLAYER_STORAGE_REMOVE:
@@ -292,6 +280,7 @@ void InventoryHandler::handleMessage(MessageIn *msg)
             if (Item *item = storage->getItem(index))
             {
                 item->increaseQuantity(-amount);
+
                 if (item->getQuantity() == 0)
                     storage->removeItemAt(index);
             }

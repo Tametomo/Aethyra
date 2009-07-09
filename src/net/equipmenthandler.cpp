@@ -79,9 +79,7 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
                 msg->skip(8);     // card
 
                 if (debugEquipment)
-                {
                     logger->log("Index: %d, ID: %d", index, itemId);
-                }
 
                 inventory->setItem(index, itemId, 1, true);
 
@@ -104,8 +102,6 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
             index = msg->readInt16() - INVENTORY_OFFSET;
             equipPoint = msg->readInt16();
             type = msg->readInt8();
-
-            logger->log("Equipping: %i %i %i", index, equipPoint, type);
 
             if (!type)
             {
@@ -130,10 +126,8 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
             }
 
             if (debugEquipment)
-            {
                 logger->log("Equipping: %i %i %i at position %i",
                             index, equipPoint, type, position);
-            }
 
             item = inventory->getItem(player_node->mEquipment->getEquipment(position));
 
@@ -183,10 +177,9 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
             inventoryWindow->updateButtons();
 
             if (debugEquipment)
-            {
                 logger->log("Unequipping: %i %i(%i) %i",
                             index, equipPoint, type, position);
-            }
+
             break;
 
         case SMSG_PLAYER_ATTACK_RANGE:

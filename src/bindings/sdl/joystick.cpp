@@ -80,7 +80,8 @@ void Joystick::update()
     mDirection = 0;
 
     // When calibrating, don't bother the outside with our state
-    if (mCalibrating) {
+    if (mCalibrating)
+    {
         doCalibration();
         return;
     };

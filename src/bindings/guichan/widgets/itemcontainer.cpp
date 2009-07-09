@@ -164,10 +164,7 @@ void ItemContainer::logic()
 
     gcn::Widget::logic();
 
-    if (mInventory->getNumberOfSlotsUsed() == 0)
-        setEnabled(false);
-    else
-        setEnabled(true);
+    setEnabled(mInventory->getNumberOfSlotsUsed() != 0);
 
     int i = mInventory->getLastUsedSlot();
 
@@ -587,16 +584,13 @@ int ItemContainer::getVisibleSlot(const Item* searchItem) const
 void ItemContainer::setTypeFilter(const std::string& type)
 {
     mTypeFilter.clear();
+
+    // "" is special-cased to remove the filter
     if (!type.empty())
-    {
-        // "" is special-cased to remove the filter
         mTypeFilter.push_back(type);
-    }
 
     if (getSelectedItem() && !passesFilter(getSelectedItem()))
-    {
         selectNone();
-    }
 }
 
 void ItemContainer::setTypeFilter(const std::list<std::string>& types)
@@ -604,9 +598,7 @@ void ItemContainer::setTypeFilter(const std::list<std::string>& types)
     mTypeFilter = types;
 
     if (getSelectedItem() && !passesFilter(getSelectedItem()))
-    {
         selectNone();
-    }
 }
 
 void ItemContainer::setEquipSlotsFilter(signed int slots)
@@ -614,9 +606,7 @@ void ItemContainer::setEquipSlotsFilter(signed int slots)
     mEquipSlotsFilter = slots;
 
     if (getSelectedItem() && !passesFilter(getSelectedItem()))
-    {
         selectNone();
-    }
 }
 
 bool ItemContainer::passesFilter(const Item* item) const
@@ -632,6 +622,7 @@ bool ItemContainer::passesEquipSlotsFilter(const Item* item) const
 {
    if (mEquipSlotsFilter == NO_EQUIP_SLOTS_FILTER)
       return true;
+
    return (mEquipSlotsFilter & item->getInfo().getEquipSlots());
 }
 

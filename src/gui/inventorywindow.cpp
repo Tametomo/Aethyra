@@ -213,17 +213,11 @@ void InventoryWindow::mouseClicked(gcn::MouseEvent &event)
 void InventoryWindow::updateButtons()
 {
     const Item *selectedItem = mItems->getSelectedItem();
+    const std::string &caption = (selectedItem && selectedItem->isEquipment()) ?
+                                 (selectedItem->isEquipped()) ? _("Unequip") :
+                                 _("Equip") : _("Use");
 
-    if (selectedItem && selectedItem->isEquipment())
-    {
-        if (selectedItem->isEquipped())
-            mUseButton->setCaption(_("Unequip"));
-        else
-            mUseButton->setCaption(_("Equip"));
-    }
-    else
-        mUseButton->setCaption(_("Use"));
-
+    mUseButton->setCaption(caption);
     mUseButton->setEnabled(selectedItem != 0);
     mDropButton->setEnabled(selectedItem != 0);
     mStoreButton->setEnabled(selectedItem != 0);

@@ -56,7 +56,8 @@ void LoginHandler::handleMessage(MessageIn *msg)
             code = msg->readInt8();
             logger->log("Connection problem: %i", code);
 
-            switch (code) {
+            switch (code)
+            {
                 case 0:
                     errorMessage = _("Authentication failed");
                     break;
@@ -120,7 +121,8 @@ void LoginHandler::handleMessage(MessageIn *msg)
             code = msg->readInt8();
             logger->log("Login::error code: %i", code);
 
-            switch (code) {
+            switch (code)
+            {
                 case 0:
                     errorMessage = _("Unregistered ID");
                     break;

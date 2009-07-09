@@ -62,8 +62,10 @@ void ItemHandler::handleMessage(MessageIn *msg)
         case SMSG_ITEM_REMOVE:
             FloorItem *item;
             item = floorItemManager->findById(msg->readInt32());
+
             if (item)
                 floorItemManager->destroy(item);
+
             break;
     }
 }

@@ -177,9 +177,7 @@ void Network::disconnect()
 void Network::registerHandler(MessageHandler *handler)
 {
     for (const Uint16 *i = handler->handledMessages; *i; i++)
-    {
         mMessageHandlers[*i] = handler;
-    }
 
     handler->setNetwork(this);
 }
@@ -187,9 +185,7 @@ void Network::registerHandler(MessageHandler *handler)
 void Network::unregisterHandler(MessageHandler *handler)
 {
     for (const Uint16 *i = handler->handledMessages; *i; i++)
-    {
         mMessageHandlers.erase(*i);
-    }
 
     handler->setNetwork(0);
 }
@@ -197,10 +193,10 @@ void Network::unregisterHandler(MessageHandler *handler)
 void Network::clearHandlers()
 {
     MessageHandlerIterator i;
+
     for (i = mMessageHandlers.begin(); i != mMessageHandlers.end(); i++)
-    {
         i->second->setNetwork(0);
-    }
+
     mMessageHandlers.clear();
 }
 
@@ -389,7 +385,8 @@ void Network::receive()
                     setError("Error in SDLNet_TCP_Recv(): " +
                              std::string(SDLNet_GetError()));
                 }
-                else {
+                else
+                {
                     mInSize += ret;
                     if (mToSkip)
                     {
@@ -421,9 +418,7 @@ void Network::receive()
     }
 
     if (SDLNet_TCP_DelSocket(set, mSocket) == -1)
-    {
         logger->log("Error in SDLNet_DelSocket(): %s", SDLNet_GetError());
-    }
 
     SDLNet_FreeSocketSet(set);
 }
