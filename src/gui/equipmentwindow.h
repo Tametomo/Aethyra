@@ -27,16 +27,16 @@
 #include <guichan/selectionlistener.hpp>
 
 #include "../bindings/guichan/widgets/window.h"
-#include "../bindings/guichan/widgets/itemcontainer.h"
-#include "../bindings/guichan/widgets/scrollarea.h"
 
 class Equipment;
 class EquipmentConfigListener;
 class Icon;
 class Inventory;
 class Item;
+class ItemContainer;
 class ItemPopup;
 class PlayerBox;
+class PopupMenu;
 
 /**
  * Equipment dialog.
@@ -69,6 +69,16 @@ class EquipmentWindow : public Window,
 
         void mousePressed(gcn::MouseEvent& mouseEvent);
 
+        /**
+         * Focuses on the item container on gaining focus.
+         */
+        void requestFocus();
+
+        /**
+         * Resets the item filter for the equipment window on shown events.
+         */
+        void widgetShown(const gcn::Event& event);
+
         enum {
             // Equipment rules:
             EQUIP_LEGS_SLOT = 0,
@@ -96,15 +106,18 @@ class EquipmentWindow : public Window,
 
         void valueChanged(const gcn::SelectionEvent &event);
 
-        bool mShowItemInfo;
-        EquipmentConfigListener *mConfigListener;
-
         Equipment *mEquipment;
         Inventory *mInventory;
         gcn::Button *mEquipButton;              /**< Button for both equipping and unequipping. */
         Icon *mEquipIcon[EQUIP_VECTOREND];      /**< Equipment Icons. */
 
-        ItemPopup *mItemPopup;
+        static EquipmentConfigListener *mConfigListener;
+
+        static int mInstances;
+        static bool mShowItemInfo;
+
+        static ItemPopup *mItemPopup;
+        static PopupMenu *mPopupMenu;
 
         PlayerBox *mPlayerBox;
 
@@ -123,13 +136,13 @@ class EquipmentWindow : public Window,
          * unequipped by other means (inventory window or shortcuts), so it may
          * as well be kept simple.
          */
-        typedef enum
+        enum EquipUnequipState
         {
-                STATE_NEITHER,
-                STATE_EQUIP,
-                STATE_UNEQUIP
-        } equipUnequipState;
-        equipUnequipState mEquipUnequipState;
+            STATE_NEITHER,
+            STATE_EQUIP,
+            STATE_UNEQUIP
+        };
+        EquipUnequipState mEquipUnequipState;
 
         /**
          * Sets the text of the button, enables or disables it as appropriate,
@@ -138,7 +151,7 @@ class EquipmentWindow : public Window,
          * No other side-effects; specifically does not change what is selected
          * (as doing so would result in another call to setEquipUnequipState).
          */
-        void setEquipUnequipState(equipUnequipState state);
+        void setEquipUnequipState(EquipUnequipState state);
 };
 
 extern EquipmentWindow *equipmentWindow;

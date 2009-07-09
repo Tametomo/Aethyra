@@ -27,7 +27,7 @@
 
 #include "equipmentwindow.h"
 #include "itempopup.h"
-#include "viewport.h"
+#include "popupmenu.h"
 
 #include "../configlistener.h"
 #include "../configuration.h"
@@ -40,6 +40,8 @@
 
 #include "../bindings/guichan/widgets/button.h"
 #include "../bindings/guichan/widgets/icon.h"
+#include "../bindings/guichan/widgets/itemcontainer.h"
+#include "../bindings/guichan/widgets/scrollarea.h"
 #include "../bindings/guichan/widgets/playerbox.h"
 
 #include "../resources/resourcemanager.h"
@@ -66,6 +68,12 @@ static const int boxPosition[][2] = {
     {129, 78}    // EQUIP_AMMO_SLOT
 };
 
+int EquipmentWindow::mInstances = 0;
+bool EquipmentWindow::mShowItemInfo = false;
+ItemPopup *EquipmentWindow::mItemPopup = NULL;
+PopupMenu *EquipmentWindow::mPopupMenu = NULL;
+EquipmentConfigListener *EquipmentWindow::mConfigListener = NULL;
+
 class EquipmentConfigListener : public ConfigListener
 {
     public:
@@ -83,25 +91,31 @@ class EquipmentConfigListener : public ConfigListener
 
 EquipmentWindow::EquipmentWindow():
     Window(_("Equipment")),
-    mSelected(-1)
+    mSelected(-1),
+    mEquipUnequipState(STATE_NEITHER)
 {
     setWindowName("Equipment");
-    mItemPopup = new ItemPopup();
-    mItemPopup->setOpaque(false);
+    setCloseButton(true);
+
+    if (mInstances == 0)
+    {
+        mConfigListener = new EquipmentConfigListener();
+        config.addListener("showItemPopups", mConfigListener);
+
+        mShowItemInfo = config.getValue("showItemPopups", true);
+
+        mItemPopup = new ItemPopup();
+        mItemPopup->setOpaque(false);
+
+        mPopupMenu = new PopupMenu(INVENTORY);
+    }
+
+    mInstances++;
 
     // Control that shows the Player
     mPlayerBox = new PlayerBox();
     mPlayerBox->setDimension(gcn::Rectangle(50, 80, 74, 123));
     mPlayerBox->setPlayer(player_node);
-
-    mShowItemInfo = config.getValue("showItemPopups", true);
-    mConfigListener = new EquipmentConfigListener();
-    config.addListener("showItemPopups", mConfigListener);
-
-    setWindowName("Equipment");
-    setCloseButton(true);
-    setDefaultSize(280, 300, ImageRect::CENTER);
-    loadWindowState();
 
     const gcn::Rectangle &area = getChildrenArea();
     const int &padding = 2 * getPadding();
@@ -116,7 +130,6 @@ EquipmentWindow::EquipmentWindow():
     mEquipButton->setEnabled(false);
 
     add(mPlayerBox);
-    add(mEquipButton);
 
     for (int i = EQUIP_LEGS_SLOT; i < EQUIP_VECTOREND; i++)
     {
@@ -132,23 +145,32 @@ EquipmentWindow::EquipmentWindow():
     mInventory = player_node->getInventory();
 
     // Control that shows equippable items
-    mItems = new ItemContainer(player_node->getInventory(), "showpopupmenu", this);
-    mItems->setEquipSlotsFilter((1 << EQUIP_VECTOREND) - 1);  // show all equippable items
+    mItems = new ItemContainer(mInventory, "showpopupmenu", this);
     mItems->addSelectionListener(this);
 
     mInvenScroll = new ScrollArea(mItems);
     mInvenScroll->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
-
     mInvenScroll->setDimension(gcn::Rectangle(175, 20, 90, 220));
+
     add(mInvenScroll);
+    add(mEquipButton);
+
+    setDefaultSize(280, 300, ImageRect::CENTER);
+    loadWindowState();
 }
 
 EquipmentWindow::~EquipmentWindow()
 {
-    delete mItemPopup;
+    mInstances--;
 
-    config.removeListener("showItemPopups", mConfigListener);
-    delete mConfigListener;
+    if (mInstances == 0)
+    {
+        delete mItemPopup;
+        delete mPopupMenu;
+
+        config.removeListener("showItemPopups", mConfigListener);
+        delete mConfigListener;
+    }
 }
 
 void EquipmentWindow::draw(gcn::Graphics *graphics)
@@ -221,16 +243,13 @@ void EquipmentWindow::action(const gcn::ActionEvent &event)
     {
         switch(mEquipUnequipState)
         {
-            case STATE_NEITHER:
-                // Should be unreachable, as the button should be disabled.
-                break;
             case STATE_EQUIP:
             {
                 Item* item = mItems->getSelectedItem();
+
                 if (item)
-                {
                     player_node->equipItem(item);
-                }
+
                 break;
             }
             case STATE_UNEQUIP:
@@ -244,8 +263,13 @@ void EquipmentWindow::action(const gcn::ActionEvent &event)
                 }
                 break;
             }
+            default:
+                // Should be unreachable, as the button should be disabled.
+                break;
         }
     }
+    else if (event.getId() == "showpopupmenu")
+        mItems->showPopupMenu(INVENTORY, false);
 }
 
 Item* EquipmentWindow::getItem(const int &x, const int &y)
@@ -286,9 +310,7 @@ void EquipmentWindow::mousePressed(gcn::MouseEvent& mouseEvent)
         // even if it doesn't select an item.  (If it does
         // select an item, valueChanged will be called too).
         if (mouseEvent.getSource() == mItems)
-        {
             setSelected(-1);
-        }
 
         // Clicking on the window background will reset the
         // items window to showing all equipment.
@@ -298,6 +320,11 @@ void EquipmentWindow::mousePressed(gcn::MouseEvent& mouseEvent)
             setSelected(-1);
             mItems->setEquipSlotsFilter((1 << EQUIP_VECTOREND) - 1);
         }
+    }
+    else if (mouseEvent.getButton() == gcn::MouseEvent::RIGHT &&
+             mouseEvent.getSource() == mItems)
+    {
+        mItems->showPopupMenu(INVENTORY);
     }
     else if (mouseEvent.getButton() == gcn::MouseEvent::RIGHT)
     {
@@ -313,7 +340,9 @@ void EquipmentWindow::mousePressed(gcn::MouseEvent& mouseEvent)
          */
         const int mx = x + getX();
         const int my = y + getY();
-        viewport->showPopup(mx, my, item);
+
+        mPopupMenu->setItem(item);
+        mPopupMenu->showPopup(mx, my);
     }
 }
 
@@ -356,33 +385,24 @@ void EquipmentWindow::setSelected(int index)
 {
     mSelected = index;
 
-    if (index == -1)    // no slot selected
-    {
-        if (mEquipUnequipState == STATE_UNEQUIP)
-            setEquipUnequipState(STATE_NEITHER);
-    }
+    if (index == -1 && mEquipUnequipState == STATE_UNEQUIP)  // no slot selected
+        setEquipUnequipState(STATE_NEITHER);
     else
-    {
         setEquipUnequipState(STATE_UNEQUIP);
-        mItems->selectNone();
-    }
 }
 
 void EquipmentWindow::valueChanged(const gcn::SelectionEvent &event)
 {
-    if (event.getSource() == mItems)
+    if (event.getSource() == mItems && mItems->getSelectedItem())
     {
-        if (mItems->getSelectedItem())
-        {
-            setSelected(-1);
-            setEquipUnequipState(STATE_EQUIP);
-        }
+        setSelected(-1);
+        setEquipUnequipState(STATE_EQUIP);
     }
 }
 
-void EquipmentWindow::setEquipUnequipState(equipUnequipState state)
+void EquipmentWindow::setEquipUnequipState(EquipUnequipState state)
 {
-    switch(state)
+    switch (state)
     {
         case STATE_NEITHER:
             mEquipButton->setEnabled(false);
@@ -396,7 +416,24 @@ void EquipmentWindow::setEquipUnequipState(equipUnequipState state)
             mEquipButton->setEnabled(true);
             mEquipButton->setCaption(_("Unequip"));
             break;
+        default:
+            mEquipUnequipState = STATE_NEITHER;
+            return;
     }
 
     mEquipUnequipState = state;
+}
+
+void EquipmentWindow::requestFocus()
+{
+    mItems->requestFocus();
+}
+
+void EquipmentWindow::widgetShown(const gcn::Event& event)
+{
+    mSelected = -1;
+    mItems->selectNone();
+    mItems->setEquipSlotsFilter((1 << EQUIP_VECTOREND) - 1);  // show all equippable items
+
+    Window::widgetShown(event);
 }
