@@ -555,7 +555,7 @@ void LocalPlayer::attack(Being *target, const bool &keep)
 
 void LocalPlayer::stopAttack()
 {
-    if (mTarget)
+    if (mTarget && mAction == ATTACK)
         setAction(STAND);
 
     setTarget(NULL);
