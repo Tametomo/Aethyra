@@ -153,8 +153,8 @@ bool KeyboardConfig::hasConflicts()
             // Also don't allow a key to be assigned to tab, since this
             // can mess up focus handling with the keyboard and cause unexpected
             // behavior.
-            if (!(((i >= KEY_ITEM_SHORTCUT_1) && (i <= KEY_ITEM_SHORTCUT_12)) &&
-                  ((j >= KEY_EMOTE_SHORTCUT_1) && (j <= KEY_EMOTE_SHORTCUT_12))) &&
+            if (!(((j >= KEY_ITEM_SHORTCUT_1) && (j <= KEY_ITEM_SHORTCUT_12)) &&
+                  ((i >= KEY_EMOTE_SHORTCUT_1) && (i <= KEY_EMOTE_SHORTCUT_12))) &&
                   (mKey[i].value == mKey[j].value || mKey[i].value == SDLK_TAB))
             {
                 return true;
