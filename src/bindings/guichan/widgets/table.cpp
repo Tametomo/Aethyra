@@ -347,6 +347,16 @@ void Table::draw(gcn::Graphics* graphics)
         y_offset += height;
     }
 
+    if (isFocused())
+    {
+        graphics->setColor(guiPalette->getColor(Palette::HIGHLIGHT,
+                                               (int)(mAlpha * 255.0f)));
+        graphics->drawLine(0, 0, getWidth() - 1, 0);
+        graphics->drawLine(0, 1, 0, getHeight() - 1);
+        graphics->drawLine(getWidth() - 1, 1, getWidth() - 1, getHeight() - 1);
+        graphics->drawLine(0, getHeight() - 1, getWidth() - 2, getHeight() - 1);
+    }
+
     if (mTopWidget)
     {
         gcn::Rectangle bounds = mTopWidget->getDimension();

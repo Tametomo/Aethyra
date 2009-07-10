@@ -78,6 +78,14 @@ void ListBox::draw(gcn::Graphics *graphics)
                                            (int) (mAlpha * 255.0f)));
     graphics->setFont(getFont());
 
+    if (isFocused())
+    {
+        graphics->drawLine(0, 0, getWidth() - 1, 0);
+        graphics->drawLine(0, 1, 0, getHeight() - 1);
+        graphics->drawLine(getWidth() - 1, 1, getWidth() - 1, getHeight() - 1);
+        graphics->drawLine(0, getHeight() - 1, getWidth() - 2, getHeight() - 1);
+    }
+
     const int fontHeight = getFont()->getHeight();
 
     // Draw filled rectangle around the selected list element

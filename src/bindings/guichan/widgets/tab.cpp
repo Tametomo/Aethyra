@@ -173,8 +173,15 @@ void Tab::draw(gcn::Graphics *graphics)
     }
 
     // draw tab
-    static_cast<Graphics*>(graphics)->
-        drawImageRect(0, 0, getWidth(), getHeight(), tabImg[mode]);
+    static_cast<Graphics*>(graphics)->drawImageRect(0, 0, getWidth(),
+                                                    getHeight(), tabImg[mode]);
+
+    if (mTabbedArea->isFocused() && mode == TAB_SELECTED)
+    {
+        graphics->setColor(guiPalette->getColor(Palette::HIGHLIGHT));
+        graphics->fillRectangle(gcn::Rectangle(4, 4, getWidth() - 8,
+                                               getHeight() - 8));
+    }
 
     // draw label
     drawChildren(graphics);
