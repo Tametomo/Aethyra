@@ -95,7 +95,12 @@ EquipmentWindow::EquipmentWindow():
     mEquipUnequipState(STATE_NEITHER)
 {
     setWindowName("Equipment");
+    setResizable(true);
     setCloseButton(true);
+
+    setMinWidth(280);
+    setMinHeight(300);
+    setDefaultSize(280, 300, ImageRect::CENTER);
 
     if (mInstances == 0)
     {
@@ -117,19 +122,22 @@ EquipmentWindow::EquipmentWindow():
     mPlayerBox->setDimension(gcn::Rectangle(50, 80, 74, 123));
     mPlayerBox->setPlayer(player_node);
 
-    const gcn::Rectangle &area = getChildrenArea();
-    const int &padding = 2 * getPadding();
+    mEquipment = player_node->mEquipment.get();
+    mInventory = player_node->getInventory();
+
+    // Control that shows equippable items
+    mItems = new ItemContainer(mInventory, "showpopupmenu", this);
+    mItems->addSelectionListener(this);
+
+    mInvenScroll = new ScrollArea(mItems);
+    mInvenScroll->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
 
     std::string longestUseString = getFont()->getWidth(_("Equip")) >
                                    getFont()->getWidth(_("Unequip")) ?
                                    _("Equip") : _("Unequip");
 
     mEquipButton = new Button(longestUseString, "equipUnequip", this);
-    mEquipButton->setPosition((area.width  - mEquipButton->getWidth()  - padding),
-                               area.height - mEquipButton->getHeight() - padding);
     mEquipButton->setEnabled(false);
-
-    add(mPlayerBox);
 
     for (int i = EQUIP_LEGS_SLOT; i < EQUIP_VECTOREND; i++)
     {
@@ -141,21 +149,10 @@ EquipmentWindow::EquipmentWindow():
         add(mEquipIcon[i]);
     }
 
-    mEquipment = player_node->mEquipment.get();
-    mInventory = player_node->getInventory();
-
-    // Control that shows equippable items
-    mItems = new ItemContainer(mInventory, "showpopupmenu", this);
-    mItems->addSelectionListener(this);
-
-    mInvenScroll = new ScrollArea(mItems);
-    mInvenScroll->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
-    mInvenScroll->setDimension(gcn::Rectangle(175, 20, 90, 220));
-
+    add(mPlayerBox);
     add(mInvenScroll);
     add(mEquipButton);
 
-    setDefaultSize(280, 300, ImageRect::CENTER);
     loadWindowState();
 }
 
@@ -171,6 +168,20 @@ EquipmentWindow::~EquipmentWindow()
         config.removeListener("showItemPopups", mConfigListener);
         delete mConfigListener;
     }
+}
+
+void EquipmentWindow::widgetResized(const gcn::Event &event)
+{
+    Window::widgetResized(event);
+
+    const gcn::Rectangle &area = getChildrenArea();
+    const int &padding = 2 * getPadding();
+
+    mInvenScroll->setDimension(gcn::Rectangle(175, 20, area.width - 190,
+                                              area.height - 80));
+
+    mEquipButton->setPosition((area.width  - mEquipButton->getWidth()  - padding),
+                               area.height - mEquipButton->getHeight() - padding);
 }
 
 void EquipmentWindow::draw(gcn::Graphics *graphics)

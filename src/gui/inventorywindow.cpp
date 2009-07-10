@@ -74,6 +74,7 @@ InventoryWindow::InventoryWindow(int invSize):
 
     mStoreButton = new Button(_("Store"), "store", this);
     mStoreButton->setEnabled(false);
+    mStoreButton->setVisible(false);
 
     mUseButton = new Button(longestUseString, "use", this);
     mUseButton->setEnabled(false);
@@ -118,8 +119,6 @@ InventoryWindow::InventoryWindow(int invSize):
     layout.setRowHeight(0, mDropButton->getHeight());
 
     loadWindowState();
-
-    mStoreButton->setVisible(false);
 }
 
 void InventoryWindow::logic()

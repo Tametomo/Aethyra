@@ -97,6 +97,8 @@ class EquipmentWindow : public Window,
 
 
     private:
+        void widgetResized(const gcn::Event &event);
+
         void mouseExited(gcn::MouseEvent &event);
         void mouseMoved(gcn::MouseEvent &event);
 

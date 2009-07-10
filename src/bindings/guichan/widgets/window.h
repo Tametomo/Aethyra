@@ -132,7 +132,7 @@ class Window : public gcn::Window, gcn::WidgetListener
         /**
          * Called whenever the widget changes size.
          */
-        void widgetResized(const gcn::Event &event);
+        virtual void widgetResized(const gcn::Event &event);
 
         /**
          * These two functions allow children widgets which inherit from this

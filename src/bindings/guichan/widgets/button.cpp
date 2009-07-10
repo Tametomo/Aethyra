@@ -98,7 +98,7 @@ Button::Button()
 }
 
 Button::Button(const std::string& caption, const std::string &actionEventId,
-    gcn::ActionListener *listener):
+               gcn::ActionListener *listener):
     gcn::Button(caption)
 {
     init();
