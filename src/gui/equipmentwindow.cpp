@@ -396,10 +396,16 @@ void EquipmentWindow::setSelected(int index)
 {
     mSelected = index;
 
-    if (index == -1 && mEquipUnequipState == STATE_UNEQUIP)  // no slot selected
-        setEquipUnequipState(STATE_NEITHER);
+    if (index == -1)    // no slot selected
+    {
+        if (mEquipUnequipState == STATE_UNEQUIP)
+            setEquipUnequipState(STATE_NEITHER);
+    }
     else
+    {
         setEquipUnequipState(STATE_UNEQUIP);
+        mItems->selectNone();
+    }
 }
 
 void EquipmentWindow::valueChanged(const gcn::SelectionEvent &event)
