@@ -180,12 +180,8 @@ void ItemContainer::draw(gcn::Graphics *graphics)
     if (!isVisible())
         return;
 
-    int columns = getWidth() / gridWidth;
+    const int columns = std::max(1, getWidth() / gridWidth);
     int gridSlot = 0;   // The visible slot for drawing this item
-
-    // Have at least 1 column
-    if (columns < 1)
-        columns = 1;
 
     for (int i = 0; i < mInventory->getSize(); i++)
     {
@@ -308,7 +304,7 @@ void ItemContainer::setSelectedItemIndex(int index)
             mLastSelectedItemId = item->getId();
 
         gcn::Rectangle scroll;
-        const int columns = getWidth() / gridWidth;
+        const int columns = std::max(1, getWidth() / gridWidth);
         const int itemY = getVisibleSlot(item) / columns;
 
         if (mSelectedItemIndex == NO_ITEM)
@@ -390,7 +386,7 @@ void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
 
     if (!useMouseCoordinates)
     {
-        const int columns = getWidth() / gridWidth;
+        const int columns = std::max(1, getWidth() / gridWidth);
         const int gridSlot = getVisibleSlot(item);
         const int itemX = gridSlot % columns;
         const int itemY = gridSlot / columns;
@@ -415,7 +411,7 @@ void ItemContainer::getPopupLocation(bool useMouseCoordinates, int &x, int &y)
 
 void ItemContainer::keyPressed(gcn::KeyEvent &event)
 {
-    const int columns = getWidth() / gridWidth;
+    const int columns = std::max(1, getWidth() / gridWidth);
     const int gridSlot = getVisibleSlot(getSelectedItem());
     int itemX = gridSlot % columns;
     int itemY = gridSlot / columns;
@@ -532,7 +528,7 @@ void ItemContainer::focusLost(const gcn::Event &event)
 
 Item* ItemContainer::getItem(const int posX, const int posY)
 {
-    int columns = getWidth() / gridWidth;
+    const int columns = std::max(1, getWidth() / gridWidth);
     int gridSlot = posX / gridWidth + ((posY / gridHeight) * columns);
     return getItemInVisibleSlot(gridSlot);
 }

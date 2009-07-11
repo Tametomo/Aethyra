@@ -131,12 +131,8 @@ EmoteContainer::~EmoteContainer()
 
 void EmoteContainer::draw(gcn::Graphics *graphics)
 {
-    int columns = getWidth() / gridWidth;
+    const int columns = std::max(1, getWidth() / gridWidth);
     int emoteCount = 0;
-
-    // Have at least 1 column
-    if (columns < 1)
-        columns = 1;
 
     for (int i = 0; i < mMaxEmote ; i++)
     {
@@ -198,7 +194,7 @@ void EmoteContainer::setSelectedEmoteIndex(int index)
         mSelectedEmoteIndex = index;
 
     gcn::Rectangle scroll;
-    const int columns = getWidth() / gridWidth;
+    const int columns = std::max(1, getWidth() / gridWidth);
     const int emoteY = mSelectedEmoteIndex / columns;
 
     if (mSelectedEmoteIndex == NO_EMOTE)
@@ -235,7 +231,7 @@ void EmoteContainer::showPopup(bool useMouseCoordinates)
 
     if (!useMouseCoordinates)
     {
-        int columns = getWidth() / gridWidth;
+        const int columns = std::max(1, getWidth() / gridWidth);
         const int emoteX = emote % columns;
         const int emoteY = emote / columns;
         const int xPos = emoteX * gridWidth + (gridWidth / 2);
@@ -261,7 +257,7 @@ void EmoteContainer::showPopup(bool useMouseCoordinates)
 
 void EmoteContainer::keyPressed(gcn::KeyEvent &event)
 {
-    int columns = getWidth() / gridWidth;
+    int columns = std::max(1, getWidth() / gridWidth);
     const int rows = mMaxEmote / columns;
     const int emoteX = mSelectedEmoteIndex % columns;
     const int emoteY = mSelectedEmoteIndex / columns;
@@ -310,7 +306,7 @@ void EmoteContainer::mousePressed(gcn::MouseEvent &event)
 
     if (button == gcn::MouseEvent::LEFT || button == gcn::MouseEvent::RIGHT)
     {
-        int columns = getWidth() / gridWidth;
+        int columns = std::max(1, getWidth() / gridWidth);
         int mx = event.getX();
         int my = event.getY();
         int index = mx / gridWidth + ((my / gridHeight) * columns);
