@@ -28,6 +28,23 @@ class Item;
 #define INVENTORY_SIZE 102
 #define STORAGE_SIZE 301
 
+/**
+ * A collection of Items.
+ *
+ * The main instances of this class are the character's carried items
+ * and storage (accessed through LocalPlayer::getInventory() and
+ * LocalPlayer::getStorage() respectively).  These are a local mirror of
+ * the character's inventory on the server; the order of items is
+ * important, as many of the messages between client and server identify
+ * items simply by their index in the inventory.  The server can
+ * rearrange the items (typically at map-change).
+ *
+ * Other instances are used for trading.
+ *
+ * In the current design, GUI items that display the inventory redraw
+ * continually, and draw the inventory's current state; thus they don't
+ * need notification when it changes.
+ */
 class Inventory
 {
     public:
