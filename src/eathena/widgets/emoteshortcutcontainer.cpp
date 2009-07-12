@@ -142,7 +142,10 @@ void EmoteShortcutContainer::mousePressed(gcn::MouseEvent &event)
     if (event.getButton() == gcn::MouseEvent::LEFT)
     {
         if (mShortcutHandler->isSelected() && emoteWindow->isVisible())
+        {
             mShortcutDragged = true; // Will store the shortcut on mouse release
+            mShortcutClicked = true;
+        }
         else if (mShortcutHandler->getShortcut(index) > -1)
             mShortcutClicked = true;
     }
