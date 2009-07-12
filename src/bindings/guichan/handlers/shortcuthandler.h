@@ -38,7 +38,7 @@ class ShortcutHandler
         /**
          * Destructor.
          */
-        ~ShortcutHandler();
+        virtual ~ShortcutHandler();
 
         /**
          * Try to use the shortcut specified by the index.

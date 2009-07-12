@@ -31,6 +31,17 @@
 
 #include <SDL/SDL_ttf.h>
 
+#ifdef __APPLE__
+#include <CoreFoundation/CFBundle.h>
+#endif
+
+#ifdef WIN32
+#include <SDL_syswm.h>
+#else
+#include <cerrno>
+#include <sys/stat.h>
+#endif
+
 #include "main.h"
 #include "options.h"
 
@@ -91,17 +102,6 @@
 #include "eathena/db/monsterdb.h"
 #include "eathena/db/npcdb.h"
 #include "eathena/db/skilldb.h"
-
-#ifdef __APPLE__
-#include <CoreFoundation/CFBundle.h>
-#endif
-
-#ifdef WIN32
-#include <SDL_syswm.h>
-#else
-#include <cerrno>
-#include <sys/stat.h>
-#endif
 
 // Account infos
 char n_server, n_character;

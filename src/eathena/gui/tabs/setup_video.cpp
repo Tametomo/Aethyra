@@ -414,7 +414,7 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "speech")
     {
-        int val = (int) mSpeechSlider->getValue();
+        const int val = (int) mSpeechSlider->getValue();
         setSpeechModeLabel(val);        
 
         mSpeechSlider->setValue(val);
