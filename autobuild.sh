@@ -34,6 +34,7 @@ echo
 echo "now running make"
 
 make
+strip src/aethyra
 
 echo
 echo "now running make install please input your root password";
