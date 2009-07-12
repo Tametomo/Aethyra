@@ -24,10 +24,10 @@
 
 #include "sdlgraphics.h"
 
-#include "../../../log.h"
+#include "../../../core/log.h"
 
-#include "../../../resources/image.h"
-#include "../../../resources/imageloader.h"
+#include "../../../core/image/image.h"
+#include "../../../core/image/imageloader.h"
 
 SDLGraphics::SDLGraphics()
 {

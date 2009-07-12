@@ -27,7 +27,7 @@
 #include "../gui.h"
 #include "../palette.h"
 
-#include "../../../configuration.h"
+#include "../../../core/configuration.h"
 
 LinkMappedListModel::LinkMappedListModel()
 {

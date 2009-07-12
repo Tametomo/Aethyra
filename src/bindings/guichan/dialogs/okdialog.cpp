@@ -29,7 +29,7 @@
 #include "../widgets/button.h"
 #include "../widgets/textbox.h"
 
-#include "../../../utils/gettext.h"
+#include "../../../core/utils/gettext.h"
 
 OkDialog::OkDialog(const std::string &title, const std::string &msg,
                    Window *parent):

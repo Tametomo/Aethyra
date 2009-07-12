@@ -27,6 +27,8 @@
 #include <guichan/widget.hpp>
 #include <guichan/widgetlistener.hpp>
 
+#include "../handlers/shortcuthandler.h"
+
 class Image;
 
 /**
@@ -42,12 +44,12 @@ class ShortcutContainer : public gcn::Widget,
         /**
          * Constructor. Initializes the shortcut container.
          */
-        ShortcutContainer();
+        ShortcutContainer(ShortcutHandler *shortcut);
 
         /**
          * Destructor.
          */
-        ~ShortcutContainer() {}
+        ~ShortcutContainer();
 
         /**
          * Draws the shortcuts
@@ -63,7 +65,7 @@ class ShortcutContainer : public gcn::Widget,
         /**
          * Handles mouse when dragged.
          */
-        virtual void mouseDragged(gcn::MouseEvent &event) = 0;
+        virtual void mouseDragged(gcn::MouseEvent &event);
 
         /**
          * Handles mouse when pressed.
@@ -73,13 +75,15 @@ class ShortcutContainer : public gcn::Widget,
         /**
          * Handles mouse release.
          */
-        virtual void mouseReleased(gcn::MouseEvent &event) = 0;
+        virtual void mouseReleased(gcn::MouseEvent &event);
 
-        virtual int getMaxItems() const { return mMaxItems; }
+        int getMaxShortcuts() const { return SHORTCUTS; }
 
-        virtual int getBoxWidth() const { return mBoxWidth; }
+        int getBoxWidth() const { return mBoxWidth; }
 
-        virtual int getBoxHeight() const { return mBoxHeight; }
+        int getBoxHeight() const { return mBoxHeight; }
+
+        ShortcutHandler *getShortcutHandler() { return mShortcutHandler; }
 
     protected:
         /**
@@ -91,15 +95,23 @@ class ShortcutContainer : public gcn::Widget,
          */
         int getIndexFromGrid(int pointX, int pointY) const;
 
-        Image *mBackgroundImg;
+        static Image *mBackgroundImg;
 
         static float mAlpha;
 
-        int mMaxItems;
-        int mBoxWidth;
-        int mBoxHeight;
+        static int mBoxWidth;
+        static int mBoxHeight;
+
+        ShortcutHandler *mShortcutHandler;
+
         int mCursorPosX, mCursorPosY;
         int mGridWidth, mGridHeight;
+
+        bool mShortcutClicked;
+        bool mShortcutDragged;
+
+    private:
+        static int mInstances;
 };
 
 #endif

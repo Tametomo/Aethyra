@@ -27,8 +27,8 @@
 #include "textmanager.h"
 #include "textrenderer.h"
 
-#include "../../configlistener.h"
-#include "../../configuration.h"
+#include "../../core/configlistener.h"
+#include "../../core/configuration.h"
 
 int Text::mInstances = 0;
 

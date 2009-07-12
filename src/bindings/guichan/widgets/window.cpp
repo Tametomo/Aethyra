@@ -33,10 +33,10 @@
 #include "../palette.h"
 #include "../skin.h"
 
-#include "../../../configuration.h"
-#include "../../../log.h"
+#include "../../../core/configuration.h"
+#include "../../../core/log.h"
 
-#include "../../../resources/image.h"
+#include "../../../core/image/image.h"
 
 int Window::instances = 0;
 int Window::mouseResize = 0;

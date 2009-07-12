@@ -27,38 +27,41 @@
 #include "keyboardconfig.h"
 
 #include "dialogs/confirmdialog.h"
+#include "dialogs/helpdialog.h"
 #include "dialogs/okdialog.h"
+
+#include "widgets/shortcutwindow.h"
 
 #include "../sdl/joystick.h"
 #include "../sdl/sound.h"
 
-#include "../../emoteshortcut.h"
-#include "../../itemshortcut.h"
-#include "../../log.h"
 #include "../../main.h"
-#include "../../playerrelations.h"
 
-#include "../../gui/chat.h"
-#include "../../gui/debugwindow.h"
-#include "../../gui/emotewindow.h"
-#include "../../gui/equipmentwindow.h"
-#include "../../gui/help.h"
-#include "../../gui/inventorywindow.h"
-#include "../../gui/minimap.h"
-#include "../../gui/ministatus.h"
-#include "../../gui/setup.h"
-#include "../../gui/shortcutwindow.h"
-#include "../../gui/skill.h"
-#include "../../gui/status.h"
-#include "../../gui/trade.h"
-#include "../../gui/viewport.h"
+#include "../../core/log.h"
 
-#include "../../resources/beingmanager.h"
-#include "../../resources/flooritemmanager.h"
+#include "../../core/image/sprite/localplayer.h"
 
-#include "../../resources/sprite/localplayer.h"
+#include "../../core/utils/gettext.h"
 
-#include "../../utils/gettext.h"
+#include "../../eathena/beingmanager.h"
+#include "../../eathena/flooritemmanager.h"
+#include "../../eathena/playerrelations.h"
+
+#include "../../eathena/gui/chat.h"
+#include "../../eathena/gui/debugwindow.h"
+#include "../../eathena/gui/emotewindow.h"
+#include "../../eathena/gui/equipmentwindow.h"
+#include "../../eathena/gui/inventorywindow.h"
+#include "../../eathena/gui/minimap.h"
+#include "../../eathena/gui/ministatus.h"
+#include "../../eathena/gui/setup.h"
+#include "../../eathena/gui/skill.h"
+#include "../../eathena/gui/status.h"
+#include "../../eathena/gui/trade.h"
+#include "../../eathena/gui/viewport.h"
+
+#include "../../eathena/handlers/emoteshortcut.h"
+#include "../../eathena/handlers/itemshortcut.h"
 
 Joystick *joystick = NULL;
 
@@ -237,7 +240,7 @@ void InputManager::handleKeyboardInput()
             {
                 // In-game Help
                 case KeyboardConfig::KEY_WINDOW_HELP:
-                    requestedWindow = helpWindow;
+                    requestedWindow = helpDialog;
                     break;
                 // Quitting confirmation dialog
                 case KeyboardConfig::KEY_QUIT:
@@ -319,7 +322,7 @@ void InputManager::handleKeyboardInput()
                         setupWindow->hide();
                         debugWindow->hide();
                         emoteWindow->hide();
-                        helpWindow->hide();
+                        helpDialog->hide();
                         emoteShortcutWindow->hide();
                         minimap->hide();
                         used = true;
@@ -340,13 +343,15 @@ void InputManager::handleKeyboardInput()
 
                 if (keyboard.isKeyActive(keyboard.KEY_EMOTE_METAKEY))
                 {
-                    const int emotion = keyboard.getKeyEmoteOffset(event.key.keysym.sym);
-
-                    if (emotion)
+                    for (int i = KeyboardConfig::KEY_EMOTE_SHORTCUT_1;
+                             i <= KeyboardConfig::KEY_EMOTE_SHORTCUT_12; i++)
                     {
-                        emoteShortcut->useEmote(emotion);
-                        used = true;
-                        break;
+                        if (tKey == i)
+                        {
+                            emoteShortcut->useShortcut(i - KeyboardConfig::KEY_EMOTE_SHORTCUT_1);
+                            used = true;
+                            break;
+                        }
                     }
                 }
 
@@ -372,7 +377,7 @@ void InputManager::handleKeyboardInput()
                         {
                             if (tKey == i)
                             {
-                                itemShortcut->useItem(i - KeyboardConfig::KEY_ITEM_SHORTCUT_1);
+                                itemShortcut->useShortcut(i - KeyboardConfig::KEY_ITEM_SHORTCUT_1);
                                 used = true;
                                 break;
                             }

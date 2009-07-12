@@ -23,7 +23,7 @@
 
 #include "../sdl/sdlinput.h"
 
-#include "../../../utils/stringutils.h"
+#include "../../../core/utils/stringutils.h"
 
 IntTextField::IntTextField(int def, const std::string &actionEventId,
                            gcn::ActionListener *listener):

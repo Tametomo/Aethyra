@@ -24,7 +24,7 @@
 
 #include "statictablemodel.h"
 
-#include "../../../utils/dtor.h"
+#include "../../../core/utils/dtor.h"
 
 #define WIDGET_AT(row, column) (((row) * mColumns) + (column))
 #define DYN_SIZE(h) ((h) >= 0)  // determines whether this size is tagged for

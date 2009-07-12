@@ -24,9 +24,9 @@
 
 #include "modelistmodel.h"
 
-#include "../../../log.h"
+#include "../../../core/log.h"
 
-#include "../../../utils/stringutils.h"
+#include "../../../core/utils/stringutils.h"
 
 #define MIN_H 600
 #define MIN_W 800

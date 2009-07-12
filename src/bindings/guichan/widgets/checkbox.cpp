@@ -28,11 +28,11 @@
 #include "../palette.h"
 #include "../protectedfocuslistener.h"
 
-#include "../../../configlistener.h"
-#include "../../../configuration.h"
+#include "../../../core/configlistener.h"
+#include "../../../core/configuration.h"
+#include "../../../core/resourcemanager.h"
 
-#include "../../../resources/image.h"
-#include "../../../resources/resourcemanager.h"
+#include "../../../core/image/image.h"
 
 int CheckBox::instances = 0;
 float CheckBox::mAlpha = 1.0;

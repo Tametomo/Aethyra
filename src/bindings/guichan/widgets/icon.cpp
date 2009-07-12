@@ -24,8 +24,9 @@
 
 #include "../graphics.h"
 
-#include "../../../resources/image.h"
-#include "../../../resources/resourcemanager.h"
+#include "../../../core/resourcemanager.h"
+
+#include "../../../core/image/image.h"
 
 Icon::Icon(const std::string &file, bool fixed):
     mImage(NULL),

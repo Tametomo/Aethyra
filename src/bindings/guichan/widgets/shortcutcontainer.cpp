@@ -22,24 +22,57 @@
 
 #include "shortcutcontainer.h"
 
-float ShortcutContainer::mAlpha = 1.0;
+#include "../../../core/resourcemanager.h"
 
-ShortcutContainer::ShortcutContainer():
+#include "../../../core/image/image.h"
+
+int ShortcutContainer::mInstances = 0;
+float ShortcutContainer::mAlpha = 1.0;
+Image *ShortcutContainer::mBackgroundImg = NULL;
+int ShortcutContainer::mBoxWidth = 0;
+int ShortcutContainer::mBoxHeight = 0;
+
+ShortcutContainer::ShortcutContainer(ShortcutHandler *shortcut):
+    mShortcutHandler(shortcut),
     mGridWidth(1),
-    mGridHeight(1)
+    mGridHeight(1),
+    mShortcutClicked(false),
+    mShortcutDragged(false)
 {
+    addMouseListener(this);
+    addWidgetListener(this);
+
+    if (mInstances == 0)
+    {
+        ResourceManager *resman = ResourceManager::getInstance();
+
+        mBackgroundImg = resman->getImage("graphics/gui/item_shortcut_bgr.png");
+        mBackgroundImg->setAlpha(mAlpha);
+
+        mBoxHeight = mBackgroundImg->getHeight();
+        mBoxWidth = mBackgroundImg->getWidth();
+    }
+
+    mInstances++;
+}
+
+ShortcutContainer::~ShortcutContainer()
+{
+    delete mShortcutHandler;
+    mInstances--;
+
+    if (mInstances == 0)
+        mBackgroundImg->decRef();
 }
 
 void ShortcutContainer::widgetResized(const gcn::Event &event)
 {
-    mGridWidth = getWidth() / mBoxWidth;
+    const int shortcuts = mShortcutHandler->getNumOfShortcuts();
 
-    if (mGridWidth < 1)
-        mGridWidth = 1;
+    mGridWidth = getWidth() > mBoxWidth ? getWidth() / mBoxWidth : 1;
+    mGridHeight = mShortcutHandler->getNumOfShortcuts() / mGridWidth;
 
-    mGridHeight = mMaxItems / mGridWidth;
-
-    if (mMaxItems % mGridWidth != 0 || mGridHeight < 1)
+    if (shortcuts % mGridWidth != 0 || mGridHeight < 1)
         ++mGridHeight;
 
     setHeight(mGridHeight * mBoxHeight);
@@ -49,11 +82,61 @@ int ShortcutContainer::getIndexFromGrid(int pointX, int pointY) const
 {
     const gcn::Rectangle tRect = gcn::Rectangle(0, 0, mGridWidth * mBoxWidth,
                                                 mGridHeight * mBoxHeight);
+    const int index = ((pointY / mBoxHeight) * mGridWidth) + pointX / mBoxWidth;
 
-    int index = ((pointY / mBoxHeight) * mGridWidth) + pointX / mBoxWidth;
+    return (index >= mShortcutHandler->getNumOfShortcuts() ||
+           !tRect.isPointInRect(pointX, pointY)) ? -1 : index;
+}
 
-    if (!tRect.isPointInRect(pointX, pointY) || index >= mMaxItems)
-        index = -1;
+void ShortcutContainer::mouseDragged(gcn::MouseEvent &event)
+{
+    if (event.getButton() == gcn::MouseEvent::LEFT)
+    {
+        if (mShortcutClicked)
+        {
+            const int index = getIndexFromGrid(event.getX(), event.getY());
 
-    return index;
+            mCursorPosX = event.getX();
+            mCursorPosY = event.getY();
+
+            if (!mShortcutDragged && index != -1)
+            {
+                const int id = mShortcutHandler->getShortcut(index);
+
+                mShortcutHandler->setSelected(id);
+                mShortcutHandler->removeShortcut(index);
+                mShortcutDragged = true;
+            }
+        }
+    }
+}
+
+void ShortcutContainer::mouseReleased(gcn::MouseEvent &event)
+{
+    if (event.getButton() == gcn::MouseEvent::LEFT)
+    {
+        const int index = getIndexFromGrid(event.getX(), event.getY());
+
+        if (index == -1)
+        {
+            mShortcutClicked = false;
+            mShortcutDragged = false;
+            mShortcutHandler->setSelected(-1);
+            return;
+        }
+
+        if (mShortcutDragged)
+        {
+            mShortcutHandler->setShortcut(index, mShortcutHandler->getSelected());
+            mShortcutHandler->setSelected(-1);
+        }
+        else if (mShortcutHandler->getShortcut(index) != -1 && mShortcutClicked)
+            mShortcutHandler->useShortcut(index);
+
+        mShortcutClicked = false;
+        mShortcutDragged = false;
+
+        if (mShortcutHandler->isSelected())
+            mShortcutHandler->setSelected(-1);
+    }
 }

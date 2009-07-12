@@ -27,15 +27,15 @@
 
 #include "graphics.h"
 
-#include "../../log.h"
+#include "../../core/log.h"
 
-#include "../../gui/chat.h"
+#include "../../core/image/image.h"
+#include "../../core/image/imageloader.h"
+#include "../../core/image/imagewriter.h"
 
-#include "../../resources/image.h"
-#include "../../resources/imageloader.h"
-#include "../../resources/imagewriter.h"
+#include "../../core/utils/gettext.h"
 
-#include "../../utils/gettext.h"
+#include "../../eathena/gui/chat.h"
 
 bool Graphics::setFullscreen(bool fs)
 {

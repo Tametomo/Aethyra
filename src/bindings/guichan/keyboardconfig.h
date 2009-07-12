@@ -121,11 +121,6 @@ class KeyboardConfig
         int getKeyIndex(int keyValue) const;
 
         /**
-         * Get the key function index for an emote by providing the offset value.
-         */
-        int getKeyEmoteOffset(int keyValue) const;
-
-        /**
          * Set the enable flag, which will stop the user from doing actions.
          */
         void setEnabled(bool flag) { mEnabled = flag; }

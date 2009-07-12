@@ -27,7 +27,7 @@
 #include "graphics.h"
 #include "truetypefont.h"
 
-#include "../../resources/image.h"
+#include "../../core/image/image.h"
 
 #define CACHE_SIZE 256
 

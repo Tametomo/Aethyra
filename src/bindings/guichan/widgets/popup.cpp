@@ -25,8 +25,8 @@
 #include "../graphics.h"
 #include "../skin.h"
 
-#include "../../../configuration.h"
-#include "../../../log.h"
+#include "../../../core/configuration.h"
+#include "../../../core/log.h"
 
 Popup::Popup(const std::string &name, const std::string &skin,
              gcn::Container *parent):

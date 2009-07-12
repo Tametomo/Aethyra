@@ -24,12 +24,12 @@
 
 #include "sdl/sdlinput.h"
 
-#include "../../configuration.h"
+#include "../../core/configuration.h"
 
-#include "../../gui/tabs/setup_input.h"
+#include "../../core/utils/gettext.h"
+#include "../../core/utils/stringutils.h"
 
-#include "../../utils/gettext.h"
-#include "../../utils/stringutils.h"
+#include "../../eathena/gui/tabs/setup_input.h"
 
 struct KeyData
 {
@@ -231,16 +231,6 @@ int KeyboardConfig::getKeyIndex(int keyValue) const
             return i;
     }
     return KEY_NO_VALUE;
-}
-
-int KeyboardConfig::getKeyEmoteOffset(int keyValue) const
-{
-    for (int i = KEY_EMOTE_SHORTCUT_1; i <= KEY_EMOTE_SHORTCUT_12; i++)
-    {
-        if (keyValue == mKey[i].value)
-            return 1 + i - KEY_EMOTE_SHORTCUT_1;
-    }
-    return 0;
 }
 
 bool KeyboardConfig::isKeyActive(int index)

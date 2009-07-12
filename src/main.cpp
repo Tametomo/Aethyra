@@ -31,12 +31,8 @@
 
 #include <SDL/SDL_ttf.h>
 
-#include "configuration.h"
-#include "game.h"
-#include "log.h"
 #include "main.h"
 #include "options.h"
-#include "playerrelations.h"
 
 #include "bindings/guichan/graphics.h"
 #include "bindings/guichan/gui.h"
@@ -44,6 +40,7 @@
 #include "bindings/guichan/keyboardconfig.h"
 #include "bindings/guichan/palette.h"
 
+#include "bindings/guichan/dialogs/helpdialog.h"
 #include "bindings/guichan/dialogs/okdialog.h"
 
 #ifdef USE_OPENGL
@@ -55,40 +52,45 @@
 
 #include "bindings/sdl/sound.h"
 
-#include "gui/charserver.h"
-#include "gui/charselect.h"
-#include "gui/debugwindow.h"
-#include "gui/desktop.h"
-#include "gui/help.h"
-#include "gui/login.h"
-#include "gui/register.h"
-#include "gui/setup.h"
-#include "gui/updatewindow.h"
+#include "core/configuration.h"
+#include "core/log.h"
+#include "core/resourcemanager.h"
 
-#include "net/charserverhandler.h"
-#include "net/logindata.h"
-#include "net/loginhandler.h"
-#include "net/maploginhandler.h"
-#include "net/messageout.h"
-#include "net/network.h"
-#include "net/serverinfo.h"
+#include "core/image/image.h"
 
-#include "resources/image.h"
-#include "resources/resourcemanager.h"
+#include "core/image/sprite/localplayer.h"
 
-#include "resources/db/colordb.h"
-#include "resources/db/effectdb.h"
-#include "resources/db/emotedb.h"
-#include "resources/db/itemdb.h"
-#include "resources/db/monsterdb.h"
-#include "resources/db/npcdb.h"
-#include "resources/db/skilldb.h"
+#include "core/utils/gettext.h"
+#include "core/utils/lockedarray.h"
+#include "core/utils/stringutils.h"
 
-#include "resources/sprite/localplayer.h"
+#include "eathena/game.h"
+#include "eathena/playerrelations.h"
 
-#include "utils/gettext.h"
-#include "utils/lockedarray.h"
-#include "utils/stringutils.h"
+#include "eathena/gui/charserver.h"
+#include "eathena/gui/charselect.h"
+#include "eathena/gui/debugwindow.h"
+#include "eathena/gui/desktop.h"
+#include "eathena/gui/login.h"
+#include "eathena/gui/register.h"
+#include "eathena/gui/setup.h"
+#include "eathena/gui/updatewindow.h"
+
+#include "eathena/net/charserverhandler.h"
+#include "eathena/net/logindata.h"
+#include "eathena/net/loginhandler.h"
+#include "eathena/net/maploginhandler.h"
+#include "eathena/net/messageout.h"
+#include "eathena/net/network.h"
+#include "eathena/net/serverinfo.h"
+
+#include "eathena/db/colordb.h"
+#include "eathena/db/effectdb.h"
+#include "eathena/db/emotedb.h"
+#include "eathena/db/itemdb.h"
+#include "eathena/db/monsterdb.h"
+#include "eathena/db/npcdb.h"
+#include "eathena/db/skilldb.h"
 
 #ifdef __APPLE__
 #include <CoreFoundation/CFBundle.h>
@@ -132,7 +134,7 @@ Palette *guiPalette;
 
 DebugWindow *debugWindow;
 Desktop *desktop;
-HelpWindow *helpWindow;
+HelpDialog *helpDialog;
 Setup* setupWindow;
 
 // This anonymous namespace hides whatever is inside from other modules.
@@ -440,7 +442,7 @@ static void exit_engine()
     // Before config.write() so that global windows can get their settings
     // written to the configuration file.
     delete debugWindow;
-    delete helpWindow;
+    delete helpDialog;
     delete setupWindow;
 
     setupWindow = NULL;
@@ -729,7 +731,7 @@ int main(int argc, char *argv[])
 
     setupWindow = new Setup();
     debugWindow = new DebugWindow();
-    helpWindow = new HelpWindow();
+    helpDialog = new HelpDialog();
 
     sound.playMusic("Magick - Real.ogg");
 

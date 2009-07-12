@@ -34,13 +34,13 @@
 
 #include "../sdl/sdlinput.h"
 
-#include "../../../configlistener.h"
-#include "../../../configuration.h"
+#include "../../../core/configlistener.h"
+#include "../../../core/configuration.h"
+#include "../../../core/resourcemanager.h"
 
-#include "../../../resources/image.h"
-#include "../../../resources/resourcemanager.h"
+#include "../../../core/image/image.h"
 
-#include "../../../utils/dtor.h"
+#include "../../../core/utils/dtor.h"
 
 int DropDown::instances = 0;
 Image *DropDown::buttons[2][2];

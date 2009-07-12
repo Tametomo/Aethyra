@@ -24,11 +24,11 @@
 
 #include "../graphics.h"
 
-#include "../../../configlistener.h"
-#include "../../../configuration.h"
+#include "../../../core/configlistener.h"
+#include "../../../core/configuration.h"
+#include "../../../core/resourcemanager.h"
 
-#include "../../../resources/image.h"
-#include "../../../resources/resourcemanager.h"
+#include "../../../core/image/image.h"
 
 Image *ResizeGrip::mGripImage = 0;
 int ResizeGrip::mInstances = 0;

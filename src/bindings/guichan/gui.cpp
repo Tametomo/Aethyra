@@ -38,16 +38,16 @@
 #include "widgets/window.h"
 #include "widgets/windowcontainer.h"
 
-#include "../../configlistener.h"
-#include "../../configuration.h"
-#include "../../log.h"
+#include "../../core/configlistener.h"
+#include "../../core/configuration.h"
+#include "../../core/log.h"
+#include "../../core/resourcemanager.h"
 
-#include "../../gui/viewport.h"
+#include "../../core/image/image.h"
+#include "../../core/image/imageset.h"
+#include "../../core/image/imageloader.h"
 
-#include "../../resources/image.h"
-#include "../../resources/imageset.h"
-#include "../../resources/imageloader.h"
-#include "../../resources/resourcemanager.h"
+#include "../../eathena/gui/viewport.h"
 
 // Guichan stuff
 Gui *gui = 0;

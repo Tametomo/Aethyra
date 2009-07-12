@@ -33,7 +33,7 @@
 
 #include "../sdl/sdlinput.h"
 
-#include "../../../utils/dtor.h"
+#include "../../../core/utils/dtor.h"
 
 float Table::mAlpha = 1.0;
 

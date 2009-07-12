@@ -28,7 +28,7 @@
 #include "../widgets/button.h"
 #include "../widgets/textfield.h"
 
-#include "../../../utils/gettext.h"
+#include "../../../core/utils/gettext.h"
 
 TextInputDialog::TextInputDialog(std::string caption):
     Window(caption)

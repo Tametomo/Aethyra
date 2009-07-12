@@ -22,7 +22,7 @@
 
 #include "windowcontainer.h"
 
-#include "../../../utils/dtor.h"
+#include "../../../core/utils/dtor.h"
 
 WindowContainer *windowContainer = NULL;
 

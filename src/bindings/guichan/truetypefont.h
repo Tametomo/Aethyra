@@ -34,7 +34,7 @@
 #include <SDL_ttf.h>
 #endif
 
-#include "../../resources/resource.h"
+#include "../../core/resource.h"
 
 class TextChunk;
 

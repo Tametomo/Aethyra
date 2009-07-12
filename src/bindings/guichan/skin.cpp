@@ -24,16 +24,16 @@
 
 #include "skin.h"
 
-#include "../../configuration.h"
-#include "../../configlistener.h"
-#include "../../log.h"
+#include "../../core/configuration.h"
+#include "../../core/configlistener.h"
+#include "../../core/log.h"
+#include "../../core/resourcemanager.h"
 
-#include "../../resources/image.h"
-#include "../../resources/resourcemanager.h"
+#include "../../core/image/image.h"
 
-#include "../../utils/dtor.h"
-#include "../../utils/stringutils.h"
-#include "../../utils/xml.h"
+#include "../../core/utils/dtor.h"
+#include "../../core/utils/stringutils.h"
+#include "../../core/utils/xml.h"
 
 SkinLoader* skinLoader = NULL;
 ConfigListener *SkinLoader::skinConfigListener = NULL;

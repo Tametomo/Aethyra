@@ -24,10 +24,10 @@
 
 #include "sound.h"
 
-#include "../../log.h"
+#include "../../core/log.h"
+#include "../../core/resourcemanager.h"
 
-#include "../../resources/resourcemanager.h"
-#include "../../resources/soundeffect.h"
+#include "../../core/sound/soundeffect.h"
 
 Sound::Sound():
     mInstalled(false),

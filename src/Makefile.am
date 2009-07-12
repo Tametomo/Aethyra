@@ -29,34 +29,28 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/truetypefont.h \
 	      bindings/guichan/dialogs/confirmdialog.cpp \
 	      bindings/guichan/dialogs/confirmdialog.h \
+	      bindings/guichan/dialogs/helpdialog.cpp \
+	      bindings/guichan/dialogs/helpdialog.h \
 	      bindings/guichan/dialogs/okdialog.cpp \
 	      bindings/guichan/dialogs/okdialog.h \
 	      bindings/guichan/dialogs/textinputdialog.cpp \
 	      bindings/guichan/dialogs/textinputdialog.h \
 	      bindings/guichan/handlers/focushandler.cpp \
 	      bindings/guichan/handlers/focushandler.h \
-	      bindings/guichan/handlers/itemlinkhandler.cpp \
-	      bindings/guichan/handlers/itemlinkhandler.h \
 	      bindings/guichan/handlers/lettertextwraphandler.cpp \
 	      bindings/guichan/handlers/lettertextwraphandler.h \
 	      bindings/guichan/handlers/linkhandler.h \
+	      bindings/guichan/handlers/shortcuthandler.cpp \
+	      bindings/guichan/handlers/shortcuthandler.h \
 	      bindings/guichan/handlers/textwraphandler.h \
 	      bindings/guichan/handlers/wordtextwraphandler.cpp \
 	      bindings/guichan/handlers/wordtextwraphandler.h \
-	      bindings/guichan/models/ignorechoiceslistmodel.h \
 	      bindings/guichan/models/keylistmodel.h \
 	      bindings/guichan/models/linkmappedlistmodel.cpp \
 	      bindings/guichan/models/linkmappedlistmodel.h \
 	      bindings/guichan/models/mappedlistmodel.h \
 	      bindings/guichan/models/modelistmodel.cpp \
 	      bindings/guichan/models/modelistmodel.h \
-	      bindings/guichan/models/playerrelationlistmodel.h \
-	      bindings/guichan/models/playertablemodel.cpp \
-	      bindings/guichan/models/playertablemodel.h \
-	      bindings/guichan/models/shoplistmodel.cpp \
-	      bindings/guichan/models/shoplistmodel.h \
-	      bindings/guichan/models/skilltablemodel.cpp \
-	      bindings/guichan/models/skilltablemodel.h \
 	      bindings/guichan/models/statictablemodel.cpp \
 	      bindings/guichan/models/statictablemodel.h \
 	      bindings/guichan/models/tablemodel.cpp \
@@ -79,20 +73,12 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/widgets/container.h \
 	      bindings/guichan/widgets/dropdown.cpp \
 	      bindings/guichan/widgets/dropdown.h \
-	      bindings/guichan/widgets/emotecontainer.cpp \
-	      bindings/guichan/widgets/emotecontainer.h \
-	      bindings/guichan/widgets/emoteshortcutcontainer.cpp \
-	      bindings/guichan/widgets/emoteshortcutcontainer.h \
 	      bindings/guichan/widgets/icon.cpp \
 	      bindings/guichan/widgets/icon.h \
 	      bindings/guichan/widgets/imagebutton.cpp \
 	      bindings/guichan/widgets/imagebutton.h \
 	      bindings/guichan/widgets/inttextfield.h \
 	      bindings/guichan/widgets/inttextfield.cpp \
-	      bindings/guichan/widgets/itemcontainer.cpp \
-	      bindings/guichan/widgets/itemcontainer.h \
-	      bindings/guichan/widgets/itemshortcutcontainer.cpp \
-	      bindings/guichan/widgets/itemshortcutcontainer.h \
 	      bindings/guichan/widgets/label.cpp \
 	      bindings/guichan/widgets/label.h \
 	      bindings/guichan/widgets/listbox.cpp \
@@ -101,8 +87,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/widgets/mappedlistbox.h \
 	      bindings/guichan/widgets/passwordfield.cpp \
 	      bindings/guichan/widgets/passwordfield.h \
-	      bindings/guichan/widgets/playerbox.cpp \
-	      bindings/guichan/widgets/playerbox.h \
 	      bindings/guichan/widgets/popup.cpp \
 	      bindings/guichan/widgets/popup.h \
 	      bindings/guichan/widgets/progressbar.cpp \
@@ -115,10 +99,10 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/widgets/resizegrip.h \
 	      bindings/guichan/widgets/scrollarea.cpp \
 	      bindings/guichan/widgets/scrollarea.h \
-	      bindings/guichan/widgets/shoplistbox.cpp \
-	      bindings/guichan/widgets/shoplistbox.h \
 	      bindings/guichan/widgets/shortcutcontainer.cpp \
 	      bindings/guichan/widgets/shortcutcontainer.h \
+	      bindings/guichan/widgets/shortcutwindow.cpp \
+	      bindings/guichan/widgets/shortcutwindow.h \
 	      bindings/guichan/widgets/slider.cpp \
 	      bindings/guichan/widgets/slider.h \
 	      bindings/guichan/widgets/speechbubble.cpp \
@@ -145,256 +129,272 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/sdl/joystick.h \
 	      bindings/sdl/sound.cpp \
 	      bindings/sdl/sound.h \
-	      gui/tabs/setup_audio.cpp \
-	      gui/tabs/setup_audio.h \
-	      gui/tabs/setup_colors.cpp \
-	      gui/tabs/setup_colors.h \
-	      gui/tabs/setup_input.cpp \
-	      gui/tabs/setup_input.h \
-	      gui/tabs/setup_players.cpp \
-	      gui/tabs/setup_players.h \
-	      gui/tabs/setuptabcontainer.cpp \
-	      gui/tabs/setuptabcontainer.h \
-	      gui/tabs/setup_video.cpp \
-	      gui/tabs/setup_video.h \
-	      gui/buy.cpp \
-	      gui/buy.h \
-	      gui/buysell.cpp \
-	      gui/buysell.h \
-	      gui/charselect.cpp \
-	      gui/charselect.h \
-	      gui/charserver.cpp \
-	      gui/charserver.h \
-	      gui/chat.cpp \
-	      gui/chat.h \
-	      gui/debugwindow.cpp \
-	      gui/debugwindow.h \
-	      gui/desktop.cpp \
-	      gui/desktop.h \
-	      gui/emotewindow.cpp \
-	      gui/emotewindow.h \
-	      gui/equipmentwindow.cpp \
-	      gui/equipmentwindow.h \
-	      gui/help.cpp \
-	      gui/help.h \
-	      gui/inventorywindow.cpp \
-	      gui/inventorywindow.h \
-	      gui/itempopup.cpp \
-	      gui/itempopup.h \
-	      gui/itemamount.cpp \
-	      gui/itemamount.h \
-	      gui/login.cpp \
-	      gui/login.h \
-	      gui/menubar.cpp \
-	      gui/menubar.h \
-	      gui/minimap.cpp \
-	      gui/minimap.h \
-	      gui/ministatus.cpp \
-	      gui/ministatus.h \
-	      gui/npcintegerdialog.cpp \
-	      gui/npcintegerdialog.h \
-	      gui/npclistdialog.cpp \
-	      gui/npclistdialog.h \
-	      gui/npcstringdialog.cpp \
-	      gui/npcstringdialog.h \
-	      gui/npctext.cpp \
-	      gui/npctext.h \
-	      gui/popupmenu.cpp \
-	      gui/popupmenu.h \
-	      gui/register.cpp \
-	      gui/register.h \
-	      gui/sell.cpp \
-	      gui/sell.h \
-	      gui/setup.cpp \
-	      gui/setup.h \
-	      gui/shortcutwindow.cpp \
-	      gui/shortcutwindow.h \
-	      gui/skill.cpp \
-	      gui/skill.h \
-	      gui/slotselection.cpp \
-	      gui/slotselection.h \
-	      gui/status.cpp \
-	      gui/status.h \
-	      gui/storagewindow.cpp \
-	      gui/storagewindow.h \
-	      gui/trade.cpp \
-	      gui/trade.h \
-	      gui/updatewindow.h \
-	      gui/updatewindow.cpp \
-	      gui/viewport.cpp \
-	      gui/viewport.h \
-	      net/beinghandler.h \
-	      net/beinghandler.cpp \
-	      net/buysellhandler.h \
-	      net/buysellhandler.cpp \
-	      net/charserverhandler.h \
-	      net/charserverhandler.cpp \
-	      net/chathandler.h \
-	      net/chathandler.cpp \
-	      net/equipmenthandler.h \
-	      net/equipmenthandler.cpp \
-	      net/inventoryhandler.h \
-	      net/inventoryhandler.cpp \
-	      net/itemhandler.h \
-	      net/itemhandler.cpp \
-	      net/logindata.h \
-	      net/loginhandler.h \
-	      net/loginhandler.cpp \
-	      net/maploginhandler.cpp \
-	      net/maploginhandler.h \
-	      net/messagehandler.cpp \
-	      net/messagehandler.h \
-	      net/messagein.cpp \
-	      net/messagein.h \
-	      net/messageout.cpp \
-	      net/messageout.h \
-	      net/network.cpp \
-	      net/network.h \
-	      net/npchandler.cpp \
-	      net/npchandler.h \
-	      net/partyhandler.cpp \
-	      net/partyhandler.h \
-	      net/playerhandler.cpp \
-	      net/playerhandler.h \
-	      net/protocol.h \
-	      net/serverinfo.h \
-	      net/skillhandler.cpp \
-	      net/skillhandler.h \
-	      net/tradehandler.cpp \
-	      net/tradehandler.h \
-	      resources/action.cpp \
-	      resources/action.h \
-	      resources/ambientoverlay.cpp \
-	      resources/ambientoverlay.h \
-	      resources/animation.cpp \
-	      resources/animation.h \
-	      resources/beingmanager.cpp \
-	      resources/beingmanager.h \
-	      resources/dye.cpp \
-	      resources/dye.h \
-	      resources/flooritemmanager.cpp \
-	      resources/flooritemmanager.h \
-	      resources/image.cpp \
-	      resources/image.h \
-	      resources/imageloader.cpp \
-	      resources/imageloader.h \
-	      resources/imageset.h \
-	      resources/imageset.cpp \
-	      resources/imagewriter.cpp \
-	      resources/imagewriter.h \
-	      resources/mapreader.cpp \
-	      resources/mapreader.h \
-	      resources/music.cpp \
-	      resources/music.h \
-	      resources/resource.cpp \
-	      resources/resource.h \
-	      resources/resourcemanager.cpp \
-	      resources/resourcemanager.h \
-	      resources/simpleanimation.cpp \
-	      resources/simpleanimation.h \
-	      resources/soundeffect.cpp \
-	      resources/soundeffect.h \
-	      resources/spritedef.cpp \
-	      resources/spritedef.h \
-	      resources/wallpaper.cpp \
-	      resources/wallpaper.h \
-	      resources/db/colordb.cpp \
-	      resources/db/colordb.h \
-	      resources/db/effectdb.cpp \
-	      resources/db/effectdb.h \
-	      resources/db/emotedb.cpp \
-	      resources/db/emotedb.h \
-	      resources/db/itemdb.cpp \
-	      resources/db/itemdb.h \
-	      resources/db/iteminfo.h \
-	      resources/db/iteminfo.cpp \
-	      resources/db/monsterdb.cpp \
-	      resources/db/monsterdb.h \
-	      resources/db/monsterinfo.cpp \
-	      resources/db/monsterinfo.h \
-	      resources/db/npcdb.cpp \
-	      resources/db/npcdb.h \
-	      resources/db/skilldb.cpp \
-	      resources/db/skilldb.h \
-	      resources/particle/animationparticle.cpp \
-	      resources/particle/animationparticle.h \
-	      resources/particle/imageparticle.cpp \
-	      resources/particle/imageparticle.h \
-	      resources/particle/particle.cpp \
-	      resources/particle/particle.h \
-	      resources/particle/particlecontainer.cpp \
-	      resources/particle/particlecontainer.h \
-	      resources/particle/particleemitter.cpp \
-	      resources/particle/particleemitter.h \
-	      resources/particle/particleemitterprop.h \
-	      resources/particle/rotationalparticle.cpp \
-	      resources/particle/rotationalparticle.h \
-	      resources/particle/textparticle.cpp \
-	      resources/particle/textparticle.h \
-	      resources/sprite/animatedsprite.cpp \
-	      resources/sprite/animatedsprite.h \
-	      resources/sprite/being.cpp \
-	      resources/sprite/being.h \
-	      resources/sprite/flooritem.cpp \
-	      resources/sprite/flooritem.h \
-	      resources/sprite/localplayer.cpp \
-	      resources/sprite/localplayer.h \
-	      resources/sprite/monster.cpp \
-	      resources/sprite/monster.h \
-	      resources/sprite/npc.cpp \
-	      resources/sprite/npc.h \
-	      resources/sprite/player.cpp \
-	      resources/sprite/player.h \
-	      resources/sprite/sprite.h \
-	      utils/base64.cpp \
-	      utils/base64.h \
-	      utils/dtor.h \
-	      utils/fastsqrt.h \
-	      utils/gettext.h \
-	      utils/lockedarray.h \
-	      utils/stringutils.cpp \
-	      utils/stringutils.h \
-	      utils/mutex.h \
-	      utils/position.cpp \
-	      utils/position.h \
-	      utils/xml.cpp \
-	      utils/xml.h \
-	      utils/vector.cpp \
-	      utils/vector.h \
-	      configlistener.h \
-	      configuration.cpp \
-	      configuration.h \
-	      emoteshortcut.cpp \
-	      emoteshortcut.h \
+	      core/configlistener.h \
+	      core/configuration.cpp \
+	      core/configuration.h \
+	      core/log.cpp \
+	      core/log.h \
+	      core/recorder.cpp \
+	      core/recorder.h \
+	      core/resource.cpp \
+	      core/resource.h \
+	      core/resourcemanager.cpp \
+	      core/resourcemanager.h \
+	      core/image/animation.cpp \
+	      core/image/animation.h \
+	      core/image/dye.cpp \
+	      core/image/dye.h \
+	      core/image/image.cpp \
+	      core/image/image.h \
+	      core/image/imageloader.cpp \
+	      core/image/imageloader.h \
+	      core/image/imageset.h \
+	      core/image/imageset.cpp \
+	      core/image/imagewriter.cpp \
+	      core/image/imagewriter.h \
+	      core/image/simpleanimation.cpp \
+	      core/image/simpleanimation.h \
+	      core/image/wallpapermanager.cpp \
+	      core/image/wallpapermanager.h \
+	      core/image/particle/animationparticle.cpp \
+	      core/image/particle/animationparticle.h \
+	      core/image/particle/imageparticle.cpp \
+	      core/image/particle/imageparticle.h \
+	      core/image/particle/particle.cpp \
+	      core/image/particle/particle.h \
+	      core/image/particle/particlecontainer.cpp \
+	      core/image/particle/particlecontainer.h \
+	      core/image/particle/particleemitter.cpp \
+	      core/image/particle/particleemitter.h \
+	      core/image/particle/particleemitterprop.h \
+	      core/image/particle/rotationalparticle.cpp \
+	      core/image/particle/rotationalparticle.h \
+	      core/image/particle/textparticle.cpp \
+	      core/image/particle/textparticle.h \
+	      core/image/sprite/action.cpp \
+	      core/image/sprite/action.h \
+	      core/image/sprite/animatedsprite.cpp \
+	      core/image/sprite/animatedsprite.h \
+	      core/image/sprite/being.cpp \
+	      core/image/sprite/being.h \
+	      core/image/sprite/flooritem.cpp \
+	      core/image/sprite/flooritem.h \
+	      core/image/sprite/localplayer.cpp \
+	      core/image/sprite/localplayer.h \
+	      core/image/sprite/monster.cpp \
+	      core/image/sprite/monster.h \
+	      core/image/sprite/npc.cpp \
+	      core/image/sprite/npc.h \
+	      core/image/sprite/player.cpp \
+	      core/image/sprite/player.h \
+	      core/image/sprite/sprite.h \
+	      core/image/sprite/spritedef.cpp \
+	      core/image/sprite/spritedef.h \
+	      core/map/ambientoverlay.cpp \
+	      core/map/ambientoverlay.h \
+	      core/map/map.cpp \
+	      core/map/map.h \
+	      core/map/mapreader.cpp \
+	      core/map/mapreader.h \
+	      core/map/position.cpp \
+	      core/map/position.h \
+	      core/map/properties.h \
+	      core/map/tileset.h \
+	      core/sound/music.cpp \
+	      core/sound/music.h \
+	      core/sound/soundeffect.cpp \
+	      core/sound/soundeffect.h \
+	      core/utils/base64.cpp \
+	      core/utils/base64.h \
+	      core/utils/dtor.h \
+	      core/utils/fastsqrt.h \
+	      core/utils/gettext.h \
+	      core/utils/lockedarray.h \
+	      core/utils/mutex.h \
+	      core/utils/stringutils.cpp \
+	      core/utils/stringutils.h \
+	      core/utils/vector.cpp \
+	      core/utils/vector.h \
+	      core/utils/xml.cpp \
+	      core/utils/xml.h \
+	      eathena/beingmanager.cpp \
+	      eathena/beingmanager.h \
+	      eathena/flooritemmanager.cpp \
+	      eathena/flooritemmanager.h \
+	      eathena/game.cpp \
+	      eathena/game.h \
+	      eathena/party.cpp \
+	      eathena/party.h \
+	      eathena/playerrelations.cpp \
+	      eathena/playerrelations.h \
+	      eathena/db/colordb.cpp \
+	      eathena/db/colordb.h \
+	      eathena/db/effectdb.cpp \
+	      eathena/db/effectdb.h \
+	      eathena/db/emotedb.cpp \
+	      eathena/db/emotedb.h \
+	      eathena/db/itemdb.cpp \
+	      eathena/db/itemdb.h \
+	      eathena/db/iteminfo.h \
+	      eathena/db/iteminfo.cpp \
+	      eathena/db/monsterdb.cpp \
+	      eathena/db/monsterdb.h \
+	      eathena/db/monsterinfo.cpp \
+	      eathena/db/monsterinfo.h \
+	      eathena/db/npcdb.cpp \
+	      eathena/db/npcdb.h \
+	      eathena/db/skilldb.cpp \
+	      eathena/db/skilldb.h \
+	      eathena/gui/tabs/setup_audio.cpp \
+	      eathena/gui/tabs/setup_audio.h \
+	      eathena/gui/tabs/setup_colors.cpp \
+	      eathena/gui/tabs/setup_colors.h \
+	      eathena/gui/tabs/setup_input.cpp \
+	      eathena/gui/tabs/setup_input.h \
+	      eathena/gui/tabs/setup_players.cpp \
+	      eathena/gui/tabs/setup_players.h \
+	      eathena/gui/tabs/setuptabcontainer.cpp \
+	      eathena/gui/tabs/setuptabcontainer.h \
+	      eathena/gui/tabs/setup_video.cpp \
+	      eathena/gui/tabs/setup_video.h \
+	      eathena/gui/buy.cpp \
+	      eathena/gui/buy.h \
+	      eathena/gui/buysell.cpp \
+	      eathena/gui/buysell.h \
+	      eathena/gui/charselect.cpp \
+	      eathena/gui/charselect.h \
+	      eathena/gui/charserver.cpp \
+	      eathena/gui/charserver.h \
+	      eathena/gui/chat.cpp \
+	      eathena/gui/chat.h \
+	      eathena/gui/debugwindow.cpp \
+	      eathena/gui/debugwindow.h \
+	      eathena/gui/desktop.cpp \
+	      eathena/gui/desktop.h \
+	      eathena/gui/emotewindow.cpp \
+	      eathena/gui/emotewindow.h \
+	      eathena/gui/equipmentwindow.cpp \
+	      eathena/gui/equipmentwindow.h \
+	      eathena/gui/inventorywindow.cpp \
+	      eathena/gui/inventorywindow.h \
+	      eathena/gui/itempopup.cpp \
+	      eathena/gui/itempopup.h \
+	      eathena/gui/itemamount.cpp \
+	      eathena/gui/itemamount.h \
+	      eathena/gui/login.cpp \
+	      eathena/gui/login.h \
+	      eathena/gui/menubar.cpp \
+	      eathena/gui/menubar.h \
+	      eathena/gui/minimap.cpp \
+	      eathena/gui/minimap.h \
+	      eathena/gui/ministatus.cpp \
+	      eathena/gui/ministatus.h \
+	      eathena/gui/npcintegerdialog.cpp \
+	      eathena/gui/npcintegerdialog.h \
+	      eathena/gui/npclistdialog.cpp \
+	      eathena/gui/npclistdialog.h \
+	      eathena/gui/npcstringdialog.cpp \
+	      eathena/gui/npcstringdialog.h \
+	      eathena/gui/npctext.cpp \
+	      eathena/gui/npctext.h \
+	      eathena/gui/popupmenu.cpp \
+	      eathena/gui/popupmenu.h \
+	      eathena/gui/register.cpp \
+	      eathena/gui/register.h \
+	      eathena/gui/sell.cpp \
+	      eathena/gui/sell.h \
+	      eathena/gui/setup.cpp \
+	      eathena/gui/setup.h \
+	      eathena/gui/skill.cpp \
+	      eathena/gui/skill.h \
+	      eathena/gui/slotselection.cpp \
+	      eathena/gui/slotselection.h \
+	      eathena/gui/status.cpp \
+	      eathena/gui/status.h \
+	      eathena/gui/storagewindow.cpp \
+	      eathena/gui/storagewindow.h \
+	      eathena/gui/trade.cpp \
+	      eathena/gui/trade.h \
+	      eathena/gui/updatewindow.h \
+	      eathena/gui/updatewindow.cpp \
+	      eathena/gui/viewport.cpp \
+	      eathena/gui/viewport.h \
+	      eathena/handlers/emoteshortcut.h \
+	      eathena/handlers/itemlinkhandler.cpp \
+	      eathena/handlers/itemlinkhandler.h \
+	      eathena/handlers/itemshortcut.h \
+	      eathena/models/ignorechoiceslistmodel.h \
+	      eathena/models/playerrelationlistmodel.h \
+	      eathena/models/playertablemodel.cpp \
+	      eathena/models/playertablemodel.h \
+	      eathena/models/shoplistmodel.cpp \
+	      eathena/models/shoplistmodel.h \
+	      eathena/models/skilltablemodel.cpp \
+	      eathena/models/skilltablemodel.h \
+	      eathena/net/beinghandler.h \
+	      eathena/net/beinghandler.cpp \
+	      eathena/net/buysellhandler.h \
+	      eathena/net/buysellhandler.cpp \
+	      eathena/net/charserverhandler.h \
+	      eathena/net/charserverhandler.cpp \
+	      eathena/net/chathandler.h \
+	      eathena/net/chathandler.cpp \
+	      eathena/net/equipmenthandler.h \
+	      eathena/net/equipmenthandler.cpp \
+	      eathena/net/inventoryhandler.h \
+	      eathena/net/inventoryhandler.cpp \
+	      eathena/net/itemhandler.h \
+	      eathena/net/itemhandler.cpp \
+	      eathena/net/logindata.h \
+	      eathena/net/loginhandler.h \
+	      eathena/net/loginhandler.cpp \
+	      eathena/net/maploginhandler.cpp \
+	      eathena/net/maploginhandler.h \
+	      eathena/net/messagehandler.cpp \
+	      eathena/net/messagehandler.h \
+	      eathena/net/messagein.cpp \
+	      eathena/net/messagein.h \
+	      eathena/net/messageout.cpp \
+	      eathena/net/messageout.h \
+	      eathena/net/network.cpp \
+	      eathena/net/network.h \
+	      eathena/net/npchandler.cpp \
+	      eathena/net/npchandler.h \
+	      eathena/net/partyhandler.cpp \
+	      eathena/net/partyhandler.h \
+	      eathena/net/playerhandler.cpp \
+	      eathena/net/playerhandler.h \
+	      eathena/net/protocol.h \
+	      eathena/net/serverinfo.h \
+	      eathena/net/skillhandler.cpp \
+	      eathena/net/skillhandler.h \
+	      eathena/net/tradehandler.cpp \
+	      eathena/net/tradehandler.h \
+	      eathena/structs/equipment.cpp \
+	      eathena/structs/equipment.h \
+	      eathena/structs/inventory.cpp \
+	      eathena/structs/inventory.h \
+	      eathena/structs/item.cpp \
+	      eathena/structs/item.h \
+	      eathena/structs/shopitem.cpp \
+	      eathena/structs/shopitem.h \
+	      eathena/widgets/emotecontainer.cpp \
+	      eathena/widgets/emotecontainer.h \
+	      eathena/widgets/emoteshortcutcontainer.cpp \
+	      eathena/widgets/emoteshortcutcontainer.h \
+	      eathena/widgets/itemcontainer.cpp \
+	      eathena/widgets/itemcontainer.h \
+	      eathena/widgets/itemshortcutcontainer.cpp \
+	      eathena/widgets/itemshortcutcontainer.h \
+	      eathena/widgets/playerbox.cpp \
+	      eathena/widgets/playerbox.h \
+	      eathena/widgets/shoplistbox.cpp \
+	      eathena/widgets/shoplistbox.h \
 	      engine.cpp \
 	      engine.h \
-	      equipment.cpp \
-	      equipment.h \
-	      game.cpp \
-	      game.h \
-	      inventory.cpp \
-	      inventory.h \
-	      item.cpp \
-	      item.h \
-	      itemshortcut.cpp \
-	      itemshortcut.h \
-	      log.cpp \
-	      log.h \
 	      main.cpp \
 	      main.h \
-	      map.cpp \
-	      map.h \
-	      options.h \
-	      party.cpp \
-	      party.h \
-	      playerrelations.cpp \
-	      playerrelations.h \
-	      properties.h \
-	      recorder.cpp \
-	      recorder.h \
-	      shopitem.cpp \
-	      shopitem.h \
-	      tileset.h
+	      options.h
 
 # set the include path found by configure
 INCLUDES =					\

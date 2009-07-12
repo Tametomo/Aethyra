@@ -25,10 +25,10 @@
 #include "gui.h"
 #include "palette.h"
 
-#include "../../configuration.h"
+#include "../../core/configuration.h"
 
-#include "../../utils/gettext.h"
-#include "../../utils/stringutils.h"
+#include "../../core/utils/gettext.h"
+#include "../../core/utils/stringutils.h"
 
 const gcn::Color Palette::BLACK = gcn::Color(0, 0, 0);
 

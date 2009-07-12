@@ -24,8 +24,8 @@
 
 #include "joystick.h"
 
-#include "../../configuration.h"
-#include "../../log.h"
+#include "../../core/configuration.h"
+#include "../../core/log.h"
 
 int Joystick::joystickCount = 0;
 

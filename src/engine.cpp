@@ -21,9 +21,6 @@
  */
 
 #include "engine.h"
-#include "game.h"
-#include "log.h"
-#include "map.h"
 
 #include "bindings/guichan/gui.h"
 #include "bindings/guichan/keyboardconfig.h"
@@ -32,20 +29,25 @@
 
 #include "bindings/sdl/sound.h"
 
-#include "gui/minimap.h"
-#include "gui/viewport.h"
+#include "eathena/beingmanager.h"
+#include "eathena/flooritemmanager.h"
+#include "eathena/game.h"
 
-#include "resources/beingmanager.h"
-#include "resources/flooritemmanager.h"
-#include "resources/mapreader.h"
-#include "resources/resourcemanager.h"
+#include "eathena/gui/minimap.h"
+#include "eathena/gui/viewport.h"
 
-#include "resources/particle/particle.h"
+#include "core/log.h"
+#include "core/resourcemanager.h"
 
-#include "resources/sprite/localplayer.h"
+#include "core/image/particle/particle.h"
 
-#include "utils/gettext.h"
-#include "utils/stringutils.h"
+#include "core/image/sprite/localplayer.h"
+
+#include "core/map/map.h"
+#include "core/map/mapreader.h"
+
+#include "core/utils/gettext.h"
+#include "core/utils/stringutils.h"
 
 Engine::Engine():
     mCurrentMap(0)

@@ -29,7 +29,7 @@
 #include "../widgets/button.h"
 #include "../widgets/textbox.h"
 
-#include "../../../utils/gettext.h"
+#include "../../../core/utils/gettext.h"
 
 ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
                              Window *parent):

@@ -23,8 +23,9 @@
 
 #include "../graphics.h"
 
-#include "../../../resources/image.h"
-#include "../../../resources/resourcemanager.h"
+#include "../../../core/resourcemanager.h"
+
+#include "../../../core/image/image.h"
 
 ImageButton::ImageButton(const std::string &image,
                          const std::string &actionEventId,
