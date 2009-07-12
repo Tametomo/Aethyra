@@ -41,11 +41,6 @@ class ShortcutHandler
         ~ShortcutHandler();
 
         /**
-         * Load the configuration information.
-         */
-        void load();
-
-        /**
          * Try to use the shortcut specified by the index.
          *
          * @param index Index of the shortcut.
@@ -77,9 +72,16 @@ class ShortcutHandler
         /**
          * Returns the shortcut ID specified by the index.
          *
-         * @param index Index of the shortcut Emote.
+         * @param index Index of the shortcut.
          */
         int getShortcut(int index) const { return mIndex[index]; }
+
+        /**
+         * Returns the shortcut index specified by the ID, -1 if not found.
+         *
+         * @param index Index of the shortcut.
+         */
+        int getShortcutIndex(int id) const;
 
         /**
          * Adds the current selection to the specified shortcut index.
@@ -113,6 +115,11 @@ class ShortcutHandler
         int mIndex[SHORTCUTS];       /**< The emote stored. */
 
     private:
+        /**
+         * Load the configuration information.
+         */
+        void load();
+
         /**
          * Save the configuration information.
          */

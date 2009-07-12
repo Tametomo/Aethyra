@@ -25,7 +25,6 @@
 #include "../structs/inventory.h"
 #include "../structs/item.h"
 
-#include "../gui/inventorywindow.h"
 #include "../gui/itempopup.h"
 #include "../gui/popupmenu.h"
 
@@ -186,22 +185,14 @@ void ItemShortcutContainer::draw(gcn::Graphics *graphics)
 
 void ItemShortcutContainer::mousePressed(gcn::MouseEvent &event)
 {
+    ShortcutContainer::mousePressed(event);
+
     const int index = getIndexFromGrid(event.getX(), event.getY());
 
     if (index == -1)
         return;
 
-    if (event.getButton() == gcn::MouseEvent::LEFT)
-    {
-        if (mShortcutHandler->isSelected() && inventoryWindow->isVisible())
-        {
-            mShortcutDragged = true; // Will store the shortcut on mouse release
-            mShortcutClicked = true;
-        }
-        else if (mShortcutHandler->getShortcut(index) > -1)
-            mShortcutClicked = true;
-    }
-    else if (event.getButton() == gcn::MouseEvent::RIGHT)
+    if (event.getButton() == gcn::MouseEvent::RIGHT)
     {
         Item *item = player_node->getInventory()->
                      findItem(mShortcutHandler->getShortcut(index));

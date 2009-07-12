@@ -111,6 +111,25 @@ void ShortcutContainer::mouseDragged(gcn::MouseEvent &event)
     }
 }
 
+void ShortcutContainer::mousePressed(gcn::MouseEvent &event)
+{
+    const int index = getIndexFromGrid(event.getX(), event.getY());
+
+    if (index == -1)
+        return;
+
+    if (event.getButton() == gcn::MouseEvent::LEFT)
+    {
+        if (mShortcutHandler->isSelected())
+        {
+            mShortcutDragged = true;
+            mShortcutClicked = true;
+        }
+        else if (mShortcutHandler->getShortcut(index) > -1)
+            mShortcutClicked = true;
+    }
+}
+
 void ShortcutContainer::mouseReleased(gcn::MouseEvent &event)
 {
     if (event.getButton() == gcn::MouseEvent::LEFT)

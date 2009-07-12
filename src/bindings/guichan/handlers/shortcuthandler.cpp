@@ -41,6 +41,22 @@ ShortcutHandler::~ShortcutHandler()
     save();
 }
 
+int ShortcutHandler::getShortcutIndex(int id) const
+{
+    int index = -1;
+
+    for (int i = 0; i < SHORTCUTS; i++)
+    {
+        if (mIndex[i] == id)
+        {
+            index = i;
+            break;
+        }
+    }
+
+    return index;
+}
+
 void ShortcutHandler::load()
 {
     if (mPrefix == "")

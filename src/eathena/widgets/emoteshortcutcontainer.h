@@ -56,11 +56,6 @@ class EmoteShortcutContainer : public ShortcutContainer
          */
         void draw(gcn::Graphics *graphics);
 
-        /**
-         * Handles mouse when pressed.
-         */
-        void mousePressed(gcn::MouseEvent &event);
-
     private:
         static EmoteShortcutContainerConfigListener *mConfigListener;
         static int mInstances;

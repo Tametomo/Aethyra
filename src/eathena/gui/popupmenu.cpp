@@ -44,6 +44,8 @@
 
 #include "../../bindings/guichan/graphics.h"
 
+#include "../../bindings/guichan/handlers/shortcuthandler.h"
+
 #include "../../bindings/guichan/models/linkmappedlistmodel.h"
 
 #include "../../bindings/guichan/widgets/mappedlistbox.h"
@@ -323,14 +325,6 @@ void PopupMenu::showPopup(int x, int y)
 
         mModel->addLink("chat", _("Add to Chat"));
     }
-    else if (mType == EMOTE)
-    {
-        if (mEmote != -1)
-        {
-            mModel->addLink("useemote", _("Use"));
-            mModel->addLink("slotemote", _("Add to Emote Shortcuts"));
-        }
-    }
     else if (mType == BEING)
     {
         if (!mBeing)
@@ -395,6 +389,14 @@ void PopupMenu::showPopup(int x, int y)
             default:
                 /* Other beings aren't interesting... */
                 return;
+        }
+    }
+    else if (mType == EMOTE)
+    {
+        if (mEmote != -1)
+        {
+            mModel->addLink("useemote", _("Use"));
+            mModel->addLink("slotemote", _("Add to Emote Shortcuts"));
         }
     }
 

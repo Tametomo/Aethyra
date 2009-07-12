@@ -24,8 +24,6 @@
 
 #include "../db/emotedb.h"
 
-#include "../gui/emotewindow.h"
-
 #include "../handlers/emoteshortcut.h"
 
 #include "../../bindings/guichan/graphics.h"
@@ -129,24 +127,5 @@ void EmoteShortcutContainer::draw(gcn::Graphics *graphics)
                 mEmoteImg[emote]->draw(g, tPosX, tPosY);
             }
         }
-    }
-}
-
-void EmoteShortcutContainer::mousePressed(gcn::MouseEvent &event)
-{
-    const int index = getIndexFromGrid(event.getX(), event.getY());
-
-    if (index == -1)
-        return;
-
-    if (event.getButton() == gcn::MouseEvent::LEFT)
-    {
-        if (mShortcutHandler->isSelected() && emoteWindow->isVisible())
-        {
-            mShortcutDragged = true; // Will store the shortcut on mouse release
-            mShortcutClicked = true;
-        }
-        else if (mShortcutHandler->getShortcut(index) > -1)
-            mShortcutClicked = true;
     }
 }

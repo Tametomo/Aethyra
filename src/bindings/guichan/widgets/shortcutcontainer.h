@@ -30,6 +30,7 @@
 #include "../handlers/shortcuthandler.h"
 
 class Image;
+class PopupMenu;
 
 /**
  * A generic shortcut container.
@@ -70,7 +71,7 @@ class ShortcutContainer : public gcn::Widget,
         /**
          * Handles mouse when pressed.
          */
-        virtual void mousePressed(gcn::MouseEvent &event) = 0;
+        virtual void mousePressed(gcn::MouseEvent &event);
 
         /**
          * Handles mouse release.
@@ -96,6 +97,7 @@ class ShortcutContainer : public gcn::Widget,
         int getIndexFromGrid(int pointX, int pointY) const;
 
         static Image *mBackgroundImg;
+        static PopupMenu *mPopupMenu;
 
         static float mAlpha;
 
