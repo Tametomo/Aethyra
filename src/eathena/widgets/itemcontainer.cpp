@@ -510,7 +510,7 @@ void ItemContainer::focusGained(const gcn::Event &event)
 {
     Item *item = getSelectedItem();
 
-    if (mShowItemInfo && item && passesFilter(item))
+    if (isVisible() && mShowItemInfo && item && passesFilter(item))
         showItemPopup(true);
 }
 
