@@ -25,6 +25,8 @@
 #include "playerhandler.h"
 #include "protocol.h"
 
+#include "../maploader.h"
+
 #include "../gui/buy.h"
 #include "../gui/buysell.h"
 #include "../gui/chat.h"
@@ -36,8 +38,6 @@
 #include "../gui/skill.h"
 #include "../gui/storagewindow.h"
 #include "../gui/viewport.h"
-
-#include "../../engine.h"
 
 #include "../../bindings/guichan/dialogs/okdialog.h"
 
@@ -194,11 +194,11 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                  */
                 player_node->stopAttack();
 
-                nearby = (engine->getCurrentMapName() == mapPath);
+                nearby = (mapLoader->getCurrentMapName() == mapPath);
 
                 // Switch the actual map, deleting the previous one if necessary
                 mapPath = mapPath.substr(0, mapPath.rfind("."));
-                if (engine->changeMap(mapPath))
+                if (mapLoader->changeMap(mapPath))
                     MessageOut outMsg(CMSG_MAP_LOADED);
 
                 current_npc = 0;

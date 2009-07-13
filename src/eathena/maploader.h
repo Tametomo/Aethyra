@@ -20,29 +20,29 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _ENGINE_H
-#define _ENGINE_H
+#ifndef _MAP_LOADER_H
+#define _MAP_LOADER_H
 
 #include <string>
 
 class Map;
 
 /**
- * Game engine. Actually hardly does anything anymore except keeping track of
- * the current map.
+ * A map loading class. Switches maps for the player, as well as resetting and
+ * initializing map specific objects.
  */
-class Engine
+class MapLoader
 {
     public:
         /**
          * Constructor.
          */
-        Engine();
+        MapLoader();
 
         /**
          * Destructor.
          */
-        ~Engine();
+        ~MapLoader();
 
         /**
          * Returns the currently active map.
@@ -56,16 +56,11 @@ class Engine
          */
         bool changeMap(const std::string &mapName);
 
-        /**
-         * Performs engine logic.
-         */
-        void logic() const;
-
     private:
         Map *mCurrentMap;
         std::string mMapName;
 };
 
-extern Engine *engine;
+extern MapLoader *mapLoader;
 
 #endif

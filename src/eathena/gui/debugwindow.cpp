@@ -23,7 +23,7 @@
 #include "debugwindow.h"
 #include "viewport.h"
 
-#include "../../engine.h"
+#include "../maploader.h"
 
 #include "../../bindings/guichan/gui.h"
 #include "../../bindings/guichan/layout.h"
@@ -69,10 +69,10 @@ void DebugWindow::widgetShown(const gcn::Event& event)
 {
     Window::widgetShown(event);
 
-    mTileMouseLabel->setVisible(engine);
-    mParticleCountLabel->setVisible(engine);
-    mMapLabel->setVisible(engine);
-    mMiniMapLabel->setVisible(engine);
+    mTileMouseLabel->setVisible(mapLoader);
+    mParticleCountLabel->setVisible(mapLoader);
+    mMapLabel->setVisible(mapLoader);
+    mMiniMapLabel->setVisible(mapLoader);
 }
 
 void DebugWindow::logic()
@@ -86,7 +86,7 @@ void DebugWindow::logic()
                                           sound.getCurrentTrack().c_str());
     mMusicFileLabel->setCaption(music);
 
-    if (!engine)
+    if (!mapLoader)
         return;
 
     // Get the current mouse position
@@ -96,7 +96,7 @@ void DebugWindow::logic()
     mTileMouseLabel->setCaption(strprintf(_("Tile: (%d, %d)"), mouseTileX,
                                             mouseTileY));
 
-    Map *currentMap = engine->getCurrentMap();
+    Map *currentMap = mapLoader->getCurrentMap();
 
     if (currentMap)
     {

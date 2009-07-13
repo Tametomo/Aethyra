@@ -223,6 +223,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      eathena/flooritemmanager.h \
 	      eathena/game.cpp \
 	      eathena/game.h \
+	      eathena/maploader.cpp \
+	      eathena/maploader.h \
 	      eathena/party.cpp \
 	      eathena/party.h \
 	      eathena/playerrelations.cpp \
@@ -390,8 +392,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      eathena/widgets/playerbox.h \
 	      eathena/widgets/shoplistbox.cpp \
 	      eathena/widgets/shoplistbox.h \
-	      engine.cpp \
-	      engine.h \
 	      main.cpp \
 	      main.h \
 	      options.h

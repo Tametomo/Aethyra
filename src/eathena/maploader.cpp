@@ -20,46 +20,45 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "engine.h"
+#include "beingmanager.h"
+#include "flooritemmanager.h"
+#include "game.h"
+#include "maploader.h"
 
-#include "bindings/guichan/gui.h"
-#include "bindings/guichan/keyboardconfig.h"
+#include "gui/minimap.h"
+#include "gui/viewport.h"
 
-#include "bindings/guichan/dialogs/okdialog.h"
+#include "../bindings/guichan/gui.h"
+#include "../bindings/guichan/keyboardconfig.h"
 
-#include "bindings/sdl/sound.h"
+#include "../bindings/guichan/dialogs/okdialog.h"
 
-#include "eathena/beingmanager.h"
-#include "eathena/flooritemmanager.h"
-#include "eathena/game.h"
+#include "../bindings/sdl/sound.h"
 
-#include "eathena/gui/minimap.h"
-#include "eathena/gui/viewport.h"
+#include "../core/log.h"
+#include "../core/resourcemanager.h"
 
-#include "core/log.h"
-#include "core/resourcemanager.h"
+#include "../core/image/particle/particle.h"
 
-#include "core/image/particle/particle.h"
+#include "../core/image/sprite/localplayer.h"
 
-#include "core/image/sprite/localplayer.h"
+#include "../core/map/map.h"
+#include "../core/map/mapreader.h"
 
-#include "core/map/map.h"
-#include "core/map/mapreader.h"
+#include "../core/utils/gettext.h"
+#include "../core/utils/stringutils.h"
 
-#include "core/utils/gettext.h"
-#include "core/utils/stringutils.h"
-
-Engine::Engine():
+MapLoader::MapLoader():
     mCurrentMap(0)
 {
 }
 
-Engine::~Engine()
+MapLoader::~MapLoader()
 {
     delete mCurrentMap;
 }
 
-bool Engine::changeMap(const std::string &mapPath)
+bool MapLoader::changeMap(const std::string &mapPath)
 {
     // Clean up floor items, beings and particles
     floorItemManager->clear();
@@ -120,8 +119,3 @@ bool Engine::changeMap(const std::string &mapPath)
     return true;
 }
 
-void Engine::logic() const
-{
-    beingManager->logic();
-    particleEngine->update();
-}

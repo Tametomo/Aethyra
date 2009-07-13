@@ -22,8 +22,6 @@
 
 #include "setup_audio.h"
 
-#include "../../../engine.h"
-
 #include "../../../bindings/guichan/dialogs/okdialog.h"
 
 #include "../../../bindings/guichan/layouthelper.h"

@@ -33,8 +33,8 @@
 #include "../menubar.h"
 
 #include "../../beingmanager.h"
+#include "../../maploader.h"
 
-#include "../../../engine.h"
 #include "../../../main.h"
 
 #include "../../../bindings/guichan/graphics.h"
@@ -595,10 +595,10 @@ void Setup_Video::changeParticleDetailLevel(const int &value)
      config.setValue("particleeffects", value != -1);
      config.setValue("particleEmitterSkip", 3 - value);
 
-     if (engine)
+     if (mapLoader)
      {
          beingManager->loadParticleEffects();
-         Map* map = engine->getCurrentMap();
+         Map* map = mapLoader->getCurrentMap();
 
          if (map)
              map->initializeParticleEffects(particleEngine);

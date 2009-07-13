@@ -325,6 +325,8 @@
 		<Unit filename="src\eathena\flooritemmanager.h" />
 		<Unit filename="src\eathena\game.cpp" />
 		<Unit filename="src\eathena\game.h" />
+		<Unit filename="src\eathena\maploader.cpp" />
+		<Unit filename="src\eathena\maploader.h" />
 		<Unit filename="src\eathena\party.cpp" />
 		<Unit filename="src\eathena\party.h" />
 		<Unit filename="src\eathena\playerrelations.cpp" />
@@ -492,8 +494,6 @@
 		<Unit filename="src\eathena\widgets\playerbox.h" />
 		<Unit filename="src\eathena\widgets\shoplistbox.cpp" />
 		<Unit filename="src\eathena\widgets\shoplistbox.h" />
-		<Unit filename="src\engine.cpp" />
-		<Unit filename="src\engine.h" />
 		<Unit filename="src\main.cpp" />
 		<Unit filename="src\main.h" />
 		<Unit filename="src\options.h" />

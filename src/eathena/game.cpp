@@ -25,6 +25,7 @@
 #include "beingmanager.h"
 #include "flooritemmanager.h"
 #include "game.h"
+#include "maploader.h"
 
 #include "db/colordb.h"
 #include "db/effectdb.h"
@@ -74,8 +75,6 @@
 #include "widgets/emoteshortcutcontainer.h"
 #include "widgets/itemshortcutcontainer.h"
 
-#include "../engine.h"
-
 #include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/inputmanager.h"
 
@@ -96,7 +95,7 @@
 
 std::string map_path;
 
-Engine *engine = NULL;
+MapLoader *mapLoader = NULL;
 
 EmoteShortcut *emoteShortcut;
 ItemShortcut *itemShortcut;
@@ -235,7 +234,7 @@ Game::Game(Network *network):
 
     createGuiWindows();
 
-    engine = new Engine();
+    mapLoader = new MapLoader();
     mInGame = true;
 
     beingManager = new BeingManager();
@@ -272,7 +271,7 @@ Game::Game(Network *network):
     msg.writeInt32(tick_time);
 
     map_path = map_path.substr(0, map_path.rfind("."));
-    engine->changeMap(map_path);
+    mapLoader->changeMap(map_path);
     MessageOut outMsg(CMSG_MAP_LOADED);
 }
 
@@ -288,8 +287,8 @@ Game::~Game()
     player_node = NULL;
     delete particleEngine;
     particleEngine = NULL;
-    delete engine;
-    engine = NULL;
+    delete mapLoader;
+    mapLoader = NULL;
     delete viewport;
     viewport = NULL;
 }
@@ -300,13 +299,15 @@ void Game::logic() const
 
     while (mInGame)
     {
-        if (engine->getCurrentMap())
-            engine->getCurrentMap()->update(get_elapsed_time(gameTime));
+        if (mapLoader->getCurrentMap())
+            mapLoader->getCurrentMap()->update(get_elapsed_time(gameTime));
+
+        beingManager->logic();
 
         // Handle all necessary game logic
         while (get_elapsed_time(gameTime) > 0)
         {
-            engine->logic();
+            particleEngine->update();
             gameTime++;
         }
 

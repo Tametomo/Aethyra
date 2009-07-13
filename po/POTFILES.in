@@ -4,6 +4,7 @@ src/bindings/guichan/graphics.cpp
 src/bindings/guichan/keyboardconfig.cpp
 src/bindings/guichan/palette.cpp
 src/eathena/game.cpp
+src/eathena/maploader.cpp
 src/eathena/party.cpp
 src/eathena/db/itemdb.cpp
 src/eathena/db/monsterdb.cpp
