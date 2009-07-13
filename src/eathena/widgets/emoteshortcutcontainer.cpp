@@ -116,16 +116,14 @@ void EmoteShortcutContainer::draw(gcn::Graphics *graphics)
     if (mShortcutDragged)
     {
         // Draw the emote being dragged by the cursor.
-        if (mShortcutHandler->getSelected() <= EmoteDB::getLast())
-        {
-            const int emote = mShortcutHandler->getSelected() - 1;
+        const int emote = std::max(-1, mShortcutHandler->getSelected() - 1);
 
-            if (mEmoteImg[emote])
-            {
-                const int tPosX = mCursorPosX - (mEmoteImg[emote]->getWidth() / 2);
-                const int tPosY = mCursorPosY - (mEmoteImg[emote]->getHeight() / 2);
-                mEmoteImg[emote]->draw(g, tPosX, tPosY);
-            }
+        if (emote > -1 && emote <= EmoteDB::getLast() && mEmoteImg[emote])
+        {
+            const int tPosX = mCursorPosX - (mEmoteImg[emote]->getWidth() / 2);
+            const int tPosY = mCursorPosY - (mEmoteImg[emote]->getHeight() / 2);
+            mEmoteImg[emote]->draw(g, tPosX, tPosY);
         }
     }
 }
+

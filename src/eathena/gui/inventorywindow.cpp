@@ -238,10 +238,8 @@ void InventoryWindow::valueChanged(const gcn::SelectionEvent &event)
 
         Item *item = mItems->getSelectedItem();
 
-        if (item)
-            itemShortcut->setSelected(item->getId());
-        else
-            itemShortcut->setSelected(-1);
+        item ? itemShortcut->setSelected(item->getId()) : 
+               itemShortcut->setSelected(-1);
     }
 }
 
