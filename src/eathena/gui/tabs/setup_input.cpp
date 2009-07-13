@@ -26,7 +26,6 @@
 
 #include "../../../core/configuration.h"
 
-#include "../../../bindings/guichan/keyboardconfig.h"
 #include "../../../bindings/guichan/layouthelper.h"
 
 #include "../../../bindings/guichan/dialogs/okdialog.h"
@@ -40,6 +39,7 @@
 #include "../../../bindings/guichan/widgets/scrollarea.h"
 
 #include "../../../bindings/sdl/joystick.h"
+#include "../../../bindings/sdl/keyboardconfig.h"
 
 #include "../../../core/utils/gettext.h"
 #include "../../../core/utils/stringutils.h"

@@ -24,7 +24,6 @@
 
 #include "gui.h"
 #include "inputmanager.h"
-#include "keyboardconfig.h"
 
 #include "dialogs/confirmdialog.h"
 #include "dialogs/helpdialog.h"
@@ -33,6 +32,7 @@
 #include "widgets/shortcutwindow.h"
 
 #include "../sdl/joystick.h"
+#include "../sdl/keyboardconfig.h"
 #include "../sdl/sound.h"
 
 #include "../../main.h"

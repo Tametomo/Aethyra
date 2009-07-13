@@ -20,9 +20,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "keyboardconfig.h"
+#include <SDL_keyboard.h>
 
-#include "sdl/sdlinput.h"
+#include "keyboardconfig.h"
 
 #include "../../core/configuration.h"
 

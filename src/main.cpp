@@ -48,7 +48,6 @@
 #include "bindings/guichan/graphics.h"
 #include "bindings/guichan/gui.h"
 #include "bindings/guichan/inputmanager.h"
-#include "bindings/guichan/keyboardconfig.h"
 #include "bindings/guichan/palette.h"
 
 #include "bindings/guichan/dialogs/helpdialog.h"
@@ -61,6 +60,7 @@
 #include "bindings/guichan/sdl/sdlgraphics.h"
 #include "bindings/guichan/sdl/sdlinput.h"
 
+#include "bindings/sdl/keyboardconfig.h"
 #include "bindings/sdl/sound.h"
 
 #include "core/configuration.h"

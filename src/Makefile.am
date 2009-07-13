@@ -8,8 +8,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/gui.h \
 	      bindings/guichan/inputmanager.cpp \
 	      bindings/guichan/inputmanager.h \
-	      bindings/guichan/keyboardconfig.cpp \
-	      bindings/guichan/keyboardconfig.h \
 	      bindings/guichan/layout.cpp \
 	      bindings/guichan/layout.h \
 	      bindings/guichan/layouthelper.cpp \
@@ -127,6 +125,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/widgets/windowcontainer.h \
 	      bindings/sdl/joystick.cpp \
 	      bindings/sdl/joystick.h \
+	      bindings/sdl/keyboardconfig.cpp \
+	      bindings/sdl/keyboardconfig.h \
 	      bindings/sdl/sound.cpp \
 	      bindings/sdl/sound.h \
 	      core/configlistener.h \

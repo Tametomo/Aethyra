@@ -29,10 +29,10 @@
 #include "gui/viewport.h"
 
 #include "../bindings/guichan/gui.h"
-#include "../bindings/guichan/keyboardconfig.h"
 
 #include "../bindings/guichan/dialogs/okdialog.h"
 
+#include "../bindings/sdl/keyboardconfig.h"
 #include "../bindings/sdl/sound.h"
 
 #include "../core/log.h"

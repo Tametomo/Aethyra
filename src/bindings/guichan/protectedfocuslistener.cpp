@@ -19,8 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "keyboardconfig.h"
 #include "protectedfocuslistener.h"
+
+#include "../sdl/keyboardconfig.h"
 
 void ProtectedFocusListener::focusGained(const gcn::Event &event)
 {

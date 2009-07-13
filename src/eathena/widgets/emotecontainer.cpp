@@ -212,9 +212,7 @@ void EmoteContainer::distributeValueChangedEvent()
     std::list<gcn::SelectionListener*>::iterator i;
 
     for (i = mListeners.begin(); i != i_end; ++i)
-    {
         (*i)->valueChanged(event);
-    }
 }
 
 void EmoteContainer::showPopup(bool useMouseCoordinates)

@@ -30,8 +30,9 @@
 
 #include "../../bindings/guichan/graphics.h"
 #include "../../bindings/guichan/gui.h"
-#include "../../bindings/guichan/keyboardconfig.h"
 #include "../../bindings/guichan/textmanager.h"
+
+#include "../../bindings/sdl/keyboardconfig.h"
 
 #include "../../core/configuration.h"
 

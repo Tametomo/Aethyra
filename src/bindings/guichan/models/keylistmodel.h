@@ -27,6 +27,8 @@
 
 #include <guichan/listmodel.hpp>
 
+#include "../../sdl/keyboardconfig.h"
+
 /**
  * The list model for key function list.
  *
