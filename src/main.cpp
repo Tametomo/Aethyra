@@ -78,12 +78,12 @@
 #include "eathena/game.h"
 #include "eathena/playerrelations.h"
 
-#include "eathena/gui/charserver.h"
 #include "eathena/gui/charselect.h"
 #include "eathena/gui/debugwindow.h"
 #include "eathena/gui/desktop.h"
 #include "eathena/gui/login.h"
 #include "eathena/gui/register.h"
+#include "eathena/gui/serverlistdialog.h"
 #include "eathena/gui/setup.h"
 #include "eathena/gui/updatewindow.h"
 
@@ -879,13 +879,13 @@ int main(int argc, char *argv[])
                     else
                     {
                         int nextState = UPDATE_STATE;
-                        desktop->changeCurrentDialog(new ServerSelectDialog(
+                        desktop->changeCurrentDialog(new ServerListDialog(
                                                          &loginData, nextState));
 
                         if (options.chooseDefault || !options.playername.empty())
                         {
                             currentDialog = desktop->getCurrentDialog();
-                            ((ServerSelectDialog*) currentDialog)->action(
+                            ((ServerListDialog*) currentDialog)->action(
                                 gcn::ActionEvent(NULL, "ok"));
                         }
                     }

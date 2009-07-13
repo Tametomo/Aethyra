@@ -20,7 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "charserver.h"
+#include "serverlistdialog.h"
 
 #include "../net/logindata.h"
 #include "../net/serverinfo.h"
@@ -50,7 +50,7 @@ class ServerListModel : public gcn::ListModel
         std::string getElementAt(int i);
 };
 
-ServerSelectDialog::ServerSelectDialog(LoginData *loginData, int nextState):
+ServerListDialog::ServerListDialog(LoginData *loginData, int nextState):
     Window(_("Select Server")),
     mLoginData(loginData),
     mNextState(nextState)
@@ -85,12 +85,12 @@ ServerSelectDialog::ServerSelectDialog(LoginData *loginData, int nextState):
     mOkButton->requestFocus();
 }
 
-ServerSelectDialog::~ServerSelectDialog()
+ServerListDialog::~ServerListDialog()
 {
     delete mServerListModel;
 }
 
-void ServerSelectDialog::action(const gcn::ActionEvent &event)
+void ServerListDialog::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "ok")
     {

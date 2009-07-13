@@ -367,8 +367,6 @@
 		<Unit filename="src\eathena\gui\buysell.h" />
 		<Unit filename="src\eathena\gui\charselect.cpp" />
 		<Unit filename="src\eathena\gui\charselect.h" />
-		<Unit filename="src\eathena\gui\charserver.cpp" />
-		<Unit filename="src\eathena\gui\charserver.h" />
 		<Unit filename="src\eathena\gui\chat.cpp" />
 		<Unit filename="src\eathena\gui\chat.h" />
 		<Unit filename="src\eathena\gui\debugwindow.cpp" />
@@ -407,6 +405,8 @@
 		<Unit filename="src\eathena\gui\register.h" />
 		<Unit filename="src\eathena\gui\sell.cpp" />
 		<Unit filename="src\eathena\gui\sell.h" />
+		<Unit filename="src\eathena\gui\serverlistdialog.cpp" />
+		<Unit filename="src\eathena\gui\serverlistdialog.h" />
 		<Unit filename="src\eathena\gui\setup.cpp" />
 		<Unit filename="src\eathena\gui\setup.h" />
 		<Unit filename="src\eathena\gui\skill.cpp" />

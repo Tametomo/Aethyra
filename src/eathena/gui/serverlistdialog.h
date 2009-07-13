@@ -20,8 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _CHAR_SEL_SERVER_H
-#define _CHAR_SEL_SERVER_H
+#ifndef _SERVER_LIST_DIALOG_H
+#define _SERVER_LIST_DIALOG_H
 
 #include <guichan/actionlistener.hpp>
 #include <guichan/listmodel.hpp>
@@ -32,11 +32,11 @@ class LoginData;
 class ServerListModel;
 
 /**
- * The server select dialog.
+ * A dialog for choosing which server to use when more than one is present.
  *
  * \ingroup Interface
  */
-class ServerSelectDialog : public Window, public gcn::ActionListener
+class ServerListDialog : public Window, public gcn::ActionListener
 {
     public:
         /**
@@ -44,12 +44,12 @@ class ServerSelectDialog : public Window, public gcn::ActionListener
          *
          * @see Window::Window
          */
-        ServerSelectDialog(LoginData *loginData, int nextState);
+        ServerListDialog(LoginData *loginData, int nextState);
 
         /**
          * Destructor.
          */
-        ~ServerSelectDialog();
+        ~ServerListDialog();
 
         /**
          * Called when receiving actions from the widgets.

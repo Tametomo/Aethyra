@@ -265,8 +265,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      eathena/gui/buysell.h \
 	      eathena/gui/charselect.cpp \
 	      eathena/gui/charselect.h \
-	      eathena/gui/charserver.cpp \
-	      eathena/gui/charserver.h \
 	      eathena/gui/chat.cpp \
 	      eathena/gui/chat.h \
 	      eathena/gui/debugwindow.cpp \
@@ -305,6 +303,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      eathena/gui/register.h \
 	      eathena/gui/sell.cpp \
 	      eathena/gui/sell.h \
+	      eathena/gui/serverlistdialog.cpp \
+	      eathena/gui/serverlistdialog.h \
 	      eathena/gui/setup.cpp \
 	      eathena/gui/setup.h \
 	      eathena/gui/skill.cpp \
