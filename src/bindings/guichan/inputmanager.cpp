@@ -128,9 +128,11 @@ void InputManager::handleInput()
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
+        bool used = false;
+
         // Key press events
         if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
-            handleKeyboardInput(event);
+            used = handleKeyboardInput(event);
             
         if (event.type == SDL_JOYAXISMOTION || event.type == SDL_JOYBALLMOTION ||
             event.type == SDL_JOYHATMOTION || event.type == SDL_JOYBUTTONDOWN ||
@@ -144,6 +146,9 @@ void InputManager::handleInput()
             state = EXIT_STATE;
         }
 
+        // Push input to GUI when not used
+        if (!used)
+            forwardInput(event);
     }
 }
 
@@ -157,8 +162,11 @@ void InputManager::handleJoystickInput(const SDL_Event &event)
     if (!mInGame)
         return;
 
-    // Player actions
-    if (player_node && player_node->mAction != Being::DEAD)
+    if (event.type == SDL_JOYBUTTONUP && !joystick->buttonPressed(3))
+    {
+        targetKeyHeld = false; // Stop protecting the target key
+    }
+    else if (player_node && player_node->mAction != Being::DEAD)
     {
         const Uint16 x = player_node->mX;
         const Uint16 y = player_node->mY;
@@ -168,11 +176,12 @@ void InputManager::handleJoystickInput(const SDL_Event &event)
             Being *target = player_node->getTarget();
 
             // Target the nearest monster
-            if (joystick->buttonPressed(3))
+            if (joystick->buttonPressed(3) && !targetKeyHeld)
             {
                 target = beingManager->findNearestLivingBeing(x, y, 20,
                                                               Being::MONSTER);
                 player_node->setTarget(target);
+                targetKeyHeld = true;
             }
 
             if (joystick->buttonPressed(0) && target &&
@@ -210,7 +219,7 @@ void InputManager::handleJoystickInput(const SDL_Event &event)
     }
 }
 
-void InputManager::handleKeyboardInput(const SDL_Event &event)
+bool InputManager::handleKeyboardInput(const SDL_Event &event)
 {
     bool used = false;
 
@@ -223,12 +232,12 @@ void InputManager::handleKeyboardInput(const SDL_Event &event)
             keyboard.setNewKey((int) event.key.keysym.sym);
             keyboard.callbackNewKey();
             keyboard.setNewKeyIndex(keyboard.KEY_NO_VALUE);
-            return;
+            return false;
         }
 
         // If the user is configuring the keys then don't respond.
         if (!keyboard.isEnabled())
-            return;
+            return false;
 
         const int tKey = keyboard.getKeyIndex(event.key.keysym.sym);
 
@@ -238,14 +247,11 @@ void InputManager::handleKeyboardInput(const SDL_Event &event)
         if (keyboard.isKeyActive(keyboard.KEY_IGNORE_INPUT_1) ||
             keyboard.isKeyActive(keyboard.KEY_IGNORE_INPUT_2))
         {
-            return;
+            return false;
         }
 
         if (keyboard.isKeyLocked(tKey))
-        {
-            forwardInput(event);
-            return;
-        }
+            return false;
 
         gcn::Window *requestedWindow = NULL;
 
@@ -535,10 +541,6 @@ void InputManager::handleKeyboardInput(const SDL_Event &event)
         }
     }
 
-    // Push input to GUI when not used
-    if (!used)
-        forwardInput(event);
-
     // At the moment, this is the only bit of logic left not assigned to a
     // specific SDL input poll, because it was causing continuous walking
     // without stopping. It would be better in the long run if this would get
@@ -565,4 +567,6 @@ void InputManager::handleKeyboardInput(const SDL_Event &event)
 
         player_node->setWalkingDir(direction);
     }
+
+    return used;
 }

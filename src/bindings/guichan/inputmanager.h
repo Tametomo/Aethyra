@@ -37,7 +37,7 @@ class InputManager
     private:
         void handleJoystickInput(const SDL_Event &event);
 
-        void handleKeyboardInput(const SDL_Event &event);
+        bool handleKeyboardInput(const SDL_Event &event);
 };
 
 extern InputManager *inputManager;
