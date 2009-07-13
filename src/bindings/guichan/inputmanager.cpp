@@ -364,7 +364,7 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                 for (int i = KeyboardConfig::KEY_EMOTE_SHORTCUT_1;
                          i <= KeyboardConfig::KEY_EMOTE_SHORTCUT_12; i++)
                 {
-                    if (tKey == i)
+                    if (keyboard.isKeyActive(i))
                     {
                         emoteShortcut->useShortcut(i - KeyboardConfig::KEY_EMOTE_SHORTCUT_1);
                         used = true;
@@ -392,7 +392,7 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                     for (int i = KeyboardConfig::KEY_ITEM_SHORTCUT_1;
                              i <= KeyboardConfig::KEY_ITEM_SHORTCUT_12; i++)
                     {
-                        if (tKey == i)
+                        if (keyboard.isKeyActive(i))
                         {
                             itemShortcut->useShortcut(i - KeyboardConfig::KEY_ITEM_SHORTCUT_1);
                             used = true;
