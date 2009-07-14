@@ -39,7 +39,6 @@
 #include "../../map/position.h"
 
 #define FIRST_IGNORE_EMOTE 14
-#define STATUS_EFFECTS 32
 
 #define SPEECH_TIME 500
 #define SPEECH_MAX_TIME 1000
