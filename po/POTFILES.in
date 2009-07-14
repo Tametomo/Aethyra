@@ -1,8 +1,8 @@
 # List of source files which contain translatable strings.
 
 src/bindings/guichan/graphics.cpp
-src/bindings/guichan/keyboardconfig.cpp
 src/bindings/guichan/palette.cpp
+src/bindings/sdl/keyboardconfig.cpp
 src/eathena/game.cpp
 src/eathena/maploader.cpp
 src/eathena/party.cpp
@@ -11,8 +11,7 @@ src/eathena/db/monsterdb.cpp
 src/eathena/db/npcdb.cpp
 src/eathena/gui/buy.cpp
 src/eathena/gui/buysell.cpp
-src/eathena/gui/char_select.cpp
-src/eathena/gui/char_server.cpp
+src/eathena/gui/charselect.cpp
 src/eathena/gui/chat.cpp
 src/eathena/gui/confirm_dialog.cpp
 src/eathena/gui/connection.cpp
@@ -36,6 +35,7 @@ src/eathena/gui/recorder.cpp
 src/eathena/gui/recorder.h
 src/eathena/gui/register.cpp
 src/eathena/gui/sell.cpp
+src/eathena/gui/serverlistdialog.cpp
 src/eathena/gui/setup.cpp
 src/eathena/gui/setup_audio.cpp
 src/eathena/gui/setup_colors.cpp
