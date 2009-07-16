@@ -23,6 +23,7 @@
 #include <climits>
 
 #include <guichan/exception.hpp>
+#include <guichan/focushandler.hpp>
 
 #include "resizegrip.h"
 #include "window.h"
@@ -353,6 +354,19 @@ void Window::widgetShown(const gcn::Event& event)
 
     requestMoveToTop();
     requestFocus();
+}
+
+void Window::widgetHidden(const gcn::Event& event)
+{
+    mVisible = false;
+
+    WidgetListIterator it;
+
+    for (it = mWidgets.begin(); it != mWidgets.end(); it++)
+    {
+        if (mFocusHandler->isFocused(*it))
+            mFocusHandler->focusNone();
+    }
 }
 
 void Window::setCloseButton(bool flag)

@@ -139,7 +139,7 @@ class Window : public gcn::Window, gcn::WidgetListener
          * class to perform visibility events, rather than hacking setVisible(),
          * since this is the proper way to handle these events in GUIChan.
          */
-        virtual void widgetHidden(const gcn::Event& event) {}
+        virtual void widgetHidden(const gcn::Event& event);
         virtual void widgetShown(const gcn::Event& event);
 
         /**
