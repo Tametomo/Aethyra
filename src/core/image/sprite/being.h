@@ -435,6 +435,8 @@ class Being : public Sprite
 
         const gcn::Color* mNameColor;
 
+        int mLastUpdate;
+
         std::vector<AnimatedSprite*> mSprites;
         std::vector<int> mSpriteIDs;
         std::vector<std::string> mSpriteColors;

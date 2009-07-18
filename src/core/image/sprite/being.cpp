@@ -125,7 +125,9 @@ Being::Being(const int &id, const int &job, Map *map):
     mSpeech = "";
     mOldSpeech = "";
     mNameColor = &guiPalette->getColor(Palette::CHAT);
-    mText = 0;
+    mText = NULL;
+
+    mLastUpdate = tick_time;
 }
 
 Being::~Being()
@@ -362,8 +364,8 @@ void Being::setDirection(const Uint8 &direction)
 
     for (int i = 0; i < VECTOREND_SPRITE; i++)
     {
-       if (mSprites[i])
-           mSprites[i]->setDirection(dir);
+        if (mSprites[i])
+            mSprites[i]->setDirection(dir);
     }
 }
 
@@ -420,15 +422,26 @@ void Being::nextStep()
 
 void Being::logic()
 {
+    const int ticks = get_elapsed_time(mLastUpdate) / 10;
+
+    mLastUpdate = tick_time;
+
     // Reduce the time that speech is still displayed
     if (mSpeechTime > 0 && viewport)
-        mSpeechTime--;
-
-    // Remove text and speechbubbles if speech boxes aren't being used
-    if (mSpeechTime == 0 && mText)
     {
-        delete mText;
-        mText = 0;
+        mSpeechTime = mSpeechTime - ticks;
+
+        if (mSpeechTime <= 0)
+        {
+            // Remove text and speechbubbles if speech boxes aren't being used
+            if (mText)
+            {
+                delete mText;
+                mText = NULL;
+            }
+            else if (mSpeechBubble)
+                mSpeechBubble->setVisible(false);
+        }
     }
 
     int oldPx = mPx;
@@ -443,8 +456,8 @@ void Being::logic()
 
     if (mEmotion != 0)
     {
-        mEmotionTime--;
-        if (mEmotionTime == 0)
+        mEmotionTime = mEmotionTime - ticks;
+        if (mEmotionTime <= 0)
             mEmotion = 0;
     }
 
@@ -500,13 +513,8 @@ void Being::drawSpeech(const int &offsetX, const int &offsetY)
     const int speech = (int) config.getValue("speech", NAME_IN_BUBBLE);
 
     // Draw speech above this being
-    if (mSpeechTime == 0)
-    {
-        if (mSpeechBubble)
-            mSpeechBubble->setVisible(false);
-    }
-    else if (mSpeechTime > 0 && (speech == NAME_IN_BUBBLE ||
-             speech == NO_NAME_IN_BUBBLE))
+    if (mSpeechTime > 0 && (speech == NAME_IN_BUBBLE ||
+        speech == NO_NAME_IN_BUBBLE))
     {
         if (!mSpeechBubble)
             mSpeechBubble = new SpeechBubble(viewport);
