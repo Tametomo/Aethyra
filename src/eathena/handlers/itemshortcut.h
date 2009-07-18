@@ -22,6 +22,8 @@
 #ifndef ITEMSHORTCUT_H
 #define ITEMSHORTCUT_H
 
+#include "../gui/trade.h"
+
 #include "../structs/inventory.h"
 #include "../structs/item.h"
 
@@ -47,7 +49,8 @@ class ItemShortcut : public ShortcutHandler
          */
         void useShortcut(int index)
         {
-            if (index > -1 && index <= SHORTCUTS)
+            if (index > -1 && index < SHORTCUTS && !tradeWindow->isVisible() &&
+                player_node && player_node->mAction != Being::DEAD)
             {
                 Item *item = player_node->getInventory()->findItem(mIndex[index]);
                 if (item && item->getQuantity())

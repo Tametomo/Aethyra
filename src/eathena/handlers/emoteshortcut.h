@@ -44,7 +44,7 @@ class EmoteShortcut : public ShortcutHandler
          */
         void useShortcut(int index)
         {
-            if (index > -1 && index <= SHORTCUTS)
+            if (index > -1 && index < SHORTCUTS)
                 player_node->emote(mIndex[index]);
         }
 };

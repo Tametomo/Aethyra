@@ -29,6 +29,8 @@
 #include "dialogs/helpdialog.h"
 #include "dialogs/okdialog.h"
 
+#include "handlers/shortcuthandler.h"
+
 #include "widgets/shortcutwindow.h"
 
 #include "../sdl/joystick.h"
@@ -359,17 +361,19 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                     break;
             }
 
-            if (keyboard.isKeyActive(keyboard.KEY_EMOTE_METAKEY))
+            for (int i = 0; i <= SHORTCUTS; i++)
             {
-                for (int i = KeyboardConfig::KEY_EMOTE_SHORTCUT_1;
-                         i <= KeyboardConfig::KEY_EMOTE_SHORTCUT_12; i++)
+                ShortcutHandler *shortcut = 
+                    keyboard.isKeyActive(keyboard.KEY_EMOTE_METAKEY) ? (ShortcutHandler *) emoteShortcut :
+                                                                       (ShortcutHandler *) itemShortcut;
+                const int offset = keyboard.isKeyActive(keyboard.KEY_EMOTE_METAKEY) ?
+                    KeyboardConfig::KEY_EMOTE_SHORTCUT_1 : KeyboardConfig::KEY_ITEM_SHORTCUT_1;
+
+                if (keyboard.isKeyActive(i + offset))
                 {
-                    if (keyboard.isKeyActive(i))
-                    {
-                        emoteShortcut->useShortcut(i - KeyboardConfig::KEY_EMOTE_SHORTCUT_1);
-                        used = true;
-                        break;
-                    }
+                    shortcut->useShortcut(i);
+                    used = true;
+                    break;
                 }
             }
 
@@ -385,21 +389,6 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                 Being *target = player_node->getTarget();
                 const Uint16 x = player_node->mX;
                 const Uint16 y = player_node->mY;
-
-                // Do not activate item shortcuts if tradewindow is visible
-                if (!tradeWindow->isVisible())
-                {
-                    for (int i = KeyboardConfig::KEY_ITEM_SHORTCUT_1;
-                             i <= KeyboardConfig::KEY_ITEM_SHORTCUT_12; i++)
-                    {
-                        if (keyboard.isKeyActive(i))
-                        {
-                            itemShortcut->useShortcut(i - KeyboardConfig::KEY_ITEM_SHORTCUT_1);
-                            used = true;
-                            break;
-                        }
-                    }
-                }
 
                 if (!keyboard.isKeyActive(keyboard.KEY_CLEAR_TARGET))
                 {
