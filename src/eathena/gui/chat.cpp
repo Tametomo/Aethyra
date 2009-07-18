@@ -382,11 +382,6 @@ void ChatWindow::requestChatFocus()
     mChatInput->requestFocus();
 }
 
-bool ChatWindow::isInputFocused()
-{
-    return isVisible() ? mChatInput->isFocused() : false;
-}
-
 void ChatWindow::updateRecorder(const std::string &mes)
 {
     mRecorder->changeRecordingStatus(mes);

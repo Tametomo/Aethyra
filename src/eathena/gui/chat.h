@@ -152,11 +152,6 @@ class ChatWindow : public Window, public gcn::ActionListener,
         void updateRecorder(const std::string &mes);
 
         /**
-         * Checks whether ChatWindow is Focused or not.
-         */
-        bool isInputFocused();
-
-        /**
          * Determines whether to send a command or an ordinary message, then
          * contructs packets & sends them.
          *
