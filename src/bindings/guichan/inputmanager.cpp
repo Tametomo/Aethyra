@@ -284,6 +284,11 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
             case KeyboardConfig::KEY_WINDOW_SETUP:
                 requestedWindow = setupWindow;
                 break;
+            // Screenshot (picture, hence the p)
+            case KeyboardConfig::KEY_SCREENSHOT:
+                saveScreenshot();
+                used = true;
+                break;
         }
 
         if (mInGame)
@@ -345,11 +350,6 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                     helpDialog->hide();
                     emoteShortcutWindow->hide();
                     minimap->hide();
-                    used = true;
-                    break;
-                // Screenshot (picture, hence the p)
-                case KeyboardConfig::KEY_SCREENSHOT:
-                    saveScreenshot();
                     used = true;
                     break;
                 // Find path to mouse (debug purpose)

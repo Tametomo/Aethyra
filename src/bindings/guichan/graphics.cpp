@@ -98,7 +98,7 @@ int Graphics::getHeight()
     return mScreen->h;
 }
 
-bool saveScreenshot()
+void saveScreenshot()
 {
     static unsigned int screenshotCount = 0;
 
@@ -131,17 +131,20 @@ bool saveScreenshot()
 
     if (success)
     {
-        std::stringstream chatlogentry;
-        chatlogentry << _("Screenshot saved to ~/") << filenameSuffix.str();
-        chatWindow->chatLog(chatlogentry.str(), BY_SERVER);
+        if (chatWindow)
+        {
+            std::stringstream chatlogentry;
+            chatlogentry << _("Screenshot saved to ~/") << filenameSuffix.str();
+            chatWindow->chatLog(chatlogentry.str(), BY_SERVER);
+        }
     }
     else
     {
-        chatWindow->chatLog(_("Saving screenshot failed!"), BY_SERVER);
+        if (chatWindow)
+            chatWindow->chatLog(_("Saving screenshot failed!"), BY_SERVER);
+
         logger->log("Error: could not save screenshot.");
     }
 
     SDL_FreeSurface(screenshot);
-
-    return success;
 }

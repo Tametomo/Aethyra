@@ -162,7 +162,7 @@ class Graphics : public gcn::SDLGraphics
         SDL_Surface *mScreen;
 };
 
-bool saveScreenshot();
+void saveScreenshot();
 
 extern Graphics *graphics;
 
