@@ -24,25 +24,25 @@
 
 #include "setup_input.h"
 
-#include "../../../core/configuration.h"
+#include "../okdialog.h"
 
-#include "../../../bindings/guichan/layouthelper.h"
+#include "../../layouthelper.h"
 
-#include "../../../bindings/guichan/dialogs/okdialog.h"
+#include "../../models/keylistmodel.h"
 
-#include "../../../bindings/guichan/models/keylistmodel.h"
+#include "../../widgets/button.h"
+#include "../../widgets/checkbox.h"
+#include "../../widgets/label.h"
+#include "../../widgets/listbox.h"
+#include "../../widgets/scrollarea.h"
 
-#include "../../../bindings/guichan/widgets/button.h"
-#include "../../../bindings/guichan/widgets/checkbox.h"
-#include "../../../bindings/guichan/widgets/label.h"
-#include "../../../bindings/guichan/widgets/listbox.h"
-#include "../../../bindings/guichan/widgets/scrollarea.h"
+#include "../../../sdl/joystick.h"
+#include "../../../sdl/keyboardconfig.h"
 
-#include "../../../bindings/sdl/joystick.h"
-#include "../../../bindings/sdl/keyboardconfig.h"
+#include "../../../../core/configuration.h"
 
-#include "../../../core/utils/gettext.h"
-#include "../../../core/utils/stringutils.h"
+#include "../../../../core/utils/gettext.h"
+#include "../../../../core/utils/stringutils.h"
 
 extern Joystick *joystick;
 

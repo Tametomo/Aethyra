@@ -169,6 +169,18 @@ void TabbedArea::removeTab(Tab *tab)
     adjustTabPositions();
 }
 
+void TabbedArea::removeTab(gcn::Widget *widget)
+{
+    for (TabContainer::iterator iter = mTabs.begin(); iter != mTabs.end(); iter++)
+    {
+        if (iter->second == widget)
+        {
+            removeTab(iter->first);
+            return;
+        }
+    }
+}
+
 void TabbedArea::logic()
 {
     if (!isVisible())

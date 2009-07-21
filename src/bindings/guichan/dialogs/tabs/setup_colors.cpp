@@ -24,23 +24,21 @@
 
 #include "setup_colors.h"
 
-#include "../../handlers/itemlinkhandler.h"
+#include "../../gui.h"
+#include "../../layouthelper.h"
 
-#include "../../../bindings/guichan/gui.h"
-#include "../../../bindings/guichan/layouthelper.h"
+#include "../../widgets/browserbox.h"
+#include "../../widgets/label.h"
+#include "../../widgets/listbox.h"
+#include "../../widgets/scrollarea.h"
+#include "../../widgets/slider.h"
+#include "../../widgets/textfield.h"
+#include "../../widgets/textpreview.h"
 
-#include "../../../bindings/guichan/widgets/browserbox.h"
-#include "../../../bindings/guichan/widgets/label.h"
-#include "../../../bindings/guichan/widgets/listbox.h"
-#include "../../../bindings/guichan/widgets/scrollarea.h"
-#include "../../../bindings/guichan/widgets/slider.h"
-#include "../../../bindings/guichan/widgets/textfield.h"
-#include "../../../bindings/guichan/widgets/textpreview.h"
+#include "../../../../core/configuration.h"
 
-#include "../../../core/configuration.h"
-
-#include "../../../core/utils/gettext.h"
-#include "../../../core/utils/stringutils.h"
+#include "../../../../core/utils/gettext.h"
+#include "../../../../core/utils/stringutils.h"
 
 const std::string Setup_Colors::rawmsg = _("This is what the color looks like");
 

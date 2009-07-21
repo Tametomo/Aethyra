@@ -20,24 +20,24 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "setup.h"
+#include "setupdialog.h"
 
 #include "tabs/setup_audio.h"
 #include "tabs/setup_colors.h"
 #include "tabs/setup_input.h"
-#include "tabs/setup_players.h"
-#include "tabs/setup_video.h"
 
-#include "../../main.h"
+#include "../layout.h"
 
-#include "../../bindings/guichan/layout.h"
+#include "../widgets/button.h"
+#include "../widgets/tabbedarea.h"
+#include "../widgets/windowcontainer.h"
 
-#include "../../bindings/guichan/widgets/button.h"
-#include "../../bindings/guichan/widgets/tabbedarea.h"
-#include "../../bindings/guichan/widgets/windowcontainer.h"
+#include "../../../main.h"
 
-#include "../../core/utils/dtor.h"
-#include "../../core/utils/gettext.h"
+#include "../../../core/utils/dtor.h"
+#include "../../../core/utils/gettext.h"
+
+#include "../../../eathena/gui/tabs/setup_video.h"
 
 Setup::Setup():
     Window(_("Setup"))
@@ -59,7 +59,6 @@ Setup::Setup():
     mTabs.push_back(new Setup_Audio());
     mTabs.push_back(new Setup_Input());
     mTabs.push_back(new Setup_Colors());
-    mTabs.push_back(new Setup_Players());
 
     for (std::list<SetupTabContainer*>::iterator i = mTabs.begin(),
          i_end = mTabs.end(); i != i_end; ++i)
@@ -91,6 +90,23 @@ Setup::Setup():
 Setup::~Setup()
 {
     delete_all(mTabs);
+}
+
+void Setup::addTab(SetupTabContainer *tab)
+{
+    mTabs.push_back(tab);
+    mPanel->addTab(tab->getName(), tab);
+}
+
+void Setup::removeTab(SetupTabContainer *tab)
+{
+    for (std::list<SetupTabContainer*>::iterator tab = mTabs.begin(),
+         tab_end = mTabs.end(); tab != tab_end; ++tab)
+    {
+        mPanel->removeTab(*tab);
+        tab = mTabs.erase(tab);
+        return;
+    }
 }
 
 void Setup::action(const gcn::ActionEvent &event)

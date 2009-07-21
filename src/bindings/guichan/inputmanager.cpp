@@ -28,6 +28,7 @@
 #include "dialogs/confirmdialog.h"
 #include "dialogs/helpdialog.h"
 #include "dialogs/okdialog.h"
+#include "dialogs/setupdialog.h"
 
 #include "handlers/shortcuthandler.h"
 
@@ -56,7 +57,6 @@
 #include "../../eathena/gui/inventorywindow.h"
 #include "../../eathena/gui/minimap.h"
 #include "../../eathena/gui/ministatus.h"
-#include "../../eathena/gui/setup.h"
 #include "../../eathena/gui/skill.h"
 #include "../../eathena/gui/status.h"
 #include "../../eathena/gui/trade.h"

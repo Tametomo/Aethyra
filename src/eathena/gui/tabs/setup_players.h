@@ -25,11 +25,11 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "setuptabcontainer.h"
-
 #include "../../playerrelations.h"
 
 #include "../../../bindings/guichan/guichanfwd.h"
+
+#include "../../../bindings/guichan/widgets/setuptabcontainer.h"
 
 class Table;
 class PlayerTableModel;
@@ -66,5 +66,7 @@ private:
     gcn::ListModel *mIgnoreActionChoicesModel;
     gcn::DropDown *mIgnoreActionChoicesBox;
 };
+
+extern Setup_Players *setupPlayers;
 
 #endif

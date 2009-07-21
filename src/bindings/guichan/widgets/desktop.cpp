@@ -22,26 +22,25 @@
 
 #include <guichan/actionlistener.hpp>
 
+#include "button.h"
 #include "desktop.h"
-#include "setup.h"
+#include "label.h"
+#include "progressbar.h"
+#include "window.h"
 
-#include "../../main.h"
+#include "../../../main.h"
 
-#include "../../bindings/guichan/dialogs/okdialog.h"
+#include "../dialogs/okdialog.h"
+#include "../dialogs/setupdialog.h"
 
-#include "../../bindings/guichan/widgets/button.h"
-#include "../../bindings/guichan/widgets/label.h"
-#include "../../bindings/guichan/widgets/progressbar.h"
-#include "../../bindings/guichan/widgets/window.h"
+#include "../../../core/configuration.h"
+#include "../../../core/log.h"
+#include "../../../core/resourcemanager.h"
 
-#include "../../core/configuration.h"
-#include "../../core/log.h"
-#include "../../core/resourcemanager.h"
+#include "../../../core/image/image.h"
+#include "../../../core/image/wallpapermanager.h"
 
-#include "../../core/image/image.h"
-#include "../../core/image/wallpapermanager.h"
-
-#include "../../core/utils/gettext.h"
+#include "../../../core/utils/gettext.h"
 
 unsigned char error = '\0';
 

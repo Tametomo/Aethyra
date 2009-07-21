@@ -52,6 +52,9 @@
 
 #include "bindings/guichan/dialogs/helpdialog.h"
 #include "bindings/guichan/dialogs/okdialog.h"
+#include "bindings/guichan/dialogs/setupdialog.h"
+
+#include "bindings/guichan/widgets/desktop.h"
 
 #ifdef USE_OPENGL
 #include "bindings/guichan/opengl/openglgraphics.h"
@@ -80,11 +83,9 @@
 
 #include "eathena/gui/charselect.h"
 #include "eathena/gui/debugwindow.h"
-#include "eathena/gui/desktop.h"
 #include "eathena/gui/login.h"
 #include "eathena/gui/register.h"
 #include "eathena/gui/serverlistdialog.h"
-#include "eathena/gui/setup.h"
 #include "eathena/gui/updatewindow.h"
 
 #include "eathena/net/charserverhandler.h"

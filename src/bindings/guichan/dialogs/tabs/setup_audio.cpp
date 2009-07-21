@@ -22,22 +22,22 @@
 
 #include "setup_audio.h"
 
-#include "../../../bindings/guichan/dialogs/okdialog.h"
+#include "../okdialog.h"
 
-#include "../../../bindings/guichan/layouthelper.h"
+#include "../../layouthelper.h"
 
-#include "../../../bindings/guichan/widgets/checkbox.h"
-#include "../../../bindings/guichan/widgets/label.h"
-#include "../../../bindings/guichan/widgets/slider.h"
+#include "../../widgets/checkbox.h"
+#include "../../widgets/label.h"
+#include "../../widgets/slider.h"
 
-#include "../../../bindings/sdl/sound.h"
+#include "../../../sdl/sound.h"
 
-#include "../../../core/configuration.h"
-#include "../../../core/log.h"
+#include "../../../../core/configuration.h"
+#include "../../../../core/log.h"
 
-#include "../../../core/map/map.h"
+#include "../../../../core/map/map.h"
 
-#include "../../../core/utils/gettext.h"
+#include "../../../../core/utils/gettext.h"
 
 Setup_Audio::Setup_Audio():
     mMusicVolume((int)config.getValue("musicVolume", 60)),

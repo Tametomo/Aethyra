@@ -24,9 +24,9 @@
 
 #include <string>
 
-#include "../../bindings/guichan/guichanfwd.h"
+#include "container.h"
 
-#include "../../bindings/guichan/widgets/container.h"
+#include "../guichanfwd.h"
 
 class Window;
 class Image;

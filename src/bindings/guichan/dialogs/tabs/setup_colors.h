@@ -27,10 +27,10 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
-#include "setuptabcontainer.h"
+#include "../../guichanfwd.h"
+#include "../../palette.h"
 
-#include "../../../bindings/guichan/guichanfwd.h"
-#include "../../../bindings/guichan/palette.h"
+#include "../../widgets/setuptabcontainer.h"
 
 class BrowserBox;
 class TextField;

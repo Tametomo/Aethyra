@@ -23,7 +23,7 @@
 #ifndef GUI_SETUPTAB_H
 #define GUI_SETUPTAB_H
 
-#include "../../../bindings/guichan/widgets/container.h"
+#include "container.h"
 
 class SetupTabContainer : public Container
 {

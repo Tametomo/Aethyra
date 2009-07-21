@@ -27,7 +27,7 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "../../bindings/guichan/widgets/window.h"
+#include "../widgets/window.h"
 
 class SetupTabContainer;
 class TabbedArea;
@@ -49,6 +49,10 @@ class Setup : public Window, public gcn::ActionListener
     public:
         Setup();
         ~Setup();
+
+        void addTab(SetupTabContainer *tab);
+
+        void removeTab(SetupTabContainer *tab);
 
         /**
          * Event handling method.

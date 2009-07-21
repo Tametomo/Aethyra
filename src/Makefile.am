@@ -31,8 +31,16 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/dialogs/helpdialog.h \
 	      bindings/guichan/dialogs/okdialog.cpp \
 	      bindings/guichan/dialogs/okdialog.h \
+	      bindings/guichan/dialogs/setupdialog.cpp \
+	      bindings/guichan/dialogs/setupdialog.h \
 	      bindings/guichan/dialogs/textinputdialog.cpp \
 	      bindings/guichan/dialogs/textinputdialog.h \
+	      bindings/guichan/dialogs/tabs/setup_audio.cpp \
+	      bindings/guichan/dialogs/tabs/setup_audio.h \
+	      bindings/guichan/dialogs/tabs/setup_colors.cpp \
+	      bindings/guichan/dialogs/tabs/setup_colors.h \
+	      bindings/guichan/dialogs/tabs/setup_input.cpp \
+	      bindings/guichan/dialogs/tabs/setup_input.h \
 	      bindings/guichan/handlers/focushandler.cpp \
 	      bindings/guichan/handlers/focushandler.h \
 	      bindings/guichan/handlers/lettertextwraphandler.cpp \
@@ -69,6 +77,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/widgets/checkbox.h \
 	      bindings/guichan/widgets/container.cpp \
 	      bindings/guichan/widgets/container.h \
+	      bindings/guichan/widgets/desktop.cpp \
+	      bindings/guichan/widgets/desktop.h \
 	      bindings/guichan/widgets/dropdown.cpp \
 	      bindings/guichan/widgets/dropdown.h \
 	      bindings/guichan/widgets/icon.cpp \
@@ -97,6 +107,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/widgets/resizegrip.h \
 	      bindings/guichan/widgets/scrollarea.cpp \
 	      bindings/guichan/widgets/scrollarea.h \
+	      bindings/guichan/widgets/setuptabcontainer.cpp \
+	      bindings/guichan/widgets/setuptabcontainer.h \
 	      bindings/guichan/widgets/shortcutcontainer.cpp \
 	      bindings/guichan/widgets/shortcutcontainer.h \
 	      bindings/guichan/widgets/shortcutwindow.cpp \
@@ -247,16 +259,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      eathena/db/npcdb.h \
 	      eathena/db/skilldb.cpp \
 	      eathena/db/skilldb.h \
-	      eathena/gui/tabs/setup_audio.cpp \
-	      eathena/gui/tabs/setup_audio.h \
-	      eathena/gui/tabs/setup_colors.cpp \
-	      eathena/gui/tabs/setup_colors.h \
-	      eathena/gui/tabs/setup_input.cpp \
-	      eathena/gui/tabs/setup_input.h \
 	      eathena/gui/tabs/setup_players.cpp \
 	      eathena/gui/tabs/setup_players.h \
-	      eathena/gui/tabs/setuptabcontainer.cpp \
-	      eathena/gui/tabs/setuptabcontainer.h \
 	      eathena/gui/tabs/setup_video.cpp \
 	      eathena/gui/tabs/setup_video.h \
 	      eathena/gui/buy.cpp \
@@ -269,8 +273,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      eathena/gui/chat.h \
 	      eathena/gui/debugwindow.cpp \
 	      eathena/gui/debugwindow.h \
-	      eathena/gui/desktop.cpp \
-	      eathena/gui/desktop.h \
 	      eathena/gui/emotewindow.cpp \
 	      eathena/gui/emotewindow.h \
 	      eathena/gui/equipmentwindow.cpp \
@@ -305,8 +307,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      eathena/gui/sell.h \
 	      eathena/gui/serverlistdialog.cpp \
 	      eathena/gui/serverlistdialog.h \
-	      eathena/gui/setup.cpp \
-	      eathena/gui/setup.h \
 	      eathena/gui/skill.cpp \
 	      eathena/gui/skill.h \
 	      eathena/gui/slotselection.cpp \

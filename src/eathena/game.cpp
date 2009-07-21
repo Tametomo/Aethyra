@@ -55,6 +55,8 @@
 #include "gui/trade.h"
 #include "gui/viewport.h"
 
+#include "gui/tabs/setup_players.h"
+
 #include "handlers/emoteshortcut.h"
 #include "handlers/itemshortcut.h"
 
@@ -79,6 +81,7 @@
 #include "../bindings/guichan/inputmanager.h"
 
 #include "../bindings/guichan/dialogs/okdialog.h"
+#include "../bindings/guichan/dialogs/setupdialog.h"
 
 #include "../bindings/guichan/widgets/shortcutwindow.h"
 
@@ -99,6 +102,8 @@ MapLoader *mapLoader = NULL;
 
 EmoteShortcut *emoteShortcut;
 ItemShortcut *itemShortcut;
+
+Setup_Players *setupPlayers = NULL;
 
 OkDialog *disconnectedDialog = NULL;
 
@@ -153,6 +158,10 @@ void createGuiWindows()
     emoteShortcut = new EmoteShortcut();
     itemShortcut = new ItemShortcut();
 
+    // Add game specific tabs to the setup window
+    setupPlayers = new Setup_Players();
+    setupWindow->addTab(setupPlayers);
+
     // Create dialogs
     buyDialog = new BuyDialog();
     buySellDialog = new BuySellDialog();
@@ -182,6 +191,12 @@ void createGuiWindows()
 static void destroyGuiWindows()
 {
     logger->setChatWindow(NULL);
+
+    setupWindow->removeTab(setupPlayers);
+    // Deleting setupPlayers causes a segfault. TODO: Is this enough to stop
+    // leaks?
+    setupPlayers = NULL;
+
     delete buyDialog;
     delete buySellDialog;
     delete chatWindow;

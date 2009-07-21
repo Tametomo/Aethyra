@@ -29,7 +29,6 @@
 
 #include "setup_video.h"
 
-#include "../desktop.h"
 #include "../menubar.h"
 
 #include "../../beingmanager.h"
@@ -46,6 +45,7 @@
 #include "../../../bindings/guichan/models/modelistmodel.h"
 
 #include "../../../bindings/guichan/widgets/checkbox.h"
+#include "../../../bindings/guichan/widgets/desktop.h"
 #include "../../../bindings/guichan/widgets/label.h"
 #include "../../../bindings/guichan/widgets/listbox.h"
 #include "../../../bindings/guichan/widgets/scrollarea.h"

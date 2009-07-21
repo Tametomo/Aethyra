@@ -29,7 +29,7 @@
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
-#include "../../eathena/gui/tabs/setup_input.h"
+#include "../../bindings/guichan/dialogs/tabs/setup_input.h"
 
 struct KeyData
 {

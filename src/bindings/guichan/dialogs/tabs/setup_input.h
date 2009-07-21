@@ -28,9 +28,9 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
-#include "setuptabcontainer.h"
+#include "../../guichanfwd.h"
 
-#include "../../../bindings/guichan/guichanfwd.h"
+#include "../../widgets/setuptabcontainer.h"
 
 class Setup_Input : public SetupTabContainer, public gcn::ActionListener,
                     public gcn::SelectionListener
