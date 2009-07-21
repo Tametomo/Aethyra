@@ -513,8 +513,8 @@ void LocalPlayer::attack(Being *target, const bool &keep)
     const int dist_y = target->mY - mY;
 
     // Must be standing and be within attack range to continue
-    if ((mAction != STAND) || (mAttackRange < abs(dist_x)) ||
-        (mAttackRange < abs(dist_y)))
+    if (target->getType() != Being::NPC && (mAction != STAND ||
+        mAttackRange < abs(dist_x) || mAttackRange < abs(dist_y)))
         return;
 
     if (abs(dist_y) >= abs(dist_x))
@@ -535,7 +535,8 @@ void LocalPlayer::attack(Being *target, const bool &keep)
     mWalkTime = tick_time;
     mTargetTime = tick_time;
 
-    setAction(ATTACK);
+    if (target->getType() != Being::NPC)
+        setAction(ATTACK);
 
     if (mEquippedWeapon)
     {

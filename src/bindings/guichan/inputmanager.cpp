@@ -417,12 +417,11 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                     else if (player_node->isAttacking())
                         target = NULL;
 
-                    if (keyboard.isKeyActive(keyboard.KEY_ATTACK) && target && 
-                        target->getType() != Being::NPC)
+                    if (keyboard.isKeyActive(keyboard.KEY_ATTACK) && target)
                     {
                         player_node->attack(player_node->getTarget() ?
-                                            player_node->getTarget() :
-                                            target, true);
+                                            player_node->getTarget() : target,
+                                            target->getType() != Being::NPC);
                         used = true;
                     }
                 }
