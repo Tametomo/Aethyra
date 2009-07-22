@@ -69,10 +69,13 @@ void DebugWindow::widgetShown(const gcn::Event& event)
 {
     Window::widgetShown(event);
 
-    mTileMouseLabel->setVisible(mapLoader);
-    mParticleCountLabel->setVisible(mapLoader);
-    mMapLabel->setVisible(mapLoader);
-    mMiniMapLabel->setVisible(mapLoader);
+    if (!mapLoader)
+    {
+        mTileMouseLabel->setCaption("");
+        mParticleCountLabel->setCaption("");
+        mMapLabel->setCaption("");
+        mMiniMapLabel->setCaption("");
+    }
 }
 
 void DebugWindow::logic()
@@ -81,10 +84,8 @@ void DebugWindow::logic()
         return;
 
     mFPSLabel->setCaption(strprintf(_("%d FPS"), fps));
-
-    const std::string music = strprintf(_("Music: %s"),
-                                          sound.getCurrentTrack().c_str());
-    mMusicFileLabel->setCaption(music);
+    mMusicFileLabel->setCaption(strprintf(_("Music: %s"),
+                                          sound.getCurrentTrack().c_str()));
 
     if (!mapLoader)
         return;
@@ -100,14 +101,10 @@ void DebugWindow::logic()
 
     if (currentMap)
     {
-
-        const std::string minimap = strprintf(_("MiniMap: %s"),
-                                                currentMap->getProperty("minimap").c_str());
-        mMiniMapLabel->setCaption(minimap);
-
-        const std::string map = strprintf(_("Map: %s"),
-                                            currentMap->getProperty("_filename").c_str());
-        mMapLabel->setCaption(map);
+        mMiniMapLabel->setCaption(strprintf(_("MiniMap: %s"),
+                                            currentMap->getProperty("minimap").c_str()));
+        mMapLabel->setCaption(strprintf(_("Map: %s"),
+                                        currentMap->getProperty("_filename").c_str()));
     }
 
     mParticleCountLabel->setCaption(strprintf(_("Particle count: %d"),
