@@ -51,6 +51,8 @@
 #include "../../core/image/imageset.h"
 #include "../../core/image/imageloader.h"
 
+#include "../../core/utils/gettext.h"
+
 #include "../../eathena/gui/viewport.h"
 
 // Guichan stuff

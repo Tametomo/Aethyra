@@ -316,8 +316,8 @@ void Setup_Video::apply()
     mSpeechMode = (int) config.getValue("speech", 3);
     mOpacity = config.getValue("guialpha", 0.8);
     mMouseOpacity = config.getValue("mousealpha", 0.7);
-    mScreenWidth = config.getValue("screenwidth", 800);
-    mScreenHeight = config.getValue("screenheight", 600);
+    mScreenWidth = (int) config.getValue("screenwidth", 800);
+    mScreenHeight = (int) config.getValue("screenheight", 600);
     mFontSize = (int) config.getValue("fontSize", 11);
     mOverlayDetail = (int) config.getValue("OverlayDetail", 2);
     mParticleDetail = 3 - (int) config.getValue("particleEmitterSkip", 1);
