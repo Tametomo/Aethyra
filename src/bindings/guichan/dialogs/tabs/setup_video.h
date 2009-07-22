@@ -25,9 +25,9 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "../../../bindings/guichan/guichanfwd.h"
+#include "../../guichanfwd.h"
 
-#include "../../../bindings/guichan/widgets/setuptabcontainer.h"
+#include "../../widgets/setuptabcontainer.h"
 
 class ModeListModel;
 

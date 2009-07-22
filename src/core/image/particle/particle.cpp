@@ -42,6 +42,8 @@
 #include "../../utils/fastsqrt.h"
 #include "../../utils/xml.h"
 
+#include "../../../eathena/beingmanager.h"
+
 #define SIN45 0.707106781f
 
 class Graphics;
@@ -239,6 +241,17 @@ void Particle::moveBy(const Vector &change)
 void Particle::moveTo(const float &x, const float &y)
 {
     moveTo(Vector(x, y, mPos.z));
+}
+
+void Particle::changeParticleDetailLevel(const int &value)
+{
+    beingManager->loadParticleEffects();
+
+    if (mMap)
+        mMap->initializeParticleEffects(particleEngine);
+
+    if (value > -1 && value < 4)
+        emitterSkip = 4 - value;
 }
 
 Particle* Particle::addEffect(const std::string &particleEffectFile,

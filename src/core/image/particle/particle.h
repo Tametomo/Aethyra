@@ -251,6 +251,11 @@ class Particle : public Sprite
          */
         void disableAutoDelete() { mAutoDelete = false; }
 
+        /**
+         * Adjusts the emitter detail level
+         */
+        void changeParticleDetailLevel(const int &value);
+
     protected:
         bool mAlive;                /**< Is the particle supposed to be drawn
                                          and updated?*/

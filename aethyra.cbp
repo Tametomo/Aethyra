@@ -143,6 +143,8 @@
 		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_colors.h" />
 		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_input.cpp" />
 		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_input.h" />
+		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_video.cpp" />
+		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_video.h" />
 		<Unit filename="src\bindings\guichan\handlers\focushandler.cpp" />
 		<Unit filename="src\bindings\guichan\handlers\focushandler.h" />
 		<Unit filename="src\bindings\guichan\handlers\lettertextwraphandler.cpp" />
@@ -363,8 +365,6 @@
 		<Unit filename="src\eathena\db\skilldb.h" />
 		<Unit filename="src\eathena\gui\tabs\setup_players.cpp" />
 		<Unit filename="src\eathena\gui\tabs\setup_players.h" />
-		<Unit filename="src\eathena\gui\tabs\setup_video.cpp" />
-		<Unit filename="src\eathena\gui\tabs\setup_video.h" />
 		<Unit filename="src\eathena\gui\buy.cpp" />
 		<Unit filename="src\eathena\gui\buy.h" />
 		<Unit filename="src\eathena\gui\buysell.cpp" />

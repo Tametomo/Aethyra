@@ -29,41 +29,35 @@
 
 #include "setup_video.h"
 
-#include "../menubar.h"
+#include "../okdialog.h"
 
-#include "../../beingmanager.h"
-#include "../../maploader.h"
+#include "../../graphics.h"
+#include "../../gui.h"
+#include "../../layouthelper.h"
 
-#include "../../../main.h"
+#include "../../models/modelistmodel.h"
 
-#include "../../../bindings/guichan/graphics.h"
-#include "../../../bindings/guichan/gui.h"
-#include "../../../bindings/guichan/layouthelper.h"
+#include "../../widgets/checkbox.h"
+#include "../../widgets/desktop.h"
+#include "../../widgets/label.h"
+#include "../../widgets/listbox.h"
+#include "../../widgets/popup.h"
+#include "../../widgets/scrollarea.h"
+#include "../../widgets/slider.h"
+#include "../../widgets/textfield.h"
+#include "../../widgets/windowcontainer.h"
 
-#include "../../../bindings/guichan/dialogs/okdialog.h"
+#include "../../../../main.h"
 
-#include "../../../bindings/guichan/models/modelistmodel.h"
+#include "../../../../core/configuration.h"
+#include "../../../../core/log.h"
 
-#include "../../../bindings/guichan/widgets/checkbox.h"
-#include "../../../bindings/guichan/widgets/desktop.h"
-#include "../../../bindings/guichan/widgets/label.h"
-#include "../../../bindings/guichan/widgets/listbox.h"
-#include "../../../bindings/guichan/widgets/scrollarea.h"
-#include "../../../bindings/guichan/widgets/slider.h"
-#include "../../../bindings/guichan/widgets/textfield.h"
-#include "../../../bindings/guichan/widgets/windowcontainer.h"
+#include "../../../../core/image/particle/particle.h"
 
-#include "../../../core/configuration.h"
-#include "../../../core/log.h"
+#include "../../../../core/image/sprite/localplayer.h"
 
-#include "../../../core/image/particle/particle.h"
-
-#include "../../../core/image/sprite/localplayer.h"
-
-#include "../../../core/map/map.h"
-
-#include "../../../core/utils/gettext.h"
-#include "../../../core/utils/stringutils.h"
+#include "../../../../core/utils/gettext.h"
+#include "../../../../core/utils/stringutils.h"
 
 Setup_Video::Setup_Video():
     mFullScreenEnabled(config.getValue("screen", false)),
@@ -285,8 +279,19 @@ void Setup_Video::apply()
 
         gui->changeFontSize(val);
 
-        if (menuBar)
-            menuBar->adaptToNewSize();
+        Widgets widgets = windowContainer->getWidgetList();
+        WidgetIterator iter;
+
+        for (iter = widgets.begin(); iter != widgets.end(); ++iter)
+        {
+            Popup* popup = dynamic_cast<Popup*>(*iter);
+
+            if (popup)
+            {
+                popup->adaptToNewSize();
+                continue;
+            }
+        }
 
         if (!mInGame && desktop)
             desktop->resize();
@@ -528,20 +533,11 @@ void Setup_Video::setParticleDetailLabel(const int &value)
 
 void Setup_Video::changeParticleDetailLevel(const int &value)
 {
-     setParticleDetailLabel(value);
-     config.setValue("particleeffects", value != -1);
-     config.setValue("particleEmitterSkip", 3 - value);
+    setParticleDetailLabel(value);
+    config.setValue("particleeffects", value != -1);
+    config.setValue("particleEmitterSkip", 3 - value);
 
-     if (mapLoader)
-     {
-         beingManager->loadParticleEffects();
-         Map* map = mapLoader->getCurrentMap();
-
-         if (map)
-             map->initializeParticleEffects(particleEngine);
-     }
-
-     if (value > -1)
-         Particle::emitterSkip = 4 - value;
+    if (particleEngine)
+        particleEngine->changeParticleDetailLevel(value);
 }
 

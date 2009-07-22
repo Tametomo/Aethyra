@@ -25,6 +25,7 @@
 #include "tabs/setup_audio.h"
 #include "tabs/setup_colors.h"
 #include "tabs/setup_input.h"
+#include "tabs/setup_video.h"
 
 #include "../layout.h"
 
@@ -36,8 +37,6 @@
 
 #include "../../../core/utils/dtor.h"
 #include "../../../core/utils/gettext.h"
-
-#include "../../../eathena/gui/tabs/setup_video.h"
 
 Setup::Setup():
     Window(_("Setup"))

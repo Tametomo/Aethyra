@@ -92,6 +92,8 @@ SET(SRCS
     bindings/guichan/dialogs/tabs/setup_colors.h
     bindings/guichan/dialogs/tabs/setup_input.cpp
     bindings/guichan/dialogs/tabs/setup_input.h
+    bindings/guichan/dialogs/tabs/setup_video.cpp
+    bindings/guichan/dialogs/tabs/setup_video.h
     bindings/guichan/handlers/focushandler.cpp
     bindings/guichan/handlers/focushandler.h
     bindings/guichan/handlers/lettertextwraphandler.cpp
@@ -312,8 +314,6 @@ SET(SRCS
     eathena/db/skilldb.h
     eathena/gui/tabs/setup_players.cpp
     eathena/gui/tabs/setup_players.h
-    eathena/gui/tabs/setup_video.cpp
-    eathena/gui/tabs/setup_video.h
     eathena/gui/buy.cpp
     eathena/gui/buy.h
     eathena/gui/buysell.cpp
