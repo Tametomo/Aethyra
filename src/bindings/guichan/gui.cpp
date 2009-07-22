@@ -31,10 +31,14 @@
 #include "skin.h"
 #include "truetypefont.h"
 
+#include "dialogs/okdialog.h"
+
 #include "handlers/focushandler.h"
 
 #include "sdl/sdlinput.h"
 
+#include "widgets/desktop.h"
+#include "widgets/popup.h"
 #include "widgets/window.h"
 #include "widgets/windowcontainer.h"
 
@@ -210,16 +214,72 @@ Gui::~Gui()
     delete guiInput;
 }
 
-void Gui::resize(Graphics *graphics)
+void Gui::resize(const int &width, const int &height)
 {
-    WindowContainer *guiTop = static_cast<WindowContainer*>(getTop());
-    guiTop->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
-                                        graphics->getHeight()));
+    if (width < 0 || height < 0 || (width == graphics->getWidth() &&
+        height == graphics->getHeight()))
+        return;
+
+    // TODO: If possible, fix resizing in place on Windows.
+    //
+    // Because: on Windows, the GL context get purged on resize!
+    // (well, not checked, but that what Internet reports)
+#ifdef WIN32
+    new OkDialog(_("Screen resolution changed"),
+                 _("Restart your client for the change to take effect."));
+#else
+    Widgets widgets = windowContainer->getWidgetList();
+    WidgetIterator iter;
+
+    // First save the window positions, adaptToNewSize will position
+    // them based on the saved positions.
+    for (iter = widgets.begin(); iter != widgets.end(); ++iter)
+    {
+        Window* window = dynamic_cast<Window*>(*iter);
+
+        if (window)
+            window->saveWindowState();
+    }
+
+    Graphics *graphics = static_cast<Graphics*>(mGraphics);
+
+    graphics->resizeVideoMode(width, height);
+
+    mTop->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
+                                      graphics->getHeight()));
 
     if (viewport)
         viewport->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
                                               graphics->getHeight()));
+
+    if (!mInGame && desktop)
+        desktop->resize();
+
+    // Reposition all the open sub-windows and popups.
+    // The rest of the windows will reposition themselves on opening.
+    for (iter = widgets.begin(); iter != widgets.end(); ++iter)
+    {
+        Window* window = dynamic_cast<Window*>(*iter);
+
+        if (window)
+        {
+            window->adaptToNewSize();
+            continue;
+        }
+
+        Popup* popup = dynamic_cast<Popup*>(*iter);
+        if (popup)
+        {
+            popup->adaptToNewSize();
+            continue;
+        }
+    }
+#endif
+
+    config.setValue("screenwidth", width);
+    config.setValue("screenheight", height);
 }
+
 void Gui::logic()
 {
     gcn::Gui::logic();

@@ -45,7 +45,7 @@ class MenuBar : public Popup
         /**
          * Reflows the menu bar on resolution changing and font size changing.
          */
-        void adjustSizeAndPosition();
+        void adaptToNewSize();
 
         /**
          * Draw this window

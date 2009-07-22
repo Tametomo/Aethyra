@@ -77,10 +77,10 @@ MenuBar::MenuBar():
         add(btn);
     }
 
-    adjustSizeAndPosition();
+    adaptToNewSize();
 }
 
-void MenuBar::adjustSizeAndPosition()
+void MenuBar::adaptToNewSize()
 {
     int x = 0, h = 0;
 

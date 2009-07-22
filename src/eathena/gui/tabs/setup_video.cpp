@@ -226,7 +226,7 @@ void Setup_Video::apply()
         const int width = atoi(mode.substr(0, mode.find("x")).c_str());
         const int height = atoi(mode.substr(mode.find("x") + 1).c_str());
 
-        changeResolution(width, height);
+        gui->resize(width, height);
     }
 
     // Full screen changes
@@ -286,7 +286,7 @@ void Setup_Video::apply()
         gui->changeFontSize(val);
 
         if (menuBar)
-            menuBar->adjustSizeAndPosition();
+            menuBar->adaptToNewSize();
 
         if (!mInGame && desktop)
             desktop->resize();
@@ -294,10 +294,7 @@ void Setup_Video::apply()
         config.setValue("fontSize", val);
     }
 
-    if (mFpsCheckBox->isSelected())
-        mFps = (int) mFpsSlider->getValue();
-    else
-        mFps = 0;
+    mFps = (mFpsCheckBox->isSelected()) ? (int) mFpsSlider->getValue() : 0;
 
     mFpsSlider->setEnabled(mFps > 0);
 
@@ -324,7 +321,7 @@ void Setup_Video::apply()
 
 void Setup_Video::cancel()
 {
-    changeResolution(mScreenWidth, mScreenHeight);
+    gui->resize(mScreenWidth, mScreenHeight);
 
     mFpsCheckBox->setSelected(mFps > 0);
     mFsCheckBox->setSelected(mFullScreenEnabled);
@@ -341,10 +338,7 @@ void Setup_Video::cancel()
 
     std::string text;
 
-    if (mFpsCheckBox->isSelected())
-        text = toString(mFps);
-    else
-        text = "";
+    text = (mFpsCheckBox->isSelected()) ? toString(mFps) : "";
 
     mFpsSlider->setEnabled(mFps > 0);
     mFpsField->setText(text);
@@ -387,7 +381,7 @@ void Setup_Video::action(const gcn::ActionEvent &event)
         const int width = atoi(mode.substr(0, mode.find("x")).c_str());
         const int height = atoi(mode.substr(mode.find("x") + 1).c_str());
 
-        changeResolution(width, height);
+        gui->resize(width, height);
     }
     else if (event.getId() == "guialpha")
     {
@@ -435,10 +429,7 @@ void Setup_Video::action(const gcn::ActionEvent &event)
         const int fps = (int) mFpsSlider->getValue();
         std::string text;
 
-        if (mFpsCheckBox->isSelected())
-            text = toString(fps);
-        else
-            text = "";
+        text = (mFpsCheckBox->isSelected()) ? toString(fps) : "";
 
         mFpsField->setText(text);
     }
@@ -475,60 +466,6 @@ void Setup_Video::action(const gcn::ActionEvent &event)
 
         mFpsSlider->setEnabled(fps > 0);
         mFpsField->setText(text);
-    }
-}
-
-void Setup_Video::changeResolution(const int &width, const int &height)
-{
-    if (width < 0 || height < 0)
-        return;
-
-    if (width != graphics->getWidth() || height != graphics->getHeight())
-    {
-        // TODO: If possible, fix resizing in place on Windows.
-        //
-        // Because: on Windows, the GL context get purged on resize!
-        // (well, not checked, but that what Internet reports)
-#ifdef WIN32
-        new OkDialog(_("Screen resolution changed"),
-                     _("Restart your client for the change to take effect."));
-#else
-        Widgets widgets = windowContainer->getWidgetList();
-        WidgetIterator iter;
-
-        // First save the window positions, adaptToNewSize will position
-        // them based on the saved positions.
-        for (iter = widgets.begin(); iter != widgets.end(); ++iter)
-        {
-            Window* window = dynamic_cast<Window*>(*iter);
-
-            if (window)
-                window->saveWindowState();
-        }
-
-        graphics->resizeVideoMode(width, height);
-        gui->resize(graphics);
-
-        // The menuBar is a Popup, not a subclass of Window
-        if (menuBar)
-            menuBar->adjustSizeAndPosition();
-
-        if (!mInGame && desktop)
-            desktop->resize();
-
-        // Reposition all the open sub-windows. The rest of the windows will
-        // reposition themselves on opening.
-        for (iter = widgets.begin(); iter != widgets.end(); ++iter)
-        {
-            Window* window = dynamic_cast<Window*>(*iter);
-
-            if (window)
-                window->adaptToNewSize();
-        }
-#endif
-
-        config.setValue("screenwidth", width);
-        config.setValue("screenheight", height);
     }
 }
 

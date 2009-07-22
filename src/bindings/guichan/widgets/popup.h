@@ -173,6 +173,12 @@ class Popup : public Container
         void setDefaultSkinPath(const std::string &path) { mDefaultSkinPath = path; }
 
         /**
+         * Allows for child popup classes to reposition themselves on resize if
+         * necessary.
+         */
+        virtual void adaptToNewSize() {}
+
+        /**
          * Schedule this popup for deletion. It will be deleted at the start
          * of the next logic update.
          */

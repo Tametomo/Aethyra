@@ -121,9 +121,9 @@ class Gui : public gcn::Gui
         void framerateChanged();
 
         /**
-         * Size of display has been changed. Adjust to it.
+         * Change the size of the display.
          */
-        void resize(Graphics *graphics);
+        void resize(const int &width, const int &height);
 
         /**
          * Returns mouse x in pixels.
