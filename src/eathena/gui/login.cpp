@@ -44,8 +44,9 @@
 
 static const int MAX_SERVER_LIST_SIZE = 5;
 
-LoginDialog::LoginDialog(LoginData *loginData):
-    Window(_("Login")), mLoginData(loginData)
+LoginDialog::LoginDialog(LoginData *loginData) :
+    Window(_("Login")),
+    mLoginData(loginData)
 {
     gcn::Label *userLabel = new Label(_("Name:"));
     gcn::Label *passLabel = new Label(_("Password:"));
@@ -77,6 +78,7 @@ LoginDialog::LoginDialog(LoginData *loginData):
     mUserField->setActionEventId("ok");
     mPassField->setActionEventId("ok");
     mServerField->setActionEventId("ok");
+    mPortField->setActionEventId("ok");
     mServerDropDown->setActionEventId("changeSelection");
 
     mUserField->addKeyListener(this);
