@@ -179,7 +179,8 @@ void Tab::draw(gcn::Graphics *graphics)
 
     if (mTabbedArea->isFocused() && mode == TAB_SELECTED)
     {
-        graphics->setColor(guiPalette->getColor(Palette::HIGHLIGHT));
+        graphics->setColor(guiPalette->getColor(Palette::HIGHLIGHT,
+                                               (int) (mAlpha * 255.0f)));
         graphics->fillRectangle(gcn::Rectangle(4, 4, getWidth() - 8,
                                                getHeight() - 8));
     }
