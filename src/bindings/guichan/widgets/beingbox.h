@@ -20,42 +20,42 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef PLAYERBOX_H
-#define PLAYERBOX_H
+#ifndef BEINGBOX_H
+#define BEINGBOX_H
 
 #include <guichan/widgets/scrollarea.hpp>
 
+class Being;
+class BeingBoxConfigListener;
 class ImageRect;
-class Player;
-class PlayerBoxConfigListener;
 
 /**
  * A box showing a player character.
  *
  * \ingroup GUI
  */
-class PlayerBox : public gcn::ScrollArea
+class BeingBox : public gcn::ScrollArea
 {
     public:
-        friend class PlayerBoxConfigListener;
+        friend class BeingBoxConfigListener;
 
         /**
          * Constructor. Takes the initial player character that this box should
          * display, which defaults to <code>NULL</code>.
          */
-        PlayerBox(const Player *player = NULL);
+        BeingBox(const Being *being = NULL);
 
         /**
          * Destructor.
          */
-        ~PlayerBox();
+        ~BeingBox();
 
         /**
-         * Sets a new player character to be displayed by this box. Setting the
-         * player to <code>NULL</code> causes the box not to draw any
-         * character.
+         * Sets the being to be displayed by this box. Setting the
+         * being to <code>NULL</code> causes the box not to draw any
+         * being.
          */
-        void setPlayer(const Player *player) { mPlayer = player; }
+        void setBeing(const Being *being) { mBeing = being; }
 
         /**
          * Draws the scroll area.
@@ -68,11 +68,11 @@ class PlayerBox : public gcn::ScrollArea
         void drawFrame(gcn::Graphics *graphics);
 
     protected:
-        static PlayerBoxConfigListener *mConfigListener;
+        static BeingBoxConfigListener *mConfigListener;
         static float mAlpha;
 
     private:
-        const Player *mPlayer;       /**< The character used for display */
+        const Being *mBeing;       /**< The being used for display */
 
         static int instances;
         static ImageRect background;

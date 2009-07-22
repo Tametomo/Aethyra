@@ -20,51 +20,51 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "playerbox.h"
+#include "beingbox.h"
 
-#include "../../bindings/guichan/graphics.h"
+#include "../graphics.h"
 
-#include "../../core/configlistener.h"
-#include "../../core/configuration.h"
-#include "../../core/resourcemanager.h"
+#include "../../../core/configlistener.h"
+#include "../../../core/configuration.h"
+#include "../../../core/resourcemanager.h"
 
-#include "../../core/image/image.h"
+#include "../../../core/image/image.h"
 
-#include "../../core/image/sprite/animatedsprite.h"
-#include "../../core/image/sprite/player.h"
+#include "../../../core/image/sprite/animatedsprite.h"
+#include "../../../core/image/sprite/being.h"
 
-#include "../../core/utils/dtor.h"
+#include "../../../core/utils/dtor.h"
 
-int PlayerBox::instances = 0;
-float PlayerBox::mAlpha = 1.0;
-ImageRect PlayerBox::background;
-PlayerBoxConfigListener *PlayerBox::mConfigListener = NULL;
+int BeingBox::instances = 0;
+float BeingBox::mAlpha = 1.0;
+ImageRect BeingBox::background;
+BeingBoxConfigListener *BeingBox::mConfigListener = NULL;
 
-class PlayerBoxConfigListener : public ConfigListener
+class BeingBoxConfigListener : public ConfigListener
 {
     public:
-        PlayerBoxConfigListener(PlayerBox *pb):
-            mPlayerBox(pb)
+        BeingBoxConfigListener(BeingBox *pb):
+            mBeingBox(pb)
         {}
 
         void optionChanged(const std::string &name)
         {
             if (name == "guialpha")
             {
-                mPlayerBox->mAlpha = config.getValue("guialpha", 0.8);
+                mBeingBox->mAlpha = config.getValue("guialpha", 0.8);
 
                 for (int a = 0; a < 9; a++)
                 {
-                    mPlayerBox->background.grid[a]->setAlpha(mPlayerBox->mAlpha);
+                    mBeingBox->background.grid[a]->setAlpha(mBeingBox->mAlpha);
                 }
             }
         }
     private:
-        PlayerBox *mPlayerBox;
+        BeingBox *mBeingBox;
 };
 
-PlayerBox::PlayerBox(const Player *player):
-    mPlayer(player)
+BeingBox::BeingBox(const Being *being):
+    mBeing(being)
 {
     setFrameSize(2);
 
@@ -94,14 +94,14 @@ PlayerBox::PlayerBox(const Player *player):
 
         textbox->decRef();
 
-        mConfigListener = new PlayerBoxConfigListener(this);
+        mConfigListener = new BeingBoxConfigListener(this);
         config.addListener("guialpha", mConfigListener);
     }
 
     instances++;
 }
 
-PlayerBox::~PlayerBox()
+BeingBox::~BeingBox()
 {
     instances--;
 
@@ -114,26 +114,26 @@ PlayerBox::~PlayerBox()
     }
 }
 
-void PlayerBox::draw(gcn::Graphics *graphics)
+void BeingBox::draw(gcn::Graphics *graphics)
 {
-    if (mPlayer)
+    if (mBeing)
     {
-        // Draw character
+        // Draw being
         int x, y, bs;
         bs = getFrameSize();
         x = getWidth() / 2 - 16 + bs;
         y = getHeight() / 2 + bs;
         for (int i = 0; i < Being::VECTOREND_SPRITE; i++)
         {
-            if (mPlayer->getSprite(i))
+            if (mBeing->getSprite(i))
             {
-                mPlayer->getSprite(i)->draw(static_cast<Graphics*>(graphics), x, y);
+                mBeing->getSprite(i)->draw(static_cast<Graphics*>(graphics), x, y);
             }
         }
     }
 }
 
-void PlayerBox::drawFrame(gcn::Graphics *graphics)
+void BeingBox::drawFrame(gcn::Graphics *graphics)
 {
     int w, h, bs;
     bs = getFrameSize();

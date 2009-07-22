@@ -31,8 +31,6 @@
 #include "../net/charserverhandler.h"
 #include "../net/messageout.h"
 
-#include "../widgets/playerbox.h"
-
 #include "../../main.h"
 
 #include "../../bindings/guichan/layout.h"
@@ -40,6 +38,7 @@
 #include "../../bindings/guichan/dialogs/confirmdialog.h"
 #include "../../bindings/guichan/dialogs/okdialog.h"
 
+#include "../../bindings/guichan/widgets/beingbox.h"
 #include "../../bindings/guichan/widgets/button.h"
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/textfield.h"
@@ -89,8 +88,8 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
     mCharSelected(false)
 {
     // Control that shows the Player
-    mPlayerBox = new PlayerBox;
-    mPlayerBox->setWidth(74);
+    mBeingBox = new BeingBox();
+    mBeingBox->setWidth(74);
 
     mNameLabel = new Label(strprintf(_("Name: %s"), ""));
     mLevelLabel = new Label(strprintf(_("Level: %d"), 0));
@@ -110,7 +109,7 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
     ContainerPlacer place;
     place = getPlacer(0, 0);
 
-    place(0, 0, mPlayerBox, 1, 6).setPadding(3);
+    place(0, 0, mBeingBox, 1, 6).setPadding(3);
     place(1, 0, mNewDelCharButton);
     place(1, 1, mNameLabel, 5);
     place(1, 2, mLevelLabel, 5);
@@ -199,7 +198,7 @@ void CharSelectDialog::updatePlayerInfo()
         mSelectButton->setEnabled(false);
     }
 
-    mPlayerBox->setPlayer(pi);
+    mBeingBox->setBeing(pi);
 }
 
 void CharSelectDialog::attemptCharDelete()
@@ -269,9 +268,9 @@ CharCreateDialog::CharCreateDialog(Window *parent, int slot, Gender gender):
     mHairStyleLabel = new Label(_("Hair Style:"));
     mCreateButton = new Button(_("Create"), "create", this);
     mCancelButton = new Button(_("Cancel"), "cancel", this);
-    mPlayerBox = new PlayerBox(mPlayer);
+    mBeingBox = new BeingBox(mPlayer);
 
-    mPlayerBox->setWidth(74);
+    mBeingBox->setWidth(74);
 
     mNameField->setActionEventId("create");
     mNameField->addActionListener(this);
@@ -283,7 +282,7 @@ CharCreateDialog::CharCreateDialog(Window *parent, int slot, Gender gender):
     place(1, 0, mNameField, 6);
     place(0, 1, mHairStyleLabel, 1);
     place(1, 1, mPrevHairStyleButton);
-    place(2, 1, mPlayerBox, 1, 8).setPadding(3);
+    place(2, 1, mBeingBox, 1, 8).setPadding(3);
     place(3, 1, mNextHairStyleButton);
     place(0, 2, mHairColorLabel, 1);
     place(1, 2, mPrevHairColorButton);

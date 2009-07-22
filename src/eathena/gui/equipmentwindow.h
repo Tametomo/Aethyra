@@ -28,6 +28,7 @@
 
 #include "../../bindings/guichan/widgets/window.h"
 
+class BeingBox;
 class Equipment;
 class EquipmentConfigListener;
 class Icon;
@@ -35,7 +36,6 @@ class Inventory;
 class Item;
 class ItemContainer;
 class ItemPopup;
-class PlayerBox;
 class PopupMenu;
 
 /**
@@ -121,7 +121,7 @@ class EquipmentWindow : public Window,
         static ItemPopup *mItemPopup;
         static PopupMenu *mPopupMenu;
 
-        PlayerBox *mPlayerBox;
+        BeingBox *mBeingBox;
 
         int mSelected;                          /**< Index of selected slot (the slot may be empty). */
 

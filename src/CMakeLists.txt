@@ -120,6 +120,8 @@ SET(SRCS
     bindings/guichan/sdl/sdlgraphics.h
     bindings/guichan/sdl/sdlinput.cpp
     bindings/guichan/sdl/sdlinput.h
+    bindings/guichan/widgets/beingbox.cpp
+    bindings/guichan/widgets/beingbox.h
     bindings/guichan/widgets/browserbox.cpp
     bindings/guichan/widgets/browserbox.h
     bindings/guichan/widgets/button.cpp
@@ -439,8 +441,6 @@ SET(SRCS
     eathena/widgets/itemcontainer.h
     eathena/widgets/itemshortcutcontainer.cpp
     eathena/widgets/itemshortcutcontainer.h
-    eathena/widgets/playerbox.cpp
-    eathena/widgets/playerbox.h
     eathena/widgets/shoplistbox.cpp
     eathena/widgets/shoplistbox.h
     main.cpp

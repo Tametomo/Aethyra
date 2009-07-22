@@ -31,10 +31,10 @@
 
 #include "../../core/utils/lockedarray.h"
 
+class BeingBox;
 class LocalPlayer;
 class Network;
 class Player;
-class PlayerBox;
 
 /**
  * Character selection dialog.
@@ -72,7 +72,7 @@ class CharSelectDialog : public Window, public gcn::ActionListener
         gcn::Label *mJobLevelLabel;
         gcn::Label *mMoneyLabel;
 
-        PlayerBox *mPlayerBox;
+        BeingBox *mBeingBox;
 
         Gender mGender;
         bool mCharSelected;
@@ -136,7 +136,7 @@ class CharCreateDialog : public Window, public gcn::ActionListener
         gcn::Button *mCancelButton;
 
         Player *mPlayer;
-        PlayerBox *mPlayerBox;
+        BeingBox *mBeingBox;
 
         int mSlot;
 };

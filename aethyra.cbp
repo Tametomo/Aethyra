@@ -171,6 +171,8 @@
 		<Unit filename="src\bindings\guichan\sdl\sdlgraphics.h" />
 		<Unit filename="src\bindings\guichan\sdl\sdlinput.cpp" />
 		<Unit filename="src\bindings\guichan\sdl\sdlinput.h" />
+		<Unit filename="src\bindings\guichan\widgets\beingbox.cpp" />
+		<Unit filename="src\bindings\guichan\widgets\beingbox.h" />
 		<Unit filename="src\bindings\guichan\widgets\browserbox.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\browserbox.h" />
 		<Unit filename="src\bindings\guichan\widgets\button.cpp" />
@@ -490,8 +492,6 @@
 		<Unit filename="src\eathena\widgets\itemcontainer.h" />
 		<Unit filename="src\eathena\widgets\itemshortcutcontainer.cpp" />
 		<Unit filename="src\eathena\widgets\itemshortcutcontainer.h" />
-		<Unit filename="src\eathena\widgets\playerbox.cpp" />
-		<Unit filename="src\eathena\widgets\playerbox.h" />
 		<Unit filename="src\eathena\widgets\shoplistbox.cpp" />
 		<Unit filename="src\eathena\widgets\shoplistbox.h" />
 		<Unit filename="src\main.cpp" />

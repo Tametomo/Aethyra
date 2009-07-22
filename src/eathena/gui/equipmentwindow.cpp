@@ -36,11 +36,11 @@
 #include "../structs/item.h"
 
 #include "../widgets/itemcontainer.h"
-#include "../widgets/playerbox.h"
 
 #include "../../bindings/guichan/graphics.h"
 #include "../../bindings/guichan/palette.h"
 
+#include "../../bindings/guichan/widgets/beingbox.h"
 #include "../../bindings/guichan/widgets/button.h"
 #include "../../bindings/guichan/widgets/icon.h"
 #include "../../bindings/guichan/widgets/scrollarea.h"
@@ -119,9 +119,9 @@ EquipmentWindow::EquipmentWindow():
     mInstances++;
 
     // Control that shows the Player
-    mPlayerBox = new PlayerBox();
-    mPlayerBox->setDimension(gcn::Rectangle(50, 80, 74, 123));
-    mPlayerBox->setPlayer(player_node);
+    mBeingBox = new BeingBox();
+    mBeingBox->setDimension(gcn::Rectangle(50, 80, 74, 123));
+    mBeingBox->setBeing(player_node);
 
     mEquipment = player_node->mEquipment.get();
     mInventory = player_node->getInventory();
@@ -150,7 +150,7 @@ EquipmentWindow::EquipmentWindow():
         add(mEquipIcon[i]);
     }
 
-    add(mPlayerBox);
+    add(mBeingBox);
     add(mInvenScroll);
     add(mEquipButton);
 
