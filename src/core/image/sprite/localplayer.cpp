@@ -25,6 +25,7 @@
 #include "flooritem.h"
 #include "localplayer.h"
 #include "monster.h"
+#include "npc.h"
 
 #include "../animation.h"
 #include "../imageset.h"
@@ -551,6 +552,9 @@ void LocalPlayer::attack(Being *target, const bool &keep)
     MessageOut outMsg(0x0089);
     outMsg.writeInt32(target->getId());
     outMsg.writeInt8(0);
+
+    if (target->getType() == Being::NPC)
+        NPC::mTalking = true;
 
     if (!keep)
         stopAttack();
