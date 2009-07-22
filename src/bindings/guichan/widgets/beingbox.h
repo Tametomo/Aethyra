@@ -23,7 +23,7 @@
 #ifndef BEINGBOX_H
 #define BEINGBOX_H
 
-#include <guichan/widgets/scrollarea.hpp>
+#include <guichan/widget.hpp>
 
 class Being;
 class BeingBoxConfigListener;
@@ -34,7 +34,7 @@ class ImageRect;
  *
  * \ingroup GUI
  */
-class BeingBox : public gcn::ScrollArea
+class BeingBox : public gcn::Widget
 {
     public:
         friend class BeingBoxConfigListener;
