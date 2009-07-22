@@ -46,6 +46,12 @@ aethyra.exe
 aethyra.depend
 aethyra.layout
 
+#files created by CMake
+cmake_install.cmake
+CMakeFiles/
+CMakeCache.txt
+install_manifest.txt
+
 # files copied in on Windows
 include/*
 lib/*
