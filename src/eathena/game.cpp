@@ -195,8 +195,8 @@ static void destroyGuiWindows()
     logger->setChatWindow(NULL);
 
     setupWindow->removeTab(setupPlayers);
-    // Deleting setupPlayers causes a segfault. TODO: Is this enough to stop
-    // leaks?
+
+    delete setupPlayers;
     setupPlayers = NULL;
 
     delete buyDialog;

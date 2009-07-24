@@ -99,12 +99,17 @@ void Setup::addTab(SetupTabContainer *tab)
 
 void Setup::removeTab(SetupTabContainer *tab)
 {
-    for (std::list<SetupTabContainer*>::iterator tab = mTabs.begin(),
-         tab_end = mTabs.end(); tab != tab_end; ++tab)
+    Tab* tabToDelete = mPanel->getTab(tab->getName());
+    mPanel->removeTab(tabToDelete);
+
+    for (std::list<SetupTabContainer*>::iterator i = mTabs.begin(),
+         i_end = mTabs.end(); i != i_end; ++i)
     {
-        mPanel->removeTab(*tab);
-        tab = mTabs.erase(tab);
-        return;
+        if (*i == tab)
+        {
+            i = mTabs.erase(i);
+            break;
+        }
     }
 }
 

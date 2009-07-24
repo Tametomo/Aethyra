@@ -151,6 +151,7 @@ void TabbedArea::removeTab(Tab *tab)
         {
             mTabsToDelete.erase(iter2);
             delete tab;
+            tab = NULL;
             break;
         }
     }
@@ -167,18 +168,6 @@ void TabbedArea::removeTab(Tab *tab)
 
     adjustSize();
     adjustTabPositions();
-}
-
-void TabbedArea::removeTab(gcn::Widget *widget)
-{
-    for (TabContainer::iterator iter = mTabs.begin(); iter != mTabs.end(); iter++)
-    {
-        if (iter->second == widget)
-        {
-            removeTab(iter->first);
-            return;
-        }
-    }
 }
 
 void TabbedArea::logic()
