@@ -87,24 +87,22 @@ ProgressBar::ProgressBar(float progress, int width, int height,
 
         ResourceManager *resman = ResourceManager::getInstance();
         Image *dBorders = resman->getImage("graphics/gui/vscroll_grey.png");
-        Image *dInsides = resman->getImage("graphics/gui/buttonhi.png");
+        int gridx[4] = {0, 4, 7, 11};
+        int gridy[4] = {0, 4, 15, 19};
+        int i = 0;
 
-        mBorder.grid[0] = dBorders->getSubImage(0, 0, 4, 4);
-        mBorder.grid[1] = dBorders->getSubImage(4, 0, 3, 4);
-        mBorder.grid[2] = dBorders->getSubImage(7, 0, 4, 4);
-        mBorder.grid[3] = dBorders->getSubImage(0, 4, 4, 10);
-        mBorder.grid[4] = dInsides->getSubImage(2, 2, 22, 22);
-        mBorder.grid[5] = dBorders->getSubImage(7, 4, 4, 10);
-        mBorder.grid[6] = dBorders->getSubImage(0, 15, 4, 4);
-        mBorder.grid[7] = dBorders->getSubImage(4, 15, 3, 4);
-        mBorder.grid[8] = dBorders->getSubImage(7, 15, 4, 4);
-
-        for (int i = 0; i < 9; i++)
+        for (int y = 0; y < 3; y++)
         {
-            mBorder.grid[i]->setAlpha(mAlpha);
+            for (int x = 0; x < 3; x++)
+            {
+                mBorder.grid[i] = dBorders->getSubImage(gridx[x], gridy[y],
+                                                        gridx[x + 1] - gridx[x],
+                                                        gridy[y + 1] - gridy[y]);
+                mBorder.grid[i]->setAlpha(config.getValue("guialpha", 0.8));
+                i++;
+            }
         }
 
-        dInsides->decRef();
         dBorders->decRef();
 
         mConfigListener = new ProgressBarConfigListener(this);
