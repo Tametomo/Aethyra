@@ -40,10 +40,6 @@ class Game
 
         void logic() const;
 
-        bool isInGame() const { return mInGame; }
-
-        void setInGame(bool inGame) { mInGame = inGame; }
-
     private:
         Network *mNetwork;
 

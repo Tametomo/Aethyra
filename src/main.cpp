@@ -785,13 +785,13 @@ int main(int argc, char *argv[])
         {
             switch (oldstate)
             {
+                // These states other than default don't cause a network
+                // disconnect
                 case UPDATE_STATE:
                     loadUpdates();
-
                     desktop->reload();
                     break;
 
-                    // Those states don't cause a network disconnect
                 case LOADDATA_STATE:
                     break;
 
@@ -917,11 +917,16 @@ int main(int argc, char *argv[])
                     sound.fadeOutMusic(1000);
 
                     delete desktop;
+                    desktop = NULL;
 
                     logger->log("State: GAME");
                     game = new Game(network);
                     game->logic();
                     delete game;
+                    game = NULL;
+
+                    network->disconnect();
+                    network->clearHandlers();
                     break;
 
                 case UPDATE_STATE:

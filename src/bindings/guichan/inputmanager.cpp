@@ -86,8 +86,6 @@ namespace
             {
                 sound.fadeOutMusic(1000);
 
-                mInGame = false;
-
                 state = EXIT_STATE;
             }
 
@@ -143,10 +141,7 @@ void InputManager::handleInput()
 
         // Quit event
         else if (event.type == SDL_QUIT)
-        {
-            mInGame = false;
             state = EXIT_STATE;
-        }
 
         // Push input to GUI when not used
         if (!used)
@@ -161,7 +156,7 @@ void InputManager::handleJoystickInput(const SDL_Event &event)
     else
         return;
 
-    if (!mInGame)
+    if (state != GAME_STATE)
         return;
 
     if (event.type == SDL_JOYBUTTONUP && !joystick->buttonPressed(3))
@@ -291,7 +286,7 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                 break;
         }
 
-        if (mInGame)
+        if (state == GAME_STATE)
         {
             switch (tKey)
             {
@@ -535,7 +530,7 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
     // fixed and then moved to one of them (in case we ever use other input
     // libraries. If everything is already grouped together, it'd be easier to
     // adapt to a new library, instead of having to rely on special cases)
-    if (mInGame && player_node->mAction != Being::DEAD && !used)
+    if (state == GAME_STATE && player_node->mAction != Being::DEAD && !used)
     {
         unsigned char direction = 0;
 

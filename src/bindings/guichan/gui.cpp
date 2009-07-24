@@ -42,6 +42,8 @@
 #include "widgets/window.h"
 #include "widgets/windowcontainer.h"
 
+#include "../../main.h"
+
 #include "../../core/configlistener.h"
 #include "../../core/configuration.h"
 #include "../../core/log.h"
@@ -254,7 +256,7 @@ void Gui::resize(const int &width, const int &height)
         viewport->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
                                               graphics->getHeight()));
 
-    if (!mInGame && desktop)
+    if (state == GAME_STATE && desktop)
         desktop->resize();
 
     // Reposition all the open sub-windows and popups.

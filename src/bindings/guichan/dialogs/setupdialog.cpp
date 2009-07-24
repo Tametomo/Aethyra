@@ -138,7 +138,7 @@ void Setup::action(const gcn::ActionEvent &event)
 void Setup::logic()
 {
     Window::logic();
-    mResetWindows->setEnabled(mInGame);
+    mResetWindows->setEnabled(state == GAME_STATE);
 }
 
 void Setup::requestFocus()

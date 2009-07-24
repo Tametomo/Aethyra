@@ -77,6 +77,8 @@
 #include "widgets/emoteshortcutcontainer.h"
 #include "widgets/itemshortcutcontainer.h"
 
+#include "../main.h"
+
 #include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/inputmanager.h"
 
@@ -143,7 +145,7 @@ namespace
         void action(const gcn::ActionEvent &event)
         {
             if (event.getId() == "ok")
-                game->setInGame(false);
+                state = EXIT_STATE;
 
             disconnectedDialog = NULL;
         }
@@ -251,7 +253,6 @@ Game::Game(Network *network):
     createGuiWindows();
 
     mapLoader = new MapLoader();
-    mInGame = true;
 
     beingManager = new BeingManager();
     floorItemManager = new FloorItemManager();
@@ -307,13 +308,25 @@ Game::~Game()
     mapLoader = NULL;
     delete viewport;
     viewport = NULL;
+
+    // Clear the network handlers
+    mNetwork->unregisterHandler(mBeingHandler.get());
+    mNetwork->unregisterHandler(mBuySellHandler.get());
+    mNetwork->unregisterHandler(mChatHandler.get());
+    mNetwork->unregisterHandler(mEquipmentHandler.get());
+    mNetwork->unregisterHandler(mInventoryHandler.get());
+    mNetwork->unregisterHandler(mItemHandler.get());
+    mNetwork->unregisterHandler(mNpcHandler.get());
+    mNetwork->unregisterHandler(mPlayerHandler.get());
+    mNetwork->unregisterHandler(mSkillHandler.get());
+    mNetwork->unregisterHandler(mTradeHandler.get());
 }
 
 void Game::logic() const
 {
     int gameTime = tick_time;
 
-    while (mInGame)
+    while (state == GAME_STATE)
     {
         if (mapLoader->getCurrentMap())
             mapLoader->getCurrentMap()->update(get_elapsed_time(gameTime));
@@ -340,10 +353,13 @@ void Game::logic() const
         {
             if (!disconnectedDialog)
             {
+                if (!mNetwork->getError().empty()) 
+                    errorMessage = mNetwork->getError();
+                else
+                    errorMessage = _("Got disconnected from server!");
+
                 disconnectedDialog = new OkDialog(_("Network Error"),
-                                                  _("The connection to the "
-                                                    "server was lost, the "
-                                                    "program will now quit"));
+                                                    errorMessage);
                 disconnectedDialog->addActionListener(&exitListener);
                 disconnectedDialog->requestMoveToTop();
             }

@@ -293,7 +293,7 @@ void Setup_Video::apply()
             }
         }
 
-        if (!mInGame && desktop)
+        if (state != GAME_STATE && desktop)
             desktop->resize();
 
         config.setValue("fontSize", val);
