@@ -769,8 +769,13 @@ int main(int argc, char *argv[])
         network->flush();
         network->dispatchMessages();
 
-        if (network->getState() == Network::NET_ERROR)
+        const int &netState = network->getState();
+
+        if (netState == Network::NET_ERROR || netState == Network::FATAL)
         {
+            if (netState == Network::FATAL)
+                errorState = EXIT_STATE;
+
             state = ERROR_STATE;
 
             if (!network->getError().empty()) 

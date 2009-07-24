@@ -81,13 +81,16 @@ class Network
             CONNECTED,
             CONNECTING,
             DATA,
-            NET_ERROR
+            NET_ERROR,
+            FATAL
         };
 
     private:
         static Network *instance();
 
         void setError(const std::string &error);
+
+        void fatal(const std::string &error);
 
         Uint16 readWord(int pos);
 

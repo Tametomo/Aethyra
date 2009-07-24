@@ -187,7 +187,7 @@ void Network::unregisterHandler(MessageHandler *handler)
     for (const Uint16 *i = handler->handledMessages; *i; i++)
         mMessageHandlers.erase(*i);
 
-    handler->setNetwork(0);
+    handler->setNetwork(NULL);
 }
 
 void Network::clearHandlers()
@@ -195,7 +195,7 @@ void Network::clearHandlers()
     MessageHandlerIterator i;
 
     for (i = mMessageHandlers.begin(); i != mMessageHandlers.end(); i++)
-        i->second->setNetwork(0);
+        i->second->setNetwork(NULL);
 
     mMessageHandlers.clear();
 }
@@ -208,8 +208,12 @@ void Network::dispatchMessages()
 
         MessageHandlerIterator iter = mMessageHandlers.find(msg.getId());
 
-        if (msg.getLength() == 0)
-            logger->error("Zero length packet received. Exiting.");
+        if (msg.getLength() == 0 || msg.getLength() == 1)
+        {
+            disconnect();
+            fatal("Packet length too short. The client will now exit.");
+            return;
+        }
 
         if (iter != mMessageHandlers.end())
             iter->second->handleMessage(&msg);
@@ -433,6 +437,13 @@ void Network::setError(const std::string &error)
     logger->log("Network error: %s", error.c_str());
     mError = error;
     mState = NET_ERROR;
+}
+
+void Network::fatal(const std::string &error)
+{
+    logger->log("Fatal network error: %s", error.c_str());
+    mError = error;
+    mState = FATAL;
 }
 
 Uint16 Network::readWord(int pos)
