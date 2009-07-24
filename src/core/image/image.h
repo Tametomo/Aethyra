@@ -43,6 +43,7 @@
 class Dye;
 class SDL_Rect;
 class SDL_Surface;
+class SubImage;
 
 /**
  * Defines a class for loading and storing images.
@@ -84,7 +85,7 @@ class Image : public Resource
          *         otherwise.
          */
         static Resource *load(void *buffer, unsigned bufferSize,
-                              Dye const &dye);
+                              const Dye &dye);
 
         /**
          * Loads an image from an SDL surface.
@@ -112,8 +113,8 @@ class Image : public Resource
          * @return <code>NULL</code> if creation failed and a valid
          *         object otherwise.
          */
-        virtual Image *getSubImage(const int &x, const int &y, const int &width,
-                                   const int &height);
+        virtual SubImage *getSubImage(const int &x, const int &y,
+                                      const int &width, const int &height);
 
         /**
          * Sets the alpha value of this image.
@@ -144,7 +145,7 @@ class Image : public Resource
          * improve overall framerates. Don't use unless you are using it to
          * reduce the number of overall layers that need to be drawn through SDL.
          */
-        Image* merge(Image* image, const int& x, const int& y);
+        Image* merge(Image* image, const int &x, const int &y);
 
     protected:
         /**
@@ -202,7 +203,7 @@ class SubImage : public Image
         /**
          * Destructor.
          */
-        ~SubImage();
+        virtual ~SubImage();
 
         /**
          * Creates a new image with the desired clipping rectangle.
@@ -210,8 +211,8 @@ class SubImage : public Image
          * @return <code>NULL</code> if creation failed and a valid
          *         image otherwise.
          */
-        Image *getSubImage(const int &x, const int &y, const int &width,
-                           const int &height);
+        SubImage *getSubImage(const int &x, const int &y, const int &width,
+                              const int &height);
 
         /**
          * Sets the alpha value of this image.

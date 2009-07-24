@@ -45,7 +45,7 @@ ImageSet::~ImageSet()
     delete_all(mImages);
 }
 
-Image* ImageSet::get(const size_type &i) const
+SubImage* ImageSet::get(const size_type &i) const
 {
     if (i >= mImages.size())
     {

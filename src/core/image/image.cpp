@@ -38,7 +38,7 @@ int Image::mTextureSize = 0;
 Image::Image(SDL_Surface *image, Uint8* alphas):
     mStoredAlpha(alphas),
 #ifdef USE_OPENGL
-    mGLImage(0),
+    mGLImage(NULL),
 #endif
     mImage(image),
     mAlpha(1.0f)
@@ -89,7 +89,7 @@ Resource *Image::load(void *buffer, unsigned bufferSize)
     return image;
 }
 
-Resource *Image::load(void *buffer, unsigned bufferSize, Dye const &dye)
+Resource *Image::load(void *buffer, unsigned bufferSize, const Dye &dye)
 {
     SDL_RWops *rw = SDL_RWFromMem(buffer, bufferSize);
     SDL_Surface *tmpImage = IMG_Load_RW(rw, 1);
@@ -286,13 +286,13 @@ void Image::unload()
     if (mGLImage)
     {
         glDeleteTextures(1, &mGLImage);
-        mGLImage = 0;
+        mGLImage = NULL;
     }
 #endif
 }
 
-Image *Image::getSubImage(const int &x, const int &y, const int &width,
-                          const int &height)
+SubImage *Image::getSubImage(const int &x, const int &y, const int &width,
+                             const int &height)
 {
     // Create a new clipped sub-image
 #ifdef USE_OPENGL
@@ -331,7 +331,7 @@ void Image::setAlpha(float alpha)
     }
 }
 
-Image* Image::merge(Image* image, const int& x, const int& y)
+Image* Image::merge(Image* image, const int &x, const int &y)
 {
     SDL_Surface* surface = new SDL_Surface(*(image->mImage));
 
@@ -470,15 +470,15 @@ SubImage::SubImage(Image *parent, const GLuint &image, const int &x, const int &
 SubImage::~SubImage()
 {
     // Avoid destruction of the image
-    mImage = 0;
+    mImage = NULL;
 #ifdef USE_OPENGL
-    mGLImage = 0;
+    mGLImage = NULL;
 #endif
     mParent->decRef();
 }
 
-Image *SubImage::getSubImage(const int &x, const int &y, const int &w,
-                             const int &h)
+SubImage *SubImage::getSubImage(const int &x, const int &y, const int &w,
+                                const int &h)
 {
     return mParent->getSubImage(mBounds.x + x, mBounds.y + y, w, h);
 }

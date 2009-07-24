@@ -25,9 +25,9 @@
 
 #include <vector>
 
-#include "../resource.h"
+#include "image.h"
 
-class Image;
+#include "../resource.h"
 
 /**
  * Stores a set of subimages originating from a single image.
@@ -56,12 +56,12 @@ class ImageSet : public Resource
         int getHeight() const { return mHeight; };
 
         typedef std::vector<Image*>::size_type size_type;
-        Image* get(const size_type &i) const;
+        SubImage* get(const size_type &i) const;
 
         size_type size() const { return mImages.size(); }
 
     private:
-        std::vector<Image*> mImages;
+        std::vector<SubImage*> mImages;
 
         int mHeight; /**< Height of the images in the image set. */
         int mWidth;  /**< Width of the images in the image set. */
