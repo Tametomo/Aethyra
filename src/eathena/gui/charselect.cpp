@@ -309,7 +309,8 @@ CharCreateDialog::~CharCreateDialog()
 
 void CharCreateDialog::action(const gcn::ActionEvent &event)
 {
-    int numberOfColors = ColorDB::size();
+    const int &numberOfColors = ColorDB::size();
+    const int &numberOfHair = mPlayer->getNumOfHairstyles();
     if (event.getId() == "create")
     {
         if (getName().length() >= 4)
@@ -330,16 +331,14 @@ void CharCreateDialog::action(const gcn::ActionEvent &event)
         mPlayer->setHairStyle(mPlayer->getHairStyle(),
                              (mPlayer->getHairColor() + 1) % numberOfColors);
     else if (event.getId() == "prevcolor")
-        mPlayer->setHairStyle(mPlayer->getHairStyle(),
-                             (mPlayer->getHairColor() + numberOfColors - 1) %
-                              numberOfColors);
+        mPlayer->setHairStyle(mPlayer->getHairStyle(), (mPlayer->getHairColor() +
+                              numberOfColors - 1) % numberOfColors);
     else if (event.getId() == "nextstyle")
-        mPlayer->setHairStyle(mPlayer->getHairStyle() + 1,
+        mPlayer->setHairStyle((mPlayer->getHairStyle() + 1) % numberOfHair,
                               mPlayer->getHairColor());
     else if (event.getId() == "prevstyle")
-        mPlayer->setHairStyle(mPlayer->getHairStyle() +
-                              mPlayer->getNumOfHairstyles() - 1,
-                              mPlayer->getHairColor());
+        mPlayer->setHairStyle((mPlayer->getHairStyle() + numberOfHair - 1) %
+                               numberOfHair, mPlayer->getHairColor());
 }
 
 std::string CharCreateDialog::getName()
