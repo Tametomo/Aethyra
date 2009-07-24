@@ -22,8 +22,11 @@
 
 #include <cassert>
 
+#include "log.h"
 #include "resource.h"
 #include "resourcemanager.h"
+
+#include "utils/stringutils.h"
 
 Resource::~Resource()
 {
@@ -37,7 +40,8 @@ void Resource::incRef()
 void Resource::decRef()
 {
     // Reference may not already have reached zero
-    assert(mRefCount != 0);
+    if (mRefCount == 0)
+        logger->error(strprintf("mRefCount may not be zero for %s", mIdPath.c_str()));
 
     mRefCount--;
 
