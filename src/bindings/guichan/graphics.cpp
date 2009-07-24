@@ -42,7 +42,7 @@ bool Graphics::setFullscreen(bool fs)
     if (mFullscreen == fs)
         return true;
 
-    return setVideoMode(mScreen->w, mScreen->h, mScreen->format->BitsPerPixel,
+    return setVideoMode(mTarget->w, mTarget->h, mTarget->format->BitsPerPixel,
                         fs, mHWAccel);
 }
 
@@ -90,12 +90,12 @@ void Graphics::drawImageRect(int x, int y, int w, int h,
 
 int Graphics::getWidth()
 {
-    return mScreen->w;
+    return mTarget->w;
 }
 
 int Graphics::getHeight()
 {
-    return mScreen->h;
+    return mTarget->h;
 }
 
 void saveScreenshot()

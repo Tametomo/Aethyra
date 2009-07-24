@@ -58,7 +58,7 @@ struct ImageRect
         RIGHT = 5,
         LOWER_LEFT = 6,
         LOWER_CENTER = 7,
-        LOWER_RIGHT = 8,
+        LOWER_RIGHT = 8
     };
 
     Image *grid[9];
@@ -159,7 +159,6 @@ class Graphics : public gcn::SDLGraphics
 
     protected:
         bool mFullscreen, mHWAccel;
-        SDL_Surface *mScreen;
 };
 
 void saveScreenshot();

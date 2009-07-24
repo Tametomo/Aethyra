@@ -31,7 +31,7 @@
 
 SDLGraphics::SDLGraphics()
 {
-    mScreen = NULL;
+    mTarget = NULL;
 }
 
 SDLGraphics::~SDLGraphics()
@@ -54,9 +54,9 @@ bool SDLGraphics::resizeVideoMode(int w, int h)
     else
         displayFlags |= SDL_SWSURFACE;
 
-    mScreen = SDL_SetVideoMode(w, h, 0, displayFlags);
+    mTarget = SDL_SetVideoMode(w, h, 0, displayFlags);
 
-    if (!mScreen)
+    if (!mTarget)
         return false;
 
     /**
@@ -65,7 +65,7 @@ bool SDLGraphics::resizeVideoMode(int w, int h)
      */
     mClipStack.top().width=w;
     mClipStack.top().height=h;
-    //setTarget(mScreen);
+    //setTarget(mTarget);
 
     return true;
 }
@@ -90,9 +90,9 @@ bool SDLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
     else
         displayFlags |= SDL_SWSURFACE;
 
-    mScreen = SDL_SetVideoMode(w, h, bpp, displayFlags);
+    mTarget = SDL_SetVideoMode(w, h, bpp, displayFlags);
 
-    if (!mScreen)
+    if (!mTarget)
         return false;
 
     char videoDriverName[64];
@@ -124,15 +124,15 @@ bool SDLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
             ((vi->blit_fill) ? "yes" : "no"));
     logger->log("Available video memory: %d", vi->video_mem);
 
-    setTarget(mScreen);
+    setTarget(mTarget);
 
     return true;
 }
 
-void SDLGraphics::drawImage(gcn::Image const *image, int srcX, int srcY,
+void SDLGraphics::drawImage(const gcn::Image *image, int srcX, int srcY,
                             int dstX, int dstY, int width, int height)
 {
-    ProxyImage const *srcImage = dynamic_cast< ProxyImage const * >(image);
+    const ProxyImage *srcImage = dynamic_cast<const ProxyImage* >(image);
     assert(srcImage);
     drawImage(srcImage->getImage(), srcX, srcY, dstX, dstY, width, height, true);
 }
@@ -146,7 +146,8 @@ bool SDLGraphics::drawImage(Image *image, int srcX, int srcY, int dstX, int dstY
                            int width, int height, bool)
 {
     // Check that preconditions for blitting are met.
-    if (!mScreen || !image || !image->mImage) return false;
+    if (!mTarget || !image || !image->mImage)
+        return false;
 
     dstX += mClipStack.top().xOffset;
     dstY += mClipStack.top().yOffset;
@@ -161,13 +162,13 @@ bool SDLGraphics::drawImage(Image *image, int srcX, int srcY, int dstX, int dstY
     srcRect.w = width;
     srcRect.h = height;
 
-    return !(SDL_BlitSurface(image->mImage, &srcRect, mScreen, &dstRect) < 0);
+    return !(SDL_BlitSurface(image->mImage, &srcRect, mTarget, &dstRect) < 0);
 }
 
 void SDLGraphics::drawImagePattern(Image *image, int x, int y, int w, int h)
 {
     // Check that preconditions for blitting are met.
-    if (!mScreen || !image || !image->mImage) return;
+    if (!mTarget || !image || !image->mImage) return;
 
     const int iw = image->getWidth();
     const int ih = image->getHeight();
@@ -192,14 +193,14 @@ void SDLGraphics::drawImagePattern(Image *image, int x, int y, int w, int h)
             srcRect.x = srcX; srcRect.y = srcY;
             srcRect.w = dw;   srcRect.h = dh;
 
-            SDL_BlitSurface(image->mImage, &srcRect, mScreen, &dstRect);
+            SDL_BlitSurface(image->mImage, &srcRect, mTarget, &dstRect);
         }
     }
 }
 
 void SDLGraphics::updateScreen()
 {
-    SDL_Flip(mScreen);
+    SDL_Flip(mTarget);
 }
 
 SDL_Surface* SDLGraphics::getScreenshot()
@@ -215,11 +216,11 @@ SDL_Surface* SDLGraphics::getScreenshot()
 #endif
     int amask = 0x00000000;
 
-    SDL_Surface *screenshot = SDL_CreateRGBSurface(SDL_SWSURFACE, mScreen->w,
-                                                   mScreen->h, 24, rmask, gmask,
+    SDL_Surface *screenshot = SDL_CreateRGBSurface(SDL_SWSURFACE, mTarget->w,
+                                                   mTarget->h, 24, rmask, gmask,
                                                    bmask, amask);
 
-    SDL_BlitSurface(mScreen, NULL, screenshot, NULL);
+    SDL_BlitSurface(mTarget, NULL, screenshot, NULL);
 
     return screenshot;
 }

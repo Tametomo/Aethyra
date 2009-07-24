@@ -47,7 +47,7 @@ OpenGLGraphics::OpenGLGraphics():
     mColorAlpha(false),
     mSync(false)
 {
-    mScreen = NULL;
+    mTarget = NULL;
 }
 
 OpenGLGraphics::~OpenGLGraphics()
@@ -71,7 +71,7 @@ bool OpenGLGraphics::resizeVideoMode(int w,int h)
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    if (!(mScreen = SDL_SetVideoMode(w, h, 0, displayFlags)))
+    if (!(mTarget = SDL_SetVideoMode(w, h, 0, displayFlags)))
         return false;
 
     glViewport(0, 0, w, h);
@@ -119,7 +119,7 @@ bool OpenGLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    if (!(mScreen = SDL_SetVideoMode(w, h, bpp, displayFlags)))
+    if (!(mTarget = SDL_SetVideoMode(w, h, bpp, displayFlags)))
         return false;
 
 #ifdef __APPLE__
@@ -291,7 +291,7 @@ void OpenGLGraphics::_beginDraw()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glOrtho(0.0, (double) mScreen->w, (double) mScreen->h, 0.0, -1.0, 1.0);
+    glOrtho(0.0, (double) mTarget->w, (double) mTarget->h, 0.0, -1.0, 1.0);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -300,7 +300,7 @@ void OpenGLGraphics::_beginDraw()
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    pushClipArea(gcn::Rectangle(0, 0, mScreen->w, mScreen->h));
+    pushClipArea(gcn::Rectangle(0, 0, mTarget->w, mTarget->h));
 }
 
 void OpenGLGraphics::_endDraw()
@@ -309,8 +309,8 @@ void OpenGLGraphics::_endDraw()
 
 SDL_Surface* OpenGLGraphics::getScreenshot()
 {
-    int h = mScreen->h;
-    int w = mScreen->w;
+    int h = mTarget->h;
+    int w = mTarget->w;
 
     SDL_Surface *screenshot = SDL_CreateRGBSurface(
             SDL_SWSURFACE,
@@ -365,7 +365,7 @@ bool OpenGLGraphics::pushClipArea(gcn::Rectangle area)
     glPushMatrix();
     glTranslatef(transX, transY, 0);
     glScissor(mClipStack.top().x,
-            mScreen->h - mClipStack.top().y - mClipStack.top().height,
+            mTarget->h - mClipStack.top().y - mClipStack.top().height,
             mClipStack.top().width,
             mClipStack.top().height);
 
@@ -380,7 +380,7 @@ void OpenGLGraphics::popClipArea()
         return;
 
     glPopMatrix();
-    glScissor(mClipStack.top().x, mScreen->h - mClipStack.top().y - 
+    glScissor(mClipStack.top().x, mTarget->h - mClipStack.top().y - 
               mClipStack.top().height, mClipStack.top().width,
               mClipStack.top().height);
 }
