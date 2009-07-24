@@ -78,7 +78,8 @@ int inflateMemory(unsigned char *in, const unsigned int &inLength,
         ret = inflate(&strm, Z_NO_FLUSH);
         assert(ret != Z_STREAM_ERROR);
 
-        switch (ret) {
+        switch (ret)
+        {
             case Z_NEED_DICT:
                 ret = Z_DATA_ERROR;
             case Z_DATA_ERROR:
@@ -427,9 +428,9 @@ void MapReader::readLayer(const xmlNodePtr &node, Map *map)
         else
         {
              // Read plain XML map file
-             for_each_xml_child_node(childNode2, childNode)
-             {
-                 if (!xmlStrEqual(childNode2->name, BAD_CAST "tile"))
+            for_each_xml_child_node(childNode2, childNode)
+            {
+                if (!xmlStrEqual(childNode2->name, BAD_CAST "tile"))
                     continue;
 
                 const int gid = XML::getProperty(childNode2, "gid", -1);
@@ -445,9 +446,7 @@ void MapReader::readLayer(const xmlNodePtr &node, Map *map)
             }
         }
  
-        if (y < h)
-            std::cerr << "TOO SMALL!\n";
-        if (x)
+        if (y < h || x)
             std::cerr << "TOO SMALL!\n";
  
         // There can be only one data element
@@ -511,7 +510,9 @@ Tileset *MapReader::readTileset(xmlNodePtr node, const std::string &path,
                 std::map<std::string, int> tileProperties;
                 for_each_xml_child_node(propertyNode, tileNode)
                 {
-                    if (!xmlStrEqual(propertyNode->name, BAD_CAST "property")) continue;
+                    if (!xmlStrEqual(propertyNode->name, BAD_CAST "property"))
+                        continue;
+
                     std::string name = XML::getProperty(propertyNode, "name", "");
                     int value = XML::getProperty(propertyNode, "value", 0);
                     tileProperties[name] = value;

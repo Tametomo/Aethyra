@@ -101,14 +101,14 @@ CheckBox::CheckBox(const std::string& caption, bool selected):
         config.addListener("guialpha", mConfigListener);
     }
 
+    instances++;
+
     mProtFocusListener = new ProtectedFocusListener();
 
     addFocusListener(mProtFocusListener);
 
     mProtFocusListener->blockKey(SDLK_SPACE);
     mProtFocusListener->blockKey(SDLK_RETURN);
-
-    instances++;
 }
 
 CheckBox::~CheckBox()

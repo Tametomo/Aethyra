@@ -110,16 +110,11 @@ Desktop::~Desktop()
     delete versionLabel;
     versionLabel = NULL;
 #endif
-    delete progressBar;
-    delete progressLabel;
-    delete setup;
-    progressBar = NULL;
-    progressLabel = NULL;
     currentDialog = NULL;
-    setup = NULL;
 
     if (login_wallpaper)
         login_wallpaper->decRef();
+
     login_wallpaper = NULL;
 }
 

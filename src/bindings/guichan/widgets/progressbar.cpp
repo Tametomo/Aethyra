@@ -36,6 +36,8 @@
 
 #include "../../../core/image/image.h"
 
+#include "../../../core/utils/dtor.h"
+
 ImageRect ProgressBar::mBorder;
 
 int ProgressBar::mInstances = 0;
@@ -123,8 +125,7 @@ ProgressBar::~ProgressBar()
         config.removeListener("guialpha", mConfigListener);
         delete mConfigListener;
 
-        for (int i = 0; i < 9; i++)
-            delete mBorder.grid[i];
+        for_each(mBorder.grid, mBorder.grid + 9, dtor<Image*>());
     }
 }
 

@@ -167,6 +167,7 @@ void ItemDB::unload()
 
     delete_all(mItemInfos);
     mItemInfos.clear();
+    mNamedItemInfos.clear();
     mLoaded = false;
 }
 

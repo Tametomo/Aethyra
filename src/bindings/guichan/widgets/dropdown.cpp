@@ -75,9 +75,7 @@ class DropDownConfigListener : public ConfigListener
 };
 
 DropDown::DropDown(gcn::ListModel *listModel):
-    gcn::DropDown::DropDown(listModel,
-                            new ScrollArea,
-                            new ListBox(listModel))
+    gcn::DropDown::DropDown(listModel, new ScrollArea, new ListBox(listModel))
 {
     setFrameSize(2);
 
