@@ -79,7 +79,6 @@
 #include "core/utils/stringutils.h"
 
 #include "eathena/game.h"
-#include "eathena/playerrelations.h"
 
 #include "eathena/gui/charselect.h"
 #include "eathena/gui/debugwindow.h"
@@ -432,9 +431,6 @@ static void init_engine(const Options &options)
 
     // Initialize keyboard
     keyboard.init();
-
-    // Initialise player relations
-    player_relations.init();
 }
 
 /** Clear the engine */

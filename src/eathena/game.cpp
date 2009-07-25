@@ -26,6 +26,7 @@
 #include "flooritemmanager.h"
 #include "game.h"
 #include "maploader.h"
+#include "playerrelations.h"
 
 #include "db/colordb.h"
 #include "db/effectdb.h"
@@ -159,6 +160,9 @@ void createGuiWindows()
 {
     emoteShortcut = new EmoteShortcut();
     itemShortcut = new ItemShortcut();
+
+    // Initialise player relations
+    player_relations.init();
 
     // Add game specific tabs to the setup window
     setupPlayers = new Setup_Players();
