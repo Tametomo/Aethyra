@@ -26,8 +26,9 @@
 
 #include <guichan/gui.hpp>
 
-#include <SDL_types.h>
+#include <SDL/SDL_framerate.h>
 
+#include <SDL_types.h>
 #include <string>
 
 #include "guichanfwd.h"
@@ -38,6 +39,8 @@ class GuiConfigListener;
 class ImageSet;
 class SDLInput;
 class TrueTypeFont;
+
+extern FPSmanager fpsm;
 
 extern volatile int fps;
 extern volatile int tick_time;

@@ -33,6 +33,7 @@
 					<Add library="guichan_sdl" />
 					<Add library="SDLmain" />
 					<Add library="SDL.dll" />
+					<Add library="SDL_gfx" />
 					<Add library="SDL_image" />
 					<Add library="SDL_mixer" />
 					<Add library="SDL_net" />
@@ -66,14 +67,14 @@
 					<Add option="`sdl-config --libs`" />
 					<Add library="guichan" />
 					<Add library="guichan_sdl" />
-					<Add library="guichan_opengl" />
 					<Add library="GL" />
 					<Add library="physfs" />
 					<Add library="curl" />
 					<Add library="xml2" />
+					<Add library="SDL_gfx" />
+					<Add library="SDL_image" />
 					<Add library="SDL_mixer" />
 					<Add library="SDL_net" />
-					<Add library="SDL_image" />
 					<Add library="SDL_ttf" />
 					<Add library="png" />
 				</Linker>

@@ -17,8 +17,9 @@ a source release. To get Aethyra to compile, you need a compiler
 (GCC) and some libraries. The required libraries are:
 
 * SDL               http://www.libsdl.org/
-* SDL_mixer         http://www.libsdl.org/projects/SDL_mixer/
+* SDL_gfx           http://www.ferzkopp.net/%7Easchiffler/Software/SDL_gfx-2.0/index.html
 * SDL_image         http://www.libsdl.org/projects/SDL_image/
+* SDL_mixer         http://www.libsdl.org/projects/SDL_mixer/
 * SDL_net           http://www.libsdl.org/projects/SDL_net/
 * SDL_ttf           http://www.libsdl.org/projects/SDL_ttf/
 * Guichan 0.8.x     http://guichan.sourceforge.net/

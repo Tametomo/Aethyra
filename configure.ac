@@ -69,6 +69,10 @@ AC_MSG_ERROR([ *** Unable to find SDL_mixer library (http://www.libsdl.org/proje
 AC_CHECK_LIB(SDL_net, SDLNet_Init, ,
 AC_MSG_ERROR([ *** Unable to find SDL_net library]))
 
+AC_CHECK_LIB(SDL_gfx, rotozoomSurfaceXY, ,
+AC_MSG_ERROR([ *** Unable to find SDL_gfx library (http://www.ferzkopp.net/%7Easchiffler/Software/SDL_gfx-2.0/index.html)]))
+AC_CHECK_HEADERS(SDL_rotozoom.h, ,)
+
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([arpa/inet.h fcntl.h malloc.h netdb.h netinet/in.h stdlib.h string.h sys/socket.h unistd.h])

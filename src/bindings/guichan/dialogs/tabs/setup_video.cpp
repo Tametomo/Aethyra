@@ -83,7 +83,7 @@ Setup_Video::Setup_Video():
     mAlphaSlider(new Slider(0.2, 1.0)),
     mMouseAlphaSlider(new Slider(0.2, 1.0)),
     mFpsCheckBox(new CheckBox(_("FPS Limit:"))),
-    mFpsSlider(new Slider(10, 120)),
+    mFpsSlider(new Slider(5, 200)),
     mFpsField(new TextField),
     mFontSize((int) config.getValue("fontSize", 11)),
     mFontSizeSlider(new Slider(8, 14)),

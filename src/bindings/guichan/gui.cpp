@@ -67,6 +67,8 @@ gcn::Font *mBoldFont = 0;
 volatile int tick_time;
 volatile int fps = 0, frame = 0;
 
+FPSmanager fpsm;
+
 const int MAX_TIME = 10000;
 
 class GuiConfigListener : public ConfigListener
@@ -115,7 +117,6 @@ Uint32 nextSecond(Uint32 interval, void *param)
 {
     fps = frame;
     frame = 0;
-
     return interval;
 }
 
@@ -139,6 +140,9 @@ Gui::Gui(Graphics *graphics):
     mCursorType(CURSOR_POINTER)
 {
     logger->log("Initializing GUI...");
+
+    SDL_initFramerate(&fpsm);
+
     // Set graphics
     setGraphics(graphics);
 
@@ -155,6 +159,7 @@ Gui::Gui(Graphics *graphics):
     mFocusHandler = new FocusHandler;
 
     // Initialize timers
+    fps = 0;
     tick_time = 0;
     SDL_AddTimer(10, nextTick, NULL);                     // Logic counter
     SDL_AddTimer(1000, nextSecond, NULL);                 // Seconds counter
@@ -291,60 +296,36 @@ void Gui::logic()
     // Update the screen when application is active, delay otherwise.
     if (SDL_GetAppState() & SDL_APPACTIVE)
     {
-        // Draw a frame if either frames are not limited or enough time has
-        // passed since the last frame.
-        if (!mMinFrameTime || get_elapsed_time(mDrawTime / 10) > mMinFrameTime)
+        draw();
+        graphics->updateScreen();
+
+        // Fade out mouse cursor after extended inactivity
+        if (get_elapsed_time(mMouseInactivityTimer) < 15000)
         {
-            frame++;
-            draw();
-            graphics->updateScreen();
-            mDrawTime += mMinFrameTime;
-
-            // Fade out mouse cursor after extended inactivity
-            if (get_elapsed_time(mMouseInactivityTimer) < 15000)
-            {
-                const float alpha = std::min(mMouseCursorAlpha + 0.05f, 1.0f);
-                mMouseCursorAlpha = std::min(mMaxMouseCursorAlpha, alpha);
-            }
-            else if (mMouseInactivityTimer > MAX_TIME)
-            {
-                mMouseInactivityTimer -= MAX_TIME;
-            }
-            else
-            {
-                mMouseCursorAlpha = std::max(0.0f, mMouseCursorAlpha - 0.005f);
-            }
-
-            // Make sure to wrap mDrawTime, since tick_time will wrap.
-            if (mDrawTime > MAX_TIME * 10)
-                mDrawTime -= MAX_TIME * 10;
+            const float alpha = std::min(mMouseCursorAlpha + 0.05f, 1.0f);
+            mMouseCursorAlpha = std::min(mMaxMouseCursorAlpha, alpha);
+        }
+        else if (mMouseInactivityTimer > MAX_TIME)
+        {
+            mMouseInactivityTimer -= MAX_TIME;
         }
         else
         {
-            SDL_Delay(10);
+            mMouseCursorAlpha = std::max(0.0f, mMouseCursorAlpha - 0.005f);
         }
     }
-    else
-    {
-        SDL_Delay(10);
-        mDrawTime = tick_time * 10;
-    }
+
+    frame++;
+    SDL_framerateDelay(&fpsm);
 
     guiPalette->advanceGradient();
 }
 
 void Gui::framerateChanged()
 {
-    int fpsLimit = (int) config.getValue("fpslimit", 0);
+    const int fpsLimit = (int) config.getValue("fpslimit", 0);
 
-    // Calculate new minimum frame time. If one isn't set, use 60 FPS.
-    // (1000 / 60 is 16.66) Since the client can go well above the refresh
-    // rates for monitors now in OpenGL mode, this cutoff is done to help
-    // conserve on CPU time.
-    mMinFrameTime = fpsLimit ? 1000 / fpsLimit : 16;
-
-    // Reset draw time to current time
-    mDrawTime = tick_time * 10;
+    SDL_setFramerate(&fpsm, fpsLimit > 0 ? fpsLimit : 60);
 }
 
 void Gui::draw()
