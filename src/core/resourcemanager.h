@@ -148,6 +148,13 @@ class ResourceManager
 
         /**
          * Convenience wrapper around ResourceManager::get for loading
+         * resized images.
+         */
+        Image *getResizedImage(const std::string &idPath, const int &width,
+                               const int &height);
+
+        /**
+         * Convenience wrapper around ResourceManager::get for loading
          * songs.
          */
         Music *getMusic(const std::string &idPath);

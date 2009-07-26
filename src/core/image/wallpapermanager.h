@@ -40,7 +40,7 @@ class Wallpaper
         static void loadWallpapers();
 
         /**
-         * Returns the larget wallpaper for the given resolution, or the
+         * Returns the largest wallpaper for the given resolution, or the
          * default wallpaper if none are found.
          *
          * @param width the desired width
@@ -48,6 +48,22 @@ class Wallpaper
          * @return the file to use, or empty if no wallpapers are useable
          */
         static std::string getWallpaper(const int &width, const int &height);
+
+        /**
+         * Returns the width of the image for given file path.
+         *
+         * Provided for convenience, and will not be accurate for all files if
+         * the sizes don't follow the wallpaper naming rules.
+         */
+        static int getWidth(const std::string &file);
+
+        /**
+         * Returns the height of the image for given file path.
+         *
+         * Provided for convenience, and will not be accurate for all files if
+         * the sizes don't follow the wallpaper naming rules.
+         */
+        static int getHeight(const std::string &file);
 };
 
 #endif // WALLPAPER_H

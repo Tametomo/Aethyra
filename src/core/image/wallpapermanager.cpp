@@ -30,8 +30,9 @@
 #include "../utils/stringutils.h"
 
 #define WALLPAPER_FOLDER "graphics/images/"
-
 #define WALLPAPER_BASE "login_wallpaper"
+#define WALLPAPER_DEFAULT_WIDTH 800
+#define WALLPAPER_DEFAULT_HEIGHT 600
 
 struct wallpaper {
     Uint16 width;
@@ -105,4 +106,20 @@ std::string Wallpaper::getWallpaper(const int &width, const int &height)
         return std::string(WALLPAPER_FOLDER WALLPAPER_BASE ".png");
 
     return std::string("");
+}
+
+int Wallpaper::getWidth(const std::string &file)
+{
+    int width = 0, height = 0;
+
+    sscanf(file.c_str(), WALLPAPER_FOLDER WALLPAPER_BASE "_%dx%d.png", &width, &height);
+    return width > 0 ? width : WALLPAPER_DEFAULT_WIDTH;
+}
+
+int Wallpaper::getHeight(const std::string &file)
+{
+    int width = 0, height = 0;
+
+    sscanf(file.c_str(), WALLPAPER_FOLDER WALLPAPER_BASE "_%dx%d.png", &width, &height);
+    return height > 0 ? height : WALLPAPER_DEFAULT_HEIGHT;
 }

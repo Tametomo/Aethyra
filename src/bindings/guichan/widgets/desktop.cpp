@@ -28,10 +28,14 @@
 #include "progressbar.h"
 #include "window.h"
 
-#include "../../../main.h"
+#include "../graphics.h"
 
 #include "../dialogs/okdialog.h"
 #include "../dialogs/setupdialog.h"
+
+#include "../sdl/sdlgraphics.h"
+
+#include "../../../main.h"
 
 #include "../../../core/configuration.h"
 #include "../../../core/log.h"
@@ -94,7 +98,19 @@ Desktop::Desktop():
 
     wallpaperName = Wallpaper::getWallpaper(getWidth(), getHeight());
 
-    login_wallpaper = ResourceManager::getInstance()->getImage(wallpaperName);
+    ResourceManager *manager = ResourceManager::getInstance();
+    SDLGraphics *g = dynamic_cast<SDLGraphics*>(graphics);
+
+    if ((getWidth() != Wallpaper::getWidth(wallpaperName) ||
+         getHeight() != Wallpaper::getHeight(wallpaperName)) && g)
+    {
+        login_wallpaper = manager->getResizedImage(wallpaperName, getWidth(),
+                                                   getHeight());
+    }
+    else
+    {
+        login_wallpaper = manager->getImage(wallpaperName);
+    }
 
     if (!login_wallpaper)
         logger->log("Couldn't load %s as wallpaper", wallpaperName.c_str());
@@ -134,13 +150,28 @@ void Desktop::resize()
         setWidth(newScreenWidth);
         setHeight(newScreenHeight);
 
+        ResourceManager *manager = ResourceManager::getInstance();
         std::string tempWallpaper = Wallpaper::getWallpaper(getWidth(),
                                                             getHeight());
 
-        if (tempWallpaper.compare(wallpaperName) != 0)
+        SDLGraphics *g = dynamic_cast<SDLGraphics*>(graphics);
+
+        if (tempWallpaper.compare(wallpaperName) != 0 || g)
         {
+            Image *temp = NULL;
+
+            if ((getWidth() != Wallpaper::getWidth(tempWallpaper) ||
+                 getHeight() != Wallpaper::getHeight(tempWallpaper)) && g)
+            {
+                temp = manager->getResizedImage(tempWallpaper, getWidth(),
+                                                getHeight());
+            }
+            else if (tempWallpaper.compare(wallpaperName) != 0)
+            {
+                temp = manager->getImage(tempWallpaper);
+            }
+
             wallpaperName = tempWallpaper;
-            Image *temp = ResourceManager::getInstance()->getImage(tempWallpaper);
 
             if (temp)
             {

@@ -88,6 +88,20 @@ class Image : public Resource
                               const Dye &dye);
 
         /**
+         * Loads a resized image from another image. Essentially just a wrapper
+         * to the resize function so that the ResourceManager can resize images.
+         *
+         * @param image      The image to resize.
+         * @param w          The width of the rescaled image.
+         * @param h          The height of the rescaled image.
+         *
+         * @return <code>NULL</code> if an error occurred, a valid pointer
+         *         otherwise.
+         */
+        static Resource *resize(Image *image, const int &w, const int &h);
+
+
+        /**
          * Loads an image from an SDL surface.
          */
         static Image *load(SDL_Surface *);
@@ -146,6 +160,13 @@ class Image : public Resource
          * reduce the number of overall layers that need to be drawn through SDL.
          */
         Image* merge(Image* image, const int &x, const int &y);
+
+        /**
+         * Resizes an image to a given width or height.
+         *
+         * TODO: Implement OpenGL routines to do this as well.
+         */
+        Image* resize(const int &width, const int &height);
 
     protected:
         /**

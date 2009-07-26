@@ -261,7 +261,7 @@ void Gui::resize(const int &width, const int &height)
         viewport->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
                                               graphics->getHeight()));
 
-    if (state == GAME_STATE && desktop)
+    if (state != GAME_STATE && desktop)
         desktop->resize();
 
     // Reposition all the open sub-windows and popups.

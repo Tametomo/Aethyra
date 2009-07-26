@@ -22,6 +22,8 @@
 
 #include <SDL_image.h>
 
+#include <SDL/SDL_rotozoom.h>
+
 #include <guichan/color.hpp>
 
 #include "dye.h"
@@ -132,6 +134,11 @@ Resource *Image::load(void *buffer, unsigned bufferSize, const Dye &dye)
     Image *image = load(surf);
     SDL_FreeSurface(surf);
     return image;
+}
+
+Resource *Image::resize(Image *image, const int &width, const int &height)
+{
+    return image->resize(width, height);
 }
 
 Image *Image::load(SDL_Surface *tmpImage)
@@ -289,6 +296,45 @@ void Image::unload()
         mGLImage = NULL;
     }
 #endif
+}
+
+Image* Image::resize(const int &width, const int &height)
+{
+    // Don't return anything for bad height or width values
+    if (width <= 0 || height <= 0)
+        return NULL;
+
+    // Don't scale at all if the image would get the same dimensions
+    // Also don't scale for OpenGL (for now)
+    if ((width == getWidth() && height == getHeight()) || mGLImage)
+        return this;
+
+    SDL_Surface* scaledSurface = NULL;
+    Uint8* imageAlphas = NULL;
+    
+    if (mImage)
+    {
+        const double scaleX = (double) width / (double) getWidth();
+        const double scaleY = (double) height / (double) getHeight();
+
+        scaledSurface = zoomSurface(mImage, scaleX, scaleY, 1);
+
+        imageAlphas = new Uint8[scaledSurface->w * scaledSurface->h];
+        if (scaledSurface->format->BitsPerPixel == 32)
+        {
+            // Recalculate the alpha layers
+            for (int i = 0; i < scaledSurface->w * scaledSurface->h; ++i)
+            {
+                Uint8 r, g, b, a;
+                SDL_GetRGBA(((Uint32*) scaledSurface->pixels)[i],
+                              scaledSurface->format, &r, &g, &b, &a);
+
+                imageAlphas[i] = a;
+            }
+        }
+    }
+
+    return new Image(scaledSurface, imageAlphas);
 }
 
 SubImage *Image::getSubImage(const int &x, const int &y, const int &width,

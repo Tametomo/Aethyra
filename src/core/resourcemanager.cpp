@@ -342,6 +342,32 @@ Image *ResourceManager::getImage(const std::string &idPath)
     return static_cast<Image*>(get(idPath, DyedImageLoader::load, &l));
 }
 
+struct ResizedImageLoader
+{
+    ResourceManager *manager;
+    std::string path;
+    int width;
+    int height;
+    static Resource *load(void *v)
+    {
+        ResizedImageLoader *l = static_cast< ResizedImageLoader * >(v);
+        Image *img = l->manager->getImage(l->path);
+        if (!img)
+            return NULL;
+
+        return Image::resize(img, l->width, l->height);
+    }
+};
+
+Image *ResourceManager::getResizedImage(const std::string &imagePath,
+                                        const int &w, const int &h)
+{
+    ResizedImageLoader l = { this, imagePath, w, h };
+    std::stringstream ss;
+    ss << imagePath << "{" << w << "x" << h << "}";
+    return static_cast<Image*>(get(ss.str(), ResizedImageLoader::load, &l));
+}
+
 struct ImageSetLoader
 {
     ResourceManager *manager;
