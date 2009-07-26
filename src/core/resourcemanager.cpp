@@ -355,7 +355,9 @@ struct ResizedImageLoader
         if (!img)
             return NULL;
 
-        return Image::resize(img, l->width, l->height);
+        Resource *newImage = Image::resize(img, l->width, l->height);
+        img->decRef();
+        return newImage;
     }
 };
 
