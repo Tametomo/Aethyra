@@ -23,7 +23,8 @@
 #ifndef _GRAPHICS_H
 #define _GRAPHICS_H
 
-#include <guichan/sdl/sdlgraphics.hpp>
+#include <guichan/color.hpp>
+#include <guichan/graphics.hpp>
 
 class Image;
 
@@ -67,7 +68,7 @@ struct ImageRect
 /**
  * A central point of control for Graphics.
  */
-class Graphics : public gcn::SDLGraphics
+class Graphics : public gcn::Graphics
 {
     public:
         /**
@@ -79,6 +80,22 @@ class Graphics : public gcn::SDLGraphics
          * Destructor.
          */
         virtual ~Graphics() {}
+
+        /**
+         * Sets the target SDL_Surface to draw to. The target can be any
+         * SDL_Surface. This funtion also pushes a clip areas corresponding to
+         * the dimension of the target.
+         *
+         * @param target the target to draw to.
+         */
+        virtual void setTarget(SDL_Surface* target) { mTarget = target; }
+
+        /**
+         * Gets the target SDL_Surface.
+         *
+         * @return the target SDL_Surface.
+         */
+        virtual SDL_Surface* getTarget() const { return mTarget; }
 
         /**
          * Try to create a window with the given settings.
@@ -93,7 +110,7 @@ class Graphics : public gcn::SDLGraphics
         /**
          * Try to change the size of the window
          */
-        virtual bool resizeVideoMode(int w,int h)=0;
+        virtual bool resizeVideoMode(int w,int h) = 0;
 
         /**
          * Blits an image onto the screen.
@@ -152,6 +169,10 @@ class Graphics : public gcn::SDLGraphics
          */
         int getHeight();
 
+        const gcn::Color& getColor() const { return mColor; }
+
+        virtual void setColor(const gcn::Color& color) = 0;
+
         /**
          * Takes a screenshot and returns it as SDL surface.
          */
@@ -159,6 +180,9 @@ class Graphics : public gcn::SDLGraphics
 
     protected:
         bool mFullscreen, mHWAccel;
+        SDL_Surface *mTarget;
+        gcn::Color mColor;
+        bool mAlpha;
 };
 
 void saveScreenshot();

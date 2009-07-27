@@ -46,6 +46,20 @@ class SDLGraphics : public Graphics
          */
         virtual ~SDLGraphics();
 
+        virtual bool pushClipArea(gcn::Rectangle area);
+
+        virtual void popClipArea();
+
+        virtual void drawPoint(int x, int y);
+
+        virtual void drawLine(int x1, int y1, int x2, int y2);
+
+        virtual void drawRectangle(const gcn::Rectangle& rectangle);
+
+        virtual void fillRectangle(const gcn::Rectangle& rectangle);
+
+        virtual void setColor(const gcn::Color& color);
+
         /**
          * Try to create a window with the given settings.
          */
@@ -67,7 +81,7 @@ class SDLGraphics : public Graphics
         /**
          * Overrides with our own drawing method.
          */
-        void drawImage(gcn::Image const *image, int srcX, int srcY,
+        void drawImage(const gcn::Image *image, int srcX, int srcY,
                        int dstX, int dstY, int width, int height);
 
         /**
@@ -107,6 +121,7 @@ class SDLGraphics : public Graphics
          * Takes a screenshot and returns it as SDL surface.
          */
         virtual SDL_Surface* getScreenshot();
+
 };
 
 #endif

@@ -22,6 +22,8 @@
 
 #include <iostream>
 #include <sstream>
+#include <stdarg.h>
+#include <stdlib.h>
 
 #include <sys/time.h>
 

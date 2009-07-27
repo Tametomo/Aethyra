@@ -57,10 +57,7 @@ void ToolTip::draw(gcn::Graphics *graphics)
     g->fillRectangle(gcn::Rectangle(1, 1, getWidth() - 6, getHeight() - 6));
 
     g->setColor(gcn::Color(186, 186, 69, alpha));
-    g->drawLine(0, 0, getWidth() - 5, 0);
-    g->drawLine(0, 1, 0, getHeight() - 5);
-    g->drawLine(getWidth() - 5, 1, getWidth() - 5, getHeight() - 5);
-    g->drawLine(0, getHeight() - 5, getWidth() - 6, getHeight() - 5);
+    g->drawRectangle(gcn::Rectangle(0, 0, getWidth() - 5, getHeight() - 5));
 
     drawChildren(graphics);
 }

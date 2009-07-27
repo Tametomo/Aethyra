@@ -40,7 +40,7 @@ int Image::mTextureSize = 0;
 Image::Image(SDL_Surface *image, Uint8* alphas):
     mStoredAlpha(alphas),
 #ifdef USE_OPENGL
-    mGLImage(NULL),
+    mGLImage(0),
 #endif
     mImage(image),
     mAlpha(1.0f)
@@ -293,7 +293,7 @@ void Image::unload()
     if (mGLImage)
     {
         glDeleteTextures(1, &mGLImage);
-        mGLImage = NULL;
+        mGLImage = 0;
     }
 #endif
 }
@@ -518,7 +518,7 @@ SubImage::~SubImage()
     // Avoid destruction of the image
     mImage = NULL;
 #ifdef USE_OPENGL
-    mGLImage = NULL;
+    mGLImage = 0;
 #endif
     mParent->decRef();
 }

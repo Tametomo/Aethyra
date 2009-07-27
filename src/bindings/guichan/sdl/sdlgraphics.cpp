@@ -22,6 +22,10 @@
 
 #include <cassert>
 
+#include <guichan/exception.hpp>
+
+#include <SDL/SDL_gfxPrimitives.h>
+
 #include "sdlgraphics.h"
 
 #include "../../../core/log.h"
@@ -37,6 +41,118 @@ SDLGraphics::SDLGraphics()
 SDLGraphics::~SDLGraphics()
 {
     _endDraw();
+}
+
+bool SDLGraphics::pushClipArea(gcn::Rectangle area)
+{
+    SDL_Rect rect;
+    bool result = Graphics::pushClipArea(area);
+
+    const gcn::ClipRectangle& carea = mClipStack.top();
+    rect.x = carea.x;
+    rect.y = carea.y;
+    rect.w = carea.width;
+    rect.h = carea.height;
+
+    SDL_SetClipRect(mTarget, &rect);
+
+    return result;
+}
+
+void SDLGraphics::popClipArea()
+{
+    Graphics::popClipArea();
+
+    if (mClipStack.empty())
+        return;
+
+    const gcn::ClipRectangle& carea = mClipStack.top();
+    SDL_Rect rect;
+    rect.x = carea.x;
+    rect.y = carea.y;
+    rect.w = carea.width;
+    rect.h = carea.height;
+
+    SDL_SetClipRect(mTarget, &rect);
+}
+
+void SDLGraphics::drawPoint(int x, int y)
+{
+    if (mClipStack.empty())
+        throw GCN_EXCEPTION("Clip stack is empty, perhaps you called a draw "
+                            "funtion outside of _beginDraw() and _endDraw()?");
+
+    const gcn::ClipRectangle& top = mClipStack.top();
+        
+    x += top.xOffset;
+    y += top.yOffset;
+
+    pixelRGBA(mTarget, x, y, mColor.r, mColor.g, mColor.b, mColor.a);
+}
+
+void SDLGraphics::drawLine(int x1, int y1, int x2, int y2)
+{
+    if (mClipStack.empty())
+        throw GCN_EXCEPTION("Clip stack is empty, perhaps you called a draw "
+                            "funtion outside of _beginDraw() and _endDraw()?");
+
+    const gcn::ClipRectangle& top = mClipStack.top();
+
+    x1 += top.xOffset;
+    y1 += top.yOffset;
+    x2 += top.xOffset;
+    y2 += top.yOffset;
+
+    if (x1 == x2)
+        vlineRGBA(mTarget, x1, y1, y2, mColor.r, mColor.g, mColor.b, mColor.a);
+    else if (y1 == y2)
+        hlineRGBA(mTarget, x1, x2, y2, mColor.r, mColor.g, mColor.b, mColor.a);
+    else
+        lineRGBA(mTarget, x1, y1, x2, y2, mColor.r, mColor.g, mColor.b, mColor.a);
+}
+
+void SDLGraphics::drawRectangle(const gcn::Rectangle& rectangle)
+{
+    if (mClipStack.empty())
+        throw GCN_EXCEPTION("Clip stack is empty, perhaps you called a draw "
+                            "funtion outside of _beginDraw() and _endDraw()?");
+
+    const gcn::ClipRectangle& top = mClipStack.top();
+        
+    gcn::Rectangle area = rectangle;
+    area.x += top.xOffset;
+    area.y += top.yOffset;
+
+    if(!area.isIntersecting(top))
+        return;
+
+    rectangleRGBA(mTarget, area.x, area.y, area.x + area.width,
+                  area.y + area.height, mColor.r, mColor.g, mColor.b, mColor.a);
+}
+
+void SDLGraphics::fillRectangle(const gcn::Rectangle& rectangle)
+{
+    if (mClipStack.empty())
+        throw GCN_EXCEPTION("Clip stack is empty, perhaps you called a draw "
+                            "funtion outside of _beginDraw() and _endDraw()?");
+
+    const gcn::ClipRectangle& top = mClipStack.top();
+        
+    gcn::Rectangle area = rectangle;
+    area.x += top.xOffset;
+    area.y += top.yOffset;
+
+    if(!area.isIntersecting(top))
+        return;
+
+    boxRGBA(mTarget, area.x, area.y, area.x + area.width,
+            area.y + area.height, mColor.r, mColor.g, mColor.b, mColor.a);
+}
+
+void SDLGraphics::setColor(const gcn::Color& color)
+{
+    mColor = color;
+    mAlpha = color.a != 255;
 }
 
 bool SDLGraphics::resizeVideoMode(int w, int h)

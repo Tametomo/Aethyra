@@ -23,16 +23,16 @@
 #include <cassert>
 #include <SDL.h>
 
+#ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
+#endif
+
 #include "openglgraphics.h"
 
 #include "../../../core/log.h"
 
 #include "../../../core/image/image.h"
 #include "../../../core/image/imageloader.h"
-
-#ifdef __APPLE__
-#include <OpenGL/OpenGL.h>
-#endif
 
 #ifdef USE_OPENGL
 

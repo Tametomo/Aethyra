@@ -34,9 +34,6 @@ AC_MSG_ERROR([ *** Unable to find pthread library]))
 AC_CHECK_LIB([guichan], [gcnGuichanVersion], ,
 AC_MSG_ERROR([ *** Unable to find Guichan library (guichan.sf.net)]))
 
-#AC_CHECK_LIB([guichan_sdl], [gcnSDL], ,
-#AC_MSG_ERROR([ *** Unable to find Guichan SDL library (guichan.sf.net)]))
-
 AC_CHECK_LIB([z], [inflate], ,
 AC_MSG_ERROR([ *** Unable to find zlib (http://www.gzip.org/zlib/)]))
 

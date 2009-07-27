@@ -24,6 +24,7 @@
 #include <fstream>
 #include <physfs.h>
 #include <sstream>
+#include <SDL.h>
 
 #include "graphics.h"
 

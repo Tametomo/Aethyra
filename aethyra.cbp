@@ -30,7 +30,6 @@
 					<Add option="--enable-auto-import" />
 					<Add option="-Wl,-u,_WinMain@16" />
 					<Add library="guichan" />
-					<Add library="guichan_sdl" />
 					<Add library="SDLmain" />
 					<Add library="SDL.dll" />
 					<Add library="SDL_gfx" />
@@ -66,7 +65,6 @@
 				<Linker>
 					<Add option="`sdl-config --libs`" />
 					<Add library="guichan" />
-					<Add library="guichan_sdl" />
 					<Add library="GL" />
 					<Add library="physfs" />
 					<Add library="curl" />

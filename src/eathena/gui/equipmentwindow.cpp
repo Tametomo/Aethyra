@@ -23,6 +23,8 @@
 #define BOX_WIDTH 36
 #define BOX_HEIGHT 36
 
+#include <SDL.h>
+
 #include <guichan/font.hpp>
 
 #include "equipmentwindow.h"
