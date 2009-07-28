@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <sstream>
+
 #include <guichan/focushandler.hpp>
 #include <guichan/font.hpp>
 
@@ -37,6 +39,7 @@
 
 #include "../../../core/image/image.h"
 
+#include "../../../core/utils/clipboard.h"
 #include "../../../core/utils/dtor.h"
 
 #undef DELETE //Win32 compatibility hack
@@ -127,6 +130,8 @@ TextField::TextField(const std::string& text,
     mProtFocusListener->blockKey(SDLK_RETURN);
     mProtFocusListener->blockKey(SDLK_HOME);
     mProtFocusListener->blockKey(SDLK_END);
+    mProtFocusListener->blockKey(SDLK_LCTRL);
+    mProtFocusListener->blockKey(SDLK_RCTRL);
 
     instances++;
 }
@@ -296,6 +301,23 @@ void TextField::keyPressed(gcn::KeyEvent &keyEvent)
 
         case Key::TAB:
             return;
+    }
+
+
+    if (keyEvent.isControlPressed())
+    {
+        if (val == 22 ) // 'v' in UTF-8
+        {
+            std::string text;
+            getClipboardContents(text);
+
+            std::ostringstream ss;
+            ss << mText.substr(0, mCaretPosition) << text << " ";
+            ss << mText.substr(mCaretPosition);
+
+            setText(ss.str());
+            setCaretPosition(mCaretPosition + text.length());
+        }
     }
 
     keyEvent.consume();

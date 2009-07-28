@@ -21,6 +21,12 @@ IF (WITH_OPENGL)
     SET(FLAGS "${FLAGS} -DUSE_OPENGL")
 ENDIF (WITH_OPENGL)
 
+IF (USE_X11)
+    FIND_PACKAGE(X11 REQUIRED)
+    INCLUDE_DIRECTORIES(${X11_INCLUDE_DIR})
+    SET(FLAGS "${FLAGS} -DUSE_X11")
+ENDIF (USE_X11)
+
 INCLUDE_DIRECTORIES(
     ${CURRENT_SOURCE_DIR}
     ${SDL_INCLUDE_DIR}
@@ -271,6 +277,8 @@ SET(SRCS
     core/sound/soundeffect.h
     core/utils/base64.cpp
     core/utils/base64.h
+    core/utils/clipboard.cpp
+    core/utils/clipboard.h
     core/utils/dtor.h
     core/utils/fastsqrt.h
     core/utils/gettext.h

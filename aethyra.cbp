@@ -323,6 +323,8 @@
 		<Unit filename="src\core\sound\soundeffect.h" />
 		<Unit filename="src\core\utils\base64.cpp" />
 		<Unit filename="src\core\utils\base64.h" />
+		<Unit filename="src\core\utils\clipboard.cpp" />
+		<Unit filename="src\core\utils\clipboard.h" />
 		<Unit filename="src\core\utils\dtor.h" />
 		<Unit filename="src\core\utils\fastsqrt.h" />
 		<Unit filename="src\core\utils\gettext.h" />

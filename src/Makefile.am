@@ -222,6 +222,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      core/sound/soundeffect.h \
 	      core/utils/base64.cpp \
 	      core/utils/base64.h \
+	      core/utils/clipboard.cpp \
+	      core/utils/clipboard.h \
 	      core/utils/dtor.h \
 	      core/utils/fastsqrt.h \
 	      core/utils/gettext.h \

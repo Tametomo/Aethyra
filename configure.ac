@@ -91,6 +91,24 @@ else
     AC_DEFINE(USE_OPENGL, 1, [Defines if aethyra should use an OpenGL display])
 fi
 
+# Check for X11
+if test "x$OSX" != "xyes"; then
+  AC_CHECK_HEADER(X11/Xlib.h, check_x11=yes, check_x11=no)
+  if test "x$check_x11" = "xno"; then
+    AC_CHECK_HEADER(X11R6/Xlib.h,
+                    [ check_x11=yes
+                      LDFLAGS="-L/usr/X11R6/include $CFLAGS"],
+                    check_x11=no)
+  fi
+  if test "x$check_x11" = "xyes"; then
+    AC_CHECK_LIB(X11, XOpenDisplay, use_x11=yes, use_x11=no
+                 [ LIBS="$LIBS -lX11" ], )
+    if test "x$use_x11" = "xyes"; then
+      AC_DEFINE(USE_X11, 1, [Define to use X11 clipboard])
+    fi
+  fi
+fi
+
 # Search for sdl-config
 AC_PATH_PROG(LIBSDL_CONFIG, sdl-config)
 
