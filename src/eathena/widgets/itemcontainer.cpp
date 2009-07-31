@@ -113,8 +113,6 @@ ItemContainer::ItemContainer(Inventory *inventory,
 
     mProtFocusListener = new ProtectedFocusListener();
 
-    addFocusListener(mProtFocusListener);
-
     mProtFocusListener->blockKey(SDLK_LEFT);
     mProtFocusListener->blockKey(SDLK_RIGHT);
     mProtFocusListener->blockKey(SDLK_UP);
@@ -126,6 +124,7 @@ ItemContainer::ItemContainer(Inventory *inventory,
 
     mMaxItems = mInventory->getLastUsedSlot(); // Count from 0, usage from 2
 
+    addFocusListener(mProtFocusListener);
     addFocusListener(this);
     addKeyListener(this);
     addMouseListener(this);
@@ -428,21 +427,28 @@ void ItemContainer::keyPressed(gcn::KeyEvent &event)
         case Key::LEFT:
             if (itemX != 0)
                 itemX--;
-                selectNewItem = true;
+
+            selectNewItem = true;
+            event.consume();
             break;
         case Key::RIGHT:
             if (itemX < (columns - 1))
                 itemX++;
-                selectNewItem = true;
+
+            selectNewItem = true;
+            event.consume();
             break;
         case Key::UP:
             if (itemY != 0)
                 itemY--;
-                selectNewItem = true;
+
+            selectNewItem = true;
+            event.consume();
             break;
         case Key::DOWN:
-                itemY++;
-                selectNewItem = true;
+            itemY++;
+            selectNewItem = true;
+            event.consume();
             break;
         case Key::ENTER:
         case Key::SPACE:
@@ -455,12 +461,14 @@ void ItemContainer::keyPressed(gcn::KeyEvent &event)
             }
             else
                 distributeActionEvent();
+
+            event.consume();
             break;
     }
 
     if (selectNewItem)
     {
-        Item* selection = getItemInVisibleSlot(itemX + columns*itemY);
+        Item* selection = getItemInVisibleSlot(itemX + columns * itemY);
 
         if (selection)
             setSelectedItemIndex(selection->getInvIndex());
