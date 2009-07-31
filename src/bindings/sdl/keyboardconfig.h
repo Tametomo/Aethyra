@@ -67,7 +67,7 @@ class KeyboardConfig
         /**
          * Determines if any key assignments are the same as each other.
          */
-        bool hasConflicts();
+        const bool hasConflicts();
 
         /**
          * Calls a function back so the key re-assignment(s) can be seen.
@@ -77,7 +77,7 @@ class KeyboardConfig
         /**
          * Sets whether to lock printable keys from input or not.
          */
-        void setPrintableKeyLock(bool lock) { mPrintableKeyLock = lock; }
+        void setPrintableKeyLock(const bool lock) { mPrintableKeyLock = lock; }
 
         /**
          * Locks a key from being used outside of GUIChan key calls.
@@ -92,48 +92,48 @@ class KeyboardConfig
         /**
          * Whether input is currently being locked on a key.
          */
-        bool isKeyLocked(const int index);
+        const bool isKeyLocked(const int keyValue);
 
         /**
          * Obtain the value stored in memory.
          */
-        int getKeyValue(int index) const { return mKey[index].value; }
+        const int getKeyValue(const int index) const { return mKey[index].value; }
 
         /**
          * Get the index of the new key to be assigned.
          */
-        int getNewKeyIndex() const { return mNewKeyIndex; }
+        const int getNewKeyIndex() const { return mNewKeyIndex; }
 
         /**
          * Get the enable flag, which will stop the user from doing actions.
          */
-        bool isEnabled() const { return mEnabled; }
+        const bool isEnabled() const { return mEnabled; }
 
         /**
          * Get the key caption, providing more meaning to the user.
          */
-        const std::string &getKeyCaption(int index) const
+        const std::string &getKeyCaption(const int index) const
         { return mKey[index].caption; }
 
         /**
          * Get the key function index by providing the keys value.
          */
-        int getKeyIndex(int keyValue) const;
+        const int getKeyIndex(const int keyValue) const;
 
         /**
          * Set the enable flag, which will stop the user from doing actions.
          */
-        void setEnabled(bool flag) { mEnabled = flag; }
+        void setEnabled(const bool flag) { mEnabled = flag; }
 
         /**
          * Set the index of the new key to be assigned.
          */
-        void setNewKeyIndex(int value) { mNewKeyIndex = value; }
+        void setNewKeyIndex(const int value) { mNewKeyIndex = value; }
 
         /**
          * Set the value of the new key.
          */
-        void setNewKey(int value) { mKey[mNewKeyIndex].value = value; }
+        void setNewKey(const int value) { mKey[mNewKeyIndex].value = value; }
 
         /**
          * Set a reference to the key setup window.
@@ -143,7 +143,7 @@ class KeyboardConfig
         /**
          * Checks if the key is active, by providing the key function index.
          */
-        bool isKeyActive(int index);
+        const bool isKeyActive(const int index);
 
         /**
          * Takes a snapshot of all the active keys.

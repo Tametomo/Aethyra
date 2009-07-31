@@ -138,7 +138,7 @@ void KeyboardConfig::makeDefault()
         mKey[i].value = mKey[i].defaultValue;
 }
 
-bool KeyboardConfig::hasConflicts()
+const bool KeyboardConfig::hasConflicts()
 {
     int i, j;
     /**
@@ -184,15 +184,15 @@ void KeyboardConfig::unlockKey(const int keyValue)
     }
 }
 
-bool KeyboardConfig::isKeyLocked(const int index)
+const bool KeyboardConfig::isKeyLocked(const int keyValue)
 {
     bool locked = false;
 
     if (mPrintableKeyLock)
     {
-        if ((mKey[index].value & 0xFF80) == 0)
+        if ((keyValue & 0xFF80) == 0)
         {
-            char key = mKey[index].value & 0x7F;
+            char key = keyValue & 0x7F;
 
             if (isalpha(key) || isdigit(key) || ispunct(key) || key == ' ')
                 locked = true;
@@ -212,7 +212,7 @@ bool KeyboardConfig::isKeyLocked(const int index)
         for (std::list<int>::iterator it = mLockedKeys.begin();
              it != mLockedKeys.end(); it++)
         {
-            if (*it == mKey[index].value)
+            if (*it == keyValue)
             {
                 locked = true;
                 break;
@@ -220,10 +220,10 @@ bool KeyboardConfig::isKeyLocked(const int index)
         }
     }
 
-    return mEnabled && locked;
+    return locked;
 }
 
-int KeyboardConfig::getKeyIndex(int keyValue) const
+const int KeyboardConfig::getKeyIndex(const int keyValue) const
 {
     for (int i = 0; i < KEY_TOTAL; i++)
     {
@@ -233,7 +233,7 @@ int KeyboardConfig::getKeyIndex(int keyValue) const
     return KEY_NO_VALUE;
 }
 
-bool KeyboardConfig::isKeyActive(int index)
+const bool KeyboardConfig::isKeyActive(const int index)
 {
     return mActiveKeys && mEnabled ? mActiveKeys[mKey[index].value] : false;
 }

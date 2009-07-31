@@ -247,7 +247,7 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
             return false;
         }
 
-        if (keyboard.isKeyLocked(tKey))
+        if (keyboard.isKeyLocked(event.key.keysym.sym))
             return false;
 
         gcn::Window *requestedWindow = NULL;
