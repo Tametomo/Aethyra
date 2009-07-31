@@ -171,7 +171,7 @@ void ItemDB::unload()
     mLoaded = false;
 }
 
-const ItemInfo& ItemDB::get(const int &id)
+const ItemInfo& ItemDB::get(const int id)
 {
     assert(mLoaded);
 

@@ -55,7 +55,7 @@ AnimatedSprite::AnimatedSprite(SpriteDef *sprite):
 }
 
 AnimatedSprite *AnimatedSprite::load(const std::string& filename,
-                                     const int &variant)
+                                     const int variant)
 {
     ResourceManager *resman = ResourceManager::getInstance();
     SpriteDef *s = resman->getSprite(filename, variant);
@@ -100,7 +100,7 @@ void AnimatedSprite::play(const SpriteAction &spriteAction)
     }
 }
 
-void AnimatedSprite::update(const int &time)
+void AnimatedSprite::update(const int time)
 {
     // Avoid freaking out at first frame or when tick_time overflows
     if (time < mLastTime || mLastTime == 0)
@@ -120,7 +120,7 @@ void AnimatedSprite::update(const int &time)
     }
 }
 
-bool AnimatedSprite::updateCurrentAnimation(const unsigned int &time)
+bool AnimatedSprite::updateCurrentAnimation(const unsigned int time)
 {
     if (!mFrame || Animation::isTerminator(*mFrame))
         return false;
@@ -148,8 +148,8 @@ bool AnimatedSprite::updateCurrentAnimation(const unsigned int &time)
     return true;
 }
 
-bool AnimatedSprite::draw(Graphics* graphics, const int &posX,
-                          const int &posY) const
+bool AnimatedSprite::draw(Graphics* graphics, const int posX,
+                          const int posY) const
 {
     if (!mFrame || !mFrame->image)
         return false;

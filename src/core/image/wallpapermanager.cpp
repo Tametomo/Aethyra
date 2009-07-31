@@ -89,7 +89,7 @@ void Wallpaper::loadWallpapers()
     std::sort(wallpapers.begin(), wallpapers.end(), wallpaperCompare);
 }
 
-std::string Wallpaper::getWallpaper(const int &width, const int &height)
+std::string Wallpaper::getWallpaper(const int width, const int height)
 {
     std::vector<wallpaper>::iterator iter;
     wallpaper wp;

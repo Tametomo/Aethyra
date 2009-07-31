@@ -86,13 +86,13 @@ class Particle : public Sprite
         /**
          * Draws the particle image.
          */
-        virtual void draw(Graphics *graphics, const int &offsetX,
-                          const int &offsetY) const {}
+        virtual void draw(Graphics *graphics, const int offsetX,
+                          const int offsetY) const {}
 
         /**
          * Necessary for sorting with the other sprites.
          */
-        virtual int getPixelY() const { return (int) (mPos.y + mPos.z) - 64; }
+        virtual const int getPixelY() const { return (int) (mPos.y + mPos.z) - 64; }
 
         /**
          * Sets the map the particle is on.
@@ -104,25 +104,25 @@ class Particle : public Sprite
          * particleEffectFile.
          */
         Particle *addEffect(const std::string &particleEffectFile,
-                            const int &pixelX, const int &pixelY,
-                            const int &rotation = 0);
+                            const int pixelX, const int pixelY,
+                            const int rotation = 0);
 
         /**
          * Creates a standalone text particle.
          */
-        Particle *addTextSplashEffect(const std::string &text, const int &x,
-                                      const int &y, const gcn::Color *color,
+        Particle *addTextSplashEffect(const std::string &text, const int x,
+                                      const int y, const gcn::Color *color,
                                       gcn::Font *font,
-                                      const bool &outline = false);
+                                      const bool outline = false);
 
         /**
          * Creates a standalone text particle.
          */
         Particle *addTextRiseFadeOutEffect(const std::string &text,
-                                           const int &x, const int &y,
+                                           const int x, const int y,
                                            const gcn::Color *color,
                                            gcn::Font *font,
-                                           const bool &outline = false);
+                                           const bool outline = false);
 
         /**
          * Adds an emitter to the particle.
@@ -138,7 +138,7 @@ class Particle : public Sprite
         /**
          * Sets the position in 2 dimensional space in pixels relative to map.
          */
-        void moveTo(const float &x, const float &y);
+        void moveTo(const float x, const float y);
 
         /**
          * Returns the particle position.
@@ -153,25 +153,25 @@ class Particle : public Sprite
         /**
          * Sets the time in game ticks until the particle is destroyed.
          */
-        void setLifetime(const int &lifetime)
+        void setLifetime(const int lifetime)
         { mLifetimeLeft = lifetime; mLifetimePast = 0; }
 
         /**
          * Sets the age of the pixel in game ticks where the particle has
          * faded in completely.
          */
-        void setFadeOut(const int &fadeOut) { mFadeOut = fadeOut; }
+        void setFadeOut(const int fadeOut) { mFadeOut = fadeOut; }
 
         /**
          * Sets the remaining particle lifetime where the particle starts to
          * fade out.
          */
-        void setFadeIn(const int &fadeIn) { mFadeIn = fadeIn; }
+        void setFadeIn(const int fadeIn) { mFadeIn = fadeIn; }
 
         /**
          * Sets the alpha value of the particle
          */
-        void setAlpha(const float &alpha) { mAlpha = alpha; }
+        void setAlpha(const float alpha) { mAlpha = alpha; }
 
         /**
          * Sets the sprite iterator of the particle on the current map to make
@@ -189,41 +189,41 @@ class Particle : public Sprite
         /**
          * Sets the current velocity in 3 dimensional space.
          */
-        void setVelocity(const float &x, const float &y, const float &z)
+        void setVelocity(const float x, const float y, const float z)
         { mVelocity.x = x; mVelocity.y = y; mVelocity.z = z; }
 
         /**
          * Sets the downward acceleration.
          */
-        void setGravity(const float &gravity) { mGravity = gravity; }
+        void setGravity(const float gravity) { mGravity = gravity; }
 
         /**
          * Sets the amount of random vector changes
          */
-        void setRandomness(const int &r) { mRandomness = r; }
+        void setRandomness(const int r) { mRandomness = r; }
 
         /**
          * Sets the amount of velocity particles retain after
          * hitting the ground.
          */
-        void setBounce(const float &bouncieness) { mBounce = bouncieness; }
+        void setBounce(const float bouncieness) { mBounce = bouncieness; }
 
         /**
          * Sets the flag if the particle is supposed to be moved by its parent
          */
-        void setFollow(const bool &follow) { mFollow = follow; }
+        void setFollow(const bool follow) { mFollow = follow; }
 
         /**
          * Gets the flag if the particle is supposed to be moved by its parent
          */
-        bool doesFollow() { return mFollow; }
+        const bool doesFollow() { return mFollow; }
 
         /**
          * Makes the particle move toward another particle with a
          * given acceleration and momentum
          */
-        void setDestination(Particle *target, const float &accel,
-                            const float &moment)
+        void setDestination(Particle *target, const float accel,
+                            const float moment)
         { mTarget = target; mAcceleration = accel; mMomentum = moment; }
 
         /**
@@ -231,14 +231,14 @@ class Particle : public Sprite
          * particle before it is destroyed. Does only make sense after a target
          * particle has been set using setDestination.
          */
-        void setDieDistance(const float &dist) { mInvDieDistance = 1.0f / dist; }
+        void setDieDistance(const float dist) { mInvDieDistance = 1.0f / dist; }
 
-        bool isAlive() { return mAlive; }
+        const bool isAlive() { return mAlive; }
 
         /**
          * Determines whether the particle and its children are all dead
          */
-        bool isExtinct() { return !isAlive() && mChildParticles.empty(); }
+        const bool isExtinct() { return !isAlive() && mChildParticles.empty(); }
 
         /**
          * Manually marks the particle for deletion.
@@ -254,7 +254,7 @@ class Particle : public Sprite
         /**
          * Adjusts the emitter detail level
          */
-        void changeParticleDetailLevel(const int &value);
+        void changeParticleDetailLevel(const int value);
 
     protected:
         bool mAlive;                /**< Is the particle supposed to be drawn

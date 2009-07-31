@@ -71,7 +71,7 @@ class MapReader
          * Gets an integer property from an xmlNodePtr.
          */
         static int getProperty(const xmlNodePtr &node, const char* name,
-                               const int &def);
+                               const int def);
 };
 
 #endif

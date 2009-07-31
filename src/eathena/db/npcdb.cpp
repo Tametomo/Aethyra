@@ -112,7 +112,7 @@ void NPCDB::unload()
     mLoaded = false;
 }
 
-const NPCInfo& NPCDB::get(const int &id)
+const NPCInfo& NPCDB::get(const int id)
 {
     NPCInfosIterator i = mNPCInfos.find(id);
 

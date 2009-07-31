@@ -765,7 +765,7 @@ int main(int argc, char *argv[])
         network->flush();
         network->dispatchMessages();
 
-        const int &netState = network->getState();
+        const int netState = network->getState();
 
         if (netState == Network::NET_ERROR || netState == Network::FATAL)
         {

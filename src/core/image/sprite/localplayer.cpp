@@ -302,7 +302,7 @@ void LocalPlayer::useItem(Item *item)
     // Note: id is dest of item, usually player_node->account_ID ??
 }
 
-void LocalPlayer::dropItem(Item *item, const int &quantity)
+void LocalPlayer::dropItem(Item *item, const int quantity)
 {
     // TODO: Fix wrong coordinates of drops
     MessageOut outMsg(CMSG_PLAYER_INVENTORY_DROP);
@@ -418,7 +418,7 @@ void LocalPlayer::setDestination(const Uint16 &x, const Uint16 &y)
     Being::setDestination(x, y);
 }
 
-void LocalPlayer::setWalkingDir(const int &dir)
+void LocalPlayer::setWalkingDir(const int dir)
 {
     if (mWalkingDir != dir)
         mWalkingDir = dir;
@@ -480,7 +480,7 @@ void LocalPlayer::emote(const Uint8 &emotion)
     outMsg.writeInt8(emotion);
 }
 
-void LocalPlayer::tradeReply(const bool &accept)
+void LocalPlayer::tradeReply(const bool accept)
 {
     if (!accept)
         mTrading = false;
@@ -500,7 +500,7 @@ bool LocalPlayer::tradeRequestOk() const
     return !mTrading;
 }
 
-void LocalPlayer::attack(Being *target, const bool &keep)
+void LocalPlayer::attack(Being *target, const bool keep)
 {
     mKeepAttacking = keep;
 
@@ -575,7 +575,7 @@ void LocalPlayer::revive()
     outMsg.writeInt8(0);
 }
 
-void LocalPlayer::setXp(const int &xp)
+void LocalPlayer::setXp(const int xp)
 {
     if (mMap && xp > mXp)
     {
@@ -631,8 +631,8 @@ void LocalPlayer::initTargetCursor()
 }
 
 void LocalPlayer::loadTargetCursor(const std::string &filename,
-                                   const int &width, const int &height,
-                                   const bool &outRange,
+                                   const int width, const int height,
+                                   const bool outRange,
                                    const TargetCursorSize &size)
 {
     assert(size > -1);
@@ -658,7 +658,7 @@ void LocalPlayer::loadTargetCursor(const std::string &filename,
     mTargetCursor[index][size] = currentCursor;
 }
 
-void LocalPlayer::setInStorage(const bool &inStorage)
+void LocalPlayer::setInStorage(const bool inStorage)
 {
     mInStorage = inStorage;
     storageWindow->setVisible(inStorage);

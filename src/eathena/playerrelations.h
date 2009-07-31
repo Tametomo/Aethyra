@@ -77,7 +77,7 @@ public:
     /**
      * Handle the ignoring of the indicated action by the indicated player.
      */
-    virtual void ignore(Player *player, const unsigned int &flags) = 0;
+    virtual void ignore(Player *player, const unsigned int flags) = 0;
 };
 
 typedef std::vector<PlayerIgnoreStrategy *> IgnoreStrategies;
@@ -168,7 +168,7 @@ public:
     /**
      * Sets the default permissions.
      */
-    void setDefault(const unsigned int &permissions);
+    void setDefault(const unsigned int permissions);
 
     /**
      * Retrieves all known player ignore strategies.

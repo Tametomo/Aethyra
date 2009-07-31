@@ -112,7 +112,7 @@ SimpleAnimation::SimpleAnimation(xmlNodePtr animationNode):
     mCurrentFrame = mAnimation->getFrame(0);
 }
 
-bool SimpleAnimation::draw(Graphics* graphics, const int &posX, const int &posY) const
+bool SimpleAnimation::draw(Graphics* graphics, const int posX, const int posY) const
 {
     if (!mCurrentFrame || !mCurrentFrame->image)
         return false;
@@ -137,7 +137,7 @@ void SimpleAnimation::setFrame(unsigned int frame)
     mCurrentFrame = mAnimation->getFrame(mAnimationPhase);
 }
 
-void SimpleAnimation::update(const unsigned int &timePassed)
+void SimpleAnimation::update(const unsigned int timePassed)
 {
     mAnimationTime += timePassed;
 

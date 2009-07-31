@@ -28,7 +28,7 @@
 
 TextParticle::TextParticle(Map *map, const std::string &text,
                            const gcn::Color *color, gcn::Font *font,
-                           const bool &outline):
+                           const bool outline):
     Particle(map),
     mText(text),
     mTextFont(font),
@@ -37,8 +37,8 @@ TextParticle::TextParticle(Map *map, const std::string &text,
 {
 }
 
-void TextParticle::draw(Graphics *graphics, const int &offsetX,
-                        const int &offsetY) const
+void TextParticle::draw(Graphics *graphics, const int offsetX,
+                        const int offsetY) const
 {
     if (!mAlive)
         return;

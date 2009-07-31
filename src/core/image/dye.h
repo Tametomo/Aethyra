@@ -47,7 +47,7 @@ class DyePalette
         /**
          * Gets a pixel color depending on its intensity.
          */
-        void getColor(const int &intensity, gcn::Color* color) const;
+        void getColor(const int intensity, gcn::Color* color) const;
 
     private:
         std::vector<gcn::Color*> mColors;

@@ -91,7 +91,7 @@ class BeingConfigListener : public ConfigListener
         Being *mBeing;
 };
 
-Being::Being(const int &id, const int &job, Map *map):
+Being::Being(const int id, const int job, Map *map):
     mJob(job),
     mX(0), mY(0),
     mAction(STAND),
@@ -169,20 +169,20 @@ void Being::setPath(const Path &path)
     }
 }
 
-void Being::setHairStyle(const int &style, const int &color)
+void Being::setHairStyle(const int style, const int color)
 {
     mHairStyle = style < 0 ? mHairStyle : style % mNumberOfHairstyles;
     mHairColor = color < 0 ? mHairColor : color % ColorDB::size();
 }
 
-void Being::setSprite(const int &slot, const int &id, const std::string &color)
+void Being::setSprite(const int slot, const int id, const std::string &color)
 {
     assert(slot >= BASE_SPRITE && slot < VECTOREND_SPRITE);
     mSpriteIDs[slot] = id;
     mSpriteColors[slot] = color;
 }
 
-void Being::setSpeech(const std::string &text, const int &time)
+void Being::setSpeech(const std::string &text, const int time)
 {
     mSpeech = text;
 
@@ -239,7 +239,7 @@ void Being::setSpeech(const std::string &text, const int &time)
         mSpeechTime = time <= SPEECH_MAX_TIME ? time : SPEECH_MAX_TIME;
 }
 
-void Being::takeDamage(const Being *attacker, const int &amount,
+void Being::takeDamage(const Being *attacker, const int amount,
                        const AttackType &type)
 {
     gcn::Font *font;
@@ -275,7 +275,7 @@ void Being::takeDamage(const Being *attacker, const int &amount,
                                         color, font, true);
 }
 
-void Being::handleAttack(Being *victim, const int &damage,
+void Being::handleAttack(Being *victim, const int damage,
                          const AttackType &type)
 {
     if (this != player_node)
@@ -475,8 +475,8 @@ void Being::logic()
     mChildParticleEffects.moveTo((float) mPx + 16.0f, (float) mPy + 32.0f);
 }
 
-void Being::draw(Graphics *graphics, const int &offsetX,
-                 const int &offsetY) const
+void Being::draw(Graphics *graphics, const int offsetX,
+                 const int offsetY) const
 {
     int px = mPx + offsetX;
     int py = mPy + offsetY;
@@ -491,8 +491,8 @@ void Being::draw(Graphics *graphics, const int &offsetX,
     }
 }
 
-void Being::drawEmotion(Graphics *graphics, const int &offsetX,
-                        const int &offsetY)
+void Being::drawEmotion(Graphics *graphics, const int offsetX,
+                        const int offsetY)
 {
     if (!mEmotion)
         return;
@@ -506,7 +506,7 @@ void Being::drawEmotion(Graphics *graphics, const int &offsetX,
         sprite->draw(graphics, px, py);
 }
 
-void Being::drawSpeech(const int &offsetX, const int &offsetY)
+void Being::drawSpeech(const int offsetX, const int offsetY)
 {
     const int px = mPx - offsetX;
     const int py = mPy - offsetY;
@@ -590,7 +590,7 @@ Being::Type Being::getType() const
         return UNKNOWN;
 }
 
-int Being::getOffset(const char &pos, const char &neg) const
+const int Being::getOffset(const char &pos, const char &neg) const
 {
     // Check whether we're walking in the requested direction
     if (mAction != WALK ||  !(mDirection & (pos | neg)))
@@ -610,7 +610,7 @@ int Being::getOffset(const char &pos, const char &neg) const
     return offset;
 }
 
-int Being::getWidth() const
+const int Being::getWidth() const
 {
     if (AnimatedSprite *base = mSprites[BASE_SPRITE])
         return std::max(base->getWidth(), DEFAULT_WIDTH);
@@ -618,7 +618,7 @@ int Being::getWidth() const
         return DEFAULT_WIDTH;
 }
 
-int Being::getHeight() const
+const int Being::getHeight() const
 {
     if (AnimatedSprite *base = mSprites[BASE_SPRITE])
         return std::max(base->getHeight(), DEFAULT_HEIGHT);

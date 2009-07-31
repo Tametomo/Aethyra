@@ -26,8 +26,8 @@
 
 #include "../../bindings/guichan/graphics.h"
 
-AmbientOverlay::AmbientOverlay(Image *img, const float &parallax,
-                               const float &speedX, const float &speedY):
+AmbientOverlay::AmbientOverlay(Image *img, const float parallax,
+                               const float speedX, const float speedY):
     mImage(img), mParallax(parallax),
     mPosX(0), mPosY(0),
     mSpeedX(speedX), mSpeedY(speedY)
@@ -40,8 +40,8 @@ AmbientOverlay::~AmbientOverlay()
     mImage->decRef();
 }
 
-void AmbientOverlay::update(const int &timePassed, const float &dx,
-                            const float &dy)
+void AmbientOverlay::update(const int timePassed, const float dx,
+                            const float dy)
 {
     // Self scrolling of the overlay
     mPosX -= mSpeedX * timePassed / 10;
@@ -66,7 +66,7 @@ void AmbientOverlay::update(const int &timePassed, const float &dx,
         mPosY += imgH;
 }
 
-void AmbientOverlay::draw(Graphics *graphics, const int &x, const int &y)
+void AmbientOverlay::draw(Graphics *graphics, const int x, const int y)
 {
     graphics->drawImagePattern(mImage, (int) -mPosX, (int) -mPosY, x +
                               (int) mPosX, y + (int) mPosY);

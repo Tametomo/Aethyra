@@ -38,7 +38,7 @@
 static const int NAME_X_OFFSET = 16;
 static const int NAME_Y_OFFSET = 16;
 
-Monster::Monster(const int &id, const Uint16 &job, Map *map):
+Monster::Monster(const int id, const Uint16 &job, Map *map):
     Being(id, job, map),
     mText(0)
 {
@@ -168,7 +168,7 @@ void Monster::setAction(const Action &action)
     }
 }
 
-void Monster::handleAttack(Being *victim, const int &damage,
+void Monster::handleAttack(Being *victim, const int damage,
                            const AttackType &type)
 {
     Being::handleAttack(victim, damage, type);
@@ -178,7 +178,7 @@ void Monster::handleAttack(Being *victim, const int &damage,
                 MONSTER_EVENT_HIT : MONSTER_EVENT_MISS));
 }
 
-void Monster::takeDamage(const Being *attacker, const int &amount,
+void Monster::takeDamage(const Being *attacker, const int amount,
                          const AttackType &type)
 {
     if (amount > 0)
@@ -197,7 +197,7 @@ const MonsterInfo &Monster::getInfo() const
     return MonsterDB::get(mJob - 1002);
 }
 
-void Monster::showName(const bool &show)
+void Monster::showName(const bool show)
 {
     if (mText)
         delete mText;

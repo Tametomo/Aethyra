@@ -27,7 +27,7 @@
 
 #include "../../core/utils/dtor.h"
 
-ImageSet::ImageSet(Image *img, const int &width, const int &height)
+ImageSet::ImageSet(Image *img, const int width, const int height)
 {
     for (int y = 0; y + height <= img->getHeight(); y += height)
     {

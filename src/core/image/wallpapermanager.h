@@ -47,7 +47,7 @@ class Wallpaper
          * @param height the desired height
          * @return the file to use, or empty if no wallpapers are useable
          */
-        static std::string getWallpaper(const int &width, const int &height);
+        static std::string getWallpaper(const int width, const int height);
 
         /**
          * Returns the width of the image for given file path.

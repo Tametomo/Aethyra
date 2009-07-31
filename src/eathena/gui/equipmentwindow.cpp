@@ -178,7 +178,7 @@ void EquipmentWindow::widgetResized(const gcn::Event &event)
     Window::widgetResized(event);
 
     const gcn::Rectangle &area = getChildrenArea();
-    const int &padding = 2 * getPadding();
+    const int padding = 2 * getPadding();
 
     mInvenScroll->setDimension(gcn::Rectangle(175, 20, area.width - 190,
                                               area.height - 80));
@@ -286,7 +286,7 @@ void EquipmentWindow::action(const gcn::ActionEvent &event)
         mItems->showPopupMenu(INVENTORY, false);
 }
 
-Item* EquipmentWindow::getItem(const int &x, const int &y)
+Item* EquipmentWindow::getItem(const int x, const int y)
 {
     for (int i = EQUIP_LEGS_SLOT; i < EQUIP_VECTOREND; i++)
     {

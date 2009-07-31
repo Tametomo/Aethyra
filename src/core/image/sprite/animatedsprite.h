@@ -52,7 +52,7 @@ class AnimatedSprite
          * @param variant  the sprite variant
          */
         static AnimatedSprite *load(const std::string &filename,
-                                    const int &variant = 0);
+                                    const int variant = 0);
 
         /**
          * Destructor.
@@ -73,13 +73,13 @@ class AnimatedSprite
          * Inform the animation of the passed time so that it can output the
          * correct animation frame.
          */
-        void update(const int &time);
+        void update(const int time);
 
         /**
          * Draw the current animation frame at the coordinates given in screen
          * pixels.
          */
-        bool draw(Graphics* graphics, const int &posX, const int &posY) const;
+        bool draw(Graphics* graphics, const int posX, const int posY) const;
 
         /**
          * gets the width in pixels of the image of the current frame
@@ -97,7 +97,7 @@ class AnimatedSprite
         void setDirection(const SpriteDirection &direction);
 
     private:
-        bool updateCurrentAnimation(const unsigned int &dt);
+        bool updateCurrentAnimation(const unsigned int dt);
 
         SpriteDirection mDirection;    /**< The sprite direction. */
         int mLastTime;                 /**< The last time update was called. */

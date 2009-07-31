@@ -51,11 +51,11 @@ namespace EmoteDB
 
     void unload();
 
-    const EmoteInfo *get(const int &id);
+    const EmoteInfo *get(const int id);
 
-    const AnimatedSprite *getAnimation(const int &id);
+    const AnimatedSprite *getAnimation(const int id);
 
-    const int& getLast();
+    const int getLast();
 
     typedef EmoteInfos::iterator EmoteInfosIterator;
 }

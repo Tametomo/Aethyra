@@ -45,12 +45,12 @@ void ProtectedFocusListener::focusLost(const gcn::Event &event)
     }
 }
 
-void ProtectedFocusListener::blockKey(const int &keyValue)
+void ProtectedFocusListener::blockKey(const int keyValue)
 {
     mBlockList.push_back(keyValue);
 }
 
-void ProtectedFocusListener::unblockKey(const int &keyValue)
+void ProtectedFocusListener::unblockKey(const int keyValue)
 {
     for (std::list<int>::iterator it = mBlockList.begin();
          it != mBlockList.end(); it++)

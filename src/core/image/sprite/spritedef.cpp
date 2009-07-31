@@ -46,7 +46,7 @@ Action* SpriteDef::getAction(const SpriteAction &action) const
     return i == mActions.end() ? NULL : i->second;
 }
 
-SpriteDef *SpriteDef::load(const std::string &animationFile, const int &variant)
+SpriteDef *SpriteDef::load(const std::string &animationFile, const int variant)
 {
     std::string::size_type pos = animationFile.find('|');
     std::string palettes;
@@ -89,7 +89,7 @@ void SpriteDef::substituteActions()
     substituteAction(ACTION_DEAD, ACTION_HURT);
 }
 
-void SpriteDef::loadSprite(const xmlNodePtr &spriteNode, const int &variant,
+void SpriteDef::loadSprite(const xmlNodePtr &spriteNode, const int variant,
                            const std::string &palettes)
 {
     // Get the variant
@@ -136,7 +136,7 @@ void SpriteDef::loadImageSet(const xmlNodePtr &node, const std::string &palettes
     mImageSets[name] = imageSet;
 }
 
-void SpriteDef::loadAction(const xmlNodePtr &node, const int &variant_offset)
+void SpriteDef::loadAction(const xmlNodePtr &node, const int variant_offset)
 {
     const std::string actionName = XML::getProperty(node, "name", "");
     const std::string imageSetName = XML::getProperty(node, "imageset", "");
@@ -174,7 +174,7 @@ void SpriteDef::loadAction(const xmlNodePtr &node, const int &variant_offset)
 
 void SpriteDef::loadAnimation(const xmlNodePtr &animationNode,
                               Action *action, ImageSet *imageSet,
-                              const int &variant_offset)
+                              const int variant_offset)
 {
     const std::string directionName =
         XML::getProperty(animationNode, "direction", "");

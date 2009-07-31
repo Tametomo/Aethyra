@@ -72,7 +72,7 @@ class SpriteDef : public Resource
         /**
          * Loads a sprite definition file.
          */
-        static SpriteDef *load(const std::string &file, const int &variant);
+        static SpriteDef *load(const std::string &file, const int variant);
 
         /**
          * Returns the specified action.
@@ -93,7 +93,7 @@ class SpriteDef : public Resource
         /**
          * Loads a sprite element.
          */
-        void loadSprite(const xmlNodePtr &spriteNode, const int &variant,
+        void loadSprite(const xmlNodePtr &spriteNode, const int variant,
                         const std::string &palettes = "");
 
         /**
@@ -104,14 +104,14 @@ class SpriteDef : public Resource
         /**
          * Loads an action element.
          */
-        void loadAction(const xmlNodePtr &node, const int &variant_offset);
+        void loadAction(const xmlNodePtr &node, const int variant_offset);
 
         /**
          * Loads an animation element.
          */
         void loadAnimation(const xmlNodePtr &animationNode,
                            Action *action, ImageSet *imageSet,
-                           const int &variant_offset);
+                           const int variant_offset);
 
         /**
          * Include another sprite into this one.

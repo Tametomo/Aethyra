@@ -474,7 +474,7 @@ void Setup_Video::action(const gcn::ActionEvent &event)
     }
 }
 
-void Setup_Video::setSpeechModeLabel(const int &value)
+void Setup_Video::setSpeechModeLabel(const int value)
 {
     switch (value)
     {
@@ -493,7 +493,7 @@ void Setup_Video::setSpeechModeLabel(const int &value)
     }
 }
 
-void Setup_Video::setOverlayDetailLabel(const int &value)
+void Setup_Video::setOverlayDetailLabel(const int value)
 {
     switch (value)
     {
@@ -509,7 +509,7 @@ void Setup_Video::setOverlayDetailLabel(const int &value)
     }
 }
 
-void Setup_Video::setParticleDetailLabel(const int &value)
+void Setup_Video::setParticleDetailLabel(const int value)
 {
     switch (value)
     {
@@ -531,7 +531,7 @@ void Setup_Video::setParticleDetailLabel(const int &value)
     }
 }
 
-void Setup_Video::changeParticleDetailLevel(const int &value)
+void Setup_Video::changeParticleDetailLevel(const int value)
 {
     setParticleDetailLabel(value);
     config.setValue("particleeffects", value != -1);

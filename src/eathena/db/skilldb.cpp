@@ -78,12 +78,12 @@ void SkillDB::unload()
     mLoaded = false;
 }
 
-const SkillInfo* SkillDB::get(const int &id)
+const SkillInfo* SkillDB::get(const int id)
 {
     return (id >= 0 && id < size() ? &skill_db[id] : &fakeSkillInfo);
 }
 
-bool SkillDB::modifiable(const int &id)
+bool SkillDB::modifiable(const int id)
 {
     return (id >= 0 && id < size() ? &skill_db[id].modifiable : false);
 }

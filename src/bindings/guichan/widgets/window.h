@@ -92,37 +92,37 @@ class Window : public gcn::Window, gcn::WidgetListener
          * Sets the location relative to the given enumerated position.
          */
         void setLocationRelativeTo(ImageRect::ImagePosition position,
-                                   const int &offsetX = 0,
-                                   const int &offsetY = 0);
+                                   const int offsetX = 0,
+                                   const int offsetY = 0);
 
         /**
          * Sets the location relative to the given enumerated position.
          */
-        void setLocationRelativeTo(const int &width, const int &height,
+        void setLocationRelativeTo(const int width, const int height,
                                    ImageRect::ImagePosition position,
-                                   const int &offsetX, const int &offsetY);
+                                   const int offsetX, const int offsetY);
 
         /**
          * Converts a given x and y coordinate to a relative coordinate.
          * Currently used to get coordinates which can be adapted to any screen
          * resolution.
          */
-        void saveRelativeLocation(const int &x, const int &y);
+        void saveRelativeLocation(const int x, const int y);
 
         /**
          * Gets the offsets to use for a particular position in comparison to
          * the window resolution.
          */
         void getRelativeOffset(ImageRect::ImagePosition position, int &x, int &y,
-                               const int& width, const int& height);
+                               const int width, const int height);
 
         /**
          * Gets the offsets to use for a particular position in comparison to
          * a supplied width and height.
          */
         void getRelativeOffset(ImageRect::ImagePosition position, int &x, int &y,
-                               const int &conWidth, const int &conHeight,
-                               const int& width, const int& height);
+                               const int conWidth, const int conHeight,
+                               const int width, const int height);
 
         /**
          * Sets whether or not the window can be resized.

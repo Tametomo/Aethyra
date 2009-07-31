@@ -44,7 +44,7 @@ namespace ItemDB
      */
     void unload();
 
-    const ItemInfo& get(const int &id);
+    const ItemInfo& get(const int id);
     const ItemInfo& get(const std::string &name);
 
     // Items database

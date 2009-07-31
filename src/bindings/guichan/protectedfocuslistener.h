@@ -58,12 +58,12 @@ class ProtectedFocusListener : public gcn::FocusListener
         /**
          * Adds a key to this listener's block list
          */
-        void blockKey(const int &key);
+        void blockKey(const int key);
 
         /**
          * Removes a key to this listener's block list
          */
-        void unblockKey(const int &key);
+        void unblockKey(const int key);
 
     private:
         bool mPrintableKeyLock;        /**< Flag to state whether a printable

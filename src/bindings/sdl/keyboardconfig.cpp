@@ -169,12 +169,12 @@ void KeyboardConfig::callbackNewKey()
     mSetupKey->newKeyCallback(mNewKeyIndex);
 }
 
-void KeyboardConfig::lockKey(const int &keyValue)
+void KeyboardConfig::lockKey(const int keyValue)
 {
     mLockedKeys.push_back(keyValue);
 }
 
-void KeyboardConfig::unlockKey(const int &keyValue)
+void KeyboardConfig::unlockKey(const int keyValue)
 {
     for (std::list<int>::iterator it = mLockedKeys.begin();
          it != mLockedKeys.end(); it++)
@@ -184,7 +184,7 @@ void KeyboardConfig::unlockKey(const int &keyValue)
     }
 }
 
-bool KeyboardConfig::isKeyLocked(const int &index)
+bool KeyboardConfig::isKeyLocked(const int index)
 {
     bool locked = false;
 

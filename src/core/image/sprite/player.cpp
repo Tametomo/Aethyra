@@ -38,7 +38,7 @@
 static const int NAME_X_OFFSET = 15;
 static const int NAME_Y_OFFSET = 30;
 
-Player::Player(const int &id, const int &job, Map *map):
+Player::Player(const int id, const int job, Map *map):
     Being(id, job, map),
     mName(0),
     mIsGM(false),
@@ -51,7 +51,7 @@ Player::~Player()
     delete mName;
 }
 
-void Player::handleAttack(Being *victim, const int &damage,
+void Player::handleAttack(Being *victim, const int damage,
                           const AttackType &type)
 {
     if (this != player_node)
@@ -173,7 +173,7 @@ Being::Type Player::getType() const
     return PLAYER;
 }
 
-void Player::flash(const int &time)
+void Player::flash(const int time)
 {
     if (mName)
         mName->flash(time);
@@ -200,7 +200,7 @@ void Player::setGender(const Gender &gender)
     }
 }
 
-void Player::setHairStyle(const int &style, const int &color)
+void Player::setHairStyle(const int style, const int color)
 {
     Being::setHairStyle(style, color);
 
@@ -208,7 +208,7 @@ void Player::setHairStyle(const int &style, const int &color)
     setAction(mAction);
 }
 
-void Player::setSprite(const int &slot, const int &id, const std::string &color)
+void Player::setSprite(const int slot, const int id, const std::string &color)
 {
     // id = 0 means unequip
     if (id == 0)

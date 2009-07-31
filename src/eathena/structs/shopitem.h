@@ -42,8 +42,8 @@ class ShopItem : public Item
          * @param quantity number of available copies of the item
          * @param price price of the item
          */
-        ShopItem(const int &inventoryIndex, const int &id, const int &quantity,
-                 const int &price);
+        ShopItem(const int inventoryIndex, const int id, const int quantity,
+                 const int price);
 
         /**
          * Constructor. Creates a new ShopItem. Inventory index will be set to
@@ -52,7 +52,7 @@ class ShopItem : public Item
          * @param id the id of the item
          * @param price price of the item
          */
-        ShopItem(const int &id, const int &price);
+        ShopItem(const int id, const int price);
 
         /**
          * Destructor.
@@ -65,7 +65,7 @@ class ShopItem : public Item
          * @param inventoryIndex the inventory index of the item
          * @param quantity number of available copies of the item
          */
-        void addDuplicate (const int &inventoryIndex, const int &quantity);
+        void addDuplicate (const int inventoryIndex, const int quantity);
 
         /**
          * Add a duplicate. Id and price will be taken from this item.
@@ -103,7 +103,7 @@ class ShopItem : public Item
          *
          * @return the amount, that actually was sold.
          */
-        int sellCurrentDuplicate(const int &quantity);
+        int sellCurrentDuplicate(const int quantity);
 
         /**
          * Gets the price of the item.

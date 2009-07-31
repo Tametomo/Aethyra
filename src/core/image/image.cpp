@@ -52,8 +52,8 @@ Image::Image(SDL_Surface *image, Uint8* alphas):
 }
 
 #ifdef USE_OPENGL
-Image::Image(const GLuint &glimage, const int &width, const int &height,
-             const int &texWidth, const int &texHeight):
+Image::Image(const GLuint &glimage, const int width, const int height,
+             const int texWidth, const int texHeight):
     mStoredAlpha(NULL),
     mGLImage(glimage),
     mTexWidth(texWidth),
@@ -136,7 +136,7 @@ Resource *Image::load(void *buffer, unsigned bufferSize, const Dye &dye)
     return image;
 }
 
-Resource *Image::resize(Image *image, const int &width, const int &height)
+Resource *Image::resize(Image *image, const int width, const int height)
 {
     return image->resize(width, height);
 }
@@ -298,7 +298,7 @@ void Image::unload()
 #endif
 }
 
-Image* Image::resize(const int &width, const int &height)
+Image* Image::resize(const int width, const int height)
 {
     // Don't return anything for bad height or width values
     if (width <= 0 || height <= 0)
@@ -337,8 +337,8 @@ Image* Image::resize(const int &width, const int &height)
     return new Image(scaledSurface, imageAlphas);
 }
 
-SubImage *Image::getSubImage(const int &x, const int &y, const int &width,
-                             const int &height)
+SubImage *Image::getSubImage(const int x, const int y, const int width,
+                             const int height)
 {
     // Create a new clipped sub-image
 #ifdef USE_OPENGL
@@ -377,7 +377,7 @@ void Image::setAlpha(float alpha)
     }
 }
 
-Image* Image::merge(Image* image, const int &x, const int &y)
+Image* Image::merge(Image* image, const int x, const int y)
 {
     SDL_Surface* surface = new SDL_Surface(*(image->mImage));
 
@@ -458,12 +458,12 @@ float Image::getAlpha() const
 }
 
 #ifdef USE_OPENGL
-void Image::setLoadAsOpenGL(const bool &useOpenGL)
+void Image::setLoadAsOpenGL(const bool useOpenGL)
 {
     Image::mUseOpenGL = useOpenGL;
 }
 
-int Image::powerOfTwo(const int &input)
+int Image::powerOfTwo(const int input)
 {
     int value = 1;
     if (mTextureType == GL_TEXTURE_2D)
@@ -482,8 +482,8 @@ int Image::powerOfTwo(const int &input)
 // SubImage Class
 //============================================================================
 
-SubImage::SubImage(Image *parent, SDL_Surface *image, const int &x, const int &y,
-                   const int &width, const int &height):
+SubImage::SubImage(Image *parent, SDL_Surface *image, const int x, const int y,
+                   const int width, const int height):
     Image(image),
     mParent(parent)
 {
@@ -497,9 +497,9 @@ SubImage::SubImage(Image *parent, SDL_Surface *image, const int &x, const int &y
 }
 
 #ifdef USE_OPENGL
-SubImage::SubImage(Image *parent, const GLuint &image, const int &x, const int &y,
-                   const int &width, const int &height, const int &texWidth,
-                   const int &texHeight):
+SubImage::SubImage(Image *parent, const GLuint &image, const int x, const int y,
+                   const int width, const int height, const int texWidth,
+                   const int texHeight):
     Image(image, width, height, texWidth, texHeight),
     mParent(parent)
 {
@@ -523,8 +523,8 @@ SubImage::~SubImage()
     mParent->decRef();
 }
 
-SubImage *SubImage::getSubImage(const int &x, const int &y, const int &w,
-                                const int &h)
+SubImage *SubImage::getSubImage(const int x, const int y, const int w,
+                                const int h)
 {
     return mParent->getSubImage(mBounds.x + x, mBounds.y + y, w, h);
 }

@@ -31,7 +31,7 @@ class Text;
 class NPC : public Player
 {
     public:
-        NPC(const int &id, const int &job, Map *map);
+        NPC(const int id, const int job, Map *map);
 
         ~NPC();
 
@@ -42,7 +42,7 @@ class NPC : public Player
 
         void setName(const std::string &name);
         void setGender(const Gender &gender);
-        void setSprite(const int &slot, const int &id, const std::string &color);
+        void setSprite(const int slot, const int id, const std::string &color);
 
         virtual Type getType() const;
 

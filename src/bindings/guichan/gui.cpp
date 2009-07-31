@@ -223,7 +223,7 @@ Gui::~Gui()
     delete guiInput;
 }
 
-void Gui::resize(const int &width, const int &height)
+void Gui::resize(const int width, const int height)
 {
     if (width < 0 || height < 0 || (width == graphics->getWidth() &&
         height == graphics->getHeight()))
@@ -408,7 +408,7 @@ const int Gui::getFontHeight() const
     return mGuiFont->getHeight();
 }
 
-void Gui::changeFontSize(const int &size)
+void Gui::changeFontSize(const int size)
 {
     ResourceManager *resman = ResourceManager::getInstance();
     const std::string path = resman->getPath("fonts/dejavusans.ttf");

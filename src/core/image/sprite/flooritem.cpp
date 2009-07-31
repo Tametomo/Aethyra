@@ -30,8 +30,8 @@
 
 #include "../../../eathena/structs/item.h"
 
-FloorItem::FloorItem(const int &id, const int &itemId, const int &x,
-                     const int &y, Map *map):
+FloorItem::FloorItem(const int id, const int itemId, const int x,
+                     const int y, Map *map):
     mId(id),
     mX(x),
     mY(y),
@@ -52,7 +52,7 @@ FloorItem::~FloorItem()
     delete mItem;
 }
 
-int FloorItem::getItemId() const
+const int FloorItem::getItemId() const
 {
     return mItem->getId();
 }
@@ -62,8 +62,8 @@ Item* FloorItem::getItem() const
     return mItem;
 }
 
-void FloorItem::draw(Graphics *graphics, const int &offsetX,
-                     const int &offsetY) const
+void FloorItem::draw(Graphics *graphics, const int offsetX,
+                     const int offsetY) const
 {
     graphics->drawImage(mItem->getImage(), mX * 32 + offsetX, mY * 32 + offsetY);
 }

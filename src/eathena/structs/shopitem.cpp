@@ -24,8 +24,8 @@
 
 #include "../../core/utils/stringutils.h"
 
-ShopItem::ShopItem (const int &inventoryIndex, const int &id,
-                    const int &quantity, const int &price) :
+ShopItem::ShopItem (const int inventoryIndex, const int id,
+                    const int quantity, const int price) :
     Item (id, 0),
     mPrice(price)
 {
@@ -34,7 +34,7 @@ ShopItem::ShopItem (const int &inventoryIndex, const int &id,
     addDuplicate(inventoryIndex, quantity);
 }
 
-ShopItem::ShopItem (const int &id, const int &price):
+ShopItem::ShopItem (const int id, const int price):
     Item (id, 0),
     mPrice(price)
 {
@@ -53,7 +53,7 @@ ShopItem::~ShopItem()
     }
 }
 
-void ShopItem::addDuplicate(const int &inventoryIndex, const int &quantity)
+void ShopItem::addDuplicate(const int inventoryIndex, const int quantity)
 {
     DuplicateItem* di = new DuplicateItem;
     di->inventoryIndex = inventoryIndex;
@@ -71,7 +71,7 @@ void ShopItem::addDuplicate()
     mDuplicates.push(di);
 }
 
-int ShopItem::sellCurrentDuplicate(const int &quantity)
+int ShopItem::sellCurrentDuplicate(const int quantity)
 {
     DuplicateItem* dupl = mDuplicates.top();
     int sellCount = quantity <= dupl->quantity ? quantity : dupl->quantity;

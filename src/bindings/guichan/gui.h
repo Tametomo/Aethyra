@@ -126,17 +126,17 @@ class Gui : public gcn::Gui
         /**
          * Change the size of the display.
          */
-        void resize(const int &width, const int &height);
+        void resize(const int width, const int height);
 
         /**
          * Returns mouse x in pixels.
          */
-        const int &getMouseX() const { return mMouseX; }
+        const int getMouseX() const { return mMouseX; }
 
         /**
          * Returns mouse y in pixels.
          */
-        const int &getMouseY() const { return mMouseY; }
+        const int getMouseY() const { return mMouseY; }
 
         /**
          * Returns the current mouse button state.
@@ -160,7 +160,7 @@ class Gui : public gcn::Gui
         /**
          * Changes the in game font size.
          */
-        void changeFontSize(const int &size);
+        void changeFontSize(const int size);
 
     protected:
         void handleMouseMoved(const gcn::MouseInput &mouseInput);

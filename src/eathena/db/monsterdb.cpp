@@ -134,7 +134,7 @@ void MonsterDB::unload()
 }
 
 
-const MonsterInfo &MonsterDB::get(const int &id)
+const MonsterInfo &MonsterDB::get(const int id)
 {
     MonsterInfoIterator i = mMonsterInfos.find(id);
 

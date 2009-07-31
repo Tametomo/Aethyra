@@ -102,7 +102,7 @@ class EquipmentWindow : public Window,
         void mouseExited(gcn::MouseEvent &event);
         void mouseMoved(gcn::MouseEvent &event);
 
-        Item* getItem(const int &x, const int &y);
+        Item* getItem(const int x, const int y);
 
         void setSelected(int index);
 

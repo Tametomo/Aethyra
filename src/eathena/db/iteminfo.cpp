@@ -94,7 +94,7 @@ void ItemInfo::setType(const std::string& type)
         mEquipSlots = 0;
 }
 
-void ItemInfo::setWeaponType(const int &type)
+void ItemInfo::setWeaponType(const int type)
 {
     // See server item.hpp file for type values.
     switch (type)

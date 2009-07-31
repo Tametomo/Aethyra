@@ -55,8 +55,8 @@ class Animation
         /**
          * Appends a new animation at the end of the sequence.
          */
-        void addFrame(Image *image, const unsigned int &delay,
-                      const int &offsetX, const int &offsetY);
+        void addFrame(Image *image, const unsigned int delay,
+                      const int offsetX, const int offsetY);
 
         /**
          * Appends an animation terminator that states that the animation
@@ -67,7 +67,7 @@ class Animation
         /**
          * Returns the frame at the specified index.
          */
-        Frame* getFrame(const int &index) { return &(mFrames[index]); }
+        Frame* getFrame(const int index) { return &(mFrames[index]); }
 
         /**
          * Returns the length of this animation in frames.

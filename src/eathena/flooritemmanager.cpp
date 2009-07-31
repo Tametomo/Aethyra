@@ -31,8 +31,8 @@ FloorItemManager::~FloorItemManager()
     clear();
 }
 
-FloorItem* FloorItemManager::create(const int &id, const int &itemId,
-                                    const int &x, const int &y, Map *map)
+FloorItem* FloorItemManager::create(const int id, const int itemId,
+                                    const int x, const int y, Map *map)
 {
     FloorItem *floorItem = new FloorItem(id, itemId, x, y, map);
     mFloorItems.push_back(floorItem);
@@ -51,7 +51,7 @@ void FloorItemManager::clear()
     mFloorItems.clear();
 }
 
-FloorItem *FloorItemManager::findById(const int &id)
+FloorItem *FloorItemManager::findById(const int id)
 {
     FloorItemIterator i;
     for (i = mFloorItems.begin(); i != mFloorItems.end(); i++)
@@ -63,7 +63,7 @@ FloorItem *FloorItemManager::findById(const int &id)
     return NULL;
 }
 
-FloorItem *FloorItemManager::findByCoordinates(const int &x, const int &y)
+FloorItem *FloorItemManager::findByCoordinates(const int x, const int y)
 {
     FloorItemIterator i;
     for (i = mFloorItems.begin(); i != mFloorItems.end(); i++)

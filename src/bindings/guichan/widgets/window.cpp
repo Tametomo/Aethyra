@@ -174,15 +174,15 @@ void Window::setLocationRelativeTo(gcn::Widget *widget)
 }
 
 void Window::setLocationRelativeTo(ImageRect::ImagePosition position,
-                                   const int &offsetX, const int &offsetY)
+                                   const int offsetX, const int offsetY)
 {
     setLocationRelativeTo(graphics->getWidth(), graphics->getHeight(), position,
                           offsetX, offsetY);
 }
 
-void Window::setLocationRelativeTo(const int &width, const int &height,
+void Window::setLocationRelativeTo(const int width, const int height,
                                    ImageRect::ImagePosition position,
-                                   const int &offsetX, const int &offsetY)
+                                   const int offsetX, const int offsetY)
 {
     int x = 0, y = 0;
 
@@ -192,15 +192,15 @@ void Window::setLocationRelativeTo(const int &width, const int &height,
 }
 
 void Window::getRelativeOffset(ImageRect::ImagePosition position, int &x, int &y,
-                               const int& width, const int& height)
+                               const int width, const int height)
 {
     getRelativeOffset(position, x, y, graphics->getWidth(),
                       graphics->getHeight(), width, height);
 }
 
 void Window::getRelativeOffset(ImageRect::ImagePosition position, int &x, int &y,
-                               const int &conWidth, const int &conHeight,
-                               const int& width, const int& height)
+                               const int conWidth, const int conHeight,
+                               const int width, const int height)
 {
     switch (position)
     {
@@ -237,7 +237,7 @@ void Window::getRelativeOffset(ImageRect::ImagePosition position, int &x, int &y
     }
 }
 
-void Window::saveRelativeLocation(const int &x, const int &y)
+void Window::saveRelativeLocation(const int x, const int y)
 {
     ImageRect::ImagePosition savedPos = ImageRect::UPPER_LEFT;
     int posX = 0, posY = 0, offsetX = 0, offsetY = 0, distX = 0, distY = 0;

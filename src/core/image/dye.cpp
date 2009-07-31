@@ -65,7 +65,7 @@ DyePalette::~DyePalette()
     delete_all(mColors);
 }
 
-void DyePalette::getColor(const int &intensity, gcn::Color* color) const
+void DyePalette::getColor(const int intensity, gcn::Color* color) const
 {
     if (intensity == 0)
     {

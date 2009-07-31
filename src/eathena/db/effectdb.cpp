@@ -80,7 +80,7 @@ void EffectDB::unload()
     mLoaded = false;
 }
 
-bool EffectDB::trigger(const int &id, Being* being)
+bool EffectDB::trigger(const int id, Being* being)
 {
     bool rValue = false;
     for (std::list<EffectDescription>::iterator i = mEffects.begin();
@@ -103,7 +103,7 @@ bool EffectDB::trigger(const int &id, Being* being)
     return rValue;
 }
 
-bool EffectDB::trigger(const int &id, const int &x, const int &y)
+bool EffectDB::trigger(const int id, const int x, const int y)
 {
     bool rValue = false;
     for (std::list<EffectDescription>::iterator i = mEffects.begin();

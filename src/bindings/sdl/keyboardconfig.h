@@ -82,17 +82,17 @@ class KeyboardConfig
         /**
          * Locks a key from being used outside of GUIChan key calls.
          */
-        void lockKey(const int &keyValue);
+        void lockKey(const int keyValue);
 
         /**
          * Unlocks a key from being used outside of GUIChan key calls.
          */
-        void unlockKey(const int &keyValue);
+        void unlockKey(const int keyValue);
 
         /**
          * Whether input is currently being locked on a key.
          */
-        bool isKeyLocked(const int &index);
+        bool isKeyLocked(const int index);
 
         /**
          * Obtain the value stored in memory.

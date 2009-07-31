@@ -37,7 +37,7 @@ class Map;
 class Player : public Being
 {
     public:
-        Player(const int &id, const int &job, Map *map);
+        Player(const int id, const int job, Map *map);
 
         ~Player();
 
@@ -48,7 +48,7 @@ class Player : public Being
          * @param damage the amount of damage dealt (0 means miss)
          * @param type the attack type
          */
-        virtual void handleAttack(Being *victim, const int &damage,
+        virtual void handleAttack(Being *victim, const int damage,
                                   const AttackType &type);
 
         /**
@@ -75,18 +75,18 @@ class Player : public Being
         /**
          * Sets the hair style and color for this player.
          */
-        void setHairStyle(const int &style, const int &color);
+        void setHairStyle(const int style, const int color);
 
         /**
          * Sets visible equipments for this player.
          */
-        virtual void setSprite(const int &slot, const int &id,
+        virtual void setSprite(const int slot, const int id,
                                const std::string &color = "");
 
         /**
          * Flash the player's name
          */
-        void flash(const int &time);
+        void flash(const int time);
 
     protected:
         virtual void updateCoords();

@@ -75,14 +75,14 @@ class ResourceManager
          *
          * @return <code>true</code> on success, <code>false</code> otherwise.
          */
-        bool addToSearchPath(const std::string &path, const bool &append);
+        bool addToSearchPath(const std::string &path, const bool append);
 
         /**
         * Searches for zip files and adds them to the search path.
         */
         void searchAndAddArchives(const std::string &path,
                                   const std::string &ext,
-                                  const bool &append);
+                                  const bool append);
 
         /**
          * Creates a directory in the write path
@@ -150,8 +150,8 @@ class ResourceManager
          * Convenience wrapper around ResourceManager::get for loading
          * resized images.
          */
-        Image *getResizedImage(const std::string &idPath, const int &width,
-                               const int &height);
+        Image *getResizedImage(const std::string &idPath, const int width,
+                               const int height);
 
         /**
          * Convenience wrapper around ResourceManager::get for loading
@@ -168,21 +168,21 @@ class ResourceManager
         /**
          * Creates a new TrueTypeFont based on the size and style given.
          */
-        TrueTypeFont *getFont(const std::string &path, const int &size,
-                              const int &style = 0);
+        TrueTypeFont *getFont(const std::string &path, const int size,
+                              const int style = 0);
 
         /**
          * Creates a image set based on the image referenced by the given
          * path and the supplied sprite sizes
          */
-        ImageSet *getImageSet(const std::string &imagePath, const int &w,
-                              const int &h);
+        ImageSet *getImageSet(const std::string &imagePath, const int w,
+                              const int h);
 
         /**
          * Creates a sprite definition based on a given path and the supplied
          * variant.
          */
-        SpriteDef *getSprite(const std::string &path, const int &variant = 0);
+        SpriteDef *getSprite(const std::string &path, const int variant = 0);
 
         /**
          * Releases a resource, placing it in the set of orphaned resources.

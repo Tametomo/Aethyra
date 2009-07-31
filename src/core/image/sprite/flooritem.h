@@ -43,7 +43,7 @@ class FloorItem : public Sprite
         /**
          * Constructor.
          */
-        FloorItem(const int &id, const int &itemId, const int &x, const int &y,
+        FloorItem(const int id, const int itemId, const int x, const int y,
                   Map *map);
 
         /**
@@ -54,12 +54,12 @@ class FloorItem : public Sprite
         /**
          * Returns instance id of this item.
          */
-        const int &getId() const { return mId; }
+        const int getId() const { return mId; }
 
         /**
          * Returns the item id.
          */
-        int getItemId() const;
+        const int getItemId() const;
 
         /**
          * Returns the item object. Useful for adding an item link for the floor
@@ -70,27 +70,27 @@ class FloorItem : public Sprite
         /**
          * Returns the x coordinate.
          */
-        const int &getX() const { return mX; }
+        const int getX() const { return mX; }
 
         /**
          * Returns the y coordinate.
          */
-        const int &getY() const { return mY; }
+        const int getY() const { return mY; }
 
         /**
          * Returns the pixel y coordinate.
          *
          * @see Sprite::getPixelY()
          */
-        int getPixelY() const { return mY * 32; }
+        const int getPixelY() const { return mY * 32; }
 
         /**
          * Draws this floor item to the given graphics context.
          *
          * @see Sprite::draw(Graphics, int, int)
          */
-        void draw(Graphics *graphics, const int &offsetX,
-                  const int &offsetY) const;
+        void draw(Graphics *graphics, const int offsetX,
+                  const int offsetY) const;
 
     private:
         int mId;

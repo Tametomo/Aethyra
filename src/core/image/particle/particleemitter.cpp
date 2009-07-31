@@ -38,7 +38,7 @@
 #define DEG_RAD_FACTOR 0.017453293f
 
 ParticleEmitter::ParticleEmitter(const xmlNodePtr &emitterNode, Particle *target,
-                                 Map *map, const int &rotation):
+                                 Map *map, const int rotation):
     mOutputPauseLeft(0),
     mParticleImage(0)
 {
@@ -369,7 +369,7 @@ ParticleEmitter::readParticleEmitterProp(xmlNodePtr propertyNode, T def)
     return retval;
 }
 
-std::list<Particle *> ParticleEmitter::createParticles(const int &tick)
+std::list<Particle *> ParticleEmitter::createParticles(const int tick)
 {
     std::list<Particle *> newParticles;
 

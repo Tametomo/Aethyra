@@ -309,8 +309,8 @@ CharCreateDialog::~CharCreateDialog()
 
 void CharCreateDialog::action(const gcn::ActionEvent &event)
 {
-    const int &numberOfColors = ColorDB::size();
-    const int &numberOfHair = mPlayer->getNumOfHairstyles();
+    const int numberOfColors = ColorDB::size();
+    const int numberOfHair = mPlayer->getNumOfHairstyles();
     if (event.getId() == "create")
     {
         if (getName().length() >= 4)

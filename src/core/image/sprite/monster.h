@@ -31,7 +31,7 @@ class Text;
 class Monster : public Being
 {
     public:
-        Monster(const int &id, const Uint16 &job, Map *map);
+        Monster(const int id, const Uint16 &job, Map *map);
 
         ~Monster();
 
@@ -56,7 +56,7 @@ class Monster : public Being
          * @param damage the amount of damage dealt (0 means miss)
          * @param type the attack type
          */
-        virtual void handleAttack(Being *victim, const int &damage,
+        virtual void handleAttack(Being *victim, const int damage,
                                   const AttackType &type);
 
         /**
@@ -66,7 +66,7 @@ class Monster : public Being
          * @param damage the amount of damage recieved (0 means miss)
          * @param type the attack type
          */
-        virtual void takeDamage(const Being *attacker, const int &amount,
+        virtual void takeDamage(const Being *attacker, const int amount,
                                 const AttackType &type);
 
         /**
@@ -77,7 +77,7 @@ class Monster : public Being
         /**
          * Determine whether the mob should show it's name
          */
-        void showName(const bool &show);
+        void showName(const bool show);
 
     protected:
         /**

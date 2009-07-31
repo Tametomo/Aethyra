@@ -76,8 +76,8 @@ class TileAnimation
     public:
         TileAnimation(Animation *ani);
         ~TileAnimation();
-        void update(const int &ticks = 1);
-        void addAffectedTile(MapLayer *layer, const int &index)
+        void update(const int ticks = 1);
+        void addAffectedTile(MapLayer *layer, const int index)
         { mAffected.push_back(std::make_pair(layer, index)); }
     private:
         std::list<std::pair<MapLayer*, int> > mAffected;
@@ -97,8 +97,8 @@ class MapLayer
          * fringe layer. The fringe layer is the layer that draws the sprites.
          * There can be only one fringe layer per map.
          */
-        MapLayer(const int &x, const int &y, const int &width, const int &height,
-                 const bool &isFringeLayer);
+        MapLayer(const int x, const int y, const int width, const int height,
+                 const bool isFringeLayer);
 
         /**
          * Destructor.
@@ -108,17 +108,17 @@ class MapLayer
         /**
          * Set tile image, with x and y in layer coordinates.
          */
-        void setTile(const int &x, const int &y, Image *img);
+        void setTile(const int x, const int y, Image *img);
 
         /**
          * Set tile image with x + y * width already known.
          */
-        void setTile(const int &index, Image *img) { mTiles[index] = img; }
+        void setTile(const int index, Image *img) { mTiles[index] = img; }
 
         /**
          * Get tile image, with x and y in layer coordinates.
          */
-        Image *getTile(const int &x, const int &y) const;
+        Image *getTile(const int x, const int y) const;
 
         /**
          * Draws this layer to the given graphics context. The coordinates are
@@ -148,8 +148,8 @@ class Map : public Properties
         /**
          * Constructor, taking map and tile size as parameters.
          */
-        Map(const int &width, const int &height, const int &tileWidth,
-            const int &tileHeight);
+        Map(const int width, const int height, const int tileWidth,
+            const int tileHeight);
 
         /**
          * Destructor.
@@ -165,7 +165,7 @@ class Map : public Properties
         /**
          * Updates animations. Called as needed.
          */
-        void update(const int &ticks = 1);
+        void update(const int ticks = 1);
 
         /**
          * Draws the map to the given graphics output. This method draws all
@@ -186,22 +186,22 @@ class Map : public Properties
         /**
          * Finds the tile set that a tile with the given global id is part of.
          */
-        Tileset *getTilesetWithGid(const int &gid) const;
+        Tileset *getTilesetWithGid(const int gid) const;
 
         /**
          * Get tile reference.
          */
-        MetaTile *getMetaTile(const int &x, const int &y);
+        MetaTile *getMetaTile(const int x, const int y);
 
         /**
          * Set walkability flag for a tile.
          */
-        void setWalk(const int &x, const int &y, const bool &walkable);
+        void setWalk(const int x, const int y, const bool walkable);
 
         /**
          * Tell if a tile collides, not including a check on beings.
          */
-        bool tileCollides(const int &x, const int &y) const;
+        bool tileCollides(const int x, const int y) const;
 
         /**
          * Returns the width of this map in tiles.
@@ -229,8 +229,8 @@ class Map : public Properties
         /**
          * Find a path from one location to the next.
          */
-        Path findPath(const int &startX, const int &startY, const int &destX,
-                      const int &destY);
+        Path findPath(const int startX, const int startY, const int destX,
+                      const int destY);
 
         /**
          * Adds a sprite to the map.
@@ -245,8 +245,8 @@ class Map : public Properties
         /**
          * Adds a particle effect
          */
-        void addParticleEffect(const std::string &effectFile, const int &x,
-                               const int &y);
+        void addParticleEffect(const std::string &effectFile, const int x,
+                               const int y);
 
         /**
          * Initializes all added particle effects
@@ -256,30 +256,30 @@ class Map : public Properties
         /**
          * Adds a tile animation to the map
          */
-        void addAnimation(const int &gid, TileAnimation *animation)
+        void addAnimation(const int gid, TileAnimation *animation)
         { mTileAnimations[gid] = animation; }
 
         /**
          * Gets the tile animation for a specific gid
          */
-        TileAnimation *getAnimationForGid(const int &gid);
+        TileAnimation *getAnimationForGid(const int gid);
 
     private:
         /**
          * Draws the overlay graphic to the given graphics output.
          */
-        void drawOverlay(Graphics *graphics, const float &scrollX,
-                         const float &scrollY, const int &detail);
+        void drawOverlay(Graphics *graphics, const float scrollX,
+                         const float scrollY, const int detail);
 
         /**
          * Tells whether a tile is occupied by a being.
          */
-        bool occupied(const int &x, const int &y) const;
+        bool occupied(const int x, const int y) const;
 
         /**
          * Tells whether the given coordinates fall within the map boundaries.
          */
-        bool contains(const int &x, const int &y) const;
+        bool contains(const int x, const int y) const;
 
         int mWidth, mHeight;
         int mTileWidth, mTileHeight;

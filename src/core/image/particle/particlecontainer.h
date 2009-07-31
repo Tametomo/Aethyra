@@ -44,7 +44,7 @@ public:
      * delParent means that the destructor should also free the parent.
      */
     ParticleContainer(ParticleContainer *parent = NULL,
-                      const bool &delParent = true);
+                      const bool delParent = true);
     virtual ~ParticleContainer();
 
     /**
@@ -60,7 +60,7 @@ public:
     /**
      * Sets the positions of all elements
      */
-    virtual void moveTo(const float &x, const float &y);
+    virtual void moveTo(const float x, const float y);
 
 protected:
     const bool mDelParent;             /**< Delete mNext in destructor */
@@ -73,7 +73,7 @@ protected:
 class ParticleList : public ParticleContainer
 {
 public:
-    ParticleList(ParticleContainer *parent = NULL, const bool &delParent = true);
+    ParticleList(ParticleContainer *parent = NULL, const bool delParent = true);
     virtual ~ParticleList();
 
     /**
@@ -88,7 +88,7 @@ public:
 
     virtual void clearLocally();
 
-    virtual void moveTo(const float &x, const float &y);
+    virtual void moveTo(const float x, const float y);
 
 protected:
     std::list<Particle*> mElements;    /**< Contained particle effects */
@@ -100,22 +100,22 @@ protected:
 class ParticleVector : public ParticleContainer
 {
 public:
-    ParticleVector(ParticleContainer *parent = NULL, const bool &delParent = true);
+    ParticleVector(ParticleContainer *parent = NULL, const bool delParent = true);
     virtual ~ParticleVector();
 
     /**
      * Sets a particle at a specified index.  Kills the previous particle
      * there, if needed.
      */
-    virtual void setLocally(const int &index, Particle *particle);
+    virtual void setLocally(const int index, Particle *particle);
 
     /**
      * Removes a particle at a specified index
      */
-    virtual void delLocally(const int &index);
+    virtual void delLocally(const int index);
 
     virtual void clearLocally();
-    virtual void moveTo(const float &x, const float &y);
+    virtual void moveTo(const float x, const float y);
 
 protected:
     std::vector<Particle*> mIndexedElements;

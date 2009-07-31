@@ -45,7 +45,7 @@ const unsigned int DEFAULT_TILE_HEIGHT = 32;
  * Inflates either zlib or gzip deflated memory. The inflated memory is
  * expected to be freed by the caller.
  */
-int inflateMemory(unsigned char *in, const unsigned int &inLength,
+int inflateMemory(unsigned char *in, const unsigned int inLength,
                   unsigned char *&out, unsigned int &outLength)
 {
     int bufferSize = 256 * 1024;
@@ -111,7 +111,7 @@ int inflateMemory(unsigned char *in, const unsigned int &inLength,
     return ret == Z_STREAM_END ? Z_OK : Z_DATA_ERROR;
 }
 
-int inflateMemory(unsigned char *in, const unsigned int &inLength,
+int inflateMemory(unsigned char *in, const unsigned int inLength,
                   unsigned char *&out)
 {
     unsigned int outLength = 0;
@@ -290,8 +290,8 @@ void MapReader::readProperties(const xmlNodePtr &node, Properties *props)
     }
 }
 
-static void setTile(Map *map, MapLayer *layer, const int &x,
-                    const int &y, const int &gid)
+static void setTile(Map *map, MapLayer *layer, const int x,
+                    const int y, const int gid)
 {
     const Tileset* set = map->getTilesetWithGid(gid);
     if (layer)

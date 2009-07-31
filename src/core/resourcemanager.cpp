@@ -149,7 +149,7 @@ bool ResourceManager::setWriteDir(const std::string &path)
 }
 
 bool ResourceManager::addToSearchPath(const std::string &path,
-                                      const bool &append)
+                                      const bool append)
 {
     logger->log("Adding to PhysicsFS: %s", path.c_str());
     if (!PHYSFS_addToSearchPath(path.c_str(), append ? 1 : 0))
@@ -162,7 +162,7 @@ bool ResourceManager::addToSearchPath(const std::string &path,
 
 void ResourceManager::searchAndAddArchives(const std::string &path,
                                            const std::string &ext,
-                                           const bool &append)
+                                           const bool append)
 {
     const char *dirSep = PHYSFS_getDirSeparator();
     char **list = PHYSFS_enumerateFiles(path.c_str());
@@ -298,8 +298,8 @@ struct FontLoader
     }
 };
 
-TrueTypeFont *ResourceManager::getFont(const std::string &path, const int &size,
-                                       const int &style)
+TrueTypeFont *ResourceManager::getFont(const std::string &path, const int size,
+                                       const int style)
 {
     FontLoader l = { path, size, style };
     std::stringstream ss;
@@ -362,7 +362,7 @@ struct ResizedImageLoader
 };
 
 Image *ResourceManager::getResizedImage(const std::string &imagePath,
-                                        const int &w, const int &h)
+                                        const int w, const int h)
 {
     ResizedImageLoader l = { this, imagePath, w, h };
     std::stringstream ss;
@@ -389,7 +389,7 @@ struct ImageSetLoader
 };
 
 ImageSet *ResourceManager::getImageSet(const std::string &imagePath,
-                                       const int &w, const int &h)
+                                       const int w, const int h)
 {
     ImageSetLoader l = { this, imagePath, w, h };
     std::stringstream ss;
@@ -409,7 +409,7 @@ struct SpriteDefLoader
 };
 
 SpriteDef *ResourceManager::getSprite(const std::string &path,
-                                      const int &variant)
+                                      const int variant)
 {
     SpriteDefLoader l = { path, variant };
     std::stringstream ss;

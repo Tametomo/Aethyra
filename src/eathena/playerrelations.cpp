@@ -285,7 +285,7 @@ unsigned int PlayerRelationsManager::getDefault() const
     return mDefaultPermissions;
 }
 
-void PlayerRelationsManager::setDefault(const unsigned int &permissions)
+void PlayerRelationsManager::setDefault(const unsigned int permissions)
 {
     mDefaultPermissions = permissions;
 
@@ -307,7 +307,7 @@ public:
         mShortName = PLAYER_IGNORE_STRATEGY_NOP;
     }
 
-    virtual void ignore(Player *player, const unsigned int &flags)
+    virtual void ignore(Player *player, const unsigned int flags)
     {
     }
 };
@@ -321,7 +321,7 @@ public:
         mShortName = "dotdotdot";
     }
 
-    virtual void ignore(Player *player, const unsigned int &flags)
+    virtual void ignore(Player *player, const unsigned int flags)
     {
         player->setSpeech("...", 500);
     }
@@ -337,7 +337,7 @@ public:
         mShortName = "blinkname";
     }
 
-    virtual void ignore(Player *player, const unsigned int &flags)
+    virtual void ignore(Player *player, const unsigned int flags)
     {
         player->flash(200);
     }
@@ -354,7 +354,7 @@ public:
         mShortName = shortname;
     }
 
-    virtual void ignore(Player *player, const unsigned int &flags)
+    virtual void ignore(Player *player, const unsigned int flags)
     {
         player->setEmote(mEmotion, IGNORE_EMOTE_TIME);
     }

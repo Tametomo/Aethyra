@@ -33,15 +33,15 @@ class FloorItemManager
     public:
         ~FloorItemManager();
 
-        FloorItem* create(const int &id, const int &itemId, const int &x,
-                          const int &y, Map *map);
+        FloorItem* create(const int id, const int itemId, const int x,
+                          const int y, Map *map);
 
         void destroy(FloorItem *item);
 
         void clear();
 
-        FloorItem* findById(const int &id);
-        FloorItem* findByCoordinates(const int &x, const int &y);
+        FloorItem* findById(const int id);
+        FloorItem* findByCoordinates(const int x, const int y);
 
     private:
         typedef std::list<FloorItem*> FloorItems;

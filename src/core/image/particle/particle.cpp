@@ -238,12 +238,12 @@ void Particle::moveBy(const Vector &change)
     }
 }
 
-void Particle::moveTo(const float &x, const float &y)
+void Particle::moveTo(const float x, const float y)
 {
     moveTo(Vector(x, y, mPos.z));
 }
 
-void Particle::changeParticleDetailLevel(const int &value)
+void Particle::changeParticleDetailLevel(const int value)
 {
     beingManager->loadParticleEffects();
 
@@ -255,8 +255,8 @@ void Particle::changeParticleDetailLevel(const int &value)
 }
 
 Particle* Particle::addEffect(const std::string &particleEffectFile,
-                              const int &pixelX, const int &pixelY,
-                              const int &rotation)
+                              const int pixelX, const int pixelY,
+                              const int rotation)
 {
     Particle *newParticle = NULL;
 
@@ -330,9 +330,9 @@ Particle* Particle::addEffect(const std::string &particleEffectFile,
     return newParticle;
 }
 
-Particle *Particle::addTextSplashEffect(const std::string &text, const int &x,
-                                        const int &y, const gcn::Color *color,
-                                        gcn::Font *font, const bool &outline)
+Particle *Particle::addTextSplashEffect(const std::string &text, const int x,
+                                        const int y, const gcn::Color *color,
+                                        gcn::Font *font, const bool outline)
 {
     Particle *newParticle = new TextParticle(mMap, text, color, font, outline);
     newParticle->moveTo(x, y);
@@ -350,10 +350,10 @@ Particle *Particle::addTextSplashEffect(const std::string &text, const int &x,
 }
 
 Particle *Particle::addTextRiseFadeOutEffect(const std::string &text,
-                                             const int &x, const int &y,
+                                             const int x, const int y,
                                              const gcn::Color *color,
                                              gcn::Font *font,
-                                             const bool &outline)
+                                             const bool outline)
 {
     Particle *newParticle = new TextParticle(mMap, text, color, font, outline);
     newParticle->moveTo(x, y);

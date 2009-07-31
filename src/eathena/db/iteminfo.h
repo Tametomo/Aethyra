@@ -56,9 +56,9 @@ class ItemInfo
         {
         }
 
-        void setId(const int &id) { mId = id; }
+        void setId(const int id) { mId = id; }
 
-        const int &getId() const { return mId; }
+        const int getId() const { return mId; }
 
         void setName(const std::string &name) { mName = name; }
 
@@ -87,18 +87,18 @@ class ItemInfo
 
         const std::string& getType() const { return mType; }
 
-        void setWeight(const short &weight) { mWeight = weight; }
+        void setWeight(const short weight) { mWeight = weight; }
 
-        const short &getWeight() const { return mWeight; }
+        const short getWeight() const { return mWeight; }
 
-        void setView(const int &view) { mView = view; }
+        void setView(const int view) { mView = view; }
 
         void setSprite(const std::string &animationFile, const Gender &gender)
         { mAnimationFiles[gender] = animationFile; }
 
         const std::string& getSprite(const Gender &gender) const;
 
-        void setWeaponType(const int&);
+        void setWeaponType(const int);
 
         const SpriteAction &getAttackType() const { return mAttackType; }
 
@@ -111,7 +111,7 @@ class ItemInfo
          * A bitmask of which equipment slots will be used by this item.
          * If the item is not equippable, it returns 0.
          */
-        int getEquipSlots() const { return mEquipSlots; }
+        const int getEquipSlots() const { return mEquipSlots; }
 
     protected:
         std::string mImageName;      /**< The filename of the icon image. */

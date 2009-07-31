@@ -153,7 +153,7 @@ class Being : public Sprite
         /**
          * Constructor.
          */
-        Being(const int &id, const int &job, Map *map);
+        Being(const int id, const int job, Map *map);
 
         /**
          * Destructor.
@@ -177,7 +177,7 @@ class Being : public Sprite
          * @param text The text that should appear.
          * @param time The amount of time the text should stay in milliseconds.
          */
-        void setSpeech(const std::string &text, const int &time = 500);
+        void setSpeech(const std::string &text, const int time = 500);
 
         /**
          * Puts a damage bubble above this being.
@@ -186,7 +186,7 @@ class Being : public Sprite
          * @param damage the amount of damage recieved (0 means miss)
          * @param type the attack type
          */
-        virtual void takeDamage(const Being *attacker, const int &damage,
+        virtual void takeDamage(const Being *attacker, const int damage,
                                 const AttackType &type);
 
         /**
@@ -196,7 +196,7 @@ class Being : public Sprite
          * @param damage the amount of damage dealt (0 means miss)
          * @param type the attack type
          */
-        virtual void handleAttack(Being *victim, const int &damage,
+        virtual void handleAttack(Being *victim, const int damage,
                                   const AttackType &type);
 
         /**
@@ -214,27 +214,27 @@ class Being : public Sprite
         /**
          * Gets the hair color for this being.
          */
-        int getHairColor() const { return mHairColor; }
+        const int getHairColor() const { return mHairColor; }
 
         /**
          * Gets the hair style for this being.
          */
-        int getHairStyle() const { return mHairStyle; }
+        const int getHairStyle() const { return mHairStyle; }
 
         /**
          * Get the number of hairstyles implemented
          */
-        static const int &getNumOfHairstyles() { return mNumberOfHairstyles; }
+        static const int getNumOfHairstyles() { return mNumberOfHairstyles; }
 
         /**
          * Sets the hair style and color for this being.
          */
-        virtual void setHairStyle(const int &style, const int &color);
+        virtual void setHairStyle(const int style, const int color);
 
         /**
          * Sets visible equipments for this being.
          */
-        virtual void setSprite(const int &slot, const int &id,
+        virtual void setSprite(const int slot, const int id,
                                const std::string &color = "");
 
         /**
@@ -260,13 +260,13 @@ class Being : public Sprite
         /**
          * Draws the speech text above the being.
          */
-        void drawSpeech(const int &offsetX, const int &offsetY);
+        void drawSpeech(const int offsetX, const int offsetY);
 
         /**
          * Draws the emotion picture above the being.
          */
-        void drawEmotion(Graphics *graphics, const int &offsetX,
-                         const int &offsetY);
+        void drawEmotion(Graphics *graphics, const int offsetX,
+                         const int offsetY);
 
         /**
          * Returns the type of the being.
@@ -291,7 +291,7 @@ class Being : public Sprite
         /**
          * Sets the sprite id.
          */
-        void setId(const int &id) { mId = id; }
+        void setId(const int id) { mId = id; }
 
         /**
          * Sets the map the being is on
@@ -316,7 +316,7 @@ class Being : public Sprite
         /**
          * Gets the current action.
          */
-        int getWalkTime() { return mWalkTime; }
+        const int getWalkTime() { return mWalkTime; }
 
         /**
          * Returns the direction the being is facing.
@@ -328,40 +328,40 @@ class Being : public Sprite
          *
          * @see Sprite::draw(Graphics, int, int)
          */
-        virtual void draw(Graphics *graphics, const int &offsetX,
-                          const int &offsetY) const;
+        virtual void draw(Graphics *graphics, const int offsetX,
+                          const int offsetY) const;
 
         /**
          * Returns the pixel X coordinate.
          */
-        const int &getPixelX() const { return mPx; }
+        const int getPixelX() const { return mPx; }
 
         /**
          * Returns the pixel Y coordinate.
          *
          * @see Sprite::getPixelY()
          */
-        int getPixelY() const { return mPy; }
+        const int getPixelY() const { return mPy; }
 
         /**
          * Get the current X pixel offset.
          */
-        int getXOffset() const { return getOffset(LEFT, RIGHT); }
+        const int getXOffset() const { return getOffset(LEFT, RIGHT); }
 
         /**
          * Get the current Y pixel offset.
          */
-        int getYOffset() const { return getOffset(UP, DOWN); }
+        const int getYOffset() const { return getOffset(UP, DOWN); }
 
         /**
          * Returns the horizontal size of the current base sprite of the being
          */
-        virtual int getWidth() const;
+        virtual const int getWidth() const;
 
         /**
          * Returns the vertical size of the current base sprite of the being
          */
-        virtual int getHeight() const;
+        virtual const int getHeight() const;
 
         /**
          * Returns the required size of a target cursor for this being.
@@ -396,7 +396,7 @@ class Being : public Sprite
             mEmotionTime = emote_time;
         }
 
-        virtual AnimatedSprite* getSprite(const int &index) const
+        virtual AnimatedSprite* getSprite(const int index) const
             { return mSprites[index]; }
 
         static void load();
@@ -449,7 +449,7 @@ class Being : public Sprite
          * Calculates the offset in the given directions.
          * If walking in direction 'neg' the value is negated.
          */
-        int getOffset(const char &pos, const char &neg) const;
+        const int getOffset(const char &pos, const char &neg) const;
 
         // Speech Bubble components
         SpeechBubble *mSpeechBubble;

@@ -42,10 +42,10 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
         void action(const gcn::ActionEvent &event);
 
     private:
-        void setSpeechModeLabel(const int &value);
-        void setOverlayDetailLabel(const int &value);
-        void setParticleDetailLabel(const int &value);
-        void changeParticleDetailLevel(const int &value);
+        void setSpeechModeLabel(const int value);
+        void setOverlayDetailLabel(const int value);
+        void setParticleDetailLabel(const int value);
+        void changeParticleDetailLevel(const int value);
 
         bool mFullScreenEnabled;
         bool mOpenGLEnabled;

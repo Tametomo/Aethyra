@@ -112,7 +112,7 @@ void EmoteDB::unload()
     mLoaded = false;
 }
 
-const EmoteInfo *EmoteDB::get(const int &id)
+const EmoteInfo *EmoteDB::get(const int id)
 {
     EmoteInfosIterator i = mEmoteInfos.find(id);
 
@@ -125,13 +125,13 @@ const EmoteInfo *EmoteDB::get(const int &id)
         return i->second;
 }
 
-const AnimatedSprite* EmoteDB::getAnimation(const int &id)
+const AnimatedSprite* EmoteDB::getAnimation(const int id)
 {
     const EmoteInfo *info = get(id);
     return info->sprites.front()->sprite;
 }
 
-const int& EmoteDB::getLast()
+const int EmoteDB::getLast()
 {
     return mLastEmote;
 }

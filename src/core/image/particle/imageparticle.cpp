@@ -38,7 +38,7 @@ ImageParticle::~ImageParticle()
     if (mImage) mImage->decRef();
 }
 
-void ImageParticle::draw(Graphics *graphics, const int &offsetX, const int &offsetY) const
+void ImageParticle::draw(Graphics *graphics, const int offsetX, const int offsetY) const
 {
     if (!mAlive || !mImage)
         return;
