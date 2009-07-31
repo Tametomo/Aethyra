@@ -262,7 +262,8 @@ void ItemContainer::refindSelectedItem()
     {
         Item* item = mInventory->getItem(mSelectedItemIndex);
 
-        if (item && item->getId() == mLastSelectedItemId)
+        if (item && item->getId() == mLastSelectedItemId &&
+            item->getQuantity() > 0)
             return; // we're already fine
 
         // Otherwise ensure the invariant: we must point to an item of the
@@ -271,7 +272,8 @@ void ItemContainer::refindSelectedItem()
         for (int i = 0; i < mMaxItems; i++)
         {
             if (mInventory->getItem(i)->getId() == mLastSelectedItemId &&
-                mInventory->getItem(i))
+                mInventory->getItem(i) &&
+                mInventory->getItem(i)->getQuantity() > 0)
             {
                 mSelectedItemIndex = i;
                 return;
