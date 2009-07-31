@@ -24,7 +24,6 @@
 
 #include <guichan/font.hpp>
 #include <guichan/mouseinput.hpp>
-#include <guichan/selectionlistener.hpp>
 
 #include "inventorywindow.h"
 #include "itemamount.h"
@@ -155,6 +154,16 @@ void InventoryWindow::logic()
     mStoreButton->setVisible(storageWindow->isVisible());
 }
 
+void InventoryWindow::distributeValueChangedEvent()
+{
+    gcn::SelectionEvent event(this);
+    std::list<gcn::SelectionListener*>::iterator i_end = mListeners.end();
+    std::list<gcn::SelectionListener*>::iterator i;
+
+    for (i = mListeners.begin(); i != i_end; ++i)
+        (*i)->valueChanged(event);
+}
+
 void InventoryWindow::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "shortcuts")
@@ -220,9 +229,9 @@ void InventoryWindow::updateButtons()
                                  _("Equip") : _("Use");
 
     mUseButton->setCaption(caption);
-    mUseButton->setEnabled(selectedItem != 0);
-    mDropButton->setEnabled(selectedItem != 0);
-    mStoreButton->setEnabled(selectedItem != 0);
+    mUseButton->setEnabled(selectedItem != NULL);
+    mDropButton->setEnabled(selectedItem != NULL);
+    mStoreButton->setEnabled(selectedItem != NULL);
 }
 
 Item* InventoryWindow::getSelectedItem() const
@@ -240,7 +249,14 @@ void InventoryWindow::valueChanged(const gcn::SelectionEvent &event)
 
         item ? itemShortcut->setSelected(item->getId()) : 
                itemShortcut->setSelected(-1);
+
+        distributeValueChangedEvent();
     }
+}
+
+void InventoryWindow::selectNone() const
+{
+    mItems->selectNone();
 }
 
 void InventoryWindow::requestFocus()
@@ -259,5 +275,5 @@ void InventoryWindow::widgetShown(const gcn::Event& event)
 void InventoryWindow::widgetHidden(const gcn::Event& event)
 {
     Window::widgetHidden(event);
-    mItems->selectNone();
+    selectNone();
 }

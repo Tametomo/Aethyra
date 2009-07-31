@@ -63,6 +63,8 @@ class InventoryWindow : public Window, gcn::ActionListener,
          */
         Item* getSelectedItem() const;
 
+        void selectNone() const;
+
         /**
          * Updates button states.
          */
@@ -88,6 +90,24 @@ class InventoryWindow : public Window, gcn::ActionListener,
          */
         void widgetHidden(const gcn::Event& event);
 
+        /**
+         * Adds a listener to the list that's notified each time a change to
+         * the selection occurs.
+         */
+        void addSelectionListener(gcn::SelectionListener *listener)
+        {
+            mListeners.push_back(listener);
+        }
+
+        /**
+         * Removes a listener from the list that's notified each time a change
+         * to the selection occurs.
+         */
+        void removeSelectionListener(gcn::SelectionListener *listener)
+        {
+            mListeners.remove(listener);
+        }
+
     private:
         ItemContainer *mItems;
 
@@ -109,6 +129,13 @@ class InventoryWindow : public Window, gcn::ActionListener,
         int mMaxSlots;
 
         bool mItemDesc;
+
+        std::list<gcn::SelectionListener*> mListeners;
+
+        /**
+         * Sends out selection events to the list of selection listeners.
+         */
+        void distributeValueChangedEvent(void);
 };
 
 extern InventoryWindow *inventoryWindow;

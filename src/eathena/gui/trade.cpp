@@ -42,7 +42,7 @@
 #include "../../bindings/guichan/widgets/button.h"
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/scrollarea.h"
-#include "../../bindings/guichan/widgets/textfield.h"
+#include "../../bindings/guichan/widgets/inttextfield.h"
 
 #include "../../core/image/sprite/localplayer.h"
 
@@ -85,8 +85,9 @@ TradeWindow::TradeWindow():
 
     mPartnerMoneyLabel = new Label(strprintf(_("You get %d GP."), 0));
     mOwnMoneyLabel = new Label(_("You give:"));
-    mMoneyField = new TextField;
+    mMoneyField = new IntTextField();
     mMoneyField->setWidth(50);
+    mMoneyField->setRange(0, player_node->mGp);
 
     place(1, 0, mPartnerMoneyLabel);
     place(0, 1, mMyScroll).setPadding(3);
@@ -106,6 +107,9 @@ TradeWindow::TradeWindow():
     layout.setColWidth(0, Layout::AUTO_SET);
     layout.setColWidth(1, Layout::AUTO_SET);
 
+    inventoryWindow->addSelectionListener(this);
+
+    mAddButton->setEnabled(inventoryWindow->getSelectedItem() != NULL);
     mOkButton->setCaption(_("OK"));
 
     loadWindowState();
@@ -163,7 +167,6 @@ void TradeWindow::reset()
 {
     mMyInventory->clear();
     mPartnerInventory->clear();
-    mAddButton->setEnabled(true);
     mOkButton->setCaption(_("OK"));
     mOkButton->setActionEventId("ok");
     mOkButton->setEnabled(true);
@@ -171,7 +174,8 @@ void TradeWindow::reset()
     mOkMe = false;
     mPartnerMoneyLabel->setCaption(strprintf(_("You get %d GP."), 0));
     mMoneyField->setEnabled(true);
-    mMoneyField->setText("");
+    mMoneyField->setValue(0);
+    mMoneyField->setRange(0, player_node->mGp);
 }
 
 void TradeWindow::receivedOk(bool own)
@@ -209,16 +213,22 @@ void TradeWindow::tradeItem(Item *item, int quantity)
 
 void TradeWindow::valueChanged(const gcn::SelectionEvent &event)
 {
-    const Item *item;
+    Item *item;
 
     /* If an item is selected in one container, make sure no item is selected
      * in the other container.
      */
     if (event.getSource() == mMyItemContainer &&
-            (item = mMyItemContainer->getSelectedItem()))
+       (item = mMyItemContainer->getSelectedItem()))
         mPartnerItemContainer->selectNone();
     else if ((item = mPartnerItemContainer->getSelectedItem()))
         mMyItemContainer->selectNone();
+
+    if (event.getSource() == inventoryWindow && mMoneyField->isEnabled())
+    {
+        item = inventoryWindow->getSelectedItem();
+        mAddButton->setEnabled(item != NULL && !mMyInventory->contains(item));
+    }
 }
 
 void TradeWindow::action(const gcn::ActionEvent &event)
@@ -227,23 +237,13 @@ void TradeWindow::action(const gcn::ActionEvent &event)
 
     if (event.getId() == "add")
     {
-        if (!inventoryWindow->isVisible() || !item || !mAddButton->isEnabled() ||
-            mMyInventory->getFreeSlot() < 0)
-            return;
-
-        if (mMyInventory->contains(item))
-        {
-            chatWindow->chatLog(_("Failed adding item. You can not "
-                                  "overlap one kind of item on the window."),
-                                  BY_SERVER);
-            return;
-        }
-
         if (item->getQuantity() == 1)
             tradeItem(item, 1);
         // Choose amount of items to trade
         else
             new ItemAmountWindow(AMOUNT_TRADE_ADD, this, item);
+
+        inventoryWindow->selectNone();
     }
     else if (event.getId() == "cancel")
     {
@@ -296,5 +296,8 @@ void TradeWindow::mouseClicked(gcn::MouseEvent &event)
 
 void TradeWindow::requestFocus()
 {
-    mAddButton->requestFocus();
+    if (mAddButton->isEnabled())
+        mAddButton->requestFocus();
+    else
+        mOkButton->requestFocus();
 }

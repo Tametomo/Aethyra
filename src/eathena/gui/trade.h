@@ -30,6 +30,7 @@
 
 #include "../../bindings/guichan/widgets/window.h"
 
+class IntTextField;
 class Inventory;
 class Item;
 class ItemContainer;
@@ -128,7 +129,7 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
         gcn::Label *mPartnerMoneyLabel, *mOwnMoneyLabel;
         gcn::Button *mAddButton, *mOkButton, *mCancelButton;
         ScrollArea *mMyScroll, *mPartnerScroll;
-        gcn::TextField *mMoneyField;
+        IntTextField *mMoneyField;
         bool mOkOther, mOkMe;
 };
 
