@@ -43,6 +43,21 @@ SDLGraphics::~SDLGraphics()
     _endDraw();
 }
 
+void SDLGraphics::_beginDraw()
+{
+    gcn::Rectangle area;
+    area.x = 0;
+    area.y = 0;
+    area.width = mTarget->w;
+    area.height = mTarget->h;
+    pushClipArea(area);
+}
+
+void SDLGraphics::_endDraw()
+{
+    popClipArea();
+}
+
 bool SDLGraphics::pushClipArea(gcn::Rectangle area)
 {
     SDL_Rect rect;
@@ -170,18 +185,14 @@ bool SDLGraphics::resizeVideoMode(int w, int h)
     else
         displayFlags |= SDL_SWSURFACE;
 
-    mTarget = SDL_SetVideoMode(w, h, 0, displayFlags);
+    SDL_Surface *target = SDL_SetVideoMode(w, h, 0, displayFlags);
 
-    if (!mTarget)
+    if (!target)
         return false;
 
-    /**
-     * This is ugly... TODO find a better & cleaner access
-     * to the cliping stack to reset it
-     */
-    mClipStack.top().width=w;
-    mClipStack.top().height=h;
-    //setTarget(mTarget);
+    setTarget(target);
+    Graphics::popClipArea();
+    _beginDraw();
 
     return true;
 }

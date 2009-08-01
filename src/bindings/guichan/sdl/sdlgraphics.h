@@ -121,6 +121,11 @@ class SDLGraphics : public Graphics
          * Takes a screenshot and returns it as SDL surface.
          */
         virtual SDL_Surface* getScreenshot();
+        // Inherited from Graphics
+
+        virtual void _beginDraw();
+
+        virtual void _endDraw();
 
 };
 
