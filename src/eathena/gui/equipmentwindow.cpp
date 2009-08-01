@@ -363,6 +363,8 @@ void EquipmentWindow::mousePressed(gcn::MouseEvent& mouseEvent)
 // Show ItemTooltip
 void EquipmentWindow::mouseMoved(gcn::MouseEvent &event)
 {
+    Window::mouseMoved(event);
+
     if (!mShowItemInfo)
     {
         mItemPopup->setVisible(false);
@@ -392,6 +394,8 @@ void EquipmentWindow::mouseMoved(gcn::MouseEvent &event)
 // Hide ItemTooltip
 void EquipmentWindow::mouseExited(gcn::MouseEvent &event)
 {
+    Window::mouseExited(event);
+
     mItemPopup->setVisible(false);
 }
 

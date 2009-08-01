@@ -795,6 +795,8 @@ void ChatWindow::keyPressed(gcn::KeyEvent & event)
 // Show Tooltip
 void ChatWindow::mouseMoved(gcn::MouseEvent &event)
 {
+    Window::mouseMoved(event);
+
     if (event.getSource() == mRecordButton)
         mToolTip->view(gui->getMouseX(), gui->getMouseY());
     else

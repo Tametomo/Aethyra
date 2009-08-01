@@ -133,8 +133,7 @@ ItemAmountWindow::~ItemAmountWindow()
 // Show ItemTooltip
 void ItemAmountWindow::mouseMoved(gcn::MouseEvent &event)
 {
-    if (!isVisible())
-        return;
+    Window::mouseMoved(event);
 
     if (event.getSource() == mItemIcon)
     {
