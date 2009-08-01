@@ -128,6 +128,8 @@
 		<Unit filename="src\bindings\guichan\truetypefont.h" />
 		<Unit filename="src\bindings\guichan\dialogs\confirmdialog.cpp" />
 		<Unit filename="src\bindings\guichan\dialogs\confirmdialog.h" />
+		<Unit filename="src\bindings\guichan\dialogs\listdialog.cpp" />
+		<Unit filename="src\bindings\guichan\dialogs\listdialog.h" />
 		<Unit filename="src\bindings\guichan\dialogs\okdialog.cpp" />
 		<Unit filename="src\bindings\guichan\dialogs\okdialog.h" />
 		<Unit filename="src\bindings\guichan\dialogs\helpdialog.cpp" />

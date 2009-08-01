@@ -2,7 +2,8 @@
  *  Aethyra
  *  Copyright (C) 2009  Aethyra Development Team
  *
- *  This file is part of Aethyra.
+ *  This file is part of Aethyra derived from original code
+ *  from The Mana World.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,27 +20,31 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef TEXT_INPUT_DIALOG_H
-#define TEXT_INPUT_DIALOG_H
+#ifndef LISTDIALOG_H
+#define LISTDIALOG_H
+
+#include <vector>
 
 #include <guichan/actionlistener.hpp>
+#include <guichan/listmodel.hpp>
 
 #include "../widgets/window.h"
 
 /**
- * The npc integer input dialog.
+ * A dialog box for displaying simple lists.
  *
  * \ingroup Interface
  */
-class TextInputDialog : public Window, public gcn::ActionListener
+class ListDialog : public Window, public gcn::ActionListener,
+                   public gcn::ListModel
 {
     public:
         /**
          * Constructor.
          *
-         * @see Window::Window
+         * @see Window::Window()
          */
-        TextInputDialog(const std::string &caption = "");
+        ListDialog(const std::string &caption);
 
         /**
          * Called when receiving actions from the widgets.
@@ -47,46 +52,50 @@ class TextInputDialog : public Window, public gcn::ActionListener
         virtual void action(const gcn::ActionEvent &event);
 
         /**
-         * Adjusts the size of the text input dialog.
+         * Returns the number of items in the choices list.
          */
-        void adjustSize();
+        int getNumberOfElements();
 
         /**
-         * Reflows the TextInputDialog's layout on font size changes.
+         * Returns the name of item number i of the choices list.
          */
-        virtual void fontChanged();
+        std::string getElementAt(int i);
 
         /**
-         * Returns the current value.
+         * Gets the currently selected element.
          */
-        std::string getValue();
+        const int getSelected();
 
         /**
-         * Resets the textfield for input.
-         */
-        void reset();
-
-        /**
-         * Chnages the current value.
+         * Fills the options list for an NPC dialog.
          *
-         * @param value The new value
+         * @param itemString A string with the options separated with colons.
          */
-        void setValue(const std::string &value);
+        void addOption(const std::string &option);
 
         /**
-         * Requests the textfield to take focus for input.
+         * Resets the list by removing all items.
+         */
+        virtual void reset();
+
+        /**
+         * Called when the dialog is visible to allow for mItemList to request
+         * focus.
          */
         void requestFocus();
 
         /**
-         * Resets the dialog on show events.
+         * Clears the list dialog on hiding
          */
-        void widgetShown(const gcn::Event& event);
+        virtual void widgetHidden(const gcn::Event& event);
 
     private:
-        gcn::TextField *mValueField;
+        gcn::ListBox *mOptionList;
+        gcn::ScrollArea *mScrollArea;
         gcn::Button *mOkButton;
         gcn::Button *mCancelButton;
+
+        std::vector<std::string> mOptions;
 };
 
-#endif
+#endif // LISTDIALOG_H

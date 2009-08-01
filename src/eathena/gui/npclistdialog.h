@@ -23,26 +23,20 @@
 #ifndef GUI_NPCLISTDIALOG_H
 #define GUI_NPCLISTDIALOG_H
 
-#include <vector>
-
-#include <guichan/actionlistener.hpp>
-#include <guichan/listmodel.hpp>
-
-#include "../../bindings/guichan/widgets/window.h"
+#include "../../bindings/guichan/dialogs/listdialog.h"
 
 /**
  * The npc list dialog.
  *
  * \ingroup Interface
  */
-class NpcListDialog : public Window, public gcn::ActionListener,
-                      public gcn::ListModel
+class NpcListDialog : public ListDialog
 {
     public:
         /**
          * Constructor.
          *
-         * @see Window::Window
+         * @see ListDialog::ListDialog()
          */
         NpcListDialog();
 
@@ -50,16 +44,6 @@ class NpcListDialog : public Window, public gcn::ActionListener,
          * Called when receiving actions from the widgets.
          */
         void action(const gcn::ActionEvent &event);
-
-        /**
-         * Returns the number of items in the choices list.
-         */
-        int getNumberOfElements();
-
-        /**
-         * Returns the name of item number i of the choices list.
-         */
-        std::string getElementAt(int i);
 
         /**
          * Fills the options list for an NPC dialog.
@@ -72,12 +56,6 @@ class NpcListDialog : public Window, public gcn::ActionListener,
          * Resets the list by removing all items.
          */
         void reset();
-
-        /**
-         * Called when the dialog is visible to allow for mItemList to request
-         * focus.
-         */
-        void requestFocus();
 
         /**
          * Readjust the window dimensions in case the NPC text dialog was
@@ -93,13 +71,6 @@ class NpcListDialog : public Window, public gcn::ActionListener,
 
     private:
         int mChoice;
-
-        gcn::ListBox *mItemList;
-        gcn::ScrollArea *scrollArea;
-        gcn::Button *okButton;
-        gcn::Button *cancelButton;
-
-        std::vector<std::string> mItems;
 };
 
 extern NpcListDialog *npcListDialog;

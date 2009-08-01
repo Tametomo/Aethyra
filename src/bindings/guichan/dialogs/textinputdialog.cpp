@@ -30,7 +30,7 @@
 
 #include "../../../core/utils/gettext.h"
 
-TextInputDialog::TextInputDialog(std::string caption):
+TextInputDialog::TextInputDialog(const std::string &caption):
     Window(caption)
 {
     setWindowName("TextInputDialog");
@@ -96,7 +96,7 @@ void TextInputDialog::reset()
 
 void TextInputDialog::action(const gcn::ActionEvent &event)
 {
-    // Proxy button events to our listeners
+    // Proxy events to our listeners
     ActionListenerIterator i;
 
     for (i = mActionListeners.begin(); i != mActionListeners.end(); ++i)

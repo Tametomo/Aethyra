@@ -29,6 +29,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/dialogs/confirmdialog.h \
 	      bindings/guichan/dialogs/helpdialog.cpp \
 	      bindings/guichan/dialogs/helpdialog.h \
+	      bindings/guichan/dialogs/listdialog.cpp \
+	      bindings/guichan/dialogs/listdialog.h \
 	      bindings/guichan/dialogs/okdialog.cpp \
 	      bindings/guichan/dialogs/okdialog.h \
 	      bindings/guichan/dialogs/setupdialog.cpp \

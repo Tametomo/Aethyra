@@ -23,20 +23,16 @@
 #ifndef _SERVER_LIST_DIALOG_H
 #define _SERVER_LIST_DIALOG_H
 
-#include <guichan/actionlistener.hpp>
-#include <guichan/listmodel.hpp>
-
-#include "../../bindings/guichan/widgets/window.h"
+#include "../../bindings/guichan/dialogs/listdialog.h"
 
 class LoginData;
-class ServerListModel;
 
 /**
  * A dialog for choosing which server to use when more than one is present.
  *
  * \ingroup Interface
  */
-class ServerListDialog : public Window, public gcn::ActionListener
+class ServerListDialog : public ListDialog
 {
     public:
         /**
@@ -47,20 +43,17 @@ class ServerListDialog : public Window, public gcn::ActionListener
         ServerListDialog(LoginData *loginData, int nextState);
 
         /**
-         * Destructor.
-         */
-        ~ServerListDialog();
-
-        /**
          * Called when receiving actions from the widgets.
          */
         void action(const gcn::ActionEvent &event);
 
+        /**
+         * Initialize the server list.
+         */
+        void widgetShown(const gcn::Event& event);
+
     private:
         LoginData *mLoginData;
-        ServerListModel *mServerListModel;
-        gcn::ListBox *mServerList;
-        gcn::Button *mOkButton;
         int mNextState;
 };
 
