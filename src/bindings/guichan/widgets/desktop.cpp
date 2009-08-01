@@ -98,19 +98,8 @@ Desktop::Desktop():
 
     wallpaperName = Wallpaper::getWallpaper(getWidth(), getHeight());
 
-    ResourceManager *manager = ResourceManager::getInstance();
-    SDLGraphics *g = dynamic_cast<SDLGraphics*>(graphics);
-
-    if ((getWidth() != Wallpaper::getWidth(wallpaperName) ||
-         getHeight() != Wallpaper::getHeight(wallpaperName)) && g)
-    {
-        login_wallpaper = manager->getResizedImage(wallpaperName, getWidth(),
-                                                   getHeight());
-    }
-    else
-    {
-        login_wallpaper = manager->getImage(wallpaperName);
-    }
+    login_wallpaper = NULL;
+    login_wallpaper = changeWallpaper(wallpaperName);
 
     if (!login_wallpaper)
         logger->log("Couldn't load %s as wallpaper", wallpaperName.c_str());
@@ -150,33 +139,15 @@ void Desktop::resize()
         setWidth(newScreenWidth);
         setHeight(newScreenHeight);
 
-        ResourceManager *manager = ResourceManager::getInstance();
         std::string tempWallpaper = Wallpaper::getWallpaper(getWidth(),
                                                             getHeight());
+        Image *temp = changeWallpaper(tempWallpaper);
 
-        SDLGraphics *g = dynamic_cast<SDLGraphics*>(graphics);
-
-        if (tempWallpaper.compare(wallpaperName) != 0 || g)
+        if (temp)
         {
-            Image *temp = NULL;
-
-            if ((getWidth() != Wallpaper::getWidth(tempWallpaper) ||
-                 getHeight() != Wallpaper::getHeight(tempWallpaper)) && g)
-            {
-                temp = manager->getResizedImage(tempWallpaper, getWidth(),
-                                                getHeight());
-            }
-            else if (tempWallpaper.compare(wallpaperName) != 0)
-            {
-                temp = manager->getImage(tempWallpaper);
-            }
-
-            if (temp)
-            {
-                wallpaperName = tempWallpaper;
-                login_wallpaper->decRef();
-                login_wallpaper = temp;
-            }
+            wallpaperName = tempWallpaper;
+            login_wallpaper->decRef();
+            login_wallpaper = temp;
         }
 
         progressBar->setPosition(5, getHeight() - 5 - 
@@ -188,6 +159,40 @@ void Desktop::resize()
     }
 
     setup->setPosition(getWidth() - setup->getWidth() - 3, 3);
+}
+
+Image *Desktop::changeWallpaper(const std::string &wallpaper)
+{
+    ResourceManager *manager = ResourceManager::getInstance();
+    SDLGraphics *g = dynamic_cast<SDLGraphics*>(graphics);
+    Image *temp = NULL;
+
+    if ((getWidth() != Wallpaper::getWidth(wallpaper) ||
+         getHeight() != Wallpaper::getHeight(wallpaper)) && g)
+    {
+        const double aspectRatio = (double) Wallpaper::getWidth(wallpaper) /
+                                   (double) Wallpaper::getHeight(wallpaper);
+        const double newAspectRatio = (double) getWidth() /
+                                      (double) getHeight();
+
+        int width = getWidth();
+        int height = getHeight();
+
+        if (newAspectRatio > aspectRatio)
+            width = height * aspectRatio;
+        else if (aspectRatio > newAspectRatio)
+            height = height / aspectRatio;
+
+        temp = manager->getResizedImage(wallpaper, width, height);
+    }
+    else if (!login_wallpaper || wallpaper.compare(wallpaperName) != 0 ||
+             (g && (getWidth() == Wallpaper::getWidth(wallpaper) &&
+              getHeight() == Wallpaper::getHeight(wallpaper))))
+    {
+        temp = manager->getImage(wallpaper);
+    }
+
+    return temp;
 }
 
 void Desktop::reload()

@@ -96,6 +96,11 @@ class Desktop : public Container
          */
         void logic();
 
+        /**
+         * Changes the wallpaper the desktop uses
+         */
+        Image *changeWallpaper(const std::string &wallpaper);
+
     private:
         /**
          * Positions the given dialog according to the Desktop widget's
