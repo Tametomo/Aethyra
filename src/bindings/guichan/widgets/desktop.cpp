@@ -171,10 +171,9 @@ void Desktop::resize()
                 temp = manager->getImage(tempWallpaper);
             }
 
-            wallpaperName = tempWallpaper;
-
             if (temp)
             {
+                wallpaperName = tempWallpaper;
                 login_wallpaper->decRef();
                 login_wallpaper = temp;
             }

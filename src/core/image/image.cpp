@@ -305,15 +305,14 @@ Image* Image::resize(const int width, const int height)
         return NULL;
 
     // Don't scale at all if the image would get the same dimensions
-    // Also don't scale for OpenGL (for now)
-    if ((width == getWidth() && height == getHeight()) || mGLImage)
+    if (width == getWidth() && height == getHeight())
         return this;
-
-    SDL_Surface* scaledSurface = NULL;
-    Uint8* imageAlphas = NULL;
     
     if (mImage)
     {
+        SDL_Surface* scaledSurface = NULL;
+        Uint8* imageAlphas = NULL;
+
         const double scaleX = (double) width / (double) getWidth();
         const double scaleY = (double) height / (double) getHeight();
 
@@ -332,9 +331,11 @@ Image* Image::resize(const int width, const int height)
                 imageAlphas[i] = a;
             }
         }
+
+        return new Image(scaledSurface, imageAlphas);
     }
 
-    return new Image(scaledSurface, imageAlphas);
+    return this;
 }
 
 SubImage *Image::getSubImage(const int x, const int y, const int width,
@@ -359,7 +360,8 @@ void Image::setAlpha(float alpha)
 
     if (mImage && !mUseOpenGL)
     {
-        SDL_LockSurface(mImage);
+        if (SDL_MUSTLOCK(mImage))
+            SDL_LockSurface(mImage);
 
         // Set the alpha value this image is drawn at, pixel by pixel
         for (int i = 0; i < mImage->w * mImage->h; i++)
@@ -373,7 +375,9 @@ void Image::setAlpha(float alpha)
             ((Uint32 *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format, r,
                                                           g, b, a);
         }
-        SDL_UnlockSurface(mImage);
+
+        if (SDL_MUSTLOCK(mImage))
+            SDL_UnlockSurface(mImage);
     }
 }
 
@@ -389,8 +393,12 @@ Image* Image::merge(Image* image, const int x, const int y)
     int current_offset, surface_offset;
     int offsetX = 0, offsetY = 0;
 
-    SDL_LockSurface(surface);
-    SDL_LockSurface(mImage);
+    if (SDL_MUSTLOCK(mImage))
+    {
+        SDL_LockSurface(surface);
+        SDL_LockSurface(mImage);
+    }
+
     // for each pixel lines of a source image
     for (offsetY = (y > 0 ? 0 : -y); offsetY < image->getHeight() &&
                     y + offsetY < getHeight(); offsetY++)
@@ -444,8 +452,12 @@ Image* Image::merge(Image* image, const int x, const int y)
             }
         }
     }
-    SDL_UnlockSurface(surface);
-    SDL_UnlockSurface(mImage);
+
+    if (SDL_MUSTLOCK(mImage))
+    {
+        SDL_UnlockSurface(surface);
+        SDL_UnlockSurface(mImage);
+    }
 
     Image* newImage = new Image(surface);
 
@@ -538,7 +550,8 @@ void SubImage::setAlpha(float alpha)
 
     if (mImage && !mUseOpenGL)
     {
-        SDL_LockSurface(mImage);
+        if (SDL_MUSTLOCK(mImage))
+            SDL_LockSurface(mImage);
 
         // Set the alpha value this image is drawn at, pixel by pixel
         for (int offsetY = 0; offsetY < getHeight() &&
@@ -559,7 +572,8 @@ void SubImage::setAlpha(float alpha)
                                                               g, b, a);
             }
         }
-        SDL_UnlockSurface(mImage);
+        if (SDL_MUSTLOCK(mImage))
+            SDL_UnlockSurface(mImage);
     }
 }
 
