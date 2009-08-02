@@ -23,6 +23,8 @@
 #ifndef CHATINPUT_H
 #define CHATINPUT_H
 
+#include <list>
+
 #include <guichan/focuslistener.hpp>
 
 #include "textfield.h"
@@ -48,14 +50,29 @@ class ChatInput : public TextField, public gcn::FocusListener
          */
         void focusGained(const gcn::Event &event);
 
+        /** Push a message into the history */
+        void pushToHistory(const std::string &message);
+
         /**
          * Called if the chat input loses focus. It will set itself to
          * invisible as result.
          */
         void focusLost(const gcn::Event &event);
 
+        /** Called when key is pressed */
+        void keyPressed(gcn::KeyEvent &event);
+
+        /** Scrolls through the chat history */
+        void mouseWheelMovedUp(gcn::MouseEvent& mouseEvent);
+        void mouseWheelMovedDown(gcn::MouseEvent& mouseEvent);
+
     private:
         ProxyWidget* mProxy;
+
+        typedef std::list<std::string> History;
+        typedef History::iterator HistoryIterator;
+        History mHistory;           /**< Command history */
+        HistoryIterator mCurHist;   /**< History iterator */
 };
 
 #endif

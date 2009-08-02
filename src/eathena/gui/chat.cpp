@@ -43,8 +43,6 @@
 
 #include "../../bindings/guichan/dialogs/textinputdialog.h"
 
-#include "../../bindings/guichan/sdl/sdlinput.h"
-
 #include "../../bindings/guichan/widgets/browserbox.h"
 #include "../../bindings/guichan/widgets/chatinput.h"
 #include "../../bindings/guichan/widgets/imagebutton.h"
@@ -111,18 +109,16 @@ ChatWindow::ChatWindow():
 
     loadWindowState();
 
-    // Add key listener to chat input to be able to respond to up/down
-    mChatInput->addKeyListener(this);
-    mCurHist = mHistory.end();
-
     // Read the party prefix
     std::string partyPrefix = config.getValue("PartyPrefix", "$");
     mPartyPrefix = (partyPrefix.empty() ? '$' : partyPrefix.at(0));
-    mReturnToggles = config.getValue("ReturnToggles", "0") == "1";
-    mRecorder = new Recorder(this);
     mParty = new Party(this);
 
-    // Initialize several widgets depending on the recorder class.
+    mReturnToggles = config.getValue("ReturnToggles", "0") == "1";
+    mRecorder = new Recorder(this);
+
+    // If we closed the client last with the recorder still open, open the file
+    // that was open then to resume recording.
     updateRecorder(config.getValue(getWindowName() + "Record", ""));
 
     // If the player had @assert on in the last session, ask the server to
@@ -199,11 +195,11 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
             }
             break;
         case BY_PLAYER:
-            tmp.nick += CAT_NORMAL;
+            tmp.nick += ": ";
             lineColor = "##Y";
             break;
         case BY_OTHER:
-            tmp.nick += CAT_NORMAL;
+            tmp.nick += ": ";
             lineColor = "##C";
             break;
         case BY_SERVER:
@@ -213,15 +209,15 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
             lineColor = "##S";
             break;
         case BY_PARTY:
-            tmp.nick += CAT_NORMAL;
+            tmp.nick += ": ";
             lineColor = "##P";
             break;
         case ACT_WHISPER:
-            tmp.nick += CAT_WHISPER;
+            tmp.nick = strprintf(_("%s whispers: "), tmp.nick.c_str());
             lineColor = "##W";
             break;
         case ACT_IS:
-            tmp.nick += CAT_IS;
+            tmp.nick += "";
             lineColor = "##I";
             break;
         case BY_LOGGER:
@@ -321,12 +317,7 @@ void ChatWindow::action(const gcn::ActionEvent & event)
 
         if (!message.empty())
         {
-            // If message different from previous, put it in the history
-            if (mHistory.empty() || message != mHistory.back())
-                mHistory.push_back(message);
-
-            // Reset history iterator
-            mCurHist = mHistory.end();
+            mChatInput->pushToHistory(message);
 
             // Send the message to the server
             chatSend(player_node->getName(), message);
@@ -766,32 +757,6 @@ void ChatWindow::scroll(int amount)
     mTextOutput->showPart(scr);
 }
 
-void ChatWindow::keyPressed(gcn::KeyEvent & event)
-{
-
-    if (event.getKey().getValue() == Key::DOWN && mCurHist != mHistory.end())
-    {
-        // Move forward through the history
-        HistoryIterator prevHist = mCurHist++;
-
-        if (mCurHist != mHistory.end())
-        {
-            mChatInput->setText(*mCurHist);
-            mChatInput->setCaretPosition(mChatInput->getText().length());
-        }
-        else
-            mCurHist = prevHist;
-    }
-    else if (event.getKey().getValue() == Key::UP && mCurHist !=
-             mHistory.begin() && mHistory.size() > 0)
-    {
-        // Move backward through the history
-        mCurHist--;
-        mChatInput->setText(*mCurHist);
-        mChatInput->setCaretPosition(mChatInput->getText().length());
-    }
-}
-
 // Show Tooltip
 void ChatWindow::mouseMoved(gcn::MouseEvent &event)
 {
@@ -802,39 +767,6 @@ void ChatWindow::mouseMoved(gcn::MouseEvent &event)
     else
         mToolTip->setVisible(false);
 }
-
-void ChatWindow::mouseWheelMovedUp(gcn::MouseEvent& mouseEvent)
-{
-    if (mChatInput->isFocused() && mCurHist != mHistory.begin() &&
-        mHistory.size() > 0)
-    {
-        // Move backward through the history
-        mCurHist--;
-        mChatInput->setText(*mCurHist);
-        mChatInput->setCaretPosition(mChatInput->getText().length());
-        mouseEvent.consume();
-    }
-}
-
-void ChatWindow::mouseWheelMovedDown(gcn::MouseEvent& mouseEvent)
-{
-    if (mChatInput->isFocused() && mCurHist != mHistory.end())
-    {
-        // Move forward through the history
-        HistoryIterator prevHist = mCurHist++;
-
-        if (mCurHist != mHistory.end())
-        {
-            mChatInput->setText(*mCurHist);
-            mChatInput->setCaretPosition(mChatInput->getText().length());
-        }
-        else
-            mCurHist = prevHist;
-
-        mouseEvent.consume();
-    }
-}
-
 
 void ChatWindow::addInputText(const std::string &text)
 {

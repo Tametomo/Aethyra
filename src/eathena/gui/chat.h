@@ -23,11 +23,9 @@
 #ifndef CHAT_H
 #define CHAT_H
 
-#include <list>
 #include <string>
 
 #include <guichan/actionlistener.hpp>
-#include <guichan/keylistener.hpp>
 
 #include "../../bindings/guichan/widgets/window.h"
 
@@ -52,14 +50,6 @@ class ToolTip;
 #define ACT_IS        6   // equivalent to "/me" on IRC
 
 #define BY_LOGGER     7
-
-/**
- * gets in between usernick and message text depending on
- * message type
- */
-#define CAT_NORMAL        ": "
-#define CAT_IS            ""
-#define CAT_WHISPER       " whispers: "
 
 /** job dependend identifiers (?)  */
 #define SKILL_BASIC       0x0001
@@ -109,8 +99,7 @@ struct CHATSKILL
  *
  * \ingroup Interface
  */
-class ChatWindow : public Window, public gcn::ActionListener,
-                   public gcn::KeyListener
+class ChatWindow : public Window, public gcn::ActionListener
 {
     public:
         /**
@@ -177,15 +166,8 @@ class ChatWindow : public Window, public gcn::ActionListener,
          */
         void chatSend(const std::string &nick, std::string msg);
 
-        /** Called when key is pressed */
-        void keyPressed(gcn::KeyEvent &event);
-
         /** Shows a tooltip over the record button */
         void mouseMoved(gcn::MouseEvent &event);
-
-        /** Scrolls through the chat history */
-        void mouseWheelMovedUp(gcn::MouseEvent& mouseEvent);
-        void mouseWheelMovedDown(gcn::MouseEvent& mouseEvent);
 
         /** Add the given text to the chat input */
         void addInputText(const std::string &text);
@@ -253,10 +235,6 @@ class ChatWindow : public Window, public gcn::ActionListener,
                                          pressing the record image button will
                                          do during its various states. */
 
-        typedef std::list<std::string> History;
-        typedef History::iterator HistoryIterator;
-        History mHistory;           /**< Command history */
-        HistoryIterator mCurHist;   /**< History iterator */
         Recorder *mRecorder;        /**< Recording class */
         char mPartyPrefix;          /**< Messages beginning with the prefix are
                                          sent to the party */
