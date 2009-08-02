@@ -95,6 +95,11 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
         void tradeItem(Item *item, int quantity);
 
         /**
+         * Returns whether a specific item is already being traded or not.
+         */
+        const bool tradingItem(const Item* item);
+
+        /**
          * Updates the labels and makes sure only one item is selected in
          * either my inventory or partner inventory.
          */
@@ -118,6 +123,11 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
          */
         void requestFocus();
 
+        /**
+         * Returns whether or not the trade window will currently accept trades.
+         */
+        static const bool canTrade();
+
     private:
         typedef const std::auto_ptr<Inventory> InventoryPtr;
         InventoryPtr mMyInventory;
@@ -127,10 +137,14 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
         ItemContainer *mPartnerItemContainer;
 
         gcn::Label *mPartnerMoneyLabel, *mOwnMoneyLabel;
-        gcn::Button *mAddButton, *mOkButton, *mCancelButton;
+        gcn::Button *mOkButton, *mCancelButton;
+
         ScrollArea *mMyScroll, *mPartnerScroll;
         IntTextField *mMoneyField;
+
         bool mOkOther, mOkMe;
+
+        static bool mCanTrade;
 };
 
 extern TradeWindow *tradeWindow;

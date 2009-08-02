@@ -25,7 +25,6 @@
 #include <guichan/font.hpp>
 
 #include "chat.h"
-#include "inventorywindow.h"
 #include "itemamount.h"
 #include "trade.h"
 
@@ -49,6 +48,8 @@
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
+bool TradeWindow::mCanTrade = false;
+
 TradeWindow::TradeWindow():
     Window(_("Trade")),
     mMyInventory(new Inventory(INVENTORY_SIZE)),
@@ -64,10 +65,9 @@ TradeWindow::TradeWindow():
     setMinHeight(209);
 
     std::string longestName = getFont()->getWidth(_("OK")) >
-                                   getFont()->getWidth(_("Trade")) ?
-                                   _("OK") : _("Trade");
+                              getFont()->getWidth(_("Trade")) ?
+                              _("OK") : _("Trade");
 
-    mAddButton = new Button(_("Add"), "add", this);
     mOkButton = new Button(longestName, "ok", this);
     mCancelButton = new Button(_("Cancel"), "cancel", this);
 
@@ -97,8 +97,7 @@ TradeWindow::TradeWindow():
     place(0, 0, mOwnMoneyLabel);
     place(1, 0, mMoneyField);
     place = getPlacer(0, 2);
-    place(5, 0, mCancelButton);
-    place(6, 0, mAddButton);
+    place(6, 0, mCancelButton);
     place(7, 0, mOkButton);
     Layout &layout = getLayout();
     layout.extend(0, 2, 2, 1);
@@ -107,9 +106,6 @@ TradeWindow::TradeWindow():
     layout.setColWidth(0, Layout::AUTO_SET);
     layout.setColWidth(1, Layout::AUTO_SET);
 
-    inventoryWindow->addSelectionListener(this);
-
-    mAddButton->setEnabled(inventoryWindow->getSelectedItem() != NULL);
     mOkButton->setCaption(_("OK"));
 
     loadWindowState();
@@ -165,6 +161,7 @@ void TradeWindow::increaseQuantity(int index, bool own, int quantity)
 
 void TradeWindow::reset()
 {
+    mCanTrade = true;
     mMyInventory->clear();
     mPartnerInventory->clear();
     mOkButton->setCaption(_("OK"));
@@ -187,7 +184,10 @@ void TradeWindow::receivedOk(bool own)
         {
             mOkButton->setCaption(_("Trade"));
             mOkButton->setActionEventId("trade");
+            mOkButton->setEnabled(true);
         }
+        else
+            mOkButton->setEnabled(false);
     }
     else
     {
@@ -196,6 +196,7 @@ void TradeWindow::receivedOk(bool own)
         {
             mOkButton->setCaption(_("Trade"));
             mOkButton->setActionEventId("trade");
+            mOkButton->setEnabled(true);
         }
     }
 }
@@ -211,6 +212,11 @@ void TradeWindow::tradeItem(Item *item, int quantity)
     outMsg.writeInt32(quantity);
 }
 
+const bool TradeWindow::tradingItem(const Item* item)
+{
+    return mMyInventory->contains(item);
+}
+
 void TradeWindow::valueChanged(const gcn::SelectionEvent &event)
 {
     Item *item;
@@ -223,29 +229,11 @@ void TradeWindow::valueChanged(const gcn::SelectionEvent &event)
         mPartnerItemContainer->selectNone();
     else if ((item = mPartnerItemContainer->getSelectedItem()))
         mMyItemContainer->selectNone();
-
-    if (event.getSource() == inventoryWindow && mMoneyField->isEnabled())
-    {
-        item = inventoryWindow->getSelectedItem();
-        mAddButton->setEnabled(item != NULL && !mMyInventory->contains(item));
-    }
 }
 
 void TradeWindow::action(const gcn::ActionEvent &event)
 {
-    Item *item = inventoryWindow->getSelectedItem();
-
-    if (event.getId() == "add")
-    {
-        if (item->getQuantity() == 1)
-            tradeItem(item, 1);
-        // Choose amount of items to trade
-        else
-            new ItemAmountWindow(AMOUNT_TRADE_ADD, this, item);
-
-        inventoryWindow->selectNone();
-    }
-    else if (event.getId() == "cancel")
+    if (event.getId() == "cancel")
     {
         close();
     }
@@ -265,7 +253,7 @@ void TradeWindow::action(const gcn::ActionEvent &event)
             mMoneyField->setText("");
 
         mMoneyField->setEnabled(false);
-        mAddButton->setEnabled(false);
+        mCanTrade = true;
         MessageOut outMsg(CMSG_TRADE_ADD_COMPLETE);
     }
     else if (event.getId() == "trade")
@@ -278,6 +266,7 @@ void TradeWindow::action(const gcn::ActionEvent &event)
 
 void TradeWindow::close()
 {
+    mCanTrade = false;
     MessageOut outMsg(CMSG_TRADE_CANCEL_REQUEST);
 }
 
@@ -296,8 +285,10 @@ void TradeWindow::mouseClicked(gcn::MouseEvent &event)
 
 void TradeWindow::requestFocus()
 {
-    if (mAddButton->isEnabled())
-        mAddButton->requestFocus();
-    else
-        mOkButton->requestFocus();
+    mOkButton->requestFocus();
+}
+
+const bool TradeWindow::canTrade()
+{
+    return mCanTrade && tradeWindow->isVisible();
 }

@@ -134,7 +134,10 @@ void StorageWindow::action(const gcn::ActionEvent &event)
             return;
 
         if (item->getQuantity() == 1)
+        {
             removeStore(item, 1);
+            selectNone();
+        }
         // Choose amount of items to retrieve
         else
             new ItemAmountWindow(AMOUNT_STORE_REMOVE, this, item);
@@ -186,6 +189,11 @@ void StorageWindow::removeStore(Item *item, int amount)
 void StorageWindow::close()
 {
     MessageOut outMsg(CMSG_CLOSE_STORAGE);
+}
+
+void StorageWindow::selectNone() const
+{
+    mItems->selectNone();
 }
 
 void StorageWindow::requestFocus()

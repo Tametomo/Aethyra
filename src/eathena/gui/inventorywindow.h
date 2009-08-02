@@ -116,8 +116,8 @@ class InventoryWindow : public Window, gcn::ActionListener,
         int mUsedSlots;
         int mTotalWeight;
         int mMaxWeight;
-        gcn::Button *mShortcutButton;
-        gcn::Button *mStoreButton, *mUseButton, *mDropButton;
+        gcn::Button *mShortcutButton, *mTradeButton, *mStoreButton;
+        gcn::Button *mUseButton, *mDropButton;
         gcn::ScrollArea *mInvenScroll;
 
         gcn::Label *mWeightLabel;

@@ -102,7 +102,7 @@ class Inventory
         /**
          * Checks if the given item is in the inventory
          */
-        bool contains(Item *item) const;
+        const bool contains(const Item *item) const;
 
         /**
          * Returns id of next free slot or -1 if all occupied.

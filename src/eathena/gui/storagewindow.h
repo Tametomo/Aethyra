@@ -98,6 +98,8 @@ class StorageWindow : public Window, gcn::ActionListener, gcn::SelectionListener
          */
         void requestFocus();
 
+        void selectNone() const;
+
     private:
         ItemContainer *mItems;
 

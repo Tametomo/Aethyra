@@ -301,7 +301,8 @@ void PopupMenu::showPopup(int x, int y)
 
             mModel->addLink("drop", _("Drop"));
 
-            if (tradeWindow && tradeWindow->isVisible())
+            if (tradeWindow &&  tradeWindow->canTrade() &&
+                !tradeWindow->tradingItem(mItem))
                 mModel->addLink("tradeitem", _("Trade"));
 
             if (storageWindow && storageWindow->isVisible())

@@ -186,10 +186,7 @@ void ItemContainer::draw(gcn::Graphics *graphics)
     {
         Item *item = mInventory->getItem(i);
 
-        if (!item || item->getQuantity() <= 0)
-            continue;
-
-        if (!passesFilter(item))
+        if (!item || item->getQuantity() <= 0 || !passesFilter(item))
             continue;
 
         // Work out the object's position,
@@ -252,7 +249,9 @@ Item *ItemContainer::getSelectedItem()
 
 void ItemContainer::selectNone()
 {
-    setSelectedItemIndex(NO_ITEM);
+    mLastSelectedItemId = mSelectedItemIndex = NO_ITEM;
+    mItemPopup->setVisible(false);
+    distributeValueChangedEvent();
 }
 
 void ItemContainer::refindSelectedItem()
@@ -270,9 +269,10 @@ void ItemContainer::refindSelectedItem()
 
         for (int i = 0; i < mMaxItems; i++)
         {
-            if (mInventory->getItem(i)->getId() == mLastSelectedItemId &&
-                mInventory->getItem(i) &&
-                mInventory->getItem(i)->getQuantity() > 0)
+            Item* item = mInventory->getItem(i); 
+
+            if (item && item->getId() == mLastSelectedItemId &&
+                item->getQuantity() > 0)
             {
                 mSelectedItemIndex = i;
                 return;
@@ -351,7 +351,7 @@ void ItemContainer::showItemPopup(bool show)
 {
     Item *item = getSelectedItem();
 
-    if (!item)
+    if (!item || item->getQuantity() <= 0 || !passesFilter(item))
         return;
 
     if (item->getInfo().getName() != mItemPopup->getItemName())
@@ -518,10 +518,7 @@ void ItemContainer::mouseExited(gcn::MouseEvent &event)
 
 void ItemContainer::focusGained(const gcn::Event &event)
 {
-    Item *item = getSelectedItem();
-
-    if (isVisible() && mShowItemInfo && item && passesFilter(item))
-        showItemPopup(true);
+    showItemPopup(mShowItemInfo);
 }
 
 void ItemContainer::focusLost(const gcn::Event &event)
@@ -544,10 +541,7 @@ Item* ItemContainer::getItemInVisibleSlot(const int gridSlot)
     {
         Item *item = mInventory->getItem(i);
 
-        if (!item || item->getQuantity() <= 0)
-            continue;
-
-        if (!passesFilter(item))
+        if (!item || item->getQuantity() <= 0 || !passesFilter(item))
             continue;
 
         itemCount++;
@@ -566,10 +560,7 @@ int ItemContainer::getVisibleSlot(const Item* searchItem) const
     {
         Item *item = mInventory->getItem(i);
 
-        if (!item || item->getQuantity() <= 0)
-            continue;
-
-        if (!passesFilter(item))
+        if (!item || item->getQuantity() <= 0 || !passesFilter(item))
             continue;
 
         itemCount++;
@@ -614,8 +605,7 @@ bool ItemContainer::passesFilter(const Item* item) const
     //The two filters aren't intended to be used together.  For
     //now let's make it allow only items that pass both filters,
     //and see what use-cases come up.
-    return (passesEquipSlotsFilter(item)
-        && passesTypeFilter(item));
+    return (passesEquipSlotsFilter(item) && passesTypeFilter(item));
 }
 
 bool ItemContainer::passesEquipSlotsFilter(const Item* item) const

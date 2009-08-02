@@ -118,7 +118,7 @@ void Inventory::removeItemAt(int index)
     mItems[index] = 0;
 }
 
-bool Inventory::contains(Item *item) const
+const bool Inventory::contains(const Item *item) const
 {
     for (int i = 0; i < mSize; i++)
         if (mItems[i] && mItems[i]->getId() == item->getId())

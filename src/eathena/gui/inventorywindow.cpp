@@ -28,6 +28,7 @@
 #include "inventorywindow.h"
 #include "itemamount.h"
 #include "storagewindow.h"
+#include "trade.h"
 
 #include "../db/iteminfo.h"
 
@@ -74,6 +75,10 @@ InventoryWindow::InventoryWindow(int invSize):
         longestUseString = _("Unequip");
     }
 
+    mTradeButton = new Button(_("Trade"), "trade", this);
+    mTradeButton->setEnabled(false);
+    mTradeButton->setVisible(false);
+
     mStoreButton = new Button(_("Store"), "store", this);
     mStoreButton->setEnabled(false);
     mStoreButton->setVisible(false);
@@ -113,7 +118,8 @@ InventoryWindow::InventoryWindow(int invSize):
     place(7, 0, mSlotsBar, 2);
     place(0, 1, mInvenScroll, 9, 4);
     place(0, 5, mShortcutButton);
-    place(6, 5, mStoreButton);
+    place(5, 5, mStoreButton);
+    place(6, 5, mTradeButton);
     place(7, 5, mDropButton);
     place(8, 5, mUseButton);
 
@@ -152,6 +158,7 @@ void InventoryWindow::logic()
     }
 
     mStoreButton->setVisible(storageWindow->isVisible());
+    mTradeButton->setVisible(tradeWindow->isVisible());
 }
 
 void InventoryWindow::distributeValueChangedEvent()
@@ -177,16 +184,27 @@ void InventoryWindow::action(const gcn::ActionEvent &event)
     if (!item)
         return;
 
-    if (event.getId() == "store")
+    if (event.getId() == "trade" && tradeWindow->canTrade())
     {
-        if (!storageWindow->isVisible())
-            return;
-
         if (item->getQuantity() == 1)
+        {
+            tradeWindow->tradeItem(item, 1);
+            selectNone();
+        }
+        // Choose amount of items to trade
+        else
+            new ItemAmountWindow(AMOUNT_TRADE_ADD, tradeWindow, item);
+    }
+    else if (event.getId() == "store" && storageWindow->isVisible())
+    {
+        if (item->getQuantity() == 1)
+        {
             storageWindow->addStore(item, 1);
+            selectNone();
+        }
         // Choose amount of items to store
         else
-            new ItemAmountWindow(AMOUNT_STORE_ADD, this, item);
+            new ItemAmountWindow(AMOUNT_STORE_ADD, storageWindow, item);
     }
     else if (event.getId() == "use" || event.getId() == "default")
     {
@@ -198,12 +216,20 @@ void InventoryWindow::action(const gcn::ActionEvent &event)
                 player_node->equipItem(item);
         }
         else
+        {
+            if (item->getQuantity() == 1)
+                selectNone();
+
             player_node->useItem(item);
+        }
     }
     else if (event.getId() == "drop")
     {
         if (item->getQuantity() == 1)
+        {
             player_node->dropItem(item, 1);
+            selectNone();
+        }
         // Choose amount of items to drop
         else
             new ItemAmountWindow(AMOUNT_ITEM_DROP, this, item);
@@ -232,6 +258,8 @@ void InventoryWindow::updateButtons()
     mUseButton->setEnabled(selectedItem != NULL);
     mDropButton->setEnabled(selectedItem != NULL);
     mStoreButton->setEnabled(selectedItem != NULL);
+    mTradeButton->setEnabled(selectedItem != NULL && tradeWindow->canTrade() &&
+                             !tradeWindow->tradingItem(selectedItem));
 }
 
 Item* InventoryWindow::getSelectedItem() const
@@ -243,13 +271,12 @@ void InventoryWindow::valueChanged(const gcn::SelectionEvent &event)
 {
     if (event.getSource() == mItems)
     {
-        updateButtons();
-
         Item *item = mItems->getSelectedItem();
 
         item ? itemShortcut->setSelected(item->getId()) : 
                itemShortcut->setSelected(-1);
 
+        updateButtons();
         distributeValueChangedEvent();
     }
 }

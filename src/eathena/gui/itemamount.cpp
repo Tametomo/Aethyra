@@ -102,16 +102,20 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     switch (usage)
     {
         case AMOUNT_TRADE_ADD:
-            setCaption(_("Select amount of items to trade."));
+            // trade as in trading an item
+            setCaption(strprintf(_("Select amount of items to %s."), _("trade")));
             break;
         case AMOUNT_ITEM_DROP:
-            setCaption(_("Select amount of items to drop."));
+            // drop as in dropping an item
+            setCaption(strprintf(_("Select amount of items to %s."), _("drop")));
             break;
         case AMOUNT_STORE_ADD:
-            setCaption(_("Select amount of items to store."));
+            // store as in storing an item
+            setCaption(strprintf(_("Select amount of items to %s."), _("store")));
             break;
         case AMOUNT_STORE_REMOVE:
-            setCaption(_("Select amount of items to retrieve."));
+            // retrieve as in retrieving an item
+            setCaption(strprintf(_("Select amount of items to %s."), _("retrieve")));
             break;
         default:
             break;
@@ -175,12 +179,16 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
                 tradeWindow->tradeItem(mItem, amount);
                 break;
             case AMOUNT_ITEM_DROP:
+                if (mItem->getQuantity() == amount)
+                    inventoryWindow->selectNone();
                 player_node->dropItem(mItem, amount);
                 break;
             case AMOUNT_STORE_ADD:
                 storageWindow->addStore(mItem, amount);
                 break;
             case AMOUNT_STORE_REMOVE:
+                if (mItem->getQuantity() == amount)
+                    storageWindow->selectNone();
                 storageWindow->removeStore(mItem, amount);
                 break;
             default:
@@ -193,21 +201,6 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
 
 void ItemAmountWindow::close()
 {
-    switch (mUsage)
-    {
-        case AMOUNT_TRADE_ADD:
-            tradeWindow->requestFocus();
-            break;
-        case AMOUNT_ITEM_DROP:
-            inventoryWindow->requestFocus();
-            break;
-        case AMOUNT_STORE_ADD:
-        case AMOUNT_STORE_REMOVE:
-            storageWindow->requestFocus();
-            break;
-        default:
-            break;
-    }
-
+    getParentWindow()->requestFocus();
     scheduleDelete();
 }
