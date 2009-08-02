@@ -803,6 +803,39 @@ void ChatWindow::mouseMoved(gcn::MouseEvent &event)
         mToolTip->setVisible(false);
 }
 
+void ChatWindow::mouseWheelMovedUp(gcn::MouseEvent& mouseEvent)
+{
+    if (mChatInput->isFocused() && mCurHist != mHistory.begin() &&
+        mHistory.size() > 0)
+    {
+        // Move backward through the history
+        mCurHist--;
+        mChatInput->setText(*mCurHist);
+        mChatInput->setCaretPosition(mChatInput->getText().length());
+        mouseEvent.consume();
+    }
+}
+
+void ChatWindow::mouseWheelMovedDown(gcn::MouseEvent& mouseEvent)
+{
+    if (mChatInput->isFocused() && mCurHist != mHistory.end())
+    {
+        // Move forward through the history
+        HistoryIterator prevHist = mCurHist++;
+
+        if (mCurHist != mHistory.end())
+        {
+            mChatInput->setText(*mCurHist);
+            mChatInput->setCaretPosition(mChatInput->getText().length());
+        }
+        else
+            mCurHist = prevHist;
+
+        mouseEvent.consume();
+    }
+}
+
+
 void ChatWindow::addInputText(const std::string &text)
 {
     const int caretPos = mChatInput->getCaretPosition();

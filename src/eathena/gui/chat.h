@@ -183,6 +183,10 @@ class ChatWindow : public Window, public gcn::ActionListener,
         /** Shows a tooltip over the record button */
         void mouseMoved(gcn::MouseEvent &event);
 
+        /** Scrolls through the chat history */
+        void mouseWheelMovedUp(gcn::MouseEvent& mouseEvent);
+        void mouseWheelMovedDown(gcn::MouseEvent& mouseEvent);
+
         /** Add the given text to the chat input */
         void addInputText(const std::string &text);
 
