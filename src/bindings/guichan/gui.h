@@ -164,6 +164,13 @@ class Gui : public gcn::Gui
 
     protected:
         void handleMouseMoved(const gcn::MouseInput &mouseInput);
+        
+        void handleMouseWheelMovedDown(const gcn::MouseInput& mouseInput);
+
+        void handleMouseWheelMovedUp(const gcn::MouseInput& mouseInput);
+
+        void distributeMouseWheelEvent(gcn::Widget* source, gcn::MouseEvent 
+                                       &mouseEvent);
 
     private:
         GuiConfigListener *mConfigListener;

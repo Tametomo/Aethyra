@@ -93,6 +93,10 @@ class ScrollArea : public gcn::ScrollArea
 
         virtual void mousePressed(gcn::MouseEvent& mouseEvent);
 
+        virtual void mouseWheelMovedUp(gcn::MouseEvent& mouseEvent);
+
+        virtual void mouseWheelMovedDown(gcn::MouseEvent& mouseEvent);
+
     protected:
         enum BUTTON_DIR {
             UP,

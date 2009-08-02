@@ -366,6 +366,36 @@ void ScrollArea::scroll()
 
     mLastUpdate = tick_time;}
 
+void ScrollArea::mouseWheelMovedUp(gcn::MouseEvent& mouseEvent)
+{
+    if (mouseEvent.isConsumed())
+        return;
+
+    if (mVBarVisible && getVerticalScrollAmount() > 0)
+    {
+        const int vScroll = getVerticalScrollAmount() -
+                            getChildrenArea().height / 8;
+
+        setVerticalScrollAmount(vScroll);
+        mouseEvent.consume();
+    }
+}
+
+void ScrollArea::mouseWheelMovedDown(gcn::MouseEvent& mouseEvent)
+{
+    if (mouseEvent.isConsumed())
+        return;
+
+    if (mVBarVisible && getVerticalScrollAmount() < getVerticalMaxScroll())
+    {
+        const int vScroll = getVerticalScrollAmount() +
+                            getChildrenArea().height / 8;
+
+        setVerticalScrollAmount(vScroll);
+        mouseEvent.consume();
+    }
+}
+
 void ScrollArea::mousePressed(gcn::MouseEvent &mouseEvent)
 {
     int x = mouseEvent.getX();

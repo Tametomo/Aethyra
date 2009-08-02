@@ -403,6 +403,161 @@ void Gui::handleMouseMoved(const gcn::MouseInput &mouseInput)
     mMouseInactivityTimer = tick_time;
 }
 
+void Gui::handleMouseWheelMovedDown(const gcn::MouseInput& mouseInput)
+{
+    gcn::Widget* sourceWidget = getMouseEventSource(mouseInput.getX(),
+                                                    mouseInput.getY());
+    gcn::Widget* focusedWidget = mFocusHandler->getFocused();
+
+    if (mFocusHandler->getDraggedWidget() != NULL)
+        sourceWidget = mFocusHandler->getDraggedWidget();
+
+    if (!sourceWidget)
+        sourceWidget = focusedWidget;
+
+    if (!sourceWidget)
+        return;
+
+    int widgetX, widgetY;
+    sourceWidget->getAbsolutePosition(widgetX, widgetY);
+
+    widgetX = mouseInput.getX() - widgetX;
+    widgetY = mouseInput.getY() - widgetY;
+
+    gcn::MouseEvent sourceEvent(sourceWidget, mShiftPressed, mControlPressed,
+                                mAltPressed, mMetaPressed,
+                                gcn::MouseEvent::WHEEL_MOVED_DOWN,
+                                mouseInput.getButton(), widgetX, widgetY,
+                                mClickCount);
+
+    distributeMouseWheelEvent(sourceWidget, sourceEvent);
+
+    if (sourceEvent.isConsumed() || !focusedWidget)
+        return;
+
+    focusedWidget->getAbsolutePosition(widgetX, widgetY);
+
+    widgetX = mouseInput.getX() - widgetX;
+    widgetY = mouseInput.getY() - widgetY;
+
+    gcn::MouseEvent focusedEvent(sourceWidget, mShiftPressed, mControlPressed,
+                                 mAltPressed, mMetaPressed,
+                                 gcn::MouseEvent::WHEEL_MOVED_DOWN,
+                                 mouseInput.getButton(), widgetX, widgetY,
+                                 mClickCount);
+
+    distributeMouseWheelEvent(focusedWidget, focusedEvent);
+}
+
+void Gui::handleMouseWheelMovedUp(const gcn::MouseInput& mouseInput)
+{
+    gcn::Widget* sourceWidget = getMouseEventSource(mouseInput.getX(),
+                                                    mouseInput.getY());
+    gcn::Widget* focusedWidget = mFocusHandler->getFocused();
+
+    if (mFocusHandler->getDraggedWidget() != NULL)
+        sourceWidget = mFocusHandler->getDraggedWidget();
+
+    if (!sourceWidget)
+        sourceWidget = focusedWidget;
+
+    if (!sourceWidget)
+        return;
+
+    int widgetX, widgetY;
+    sourceWidget->getAbsolutePosition(widgetX, widgetY);
+
+    widgetX = mouseInput.getX() - widgetX;
+    widgetY = mouseInput.getY() - widgetY;
+
+    gcn::MouseEvent sourceEvent(sourceWidget, mShiftPressed, mControlPressed,
+                                mAltPressed, mMetaPressed,
+                                gcn::MouseEvent::WHEEL_MOVED_UP,
+                                mouseInput.getButton(), widgetX, widgetY,
+                                mClickCount);
+
+    distributeMouseWheelEvent(sourceWidget, sourceEvent);
+
+    if (sourceEvent.isConsumed() || !focusedWidget)
+        return;
+
+    focusedWidget->getAbsolutePosition(widgetX, widgetY);
+
+    widgetX = mouseInput.getX() - widgetX;
+    widgetY = mouseInput.getY() - widgetY;
+
+    gcn::MouseEvent focusedEvent(sourceWidget, mShiftPressed, mControlPressed,
+                                 mAltPressed, mMetaPressed,
+                                 gcn::MouseEvent::WHEEL_MOVED_UP,
+                                 mouseInput.getButton(), widgetX, widgetY,
+                                 mClickCount);
+
+    distributeMouseWheelEvent(focusedWidget, focusedEvent);
+}
+
+void Gui::distributeMouseWheelEvent(gcn::Widget* source, gcn::MouseEvent 
+                                    &mouseEvent)
+{
+    gcn::Widget* parent = source;
+    gcn::Widget* widget = source;
+
+    if ((mFocusHandler->getModalFocused() != NULL && !widget->isModalFocused()) ||
+        (mFocusHandler->getModalMouseInputFocused() != NULL &&
+        !widget->isModalMouseInputFocused()))
+    {
+        return;
+    }
+
+    while (parent != NULL)
+    {
+        // If the widget has been removed due to input
+        // cancel the distribution.
+        if (!gcn::Widget::widgetExists(widget))
+            break;
+
+        parent = (gcn::Widget*) widget->getParent();
+
+        if (widget->isEnabled())
+        {                                      
+            std::list<gcn::MouseListener*> mouseListeners = widget->_getMouseListeners();
+
+            // Send the event to all mouse listeners of the widget.
+            for (std::list<gcn::MouseListener*>::iterator it = mouseListeners.begin();
+                 it != mouseListeners.end(); ++it)
+            {
+                switch (mouseEvent.getType())
+                {
+                    case gcn::MouseEvent::WHEEL_MOVED_UP:
+                        (*it)->mouseWheelMovedUp(mouseEvent);
+                        break;
+                    case gcn::MouseEvent::WHEEL_MOVED_DOWN:
+                        (*it)->mouseWheelMovedDown(mouseEvent);
+                        break;
+                    default:
+                        throw GCN_EXCEPTION("Unknown mouse event type.");
+                }                    
+            }
+        }
+
+        gcn::Widget* swap = widget;
+        widget = parent;
+        parent = (gcn::Widget*) swap->getParent();
+
+        // If a non modal focused widget has been reach and we have modal focus,
+        // cancel the distribution.
+        if (mFocusHandler->getModalFocused() != NULL && !widget->isModalFocused())
+            break;
+
+        // If a non modal mouse input focused widget has been reached and we
+        // have modal mouse input focus cancel the distribution.
+        if (mFocusHandler->getModalMouseInputFocused() != NULL &&
+            !widget->isModalMouseInputFocused())
+        {
+            break;
+        }
+    }
+}
+
 const int Gui::getFontHeight() const
 {
     return mGuiFont->getHeight();
