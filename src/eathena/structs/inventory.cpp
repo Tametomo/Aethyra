@@ -31,11 +31,11 @@ struct SlotUsed : public std::unary_function<Item*, bool>
 {
     bool operator()(const Item *item) const
     {
-        return item && item->getId() != -1 && item->getQuantity() > 0;
+        return item && item->getId() != NO_SLOT_INDEX && item->getQuantity() > 0;
     }
 };
 
-Inventory::Inventory(int size):
+Inventory::Inventory(const int size):
     mSize(size)
 {
     mItems = new Item*[mSize];
@@ -50,7 +50,7 @@ Inventory::~Inventory()
     delete [] mItems;
 }
 
-Item* Inventory::getItem(int index) const
+Item* Inventory::getItem(const int index) const
 {
     if (index < 0 || index >= mSize || !mItems[index] ||
         mItems[index]->getQuantity() <= 0)
@@ -59,7 +59,7 @@ Item* Inventory::getItem(int index) const
     return mItems[index];
 }
 
-Item* Inventory::findItem(int itemId) const
+Item* Inventory::findItem(const int itemId) const
 {
     for (int i = 0; i < mSize; i++)
         if (mItems[i] && mItems[i]->getId() == itemId)
@@ -68,12 +68,13 @@ Item* Inventory::findItem(int itemId) const
     return NULL;
 }
 
-void Inventory::addItem(int id, int quantity, bool equipment)
+void Inventory::addItem(const int id, const int quantity, const bool equipment)
 {
     setItem(getFreeSlot(), id, quantity, equipment);
 }
 
-void Inventory::setItem(int index, int id, int quantity, bool equipment)
+void Inventory::setItem(const int index, const int id, const int quantity,
+                        const bool equipment)
 {
     if (index < 0 || index >= mSize)
     {
@@ -105,14 +106,14 @@ void Inventory::clear()
         removeItemAt(i);
 }
 
-void Inventory::removeItem(int id)
+void Inventory::removeItem(const int id)
 {
     for (int i = 0; i < mSize; i++)
         if (mItems[i] && mItems[i]->getId() == id)
             removeItemAt(i);
 }
 
-void Inventory::removeItemAt(int index)
+void Inventory::removeItemAt(const int index)
 {
     delete mItems[index];
     mItems[index] = 0;
@@ -127,22 +128,22 @@ const bool Inventory::contains(const Item *item) const
     return false;
 }
 
-int Inventory::getFreeSlot() const
+const int Inventory::getFreeSlot() const
 {
     Item **i = std::find_if(mItems, mItems + mSize, std::not1(SlotUsed()));
-    return (i == mItems + mSize) ? -1 : (i - mItems);
+    return (i == mItems + mSize) ? NO_SLOT_INDEX : (i - mItems);
 }
 
-int Inventory::getNumberOfSlotsUsed() const
+const int Inventory::getNumberOfSlotsUsed() const
 {
     return count_if(mItems, mItems + mSize, SlotUsed());
 }
 
-int Inventory::getLastUsedSlot() const
+const int Inventory::getLastUsedSlot() const
 {
     for (int i = mSize - 1; i >= 0; i--)
         if (SlotUsed()(mItems[i]))
             return i;
 
-    return -1;
+    return NO_SLOT_INDEX;
 }

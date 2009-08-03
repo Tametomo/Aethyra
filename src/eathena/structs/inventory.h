@@ -27,6 +27,7 @@ class Item;
 
 #define INVENTORY_SIZE 102
 #define STORAGE_SIZE 301
+#define NO_SLOT_INDEX -1 /**< Slot has no index. */
 
 /**
  * A collection of Items.
@@ -51,7 +52,7 @@ class Inventory
         /**
          * Constructor.
          */
-        Inventory(int size);
+        Inventory(const int size);
 
         /**
          * Destructor.
@@ -61,7 +62,7 @@ class Inventory
         /**
          * Returns the size that this instance is configured for
          */
-        int getSize() const { return mSize; }
+        const int getSize() const { return mSize; }
 
         /**
          * Returns the item at the specified index.
@@ -69,7 +70,7 @@ class Inventory
          * This bounds-checks, and also checks that (quantity > 0),
          * returning NULL in either case.
          */
-        Item* getItem(int index) const;
+        Item* getItem(const int index) const;
 
         /**
          * Searches for the specified item by it's id.
@@ -77,12 +78,12 @@ class Inventory
          * @param itemId The id of the item to be searched.
          * @return Item found on success, NULL on failure.
          */
-        Item* findItem(int itemId) const;
+        Item* findItem(const int itemId) const;
 
         /**
          * Adds a new item in a free slot.
          */
-        void addItem(int id, int quantity, bool equipment);
+        void addItem(const int id, const int quantity, const bool equipment);
 
         /**
          * Sets the item at the given position.
@@ -92,12 +93,12 @@ class Inventory
         /**
          * Remove a item from the inventory.
          */
-        void removeItem(int id);
+        void removeItem(const int id);
 
         /**
          * Remove the item at the specified index from the inventory.
          */
-        void removeItemAt(int index);
+        void removeItemAt(const int index);
 
         /**
          * Checks if the given item is in the inventory
@@ -107,7 +108,7 @@ class Inventory
         /**
          * Returns id of next free slot or -1 if all occupied.
          */
-        int getFreeSlot() const;
+        const int getFreeSlot() const;
 
         /**
          * Reset all item slots.
@@ -117,15 +118,12 @@ class Inventory
         /**
          * Get the number of slots filled with an item
          */
-        int getNumberOfSlotsUsed() const;
+        const int getNumberOfSlotsUsed() const;
 
         /**
          * Returns the index of the last occupied slot or 0 if none occupied.
          */
-        int getLastUsedSlot() const;
-
-        static const int NO_SLOT_INDEX = -1; /**< Slot has no index. */
-
+        const int getLastUsedSlot() const;
     protected:
         Item **mItems;  /**< The holder of items */
         int mSize;      /**< The max number of inventory items */

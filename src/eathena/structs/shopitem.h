@@ -79,7 +79,7 @@ class ShopItem : public Item
          *
          * @return the quantity of the currently topmost duplicate
          */
-        int getCurrentQuantity()
+        const int getCurrentQuantity()
         { return mDuplicates.empty() ? 0 : mDuplicates.top()->quantity; }
 
         /**
@@ -87,9 +87,10 @@ class ShopItem : public Item
          *
          * @return the inventory index of the currently topmost duplicate
          */
-        int getCurrentInvIndex() {
+        const int getCurrentInvIndex()
+        {
             return mDuplicates.empty() ? mInvIndex :
-                   mDuplicates.top()->inventoryIndex;
+                                         mDuplicates.top()->inventoryIndex;
         }
 
         /**
@@ -103,14 +104,14 @@ class ShopItem : public Item
          *
          * @return the amount, that actually was sold.
          */
-        int sellCurrentDuplicate(const int quantity);
+        const int sellCurrentDuplicate(const int quantity);
 
         /**
          * Gets the price of the item.
          *
          * @return the price of the item
          */
-        int getPrice() const { return mPrice; }
+        const int getPrice() const { return mPrice; }
 
         /**
          * Gets the display name for the item in the shop list.
@@ -127,10 +128,12 @@ class ShopItem : public Item
         /**
          * Struct to keep track of duplicates.
          */
-        typedef struct {
+        typedef struct
+        {
             int inventoryIndex;
             int quantity;
         } DuplicateItem;
+
         std::stack<DuplicateItem*> mDuplicates; /** <-- Stores duplicates */
 };
 

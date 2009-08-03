@@ -38,27 +38,27 @@ class Equipment
         /**
          * Get equipment at the given slot.
          */
-        int getEquipment(int index) const { return mEquipment[index]; }
+        const int getEquipment(const int index) const { return mEquipment[index]; }
 
         /**
          * Set equipment at the given slot.
          */
-        void setEquipment(int index, int inventoryIndex);
+        void setEquipment(const int index, const int inventoryIndex);
 
         /**
          * Remove equipment from the given slot.
          */
-        void removeEquipment(int index);
+        void removeEquipment(const int index);
 
         /**
          * Returns the item used in the arrow slot.
          */
-        int getArrows() const { return mArrows; }
+        const int getArrows() const { return mArrows; }
 
         /**
          * Set the item used in the arrow slot.
          */
-        void setArrows(int arrows) { mArrows = arrows; }
+        void setArrows(const int arrows) { mArrows = arrows; }
 
     private:
         int mEquipment[EQUIPMENT_SIZE];

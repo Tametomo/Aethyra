@@ -36,8 +36,8 @@ class Item
         /**
          * Constructor.
          */
-        Item(int id = -1, int quantity = 0, bool equipment = false,
-             bool equipped = false);
+        Item(const int id = -1, const int quantity = 0,
+             const bool equipment = false, const bool equipped = false);
 
         /**
          * Destructor.
@@ -47,12 +47,12 @@ class Item
         /**
          * Sets the item id, identifying the item type.
          */
-        void setId(int id);
+        void setId(const int id);
 
         /**
          * Returns the item id.
          */
-        int getId() const { return mId; }
+        const int getId() const { return mId; }
 
         /**
          * Returns the item image.
@@ -62,47 +62,47 @@ class Item
         /**
          * Sets the number of items.
          */
-        void setQuantity(int quantity) { mQuantity = quantity; }
+        void setQuantity(const int quantity) { mQuantity = quantity; }
 
         /**
          * Increases the number of items by the given amount.
          */
-        void increaseQuantity(int amount) { mQuantity += amount; }
+        void increaseQuantity(const int amount) { mQuantity += amount; }
 
         /**
          * Returns the number of items.
          */
-        int getQuantity() const { return mQuantity; }
+        const int getQuantity() const { return mQuantity; }
 
         /**
          * Sets whether this item is considered equipment.
          */
-        void setEquipment(bool equipment) { mEquipment = equipment; }
+        void setEquipment(const bool equipment) { mEquipment = equipment; }
 
         /**
          * Returns whether this item is considered equipment.
          */
-        bool isEquipment() const { return mEquipment; }
+        const bool isEquipment() const { return mEquipment; }
 
         /**
          * Sets whether this item is equipped.
          */
-        void setEquipped(bool equipped) { mEquipped = equipped; }
+        void setEquipped(const bool equipped) { mEquipped = equipped; }
 
         /**
          * Returns whether this item is equipped.
          */
-        bool isEquipped() const { return mEquipped; }
+        const bool isEquipped() const { return mEquipped; }
 
         /**
          * Sets the inventory index of this item.
          */
-        void setInvIndex(int index) { mInvIndex = index; }
+        void setInvIndex(const int index) { mInvIndex = index; }
 
         /**
          * Returns the inventory index of this item.
          */
-        int getInvIndex() const { return mInvIndex; }
+        const int getInvIndex() const { return mInvIndex; }
 
         /**
          * Returns information about this item type.
@@ -112,7 +112,7 @@ class Item
         /**
          * Returns the item's name.
          */
-        std::string getName() const { return ItemDB::get(mId).getName(); }
+        const std::string getName() const { return ItemDB::get(mId).getName(); }
 
     protected:
         int mId;              /**< Item type id. */

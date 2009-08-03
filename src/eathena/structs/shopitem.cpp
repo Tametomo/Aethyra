@@ -71,12 +71,16 @@ void ShopItem::addDuplicate()
     mDuplicates.push(di);
 }
 
-int ShopItem::sellCurrentDuplicate(const int quantity)
+const int ShopItem::sellCurrentDuplicate(const int quantity)
 {
     DuplicateItem* dupl = mDuplicates.top();
-    int sellCount = quantity <= dupl->quantity ? quantity : dupl->quantity;
+
+    const int sellCount = quantity <= dupl->quantity ? quantity :
+                                                       dupl->quantity;
+
     dupl->quantity -= sellCount;
     mQuantity -= sellCount;
+
     if (dupl->quantity == 0)
     {
         delete dupl;

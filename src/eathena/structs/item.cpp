@@ -26,7 +26,8 @@
 
 #include "../../core/image/image.h"
 
-Item::Item(int id, int quantity, bool equipment, bool equipped):
+Item::Item(const int id, const int quantity, const bool equipment,
+           const bool equipped) :
     mImage(0),
     mQuantity(quantity),
     mEquipment(equipment),
@@ -41,7 +42,7 @@ Item::~Item()
         mImage->decRef();
 }
 
-void Item::setId(int id)
+void Item::setId(const int id)
 {
     mId = id;
 
