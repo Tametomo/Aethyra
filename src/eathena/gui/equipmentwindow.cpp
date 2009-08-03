@@ -1,9 +1,8 @@
 /*
  *  Aethyra
- *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2008  Aethyra Development Team
  *
- *  This file is part of Aethyra derived from original code
- *  from The Mana World.
+ *  This file is part of Aethyra.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -94,8 +93,7 @@ class EquipmentConfigListener : public ConfigListener
 
 EquipmentWindow::EquipmentWindow():
     Window(_("Equipment")),
-    mSelected(-1),
-    mEquipUnequipState(STATE_NEITHER)
+    mSelected(-1)
 {
     setWindowName("Equipment");
     setResizable(true);
@@ -130,6 +128,7 @@ EquipmentWindow::EquipmentWindow():
 
     // Control that shows equippable items
     mItems = new ItemContainer(mInventory, "showpopupmenu", this);
+    mItems->setEquipSlotsFilter((1 << EQUIP_VECTOREND) - 1);
     mItems->addSelectionListener(this);
 
     mInvenScroll = new ScrollArea(mItems);
@@ -139,7 +138,7 @@ EquipmentWindow::EquipmentWindow():
                                    getFont()->getWidth(_("Unequip")) ?
                                    _("Equip") : _("Unequip");
 
-    mEquipButton = new Button(longestUseString, "equipUnequip", this);
+    mEquipButton = new Button(longestUseString, "equip", this);
     mEquipButton->setEnabled(false);
 
     for (int i = EQUIP_LEGS_SLOT; i < EQUIP_VECTOREND; i++)
@@ -199,9 +198,12 @@ void EquipmentWindow::draw(gcn::Graphics *graphics)
     // A bitmask showing which slots will be affected
     // by the equip / unequip button.
     int highlightSlots = 0;
+
     if (mSelected != -1)
         highlightSlots = (1 << mSelected);
+
     Item* wouldEquip = mItems->getSelectedItem();
+
     if (wouldEquip)
         highlightSlots |= wouldEquip->getInfo().getEquipSlots();
 
@@ -253,34 +255,29 @@ void EquipmentWindow::draw(gcn::Graphics *graphics)
 
 void EquipmentWindow::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == "equipUnequip")
+    Item* item = mItems->getSelectedItem();
+
+    if (!item && mSelected > -1)
+        item = (mSelected != EQUIP_AMMO_SLOT) ?
+                mInventory->getItem(mEquipment->getEquipment(mSelected)) :
+                mInventory->getItem(mEquipment->getArrows());
+
+    if (!item)
+        return;
+
+    if (event.getId() == "equip")
     {
-        switch(mEquipUnequipState)
-        {
-            case STATE_EQUIP:
-            {
-                Item* item = mItems->getSelectedItem();
+        bool equipped = item->isEquipped();
 
-                if (item)
-                    player_node->equipItem(item);
+        if (!equipped)
+            player_node->equipItem(item);
+        else
+            player_node->unequipItem(item);
 
-                break;
-            }
-            case STATE_UNEQUIP:
-            {
-                if (mSelected > -1)
-                {
-                    Item* item = (mSelected != EQUIP_AMMO_SLOT) ?
-                                 mInventory->getItem(mEquipment->getEquipment(mSelected)) :
-                                 mInventory->getItem(mEquipment->getArrows());
-                    player_node->unequipItem(item);
-                }
-                break;
-            }
-            default:
-                // Should be unreachable, as the button should be disabled.
-                break;
-        }
+        setSelected(mSelected);
+
+        // Compensate for potential server delays in updating equipment
+        mEquipButton->setCaption(equipped ? _("Equip") : _("Unequip"));
     }
     else if (event.getId() == "showpopupmenu")
         mItems->showPopupMenu(INVENTORY, false);
@@ -314,25 +311,34 @@ void EquipmentWindow::mousePressed(gcn::MouseEvent& mouseEvent)
         {            
             if (mouseEvent.getSource() == mEquipIcon[i])
             {
-                setSelected(i);
+                Item *item = (i != EQUIP_AMMO_SLOT) ?
+                              mInventory->getItem(mEquipment->getEquipment(i)) :
+                              mInventory->getItem(mEquipment->getArrows());
+
                 mItems->setEquipSlotsFilter(1 << i);
+
+                if (item && (item->getInfo().getEquipSlots() & (1 << i)))
+                {
+                    mItems->setSelectedItemIndex(item->getInvIndex());
+                    mSelected = i;
+
+                    // Suppress the item popup in the ItemContainer, in case we
+                    // change item indicies.
+                    mItems->showItemPopup(false);
+                }
+
+                setSelected(i);
                 break;  // No point checking the other boxes
             }
         }
-
-        // Clicking in the item box should deselect the slot,
-        // even if it doesn't select an item.  (If it does
-        // select an item, valueChanged will be called too).
-        if (mouseEvent.getSource() == mItems)
-            setSelected(-1);
 
         // Clicking on the window background will reset the
         // items window to showing all equipment.
         // (Intuitive to me, but maybe it should be a button)
         if (mouseEvent.getSource() == this)
         {
-            setSelected(-1);
             mItems->setEquipSlotsFilter((1 << EQUIP_VECTOREND) - 1);
+            setSelected(-1);
         }
     }
     else if (mouseEvent.getButton() == gcn::MouseEvent::RIGHT &&
@@ -346,6 +352,7 @@ void EquipmentWindow::mousePressed(gcn::MouseEvent& mouseEvent)
         const int y = mouseEvent.getY();
 
         Item* item = getItem(x, y);
+
         if (!item)
             return;
 
@@ -395,57 +402,36 @@ void EquipmentWindow::mouseMoved(gcn::MouseEvent &event)
 void EquipmentWindow::mouseExited(gcn::MouseEvent &event)
 {
     Window::mouseExited(event);
-
     mItemPopup->setVisible(false);
 }
 
 void EquipmentWindow::setSelected(int index)
 {
-    mSelected = index;
+    Item *item = mItems->getSelectedItem();
 
-    if (index == -1)    // no slot selected
+    if (item && !mItems->passesFilter(item))
+        item = NULL;
+
+    if (mSelected != index)
     {
-        if (mEquipUnequipState == STATE_UNEQUIP)
-            setEquipUnequipState(STATE_NEITHER);
-    }
-    else
-    {
-        setEquipUnequipState(STATE_UNEQUIP);
         mItems->selectNone();
+        mSelected = index;
     }
+
+    mEquipButton->setEnabled(item);
+
+    if (item)
+        mEquipButton->setCaption(item->isEquipped() ? _("Unequip") : _("Equip"));
 }
 
 void EquipmentWindow::valueChanged(const gcn::SelectionEvent &event)
 {
-    if (event.getSource() == mItems && mItems->getSelectedItem())
-    {
-        setSelected(-1);
-        setEquipUnequipState(STATE_EQUIP);
-    }
-}
+    Item *item = mItems->getSelectedItem();
 
-void EquipmentWindow::setEquipUnequipState(EquipUnequipState state)
-{
-    switch (state)
-    {
-        case STATE_NEITHER:
-            mEquipButton->setEnabled(false);
-            // leave it with the previous caption
-            break;
-        case STATE_EQUIP:
-            mEquipButton->setEnabled(true);
-            mEquipButton->setCaption(_("Equip"));
-            break;
-        case STATE_UNEQUIP:
-            mEquipButton->setEnabled(true);
-            mEquipButton->setCaption(_("Unequip"));
-            break;
-        default:
-            mEquipUnequipState = STATE_NEITHER;
-            return;
-    }
+    mEquipButton->setEnabled(item);
 
-    mEquipUnequipState = state;
+    if (event.getSource() == mItems && item)
+        mEquipButton->setCaption(item->isEquipped() ? _("Unequip") : _("Equip"));
 }
 
 void EquipmentWindow::requestFocus()
@@ -453,11 +439,10 @@ void EquipmentWindow::requestFocus()
     mItems->requestFocus();
 }
 
-void EquipmentWindow::widgetShown(const gcn::Event& event)
+void EquipmentWindow::widgetHidden(const gcn::Event& event)
 {
-    mSelected = -1;
     mItems->selectNone();
+    setSelected(-1);
     mItems->setEquipSlotsFilter((1 << EQUIP_VECTOREND) - 1);  // show all equippable items
-
-    Window::widgetShown(event);
+    Window::widgetHidden(event);
 }

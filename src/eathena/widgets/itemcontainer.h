@@ -159,6 +159,17 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          */
         static const signed int NO_EQUIP_SLOTS_FILTER = -1;
 
+        /**
+         * Sets the currently selected item.  Invalid (e.g., negative) indices
+         * set `no item'.
+         */
+        void setSelectedItemIndex(int index);
+
+        /**
+         * Whether the item should be shown
+         */
+        bool passesFilter(const Item* item) const;
+
     protected:
         ProtectedFocusListener *mProtFocusListener;
 
@@ -182,12 +193,6 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
          * selected item index should be used, or the mouse coordinates.
          */
         void getPopupLocation(bool useMouseCoordinates, int &x, int &y);
-
-        /**
-
-         * Sets the currently selected item.  Invalid (e.g., negative) indices set `no item'.
-         */
-        void setSelectedItemIndex(int index);
 
         /**
          * Find the current item index by the most recently used item ID
@@ -239,7 +244,6 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         /**
          * Whether the item should be shown.
          */
-        bool passesFilter(const Item* item) const;
         bool passesEquipSlotsFilter(const Item* item) const;
         bool passesTypeFilter(const Item* item) const;
 

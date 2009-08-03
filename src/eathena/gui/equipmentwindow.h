@@ -1,9 +1,8 @@
 /*
  *  Aethyra
- *  Copyright 2004 The Mana World Development Team
+ *  Copyright 2008 Aethyra Development Team
  *
- *  This file is part of Aethyra derived from original code
- *  from The Mana World.
+ *  This file is part of Aethyra.
  *
  *  The Mana World is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -77,7 +76,7 @@ class EquipmentWindow : public Window,
         /**
          * Resets the item filter for the equipment window on shown events.
          */
-        void widgetShown(const gcn::Event& event);
+        void widgetHidden(const gcn::Event& event);
 
         enum {
             // Equipment rules:
@@ -127,33 +126,6 @@ class EquipmentWindow : public Window,
 
         ItemContainer *mItems;                  /**< Equippable items */
         gcn::ScrollArea *mInvenScroll;
-
-        /**
-         * The current action that mEquipButton performs.
-         *
-         * Only one thing can be selected at once - either a slot or an item.
-         *
-         * There's no special logic about selecting an empty slot (with nothing
-         * to unequip), that would need to handle items being equipped or
-         * unequipped by other means (inventory window or shortcuts), so it may
-         * as well be kept simple.
-         */
-        enum EquipUnequipState
-        {
-            STATE_NEITHER,
-            STATE_EQUIP,
-            STATE_UNEQUIP
-        };
-        EquipUnequipState mEquipUnequipState;
-
-        /**
-         * Sets the text of the button, enables or disables it as appropriate,
-         * sets mEquipUnequipState.
-         *
-         * No other side-effects; specifically does not change what is selected
-         * (as doing so would result in another call to setEquipUnequipState).
-         */
-        void setEquipUnequipState(EquipUnequipState state);
 };
 
 extern EquipmentWindow *equipmentWindow;
