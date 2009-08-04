@@ -26,6 +26,7 @@
 #include <vector>
 
 #include <guichan/actionlistener.hpp>
+#include <guichan/selectionlistener.hpp>
 
 #include "../../bindings/guichan/widgets/window.h"
 
@@ -42,7 +43,8 @@ class SkillTableModel;
  *
  * \ingroup Interface
  */
-class SkillDialog : public Window, public gcn::ActionListener
+class SkillDialog : public Window, public gcn::ActionListener,
+                    public gcn::SelectionListener
 {
     public:
         /**
@@ -56,6 +58,10 @@ class SkillDialog : public Window, public gcn::ActionListener
         ~SkillDialog();
 
         void action(const gcn::ActionEvent &event);
+
+        void valueChanged(const gcn::SelectionEvent &event);
+
+        void widgetShown(const gcn::Event& event);
 
         void update();
 

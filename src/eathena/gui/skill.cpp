@@ -51,7 +51,7 @@ SkillDialog::SkillDialog():
     mTable->setOpaque(false);
     mTable->setLinewiseSelection(true);
     mTable->setWrappingEnabled(true);
-    mTable->setActionEventId("skill");
+    mTable->setActionEventId("inc");
     mTable->addActionListener(this);
 
     setWindowName("Skills");
@@ -95,16 +95,13 @@ void SkillDialog::action(const gcn::ActionEvent &event)
         if (selectedSkill >= 0)
             player_node->raiseSkill(mSkillList[selectedSkill]->id);
     }
-    else if (event.getId() == "skill" && mTable->getSelectedRow() > -1)
-    {
-        SKILL *skill = mSkillList[mTable->getSelectedRow()];
-        SkillInfo const *info = SkillDB::get(skill->id);
-
-        mIncButton->setEnabled(player_node->mSkillPoint > 0 &&
-                               info->modifiable);
-    }
     else if (event.getId() == "close")
         close();
+}
+
+void SkillDialog::valueChanged(const gcn::SelectionEvent &event)
+{
+    update();
 }
 
 void SkillDialog::update()
@@ -172,7 +169,12 @@ void SkillDialog::cleanList()
 
 void SkillDialog::requestFocus()
 {
-    mTable->requestFocus();
+    mIncButton->requestFocus();
+}
+
+void SkillDialog::widgetShown(const gcn::Event& event)
+{
+    Window::widgetShown(event);
     mTable->setSelectedRow(0);
 }
 
