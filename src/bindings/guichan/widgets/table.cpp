@@ -390,7 +390,15 @@ void Table::keyPressed(gcn::KeyEvent& keyEvent)
     gcn::Key key = keyEvent.getKey();
 
     if (key.getValue() == Key::ENTER || key.getValue() == Key::SPACE)
-        distributeActionEvent();
+        if (keyEvent.isShiftPressed())
+        {
+            const std::string actionEventId = getActionEventId();
+            setActionEventId("default");
+            distributeActionEvent();
+            setActionEventId(actionEventId);
+        }
+        else
+            distributeActionEvent();
     else if (key.getValue() == Key::UP)
         setSelectedRow(mSelectedRow - 1);
     else if (key.getValue() == Key::DOWN)
