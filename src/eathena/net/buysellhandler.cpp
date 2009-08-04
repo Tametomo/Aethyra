@@ -36,8 +36,8 @@
 #include "../structs/inventory.h"
 #include "../structs/item.h"
 
-#include "../../core/image/sprite/localplayer.h"
-#include "../../core/image/sprite/npc.h"
+#include "../../core/map/sprite/localplayer.h"
+#include "../../core/map/sprite/npc.h"
 
 #include "../../core/utils/gettext.h"
 

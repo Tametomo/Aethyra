@@ -29,8 +29,6 @@
 
 #include "../../bindings/guichan/widgets/window.h"
 
-#include "../../core/image/sprite/npc.h"
-
 class TextBox;
 
 /**
@@ -76,12 +74,12 @@ class NpcTextDialog : public Window, public gcn::ActionListener
         /**
          * Notifies the server that the client has performed a next action.
          */
-        void nextDialog(int npcID = current_npc);
+        void next();
 
         /**
          * Notifies the server that the client has performed a close action.
          */
-        void closeDialog(int npcID = current_npc);
+        void close();
 
         /**
          * Initializes window width to the last known setting. Since the dialog

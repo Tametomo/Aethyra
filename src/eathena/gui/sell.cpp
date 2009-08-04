@@ -36,7 +36,7 @@
 #include "../../bindings/guichan/widgets/scrollarea.h"
 #include "../../bindings/guichan/widgets/slider.h"
 
-#include "../../core/image/sprite/npc.h"
+#include "../../core/map/sprite/npc.h"
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"

@@ -33,7 +33,7 @@
 #include "../../bindings/guichan/widgets/scrollarea.h"
 #include "../../bindings/guichan/widgets/textbox.h"
 
-#include "../../core/image/sprite/npc.h"
+#include "../../core/map/sprite/npc.h"
 
 #include "../../core/utils/gettext.h"
 
@@ -94,22 +94,29 @@ void NpcTextDialog::action(const gcn::ActionEvent &event)
         saveWindowState();
 
         if (current_npc)
-            nextDialog();
+            next();
 
         current_npc = 0;
     }
 }
 
-void NpcTextDialog::nextDialog(int npcID)
+void NpcTextDialog::next()
 {
     MessageOut outMsg(CMSG_NPC_NEXT_REQUEST);
-    outMsg.writeInt32(npcID);
+    outMsg.writeInt32(current_npc);
 }
 
-void NpcTextDialog::closeDialog(int npcID)
+void NpcTextDialog::close()
 {
-    MessageOut outMsg(CMSG_NPC_CLOSE);
-    outMsg.writeInt32(npcID);
+    if (!NPC::mTalking)
+        Window::close();
+
+    if (current_npc)
+    {
+        MessageOut outMsg(CMSG_NPC_CLOSE);
+        outMsg.writeInt32(current_npc);
+        current_npc = 0;
+    }
 }
 
 void NpcTextDialog::widgetResized(const gcn::Event &event)
@@ -125,6 +132,7 @@ void NpcTextDialog::requestFocus()
 
 void NpcTextDialog::widgetShown(const gcn::Event& event)
 {
+    NPC::mTalking = true;
     Window::widgetShown(event);
     loadWindowState();
 }

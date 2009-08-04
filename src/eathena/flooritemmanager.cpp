@@ -22,7 +22,7 @@
 
 #include "flooritemmanager.h"
 
-#include "../core/image/sprite/flooritem.h"
+#include "../core/map/sprite/flooritem.h"
 
 #include "../core/utils/dtor.h"
 

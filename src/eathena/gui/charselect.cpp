@@ -43,9 +43,10 @@
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/textfield.h"
 
-#include "../../core/image/sprite/localplayer.h"
+#include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/gettext.h"
+#include "../../core/utils/lockedarray.h"
 #include "../../core/utils/stringutils.h"
 
 // Defined in main.cpp, used here for setting the char create dialog

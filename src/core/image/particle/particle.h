@@ -26,7 +26,7 @@
 #include <list>
 #include <string>
 
-#include "../sprite/sprite.h"
+#include "../../map/sprite/sprite.h"
 
 #include "../../utils/vector.h"
 

@@ -36,9 +36,9 @@
 
 #include "../../core/log.h"
 
-#include "../../core/image/sprite/being.h"
-#include "../../core/image/sprite/localplayer.h"
-#include "../../core/image/sprite/npc.h"
+#include "../../core/map/sprite/being.h"
+#include "../../core/map/sprite/localplayer.h"
+#include "../../core/map/sprite/npc.h"
 
 const int EMOTION_TIME = 150;    /**< Duration of emotion icon */
 

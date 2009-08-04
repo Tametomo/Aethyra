@@ -30,8 +30,6 @@
 #include "../widgets/listbox.h"
 #include "../widgets/scrollarea.h"
 
-#include "../../../core/image/sprite/npc.h"
-
 #include "../../../core/utils/gettext.h"
 
 ListDialog::ListDialog(const std::string &caption):

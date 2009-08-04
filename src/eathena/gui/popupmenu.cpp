@@ -52,10 +52,10 @@
 
 #include "../../core/configuration.h"
 
-#include "../../core/image/sprite/being.h"
-#include "../../core/image/sprite/flooritem.h"
-#include "../../core/image/sprite/localplayer.h"
-#include "../../core/image/sprite/npc.h"
+#include "../../core/map/sprite/being.h"
+#include "../../core/map/sprite/flooritem.h"
+#include "../../core/map/sprite/localplayer.h"
+#include "../../core/map/sprite/npc.h"
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"

@@ -34,9 +34,9 @@
 #include "sprite.h"
 #include "spritedef.h"
 
-#include "../particle/particlecontainer.h"
+#include "../position.h"
 
-#include "../../map/position.h"
+#include "../../image/particle/particlecontainer.h"
 
 #define FIRST_IGNORE_EMOTE 14
 

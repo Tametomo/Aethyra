@@ -23,7 +23,7 @@
 #ifndef BEINGMANAGER_H
 #define BEINGMANAGER_H
 
-#include "../core/image/sprite/being.h"
+#include "../core/map/sprite/being.h"
 
 class LocalPlayer;
 class Map;

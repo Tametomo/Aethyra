@@ -36,7 +36,7 @@
 
 #include "../../core/image/image.h"
 
-#include "../../core/image/sprite/animatedsprite.h"
+#include "../../core/map/sprite/animatedsprite.h"
 
 static const int MAX_ITEMS = 12;
 

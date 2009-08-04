@@ -22,9 +22,9 @@
 
 #include "flooritem.h"
 
-#include "../image.h"
+#include "../map.h"
 
-#include "../../map/map.h"
+#include "../../image/image.h"
 
 #include "../../../bindings/guichan/graphics.h"
 

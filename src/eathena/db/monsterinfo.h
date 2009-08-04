@@ -28,7 +28,7 @@
 #include <string>
 #include <vector>
 
-#include "../../core/image/sprite/being.h"
+#include "../../core/map/sprite/being.h"
 
 enum MonsterSoundEvent
 {

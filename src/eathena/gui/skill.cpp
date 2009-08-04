@@ -37,7 +37,7 @@
 #include "../../bindings/guichan/widgets/table.h"
 #include "../../bindings/guichan/widgets/windowcontainer.h"
 
-#include "../../core/image/sprite/localplayer.h"
+#include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"

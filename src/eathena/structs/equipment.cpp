@@ -24,7 +24,7 @@
 #include "item.h"
 #include "inventory.h"
 
-#include "../../core/image/sprite/localplayer.h"
+#include "../../core/map/sprite/localplayer.h"
 
 Equipment::Equipment():
     mArrows(-1)

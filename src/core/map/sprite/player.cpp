@@ -24,7 +24,7 @@
 #include "localplayer.h"
 #include "player.h"
 
-#include "../particle/particle.h"
+#include "../../image/particle/particle.h"
 
 #include "../../utils/stringutils.h"
 

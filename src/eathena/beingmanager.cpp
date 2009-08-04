@@ -27,10 +27,10 @@
 #include "net/messageout.h"
 #include "net/protocol.h"
 
-#include "../core/image/sprite/localplayer.h"
-#include "../core/image/sprite/monster.h"
-#include "../core/image/sprite/npc.h"
-#include "../core/image/sprite/player.h"
+#include "../core/map/sprite/localplayer.h"
+#include "../core/map/sprite/monster.h"
+#include "../core/map/sprite/npc.h"
+#include "../core/map/sprite/player.h"
 
 #include "../core/utils/dtor.h"
 

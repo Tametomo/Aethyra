@@ -189,25 +189,6 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      core/image/particle/rotationalparticle.h \
 	      core/image/particle/textparticle.cpp \
 	      core/image/particle/textparticle.h \
-	      core/image/sprite/action.cpp \
-	      core/image/sprite/action.h \
-	      core/image/sprite/animatedsprite.cpp \
-	      core/image/sprite/animatedsprite.h \
-	      core/image/sprite/being.cpp \
-	      core/image/sprite/being.h \
-	      core/image/sprite/flooritem.cpp \
-	      core/image/sprite/flooritem.h \
-	      core/image/sprite/localplayer.cpp \
-	      core/image/sprite/localplayer.h \
-	      core/image/sprite/monster.cpp \
-	      core/image/sprite/monster.h \
-	      core/image/sprite/npc.cpp \
-	      core/image/sprite/npc.h \
-	      core/image/sprite/player.cpp \
-	      core/image/sprite/player.h \
-	      core/image/sprite/sprite.h \
-	      core/image/sprite/spritedef.cpp \
-	      core/image/sprite/spritedef.h \
 	      core/map/ambientoverlay.cpp \
 	      core/map/ambientoverlay.h \
 	      core/map/map.cpp \
@@ -218,6 +199,25 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      core/map/position.h \
 	      core/map/properties.h \
 	      core/map/tileset.h \
+	      core/map/sprite/action.cpp \
+	      core/map/sprite/action.h \
+	      core/map/sprite/animatedsprite.cpp \
+	      core/map/sprite/animatedsprite.h \
+	      core/map/sprite/being.cpp \
+	      core/map/sprite/being.h \
+	      core/map/sprite/flooritem.cpp \
+	      core/map/sprite/flooritem.h \
+	      core/map/sprite/localplayer.cpp \
+	      core/map/sprite/localplayer.h \
+	      core/map/sprite/monster.cpp \
+	      core/map/sprite/monster.h \
+	      core/map/sprite/npc.cpp \
+	      core/map/sprite/npc.h \
+	      core/map/sprite/player.cpp \
+	      core/map/sprite/player.h \
+	      core/map/sprite/sprite.h \
+	      core/map/sprite/spritedef.cpp \
+	      core/map/sprite/spritedef.h \
 	      core/sound/music.cpp \
 	      core/sound/music.h \
 	      core/sound/soundeffect.cpp \

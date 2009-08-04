@@ -27,12 +27,12 @@
 #include "being.h"
 #include "localplayer.h"
 
-#include "../image.h"
-#include "../simpleanimation.h"
-
-#include "../particle/particle.h"
-
 #include "../../resourcemanager.h"
+
+#include "../../image/image.h"
+#include "../../image/simpleanimation.h"
+
+#include "../../image/particle/particle.h"
 
 #include "../../../bindings/guichan/graphics.h"
 #include "../../../bindings/guichan/gui.h"

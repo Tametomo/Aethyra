@@ -22,7 +22,7 @@
 
 #include "action.h"
 
-#include "../animation.h"
+#include "../../image/animation.h"
 
 #include "../../utils/dtor.h"
 

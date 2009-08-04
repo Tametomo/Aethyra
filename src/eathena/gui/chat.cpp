@@ -54,9 +54,10 @@
 #include "../../core/configuration.h"
 #include "../../core/recorder.h"
 
-#include "../../core/image/sprite/localplayer.h"
+#include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/gettext.h"
+#include "../../core/utils/lockedarray.h"
 #include "../../core/utils/stringutils.h"
 
 ChatWindow::ChatWindow():

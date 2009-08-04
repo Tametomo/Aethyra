@@ -43,8 +43,8 @@
 
 #include "../../core/image/image.h"
 
-#include "../../core/image/sprite/animatedsprite.h"
-#include "../../core/image/sprite/localplayer.h"
+#include "../../core/map/sprite/animatedsprite.h"
+#include "../../core/map/sprite/localplayer.h"
 
 const int EmoteContainer::gridWidth = 34;  // emote icon width + 4
 const int EmoteContainer::gridHeight = 36; // emote icon height + 4

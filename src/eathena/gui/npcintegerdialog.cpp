@@ -30,7 +30,7 @@
 #include "../../bindings/guichan/widgets/button.h"
 #include "../../bindings/guichan/widgets/inttextfield.h"
 
-#include "../../core/image/sprite/npc.h"
+#include "../../core/map/sprite/npc.h"
 
 #include "../../core/utils/gettext.h"
 

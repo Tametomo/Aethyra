@@ -27,16 +27,16 @@
 #include "monster.h"
 #include "npc.h"
 
-#include "../animation.h"
-#include "../imageset.h"
-#include "../simpleanimation.h"
-
-#include "../particle/particle.h"
+#include "../map.h"
 
 #include "../../configuration.h"
 #include "../../resourcemanager.h"
 
-#include "../../map/map.h"
+#include "../../image/animation.h"
+#include "../../image/imageset.h"
+#include "../../image/simpleanimation.h"
+
+#include "../../image/particle/particle.h"
 
 #include "../../utils/stringutils.h"
 
@@ -554,9 +554,12 @@ void LocalPlayer::attack(Being *target, const bool keep)
     outMsg.writeInt8(0);
 
     if (target->getType() == Being::NPC)
+    {
         NPC::mTalking = true;
+        mKeepAttacking = false;
+    }
 
-    if (!keep)
+    if (!mKeepAttacking)
         stopAttack();
 }
 

@@ -26,6 +26,8 @@
 #include "map.h"
 #include "tileset.h"
 
+#include "sprite/sprite.h"
+
 #include "../configuration.h"
 #include "../resourcemanager.h"
 
@@ -33,8 +35,6 @@
 #include "../image/simpleanimation.h"
 
 #include "../image/particle/particle.h"
-
-#include "../image/sprite/sprite.h"
 
 #include "../utils/dtor.h"
 #include "../utils/stringutils.h"

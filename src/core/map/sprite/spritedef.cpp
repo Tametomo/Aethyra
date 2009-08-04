@@ -25,12 +25,12 @@
 #include "action.h"
 #include "spritedef.h"
 
-#include "../animation.h"
-#include "../dye.h"
-#include "../image.h"
-#include "../imageset.h"
-
 #include "../../resourcemanager.h"
+
+#include "../../image/animation.h"
+#include "../../image/dye.h"
+#include "../../image/image.h"
+#include "../../image/imageset.h"
 
 #include "../../../core/log.h"
 

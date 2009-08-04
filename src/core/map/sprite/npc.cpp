@@ -23,7 +23,7 @@
 #include "animatedsprite.h"
 #include "npc.h"
 
-#include "../particle/particle.h"
+#include "../../image/particle/particle.h"
 
 #include "../../../bindings/guichan/palette.h"
 #include "../../../bindings/guichan/text.h"

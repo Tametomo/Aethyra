@@ -54,7 +54,7 @@
 
 #include "../../../../core/image/particle/particle.h"
 
-#include "../../../../core/image/sprite/localplayer.h"
+#include "../../../../core/map/sprite/localplayer.h"
 
 #include "../../../../core/utils/gettext.h"
 #include "../../../../core/utils/stringutils.h"

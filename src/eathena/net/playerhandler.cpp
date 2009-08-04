@@ -43,8 +43,8 @@
 
 #include "../../core/log.h"
 
-#include "../../core/image/sprite/localplayer.h"
-#include "../../core/image/sprite/npc.h"
+#include "../../core/map/sprite/localplayer.h"
+#include "../../core/map/sprite/npc.h"
 
 #include "../../core/utils/stringutils.h"
 #include "../../core/utils/gettext.h"

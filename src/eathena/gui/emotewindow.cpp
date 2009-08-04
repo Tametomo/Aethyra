@@ -33,7 +33,7 @@
 #include "../../bindings/guichan/widgets/button.h"
 #include "../../bindings/guichan/widgets/scrollarea.h"
 
-#include "../../core/image/sprite/localplayer.h"
+#include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"

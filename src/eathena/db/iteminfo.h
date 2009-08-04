@@ -28,9 +28,8 @@
 #include <string>
 #include <vector>
 
-#include "../../core/image/sprite/spritedef.h"
-
-#include "../../core/image/sprite/being.h"
+#include "../../core/map/sprite/being.h"
+#include "../../core/map/sprite/spritedef.h"
 
 enum EquipmentSoundEvent
 {

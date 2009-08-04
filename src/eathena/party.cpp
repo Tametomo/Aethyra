@@ -28,8 +28,8 @@
 
 #include "../bindings/guichan/dialogs/confirmdialog.h"
 
-#include "../core/image/sprite/being.h"
-#include "../core/image/sprite/localplayer.h"
+#include "../core/map/sprite/being.h"
+#include "../core/map/sprite/localplayer.h"
 
 #include "../core/utils/gettext.h"
 #include "../core/utils/stringutils.h"

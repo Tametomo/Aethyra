@@ -27,7 +27,7 @@
 
 #include "../../bindings/guichan/widgets/progressbar.h"
 
-#include "../../core/image/sprite/localplayer.h"
+#include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/stringutils.h"
 

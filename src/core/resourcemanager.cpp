@@ -35,7 +35,7 @@
 #include "image/image.h"
 #include "image/imageset.h"
 
-#include "image/sprite/spritedef.h"
+#include "map/sprite/spritedef.h"
 
 #include "sound/music.h"
 #include "sound/soundeffect.h"

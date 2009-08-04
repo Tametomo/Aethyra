@@ -29,8 +29,8 @@
 
 #include "../core/configuration.h"
 
-#include "../core/image/sprite/being.h"
-#include "../core/image/sprite/player.h"
+#include "../core/map/sprite/being.h"
+#include "../core/map/sprite/player.h"
 
 #include "../core/utils/dtor.h"
 

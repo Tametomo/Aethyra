@@ -24,7 +24,7 @@
 #include "localplayer.h"
 #include "monster.h"
 
-#include "../particle/particle.h"
+#include "../../image/particle/particle.h"
 
 #include "../../../bindings/guichan/gui.h"
 #include "../../../bindings/guichan/palette.h"

@@ -36,10 +36,10 @@
 
 #include "../../core/configuration.h"
 
-#include "../../core/image/sprite/localplayer.h"
-#include "../../core/image/sprite/npc.h"
-
 #include "../../core/map/map.h"
+
+#include "../../core/map/sprite/localplayer.h"
+#include "../../core/map/sprite/npc.h"
 
 #include "../../core/utils/stringutils.h"
 
@@ -69,7 +69,7 @@ Viewport::Viewport():
     mPopupMenu = new PopupMenu(UNKNOWN, this);
 
     setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
-                                      graphics->getHeight()));
+                                graphics->getHeight()));
 }
 
 Viewport::~Viewport()
@@ -82,27 +82,26 @@ void Viewport::setMap(Map *map)
     mMap = map;
 }
 
-void Viewport::draw(gcn::Graphics *gcnGraphics)
+void Viewport::draw(gcn::Graphics *graphics)
 {
     static int lastTick = tick_time;
 
     if (!mMap || !player_node)
     {
-        gcnGraphics->setColor(gcn::Color(64, 64, 64));
-        gcnGraphics->fillRectangle(
-                gcn::Rectangle(0, 0, getWidth(), getHeight()));
+        graphics->setColor(gcn::Color(64, 64, 64));
+        graphics->fillRectangle(gcn::Rectangle(0, 0, getWidth(), getHeight()));
         return;
     }
 
-    Graphics *graphics = static_cast<Graphics*>(gcnGraphics);
+    Graphics *g = static_cast<Graphics*>(graphics);
 
     // Avoid freaking out when tick_time overflows
     if (tick_time < lastTick)
         lastTick = tick_time;
 
     // Calculate viewpoint
-    int midTileX = (graphics->getWidth() + mScrollCenterOffsetX) / 32 / 2;
-    int midTileY = (graphics->getHeight() + mScrollCenterOffsetY) / 32 / 2;
+    int midTileX = (g->getWidth() + mScrollCenterOffsetX) / 32 / 2;
+    int midTileY = (g->getHeight() + mScrollCenterOffsetY) / 32 / 2;
 
     int player_x = (player_node->mX - midTileX) * 32 +
                     player_node->getXOffset();
@@ -139,18 +138,19 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
     }
 
     // Auto center when player is off screen
-    if (player_x - mPixelViewX > graphics->getWidth() / 2 ||
-        mPixelViewX - player_x > graphics->getWidth() / 2 ||
-        mPixelViewY - player_y > graphics->getHeight() / 2 ||
-        player_y - mPixelViewY > graphics->getHeight() / 2)
+    if (player_x - mPixelViewX > g->getWidth() / 2 ||
+        mPixelViewX - player_x > g->getWidth() / 2 ||
+        mPixelViewY - player_y > g->getHeight() / 2 ||
+        player_y - mPixelViewY > g->getHeight() / 2)
     {
         mPixelViewX = player_x;
         mPixelViewY = player_y;
     };
 
     // Don't move camera so that the end of the map is on screen
-    int viewXmax = (mMap->getWidth() * 32) - graphics->getWidth();
-    int viewYmax = (mMap->getHeight() * 32) - graphics->getHeight();
+    const int viewXmax = (mMap->getWidth() * 32) - g->getWidth();
+    const int viewYmax = (mMap->getHeight() * 32) - g->getHeight();
+
     if (mMap)
     {
         if (mPixelViewX < 0)
@@ -169,7 +169,7 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
     // Draw tiles and sprites
     if (mMap)
     {
-        mMap->draw(graphics, (int) mPixelViewX, (int) mPixelViewY);
+        mMap->draw(g, (int) mPixelViewX, (int) mPixelViewY);
 
         // Find a path from the player to the mouse, and draw it. This is for
         // debug purposes.
@@ -184,14 +184,14 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
             Path debugPath = mMap->findPath(player_node->mX, player_node->mY,
                                             mouseTileX, mouseTileY);
 
-            graphics->setColor(gcn::Color(255, 0, 0));
+            g->setColor(gcn::Color(255, 0, 0));
             for (PathIterator i = debugPath.begin(); i != debugPath.end(); i++)
             {
-                int squareX = i->x * 32 - (int) mPixelViewX + 12;
-                int squareY = i->y * 32 - (int) mPixelViewY + 12;
+                const int squareX = i->x * 32 - (int) mPixelViewX + 12;
+                const int squareY = i->y * 32 - (int) mPixelViewY + 12;
 
-                graphics->fillRectangle(gcn::Rectangle(squareX, squareY, 8, 8));
-                graphics->drawText(toString(mMap->getMetaTile(i->x, i->y)->Gcost),
+                g->fillRectangle(gcn::Rectangle(squareX, squareY, 8, 8));
+                g->drawText(toString(mMap->getMetaTile(i->x, i->y)->Gcost),
                                    squareX + 4, squareY + 12,
                                    gcn::Graphics::CENTER);
             }
@@ -206,9 +206,7 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
 
     // Draw text
     if (textManager)
-    {
-        textManager->draw(graphics, (int) mPixelViewX, (int) mPixelViewY);
-    }
+        textManager->draw(g, (int) mPixelViewX, (int) mPixelViewY);
 
     // Draw player names, speech, and emotion sprite as needed
     const Beings &beings = beingManager->getAll();
@@ -216,10 +214,10 @@ void Viewport::draw(gcn::Graphics *gcnGraphics)
          i != i_end; ++i)
     {
         (*i)->drawSpeech((int) mPixelViewX, (int) mPixelViewY);
-        (*i)->drawEmotion(graphics, (int) mPixelViewX, (int) mPixelViewY);
+        (*i)->drawEmotion(g, (int) mPixelViewX, (int) mPixelViewY);
     }
 
-    drawChildren(graphics);
+    drawChildren(g);
 }
 
 void Viewport::logic()
@@ -249,10 +247,6 @@ void Viewport::mousePressed(gcn::MouseEvent &event)
 
     // Check if we are alive and kickin'
     if (!mMap || !player_node || player_node->mAction == Being::DEAD)
-        return;
-
-    // Check if we are busy
-    if (current_npc)
         return;
 
     mPlayerFollowMouse = false;
@@ -300,45 +294,25 @@ void Viewport::mousePressed(gcn::MouseEvent &event)
 
         // Interact with some being
 //        if ((being = beingManager->findBeing(tilex, tiley)))
-        if ((being = beingManager->findBeingByPixel(x, y)))
+        if ((being = beingManager->findBeingByPixel(x, y)) &&
+             being->mAction != Being::DEAD)
         {
-            switch (being->getType())
+            if (being->getType() == Being::NPC && NPC::mTalking == false)
+                static_cast<NPC*>(being)->talk();
+            else if (player_node->withinAttackRange(being) &&
+                     being->getType() != Being::NPC)
             {
-                case Being::NPC:
-                    dynamic_cast<NPC*>(being)->talk();
-                    break;
-
-                case Being::MONSTER:
-                case Being::PLAYER:
-                    if (being->mAction == Being::DEAD)
-                        break;
-
-                    if (player_node->withinAttackRange(being) ||
-                        keyboard.isKeyActive(keyboard.KEY_ATTACK))
-                    {
-                        player_node->setGotoTarget(being);
-                        player_node->attack(being,
-                            !keyboard.isKeyActive(keyboard.KEY_CLEAR_TARGET));
-                    }
-                    else
-                    {
-                        player_node->setDestination(tilex, tiley);
-                    }
-                    break;
-
-                default:
-                    break;
-             }
+                player_node->setGotoTarget(being);
+                player_node->attack(being, true);
+            }
+            else
+                player_node->setDestination(tilex, tiley);
         }
         // Pick up some item
         else if ((item = floorItemManager->findByCoordinates(tilex, tiley)))
-        {
             player_node->pickUp(item);
-        }
         else if (player_node->mAction == Being::SIT)
-        {
             return;
-        }
         // Just walk around
         else
         {

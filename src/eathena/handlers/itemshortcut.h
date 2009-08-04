@@ -29,7 +29,7 @@
 
 #include "../../bindings/guichan/handlers/shortcuthandler.h"
 
-#include "../../core/image/sprite/localplayer.h"
+#include "../../core/map/sprite/localplayer.h"
 
 /**
  * A handler which keeps track of item shortcuts.

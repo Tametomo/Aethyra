@@ -41,7 +41,7 @@
 
 #include "../../core/image/image.h"
 
-#include "../../core/image/sprite/localplayer.h"
+#include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/stringutils.h"
 

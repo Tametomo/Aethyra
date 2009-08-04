@@ -25,11 +25,11 @@
 #include "action.h"
 #include "animatedsprite.h"
 
-#include "../animation.h"
-#include "../image.h"
-
 #include "../../log.h"
 #include "../../resourcemanager.h"
+
+#include "../../image/animation.h"
+#include "../../image/image.h"
 
 #include "../../utils/xml.h"
 

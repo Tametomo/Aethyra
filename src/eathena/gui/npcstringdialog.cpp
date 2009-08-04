@@ -27,7 +27,7 @@
 
 #include "../../bindings/guichan/widgets/textfield.h"
 
-#include "../../core/image/sprite/npc.h"
+#include "../../core/map/sprite/npc.h"
 
 #include "../../core/utils/gettext.h"
 

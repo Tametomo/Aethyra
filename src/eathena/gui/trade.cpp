@@ -43,7 +43,7 @@
 #include "../../bindings/guichan/widgets/scrollarea.h"
 #include "../../bindings/guichan/widgets/inttextfield.h"
 
-#include "../../core/image/sprite/localplayer.h"
+#include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"

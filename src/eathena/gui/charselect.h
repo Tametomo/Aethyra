@@ -25,16 +25,17 @@
 
 #include <guichan/actionlistener.hpp>
 
+#include "../../core/map/sprite/being.h"
+
 #include "../../bindings/guichan/widgets/window.h"
-
-#include "../../core/image/sprite/being.h"
-
-#include "../../core/utils/lockedarray.h"
 
 class BeingBox;
 class LocalPlayer;
 class Network;
 class Player;
+
+template<class T>
+class LockedArray;
 
 /**
  * Character selection dialog.
