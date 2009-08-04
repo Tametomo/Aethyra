@@ -25,14 +25,20 @@
 
 #include "wallpapermanager.h"
 
+#include "../configuration.h"
 #include "../log.h"
 
 #include "../utils/stringutils.h"
 
-#define WALLPAPER_FOLDER "graphics/images/"
-#define WALLPAPER_BASE "login_wallpaper"
-#define WALLPAPER_DEFAULT_WIDTH 800
-#define WALLPAPER_DEFAULT_HEIGHT 600
+namespace
+{
+    const std::string wallpaperFolder = config.getValue("wallpaperFolder",
+                                                        "graphics/images/");
+    const std::string wallpaperBase = config.getValue("wallpaperBase",
+                                                      "login_wallpaper");
+    const int defaultWidth = config.getValue("defaultWidth", 800);
+    const int defaultHeight = config.getValue("defaultHeight", 600);
+}
 
 struct wallpaper {
     Uint16 width;
@@ -52,9 +58,9 @@ bool wallpaperCompare(struct wallpaper x, struct wallpaper y)
 
 void Wallpaper::loadWallpapers()
 {
-    char **imgs = PHYSFS_enumerateFiles(WALLPAPER_FOLDER);
+    char **imgs = PHYSFS_enumerateFiles(wallpaperFolder.c_str());
     char **i;
-    size_t baseLen = strlen(WALLPAPER_BASE);
+    size_t baseLen = wallpaperBase.size();
     int width;
     int height;
 
@@ -64,8 +70,10 @@ void Wallpaper::loadWallpapers()
 
     for (i = imgs; *i != NULL; i++)
     {
-        if (strncmp(*i, WALLPAPER_BASE, baseLen) == 0)
+        if (strncmp(*i, wallpaperBase.c_str(), baseLen) == 0)
         {
+            const std::string path = wallpaperBase + "_%dx%d.png";
+
             if (strlen(*i) == baseLen + 4)
             {
                 if (haveBackup)
@@ -73,8 +81,7 @@ void Wallpaper::loadWallpapers()
                 else
                     haveBackup = true;
             }
-            else if (sscanf(*i, WALLPAPER_BASE "_%dx%d.png", &width,
-                            &height) == 2)
+            else if (sscanf(*i, path.c_str(), &width, &height) == 2)
             {
                 struct wallpaper wp;
                 wp.width = width;
@@ -98,12 +105,14 @@ std::string Wallpaper::getWallpaper(const int width, const int height)
     {
         wp = *iter;
         if (wp.width <= width && wp.height <= height)
-            return std::string(strprintf(WALLPAPER_FOLDER WALLPAPER_BASE
-                                "_%dx%d.png", wp.width, wp.height));
+            return std::string(strprintf("%s%s_%dx%d.png",
+                                         wallpaperFolder.c_str(),
+                                         wallpaperBase.c_str(),
+                                         wp.width, wp.height));
     }
 
     if (haveBackup)
-        return std::string(WALLPAPER_FOLDER WALLPAPER_BASE ".png");
+        return std::string(wallpaperFolder + wallpaperBase + ".png");
 
     return std::string("");
 }
@@ -111,15 +120,18 @@ std::string Wallpaper::getWallpaper(const int width, const int height)
 int Wallpaper::getWidth(const std::string &file)
 {
     int width = 0, height = 0;
+    const std::string path = wallpaperFolder + wallpaperBase + "_%dx%d.png";
 
-    sscanf(file.c_str(), WALLPAPER_FOLDER WALLPAPER_BASE "_%dx%d.png", &width, &height);
-    return width > 0 ? width : WALLPAPER_DEFAULT_WIDTH;
+    sscanf(file.c_str(), path.c_str(), &width, &height);
+    return width > 0 ? width : defaultWidth;
 }
 
 int Wallpaper::getHeight(const std::string &file)
 {
     int width = 0, height = 0;
 
-    sscanf(file.c_str(), WALLPAPER_FOLDER WALLPAPER_BASE "_%dx%d.png", &width, &height);
-    return height > 0 ? height : WALLPAPER_DEFAULT_HEIGHT;
+    const std::string path = wallpaperFolder + wallpaperBase + "_%dx%d.png";
+
+    sscanf(file.c_str(), path.c_str(), &width, &height);
+    return height > 0 ? height : defaultHeight;
 }
