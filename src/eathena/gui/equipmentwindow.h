@@ -74,6 +74,11 @@ class EquipmentWindow : public Window,
         void requestFocus();
 
         /**
+         * Updates button states.
+         */
+        void updateButtons();
+
+        /**
          * Resets the item filter for the equipment window on shown events.
          */
         void widgetHidden(const gcn::Event& event);

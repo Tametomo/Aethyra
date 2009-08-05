@@ -25,6 +25,7 @@
 #include "protocol.h"
 
 #include "../gui/chat.h"
+#include "../gui/equipmentwindow.h"
 #include "../gui/inventorywindow.h"
 
 #include "../structs/equipment.h"
@@ -139,6 +140,7 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
             item = inventory->getItem(index);
             player_node->mEquipment->setEquipment(position, index);
             inventoryWindow->updateButtons();
+            equipmentWindow->updateButtons();
             break;
 
         case SMSG_PLAYER_UNEQUIP:
@@ -176,6 +178,7 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
                 player_node->mEquipment->removeEquipment(position);
 
             inventoryWindow->updateButtons();
+            equipmentWindow->updateButtons();
 
             if (debugEquipment)
                 logger->log("Unequipping: %i %i(%i) %i",
@@ -202,6 +205,7 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
                 item->setEquipped(true);
                 player_node->mEquipment->setArrows(index);
                 inventoryWindow->updateButtons();
+                equipmentWindow->updateButtons();
                 logger->log("Arrows equipped: %i", index);
             }
             break;

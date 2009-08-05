@@ -273,11 +273,6 @@ void EquipmentWindow::action(const gcn::ActionEvent &event)
             player_node->equipItem(item);
         else
             player_node->unequipItem(item);
-
-        setSelected(mSelected);
-
-        // Compensate for potential server delays in updating equipment
-        mEquipButton->setCaption(equipped ? _("Equip") : _("Unequip"));
     }
     else if (event.getId() == "showpopupmenu")
         mItems->showPopupMenu(INVENTORY, false);
@@ -418,20 +413,23 @@ void EquipmentWindow::setSelected(int index)
         mSelected = index;
     }
 
-    mEquipButton->setEnabled(item);
+    updateButtons();
+}
+
+void EquipmentWindow::updateButtons()
+{
+    const Item *item = mItems->getSelectedItem();
 
     if (item)
         mEquipButton->setCaption(item->isEquipped() ? _("Unequip") : _("Equip"));
+
+    mEquipButton->setEnabled(item != NULL);
 }
 
 void EquipmentWindow::valueChanged(const gcn::SelectionEvent &event)
 {
-    Item *item = mItems->getSelectedItem();
-
-    mEquipButton->setEnabled(item);
-
-    if (event.getSource() == mItems && item)
-        mEquipButton->setCaption(item->isEquipped() ? _("Unequip") : _("Equip"));
+    if (event.getSource() == mItems)
+        updateButtons();
 }
 
 void EquipmentWindow::requestFocus()
