@@ -354,6 +354,20 @@ void Window::widgetShown(const gcn::Event& event)
 
     requestMoveToTop();
     requestFocus();
+
+    int widgetX, widgetY;
+    getAbsolutePosition(widgetX, widgetY);
+
+    widgetX = gui->getMouseX() - widgetX;
+    widgetY = gui->getMouseY() - widgetY;
+
+    if (getChildrenArea().isPointInRect(widgetX, widgetY))
+    {
+        gcn::MouseEvent mouseEvent(this, false, false, false, false,
+                                   gcn::MouseEvent::MOVED, 0, widgetX, widgetY, 0);
+
+        mouseMoved(mouseEvent);
+    }
 }
 
 void Window::widgetHidden(const gcn::Event& event)
@@ -367,6 +381,17 @@ void Window::widgetHidden(const gcn::Event& event)
         if (mFocusHandler->isFocused(*it))
             mFocusHandler->focusNone();
     }
+
+    int widgetX, widgetY;
+    getAbsolutePosition(widgetX, widgetY);
+
+    widgetX = gui->getMouseX() - widgetX;
+    widgetY = gui->getMouseY() - widgetY;
+
+    gcn::MouseEvent mouseEvent(this, false, false, false, false,
+                               gcn::MouseEvent::EXITED, 0, widgetX, widgetY, 0);
+
+    mouseExited(mouseEvent);
 }
 
 void Window::setCloseButton(bool flag)
