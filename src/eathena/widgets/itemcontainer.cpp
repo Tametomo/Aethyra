@@ -229,8 +229,21 @@ void ItemContainer::widgetResized(const gcn::Event &event)
 
 void ItemContainer::recalculateHeight()
 {
+    int numOfItems = 0;
+
+    for (int i = 0; i < mInventory->getSize(); i++)
+    {
+        Item *item = mInventory->getItem(i);
+
+        if (!item || item->getQuantity() <= 0 || !passesFilter(item))
+            continue;
+
+        numOfItems++;
+    }
+
     const int cols = std::max(1, getWidth() / gridWidth);
-    const int rows = ((mMaxItems + 1) / cols) + ((mMaxItems + 1) % cols > 0 ? 1 : 0);
+    const int rows = ((numOfItems + 1) / cols) + 
+                     ((numOfItems + 1) % cols > 0 ? 1 : 0);
     const int height = rows * gridHeight + 8;
 
     if (height != getHeight())
