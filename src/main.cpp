@@ -377,7 +377,7 @@ static void init_engine(const Options &options)
 #endif
 
 #ifdef USE_OPENGL
-    bool useOpenGL = (bool) config.getValue("opengl", 0) == 1;
+    bool useOpenGL = !options.noOpenGL && (config.getValue("opengl", 0) == 1);
 
     // Setup image loading for the right image format
     Image::setLoadAsOpenGL(useOpenGL);
@@ -476,6 +476,11 @@ static void printHelp()
         << _("  -P --password   : Login with this password") << std::endl
         << _("  -u --skipupdate : Skip the update downloads") << std::endl
         << _("  -U --username   : Login with this username") << std::endl
+#ifdef USE_OPENGL
+        << _("  -O --no-opengl  : Disable OpenGL for this session") << std::endl
+#else
+        << _("  -O --no-opengl  : default (OpenGL has been disabled at build time)") << std::endl
+#endif
         << _("  -v --version    : Display the version") << std::endl;
 }
 
@@ -490,7 +495,7 @@ static void printVersion()
 
 static void parseOptions(int argc, char *argv[], Options &options)
 {
-    const char *optstring = "hvud:U:P:Dp:C:H:";
+    const char *optstring = "hvud:U:P:Dp:C:H:O";
 
     const struct option long_options[] = {
         { "configfile", required_argument, 0, 'C' },
@@ -502,6 +507,7 @@ static void parseOptions(int argc, char *argv[], Options &options)
         { "updatehost", required_argument, 0, 'H' },
         { "skipupdate", no_argument,       0, 'u' },
         { "username",   required_argument, 0, 'U' },
+        { "no-opengl",  no_argument,       0, 'O' },
         { "version",    no_argument,       0, 'v' },
         { 0 }
     };
@@ -546,6 +552,12 @@ static void parseOptions(int argc, char *argv[], Options &options)
                 break;
             case 'v':
                 options.printVersion = true;
+                break;
+            case 'O':
+                options.noOpenGL = true;
+#ifndef USE_OPENGL
+                std::cout << _("--no-opengl is set by default (OpenGL has been disabled at build time)") << std::endl;
+#endif
                 break;
         }
     }

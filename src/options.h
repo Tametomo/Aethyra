@@ -36,13 +36,15 @@ struct Options
         printHelp(false),
         printVersion(false),
         skipUpdate(false),
-        chooseDefault(false)
+        chooseDefault(false),
+        noOpenGL(false)
     {};
 
     bool printHelp;
     bool printVersion;
     bool skipUpdate;
     bool chooseDefault;
+    bool noOpenGL;
     std::string username;
     std::string password;
     std::string playername;
