@@ -101,8 +101,7 @@ if test "x$OSX" != "xyes"; then
                     check_x11=no)
   fi
   if test "x$check_x11" = "xyes"; then
-    AC_CHECK_LIB(X11, XOpenDisplay, use_x11=yes, use_x11=no
-                 [ LIBS="$LIBS -lX11" ], )
+    AC_SEARCH_LIBS(XOpenDisplay, X11, use_x11=yes, use_x11=no, )
     if test "x$use_x11" = "xyes"; then
       AC_DEFINE(USE_X11, 1, [Define to use X11 clipboard])
     fi
