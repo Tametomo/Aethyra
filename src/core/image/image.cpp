@@ -358,7 +358,11 @@ void Image::setAlpha(float alpha)
 
     mAlpha = alpha;
 
+#ifdef USE_OPENGL
     if (mImage && !mUseOpenGL)
+#else
+    if (mImage)
+#endif
     {
         if (SDL_MUSTLOCK(mImage))
             SDL_LockSurface(mImage);
@@ -548,7 +552,11 @@ void SubImage::setAlpha(float alpha)
 
     mAlpha = alpha;
 
+#ifdef USE_OPENGL
     if (mImage && !mUseOpenGL)
+#else
+    if (mImage)
+#endif
     {
         if (SDL_MUSTLOCK(mImage))
             SDL_LockSurface(mImage);
