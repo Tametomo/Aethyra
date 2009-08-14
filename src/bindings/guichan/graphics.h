@@ -26,6 +26,9 @@
 #include <guichan/color.hpp>
 #include <guichan/graphics.hpp>
 
+const short defaultScreenWidth = 800;
+const short defaultScreenHeight = 600;
+
 class Image;
 
 class SDL_Surface;

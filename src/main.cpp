@@ -22,55 +22,25 @@
 
 #include <getopt.h>
 #include <iostream>
-#include <physfs.h>
-#include <SDL_image.h>
 #include <unistd.h>
 #include <vector>
 
-#include <libxml/parser.h>
-
-#include <SDL/SDL_ttf.h>
-
-#ifdef __APPLE__
-#include <CoreFoundation/CFBundle.h>
-#endif
-
-#ifdef WIN32
-#include <SDL_syswm.h>
-#else
-#include <cerrno>
-#include <sys/stat.h>
-#endif
-
+#include "engine.h"
 #include "main.h"
 #include "options.h"
 
-#include "bindings/guichan/graphics.h"
 #include "bindings/guichan/gui.h"
 #include "bindings/guichan/inputmanager.h"
-#include "bindings/guichan/palette.h"
 
-#include "bindings/guichan/dialogs/helpdialog.h"
 #include "bindings/guichan/dialogs/okdialog.h"
-#include "bindings/guichan/dialogs/setupdialog.h"
 
 #include "bindings/guichan/widgets/desktop.h"
 
-#ifdef USE_OPENGL
-#include "bindings/guichan/opengl/openglgraphics.h"
-#endif
-
-#include "bindings/guichan/sdl/sdlgraphics.h"
-#include "bindings/guichan/sdl/sdlinput.h"
-
-#include "bindings/sdl/keyboardconfig.h"
 #include "bindings/sdl/sound.h"
 
 #include "core/configuration.h"
 #include "core/log.h"
 #include "core/resourcemanager.h"
-
-#include "core/image/image.h"
 
 #include "core/map/sprite/localplayer.h"
 
@@ -79,9 +49,16 @@
 #include "core/utils/stringutils.h"
 
 #include "eathena/game.h"
+ 
+#include "eathena/db/colordb.h"
+#include "eathena/db/effectdb.h"
+#include "eathena/db/emotedb.h"
+#include "eathena/db/itemdb.h"
+#include "eathena/db/monsterdb.h"
+#include "eathena/db/npcdb.h"
+#include "eathena/db/skilldb.h"
 
 #include "eathena/gui/charselect.h"
-#include "eathena/gui/debugwindow.h"
 #include "eathena/gui/login.h"
 #include "eathena/gui/register.h"
 #include "eathena/gui/serverlistdialog.h"
@@ -95,371 +72,33 @@
 #include "eathena/net/network.h"
 #include "eathena/net/serverinfo.h"
 
-#include "eathena/db/colordb.h"
-#include "eathena/db/effectdb.h"
-#include "eathena/db/emotedb.h"
-#include "eathena/db/itemdb.h"
-#include "eathena/db/monsterdb.h"
-#include "eathena/db/npcdb.h"
-#include "eathena/db/skilldb.h"
-
 // Account infos
 char n_server, n_character;
-
-Graphics *graphics;
 
 // TODO Anyone knows a good location for this? Or a way to make it non-global?
 class SERVER_INFO;
 SERVER_INFO **server_info;
 
-bool mInGame;
 unsigned char state;
 std::string errorMessage;
-unsigned char screen_mode;
 
-Sound sound;
 Music *bgm;
 Game *game;
-
-Configuration config;         /**< XML file configuration reader */
-Logger *logger;               /**< Log object */
-KeyboardConfig keyboard;
-InputManager *inputManager;
+Engine *engine;
 
 CharServerHandler charServerHandler;
 LoginData loginData;
 LockedArray<LocalPlayer*> charInfo(MAX_SLOT + 1);
 
-Palette *guiPalette;
-
-DebugWindow *debugWindow;
 Desktop *desktop;
-HelpDialog *helpDialog;
-Setup* setupWindow;
 
 // This anonymous namespace hides whatever is inside from other modules.
-namespace {
-
-std::string homeDir;
+namespace
+{
 std::string updateHost;
-std::string updatesDir;
 
 LoginHandler loginHandler;
 MapLoginHandler mapLoginHandler;
-
-SDL_Surface *icon;
-
-/**
- * Parse the update host and determine the updates directory
- * Then verify that the directory exists (creating if needed).
- */
-static void setUpdatesDir()
-{
-    std::stringstream updates;
-
-    // If updatesHost is currently empty, fill it from config file
-    if (updateHost.empty())
-    {
-        updateHost =
-            config.getValue("updatehost", "http://www.aethyra.org/updates");
-    }
-
-    // Remove any trailing slash at the end of the update host
-    if (updateHost.at(updateHost.size() - 1) == '/')
-        updateHost.resize(updateHost.size() - 1);
-
-    // Parse out any "http://" or "ftp://", and set the updates directory
-    size_t pos;
-    pos = updateHost.find("://");
-    if (pos != updateHost.npos)
-    {
-        if (pos + 3 < updateHost.length())
-        {
-            updates << "updates/" << updateHost.substr(pos + 3)
-                    << "/" << loginData.port;
-            updatesDir = updates.str();
-        }
-        else
-        {
-            logger->log("Error: Invalid update host: %s", updateHost.c_str());
-            errorMessage = _("Invalid update host: ") + updateHost;
-            state = ERROR_STATE;
-        }
-    }
-    else
-    {
-        logger->log("Warning: no protocol was specified for the update host");
-        updates << "updates/" << updateHost << "/" << loginData.port;
-        updatesDir = updates.str();
-    }
-
-    ResourceManager *resman = ResourceManager::getInstance();
-
-    // Verify that the updates directory exists. Create if necessary.
-    if (!resman->isDirectory("/" + updatesDir))
-    {
-        if (!resman->mkdir("/" + updatesDir))
-        {
-#if defined WIN32
-            std::string newDir = homeDir + "\\" + updatesDir;
-            std::string::size_type loc = newDir.find("/", 0);
-
-            while (loc != std::string::npos)
-            {
-                newDir.replace(loc, 1, "\\");
-                loc = newDir.find("/", loc);
-            }
-
-            if (!CreateDirectory(newDir.c_str(), 0) &&
-                GetLastError() != ERROR_ALREADY_EXISTS)
-            {
-                logger->log("Error: %s can't be made, but doesn't exist!",
-                            newDir.c_str());
-                errorMessage = _("Error creating updates directory!");
-                state = ERROR_STATE;
-            }
-#else
-            logger->log("Error: %s/%s can't be made, but doesn't exist!",
-                        homeDir.c_str(), updatesDir.c_str());
-            errorMessage = _("Error creating updates directory!");
-            state = ERROR_STATE;
-#endif
-        }
-    }
-}
-
-/**
- * Do all initialization stuff
- */
-static void init_engine(const Options &options)
-{
-    homeDir = std::string(PHYSFS_getUserDir()) + "/.aethyra";
-#if defined WIN32
-    if (!CreateDirectory(homeDir.c_str(), 0) &&
-            GetLastError() != ERROR_ALREADY_EXISTS)
-#elif defined __APPLE__
-    // Use Application Directory instead of .aethyra
-    homeDir = std::string(PHYSFS_getUserDir()) +
-        "/Library/Application Support/Aethyra";
-    if ((mkdir(homeDir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0) &&
-            (errno != EEXIST))
-#else
-    // Checking if /home/user/.aethyra folder exists.
-    if ((mkdir(homeDir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0) &&
-            (errno != EEXIST))
-#endif
-    {
-        std::cout << strprintf(_("%s can't be created, but it doesn't exist! "
-                                 "Exiting."), homeDir.c_str()) << std::endl;
-        exit(1);
-    }
-
-    // Set log file
-    logger->setLogFile(homeDir + std::string("/aethyra.log"));
-
-#ifdef PACKAGE_VERSION
-    logger->log("Starting Aethyra Version %s.", PACKAGE_VERSION);
-#else
-    logger->log("Starting Aethyra - Version not defined.");
-#endif
-
-    // Initialize SDL
-    logger->log("Initializing SDL...");
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
-    {
-        std::cerr << _("Could not initialize SDL: ") << SDL_GetError()
-                  << std::endl;
-        exit(1);
-    }
-    atexit(SDL_Quit);
-
-    SDL_EnableUNICODE(1);
-    SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-
-    ResourceManager *resman = ResourceManager::getInstance();
-
-    if (!resman->setWriteDir(homeDir))
-    {
-        std::cout << strprintf(_("%s couldn't be set as home directory! "
-                                 "Exiting."), homeDir.c_str()) << std::endl;
-        exit(1);
-    }
-
-    // Add the user's homedir to PhysicsFS search path
-    resman->addToSearchPath(homeDir, false);
-
-    // Add the main data directories to our PhysicsFS search path
-    if (!options.dataPath.empty())
-        resman->addToSearchPath(options.dataPath, true);
-
-    resman->addToSearchPath("data", true);
-#if defined __APPLE__
-    CFBundleRef mainBundle = CFBundleGetMainBundle();
-    CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
-    char path[PATH_MAX];
-    if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path,
-                                          PATH_MAX))
-    {
-        fprintf(stderr, _("Can't find Resources directory!\n"));
-    }
-    CFRelease(resourcesURL);
-    strncat(path, "/data", PATH_MAX - 1);
-    resman->addToSearchPath(path, true);
-#else
-    resman->addToSearchPath(PKG_DATADIR "data", true);
-#endif
-
-    // Fill configuration with defaults
-    logger->log("Initializing configuration...");
-    config.setValue("host", "www.aethyra.org");
-    config.setValue("port", 21001);
-    config.setValue("hwaccel", 0);
-#if defined USE_OPENGL
-    config.setValue("opengl", 1);
-#else
-    config.setValue("opengl", 0);
-#endif
-    config.setValue("screen", 0);
-    config.setValue("sound", 1);
-    config.setValue("guialpha", 0.8f);
-    config.setValue("remember", 1);
-    config.setValue("sfxVolume", 100);
-    config.setValue("musicVolume", 60);
-    config.setValue("fpslimit", 0);
-    config.setValue("updatehost", "http://www.aethyra.org/updates");
-    config.setValue("customcursor", 1);
-    config.setValue("ChatLogLength", 128);
-
-    // Checking if the configuration file exists... otherwise creates it with
-    // default options !
-    FILE *configFile = 0;
-    std::string configPath = options.configPath;
-
-    if (configPath.empty())
-        configPath = homeDir + "/config.xml";
-
-    configFile = fopen(configPath.c_str(), "r");
-
-    // If we can't read it, it doesn't exist !
-    if (configFile == NULL)
-    {
-        // We reopen the file in write mode and we create it
-        configFile = fopen(configPath.c_str(), "wt");
-    }
-
-    if (configFile == NULL)
-    {
-        std::cout << strprintf("Can't create %s. Using Defaults.",
-                               configPath.c_str()) << std::endl;
-    }
-    else
-    {
-        fclose(configFile);
-        config.init(configPath);
-    }
-
-    SDL_WM_SetCaption("Aethyra", NULL);
-#ifdef WIN32
-    static SDL_SysWMinfo pInfo;
-    SDL_GetWMInfo(&pInfo);
-    HICON icon = LoadIcon(GetModuleHandle(NULL), "A");
-    if (icon)
-    {
-        SetClassLong(pInfo.window, GCL_HICON, (LONG) icon);
-    }
-#else
-    icon = IMG_Load(PKG_DATADIR "data/icons/aethyra.png");
-    if (icon)
-    {
-        SDL_SetAlpha(icon, SDL_SRCALPHA, SDL_ALPHA_OPAQUE);
-        SDL_WM_SetIcon(icon, NULL);
-    }
-#endif
-
-#ifdef USE_OPENGL
-    bool useOpenGL = !options.noOpenGL && (config.getValue("opengl", 0) == 1);
-
-    // Setup image loading for the right image format
-    Image::setLoadAsOpenGL(useOpenGL);
-
-    // Create the graphics context
-    if (useOpenGL)
-        graphics = new OpenGLGraphics();
-    else
-        graphics = new SDLGraphics();
-#else
-    // Create the graphics context
-    graphics = new SDLGraphics();
-#endif
-
-    const int width = (int) config.getValue("screenwidth", defaultScreenWidth);
-    const int height = (int) config.getValue("screenheight", defaultScreenHeight);
-    const int bpp = 0;
-    const bool fullscreen = ((int) config.getValue("screen", 0) == 1);
-    const bool hwaccel = ((int) config.getValue("hwaccel", 0) == 1);
-
-    // Try to set the desired video mode
-    if (!graphics->setVideoMode(width, height, bpp, fullscreen, hwaccel))
-    {
-        std::cerr << _("Couldn't set ") << width << "x" << height << "x" 
-                  << bpp << _(" video mode: ") << SDL_GetError() << std::endl;
-        exit(1);
-    }
-
-    // Initialize for drawing
-    graphics->_beginDraw();
-
-    gui = new Gui(graphics);
-    state = START_STATE; /**< Initial game state */
-
-    // Initialize sound engine
-    try
-    {
-        if (config.getValue("sound", 0) == 1)
-            sound.init();
-
-        sound.setSfxVolume((int) config.getValue("sfxVolume", defaultSfxVolume));
-        sound.setMusicVolume((int) config.getValue("musicVolume",
-                                                   defaultMusicVolume));
-    }
-    catch (const char *err)
-    {
-        state = ERROR_STATE;
-        errorMessage = err;
-        logger->log("Warning: %s", err);
-    }
-
-    // Initialize keyboard
-    keyboard.init();
-}
-
-/** Clear the engine */
-static void exit_engine()
-{
-    // Before config.write() so that global windows can get their settings
-    // written to the configuration file.
-    delete debugWindow;
-    delete helpDialog;
-    delete setupWindow;
-
-    setupWindow = NULL;
-
-    config.write();
-
-    delete gui;
-    delete graphics;
-
-    // Shutdown libxml
-    xmlCleanupParser();
-
-    // Shutdown sound
-    sound.close();
-
-    ResourceManager::deleteInstance();
-    delete logger;
-
-    SDL_FreeSurface(icon);
-}
 
 static void printHelp()
 {
@@ -479,7 +118,7 @@ static void printHelp()
 #ifdef USE_OPENGL
         << _("  -O --no-opengl  : Disable OpenGL for this session") << std::endl
 #else
-        << _("  -O --no-opengl  : default (OpenGL has been disabled at build time)") << std::endl
+        << _("  -O --no-opengl  : Default (OpenGL has been disabled at build time)") << std::endl
 #endif
         << _("  -v --version    : Display the version") << std::endl;
 }
@@ -569,10 +208,11 @@ static void parseOptions(int argc, char *argv[], Options &options)
  */
 static void loadUpdates()
 {
-    if (updatesDir.empty())
+    if (engine->getUpdatesDir().empty())
         return;
 
-    const std::string updatesFile = "/" + updatesDir + "/resources2.txt";
+    const std::string updatesFile = "/" + engine->getUpdatesDir() +
+                                    "/resources2.txt";
     ResourceManager *resman = ResourceManager::getInstance();
     std::vector<std::string> lines = resman->loadTextFile(updatesFile);
 
@@ -581,8 +221,8 @@ static void loadUpdates()
         std::stringstream line(lines[i]);
         std::string filename;
         line >> filename;
-        resman->addToSearchPath(homeDir + "/" + updatesDir + "/" + filename,
-                                false);
+        resman->addToSearchPath(engine->getHomeDir() + "/" + 
+                                engine->getUpdatesDir() + "/" + filename, false);
     }
 }
 
@@ -677,29 +317,9 @@ static void mapLogin(Network *network, LoginData *loginData)
 
 } // namespace
 
-extern "C" char const *_nl_locale_name_default(void);
-
-static void initInternationalization()
-{
-#if ENABLE_NLS
-#ifdef WIN32
-    putenv(("LANG=" + std::string(_nl_locale_name_default())).c_str());
-    // mingw doesn't like LOCALEDIR to be defined for some reason
-    bindtextdomain("aethyra", "translations/");
-#else
-    bindtextdomain("aethyra", LOCALEDIR);
-#endif
-    setlocale(LC_MESSAGES, "");
-    bind_textdomain_codeset("aethyra", "UTF-8");
-    textdomain("aethyra");
-#endif
-}
-
 /** Main */
 int main(int argc, char *argv[])
 {
-    logger = new Logger();
-
     Options options;
 
     parseOptions(argc, argv, options);
@@ -715,42 +335,18 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    initInternationalization();
+    engine = new Engine(argv[0], options);
 
-    // Initialize libxml2 and check for potential ABI mismatches between
-    // compiled version and the shared library actually used.
-    xmlInitParser();
-    LIBXML_TEST_VERSION;
-
-    // Redirect libxml errors to /dev/null
-    FILE *nullFile = fopen("/dev/null", "w");
-    xmlSetGenericErrorFunc(nullFile, NULL);
-
-    // Initialize PhysicsFS
-    PHYSFS_init(argv[0]);
-
-    init_engine(options);
+    state = START_STATE; /**< Initial game state */
 
     unsigned int oldstate = !state; // We start with a status change.
 
-    // Needs to be created in main, as the updater uses it
-    guiPalette = new Palette;
-
     game = NULL;
-
-    setupWindow = new Setup();
-    debugWindow = new DebugWindow();
-    helpDialog = new HelpDialog();
-
-    sound.playMusic("Magick - Real.ogg");
 
     loginData.username = options.username;
 
-    if (loginData.username.empty())
-    {
-        if (config.getValue("remember", 0))
-            loginData.username = config.getValue("username", "");
-    }
+    if (loginData.username.empty() && config.getValue("remember", 0))
+        loginData.username = config.getValue("username", "");
 
     if (!options.password.empty())
         loginData.password = options.password;
@@ -759,10 +355,6 @@ int main(int argc, char *argv[])
     loginData.port = (short) config.getValue("port", 21001);
     loginData.remember = config.getValue("remember", 0);
     loginData.registerLogin = false;
-
-    SDLNet_Init();
-    Network *network = new Network();
-    InputManager *inputManager = new InputManager();
 
     gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
 
@@ -774,10 +366,10 @@ int main(int argc, char *argv[])
 
         // Handle SDL events
         inputManager->handleInput();
-        network->flush();
-        network->dispatchMessages();
+        engine->getNetwork()->flush();
+        engine->getNetwork()->dispatchMessages();
 
-        const int netState = network->getState();
+        const int netState = engine->getNetwork()->getState();
 
         if (netState == Network::NET_ERROR || netState == Network::FATAL)
         {
@@ -786,8 +378,8 @@ int main(int argc, char *argv[])
 
             state = ERROR_STATE;
 
-            if (!network->getError().empty()) 
-                errorMessage = network->getError();
+            if (!engine->getNetwork()->getError().empty()) 
+                errorMessage = engine->getNetwork()->getError();
             else
                 errorMessage = _("Got disconnected from server!");
         }
@@ -815,8 +407,8 @@ int main(int argc, char *argv[])
                     break;
 
                 default:
-                    network->disconnect();
-                    network->clearHandlers();
+                    engine->getNetwork()->disconnect();
+                    engine->getNetwork()->clearHandlers();
                     break;
             }
 
@@ -838,13 +430,13 @@ int main(int argc, char *argv[])
                         "customdata/", "zip", false);
 
                     // Load XML databases
-                    EffectDB::load();
-                    SkillDB::load();
                     ColorDB::load();
+                    EffectDB::load();
+                    EmoteDB::load();
                     ItemDB::load();
                     MonsterDB::load();
                     NPCDB::load();
-                    EmoteDB::load();
+                    SkillDB::load();
                     Being::load(); // Hairstyles
 
                     state = CHAR_CONNECT_STATE;
@@ -856,7 +448,6 @@ int main(int argc, char *argv[])
                     desktop = new Desktop();
                     top->add(desktop);
 
-                    mInGame = false;
                     state = LOGIN_STATE;
                     break;
 
@@ -869,9 +460,7 @@ int main(int argc, char *argv[])
                         state = ACCOUNT_STATE;
                     }
                     else
-                    {
                         desktop->changeCurrentDialog(new LoginDialog(&loginData));
-                    }
                     break;
 
                 case REGISTER_STATE:
@@ -933,13 +522,13 @@ int main(int argc, char *argv[])
                     desktop = NULL;
 
                     logger->log("State: GAME");
-                    game = new Game(network);
+                    game = new Game(engine->getNetwork());
                     game->logic();
                     delete game;
                     game = NULL;
 
-                    network->disconnect();
-                    network->clearHandlers();
+                    engine->getNetwork()->disconnect();
+                    engine->getNetwork()->clearHandlers();
                     break;
 
                 case UPDATE_STATE:
@@ -949,18 +538,14 @@ int main(int argc, char *argv[])
                     }
                     else
                     {
-                        // Determine which source to use for the update host
-                        if (!options.updateHost.empty())
-                            updateHost = options.updateHost;
-                        else
-                            updateHost = loginData.updateHost;
-
-                        setUpdatesDir();
+                        updateHost = (!options.updateHost.empty() ?
+                                       options.updateHost : loginData.updateHost);
+                        engine->setUpdatesDir(updateHost, loginData);
                         logger->log("State: UPDATE");
 
                         desktop->changeCurrentDialog(new UpdaterWindow(updateHost,
-                                                                       homeDir + "/"
-                                                                       + updatesDir));
+                                                                       engine->getHomeDir() + "/"
+                                                                       + engine->getUpdatesDir()));
                     }
                     break;
 
@@ -968,24 +553,29 @@ int main(int argc, char *argv[])
                     logger->log("State: ERROR");
                     desktop->showError(new OkDialog(_("Error"), errorMessage),
                                        errorState);
-                    network->disconnect();
-                    network->clearHandlers();
+                    engine->getNetwork()->disconnect();
+                    engine->getNetwork()->clearHandlers();
                     break;
 
                 case CONNECTING_STATE:
                     logger->log("State: CONNECTING");
                     desktop->useProgressBar(_("Connecting to map server..."));
-                    mapLogin(network, &loginData);
+                    mapLogin(engine->getNetwork(), &loginData);
                     break;
 
                 case CHAR_CONNECT_STATE:
                     desktop->useProgressBar(_("Connecting to character server..."));
-                    charLogin(network, &loginData);
+                    charLogin(engine->getNetwork(), &loginData);
                     break;
 
                 case ACCOUNT_STATE:
                     desktop->useProgressBar(_("Connecting to account server..."));
-                    accountLogin(network, &loginData);
+                    accountLogin(engine->getNetwork(), &loginData);
+                    break;
+
+                case EXIT_STATE:
+                    logger->log("State: EXIT");
+                    delete engine;
                     break;
 
                 default:
@@ -994,18 +584,6 @@ int main(int argc, char *argv[])
             }
         }
     }
-
-    delete guiPalette;
-    delete inputManager;
-    delete network;
-    SDLNet_Quit();
-
-    if (nullFile)
-        fclose(nullFile);
-
-    logger->log("State: EXIT");
-    exit_engine();
-    PHYSFS_deinit();
     return 0;
 }
 

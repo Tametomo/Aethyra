@@ -497,6 +497,8 @@
 		<Unit filename="src\eathena\widgets\itemshortcutcontainer.h" />
 		<Unit filename="src\eathena\widgets\shoplistbox.cpp" />
 		<Unit filename="src\eathena\widgets\shoplistbox.h" />
+		<Unit filename="src\engine.cpp" />
+		<Unit filename="src\engine.h" />
 		<Unit filename="src\main.cpp" />
 		<Unit filename="src\main.h" />
 		<Unit filename="src\options.h" />

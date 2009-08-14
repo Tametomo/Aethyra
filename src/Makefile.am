@@ -396,6 +396,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      eathena/widgets/itemshortcutcontainer.h \
 	      eathena/widgets/shoplistbox.cpp \
 	      eathena/widgets/shoplistbox.h \
+	      engine.cpp \
+	      engine.h \
 	      main.cpp \
 	      main.h \
 	      options.h
