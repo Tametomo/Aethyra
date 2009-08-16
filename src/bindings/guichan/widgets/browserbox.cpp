@@ -444,7 +444,7 @@ void BrowserBox::draw(gcn::Graphics *graphics)
             x += font->getWidth(part);
         }
         y += font->getHeight();
-        setHeight((mTextRows.size() + wrappedLines) * font->getHeight());
     }
+    setHeight(y);
 }
 
