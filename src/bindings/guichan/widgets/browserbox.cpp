@@ -316,7 +316,8 @@ void BrowserBox::draw(gcn::Graphics *graphics)
 
     gcn::Font *font = getFont();
 
-    for (LaidOutTextIterator i = mLaidOutText.begin(); i != mLaidOutText.end(); i++)
+    for (LaidOutTextIterator i = mLaidOutText.begin();
+            i != mLaidOutText.end(); i++)
     {
         switch (i->type)
         {
@@ -352,7 +353,8 @@ void BrowserBox::calculateTextLayout()
         // Check for separator lines
         if (row.find("---", 0) == 0)
         {
-            LaidOutPart temp(LaidOutPart::HORIZONTAL_RULE, row, 0, y+(font->getHeight()/2), textColor);
+            LaidOutPart temp(LaidOutPart::HORIZONTAL_RULE, row,
+                0, y + (font->getHeight() / 2), textColor);
             mLaidOutText.push_back(temp);
             y += font->getHeight();
             continue;
@@ -467,7 +469,8 @@ void BrowserBox::calculateTextLayout()
                 if (forced)
                 {
                     x -= hyphenWidth; // Remove the wrap-notifier accounting
-                    LaidOutPart temp(hyphen, getWidth() - hyphenWidth, y, selColor);
+                    LaidOutPart temp(hyphen,
+                        getWidth() - hyphenWidth, y, selColor);
                     mLaidOutText.push_back(temp);
                     end++; // Skip to the next character
                 }
