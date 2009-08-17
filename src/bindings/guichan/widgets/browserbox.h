@@ -27,6 +27,7 @@
 #include <vector>
 
 #include <guichan/mouselistener.hpp>
+#include <guichan/widgetlistener.hpp>
 #include <guichan/widget.hpp>
 
 class LinkHandler;
@@ -41,7 +42,7 @@ struct BROWSER_LINK {
  * A simple browser box able to handle links and forward events to the
  * parent conteiner.
  */
-class BrowserBox : public gcn::Widget, public gcn::MouseListener
+class BrowserBox : public gcn::Widget, public gcn::MouseListener, public gcn::WidgetListener
 {
     public:
         /**
@@ -96,9 +97,21 @@ class BrowserBox : public gcn::Widget, public gcn::MouseListener
         void mouseMoved(gcn::MouseEvent &event);
 
         /**
+         * After a resize, calculateTextLayout must be called
+         * before (or at the start of) the next draw.
+         */
+        void widgetResized(const gcn::Event &event);
+
+        /**
          * Draws the browser box.
          */
         void draw(gcn::Graphics *graphics);
+
+        /**
+         * Parses the raw text, updates and positions all the
+         * Links and LaidOutParts.
+         */
+        void calculateTextLayout();
 
         /**
          * BrowserBox modes.
@@ -140,9 +153,62 @@ class BrowserBox : public gcn::Widget, public gcn::MouseListener
         };
 
     private:
+        /*
+         * mTextRows contains the raw text, before any
+         * layout or link-recognition operations.
+         */
         typedef std::list<std::string> TextRows;
         typedef TextRows::iterator TextRowIterator;
         TextRows mTextRows;
+
+        /**
+         * A result of parsing mTextRows which has been
+         * positioned and is ready to draw.  Due to line-wrapping
+         * and color changes, a TextRow may become several
+         * LaidOutParts.
+         *
+         * ORDINARY_TEXT is text that is all on one line, and can
+         * be drawn with a single call to graphics->setColor and
+         * font->drawString.
+         */
+        class LaidOutPart {
+            public:
+                enum PartType
+                {
+                    ORDINARY_TEXT,      /**< Single line of text */
+                    HORIZONTAL_RULE     /**< Separator - similar to an HTML [hr] element */
+                };
+                PartType type;
+                std::string text;
+                int x;
+                int y;
+                gcn::Color color;
+
+                LaidOutPart(std::string t, int xcoord, int ycoord, gcn::Color c) :
+                    type(ORDINARY_TEXT),
+                    text(t),
+                    x(xcoord),
+                    y(ycoord),
+                    color(c)
+                    {}
+
+                LaidOutPart(PartType pt, std::string t, int xcoord, int ycoord, gcn::Color c) :
+                    type (pt),
+                    text(t),
+                    x(xcoord),
+                    y(ycoord),
+                    color(c)
+                    {}
+        };
+        typedef std::list<LaidOutPart> LaidOutText;
+        typedef LaidOutText::iterator LaidOutTextIterator;
+        LaidOutText mLaidOutText;
+
+        /**
+         * Whether calculateTextLayout has been called since the
+         * last event that requires it.
+         */
+        bool mLaidOutTextValid;
 
         typedef std::vector<BROWSER_LINK> Links;
         typedef Links::iterator LinkIterator;

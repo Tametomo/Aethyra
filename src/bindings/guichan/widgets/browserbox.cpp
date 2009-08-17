@@ -41,10 +41,13 @@ BrowserBox::BrowserBox(unsigned int mode, bool opaque):
 {
     setFocusable(false);
     addMouseListener(this);
+    addWidgetListener(this);
 }
 
 BrowserBox::~BrowserBox()
 {
+    removeWidgetListener(this);
+    removeMouseListener(this);
 }
 
 void BrowserBox::setLinkHandler(LinkHandler* linkHandler)
@@ -74,6 +77,9 @@ void BrowserBox::addRow(const std::string &row)
     BROWSER_LINK bLink;
     std::string::size_type idx1, idx2, idx3;
     gcn::Font *font = getFont();
+
+    // Invalidate the cached prewrapped lines
+    mLaidOutTextValid = false;
 
     // Use links and user defined colors
     if (mUseLinksAndUserColors)
@@ -214,6 +220,8 @@ void BrowserBox::addRow(const std::string &row)
 void BrowserBox::clearRows()
 {
     mTextRows.clear();
+    mLaidOutTextValid = false;
+    mLaidOutText.clear();
     mLinks.clear();
     setWidth(0);
     setHeight(0);
@@ -249,9 +257,17 @@ void BrowserBox::mouseMoved(gcn::MouseEvent &event)
     mSelectedLink = (i != mLinks.end()) ? (i - mLinks.begin()) : -1;
 }
 
+void BrowserBox::widgetResized(const gcn::Event &event)
+{
+    /* Need to lay the text out again, as line-wrapping may
+     * have changed.
+     */
+    mLaidOutTextValid = false;
+}
+
 void BrowserBox::draw(gcn::Graphics *graphics)
 {
-    /* Forge's addition: The remaining code get nuts
+    /* Forge's addition: The remaining code [in calculateTextLayout] get nuts
      *   on infinite loop when getWidth is 0 (how and why
      * it might be so is yet to be explained). For the
      * time being, just protect with a basic sanity check.
@@ -264,6 +280,12 @@ void BrowserBox::draw(gcn::Graphics *graphics)
        return;
 
     // End of Forge's addition
+
+    if (!mLaidOutTextValid)
+    {
+        calculateTextLayout();
+    }
+
     if (mOpaque)
     {
         graphics->setColor(guiPalette->getColor(Palette::BACKGROUND));
@@ -292,12 +314,32 @@ void BrowserBox::draw(gcn::Graphics *graphics)
         }
     }
 
+    gcn::Font *font = getFont();
+
+    for (LaidOutTextIterator i = mLaidOutText.begin(); i != mLaidOutText.end(); i++)
+    {
+        switch (i->type)
+        {
+            case LaidOutPart::HORIZONTAL_RULE:
+                graphics->setColor(i->color);
+                graphics->drawLine(0, i->y, getWidth(), i->y);
+                break;
+            default:
+                graphics->setColor(i->color);
+                font->drawString(graphics, i->text, i->x, i->y);
+        }
+    }
+}
+
+void BrowserBox::calculateTextLayout()
+{
     int x = 0, y = 0;
     int wrappedLines = 0;
     int link = 0;
     gcn::Font *font = getFont();
 
-    graphics->setColor(guiPalette->getColor(Palette::TEXT));
+    mLaidOutText.clear();
+
     for (TextRowIterator i = mTextRows.begin(); i != mTextRows.end(); i++)
     {
         const gcn::Color textColor = guiPalette->getColor(Palette::TEXT);
@@ -310,12 +352,8 @@ void BrowserBox::draw(gcn::Graphics *graphics)
         // Check for separator lines
         if (row.find("---", 0) == 0)
         {
-            const int dashWidth = font->getWidth("-");
-            for (x = 0; x < getWidth(); x++)
-            {
-                font->drawString(graphics, "-", x, y);
-                x += dashWidth - 2;
-            }
+            LaidOutPart temp(LaidOutPart::HORIZONTAL_RULE, row, 0, y+(font->getHeight()/2), textColor);
+            mLaidOutText.push_back(temp);
             y += font->getHeight();
             continue;
         }
@@ -385,7 +423,6 @@ void BrowserBox::draw(gcn::Graphics *graphics)
                     if (start == row.size())
                         break;
                 }
-                graphics->setColor(selColor);
             }
 
             std::string::size_type len =
@@ -430,8 +467,8 @@ void BrowserBox::draw(gcn::Graphics *graphics)
                 if (forced)
                 {
                     x -= hyphenWidth; // Remove the wrap-notifier accounting
-                    font->drawString(graphics, hyphen,
-                            getWidth() - hyphenWidth, y);
+                    LaidOutPart temp(hyphen, getWidth() - hyphenWidth, y, selColor);
+                    mLaidOutText.push_back(temp);
                     end++; // Skip to the next character
                 }
                 else
@@ -440,11 +477,12 @@ void BrowserBox::draw(gcn::Graphics *graphics)
                 wrapped = true;
                 wrappedLines++;
             }
-            font->drawString(graphics, part, x, y);
+            LaidOutPart temp(part, x, y, selColor);
+            mLaidOutText.push_back(temp);
             x += font->getWidth(part);
         }
         y += font->getHeight();
     }
     setHeight(y);
+    mLaidOutTextValid = true;
 }
-
