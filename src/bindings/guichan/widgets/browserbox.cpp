@@ -366,11 +366,13 @@ void BrowserBox::calculateTextLayout()
                 start != std::string::npos;
                 start = end, end = std::string::npos)
         {
-            // Wrapped line continuation shall be indented
+            // Wrapped line continuation shall be indented.
             if (wrapped)
             {
                 y += font->getHeight();
                 x = 15;
+                // Clear flag, in case this line contains more than one part
+                wrapped = false;
             }
 
             // "Tokenize" the string at control sequences
