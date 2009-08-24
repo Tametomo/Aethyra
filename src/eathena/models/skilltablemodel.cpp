@@ -28,6 +28,8 @@
 
 #include "../../bindings/guichan/widgets/label.h"
 
+#include "../../core/utils/stringutils.h"
+
 SkillTableModel::SkillTableModel(SkillDialog *dialog) :
     StaticTableModel(0, 3)
 {
@@ -45,17 +47,17 @@ void SkillTableModel::update(void)
     {
         SKILL *skill = mDialog->getSkills()[i];
         SkillInfo const *info;
-        char tmp[128];
+        std::string tmp;
 
         info = SkillDB::get(skill->id);
 
-        sprintf(tmp, "%c%s", info->modifiable? ' ' : '*', info->name.c_str());
+        tmp = strprintf("%c%s", info->modifiable? ' ' : '*', info->name.c_str());
         gcn::Label *name_label = new Label(tmp);
 
-        sprintf(tmp, "Lv:%i", skill->lv);
+        tmp = strprintf("Lv:%i", skill->lv);
         gcn::Label *lv_label = new Label(tmp);
 
-        sprintf(tmp, "Sp:%i", skill->sp);
+        tmp = strprintf("Sp:%i", skill->sp);
         gcn::Label *sp_label = new Label(tmp);
 
         set(i, 0, name_label);
