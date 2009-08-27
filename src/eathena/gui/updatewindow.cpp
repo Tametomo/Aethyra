@@ -98,11 +98,8 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
     mUpdatesDir(""),
     mCurrentFile("news.txt"),
     mCurrentChecksum(0),
-    mStoreInMemory(true),
     mDownloadComplete(true),
     mUserCancel(false),
-    mDownloadedBytes(0),
-    mMemoryBuffer(NULL),
     mCurlError(new char[CURL_ERROR_SIZE]),
     mLineIndex(0)
 {
@@ -151,8 +148,6 @@ UpdaterWindow::~UpdaterWindow()
     if (mThread)
         SDL_WaitThread(mThread, NULL);
 
-    free(mMemoryBuffer);
-
     // Remove possibly leftover temporary download
     ::remove((engine->getHomeDir() + "/" + mUpdatesDir + "/download.temp").c_str());
 
@@ -195,29 +190,16 @@ void UpdaterWindow::action(const gcn::ActionEvent &event)
 
 void UpdaterWindow::loadNews()
 {
-    if (!mMemoryBuffer)
-    {
-        logger->log("Couldn't load news");
-        return;
-    }
-
-    // Reallocate and include terminating 0 character
-    mMemoryBuffer = (char*)realloc(mMemoryBuffer, mDownloadedBytes + 1);
-    mMemoryBuffer[mDownloadedBytes] = '\0';
+    std::vector<std::string> lines = loadTextFile(engine->getHomeDir()
+        + "/" + mUpdatesDir + "/news.txt");
 
     mBrowserBox->clearRows();
 
-    // Tokenize and add each line separately
-    char *line = strtok(mMemoryBuffer, "\n");
-    while (line)
+    for (std::vector<std::string>::iterator itr = lines.begin() ;
+            itr != lines.end() ; itr++)
     {
-        mBrowserBox->addRow(line);
-        line = strtok(NULL, "\n");
+        mBrowserBox->addRow(*itr);
     }
-
-    // Free the memory buffer now that we don't need it anymore
-    free(mMemoryBuffer);
-    mMemoryBuffer = NULL;
 
     mScrollArea->setVerticalScrollAmount(0);
 }
@@ -247,22 +229,6 @@ int UpdaterWindow::updateProgress(void *ptr, double dt, double dn, double ut,
     return 0;
 }
 
-size_t UpdaterWindow::memoryWrite(void *ptr, size_t size, size_t nmemb,
-                                  FILE *stream)
-{
-    UpdaterWindow *uw = reinterpret_cast<UpdaterWindow *>(stream);
-    size_t totalMem = size * nmemb;
-    uw->mMemoryBuffer = (char*) realloc(uw->mMemoryBuffer,
-                                        uw->mDownloadedBytes + totalMem);
-    if (uw->mMemoryBuffer)
-    {
-        memcpy(&(uw->mMemoryBuffer[uw->mDownloadedBytes]), ptr, totalMem);
-        uw->mDownloadedBytes += totalMem;
-    }
-
-    return totalMem;
-}
-
 int UpdaterWindow::downloadThread(void *ptr)
 {
     int attempts = 0;
@@ -284,21 +250,10 @@ int UpdaterWindow::downloadThread(void *ptr)
         {
             logger->log("Downloading: %s", url.c_str());
 
-            if (uw->mStoreInMemory)
-            {
-                uw->mDownloadedBytes = 0;
-                curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1);
-                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION,
-                                       UpdaterWindow::memoryWrite);
-                curl_easy_setopt(curl, CURLOPT_WRITEDATA, ptr);
-            }
-            else
-            {
-                outFilename = engine->getHomeDir() + "/" + uw->mUpdatesDir +
-                              "/download.temp";
-                outfile = fopen(outFilename.c_str(), "w+b");
-                curl_easy_setopt(curl, CURLOPT_WRITEDATA, outfile);
-            }
+            outFilename = engine->getHomeDir() + "/" + uw->mUpdatesDir +
+                          "/download.temp";
+            outfile = fopen(outFilename.c_str(), "w+b");
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, outfile);
 
 #ifdef PACKAGE_VERSION
             curl_easy_setopt(curl, CURLOPT_USERAGENT, "Aethyra/" PACKAGE_VERSION);
@@ -333,16 +288,13 @@ int UpdaterWindow::downloadThread(void *ptr)
                 case CURLE_COULDNT_CONNECT:
                 default:
                     std::cerr << _("curl error ") << res << ": "
-                              << uw->mCurlError << _(" host: ") << url.c_str()
+                              << uw->mCurlError << _(" host: ") << url
                               << std::endl;
                     break;
                 }
 
-                if (!uw->mStoreInMemory)
-                {
-                    fclose(outfile);
-                    ::remove(outFilename.c_str());
-                }
+                fclose(outfile);
+                ::remove(outFilename.c_str());
                 attempts++;
                 continue;
             }
@@ -354,50 +306,42 @@ int UpdaterWindow::downloadThread(void *ptr)
                 curl_slist_free_all(pHeaders);
             }
 
-            if (!uw->mStoreInMemory)
+            // Don't check checksum for news.txt or resources2.txt
+            if (uw->mDownloadStatus == UPDATE_RESOURCES)
             {
-                // Don't check resources2.txt checksum
-                if (uw->mDownloadStatus == UPDATE_RESOURCES)
+                unsigned long adler = fadler32(outfile);
+
+                if (uw->mCurrentChecksum != adler)
                 {
-                    unsigned long adler = fadler32(outfile);
+                    fclose(outfile);
 
-                    if (uw->mCurrentChecksum != adler)
-                    {
-                        fclose(outfile);
-
-                        // Remove the corrupted file
-                        ::remove(outFilename.c_str());
-                        logger->log(
-                            _("Checksum for file %s failed: (%lx/%lx)"),
-                            uw->mCurrentFile.c_str(),
-                            adler, uw->mCurrentChecksum);
-                        attempts++;
-                        continue; // Bail out here to avoid the renaming
-                    }
-                }
-                fclose(outfile);
-
-                // Give the file the proper name
-                const std::string newName = engine->getHomeDir() + "/" +
-                                            uw->mUpdatesDir + "/" + uw->mCurrentFile;
-
-                // Any existing file with this name is deleted first, otherwise
-                // the rename will fail on Windows.
-                ::remove(newName.c_str());
-                ::rename(outFilename.c_str(), newName.c_str());
-
-                // Check if we can open it and no errors were encountered
-                // during renaming
-                newfile = fopen(newName.c_str(), "rb");
-                if (newfile)
-                {
-                    fclose(newfile);
-                    uw->mDownloadComplete = true;
+                    // Remove the corrupted file
+                    ::remove(outFilename.c_str());
+                    logger->log(
+                        _("Checksum for file %s failed: (%lx/%lx)"),
+                        uw->mCurrentFile.c_str(),
+                        adler, uw->mCurrentChecksum);
+                    attempts++;
+                    continue; // Bail out here to avoid the renaming
                 }
             }
-            else
+            fclose(outfile);
+
+            // Give the file the proper name
+            const std::string newName = engine->getHomeDir() + "/" +
+                                        uw->mUpdatesDir + "/" + uw->mCurrentFile;
+
+            // Any existing file with this name is deleted first, otherwise
+            // the rename will fail on Windows.
+            ::remove(newName.c_str());
+            ::rename(outFilename.c_str(), newName.c_str());
+
+            // Check if we can open it and no errors were encountered
+            // during renaming
+            newfile = fopen(newName.c_str(), "rb");
+            if (newfile)
             {
-                // It's stored in memory, we're done
+                fclose(newfile);
                 uw->mDownloadComplete = true;
             }
         }
@@ -470,7 +414,6 @@ void UpdaterWindow::logic()
                 loadNews();
 
                 mCurrentFile = "resources2.txt";
-                mStoreInMemory = false;
                 mDownloadStatus = UPDATE_LIST;
                 download(); // download() changes mDownloadComplete to false
             }
@@ -480,7 +423,6 @@ void UpdaterWindow::logic()
             {
                 mLines = loadTextFile(engine->getHomeDir() + "/" + mUpdatesDir +
                                       "/resources2.txt");
-                mStoreInMemory = false;
                 mDownloadStatus = UPDATE_RESOURCES;
             }
             break;

@@ -86,8 +86,8 @@ private:
     void enable();
 
     /**
-     * Loads and display news. Assumes the news file contents have been loaded
-     * into the memory buffer.
+     * Parse and display the contents of news.txt.  Assumes that news.txt file
+     * has already been downloaded.
      */
     void loadNews();
 
@@ -115,12 +115,6 @@ private:
      */
     static int updateProgress(void *ptr,
                               double dt, double dn, double ut, double un);
-
-    /**
-     * A libcurl callback for writing to memory.
-     */
-    static size_t memoryWrite(void *ptr, size_t size, size_t nmemb,
-                              FILE *stream);
 
     enum DownloadStatus
     {
@@ -156,20 +150,11 @@ private:
     /** The Adler32 checksum of the file currently downloading. */
     unsigned long mCurrentChecksum;
 
-    /** A flag to indicate whether to use a memory buffer or a regular file. */
-    bool mStoreInMemory;
-
     /** Flag that show if current download is complete. */
     bool mDownloadComplete;
 
     /** Flag that show if the user has canceled the update. */
     bool mUserCancel;
-
-    /** Byte count currently downloaded in mMemoryBuffer. */
-    int mDownloadedBytes;
-
-    /** Buffer for files downloaded to memory. */
-    char *mMemoryBuffer;
 
     /** Buffer to handler human readable error provided by curl. */
     char *mCurlError;
