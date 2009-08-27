@@ -85,6 +85,11 @@ class ListDialog : public Window, public gcn::ActionListener,
         void requestFocus();
 
         /**
+         * Selects the first item in the list on shown events.
+         */
+        virtual void widgetShown(const gcn::Event& event);
+
+        /**
          * Clears the list dialog on hiding
          */
         virtual void widgetHidden(const gcn::Event& event);

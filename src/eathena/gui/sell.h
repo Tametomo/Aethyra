@@ -68,6 +68,11 @@ class SellDialog : public Window, gcn::ActionListener, gcn::SelectionListener
         void action(const gcn::ActionEvent &event);
 
         /**
+         * Returns the number of items in the shop inventory.
+         */
+        int getNumberOfElements();
+
+        /**
          * Updates labels according to selected item.
          *
          * @see SelectionListener::selectionChanged
@@ -88,6 +93,11 @@ class SellDialog : public Window, gcn::ActionListener, gcn::SelectionListener
          * Closes the Buy Window, as well as resetting the current npc.
          */
         void close();
+
+        /**
+         * Resets the listbox selection on shown events.
+         */
+        void widgetShown(const gcn::Event& event);
     private:
         /**
          * Updates the state of buttons and labels.

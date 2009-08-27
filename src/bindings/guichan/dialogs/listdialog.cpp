@@ -99,12 +99,17 @@ void ListDialog::action(const gcn::ActionEvent &event)
 void ListDialog::requestFocus()
 {
     if (getNumberOfElements() > 0)
-    {
         mOptionList->requestFocus();
-        mOptionList->setSelected(0);
-    }
 
     mOkButton->setEnabled(getNumberOfElements() > 0);
+}
+
+void ListDialog::widgetShown(const gcn::Event& event)
+{
+    Window::widgetShown(event);
+
+    if (getNumberOfElements() > 0)
+        mOptionList->setSelected(0);
 }
 
 void ListDialog::widgetHidden(const gcn::Event& event)

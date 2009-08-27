@@ -265,10 +265,23 @@ void SellDialog::updateButtonsAndLabels()
                    income, mPlayerMoney + income));
 }
 
+int SellDialog::getNumberOfElements()
+{
+    return mShopListModel->getNumberOfElements();
+}
+
 void SellDialog::requestFocus()
 {
-    mShopItemList->requestFocus();
-    mShopItemList->setSelected(0);
+    if (getNumberOfElements() > 0)
+        mShopItemList->requestFocus();
+}
+
+void SellDialog::widgetShown(const gcn::Event& event)
+{
+    Window::widgetShown(event);
+
+    if (getNumberOfElements() > 0)
+        mShopItemList->setSelected(0);
 }
 
 void SellDialog::close()

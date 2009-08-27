@@ -104,6 +104,11 @@ class BuyDialog : public Window, public gcn::ActionListener,
          * Closes the Buy Window, as well as resetting the current npc.
          */
         void close();
+
+        /**
+         * Resets the listbox selection on shown events.
+         */
+        void widgetShown(const gcn::Event& event);
     private:
         gcn::Button *mBuyButton;
         gcn::Button *mQuitButton;

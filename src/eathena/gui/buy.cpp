@@ -240,10 +240,23 @@ void BuyDialog::updateButtonsAndLabels()
         (strprintf(_("Price: %d GP / Total: %d GP"), price, mMoney - price));
 }
 
+int BuyDialog::getNumberOfElements()
+{
+    return mShopListModel->getNumberOfElements();
+}
+
 void BuyDialog::requestFocus()
 {
-    mShopItemList->requestFocus();
-    mShopItemList->setSelected(0);
+    if (getNumberOfElements() > 0)
+        mShopItemList->requestFocus();
+}
+
+void BuyDialog::widgetShown(const gcn::Event& event)
+{
+    Window::widgetShown(event);
+
+    if (getNumberOfElements() > 0)
+        mShopItemList->setSelected(0);
 }
 
 void BuyDialog::close()
