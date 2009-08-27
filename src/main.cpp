@@ -82,7 +82,6 @@ SERVER_INFO **server_info;
 unsigned char state;
 std::string errorMessage;
 
-Music *bgm;
 Game *game;
 Engine *engine;
 
@@ -199,30 +198,6 @@ static void parseOptions(int argc, char *argv[], Options &options)
 #endif
                 break;
         }
-    }
-}
-
-/**
- * Reads the file "{Updates Directory}/resources2.txt" and attempts to load
- * each update mentioned in it.
- */
-static void loadUpdates()
-{
-    if (engine->getUpdatesDir().empty())
-        return;
-
-    const std::string updatesFile = "/" + engine->getUpdatesDir() +
-                                    "/resources2.txt";
-    ResourceManager *resman = ResourceManager::getInstance();
-    std::vector<std::string> lines = resman->loadTextFile(updatesFile);
-
-    for (unsigned int i = 0; i < lines.size(); ++i)
-    {
-        std::stringstream line(lines[i]);
-        std::string filename;
-        line >> filename;
-        resman->addToSearchPath(engine->getHomeDir() + "/" + 
-                                engine->getUpdatesDir() + "/" + filename, false);
     }
 }
 
@@ -393,7 +368,6 @@ int main(int argc, char *argv[])
                 // These states other than default don't cause a network
                 // disconnect
                 case UPDATE_STATE:
-                    loadUpdates();
                     desktop->reload();
                     break;
 
@@ -532,21 +506,20 @@ int main(int argc, char *argv[])
                     break;
 
                 case UPDATE_STATE:
-                    if (options.skipUpdate)
+                    logger->log("State: UPDATE");
+
+                    updateHost = (!options.updateHost.empty() ?
+                                  options.updateHost : loginData.updateHost);
+
+                    if (!options.skipUpdate)
                     {
-                        state = LOADDATA_STATE;
+                        UpdaterWindow *updateDialog = new UpdaterWindow(updateHost);
+                        desktop->changeCurrentDialog(updateDialog);
+                        desktop->reload();
                     }
                     else
-                    {
-                        updateHost = (!options.updateHost.empty() ?
-                                       options.updateHost : loginData.updateHost);
-                        engine->setUpdatesDir(updateHost, loginData);
-                        logger->log("State: UPDATE");
+                        state = LOADDATA_STATE;
 
-                        desktop->changeCurrentDialog(new UpdaterWindow(updateHost,
-                                                                       engine->getHomeDir() + "/"
-                                                                       + engine->getUpdatesDir()));
-                    }
                     break;
 
                 case ERROR_STATE:

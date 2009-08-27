@@ -29,6 +29,7 @@
 
 #include "updatewindow.h"
 
+#include "../../engine.h"
 #include "../../main.h"
 
 #include "../../bindings/guichan/layout.h"
@@ -89,13 +90,12 @@ std::vector<std::string> loadTextFile(const std::string &fileName)
 }
 
 
-UpdaterWindow::UpdaterWindow(const std::string &updateHost,
-                             const std::string &updatesDir):
+UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
     Window(_("Updating...")),
     mThread(NULL),
     mDownloadStatus(UPDATE_NEWS),
     mUpdateHost(updateHost),
-    mUpdatesDir(updatesDir),
+    mUpdatesDir(""),
     mCurrentFile("news.txt"),
     mCurrentChecksum(0),
     mStoreInMemory(true),
@@ -109,13 +109,17 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost,
     mCurlError[0] = 0;
 
     mBrowserBox = new BrowserBox();
-    mScrollArea = new ScrollArea(mBrowserBox);
-    mLabel = new Label(_("Connecting..."));
-    mProgressBar = new ProgressBar(0.0, 310, 20, gcn::Color(168, 116, 31));
-    mCancelButton = new Button(_("Cancel"), "cancel", this);
-    mPlayButton = new Button(_("Play"), "play", this);
-
     mBrowserBox->setOpaque(false);
+    mScrollArea = new ScrollArea(mBrowserBox);
+
+    mLabel = new Label(_("Connecting..."));
+
+    mProgressBar = new ProgressBar(0.0, 310, 20, gcn::Color(168, 116, 31));
+    mProgressBar->setSmoothProgress(false);
+
+    mCancelButton = new Button(_("Cancel"), "cancel", this);
+
+    mPlayButton = new Button(_("Play"), "play", this);
     mPlayButton->setEnabled(false);
 
     ContainerPlacer place;
@@ -136,7 +140,10 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost,
     setVisible(true);
     mCancelButton->requestFocus();
 
+    setUpdatesDir(mUpdateHost);
+
     // Try to download the updates list
+    loadUpdates(mUpdatesDir);
     download();
 }
 
@@ -148,7 +155,7 @@ UpdaterWindow::~UpdaterWindow()
     free(mMemoryBuffer);
 
     // Remove possibly leftover temporary download
-    ::remove((mUpdatesDir + "/download.temp").c_str());
+    ::remove((engine->getHomeDir() + "/" + mUpdatesDir + "/download.temp").c_str());
 
     delete[] mCurlError;
 }
@@ -184,9 +191,7 @@ void UpdaterWindow::action(const gcn::ActionEvent &event)
 
     }
     else if (event.getId() == "play")
-    {
         state = LOADDATA_STATE;
-    }
 }
 
 void UpdaterWindow::loadNews()
@@ -290,7 +295,8 @@ int UpdaterWindow::downloadThread(void *ptr)
             }
             else
             {
-                outFilename =  uw->mUpdatesDir + "/download.temp";
+                outFilename = engine->getHomeDir() + "/" + uw->mUpdatesDir +
+                              "/download.temp";
                 outfile = fopen(outFilename.c_str(), "w+b");
                 curl_easy_setopt(curl, CURLOPT_WRITEDATA, outfile);
             }
@@ -373,8 +379,8 @@ int UpdaterWindow::downloadThread(void *ptr)
                 fclose(outfile);
 
                 // Give the file the proper name
-                const std::string newName =
-                    uw->mUpdatesDir + "/" + uw->mCurrentFile;
+                const std::string newName = engine->getHomeDir() + "/" +
+                                            uw->mUpdatesDir + "/" + uw->mCurrentFile;
 
                 // Any existing file with this name is deleted first, otherwise
                 // the rename will fail on Windows.
@@ -419,8 +425,7 @@ void UpdaterWindow::download()
 
 void UpdaterWindow::logic()
 {
-    // Update Scroll logic
-    mScrollArea->logic();
+    Window::logic();
 
     // Synchronize label caption when necessary
     {
@@ -446,9 +451,8 @@ void UpdaterWindow::logic()
                     mUserCancel = false;
                 }
                 else
-                {
                     SDL_WaitThread(mThread, NULL);
-                }
+
                 mThread = NULL;
             }
             mBrowserBox->addRow("");
@@ -475,7 +479,8 @@ void UpdaterWindow::logic()
         case UPDATE_LIST:
             if (mDownloadComplete)
             {
-                mLines = loadTextFile(mUpdatesDir + "/resources2.txt");
+                mLines = loadTextFile(engine->getHomeDir() + "/" + mUpdatesDir +
+                                      "/resources2.txt");
                 mStoreInMemory = false;
                 mDownloadStatus = UPDATE_RESOURCES;
             }
@@ -498,8 +503,8 @@ void UpdaterWindow::logic()
                     std::stringstream ss(checksum);
                     ss >> std::hex >> mCurrentChecksum;
 
-                    std::ifstream temp(
-                            (mUpdatesDir + "/" + mCurrentFile).c_str());
+                    std::ifstream temp((engine->getHomeDir() + "/" + mUpdatesDir +
+                                        "/" + mCurrentFile).c_str());
 
                     if (!temp.is_open())
                     {
@@ -507,16 +512,13 @@ void UpdaterWindow::logic()
                         download();
                     }
                     else
-                    {
                         logger->log("%s already here", mCurrentFile.c_str());
-                    }
+
                     mLineIndex++;
                 }
+                // Download of updates completed
                 else
-                {
-                    // Download of updates completed
                     mDownloadStatus = UPDATE_COMPLETE;
-                }
             }
             break;
         case UPDATE_IDLE:
@@ -525,5 +527,98 @@ void UpdaterWindow::logic()
             enable();
             setLabel(_("Completed"));
             break;
+    }
+}
+
+void UpdaterWindow::loadUpdates(const std::string &updatesDir)
+{
+    if (updatesDir.empty())
+        return;
+
+    const std::string updatesFile = "/" + updatesDir + "/resources2.txt";
+    ResourceManager *resman = ResourceManager::getInstance();
+    std::vector<std::string> lines = resman->loadTextFile(updatesFile);
+
+    for (unsigned int i = 0; i < lines.size(); ++i)
+    {
+        std::stringstream line(lines[i]);
+        std::string filename;
+        line >> filename;
+        resman->addToSearchPath(engine->getHomeDir() + "/" + updatesDir + "/" +
+                                filename, false);
+    }
+}
+
+void UpdaterWindow::setUpdatesDir(std::string &updateHost)
+{
+    std::stringstream updates;
+
+    // If updatesHost is currently empty, fill it from config file
+    if (updateHost.empty())
+    {
+        updateHost = config.getValue("updatehost",
+                                     "http://www.aethyra.org/updates");
+    }
+
+    // Remove any trailing slash at the end of the update host
+    if (updateHost.at(updateHost.size() - 1) == '/')
+        updateHost.resize(updateHost.size() - 1);
+
+    // Parse out any "http://" or "ftp://", and set the updates directory
+    size_t pos;
+    pos = updateHost.find("://");
+    if (pos != updateHost.npos)
+    {
+        if (pos + 3 < updateHost.length())
+        {
+            updates << "updates/" << updateHost.substr(pos + 3);
+            mUpdatesDir = updates.str();
+        }
+        else
+        {
+            logger->log("Error: Invalid update host: %s", updateHost.c_str());
+            errorMessage = _("Invalid update host: ") + updateHost;
+            state = ERROR_STATE;
+        }
+    }
+    else
+    {
+        logger->log("Warning: no protocol was specified for the update host");
+        updates << "updates/" << updateHost;
+        mUpdatesDir = updates.str();
+    }
+
+    ResourceManager *resman = ResourceManager::getInstance();
+
+    // Verify that the updates directory exists. Create if necessary.
+    if (!resman->isDirectory("/" + mUpdatesDir))
+    {
+        if (!resman->mkdir("/" + mUpdatesDir))
+        {
+#if defined WIN32
+            std::string newDir = engine->getHomeDir() + "\\" + mUpdatesDir;
+            std::string::size_type loc = newDir.find("/", 0);
+
+            while (loc != std::string::npos)
+            {
+                newDir.replace(loc, 1, "\\");
+                loc = newDir.find("/", loc);
+            }
+
+            if (!CreateDirectory(newDir.c_str(), 0) &&
+                GetLastError() != ERROR_ALREADY_EXISTS)
+            {
+                logger->log("Error: %s can't be made, but doesn't exist!",
+                            newDir.c_str());
+#else
+            logger->log("Error: %s/%s can't be made, but doesn't exist!",
+                        engine->getHomeDir().c_str(), mUpdatesDir.c_str());
+#endif
+            errorMessage = _("Error creating updates directory!");
+            state = ERROR_STATE;
+#if defined WIN32
+            }
+#endif
+        }
     }
 }

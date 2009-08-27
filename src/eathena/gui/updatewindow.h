@@ -51,11 +51,8 @@ class UpdaterWindow : public Window, public gcn::ActionListener
      * Constructor.
      *
      * @param updateHost Host where to get the updated files.
-     * @param updatesDir Directory where to store updates (should be absolute
-     *                   and already created).
      */
-    UpdaterWindow(const std::string &updateHost,
-                  const std::string &updatesDir);
+    UpdaterWindow(const std::string &updateHost);
 
     /**
      * Destructor
@@ -73,6 +70,12 @@ class UpdaterWindow : public Window, public gcn::ActionListener
     void setLabel(const std::string &);
 
     /**
+     * Parse the update host and determine the updates directory
+     * Then verify that the directory exists (creating if needed).
+     */
+    void setUpdatesDir(std::string &updateHost);
+
+    /**
      * Enables play button
      */
     void enable();
@@ -82,6 +85,12 @@ class UpdaterWindow : public Window, public gcn::ActionListener
      * into the memory buffer.
      */
     void loadNews();
+
+    /**
+     * Reads the file "{Updates Directory}/resources2.txt" and attempts to load
+     * each update mentioned in it.
+     */
+    static void loadUpdates(const std::string &updatesDir);
 
     void action(const gcn::ActionEvent &event);
 
