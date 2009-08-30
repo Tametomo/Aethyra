@@ -220,6 +220,14 @@ int UpdaterWindow::updateProgress(void *ptr, double dt, double dn, double ut,
 
     uw->setLabel(uw->mCurrentFile + " (" + toString((int) (progress * 100)) +
                  "%)");
+
+    // Make the progress bar display overall progress, not just for this file
+    // (inaccurate as it assumes all files are the same size)
+    // (The +1 is because mLineIndex has already been incremented to point to
+    // the next file; but isn't incremented for news.txt or resources.txt.)
+    if (uw->mLines.size() > 0)
+        progress = (uw->mLineIndex + progress) / (uw->mLines.size() + 1);
+
     uw->setProgress(progress);
 
     // If the action was canceled return an error code to stop the mThread
