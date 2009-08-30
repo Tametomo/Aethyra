@@ -59,6 +59,11 @@ class UpdaterWindow : public Window, public gcn::ActionListener
      */
     ~UpdaterWindow();
 
+    void action(const gcn::ActionEvent &event);
+
+    void logic();
+
+private:
     /**
      * Set's progress bar status
      */
@@ -93,13 +98,11 @@ class UpdaterWindow : public Window, public gcn::ActionListener
      */
     void addUpdatesToResman();
 
-    void action(const gcn::ActionEvent &event);
-
-    void logic();
-
     int updateState;
 
-private:
+    /**
+     * Asynchronously downloads a single file (identified by mCurrentFile etc).
+     */
     void download();
 
     /**
