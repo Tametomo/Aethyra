@@ -143,7 +143,6 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
     setUpdatesDir(mUpdateHost);
 
     // Try to download the updates list
-    loadUpdates(mUpdatesDir);
     download();
 }
 
@@ -524,27 +523,23 @@ void UpdaterWindow::logic()
         case UPDATE_IDLE:
             break;
         case UPDATE_COMPLETE:
+            addUpdatesToResman();
             enable();
             setLabel(_("Completed"));
             break;
     }
 }
 
-void UpdaterWindow::loadUpdates(const std::string &updatesDir)
+void UpdaterWindow::addUpdatesToResman()
 {
-    if (updatesDir.empty())
-        return;
-
-    const std::string updatesFile = "/" + updatesDir + "/resources2.txt";
     ResourceManager *resman = ResourceManager::getInstance();
-    std::vector<std::string> lines = resman->loadTextFile(updatesFile);
 
-    for (unsigned int i = 0; i < lines.size(); ++i)
+    for (unsigned int i = 0; i < mLines.size(); ++i)
     {
-        std::stringstream line(lines[i]);
+        std::stringstream line(mLines[i]);
         std::string filename;
         line >> filename;
-        resman->addToSearchPath(engine->getHomeDir() + "/" + updatesDir + "/" +
+        resman->addToSearchPath(engine->getHomeDir() + "/" + mUpdatesDir + "/" +
                                 filename, false);
     }
 }

@@ -88,9 +88,10 @@ class UpdaterWindow : public Window, public gcn::ActionListener
 
     /**
      * Reads the file "{Updates Directory}/resources2.txt" and attempts to load
-     * each update mentioned in it.
+     * each update mentioned in it.  The files need to have been downloaded
+     * already - this just passes filenames to ResourceManager.
      */
-    static void loadUpdates(const std::string &updatesDir);
+    void addUpdatesToResman();
 
     void action(const gcn::ActionEvent &event);
 
