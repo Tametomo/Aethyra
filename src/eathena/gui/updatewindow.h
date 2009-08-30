@@ -40,7 +40,16 @@ class ScrollArea;
 struct SDL_Thread;
 
 /**
- * Update progress window GUI
+ * Update progress window GUI, for downloading from the update server.
+ *
+ * Main user interface while StateManager::getState() == UPDATE_STATE.
+ * When the player presses "play", sets the game state to LOADDATA_STATE.
+ *
+ * Currently also the logic for the process of updating, and the controller for
+ * the download.
+ *
+ * Currently also responsible for adding all the update files to
+ * ResourceManager's search path.
  *
  * \ingroup GUI
  */
@@ -116,14 +125,22 @@ private:
     static int updateProgress(void *ptr,
                               double dt, double dn, double ut, double un);
 
+    /**
+     * State machine for the download.  Assuming success, they occur in
+     * sequential order down to UPDATE_COMPLETE.
+     *
+     * UPDATE_ERROR is the error state (including the user pressing "cancel"),
+     * which moves on to UPDATE_COMPLETE next time logic() is called.
+     *
+     * The "play" button is only active in UPDATE_COMPLETE.
+     */
     enum DownloadStatus
     {
-        UPDATE_ERROR,
-        UPDATE_IDLE,
-        UPDATE_LIST,
-        UPDATE_COMPLETE,
-        UPDATE_NEWS,
-        UPDATE_RESOURCES
+        UPDATE_NEWS,       /**< Download news.txt file. */
+        UPDATE_LIST,       /**< Download resources2.txt. */
+        UPDATE_RESOURCES,  /**< Download .zip files named in resources2.txt. */
+        UPDATE_COMPLETE,   /**< Waiting for user to press "play". */
+        UPDATE_ERROR       /**< Error condition. */
     };
 
     /** A thread that use libcurl to download updates. */

@@ -470,8 +470,6 @@ void UpdaterWindow::logic()
                     mDownloadStatus = UPDATE_COMPLETE;
             }
             break;
-        case UPDATE_IDLE:
-            break;
         case UPDATE_COMPLETE:
             addUpdatesToResman();
             enable();
