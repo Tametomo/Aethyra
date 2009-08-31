@@ -51,8 +51,8 @@ DebugWindow::DebugWindow():
     mFPSLabel = new Label(strprintf(_("%d FPS"), 0));
     mMusicFileLabel = new Label(strprintf(_("Music: %s"), ""));
     mMapLabel = new Label(strprintf(_("Map: %s"), ""));
-    mMiniMapLabel = new Label(strprintf(_("Mini-Map: %s"), ""));
-    mTileMouseLabel = new Label(strprintf(_("Tile: (%d, %d)"), 0, 0));
+    mMiniMapLabel = new Label(strprintf(_("Minimap: %s"), ""));
+    mTileMouseLabel = new Label(strprintf(_("Cursor: (%d, %d)"), 0, 0));
     mParticleCountLabel = new Label(strprintf(_("Particle count: %d"), 0));
 
     place(0, 0, mFPSLabel, 3);
@@ -94,14 +94,14 @@ void DebugWindow::logic()
     const int mouseTileX = (gui->getMouseX() + viewport->getCameraX()) / 32;
     const int mouseTileY = (gui->getMouseY() + viewport->getCameraY()) / 32;
 
-    mTileMouseLabel->setCaption(strprintf(_("Tile: (%d, %d)"), mouseTileX,
+    mTileMouseLabel->setCaption(strprintf(_("Cursor: (%d, %d)"), mouseTileX,
                                             mouseTileY));
 
     Map *currentMap = mapLoader->getCurrentMap();
 
     if (currentMap)
     {
-        mMiniMapLabel->setCaption(strprintf(_("MiniMap: %s"),
+        mMiniMapLabel->setCaption(strprintf(_("Minimap: %s"),
                                             currentMap->getProperty("minimap").c_str()));
         mMapLabel->setCaption(strprintf(_("Map: %s"),
                                         currentMap->getProperty("_filename").c_str()));
