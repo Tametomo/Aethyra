@@ -480,6 +480,12 @@ void UpdaterWindow::logic()
 
 void UpdaterWindow::addUpdatesToResman()
 {
+    // If the user cancelled in UPDATE_NEWS or UPDATE_LIST, mLines hasn't been
+    // populated yet.  But we might have all the updates already.
+    if (mLines.empty())
+        mLines = loadTextFile(engine->getHomeDir() + "/" + mUpdatesDir +
+                          "/resources2.txt");
+
     ResourceManager *resman = ResourceManager::getInstance();
 
     for (unsigned int i = 0; i < mLines.size(); ++i)
