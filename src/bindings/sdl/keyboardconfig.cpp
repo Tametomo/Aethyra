@@ -171,7 +171,8 @@ void KeyboardConfig::callbackNewKey()
 
 void KeyboardConfig::lockKey(const int keyValue)
 {
-    mLockedKeys.push_back(keyValue);
+    if (!isKeyLocked(keyValue))
+        mLockedKeys.push_back(keyValue);
 }
 
 void KeyboardConfig::unlockKey(const int keyValue)
