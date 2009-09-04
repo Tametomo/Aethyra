@@ -413,7 +413,7 @@ void UpdaterWindow::logic()
             mBrowserBox->addRow(mCurlError);
             mScrollArea->setVerticalScrollAmount(
                     mScrollArea->getVerticalMaxScroll());
-            mDownloadStatus = UPDATE_COMPLETE;
+            mDownloadStatus = UPDATE_FINISH;
             break;
         case UPDATE_NEWS:
             if (mDownloadComplete)
@@ -467,13 +467,18 @@ void UpdaterWindow::logic()
                 }
                 // Download of updates completed
                 else
-                    mDownloadStatus = UPDATE_COMPLETE;
+                    mDownloadStatus = UPDATE_FINISH;
             }
             break;
-        case UPDATE_COMPLETE:
+        case UPDATE_FINISH:
+            // The downloading has finished (or been cancelled)
             addUpdatesToResman();
             enable();
             setLabel(_("Completed"));
+            mDownloadStatus = UPDATE_COMPLETE;
+            break;
+        case UPDATE_COMPLETE:
+            // just wait for the player to press "play"
             break;
     }
 }

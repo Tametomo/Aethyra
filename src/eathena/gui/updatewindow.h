@@ -130,7 +130,7 @@ private:
      * sequential order down to UPDATE_COMPLETE.
      *
      * UPDATE_ERROR is the error state (including the user pressing "cancel"),
-     * which moves on to UPDATE_COMPLETE next time logic() is called.
+     * which moves on to UPDATE_FINISH next time logic() is called.
      *
      * The "play" button is only active in UPDATE_COMPLETE.
      */
@@ -139,6 +139,7 @@ private:
         UPDATE_NEWS,       /**< Download news.txt file. */
         UPDATE_LIST,       /**< Download resources2.txt. */
         UPDATE_RESOURCES,  /**< Download .zip files named in resources2.txt. */
+        UPDATE_FINISH,     /**< All downloads complete. */
         UPDATE_COMPLETE,   /**< Waiting for user to press "play". */
         UPDATE_ERROR       /**< Error condition. */
     };
