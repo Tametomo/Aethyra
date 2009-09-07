@@ -16,7 +16,7 @@ if [ -e $file1 ];then
         sudo apt-get install libphysfs-dev libcurl4-openssl-dev libgl1-mesa-dev 
         sudo apt-get install libglu1-mesa-dev liballegro4.2-dev libxml2-dev
         sudo apt-get install libguichan-0.8.1-1 libguichan-sdl-0.8.1-1 libguichan-dev
-        sudo apt-get install libsdl-ttf2.0-0 libsdl-ttf2.0-dev libsdl-gfx1.2 libsdl-gfx1.2-dev
+        sudo apt-get install libsdl-ttf2.0-0 libsdl-ttf2.0-dev libsdl-gfx1.2-4 libsdl-gfx1.2-dev
 fi
 
 echo "Generating build information using aclocal, autoheader, automake and autoconf."
