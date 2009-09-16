@@ -104,8 +104,8 @@ RegisterDialog::RegisterDialog(LoginData *loginData):
     place(1, 4, mServerField, 3).setPadding(2);
     place(1, 5, mPortField, 3).setPadding(2);
     place = getPlacer(0, 2);
-    place(1, 0, mRegisterButton);
-    place(2, 0, mCancelButton);
+    place(1, 0, mCancelButton);
+    place(2, 0, mRegisterButton);
     reflowLayout(250, 0);
 
     mUserField->addKeyListener(this);
