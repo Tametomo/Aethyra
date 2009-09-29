@@ -579,4 +579,18 @@ void Gui::changeFontSize(const int size)
     mBoldFont = resman->getFont(path, size, 1);
     infoParticleFont->decRef();
     mInfoParticleFont = resman->getFont(path, size, 1);
+
+    Widgets widgets = windowContainer->getWidgetList();
+    WidgetIterator iter;
+
+    for (iter = widgets.begin(); iter != widgets.end(); ++iter)
+    {
+        Popup* popup = dynamic_cast<Popup*>(*iter);
+
+        if (popup)
+            popup->adaptToNewSize();
+    }
+
+    if (state != GAME_STATE && desktop)
+        desktop->resize();
 }

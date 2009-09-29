@@ -234,16 +234,16 @@ Engine::~Engine()
 
     setupWindow = NULL;
 
-    config.write();
-
     delete gui;
-    delete graphics;
-
     delete guiPalette;
-    delete inputManager;
+
+    config.write();
 
     // Shutdown libxml
     xmlCleanupParser();
+
+    delete graphics;
+    delete inputManager;
 
     // Shutdown sound
     sound.close();

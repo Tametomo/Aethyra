@@ -32,10 +32,11 @@
 #include "../layout.h"
 
 #include "../widgets/button.h"
+#include "../widgets/desktop.h"
 #include "../widgets/tabbedarea.h"
 #include "../widgets/windowcontainer.h"
 
-#include "../../../main.h"
+#include "../../../core/configuration.h"
 
 #include "../../../core/utils/dtor.h"
 #include "../../../core/utils/gettext.h"
@@ -129,6 +130,13 @@ void Setup::action(const gcn::ActionEvent &event)
     }
     else if (event.getId() == "Reset Windows")
     {
+        config.removeAllValues("Hidden");
+        config.removeAllValues("OffsetX");
+        config.removeAllValues("OffsetY");
+        config.removeAllValues("Position");
+        config.removeAllValues("Height");
+        config.removeAllValues("Width");
+
         Widgets widgets = windowContainer->getWidgetList();
         WidgetIterator iter;
 
@@ -136,16 +144,10 @@ void Setup::action(const gcn::ActionEvent &event)
         {
             Window* window = dynamic_cast<Window*>(*iter);
 
-            if (window)
+            if (window && (!desktop || desktop->getCurrentDialog() != window))
                 window->resetToDefaultSize();
         }
     }
-}
-
-void Setup::logic()
-{
-    Window::logic();
-    mResetWindows->setEnabled(state == GAME_STATE);
 }
 
 void Setup::requestFocus()

@@ -125,9 +125,6 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
 
     reflowLayout(250, 0);
 
-    setLocationRelativeTo(getParent());
-    setVisible(true);
-    mSelectButton->requestFocus();
     updatePlayerInfo();
 }
 
@@ -221,7 +218,16 @@ void CharSelectDialog::attemptCharSelect()
 
 void CharSelectDialog::logic()
 {
+    Window::logic();
     updatePlayerInfo();
+}
+
+void CharSelectDialog::requestFocus()
+{
+    if (mSelectButton->isEnabled())
+        mSelectButton->requestFocus();
+    else
+        mNewDelCharButton->requestFocus();
 }
 
 bool CharSelectDialog::selectByName(const std::string &name)
@@ -297,6 +303,7 @@ CharCreateDialog::CharCreateDialog(Window *parent, int slot, Gender gender):
 
     setLocationRelativeTo(getParent());
     setVisible(true);
+
     mNameField->requestFocus();
 }
 

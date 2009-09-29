@@ -60,12 +60,6 @@ class Setup : public Window, public gcn::ActionListener
         void action(const gcn::ActionEvent &event);
 
         /**
-         * Checks whether we are in game, and enables/disables the reset windows
-         * button accordingly.
-         */
-        void logic();
-
-        /**
          * Focuses on the tabbed area on gaining focus.
          */
         void requestFocus();

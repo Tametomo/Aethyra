@@ -55,140 +55,146 @@ struct SDL_Thread;
  */
 class UpdaterWindow : public Window, public gcn::ActionListener
 {
- public:
-    /**
-     * Constructor.
-     *
-     * @param updateHost Host where to get the updated files.
-     */
-    UpdaterWindow(const std::string &updateHost);
+    public:
+        /**
+         * Constructor.
+         *
+         * @param updateHost Host where to get the updated files.
+         */
+        UpdaterWindow(const std::string &updateHost);
 
-    /**
-     * Destructor
-     */
-    ~UpdaterWindow();
+        /**
+         * Destructor
+         */
+        ~UpdaterWindow();
 
-    void action(const gcn::ActionEvent &event);
+        void action(const gcn::ActionEvent &event);
 
-    void logic();
+        void logic();
 
-private:
-    /**
-     * Set's progress bar status
-     */
-    void setProgress(float p);
+        /**
+         * Selects the cancel button when no updates are loaded, or the play
+         * button when the updates are already loaded.
+         */
+        void requestFocus();
 
-    /**
-     * Set's label above progress
-     */
-    void setLabel(const std::string &);
+    private:
+        /**
+         * Set's progress bar status
+         */
+        void setProgress(float p);
 
-    /**
-     * Parse the update host and determine the updates directory
-     * Then verify that the directory exists (creating if needed).
-     */
-    void setUpdatesDir(std::string &updateHost);
+        /**
+         * Set's label above progress
+         */
+        void setLabel(const std::string &);
 
-    /**
-     * Enables play button
-     */
-    void enable();
+        /**
+         * Parse the update host and determine the updates directory
+         * Then verify that the directory exists (creating if needed).
+         */
+        void setUpdatesDir(std::string &updateHost);
 
-    /**
-     * Parse and display the contents of news.txt.  Assumes that news.txt file
-     * has already been downloaded.
-     */
-    void loadNews();
+        /**
+         * Enables play button
+         */
+        void enable();
 
-    /**
-     * Reads the file "{Updates Directory}/resources2.txt" and attempts to load
-     * each update mentioned in it.  The files need to have been downloaded
-     * already - this just passes filenames to ResourceManager.
-     */
-    void addUpdatesToResman();
+        /**
+         * Parse and display the contents of news.txt.  Assumes that news.txt file
+         * has already been downloaded.
+         */
+        void loadNews();
 
-    int updateState;
+        /**
+         * Reads the file "{Updates Directory}/resources2.txt" and attempts to load
+         * each update mentioned in it.  The files need to have been downloaded
+         * already - this just passes filenames to ResourceManager.
+         */
+        void addUpdatesToResman();
 
-    /**
-     * Asynchronously downloads a single file (identified by mCurrentFile etc).
-     */
-    void download();
+        /**
+         * Asynchronously downloads a single file (identified by mCurrentFile etc).
+         */
+        void download();
 
-    /**
-     * The thread function that download the files.
-     */
-    static int downloadThread(void *ptr);
+        /**
+         * The thread function that download the files.
+         */
+        static int downloadThread(void *ptr);
 
-    /**
-     * A libcurl callback for progress updates.
-     */
-    static int updateProgress(void *ptr,
-                              double dt, double dn, double ut, double un);
+        /**
+         * A libcurl callback for progress updates.
+         */
+        static int updateProgress(void *ptr, double dt, double dn, double ut,
+                                  double un);
 
-    /**
-     * State machine for the download.  Assuming success, they occur in
-     * sequential order down to UPDATE_COMPLETE.
-     *
-     * UPDATE_ERROR is the error state (including the user pressing "cancel"),
-     * which moves on to UPDATE_FINISH next time logic() is called.
-     *
-     * The "play" button is only active in UPDATE_COMPLETE.
-     */
-    enum DownloadStatus
-    {
-        UPDATE_NEWS,       /**< Download news.txt file. */
-        UPDATE_LIST,       /**< Download resources2.txt. */
-        UPDATE_RESOURCES,  /**< Download .zip files named in resources2.txt. */
-        UPDATE_FINISH,     /**< All downloads complete. */
-        UPDATE_COMPLETE,   /**< Waiting for user to press "play". */
-        UPDATE_ERROR       /**< Error condition. */
-    };
+        /**
+         * State machine for the download.  Assuming success, they occur in
+         * sequential order down to UPDATE_COMPLETE.
+         *
+         * UPDATE_ERROR is the error state (including the user pressing "cancel"),
+         * which moves on to UPDATE_FINISH next time logic() is called.
+         *
+         * The "play" button is only active in UPDATE_COMPLETE.
+         */
+        enum DownloadStatus
+        {
+            UPDATE_NEWS,       /**< Download news.txt file. */
+            UPDATE_LIST,       /**< Download resources2.txt. */
+            UPDATE_RESOURCES,  /**< Download .zip files named in resources2.txt. */
+            UPDATE_FINISH,     /**< All downloads complete. */
+            UPDATE_COMPLETE,   /**< Waiting for user to press "play". */
+            UPDATE_ERROR       /**< Error condition. */
+        };
 
-    /** A thread that use libcurl to download updates. */
-    SDL_Thread *mThread;
+        int updateState;
 
-    /** Status of the current download. */
-    DownloadStatus mDownloadStatus;
+        /** A thread that use libcurl to download updates. */
+        SDL_Thread *mThread;
 
-    /** Host where we get the updated files. */
-    std::string mUpdateHost;
+        /** Status of the current download. */
+        DownloadStatus mDownloadStatus;
 
-    /** Place where the updates are stored (absolute path). */
-    std::string mUpdatesDir;
+        /** Host where we get the updated files. */
+        std::string mUpdateHost;
 
-    /** The file currently downloading. */
-    std::string mCurrentFile;
+        /** Place where the updates are stored (absolute path). */
+        std::string mUpdatesDir;
 
-    /** The new label caption to be set in the logic method. */
-    std::string mNewLabelCaption;
+        /** The file currently downloading. */
+        std::string mCurrentFile;
 
-    /** The mutex used to guard access to mNewLabelCaption. */
-    Mutex mLabelMutex;
+        /** The new label caption to be set in the logic method. */
+        std::string mNewLabelCaption;
 
-    /** The Adler32 checksum of the file currently downloading. */
-    unsigned long mCurrentChecksum;
+        /** The mutex used to guard access to mNewLabelCaption. */
+        Mutex mLabelMutex;
 
-    /** Flag that show if current download is complete. */
-    bool mDownloadComplete;
+        /** The Adler32 checksum of the file currently downloading. */
+        unsigned long mCurrentChecksum;
 
-    /** Flag that show if the user has canceled the update. */
-    bool mUserCancel;
+        /** Flag that show if current download is complete. */
+        bool mDownloadComplete;
 
-    /** Buffer to handler human readable error provided by curl. */
-    char *mCurlError;
+        /** Flag that show if the user has canceled the update. */
+        bool mUserCancel;
 
-    /** List of files to download. */
-    std::vector<std::string> mLines;
+        /** Buffer to handler human readable error provided by curl. */
+        char *mCurlError;
 
-    /** Index of the file to be downloaded. */
-    unsigned int mLineIndex;
+        /** List of files to download. */
+        std::vector<std::string> mLines;
 
-    gcn::Label *mLabel;           /**< Progress bar caption. */
-    Button *mCancelButton;        /**< Button to stop the update process. */
-    Button *mPlayButton;          /**< Button to start playing. */
-    ProgressBar *mProgressBar;    /**< Update progress bar. */
-    BrowserBox *mBrowserBox;      /**< Box to display news. */
-    ScrollArea *mScrollArea;      /**< Used to scroll news box. */
+        /** Index of the file to be downloaded. */
+        unsigned int mLineIndex;
+
+        gcn::Label *mLabel;           /**< Progress bar caption. */
+        Button *mCancelButton;        /**< Button to stop the update process. */
+        Button *mPlayButton;          /**< Button to start playing. */
+        ProgressBar *mProgressBar;    /**< Update progress bar. */
+        BrowserBox *mBrowserBox;      /**< Box to display news. */
+        ScrollArea *mScrollArea;      /**< Used to scroll news box. */
 };
 
 #endif

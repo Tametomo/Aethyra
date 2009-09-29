@@ -131,11 +131,6 @@ RegisterDialog::RegisterDialog(LoginData *loginData):
     mServerField->addActionListener(this);
     mPortField->addActionListener(this);
 
-    setLocationRelativeTo(getParent());
-    setVisible(true);
-    mUserField->requestFocus();
-    mUserField->setCaretPosition(mUserField->getText().length());
-
     mRegisterButton->setEnabled(canSubmit());
 }
 
@@ -276,4 +271,10 @@ unsigned short RegisterDialog::getUShort(const std::string &str)
         l = l * 10 + (*strPtr - '0');
     }
     return static_cast<unsigned short>(l);
+}
+
+void RegisterDialog::requestFocus()
+{
+    mUserField->requestFocus();
+    mUserField->setCaretPosition(mUserField->getText().length());
 }

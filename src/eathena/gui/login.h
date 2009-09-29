@@ -68,6 +68,12 @@ class LoginDialog : public Window, public gcn::ActionListener,
          */
         void keyPressed(gcn::KeyEvent &keyEvent);
 
+        /**
+         * Determines the appropriate field to focus on when the dialog takes
+         * focus.
+         */
+        void requestFocus();
+
     private:
         /**
          * Returns whether submit can be enabled. This is true in the login

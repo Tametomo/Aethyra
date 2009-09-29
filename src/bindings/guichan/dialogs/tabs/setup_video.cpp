@@ -41,13 +41,9 @@
 #include "../../widgets/desktop.h"
 #include "../../widgets/label.h"
 #include "../../widgets/listbox.h"
-#include "../../widgets/popup.h"
 #include "../../widgets/scrollarea.h"
 #include "../../widgets/slider.h"
 #include "../../widgets/textfield.h"
-#include "../../widgets/windowcontainer.h"
-
-#include "../../../../main.h"
 
 #include "../../../../core/configuration.h"
 #include "../../../../core/log.h"
@@ -278,23 +274,6 @@ void Setup_Video::apply()
         const int val = (int) mFontSizeSlider->getValue();
 
         gui->changeFontSize(val);
-
-        Widgets widgets = windowContainer->getWidgetList();
-        WidgetIterator iter;
-
-        for (iter = widgets.begin(); iter != widgets.end(); ++iter)
-        {
-            Popup* popup = dynamic_cast<Popup*>(*iter);
-
-            if (popup)
-            {
-                popup->adaptToNewSize();
-                continue;
-            }
-        }
-
-        if (state != GAME_STATE && desktop)
-            desktop->resize();
 
         config.setValue("fontSize", val);
     }

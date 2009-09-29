@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -81,6 +82,16 @@ class ConfigurationObject
          * \param key Option identifier.
          */
         virtual void removeValue(const std::string &key);
+
+        /**
+         * Removes all key values which contain the supplied pattern from the
+         * configuration file.
+         *
+         * \param pattern Part of the key to match against. For instance, a
+         *                pattern of "Visible" will apply against all keys which
+         *                contain "Visible" in their key identifier.
+         */
+        virtual void removeAllValues(const std::string &pattern);
 
         /**
          * Sets an option using a string value.

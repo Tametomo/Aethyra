@@ -66,6 +66,12 @@ class RegisterDialog : public Window, public gcn::ActionListener,
          */
         void keyPressed(gcn::KeyEvent &keyEvent);
 
+        /**
+         * Selects the Character's name field, even going as far as scrolling to
+         * the end of the input field.
+         */
+        void requestFocus();
+
     private:
         /**
          * Returns whether submit can be enabled. This is true in the register

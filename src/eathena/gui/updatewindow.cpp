@@ -133,10 +133,6 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
 
-    setLocationRelativeTo(getParent());
-    setVisible(true);
-    mCancelButton->requestFocus();
-
     setUpdatesDir(mUpdateHost);
 
     // Try to download the updates list
@@ -164,6 +160,14 @@ void UpdaterWindow::setLabel(const std::string &str)
     // Do delayed label text update, since Guichan isn't thread-safe
     MutexLocker lock(&mLabelMutex);
     mNewLabelCaption = str;
+}
+
+void UpdaterWindow::requestFocus()
+{
+    if (mPlayButton->isEnabled())
+        mPlayButton->requestFocus();
+    else
+        mCancelButton->requestFocus();
 }
 
 void UpdaterWindow::enable()

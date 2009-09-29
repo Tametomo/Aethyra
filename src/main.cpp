@@ -548,7 +548,6 @@ int main(int argc, char *argv[])
 
                 case EXIT_STATE:
                     logger->log("State: EXIT");
-                    delete engine;
                     break;
 
                 default:
@@ -557,6 +556,8 @@ int main(int argc, char *argv[])
             }
         }
     }
+
+    delete engine;
     return 0;
 }
 

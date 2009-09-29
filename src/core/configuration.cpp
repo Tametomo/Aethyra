@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -34,6 +35,25 @@ void ConfigurationObject::removeValue(const std::string &key)
 
     if (mOptions.end() != iter)
         mOptions.erase(key);
+}
+
+void ConfigurationObject::removeAllValues(const std::string &pattern)
+{
+    OptionIterator nextIter;
+
+    for (OptionIterator iter = mOptions.begin(); iter != mOptions.end(); iter++)
+    {
+        if (iter->first.find(pattern) != std::string::npos)
+        {
+            nextIter = iter;
+            nextIter++;
+
+            // Workaround for the single erase case invalidating iter. Done
+            // so that we don't have to start the check over at the start on
+            // erasing.
+            mOptions.erase(iter, nextIter);
+        }
+    }
 }
 
 void ConfigurationObject::setValue(const std::string &key, std::string value)

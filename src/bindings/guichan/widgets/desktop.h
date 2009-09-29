@@ -105,8 +105,17 @@ class Desktop : public Container
         /**
          * Positions the given dialog according to the Desktop widget's
          * positioning rules.
+         *
+         * \param dialog The dialog to position.
+         * \param xPos Scale value in between 0-1 for the relative X coordinate
+         *             position. 0.5, for example, would center the dialog
+         *             horizontally.
+         * \param yPos Scale value in between 0-1 for the relative Y coordinate
+         *             position. 0.5, for example, would center the dialog
+         *             vertically.
          */
-        void positionDialog(Window *dialog);
+        void positionDialog(Window *dialog, float xPos = 0.625f,
+                            float yPos = 0.625f);
 
         ProgressBar *progressBar;
         gcn::Label *progressLabel;

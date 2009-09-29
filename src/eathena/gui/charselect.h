@@ -59,6 +59,12 @@ class CharSelectDialog : public Window, public gcn::ActionListener
 
         bool selectByName(const std::string &name);
 
+        /**
+         * Focuses on the OK button when there is a character to select,
+         * otherwise, it selects the new button.
+         */
+        void requestFocus();
+
     private:
         LockedArray<LocalPlayer*> *mCharInfo;
 

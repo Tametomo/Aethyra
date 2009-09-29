@@ -154,7 +154,6 @@ void Desktop::resize()
                                  progressBar->getHeight());
         progressLabel->setPosition(15 + progressBar->getWidth(), 4 +
                                    progressBar->getY());
-
         positionDialog(currentDialog);
     }
 
@@ -243,19 +242,20 @@ void Desktop::useProgressBar(std::string message)
     progressLabel->adjustSize();
 }
 
-void Desktop::positionDialog(Window *dialog)
+void Desktop::positionDialog(Window *dialog, float xPos, float yPos)
 {
     if (!dialog)
         return;
 
-    const int width = std::min(getWidth() * 5 / 8, getWidth() -
+    const int width = std::min((int) (getWidth() * xPos), getWidth() -
                                dialog->getWidth());
 
-    const int height = std::min(getHeight() * 5 / 8, getHeight() -
+    const int height = std::min((int) (getHeight() * yPos), getHeight() -
                                 dialog->getHeight());
 
     dialog->setPosition(width, height);
     dialog->saveRelativeLocation(width, height);
+    dialog->setVisible(true);
 }
 
 void Desktop::draw(gcn::Graphics *graphics)

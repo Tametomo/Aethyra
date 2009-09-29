@@ -109,14 +109,6 @@ LoginDialog::LoginDialog(LoginData *loginData) :
     place(3, 6, mOkButton);
     reflowLayout(250, 0);
 
-    setLocationRelativeTo(getParent());
-    setVisible(true);
-
-    if (mUserField->getText().empty())
-        mUserField->requestFocus();
-    else
-        mPassField->requestFocus();
-
     mOkButton->setEnabled(canSubmit());
 }
 
@@ -304,4 +296,12 @@ std::string LoginDialog::DropDownList::getPortAt(int i)
         return "";
 
     return mPorts.at(i);
+}
+
+void LoginDialog::requestFocus()
+{
+    if (mUserField->getText().empty())
+        mUserField->requestFocus();
+    else
+        mPassField->requestFocus();
 }
