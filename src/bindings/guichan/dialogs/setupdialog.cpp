@@ -26,8 +26,8 @@
 
 #include "tabs/setup_audio.h"
 #include "tabs/setup_colors.h"
+#include "tabs/setup_gui.h"
 #include "tabs/setup_input.h"
-#include "tabs/setup_video.h"
 
 #include "../layout.h"
 
@@ -57,7 +57,7 @@ Setup::Setup():
     mPanel = new TabbedArea();
     mPanel->setDimension(gcn::Rectangle(5, 5, width - 10, height - 40));
 
-    mTabs.push_back(new Setup_Video());
+    mTabs.push_back(new Setup_Gui());
     mTabs.push_back(new Setup_Audio());
     mTabs.push_back(new Setup_Input());
     mTabs.push_back(new Setup_Colors());

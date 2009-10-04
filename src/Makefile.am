@@ -41,10 +41,10 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/guichan/dialogs/tabs/setup_audio.h \
 	      bindings/guichan/dialogs/tabs/setup_colors.cpp \
 	      bindings/guichan/dialogs/tabs/setup_colors.h \
+	      bindings/guichan/dialogs/tabs/setup_gui.cpp \
+	      bindings/guichan/dialogs/tabs/setup_gui.h \
 	      bindings/guichan/dialogs/tabs/setup_input.cpp \
 	      bindings/guichan/dialogs/tabs/setup_input.h \
-	      bindings/guichan/dialogs/tabs/setup_video.cpp \
-	      bindings/guichan/dialogs/tabs/setup_video.h \
 	      bindings/guichan/handlers/focushandler.cpp \
 	      bindings/guichan/handlers/focushandler.h \
 	      bindings/guichan/handlers/lettertextwraphandler.cpp \
@@ -267,6 +267,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      eathena/db/npcdb.h \
 	      eathena/db/skilldb.cpp \
 	      eathena/db/skilldb.h \
+	      eathena/gui/tabs/setup_game.cpp \
+	      eathena/gui/tabs/setup_game.h \
 	      eathena/gui/tabs/setup_players.cpp \
 	      eathena/gui/tabs/setup_players.h \
 	      eathena/gui/buy.cpp \

@@ -56,6 +56,7 @@
 #include "gui/trade.h"
 #include "gui/viewport.h"
 
+#include "gui/tabs/setup_game.h"
 #include "gui/tabs/setup_players.h"
 
 #include "handlers/emoteshortcut.h"
@@ -106,6 +107,7 @@ MapLoader *mapLoader = NULL;
 EmoteShortcut *emoteShortcut;
 ItemShortcut *itemShortcut;
 
+Setup_Game *setupGame = NULL;
 Setup_Players *setupPlayers = NULL;
 
 OkDialog *disconnectedDialog = NULL;
@@ -164,10 +166,6 @@ void createGuiWindows()
     // Initialise player relations
     player_relations.init();
 
-    // Add game specific tabs to the setup window
-    setupPlayers = new Setup_Players();
-    setupWindow->addTab(setupPlayers);
-
     // Create dialogs
     buyDialog = new BuyDialog();
     buySellDialog = new BuySellDialog();
@@ -197,11 +195,6 @@ void createGuiWindows()
 static void destroyGuiWindows()
 {
     logger->setChatWindow(NULL);
-
-    setupWindow->removeTab(setupPlayers);
-
-    delete setupPlayers;
-    setupPlayers = NULL;
 
     delete buyDialog;
     delete buySellDialog;
@@ -256,6 +249,13 @@ Game::Game(Network *network):
 
     createGuiWindows();
 
+    // Add game specific tabs to the setup window
+    setupGame = new Setup_Game();
+    setupWindow->addTab(setupGame);
+
+    setupPlayers = new Setup_Players();
+    setupWindow->addTab(setupPlayers);
+
     mapLoader = new MapLoader();
 
     beingManager = new BeingManager();
@@ -300,6 +300,13 @@ Game::~Game()
 {
     destroyGuiWindows();
 
+    setupWindow->removeTab(setupGame);
+    setupWindow->removeTab(setupPlayers);
+
+    delete setupGame;
+    setupGame = NULL;
+    delete setupPlayers;
+    setupPlayers = NULL;
     delete beingManager;
     beingManager = NULL;
     delete floorItemManager;

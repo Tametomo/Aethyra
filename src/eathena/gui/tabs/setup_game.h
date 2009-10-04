@@ -1,9 +1,9 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
- *  from The Mana World.
+ *  This file is part of Aethyra.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,21 +20,19 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GUI_SETUP_VIDEO_H
-#define GUI_SETUP_VIDEO_H
+#ifndef GUI_SETUP_GAME_H
+#define GUI_SETUP_GAME_H
 
 #include <guichan/actionlistener.hpp>
 
-#include "../../guichanfwd.h"
+#include "../../../bindings/guichan/guichanfwd.h"
 
-#include "../../widgets/setuptabcontainer.h"
+#include "../../../bindings/guichan/widgets/setuptabcontainer.h"
 
-class ModeListModel;
-
-class Setup_Video : public SetupTabContainer, public gcn::ActionListener
+class Setup_Game : public SetupTabContainer, public gcn::ActionListener
 {
     public:
-        Setup_Video();
+        Setup_Game();
 
         void apply();
         void cancel();
@@ -47,45 +45,19 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
         void setParticleDetailLabel(const int value);
         void changeParticleDetailLevel(const int value);
 
-        bool mFullScreenEnabled;
-        bool mOpenGLEnabled;
-        bool mCustomCursorEnabled;
         bool mNameEnabled;
         bool mPickupChatEnabled;
         bool mPickupParticleEnabled;
-        double mOpacity;
-        double mMouseOpacity;
-        int mFps;
         int mSpeechMode;
-        int mScreenWidth;
-        int mScreenHeight;
-
-        ModeListModel *mModeListModel;
 
         gcn::Label *speechLabel;
-        gcn::Label *alphaLabel;
-        gcn::Label *mouseAlphaLabel;
-        gcn::Label *fontSizeLabel;
         gcn::Label *overlayDetailLabel;
         gcn::Label *particleDetailLabel;
 
-        gcn::ListBox *mModeList;
-        gcn::CheckBox *mFsCheckBox;
-        gcn::CheckBox *mOpenGLCheckBox;
-        gcn::CheckBox *mCustomCursorCheckBox;
         gcn::CheckBox *mNameCheckBox;
 
         gcn::Slider *mSpeechSlider;
         gcn::Label *mSpeechModeLabel;
-        gcn::Slider *mAlphaSlider;
-        gcn::Slider *mMouseAlphaSlider;
-        gcn::CheckBox *mFpsCheckBox;
-        gcn::Slider *mFpsSlider;
-        gcn::TextField *mFpsField;
-
-        int mFontSize;
-        gcn::Slider *mFontSizeSlider;
-        gcn::Label *mFontSizeLabel;
 
         int mOverlayDetail;
         gcn::Slider *mOverlayDetailSlider;
@@ -99,5 +71,7 @@ class Setup_Video : public SetupTabContainer, public gcn::ActionListener
         gcn::CheckBox *mPickupChatCheckBox;
         gcn::CheckBox *mPickupParticleCheckBox;
 };
+
+extern Setup_Game *setupGame;
 
 #endif
