@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  The Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -28,6 +29,8 @@
 #include <string>
 #include <vector>
 
+#include "../../bindings/update/downloadupdates.h"
+
 #include "../../bindings/guichan/widgets/window.h"
 
 #include "../../core/utils/mutex.h"
@@ -53,7 +56,8 @@ struct SDL_Thread;
  *
  * \ingroup GUI
  */
-class UpdaterWindow : public Window, public gcn::ActionListener
+class UpdaterWindow : public Window, public gcn::ActionListener,
+        public UpdaterListener
 {
     public:
         /**
@@ -79,122 +83,54 @@ class UpdaterWindow : public Window, public gcn::ActionListener
         void requestFocus();
 
         void fontChanged();
+
+        //from UpdaterListener
+        void downloadTextUpdate(const std::vector<std::string>& news);
+        void downloadProgress(float totalProgress,
+                const std::string& currentFile, float fileProgress);
+        void downloadComplete();
+
+
     private:
-        /**
-         * Set's progress bar status
-         */
-        void setProgress(float p);
-
-        /**
-         * Set's label above progress
-         */
-        void setLabel(const std::string &);
-
-        /**
-         * Parse the update host and determine the updates directory
-         * Then verify that the directory exists (creating if needed).
-         */
-        void setUpdatesDir(std::string &updateHost);
-
         /**
          * Enables play button
          */
         void enable();
 
         /**
-         * Parse and display the contents of news.txt.  Assumes that news.txt file
-         * has already been downloaded.
+         * The new label caption to be set in the logic method.
+         * This is for the downloadProgress callback, which happens in
+         * a different thread to the UI thread.
          */
-        void loadNews();
-
-        /**
-         * Reads the file "{Updates Directory}/resources2.txt" and attempts to load
-         * each update mentioned in it.  The files need to have been downloaded
-         * already - this just passes filenames to ResourceManager.
-         */
-        void addUpdatesToResman();
-
-        /**
-         * Asynchronously downloads a single file (identified by mCurrentFile etc).
-         */
-        void download();
-
-        /**
-         * The thread function that download the files.
-         */
-        static int downloadThread(void *ptr);
-
-        /**
-         * A libcurl callback for progress updates.
-         */
-        static int updateProgress(void *ptr, double dt, double dn, double ut,
-                                  double un);
-
-        /**
-         * State machine for the download.  Assuming success, they occur in
-         * sequential order down to UPDATE_COMPLETE.
-         *
-         * UPDATE_ERROR is the error state (including the user pressing "cancel"),
-         * which moves on to UPDATE_FINISH next time logic() is called.
-         *
-         * The "play" button is only active in UPDATE_COMPLETE.
-         */
-        enum DownloadStatus
-        {
-            UPDATE_NEWS,       /**< Download news.txt file. */
-            UPDATE_LIST,       /**< Download resources2.txt. */
-            UPDATE_RESOURCES,  /**< Download .zip files named in resources2.txt. */
-            UPDATE_FINISH,     /**< All downloads complete. */
-            UPDATE_COMPLETE,   /**< Waiting for user to press "play". */
-            UPDATE_ERROR       /**< Error condition. */
-        };
-
-        int updateState;
-
-        /** A thread that use libcurl to download updates. */
-        SDL_Thread *mThread;
-
-        /** Status of the current download. */
-        DownloadStatus mDownloadStatus;
-
-        /** Host where we get the updated files. */
-        std::string mUpdateHost;
-
-        /** Place where the updates are stored (absolute path). */
-        std::string mUpdatesDir;
-
-        /** The file currently downloading. */
-        std::string mCurrentFile;
-
-        /** The new label caption to be set in the logic method. */
         std::string mNewLabelCaption;
+        /**
+         * New value for the progress bar.
+         *
+         * This is a unit with mNewLabelCaption - they both update
+         * at the same time.
+         */
+        float mNewProgress;
 
-        /** The mutex used to guard access to mNewLabelCaption. */
+        /**
+         * News to display to the user.
+         * Not synchronous to mNewLabelCaption, but is affected by the same two
+         * threads, and uses the same mutex.
+         */
+        std::vector<std::string> mNewNews;
+
+        /** The mutex used to guard access to mNewLabelCaption etc. */
         Mutex mLabelMutex;
-
-        /** The Adler32 checksum of the file currently downloading. */
-        unsigned long mCurrentChecksum;
-
-        /** Flag that show if current download is complete. */
-        bool mDownloadComplete;
-
-        /** Flag that show if the user has canceled the update. */
-        bool mUserCancel;
-
-        /** Buffer to handler human readable error provided by curl. */
-        char *mCurlError;
-
-        /** List of files to download. */
-        std::vector<std::string> mLines;
-
-        /** Index of the file to be downloaded. */
-        unsigned int mLineIndex;
 
         gcn::Label *mLabel;           /**< Progress bar caption. */
         Button *mStateButton;          /**< Button to start playing/cancel. */
         ProgressBar *mProgressBar;    /**< Update progress bar. */
         BrowserBox *mBrowserBox;      /**< Box to display news. */
         ScrollArea *mScrollArea;      /**< Used to scroll news box. */
+
+        /**
+         * The model that this UI is the view for.
+         */
+        DownloadUpdates* mLogic;
 };
 
 #endif

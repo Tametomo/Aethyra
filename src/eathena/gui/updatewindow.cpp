@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  The Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -23,9 +24,6 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_thread.h>
-#include <zlib.h>
-
-#include <curl/curl.h>
 
 #include <guichan/font.hpp>
 
@@ -49,64 +47,9 @@
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
-/**
- * Calculates the Alder-32 checksum for the given file.
- */
-static unsigned long fadler32(FILE *file)
-{
-    // Obtain file size
-    fseek(file, 0, SEEK_END);
-    long fileSize = ftell(file);
-    rewind(file);
-
-    // Calculate Adler-32 checksum
-    char *buffer = (char*) malloc(fileSize);
-    const size_t read = fread(buffer, 1, fileSize, file);
-    unsigned long adler = adler32(0L, Z_NULL, 0);
-    adler = adler32(adler, (Bytef*) buffer, read);
-    free(buffer);
-
-    return adler;
-}
-
-/**
- * Load the given file into a vector of strings.
- */
-std::vector<std::string> loadTextFile(const std::string &fileName)
-{
-    std::vector<std::string> lines;
-    std::ifstream fin(fileName.c_str());
-
-    if (!fin)
-    {
-        logger->log("Couldn't load text file: %s", fileName.c_str());
-        return lines;
-    }
-
-    std::string line;
-
-    while (getline(fin, line))
-        lines.push_back(line);
-
-    return lines;
-}
-
-
 UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
-    Window(_("Updating...")),
-    mThread(NULL),
-    mDownloadStatus(UPDATE_NEWS),
-    mUpdateHost(updateHost),
-    mUpdatesDir(""),
-    mCurrentFile("news.txt"),
-    mCurrentChecksum(0),
-    mDownloadComplete(true),
-    mUserCancel(false),
-    mCurlError(new char[CURL_ERROR_SIZE]),
-    mLineIndex(0)
+    Window(_("Updating..."))
 {
-    mCurlError[0] = 0;
-
     mBrowserBox = new BrowserBox();
     mBrowserBox->setOpaque(false);
     mScrollArea = new ScrollArea(mBrowserBox);
@@ -119,21 +62,16 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
     mStateButton = new Button(_("Cancel"), "cancel", this);
 
     fontChanged();
-    setUpdatesDir(mUpdateHost);
 
-    // Try to download the updates list
-    download();
+    mLogic = new DownloadUpdates(updateHost, this);
+    mLogic->download();
 }
 
 UpdaterWindow::~UpdaterWindow()
 {
-    if (mThread)
-        SDL_WaitThread(mThread, NULL);
-
-    // Remove possibly leftover temporary download
-    ::remove((engine->getHomeDir() + "/" + mUpdatesDir + "/download.temp").c_str());
-
-    delete[] mCurlError;
+    // This will block until the download thread exits
+    // but that should happen within a second.
+    delete mLogic;
 }
 
 void UpdaterWindow::fontChanged()
@@ -159,16 +97,15 @@ void UpdaterWindow::fontChanged()
     restoreFocus();
 }
 
-void UpdaterWindow::setProgress(float p)
+void UpdaterWindow::downloadComplete()
 {
-    mProgressBar->setProgress(p);
-}
+    //TODO needs thread safety
+    enable();
 
-void UpdaterWindow::setLabel(const std::string &str)
-{
-    // Do delayed label text update, since Guichan isn't thread-safe
     MutexLocker lock(&mLabelMutex);
-    mNewLabelCaption = str;
+    mNewLabelCaption = "";
+    // leave mNewProgress as it is, in case the user cancelled
+    // (this will leave the download bar reflecting the situation)
 }
 
 void UpdaterWindow::requestFocus()
@@ -184,16 +121,17 @@ void UpdaterWindow::enable()
     fontChanged();
 }
 
+void UpdaterWindow::downloadTextUpdate(const std::vector<std::string>& news)
+{
+    MutexLocker lock(&mLabelMutex);
+    mNewNews = news;
+}
+
 void UpdaterWindow::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "cancel")
     {
-        // Register the user cancel
-        mUserCancel = true;
-        // Skip the updating process
-        if (mDownloadStatus != UPDATE_COMPLETE)
-            mDownloadStatus = UPDATE_ERROR;
-
+        mLogic->userCancelled();
     }
     else if (event.getId() == "play")
     {
@@ -202,190 +140,15 @@ void UpdaterWindow::action(const gcn::ActionEvent &event)
     }
 }
 
-void UpdaterWindow::loadNews()
+void UpdaterWindow::downloadProgress(float totalProgress,
+        const std::string& currentFile, float fileProgress)
 {
-    std::vector<std::string> lines = loadTextFile(engine->getHomeDir()
-        + "/" + mUpdatesDir + "/news.txt");
+    // Do delayed label text update, since Guichan isn't thread-safe
+    MutexLocker lock(&mLabelMutex);
+    mNewLabelCaption = currentFile +
+        " (" + toString((int) (fileProgress * 100)) + "%)";
 
-    mBrowserBox->clearRows();
-
-    for (std::vector<std::string>::iterator itr = lines.begin() ;
-            itr != lines.end() ; itr++)
-    {
-        mBrowserBox->addRow(*itr);
-    }
-
-    mScrollArea->setVerticalScrollAmount(0);
-}
-
-int UpdaterWindow::updateProgress(void *ptr, double dt, double dn, double ut,
-                                  double un)
-{
-    float progress = dn / dt;
-    UpdaterWindow *uw = reinterpret_cast<UpdaterWindow *>(ptr);
-
-    if (progress != progress)
-        progress = 0.0f; // check for NaN
-    if (progress < 0.0f)
-        progress = 0.0f; // no idea how this could ever happen,
-                         // but why not check for it anyway.
-    if (progress > 1.0f)
-        progress = 1.0f;
-
-    uw->setLabel(uw->mCurrentFile + " (" + toString((int) (progress * 100)) +
-                 "%)");
-
-    // Make the progress bar display overall progress, not just for this file
-    // (inaccurate as it assumes all files are the same size)
-    // (The +1 is because mLineIndex has already been incremented to point to
-    // the next file; but isn't incremented for news.txt or resources.txt.)
-    if (uw->mLines.size() > 0)
-        progress = (uw->mLineIndex + progress) / (uw->mLines.size() + 1);
-
-    uw->setProgress(progress);
-
-    // If the action was canceled return an error code to stop the mThread
-    if (state != UPDATE_STATE || uw->mDownloadStatus == UPDATE_ERROR)
-        return -1;
-
-    return 0;
-}
-
-int UpdaterWindow::downloadThread(void *ptr)
-{
-    int attempts = 0;
-    UpdaterWindow *uw = reinterpret_cast<UpdaterWindow *>(ptr);
-    CURL *curl;
-    CURLcode res;
-    std::string outFilename;
-    std::string url(uw->mUpdateHost + "/" + uw->mCurrentFile);
-
-    while (attempts < 3 && !uw->mDownloadComplete)
-    {
-        FILE *outfile = NULL;
-        FILE *newfile = NULL;
-        uw->setLabel(uw->mCurrentFile + " (0%)");
-
-        curl = curl_easy_init();
-
-        if (curl)
-        {
-            logger->log("Downloading: %s", url.c_str());
-
-            outFilename = engine->getHomeDir() + "/" + uw->mUpdatesDir +
-                          "/download.temp";
-            outfile = fopen(outFilename.c_str(), "w+b");
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, outfile);
-
-#ifdef PACKAGE_VERSION
-            curl_easy_setopt(curl, CURLOPT_USERAGENT, "Aethyra/" PACKAGE_VERSION);
-#else
-            curl_easy_setopt(curl, CURLOPT_USERAGENT, "Aethyra");
-#endif
-            curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, uw->mCurlError);
-            curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-            curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0);
-            curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION,
-                                   UpdaterWindow::updateProgress);
-            curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, ptr);
-            curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
-            curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 15);
-
-            struct curl_slist *pHeaders = NULL;
-            if (uw->mDownloadStatus != UPDATE_RESOURCES)
-            {
-                // Make sure the resources2.txt and news.txt aren't cached,
-                // in order to always get the latest version.
-                pHeaders = curl_slist_append(pHeaders, "pragma: no-cache");
-                pHeaders =
-                    curl_slist_append(pHeaders, "Cache-Control: no-cache");
-                curl_easy_setopt(curl, CURLOPT_HTTPHEADER, pHeaders);
-            }
-
-            if ((res = curl_easy_perform(curl)) != 0)
-            {
-                uw->mDownloadStatus = UPDATE_ERROR;
-                switch (res)
-                {
-                case CURLE_COULDNT_CONNECT:
-                default:
-                    std::cerr << _("curl error ") << res << ": "
-                              << uw->mCurlError << _(" host: ") << url
-                              << std::endl;
-                    break;
-                }
-
-                fclose(outfile);
-                ::remove(outFilename.c_str());
-                attempts++;
-                continue;
-            }
-
-            curl_easy_cleanup(curl);
-
-            if (uw->mDownloadStatus != UPDATE_RESOURCES)
-            {
-                curl_slist_free_all(pHeaders);
-            }
-
-            // Don't check checksum for news.txt or resources2.txt
-            if (uw->mDownloadStatus == UPDATE_RESOURCES)
-            {
-                unsigned long adler = fadler32(outfile);
-
-                if (uw->mCurrentChecksum != adler)
-                {
-                    fclose(outfile);
-
-                    // Remove the corrupted file
-                    ::remove(outFilename.c_str());
-                    logger->log(
-                        _("Checksum for file %s failed: (%lx/%lx)"),
-                        uw->mCurrentFile.c_str(),
-                        adler, uw->mCurrentChecksum);
-                    attempts++;
-                    continue; // Bail out here to avoid the renaming
-                }
-            }
-            fclose(outfile);
-
-            // Give the file the proper name
-            const std::string newName = engine->getHomeDir() + "/" +
-                                        uw->mUpdatesDir + "/" + uw->mCurrentFile;
-
-            // Any existing file with this name is deleted first, otherwise
-            // the rename will fail on Windows.
-            ::remove(newName.c_str());
-            ::rename(outFilename.c_str(), newName.c_str());
-
-            // Check if we can open it and no errors were encountered
-            // during renaming
-            newfile = fopen(newName.c_str(), "rb");
-            if (newfile)
-            {
-                fclose(newfile);
-                uw->mDownloadComplete = true;
-            }
-        }
-        attempts++;
-    }
-
-    if (!uw->mDownloadComplete)
-        uw->mDownloadStatus = UPDATE_ERROR;
-
-    return 0;
-}
-
-void UpdaterWindow::download()
-{
-    mDownloadComplete = false;
-    mThread = SDL_CreateThread(UpdaterWindow::downloadThread, this);
-
-    if (!mThread)
-    {
-        logger->log("Unable to create mThread");
-        mDownloadStatus = UPDATE_ERROR;
-    }
+    mNewProgress = totalProgress;
 }
 
 void UpdaterWindow::logic()
@@ -400,193 +163,22 @@ void UpdaterWindow::logic()
         {
             mLabel->setCaption(mNewLabelCaption);
             mLabel->adjustSize();
+
+            mProgressBar->setProgress(mNewProgress);
         }
-    }
 
-    switch (mDownloadStatus)
-    {
-        case UPDATE_ERROR:
-            if (mThread)
-            {
-                if (mUserCancel)
-                {
-                    // Kill the thread, because user has canceled
-                    SDL_KillThread(mThread);
-                    // Set the flag to false again
-                    mUserCancel = false;
-                }
-                else
-                    SDL_WaitThread(mThread, NULL);
-
-                mThread = NULL;
-            }
-            mBrowserBox->addRow("");
-            mBrowserBox->addRow(_("##1  The update process is incomplete."));
-            mBrowserBox->addRow(_("##1  It is strongly recommended that"));
-            mBrowserBox->addRow(_("##1  you try again later"));
-            mBrowserBox->addRow(mCurlError);
-            mScrollArea->setVerticalScrollAmount(
-                    mScrollArea->getVerticalMaxScroll());
-            mDownloadStatus = UPDATE_FINISH;
-            break;
-        case UPDATE_NEWS:
-            if (mDownloadComplete)
-            {
-                // Parse current memory buffer as news and dispose of the data
-                loadNews();
-
-                mCurrentFile = "resources2.txt";
-                mDownloadStatus = UPDATE_LIST;
-                download(); // download() changes mDownloadComplete to false
-            }
-            break;
-        case UPDATE_LIST:
-            if (mDownloadComplete)
-            {
-                mLines = loadTextFile(engine->getHomeDir() + "/" + mUpdatesDir +
-                                      "/resources2.txt");
-                mDownloadStatus = UPDATE_RESOURCES;
-            }
-            break;
-        case UPDATE_RESOURCES:
-            if (mDownloadComplete)
-            {
-                if (mThread)
-                {
-                    SDL_WaitThread(mThread, NULL);
-                    mThread = NULL;
-                }
-
-                if (mLineIndex < mLines.size())
-                {
-                    std::stringstream line(mLines[mLineIndex]);
-                    line >> mCurrentFile;
-                    std::string checksum;
-                    line >> checksum;
-                    std::stringstream ss(checksum);
-                    ss >> std::hex >> mCurrentChecksum;
-
-                    std::ifstream temp((engine->getHomeDir() + "/" + mUpdatesDir +
-                                        "/" + mCurrentFile).c_str());
-
-                    if (!temp.is_open())
-                    {
-                        temp.close();
-                        download();
-                    }
-                    else
-                        logger->log("%s already here", mCurrentFile.c_str());
-
-                    mLineIndex++;
-                }
-                // Download of updates completed
-                else
-                    mDownloadStatus = UPDATE_FINISH;
-            }
-            break;
-        case UPDATE_FINISH:
-            // The downloading has finished (or been cancelled)
-            addUpdatesToResman();
-            enable();
-            setLabel(_("Completed"));
-            mDownloadStatus = UPDATE_COMPLETE;
-            break;
-        case UPDATE_COMPLETE:
-            // just wait for the player to press "play"
-            break;
-    }
-}
-
-void UpdaterWindow::addUpdatesToResman()
-{
-    // If the user cancelled in UPDATE_NEWS or UPDATE_LIST, mLines hasn't been
-    // populated yet.  But we might have all the updates already.
-    if (mLines.empty())
-        mLines = loadTextFile(engine->getHomeDir() + "/" + mUpdatesDir +
-                          "/resources2.txt");
-
-    ResourceManager *resman = ResourceManager::getInstance();
-
-    for (unsigned int i = 0; i < mLines.size(); ++i)
-    {
-        std::stringstream line(mLines[i]);
-        std::string filename;
-        line >> filename;
-        resman->addToSearchPath(engine->getHomeDir() + "/" + mUpdatesDir + "/" +
-                                filename, false);
-    }
-}
-
-void UpdaterWindow::setUpdatesDir(std::string &updateHost)
-{
-    std::stringstream updates;
-
-    // If updatesHost is currently empty, fill it from config file
-    if (updateHost.empty())
-    {
-        updateHost = config.getValue("updatehost",
-                                     "http://www.aethyra.org/updates");
-    }
-
-    // Remove any trailing slash at the end of the update host
-    if (updateHost.at(updateHost.size() - 1) == '/')
-        updateHost.resize(updateHost.size() - 1);
-
-    // Parse out any "http://" or "ftp://", and set the updates directory
-    size_t pos;
-    pos = updateHost.find("://");
-    if (pos != updateHost.npos)
-    {
-        if (pos + 3 < updateHost.length())
+        if (! mNewNews.empty())
         {
-            updates << "updates/" << updateHost.substr(pos + 3);
-            mUpdatesDir = updates.str();
-        }
-        else
-        {
-            logger->log("Error: Invalid update host: %s", updateHost.c_str());
-            errorMessage = _("Invalid update host: ") + updateHost;
-            state = ERROR_STATE;
-        }
-    }
-    else
-    {
-        logger->log("Warning: no protocol was specified for the update host");
-        updates << "updates/" << updateHost;
-        mUpdatesDir = updates.str();
-    }
+            mBrowserBox->clearRows();
 
-    ResourceManager *resman = ResourceManager::getInstance();
-
-    // Verify that the updates directory exists. Create if necessary.
-    if (!resman->isDirectory("/" + mUpdatesDir))
-    {
-        if (!resman->mkdir("/" + mUpdatesDir))
-        {
-#if defined WIN32
-            std::string newDir = engine->getHomeDir() + "\\" + mUpdatesDir;
-            std::string::size_type loc = newDir.find("/", 0);
-
-            while (loc != std::string::npos)
+            for (std::vector<std::string>::iterator itr = mNewNews.begin() ;
+                    itr != mNewNews.end() ; itr++)
             {
-                newDir.replace(loc, 1, "\\");
-                loc = newDir.find("/", loc);
+                mBrowserBox->addRow(*itr);
             }
 
-            if (!CreateDirectory(newDir.c_str(), 0) &&
-                GetLastError() != ERROR_ALREADY_EXISTS)
-            {
-                logger->log("Error: %s can't be made, but doesn't exist!",
-                            newDir.c_str());
-#else
-            logger->log("Error: %s/%s can't be made, but doesn't exist!",
-                        engine->getHomeDir().c_str(), mUpdatesDir.c_str());
-#endif
-            errorMessage = _("Error creating updates directory!");
-            state = ERROR_STATE;
-#if defined WIN32
-            }
-#endif
+            mScrollArea->setVerticalScrollAmount(0);
+            mNewNews.clear();
         }
     }
 }
