@@ -27,6 +27,8 @@
 
 #include <curl/curl.h>
 
+#include <guichan/font.hpp>
+
 #include "updatewindow.h"
 
 #include "../../engine.h"
@@ -114,10 +116,11 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
     mProgressBar = new ProgressBar(0.0, 310, 20, gcn::Color(168, 116, 31));
     mProgressBar->setSmoothProgress(false);
 
-    mCancelButton = new Button(_("Cancel"), "cancel", this);
+    std::string longest = getFont()->getWidth(_("Play")) >
+                          getFont()->getWidth(_("Cancel")) ?
+                          _("Play") : _("Cancel");
 
-    mPlayButton = new Button(_("Play"), "play", this);
-    mPlayButton->setEnabled(false);
+    mStateButton = new Button(longest, "cancel", this);
 
     ContainerPlacer place;
     place = getPlacer(0, 0);
@@ -125,13 +128,14 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
     place(0, 0, mScrollArea, 5, 3).setPadding(3);
     place(0, 3, mLabel, 5);
     place(0, 4, mProgressBar, 5);
-    place(3, 5, mCancelButton);
-    place(4, 5, mPlayButton);
+    place(4, 5, mStateButton);
 
     reflowLayout(320, 240);
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
+
+    mStateButton->setCaption(_("Cancel"));
 
     setUpdatesDir(mUpdateHost);
 
@@ -164,17 +168,15 @@ void UpdaterWindow::setLabel(const std::string &str)
 
 void UpdaterWindow::requestFocus()
 {
-    if (mPlayButton->isEnabled())
-        mPlayButton->requestFocus();
-    else
-        mCancelButton->requestFocus();
+    if (mStateButton->isEnabled())
+        mStateButton->requestFocus();
 }
 
 void UpdaterWindow::enable()
 {
-    mCancelButton->setEnabled(false);
-    mPlayButton->setEnabled(true);
-    mPlayButton->requestFocus();
+    mStateButton->setCaption(_("Play"));
+    mStateButton->setActionEventId("play");
+    mStateButton->requestFocus();
 }
 
 void UpdaterWindow::action(const gcn::ActionEvent &event)
@@ -189,7 +191,10 @@ void UpdaterWindow::action(const gcn::ActionEvent &event)
 
     }
     else if (event.getId() == "play")
+    {
+        mStateButton->setEnabled(false);
         state = LOADDATA_STATE;
+    }
 }
 
 void UpdaterWindow::loadNews()

@@ -190,8 +190,7 @@ class UpdaterWindow : public Window, public gcn::ActionListener
         unsigned int mLineIndex;
 
         gcn::Label *mLabel;           /**< Progress bar caption. */
-        Button *mCancelButton;        /**< Button to stop the update process. */
-        Button *mPlayButton;          /**< Button to start playing. */
+        Button *mStateButton;          /**< Button to start playing/cancel. */
         ProgressBar *mProgressBar;    /**< Update progress bar. */
         BrowserBox *mBrowserBox;      /**< Box to display news. */
         ScrollArea *mScrollArea;      /**< Used to scroll news box. */
