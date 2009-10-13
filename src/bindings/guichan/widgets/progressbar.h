@@ -120,6 +120,12 @@ class ProgressBar : public gcn::Widget
          */
         void reset();
 
+        /**
+         * Sets whether the progress bar should behave like a throbber (as in a
+         * progress bar that cycles when progress is unknown) or not.
+         */
+        void toggleThrobbing(bool throb);
+
     private:
         float mProgress, mProgressToGo;
         bool mSmoothProgress;
@@ -130,6 +136,9 @@ class ProgressBar : public gcn::Widget
 
         gcn::Color mColor, mColorToGo;
         bool mSmoothColorChange;
+        bool mThrobber;      /**< Whether the progress bar should behave like a
+                                  throbber (as in a progress bar that cycles
+                                  when progress is unknown) or not. */
 
         std::string mText;
 

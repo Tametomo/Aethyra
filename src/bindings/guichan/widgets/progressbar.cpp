@@ -76,7 +76,8 @@ ProgressBar::ProgressBar(float progress, int width, int height,
     mCurrentColor(0),
     mColor(color),
     mColorToGo(color),
-    mSmoothColorChange(true)
+    mSmoothColorChange(true),
+    mThrobber(false)
 {
     mColors.push_back(color);
 
@@ -175,13 +176,16 @@ void ProgressBar::logic()
         mColor = mColorToGo;
     }
 
-    if (mSmoothProgress && mProgressToGo != mProgress)
+    if ((mSmoothProgress && mProgressToGo != mProgress) || mThrobber)
     {
         // Smoothly showing the progressbar changes.
         if (mProgressToGo > mProgress)
             mProgress = std::min(1.0f, mProgress + (0.005f * updateTicks));
         if (mProgressToGo < mProgress)
             mProgress = std::max(0.0f, mProgress - (0.005f * updateTicks));
+
+        if (mProgress == 1.0f && mThrobber)
+            reset();
     }
     else
     {
@@ -242,7 +246,15 @@ void ProgressBar::addColor(Uint8 red, Uint8 green, Uint8 blue)
 
 void ProgressBar::reset()
 {
-    mProgress = 0;
+    mProgress = 0.0f;
     mColor = mColorToGo = mColors[0];
 }
+
+void ProgressBar::toggleThrobbing(bool throb)
+{
+    mThrobber = throb;
+    reset();
+    mProgressToGo = 1.0f;
+}
+
 

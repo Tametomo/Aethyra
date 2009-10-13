@@ -1,6 +1,5 @@
 /*
  *  Aethyra
- *  Copyright (C) 2004  The Mana World Development Team
  *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra.
@@ -85,6 +84,7 @@ Desktop::Desktop():
     progressBar = new ProgressBar(0.0f, 100, 20, gcn::Color(168, 116, 31));
     progressBar->setVisible(false);
     progressBar->setPosition(5, getHeight() - 5 - progressBar->getHeight());
+    progressBar->toggleThrobbing(true);
 
     progressLabel = new Label();
     progressLabel->setPosition(15 + progressBar->getWidth(), 4 +
@@ -115,7 +115,7 @@ Desktop::~Desktop()
     delete versionLabel;
     versionLabel = NULL;
 #endif
-    currentDialog = NULL;
+    removeCurrentDialog();
 
     if (login_wallpaper)
         login_wallpaper->decRef();
@@ -154,7 +154,9 @@ void Desktop::resize()
                                  progressBar->getHeight());
         progressLabel->setPosition(15 + progressBar->getWidth(), 4 +
                                    progressBar->getY());
-        positionDialog(currentDialog);
+
+        if (currentDialog)
+            positionDialog(currentDialog);
     }
 
     setup->setPosition(getWidth() - setup->getWidth() - 3, 3);
@@ -204,6 +206,9 @@ void Desktop::reload()
 
 void Desktop::changeCurrentDialog(Window* window)
 {
+    if (currentDialog)
+        removeCurrentDialog();
+
     currentDialog = window;
     positionDialog(currentDialog);
 }
@@ -223,23 +228,24 @@ Window* Desktop::getCurrentDialog()
 
 void Desktop::removeCurrentDialog()
 {
-    delete currentDialog;
+    currentDialog->scheduleDelete();
     currentDialog = NULL;
 }
 
 void Desktop::resetProgressBar()
 {
-    progressBar->setVisible(false);
     progressBar->reset();
+    progressBar->setVisible(false);
     progressLabel->setCaption("");
 }
 
 void Desktop::useProgressBar(std::string message)
 {
-    resetProgressBar();
-    progressBar->setVisible(true);
+    removeCurrentDialog();
     progressLabel->setCaption(message);
     progressLabel->adjustSize();
+    progressBar->reset();
+    progressBar->setVisible(true);
 }
 
 void Desktop::positionDialog(Window *dialog, float xPos, float yPos)
@@ -282,14 +288,6 @@ void Desktop::logic()
 {
     if (!isVisible())
         return;
-
-    if (progressBar->isVisible())
-    {
-        progressBar->setProgress(progressBar->getProgress() + 0.005f);
-
-        if (progressBar->getProgress() == 1.0f)
-            progressBar->reset();
-    }
 
     Container::logic();
 }
