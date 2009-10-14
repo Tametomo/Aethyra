@@ -126,6 +126,8 @@ void InventoryWindow::fontChanged()
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, mDropButton->getHeight());
+
+    refreshLayout();
 }
 
 void InventoryWindow::logic()

@@ -117,6 +117,8 @@ void TradeWindow::fontChanged()
     layout.setRowHeight(2, 0);
     layout.setColWidth(0, Layout::AUTO_SET);
     layout.setColWidth(1, Layout::AUTO_SET);
+
+    refreshLayout();
 }
 
 void TradeWindow::addMoney(int amount)
