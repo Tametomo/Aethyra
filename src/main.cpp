@@ -101,25 +101,32 @@ MapLoginHandler mapLoginHandler;
 
 static void printHelp()
 {
-    std::cout
-        << _("aethyra") << std::endl << std::endl
-        << _("Options: ") << std::endl
-        << _("  -C --configfile : Configuration file to use") << std::endl
-        << _("  -d --data       : Directory to load game data from") << std::endl
-        << _("  -D --default    : Bypass the login process with default settings")
-        << std::endl
-        << _("  -h --help       : Display this help") << std::endl
-        << _("  -H --updatehost : Use this update host") << std::endl
-        << _("  -p --playername : Login with this player") << std::endl
-        << _("  -P --password   : Login with this password") << std::endl
-        << _("  -u --skipupdate : Skip the update downloads") << std::endl
-        << _("  -U --username   : Login with this username") << std::endl
+    std::cout << _("Options: ") << std::endl
+              << _("  -C --configfile\t: Configuration file to use") << std::endl
+              << _("  -d --data\t\t: Directory to load game data from")
+              << std::endl
+              << _("  -D --default\t\t: Bypass the login process with default "
+                   "settings") << std::endl
+              << _("  -h --help\t\t: Display this help") << std::endl
+              << _("  -H --updatehost\t: Use this update host") << std::endl
+              << _("  -p --playername\t: Login with this player") << std::endl
+              << _("  -P --password\t\t: Login with this password") << std::endl
+              << _("  -u --skipupdate\t: Skip the update downloads") << std::endl
+              << _("  -U --username\t\t: Login with this username") << std::endl
 #ifdef USE_OPENGL
-        << _("  -O --no-opengl  : Disable OpenGL for this session") << std::endl
+              << _("  -O --no-opengl\t: Disable OpenGL for this session")
+              << std::endl
 #else
-        << _("  -O --no-opengl  : Default (OpenGL has been disabled at build time)") << std::endl
+              << _("  -O --no-opengl\t: Default (OpenGL has been disabled at "
+                   "build time)") << std::endl
 #endif
-        << _("  -v --version    : Display the version") << std::endl;
+              << _("  -v --version\t\t: Display the version") << std::endl
+              << std::endl
+              << _("Report bugs at: http://www.aethyra.org/mantis")
+              << std::endl
+              << _("Homepage: http://www.aethyra.org") << std::endl
+              << _("Forums: http://www.aethyra.org/forums") << std::endl
+              << _("IRC: irc.freenode.net\tChannel: #aethyra") << std::endl;
 }
 
 static void printVersion()
@@ -309,14 +316,12 @@ int main(int argc, char *argv[])
 
     parseOptions(argc, argv, options);
 
+    if (options.printVersion)
+        printVersion();
+
     if (options.printHelp)
     {
         printHelp();
-        return 0;
-    }
-    else if (options.printVersion)
-    {
-        printVersion();
         return 0;
     }
 
