@@ -350,15 +350,19 @@ class Window : public gcn::Window, public gcn::WidgetListener
          */
         ImageRect::ImagePosition getPosition() { return mPosition; }
 
-         /**
-          * Readjusts content as needed.
-          */
-         virtual void refreshLayout();
+        /**
+         * Readjusts content as needed.
+         */
+        virtual void refreshLayout();
 
-         /**
-          * Recalculates the layout positioning if needed.
-          */
-         virtual void fontChanged();
+        /**
+         * Recalculates the layout positioning if needed.
+         */
+        virtual void fontChanged();
+
+        // Restores focus back to the widget that had it if a clear() took it
+        // away.
+        static void restoreFocus();
 
     protected:
         bool mOldVisibility;          /**< Whether the window was previously
@@ -427,6 +431,10 @@ class Window : public gcn::Window, public gcn::WidgetListener
          * where two borders are moved at the same time.
          */
         static const int resizeBorderWidth = 10;
+
+        // Keeps the previously focused widget in the window stored when using
+        // clear(), so that it can be recalled if needed.
+        static gcn::Widget *mPreviousFocus;
 };
 
 #endif

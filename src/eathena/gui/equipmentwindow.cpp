@@ -432,6 +432,7 @@ void EquipmentWindow::updateButtons()
         mEquipButton->setCaption(item->isEquipped() ? _("Unequip") : _("Equip"));
 
     fontChanged();
+    restoreFocus();
 
     mEquipButton->setEnabled(item != NULL);
 }

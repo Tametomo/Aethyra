@@ -180,6 +180,7 @@ void TradeWindow::reset()
     mMoneyField->setValue(0);
     mMoneyField->setRange(0, player_node->mGp);
     fontChanged();
+    //restoreFocus();
 }
 
 void TradeWindow::receivedOk(bool own)
@@ -192,6 +193,7 @@ void TradeWindow::receivedOk(bool own)
             mOkButton->setCaption(_("Trade"));
             mOkButton->setActionEventId("trade");
             fontChanged();
+            restoreFocus();
             mOkButton->setEnabled(true);
             mOkButton->requestFocus();
         }
@@ -206,6 +208,7 @@ void TradeWindow::receivedOk(bool own)
             mOkButton->setCaption(_("Trade"));
             mOkButton->setActionEventId("trade");
             fontChanged();
+            restoreFocus();
             mOkButton->setEnabled(true);
             mOkButton->requestFocus();
         }

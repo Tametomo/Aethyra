@@ -180,7 +180,7 @@ void UpdaterWindow::enable()
     mStateButton->setCaption(_("Play"));
     mStateButton->setActionEventId("play");
     fontChanged();
-    mStateButton->requestFocus();
+    restoreFocus();
 }
 
 void UpdaterWindow::action(const gcn::ActionEvent &event)

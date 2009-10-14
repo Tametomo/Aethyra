@@ -262,6 +262,7 @@ void InventoryWindow::updateButtons()
     mTradeButton->setEnabled(selectedItem != NULL && tradeWindow->canTrade() &&
                              !tradeWindow->tradingItem(selectedItem));
     fontChanged();
+    restoreFocus();
 }
 
 Item* InventoryWindow::getSelectedItem() const

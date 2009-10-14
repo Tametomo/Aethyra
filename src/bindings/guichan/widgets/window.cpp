@@ -43,6 +43,8 @@
 int Window::instances = 0;
 int Window::mouseResize = 0;
 
+gcn::Widget *Window::mPreviousFocus = NULL;
+
 Window::Window(const std::string& caption, bool modal, Window *parent,
                const std::string& skin, bool visible):
     gcn::Window(caption),
@@ -103,7 +105,11 @@ Window::~Window()
     delete mLayout;
 
     while (!mWidgets.empty())
+    {
+        if (mWidgets.front() == mPreviousFocus)
+            mPreviousFocus = NULL;
         delete mWidgets.front();
+    }
 
     removeWidgetListener(this);
 
@@ -783,6 +789,15 @@ void Window::fontChanged()
 
 void Window::clear()
 {
+    mPreviousFocus = NULL;
+
+    std::list<Widget*>::iterator iter;
+    for (iter = mWidgets.begin(); iter != mWidgets.end(); ++iter)
+    {
+        if ((*iter)->isFocused())
+            mPreviousFocus = (*iter);
+    }
+
     gcn::BasicContainer::clear();
 
     // Restore the resize grip
@@ -795,3 +810,13 @@ void Window::clear()
         mLayout = NULL;
     }
 }
+
+void Window::restoreFocus()
+{
+    if (!mPreviousFocus)
+        return;
+
+    mPreviousFocus->requestFocus();
+    mPreviousFocus = NULL;
+}
+

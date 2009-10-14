@@ -598,6 +598,8 @@ void Gui::changeFontSize(const int size)
             window->refreshLayout();
     }
 
+    Window::restoreFocus();
+
     if (state != GAME_STATE && desktop)
         desktop->resize();
 }

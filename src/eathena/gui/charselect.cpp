@@ -327,8 +327,6 @@ void CharCreateDialog::fontChanged()
 
     setLocationRelativeTo(getParent());
     setVisible(true);
-
-    mNameField->requestFocus();
 }
 
 CharCreateDialog::~CharCreateDialog()
