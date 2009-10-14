@@ -192,12 +192,8 @@ Engine::Engine(const char *prog, const Options &gameOptions) :
     // Initialize sound engine
     try
     {
-        if (config.getValue("sound", 0) == 1)
+        if (config.getValue("sound", 1) == 1)
             sound.init();
-
-        sound.setSfxVolume((int) config.getValue("sfxVolume", defaultSfxVolume));
-        sound.setMusicVolume((int) config.getValue("musicVolume",
-                                                   defaultMusicVolume));
     }
     catch (const char *err)
     {
@@ -290,11 +286,8 @@ void Engine::initConfig()
     config.setValue("opengl", 0);
 #endif
     config.setValue("screen", 0);
-    config.setValue("sound", 1);
     config.setValue("guialpha", 0.8f);
     config.setValue("remember", 1);
-    config.setValue("sfxVolume", 100);
-    config.setValue("musicVolume", 60);
     config.setValue("fpslimit", 0);
     config.setValue("updatehost", "http://www.aethyra.org/updates");
     config.setValue("customcursor", 1);
@@ -375,8 +368,8 @@ void Engine::initWindow()
     // Try to set the desired video mode
     if (!graphics->setVideoMode(width, height, bpp, fullscreen, hwaccel))
     {
-        std::cerr << _("Couldn't set ") << width << "x" << height << "x" 
-                  << bpp << _(" video mode: ") << SDL_GetError() << std::endl;
+        std::cerr << strprintf(_("Couldn't set %dx%dx%d video mode: %s"), width,
+                                 height, bpp, SDL_GetError()) << std::endl;
         exit(1);
     }
 

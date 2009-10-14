@@ -29,6 +29,12 @@
 
 #include "../../widgets/setuptabcontainer.h"
 
+// Default program values
+// -------------------
+// Sound
+const short defaultSfxVolume = 100;
+const short defaultMusicVolume = 60;
+
 class Setup_Audio : public SetupTabContainer, public gcn::ActionListener
 {
     public:

@@ -36,13 +36,6 @@
 
 #include "bindings/guichan/sdl/sdlgraphics.h"
 
-// Default program values
-// -------------------
-// Screen
-// Sound
-const short defaultSfxVolume = 100;
-const short defaultMusicVolume = 60;
-
 class LoginData;
 class Network;
 class Options;
