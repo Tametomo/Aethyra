@@ -49,6 +49,8 @@ class Label : public gcn::Label
          * Draws the label.
          */
         void draw(gcn::Graphics* graphics);
+
+        void fontChanged() { adjustSize(); }
 };
 
 #endif

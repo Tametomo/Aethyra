@@ -57,14 +57,23 @@ HelpDialog::HelpDialog():
 
     mBrowserBox->setLinkHandler(this);
 
+    fontChanged();
+    loadWindowState();
+    loadHelp("index");
+}
+
+void HelpDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     place(0, 0, mScrollArea, 5, 3).setPadding(3);
     place(4, 3, mOkButton);
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
-
-    loadWindowState();
-    loadHelp("index");
 }
 
 void HelpDialog::action(const gcn::ActionEvent &event)

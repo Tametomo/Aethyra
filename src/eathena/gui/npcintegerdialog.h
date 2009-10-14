@@ -78,6 +78,7 @@ class NpcIntegerDialog : public Window, public gcn::ActionListener
          */
         void close();
 
+        void fontChanged();
     private:
         IntTextField *mValueField;
         gcn::Button *okButton;

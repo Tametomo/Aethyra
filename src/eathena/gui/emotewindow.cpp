@@ -61,14 +61,23 @@ EmoteWindow::EmoteWindow():
     mEmoteScroll = new ScrollArea(mEmotes);
     mEmoteScroll->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
 
+    fontChanged();
+    loadWindowState();
+}
+
+void EmoteWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     place(0, 0, mEmoteScroll, 5, 4);
     place(0, 4, mShortcutButton);
     place(4, 4, mUseButton);
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
-
-    loadWindowState();
 }
 
 void EmoteWindow::action(const gcn::ActionEvent &event)

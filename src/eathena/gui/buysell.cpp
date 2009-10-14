@@ -31,34 +31,48 @@
 
 #include "../../core/utils/gettext.h"
 
+static const char *buttonNames[] = {
+    N_("Buy"),
+    N_("Sell"),
+    N_("Cancel"),
+    0
+};
+
 BuySellDialog::BuySellDialog():
     Window(_("Shop"))
 {
     setWindowName("BuySell");
     saveVisibility(false);
 
-    buyButton = NULL;
-    static const char *buttonNames[] = {
-        N_("Buy"), N_("Sell"), N_("Cancel"), 0
-    };
-    int x = 10, y = 10;
-
     for (const char **curBtn = buttonNames; *curBtn; curBtn++)
     {
         Button *btn = new Button(gettext(*curBtn), *curBtn, this);
-        if (!buyButton)
-            buyButton = btn; // For focus request
-        btn->setPosition(x, y);
-        add(btn);
-        x += btn->getWidth() + 10;
+        mButtons.push_back(btn);
     }
 
-    buyButton->requestFocus();
+    fontChanged();
+    loadWindowState();
+}
 
-    setDefaultSize(x + getPadding(), (2 * y + buyButton->getHeight() +
+void BuySellDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    int x = 10, y = 10;
+    for (size_t i = 0; i < mButtons.size(); i++)
+    {
+        mButtons[i]->setPosition(x, y);
+        add(mButtons[i]);
+        x += mButtons[i]->getWidth() + 10;
+    }
+
+    setDefaultSize(x + getPadding(), (2 * y + mButtons[0]->getHeight() +
                    getTitleBarHeight()), ImageRect::CENTER);
 
-    loadWindowState();
+    setContentSize(x, (2 * y + mButtons[0]->getHeight()));
 }
 
 void BuySellDialog::logic()
@@ -71,7 +85,8 @@ void BuySellDialog::logic()
 
 void BuySellDialog::requestFocus()
 {
-    buyButton->requestFocus();
+    if (mButtons.size() > 0)
+        mButtons[0]->requestFocus();
 }
 
 void BuySellDialog::action(const gcn::ActionEvent &event)

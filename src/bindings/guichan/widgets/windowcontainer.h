@@ -25,9 +25,6 @@
 
 #include "container.h"
 
-typedef std::list<gcn::Widget*> Widgets;
-typedef Widgets::iterator WidgetIterator;
-
 /**
  * A window container. This container adds functionality for more convenient
  * widget (windows in particular) destruction.
@@ -57,13 +54,13 @@ class WindowContainer : public Container
         /**
          * Get the list of all widget instances
          */
-        std::list<gcn::Widget*> getWidgetList() { return mWidgets; }
+        WidgetList getWidgetList() { return mWidgets; }
 
     private:
         /**
          * List of widgets that are scheduled to be deleted.
          */
-        Widgets mDeathList;
+        WidgetList mDeathList;
 };
 
 extern WindowContainer *windowContainer;

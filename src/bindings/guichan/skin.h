@@ -68,12 +68,12 @@ class Skin
         /**
          * Returns the minimum width which can be used with this skin.
          */
-        int getMinWidth() const;
+        const int getMinWidth() const { return border.getMinWidth(); }
 
         /**
          * Returns the minimum height which can be used with this skin.
          */
-        int getMinHeight() const;
+        const int getMinHeight() const {return border.getMinHeight(); }
 
         /**
          * Updates the alpha value of the skin

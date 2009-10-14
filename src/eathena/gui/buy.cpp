@@ -81,6 +81,22 @@ BuyDialog::BuyDialog():
     mSlider->addActionListener(this);
     mShopItemList->addSelectionListener(this);
 
+    fontChanged();
+    loadWindowState();
+}
+
+BuyDialog::~BuyDialog()
+{
+    delete mShopListModel;
+}
+
+void BuyDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     ContainerPlacer place;
     place = getPlacer(0, 0);
 
@@ -96,13 +112,6 @@ BuyDialog::BuyDialog():
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
-
-    loadWindowState();
-}
-
-BuyDialog::~BuyDialog()
-{
-    delete mShopListModel;
 }
 
 void BuyDialog::setMoney(int amount)

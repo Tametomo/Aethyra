@@ -103,6 +103,8 @@ class TextField : public gcn::TextField
          */
         void addListener(TextFieldListener *listener) { mListener = listener; }
 
+        void fontChanged() { adjustHeight(); }
+
     protected:
         static float mAlpha;
         static TextFieldConfigListener *mConfigListener;

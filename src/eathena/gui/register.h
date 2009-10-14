@@ -72,6 +72,7 @@ class RegisterDialog : public Window, public gcn::ActionListener,
          */
         void requestFocus();
 
+        void fontChanged();
     private:
         /**
          * Returns whether submit can be enabled. This is true in the register
@@ -96,6 +97,12 @@ class RegisterDialog : public Window, public gcn::ActionListener,
          * @return the value str represents
          */
         static unsigned short getUShort(const std::string &str);
+
+        gcn::Label *mUserLabel;
+        gcn::Label *mPasswordLabel;
+        gcn::Label *mConfirmLabel;
+        gcn::Label *mServerLabel;
+        gcn::Label *mPortLabel;
 
         gcn::TextField *mUserField;
         gcn::TextField *mPasswordField;

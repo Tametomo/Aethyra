@@ -128,6 +128,7 @@ class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
          */
         static const bool canTrade();
 
+        void fontChanged();
     private:
         typedef const std::auto_ptr<Inventory> InventoryPtr;
         InventoryPtr mMyInventory;

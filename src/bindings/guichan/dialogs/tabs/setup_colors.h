@@ -51,6 +51,7 @@ class Setup_Colors : public SetupTabContainer, public gcn::ActionListener,
 
         void setGradTypeText(const Palette::GradientType &value);
 
+        void fontChanged();
     private:
         static const std::string rawmsg;
 

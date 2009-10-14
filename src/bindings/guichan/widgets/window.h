@@ -44,7 +44,7 @@ class WindowContainer;
  *
  * \ingroup GUI
  */
-class Window : public gcn::Window, gcn::WidgetListener
+class Window : public gcn::Window, public gcn::WidgetListener
 {
     public:
         /**
@@ -350,11 +350,24 @@ class Window : public gcn::Window, gcn::WidgetListener
          */
         ImageRect::ImagePosition getPosition() { return mPosition; }
 
+         /**
+          * Readjusts content as needed.
+          */
+         virtual void refreshLayout();
+
+         /**
+          * Recalculates the layout positioning if needed.
+          */
+         virtual void fontChanged();
+
     protected:
         bool mOldVisibility;          /**< Whether the window was previously
                                            viewable before a hide */
 
         Skin* mSkin;                  /**< Skin in use by this window */
+
+        // Inherited from BasicContainer
+        virtual void clear();
     private:
         enum ResizeHandles
         {

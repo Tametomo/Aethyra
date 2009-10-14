@@ -57,7 +57,7 @@ class TabbedArea : public gcn::TabbedArea
         /**
          * Return tab with specified name as caption
          */
-        Tab* getTab(const std::string &name);
+        gcn::Tab* getTab(const std::string &name);
 
         /**
          * Returns the widget with the tab that has specified caption
@@ -79,11 +79,6 @@ class TabbedArea : public gcn::TabbedArea
         void addTab(Tab *tab, gcn::Widget *widget);
 
         /**
-         * Overload the remove tab function as its broken in guichan 0.8
-         */
-        void removeTab(Tab *tab);
-
-        /**
          * Overload the logic function since it's broken in guichan 0.8
          */
         void logic();
@@ -95,6 +90,8 @@ class TabbedArea : public gcn::TabbedArea
         // Inherited from MouseListener
 
         void mousePressed(gcn::MouseEvent &mouseEvent);
+
+        void fontChanged();
     protected:
         ProtectedFocusListener *mProtFocusListener;
     private:

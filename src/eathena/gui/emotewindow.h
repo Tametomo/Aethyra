@@ -34,8 +34,8 @@ class EmoteContainer;
  *
  * \ingroup Interface
  */
-class EmoteWindow : public Window, gcn::ActionListener,
-                                   gcn::SelectionListener
+class EmoteWindow : public Window, public gcn::ActionListener,
+                    public gcn::SelectionListener
 {
     public:
         /**
@@ -67,6 +67,7 @@ class EmoteWindow : public Window, gcn::ActionListener,
          */
         void widgetHidden(const gcn::Event& event);
 
+        void fontChanged();
     private:
         EmoteContainer *mEmotes;
 

@@ -42,7 +42,8 @@ struct BROWSER_LINK {
  * A simple browser box able to handle links and forward events to the
  * parent conteiner.
  */
-class BrowserBox : public gcn::Widget, public gcn::MouseListener, public gcn::WidgetListener
+class BrowserBox : public gcn::Widget, public gcn::MouseListener,
+                   public gcn::WidgetListener
 {
     public:
         /**
@@ -112,6 +113,12 @@ class BrowserBox : public gcn::Widget, public gcn::MouseListener, public gcn::Wi
          * Links and LaidOutParts.
          */
         void calculateTextLayout();
+
+        /**
+         * Forces the BrowserBox to recalculate its lines, since the font
+         * changed.
+         */
+        void fontChanged();
 
         /**
          * BrowserBox modes.

@@ -94,6 +94,7 @@ class ListDialog : public Window, public gcn::ActionListener,
          */
         virtual void widgetHidden(const gcn::Event& event);
 
+        void fontChanged();
     private:
         gcn::ListBox *mOptionList;
         gcn::ScrollArea *mScrollArea;

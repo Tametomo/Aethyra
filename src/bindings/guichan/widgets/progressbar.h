@@ -126,6 +126,16 @@ class ProgressBar : public gcn::Widget
          */
         void toggleThrobbing(bool throb);
 
+        /**
+         * Adjusts the size of the ProgressBar to match the caption text's size.
+         */
+        virtual void adjustSize();
+
+        virtual void adjustWidth();
+
+        virtual void adjustHeight();
+
+        void fontChanged();
     private:
         float mProgress, mProgressToGo;
         bool mSmoothProgress;

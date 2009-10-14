@@ -82,7 +82,6 @@ class TextInputDialog : public Window, public gcn::ActionListener
          * Resets the dialog on show events.
          */
         void widgetShown(const gcn::Event& event);
-
     private:
         gcn::TextField *mValueField;
         gcn::Button *mOkButton;

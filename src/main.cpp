@@ -388,12 +388,6 @@ int main(int argc, char *argv[])
 
             oldstate = state;
 
-            if (desktop && state != ACCOUNT_STATE && state != CHAR_CONNECT_STATE
-                && desktop->getCurrentDialog())
-            {
-                desktop->removeCurrentDialog();
-            }
-
             switch (state)
             {
                 case LOADDATA_STATE:
@@ -548,6 +542,8 @@ int main(int argc, char *argv[])
 
                 case EXIT_STATE:
                     logger->log("State: EXIT");
+                    delete desktop;
+                    desktop = NULL;
                     break;
 
                 default:

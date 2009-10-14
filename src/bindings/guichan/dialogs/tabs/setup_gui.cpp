@@ -79,13 +79,13 @@ Setup_Gui::Setup_Gui():
 {
     setName(_("GUI"));
 
-    ScrollArea *scrollArea = new ScrollArea(mModeList);
-    scrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
-    scrollArea->setWidth(90);
+    mScrollArea = new ScrollArea(mModeList);
+    mScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
+    mScrollArea->setWidth(90);
 
-    alphaLabel = new Label(_("Gui opacity"));
-    mouseAlphaLabel = new Label(_("Mouse opacity"));
-    fontSizeLabel = new Label(_("Font size"));
+    mAlphaLabel = new Label(_("Gui opacity"));
+    mMouseAlphaLabel = new Label(_("Mouse opacity"));
+    mFontLabel = new Label(_("Font size"));
 
     mModeList->setEnabled(true);
 
@@ -124,11 +124,22 @@ Setup_Gui::Setup_Gui():
     mFpsSlider->setStepLength(1.0);
     mFontSizeSlider->setStepLength(1.0);
 
-    // Do the layout
+    fontChanged();
+
+    setDimension(gcn::Rectangle(0, 0, 325, 200));
+}
+
+void Setup_Gui::fontChanged()
+{
+    SetupTabContainer::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     LayoutHelper h(this);
     ContainerPlacer place = h.getPlacer(0, 0);
 
-    place(0, 0, scrollArea, 1, 6).setPadding(2);
+    place(0, 0, mScrollArea, 1, 6).setPadding(2);
     place(1, 0, mFsCheckBox, 2);
     place(3, 0, mOpenGLCheckBox, 1);
     place(1, 1, mCustomCursorCheckBox, 3);
@@ -138,15 +149,15 @@ Setup_Gui::Setup_Gui():
     place(0, 8, mFpsSlider);
     place(0, 9, mFontSizeSlider);
 
-    place(1, 6, alphaLabel, 3).setPadding(2);
-    place(1, 7, mouseAlphaLabel, 3).setPadding(2);
+    place(1, 6, mAlphaLabel, 3).setPadding(2);
+    place(1, 7, mMouseAlphaLabel, 3).setPadding(2);
     place(1, 8, mFpsCheckBox).setPadding(3);
-    place(1, 9, fontSizeLabel);
+    place(1, 9, mFontLabel);
 
     place(2, 8, mFpsField).setPadding(1);
     place(2, 9, mFontSizeLabel, 3).setPadding(2);
 
-    setDimension(gcn::Rectangle(0, 0, 325, 200));
+    h.reflowLayout(325, 200);
 }
 
 void Setup_Gui::apply()

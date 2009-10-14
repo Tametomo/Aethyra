@@ -57,12 +57,15 @@
 
 #include "../../eathena/gui/viewport.h"
 
+typedef std::list<gcn::Widget*> Widgets;
+typedef Widgets::iterator WidgetIterator;
+
 // Guichan stuff
-Gui *gui = 0;
-SDLInput *guiInput = 0;
+Gui *gui = NULL;
+SDLInput *guiInput = NULL;
 
 // Bolded font
-gcn::Font *mBoldFont = 0;
+gcn::Font *mBoldFont = NULL;
 
 volatile int tick_time;
 volatile int fps = 0, frame = 0;
@@ -586,9 +589,13 @@ void Gui::changeFontSize(const int size)
     for (iter = widgets.begin(); iter != widgets.end(); ++iter)
     {
         Popup* popup = dynamic_cast<Popup*>(*iter);
+        Window* window = dynamic_cast<Window*>(*iter);
 
         if (popup)
             popup->adaptToNewSize();
+
+        if (window)
+            window->refreshLayout();
     }
 
     if (state != GAME_STATE && desktop)

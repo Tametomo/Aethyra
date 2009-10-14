@@ -39,6 +39,7 @@ class Setup_Game : public SetupTabContainer, public gcn::ActionListener
 
         void action(const gcn::ActionEvent &event);
 
+        void fontChanged();
     private:
         void setSpeechModeLabel(const int value);
         void setOverlayDetailLabel(const int value);

@@ -70,8 +70,14 @@ class ItemAmountWindow : public Window, public gcn::ActionListener
          */
         void close();
 
+        void fontChanged();
     private:
         gcn::Label *mItemAmountLabel;   /**< Item amount caption. */
+
+        gcn::Button *mOkButton;
+        gcn::Button *mCancelButton;
+        gcn::Button *mAddAllButton;
+
         Item *mItem;
         Icon *mItemIcon;
 

@@ -74,39 +74,24 @@ RegisterDialog::RegisterDialog(LoginData *loginData):
     mWrongDataNoticeListener(new WrongDataNoticeListener),
     mLoginData(loginData)
 {
-    gcn::Label *userLabel = new Label(_("Name:"));
-    gcn::Label *passwordLabel = new Label(_("Password:"));
-    gcn::Label *confirmLabel = new Label(_("Confirm:"));
-    gcn::Label *serverLabel = new Label(_("Server:"));
-    gcn::Label *portLabel = new Label(_("Port:"));
+    mUserLabel = new Label(_("Name:"));
+    mPasswordLabel = new Label(_("Password:"));
+    mConfirmLabel = new Label(_("Confirm:"));
+    mServerLabel = new Label(_("Server:"));
+    mPortLabel = new Label(_("Port:"));
+
     mUserField = new TextField(loginData->username);
     mPasswordField = new PasswordField(loginData->password);
     mConfirmField = new PasswordField;
     mServerField = new TextField(loginData->hostname);
     mPortField = new TextField(toString(loginData->port));
+
     mMaleButton = new RadioButton(_("Male"), "sex", true);
     mFemaleButton = new RadioButton(_("Female"), "sex", false);
     mRegisterButton = new Button(_("Register"), "register", this);
     mCancelButton = new Button(_("Cancel"), "cancel", this);
 
-    ContainerPlacer place;
-    place = getPlacer(0, 0);
-    place(0, 0, userLabel);
-    place(0, 1, passwordLabel);
-    place(0, 2, confirmLabel);
-    place(1, 3, mMaleButton);
-    place(2, 3, mFemaleButton);
-    place(0, 4, serverLabel);
-    place(0, 5, portLabel);
-    place(1, 0, mUserField, 3).setPadding(2);
-    place(1, 1, mPasswordField, 3).setPadding(2);
-    place(1, 2, mConfirmField, 3).setPadding(2);
-    place(1, 4, mServerField, 3).setPadding(2);
-    place(1, 5, mPortField, 3).setPadding(2);
-    place = getPlacer(0, 2);
-    place(1, 0, mCancelButton);
-    place(2, 0, mRegisterButton);
-    reflowLayout(250, 0);
+    fontChanged();
 
     mUserField->addKeyListener(this);
     mPasswordField->addKeyListener(this);
@@ -137,6 +122,35 @@ RegisterDialog::RegisterDialog(LoginData *loginData):
 RegisterDialog::~RegisterDialog()
 {
     delete mWrongDataNoticeListener;
+}
+
+void RegisterDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    ContainerPlacer place;
+    place = getPlacer(0, 0);
+
+    place(0, 0, mUserLabel);
+    place(0, 1, mPasswordLabel);
+    place(0, 2, mConfirmLabel);
+    place(1, 3, mMaleButton);
+    place(2, 3, mFemaleButton);
+    place(0, 4, mServerLabel);
+    place(0, 5, mPortLabel);
+    place(1, 0, mUserField, 3).setPadding(2);
+    place(1, 1, mPasswordField, 3).setPadding(2);
+    place(1, 2, mConfirmField, 3).setPadding(2);
+    place(1, 4, mServerField, 3).setPadding(2);
+    place(1, 5, mPortField, 3).setPadding(2);
+    place = getPlacer(0, 2);
+    place(1, 0, mCancelButton);
+    place(2, 0, mRegisterButton);
+
+    reflowLayout(250, 0);
 }
 
 void RegisterDialog::action(const gcn::ActionEvent &event)

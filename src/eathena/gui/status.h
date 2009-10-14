@@ -64,6 +64,7 @@ class StatusWindow : public Window, public gcn::ActionListener
          */
         void widgetShown(const gcn::Event& event);
 
+        void fontChanged();
     private:
         LocalPlayer *mPlayer;
 
@@ -73,6 +74,7 @@ class StatusWindow : public Window, public gcn::ActionListener
         gcn::Label *mLvlLabel, *mJobLvlLabel;
         gcn::Label *mGpLabel;
         gcn::Label *mHpLabel, *mMpLabel, *mXpLabel, *mJobLabel;
+
         ProgressBar *mHpBar, *mMpBar;
         ProgressBar *mXpBar, *mJobBar;
 
@@ -92,6 +94,10 @@ class StatusWindow : public Window, public gcn::ActionListener
         /**
          * Stats captions.
          */
+        gcn::Label *mStatsTitleLabel;
+        gcn::Label *mStatsTotalLabel;
+        gcn::Label *mStatsCostLabel;
+
         gcn::Label *mStatsLabel[6];
         gcn::Label *mPointsLabel[6];
         gcn::Label *mStatsDisplayLabel[6];

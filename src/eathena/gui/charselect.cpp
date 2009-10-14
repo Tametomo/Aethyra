@@ -97,15 +97,21 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
     mJobLevelLabel = new Label(strprintf(_("Job Level: %d"), 0));
     mMoneyLabel = new Label(strprintf(_("Money: %d"), 0));
 
-    const std::string tempString = getFont()->getWidth(_("New")) <
-                                   getFont()->getWidth(_("Delete")) ?
-                                   _("Delete") : _("New");
-
     mPreviousButton = new Button(_("Previous"), "previous", this);
     mNextButton = new Button(_("Next"), "next", this);
-    mNewDelCharButton = new Button(tempString, "newdel", this);
+    mNewDelCharButton = new Button(_("New"), "newdel", this);
     mSelectButton = new Button(_("OK"), "ok", this);
     mCancelButton = new Button(_("Cancel"), "cancel", this);
+
+    updatePlayerInfo();
+}
+
+void CharSelectDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
 
     ContainerPlacer place;
     place = getPlacer(0, 0);
@@ -124,8 +130,6 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
     place(5, 0, mSelectButton);
 
     reflowLayout(250, 0);
-
-    updatePlayerInfo();
 }
 
 void CharSelectDialog::action(const gcn::ActionEvent &event)
@@ -183,7 +187,10 @@ void CharSelectDialog::updatePlayerInfo()
         if (!mCharSelected)
         {
             mNewDelCharButton->setCaption(_("Delete"));
+            mNewDelCharButton->adjustSize();
+            fontChanged();
             mSelectButton->setEnabled(true);
+            mSelectButton->requestFocus();
         }
     }
     else
@@ -193,6 +200,8 @@ void CharSelectDialog::updatePlayerInfo()
         mJobLevelLabel->setCaption(strprintf(_("Job Level: %d"), 0));
         mMoneyLabel->setCaption(strprintf(_("Money: %s"), ""));
         mNewDelCharButton->setCaption(_("New"));
+        mNewDelCharButton->adjustSize();
+        fontChanged();
         mSelectButton->setEnabled(false);
     }
 
@@ -282,6 +291,21 @@ CharCreateDialog::CharCreateDialog(Window *parent, int slot, Gender gender):
     mNameField->setActionEventId("create");
     mNameField->addActionListener(this);
 
+    fontChanged();
+
+    setLocationRelativeTo(getParent());
+    setVisible(true);
+
+    mNameField->requestFocus();
+}
+
+void CharCreateDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     ContainerPlacer place;
     place = getPlacer(0, 0);
 
@@ -312,7 +336,7 @@ CharCreateDialog::~CharCreateDialog()
     delete mPlayer;
 
     // Make sure the char server handler knows that we're gone
-    charServerHandler.setCharCreateDialog(0);
+    charServerHandler.setCharCreateDialog(NULL);
 }
 
 void CharCreateDialog::action(const gcn::ActionEvent &event)

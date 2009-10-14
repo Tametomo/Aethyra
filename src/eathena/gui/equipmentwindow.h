@@ -27,6 +27,7 @@
 
 #include "../../bindings/guichan/widgets/window.h"
 
+class Button;
 class BeingBox;
 class Equipment;
 class EquipmentConfigListener;
@@ -99,7 +100,7 @@ class EquipmentWindow : public Window,
             EQUIP_VECTOREND
         };
 
-
+        void fontChanged();
     private:
         void widgetResized(const gcn::Event &event);
 
@@ -114,7 +115,7 @@ class EquipmentWindow : public Window,
 
         Equipment *mEquipment;
         Inventory *mInventory;
-        gcn::Button *mEquipButton;              /**< Button for both equipping and unequipping. */
+        Button *mEquipButton;                   /**< Button for both equipping and unequipping. */
         Icon *mEquipIcon[EQUIP_VECTOREND];      /**< Equipment Icons. */
 
         static EquipmentConfigListener *mConfigListener;

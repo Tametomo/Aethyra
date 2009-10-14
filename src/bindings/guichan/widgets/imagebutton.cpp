@@ -19,6 +19,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/font.hpp>
+
 #include "imagebutton.h"
 
 #include "../graphics.h"
@@ -116,4 +118,15 @@ void ImageButton::draw(gcn::Graphics *graphics)
     const int y = (getHeight() - mImage->getHeight()) / 2;
 
     static_cast<Graphics*>(graphics)->drawImage(mImage, x, y);
+}
+
+void ImageButton::fontChanged()
+{
+    Button::fontChanged();
+
+    const int imageWidth = mImage->getWidth() + 2 * mPadding;
+    const int imageHeight = mImage->getHeight() + 2 * mPadding;
+
+    setWidth(getWidth() > imageWidth ? getWidth() : imageWidth);
+    setHeight(getHeight() > imageHeight ? getHeight() : imageHeight);
 }

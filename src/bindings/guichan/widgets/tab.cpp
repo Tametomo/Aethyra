@@ -89,7 +89,8 @@ class TabConfigListener : public ConfigListener
         Tab *mTab;
 };
 
-Tab::Tab() : gcn::Tab(),
+Tab::Tab() :
+    gcn::Tab(),
     mTabColor(&guiPalette->getColor(Palette::TEXT))
 {
     init();
@@ -197,4 +198,12 @@ void Tab::setTabColor(const gcn::Color *color)
 void Tab::setHighlighted(bool high)
 {
     mHighlighted = high;
+}
+
+void Tab::fontChanged()
+{
+    gcn::Tab::fontChanged();
+
+    mLabel->adjustSize();
+    adjustSize();
 }

@@ -65,7 +65,7 @@ StorageWindow::StorageWindow(int invSize):
     mRetrieveButton = new Button(_("Retrieve"), "retrieve", this);
     mRetrieveButton->setEnabled(false);
 
-    Button *closeButton = new Button(_("Close"), "close", this);
+    mCloseButton = new Button(_("Close"), "close", this);
 
     mItems = new ItemContainer(player_node->getStorage(), "showpopupmenu", this);
     mItems->addSelectionListener(this);
@@ -84,21 +84,30 @@ StorageWindow::StorageWindow(int invSize):
     setMinHeight(130);
     setMinWidth(200);
 
-    place(0, 0, mSlotsLabel).setPadding(3);
-    place(1, 0, mSlotsBar, 3);
-    place(0, 1, mInvenScroll, 4, 4);
-    place(2, 5, closeButton);
-    place(3, 5, mRetrieveButton);
-
-    Layout &layout = getLayout();
-    layout.setRowHeight(0, mRetrieveButton->getHeight());
-
+    fontChanged();
     loadWindowState();
 }
 
 StorageWindow::~StorageWindow()
 {
     delete mItems;
+}
+
+void StorageWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    place(0, 0, mSlotsLabel).setPadding(3);
+    place(1, 0, mSlotsBar, 3);
+    place(0, 1, mInvenScroll, 4, 4);
+    place(2, 5, mCloseButton);
+    place(3, 5, mRetrieveButton);
+
+    Layout &layout = getLayout();
+    layout.setRowHeight(0, mRetrieveButton->getHeight());
 }
 
 void StorageWindow::logic()

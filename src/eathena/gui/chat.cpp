@@ -49,7 +49,6 @@
 #include "../../bindings/guichan/widgets/proxywidget.h"
 #include "../../bindings/guichan/widgets/scrollarea.h"
 #include "../../bindings/guichan/widgets/tooltip.h"
-#include "../../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../../core/configuration.h"
 #include "../../core/recorder.h"
@@ -99,15 +98,7 @@ ChatWindow::ChatWindow():
     mScrollArea->setScrollAmount(0, 1);
     mScrollArea->setOpaque(false);
 
-    place(0, 0, mScrollArea, 5, 5).setPadding(0);
-    place(0, 5, mChatInput, 3).setPadding(1);
-    place(3, 5, mProxy).setPadding(0);
-    place(4, 5, mRecordButton).setPadding(1);
-
-    Layout &layout = getLayout();
-    layout.setRowHeight(0, Layout::AUTO_SET);
-    layout.setMargin(2);
-
+    fontChanged();
     loadWindowState();
 
     // Read the party prefix
@@ -141,6 +132,25 @@ ChatWindow::~ChatWindow()
     delete mToolTip;
     delete mItemLinkHandler;
     delete mParty;
+}
+
+void ChatWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    mProxy->setHeight(mRecordButton->getHeight());
+
+    place(0, 0, mScrollArea, 5, 5).setPadding(0);
+    place(0, 5, mChatInput, 3).setPadding(1);
+    place(3, 5, mProxy).setPadding(0);
+    place(4, 5, mRecordButton).setPadding(1);
+
+    Layout &layout = getLayout();
+    layout.setRowHeight(0, Layout::AUTO_SET);
+    layout.setMargin(2);
 }
 
 void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)

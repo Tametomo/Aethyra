@@ -30,7 +30,6 @@
 
 #include "../../core/log.h"
 
-#include "../../core/image/image.h"
 #include "../../core/image/imageloader.h"
 #include "../../core/image/imagewriter.h"
 

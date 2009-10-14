@@ -53,6 +53,16 @@ ListDialog::ListDialog(const std::string &caption):
     setContentSize(260, 175);
     mScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
 
+    fontChanged();
+}
+
+void ListDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     place(0, 0, mScrollArea, 5).setPadding(3);
     place(3, 1, mCancelButton);
     place(4, 1, mOkButton);

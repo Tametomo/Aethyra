@@ -66,6 +66,8 @@ class TextBox : public gcn::TextBox
             gcn::TextBox::draw(graphics);
         }
 
+        void fontChanged() { adjustSize(); }
+
     private:
         int mMinWidth;
 

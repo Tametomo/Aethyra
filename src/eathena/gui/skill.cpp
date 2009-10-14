@@ -35,7 +35,6 @@
 #include "../../bindings/guichan/widgets/listbox.h"
 #include "../../bindings/guichan/widgets/scrollarea.h"
 #include "../../bindings/guichan/widgets/table.h"
-#include "../../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../../core/map/sprite/localplayer.h"
 
@@ -61,28 +60,37 @@ SkillDialog::SkillDialog():
     setMinHeight(50 + mTableModel->getHeight());
     setMinWidth(200);
 
-    ScrollArea *skillScrollArea = new ScrollArea(mTable);
+    mSkillScrollArea = new ScrollArea(mTable);
     mPointsLabel = new Label(strprintf(_("Skill points: %d"), 0));
     mIncButton = new Button(_("Up"), _("inc"), this);
     mUseButton = new Button(_("Use"), _("use"), this);
     mUseButton->setEnabled(false);
 
-    skillScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
+    mSkillScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
 
-    place(0, 0, skillScrollArea, 5).setPadding(3);
-    place(0, 1, mPointsLabel, 4);
-    place(3, 2, mIncButton);
-    place(4, 2, mUseButton);
-
-    Layout &layout = getLayout();
-    layout.setRowHeight(0, Layout::AUTO_SET);
-
+    fontChanged();
     loadWindowState();
 }
 
 SkillDialog::~SkillDialog()
 {
     delete_all(mSkillList);
+}
+
+void SkillDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    place(0, 0, mSkillScrollArea, 5).setPadding(3);
+    place(0, 1, mPointsLabel, 4);
+    place(3, 2, mIncButton);
+    place(4, 2, mUseButton);
+
+    Layout &layout = getLayout();
+    layout.setRowHeight(0, Layout::AUTO_SET);
 }
 
 void SkillDialog::action(const gcn::ActionEvent &event)

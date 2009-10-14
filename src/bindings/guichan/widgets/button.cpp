@@ -219,3 +219,8 @@ void Button::draw(gcn::Graphics *graphics)
     else
         graphics->drawText(getCaption(), textX, textY, getAlignment());
 }
+
+void Button::fontChanged()
+{
+    adjustSize();
+}

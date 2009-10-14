@@ -130,6 +130,30 @@ ProgressBar::~ProgressBar()
     }
 }
 
+void ProgressBar::adjustSize()
+{
+    adjustWidth();
+    adjustHeight();
+}
+
+void ProgressBar::adjustWidth()
+{
+    setWidth((getFont()->getWidth(mText) + 8) < mBorder.getMinWidth() ?
+             mBorder.getMinHeight() : getFont()->getWidth(mText) + 8);
+}
+
+void ProgressBar::adjustHeight()
+{
+    setHeight((getFont()->getHeight() + 8) < mBorder.getMinHeight() ?
+              mBorder.getMinHeight() : getFont()->getHeight() + 8);
+}
+
+void ProgressBar::fontChanged()
+{
+    if (!mText.empty())
+        adjustHeight();
+}
+
 void ProgressBar::logic()
 {
     if (!isVisible() || !getParent()->isVisible())
@@ -256,5 +280,4 @@ void ProgressBar::toggleThrobbing(bool throb)
     reset();
     mProgressToGo = 1.0f;
 }
-
 

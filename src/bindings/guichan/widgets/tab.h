@@ -61,6 +61,8 @@ class Tab : public gcn::Tab
          */
         void setHighlighted(bool high);
 
+        void fontChanged();
+
     protected:
         static float mAlpha;
         static TabConfigListener *mConfigListener;

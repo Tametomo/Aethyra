@@ -60,7 +60,7 @@ int TabbedArea::getNumberOfTabs()
     return mTabs.size();
 }
 
-Tab* TabbedArea::getTab(const std::string &name)
+gcn::Tab* TabbedArea::getTab(const std::string &name)
 {
     TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end();
     while (itr != itr_end)
@@ -119,57 +119,6 @@ void TabbedArea::addTab(Tab *tab, gcn::Widget *widget)
     adjustSize();
 }
 
-void TabbedArea::removeTab(Tab *tab)
-{
-    int tabIndexToBeSelected = -1;
-
-    if (tab == mSelectedTab)
-    {
-        int index = getSelectedTabIndex();
-
-        if (index == (int)mTabs.size() - 1 && mTabs.size() == 1)
-            tabIndexToBeSelected = -1;
-        else
-            tabIndexToBeSelected = index - 1;
-    }
-
-    TabContainer::iterator iter;
-    for (iter = mTabs.begin(); iter != mTabs.end(); iter++)
-    {
-        if (iter->first == tab)
-        {
-            mTabContainer->remove(tab);
-            mTabs.erase(iter);
-            break;
-        }
-    }
-
-    std::vector<gcn::Tab*>::iterator iter2;
-    for (iter2 = mTabsToDelete.begin(); iter2 != mTabsToDelete.end(); iter2++)
-    {
-        if (*iter2 == tab)
-        {
-            mTabsToDelete.erase(iter2);
-            delete tab;
-            tab = NULL;
-            break;
-        }
-    }
-
-    if (tabIndexToBeSelected == -1)
-    {
-        mSelectedTab = NULL;
-        mWidgetContainer->clear();
-    }
-    else
-    {
-        setSelectedTab(tabIndexToBeSelected);
-    }
-
-    adjustSize();
-    adjustTabPositions();
-}
-
 void TabbedArea::logic()
 {
     if (!isVisible())
@@ -226,4 +175,12 @@ void TabbedArea::keyPressed(gcn::KeyEvent& keyEvent)
 
         keyEvent.consume();
     }
+}
+
+void TabbedArea::fontChanged()
+{
+    gcn::TabbedArea::fontChanged();
+
+    adjustTabPositions();
+    adjustSize();
 }

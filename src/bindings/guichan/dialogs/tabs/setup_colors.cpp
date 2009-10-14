@@ -159,7 +159,28 @@ Setup_Colors::Setup_Colors() :
 
     setOpaque(false);
 
-    // Do the layout
+    fontChanged();
+
+    setDimension(gcn::Rectangle(0, 0, 325, 280));
+
+    mGradTypeText->setCaption("");
+}
+
+Setup_Colors::~Setup_Colors()
+{
+    if (mPreviewBox->getContent() == mPreview)
+        delete mTextPreview;
+    else
+        delete mPreview;
+}
+
+void Setup_Colors::fontChanged()
+{
+    SetupTabContainer::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     LayoutHelper h(this);
     ContainerPlacer place = h.getPlacer(0, 0);
 
@@ -181,17 +202,7 @@ Setup_Colors::Setup_Colors() :
     place(3, 11, mGradDelaySlider);
     place(5, 11, mGradDelayText).setPadding(1);
 
-    mGradTypeText->setCaption("");
-
-    setDimension(gcn::Rectangle(0, 0, 325, 280));
-}
-
-Setup_Colors::~Setup_Colors()
-{
-    if (mPreviewBox->getContent() == mPreview)
-        delete mTextPreview;
-    else
-        delete mPreview;
+    h.reflowLayout(325, 280);
 }
 
 void Setup_Colors::action(const gcn::ActionEvent &event)

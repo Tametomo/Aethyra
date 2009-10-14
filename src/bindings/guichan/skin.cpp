@@ -95,18 +95,6 @@ void Skin::setMaxAlphaPercent(float maxPercent)
         mMaxAlphaPercent = maxPercent;
 }
 
-int Skin::getMinWidth() const
-{
-    return (border.grid[0]->getWidth() + border.grid[1]->getWidth()) +
-            border.grid[2]->getWidth();
-}
-
-int Skin::getMinHeight() const
-{
-    return (border.grid[0]->getHeight() + border.grid[3]->getHeight()) +
-            border.grid[6]->getHeight();
-}
-
 Skin* SkinLoader::load(const std::string &filename,
                        const std::string &defaultPath)
 {

@@ -64,10 +64,11 @@ class Setup : public Window, public gcn::ActionListener
          */
         void requestFocus();
 
+        void fontChanged();
     private:
         TabbedArea *mPanel;
+        std::list<gcn::Button*> mButtons;
         std::list<SetupTabContainer*> mTabs;
-        gcn::Button* mResetWindows;
 };
 
 extern Setup* setupWindow;

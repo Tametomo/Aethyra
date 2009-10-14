@@ -59,9 +59,13 @@ class SlotSelectionWindow : public Window, public gcn::ActionListener
          */
         void close();
 
+        void fontChanged();
     private:
         gcn::Label *mSlotLabel;  /**< Slot caption. */
         gcn::Slider *mSlotSlide; /**< Slider containing the selected slot */
+
+        gcn::Button *mOkButton;
+        gcn::Button *mCancelButton;
 
         int mMaxSlot;
         int mUsage;              /**< What kind of shortcut container */

@@ -46,6 +46,19 @@ NpcIntegerDialog::NpcIntegerDialog():
     cancelButton = new Button(_("Cancel"), "cancel", this);
     resetButton = new Button(_("Reset"), "reset", this);
 
+    fontChanged();
+    setDefaultSize(175, 75, ImageRect::CENTER);
+
+    loadWindowState();
+}
+
+void NpcIntegerDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     ContainerPlacer place;
     place = getPlacer(0, 0);
 
@@ -55,10 +68,6 @@ NpcIntegerDialog::NpcIntegerDialog():
     place(0, 0, resetButton);
     place(2, 0, cancelButton);
     place(3, 0, okButton);
-
-    setDefaultSize(175, 75, ImageRect::CENTER);
-
-    loadWindowState();
 }
 
 void NpcIntegerDialog::setRange(const int min, const int max)

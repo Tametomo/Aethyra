@@ -101,6 +101,7 @@ class NpcTextDialog : public Window, public gcn::ActionListener
          */
         void widgetShown(const gcn::Event& event);
 
+        void fontChanged();
     private:
         gcn::ScrollArea *mScrollArea;
         TextBox *mTextBox;

@@ -67,8 +67,23 @@ SlotSelectionWindow::SlotSelectionWindow(int use, Window *parent, int id):
     mSlotSlide->addActionListener(this);
 
     // Buttons
-    Button *okButton = new Button(_("OK"), "ok", this);
-    Button *cancelButton = new Button(_("Cancel"), "cancel", this);
+    mOkButton = new Button(_("OK"), "ok", this);
+    mCancelButton = new Button(_("Cancel"), "cancel", this);
+
+    fontChanged();
+
+    setLocationRelativeTo(getParentWindow());
+    setVisible(true);
+
+    mSlotSlide->requestFocus();
+}
+
+void SlotSelectionWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
 
     // Set positions
     ContainerPlacer place;
@@ -77,15 +92,10 @@ SlotSelectionWindow::SlotSelectionWindow(int use, Window *parent, int id):
     place(0, 0, mSlotSlide, 5);
     place(5, 0, mSlotLabel, 2);
     place = getPlacer(0, 1);
-    place(4, 0, cancelButton);
-    place(5, 0, okButton);
+    place(4, 0, mCancelButton);
+    place(5, 0, mOkButton);
 
     reflowLayout(225, 0);
-
-    setLocationRelativeTo(getParentWindow());
-    setVisible(true);
-
-    mSlotSlide->requestFocus();
 }
 
 void SlotSelectionWindow::reset()

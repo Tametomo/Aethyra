@@ -24,6 +24,7 @@
 
 #include <guichan/exception.hpp>
 #include <guichan/focushandler.hpp>
+#include <guichan/font.hpp>
 
 #include "resizegrip.h"
 #include "window.h"
@@ -340,12 +341,7 @@ void Window::widgetResized(const gcn::Event &event)
         mGrip->setPosition(getWidth() - mGrip->getWidth() - area.x,
                            getHeight() - mGrip->getHeight() - area.y);
 
-    if (mLayout)
-    {
-        int w = area.width;
-        int h = area.height;
-        mLayout->reflow(w, h);
-    }
+    refreshLayout();
 }
 
 void Window::widgetShown(const gcn::Event& event)
@@ -739,7 +735,7 @@ int Window::getGuiAlpha()
 Layout &Window::getLayout()
 {
     if (!mLayout)
-        mLayout = new Layout;
+        mLayout = new Layout();
     return *mLayout;
 }
 
@@ -761,4 +757,41 @@ void Window::reflowLayout(int w, int h)
     delete mLayout;
     mLayout = NULL;
     setContentSize(w, h);
+}
+
+void Window::refreshLayout()
+{
+    if (!mLayout)
+        return;
+
+    int width = getChildrenArea().width;
+    int height = getChildrenArea().height;
+    mLayout->reflow(width, height);
+}
+
+void Window::fontChanged()
+{
+    std::list<Widget*>::iterator iter;
+    for (iter = mWidgets.begin(); iter != mWidgets.end(); ++iter)
+    {
+        (*iter)->fontChanged();
+    }
+
+    if (!getCaption().empty())
+        setTitleBarHeight(getFont()->getHeight() + 10);
+}
+
+void Window::clear()
+{
+    gcn::BasicContainer::clear();
+
+    // Restore the resize grip
+    if (mGrip)
+        add(mGrip);
+
+    if (mLayout)
+    {
+        delete mLayout;
+        mLayout = NULL;
+    }
 }

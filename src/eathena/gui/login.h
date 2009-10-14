@@ -74,6 +74,8 @@ class LoginDialog : public Window, public gcn::ActionListener,
          */
         void requestFocus();
 
+        void fontChanged();
+
     private:
         /**
          * Returns whether submit can be enabled. This is true in the login
@@ -99,6 +101,11 @@ class LoginDialog : public Window, public gcn::ActionListener,
          */
         static unsigned short getUShort(const std::string &str);
 
+        gcn::Label *mUserLabel;
+        gcn::Label *mPassLabel;
+        gcn::Label *mServerLabel;
+        gcn::Label *mPortLabel;
+        gcn::Label *mDropdownLabel;
         gcn::TextField *mUserField;
         gcn::TextField *mPassField;
         gcn::TextField *mServerField;

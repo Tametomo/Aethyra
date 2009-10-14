@@ -40,15 +40,35 @@ ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
     mTextBox->setOpaque(false);
     mTextBox->setTextWrapped(msg, 260);
 
-    gcn::Button *yesButton = new Button(_("Yes"), "yes", this);
-    gcn::Button *noButton = new Button(_("No"), "no", this);
+    yesButton = new Button(_("Yes"), "yes", this);
+    noButton = new Button(_("No"), "no", this);
+
+    fontChanged();
+
+    add(mTextBox);
+    add(yesButton);
+    add(noButton);
+
+    if (getParent())
+    {
+        setLocationRelativeTo(getParent());
+        getParent()->moveToTop(this);
+    }
+
+    setVisible(true);
+    yesButton->requestFocus();
+}
+
+void ConfirmDialog::fontChanged()
+{
+    Window::fontChanged();
 
     const int numRows = mTextBox->getNumberOfRows();
     const int inWidth = yesButton->getWidth() + noButton->getWidth() + 
                         (2 * getPadding());
     const int fontHeight = getFont()->getHeight();
     const int height = numRows * fontHeight;
-    int width = getFont()->getWidth(title);
+    int width = getFont()->getWidth(getCaption());
 
     if (width < mTextBox->getMinWidth())
         width = mTextBox->getMinWidth();
@@ -64,19 +84,6 @@ ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
     yesButton->setPosition((width - inWidth) / 2, height + 8);
     noButton->setPosition(yesButton->getX() + inWidth - noButton->getWidth(),
                           height + 8);
-
-    add(mTextBox);
-    add(yesButton);
-    add(noButton);
-
-    if (getParent())
-    {
-        setLocationRelativeTo(getParent());
-        getParent()->moveToTop(this);
-    }
-
-    setVisible(true);
-    yesButton->requestFocus();
 }
 
 unsigned int ConfirmDialog::getNumRows()

@@ -96,7 +96,18 @@ Setup_Game::Setup_Game():
     mOverlayDetailSlider->setStepLength(1.0);
     mParticleDetailSlider->setStepLength(1.0);
 
-    // Do the layout
+    fontChanged();
+
+    setDimension(gcn::Rectangle(0, 0, 340, 280));
+}
+
+void Setup_Game::fontChanged()
+{
+    SetupTabContainer::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     LayoutHelper h(this);
     ContainerPlacer place = h.getPlacer(0, 0);
 
@@ -117,7 +128,7 @@ Setup_Game::Setup_Game():
     place(3, 3, mOverlayDetailLabel, 3).setPadding(2);
     place(3, 4, mParticleDetailLabel, 3).setPadding(2);
 
-    setDimension(gcn::Rectangle(0, 0, 340, 280));
+    h.reflowLayout(340, 280);
 }
 
 void Setup_Game::apply()

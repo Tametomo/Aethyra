@@ -65,16 +65,6 @@ InventoryWindow::InventoryWindow(int invSize):
 
     setDefaultSize(375, 300, ImageRect::CENTER);
 
-    std::string longestUseString = getFont()->getWidth(_("Equip")) >
-                                   getFont()->getWidth(_("Use")) ?
-                                   _("Equip") : _("Use");
-
-    if (getFont()->getWidth(longestUseString) <
-        getFont()->getWidth(_("Unequip")))
-    {
-        longestUseString = _("Unequip");
-    }
-
     mTradeButton = new Button(_("Trade"), "trade", this);
     mTradeButton->setEnabled(false);
     mTradeButton->setVisible(false);
@@ -83,7 +73,7 @@ InventoryWindow::InventoryWindow(int invSize):
     mStoreButton->setEnabled(false);
     mStoreButton->setVisible(false);
 
-    mUseButton = new Button(longestUseString, "use", this);
+    mUseButton = new Button(_("Use"), "use", this);
     mUseButton->setEnabled(false);
 
     mDropButton = new Button(_("Drop"), "drop", this);
@@ -109,6 +99,17 @@ InventoryWindow::InventoryWindow(int invSize):
     mWeightBar->addColor(255, 255, 0);
     mWeightBar->addColor(255, 0, 0);
 
+    fontChanged();
+    loadWindowState();
+}
+
+void InventoryWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     setMinHeight(130);
     setMinWidth(mWeightLabel->getWidth() + mSlotsLabel->getWidth() + 260);
 
@@ -125,8 +126,6 @@ InventoryWindow::InventoryWindow(int invSize):
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, mDropButton->getHeight());
-
-    loadWindowState();
 }
 
 void InventoryWindow::logic()
@@ -260,6 +259,7 @@ void InventoryWindow::updateButtons()
     mStoreButton->setEnabled(selectedItem != NULL);
     mTradeButton->setEnabled(selectedItem != NULL && tradeWindow->canTrade() &&
                              !tradeWindow->tradingItem(selectedItem));
+    fontChanged();
 }
 
 Item* InventoryWindow::getSelectedItem() const

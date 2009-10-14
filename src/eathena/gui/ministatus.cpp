@@ -54,6 +54,13 @@ MiniStatusWindow::MiniStatusWindow():
     add(mMpBar);
     add(mXpBar);
 
+    fontChanged();
+}
+
+void MiniStatusWindow::fontChanged()
+{
+    Popup::fontChanged();
+
     setContentSize(mXpBar->getX() + mXpBar->getWidth(),
                    mXpBar->getY() + mXpBar->getHeight());
 }
@@ -73,8 +80,11 @@ void MiniStatusWindow::update()
 
     // Update labels
     mHpBar->setText(toString(player_node->mHp));
+    mHpBar->adjustHeight();
     mMpBar->setText(toString(player_node->mMp));
+    mMpBar->adjustHeight();
     mXpBar->setText(strprintf("%2.2f", 100 * xp) + "%");
+    mXpBar->adjustHeight();
 
     // Displays the number of monsters to next lvl
     // (disabled for now but interesting idea)

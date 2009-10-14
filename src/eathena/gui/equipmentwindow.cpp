@@ -172,6 +172,18 @@ EquipmentWindow::~EquipmentWindow()
     }
 }
 
+void EquipmentWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    const gcn::Rectangle &area = getChildrenArea();
+    const int padding = 2 * getPadding();
+
+    mEquipButton->fontChanged();
+    mEquipButton->setPosition((area.width  - mEquipButton->getWidth()  - padding),
+                               area.height - mEquipButton->getHeight() - padding);
+}
+
 void EquipmentWindow::widgetResized(const gcn::Event &event)
 {
     Window::widgetResized(event);
@@ -422,6 +434,8 @@ void EquipmentWindow::updateButtons()
 
     if (item)
         mEquipButton->setCaption(item->isEquipped() ? _("Unequip") : _("Equip"));
+
+    fontChanged();
 
     mEquipButton->setEnabled(item != NULL);
 }

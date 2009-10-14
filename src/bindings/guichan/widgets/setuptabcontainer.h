@@ -42,6 +42,7 @@ class SetupTabContainer : public Container
          */
         virtual void cancel() = 0;
 
+        virtual void fontChanged();
     protected:
         /**
          * Sets the name displayed on the tab. Should be set in the

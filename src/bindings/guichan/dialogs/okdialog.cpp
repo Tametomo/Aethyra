@@ -42,10 +42,24 @@ OkDialog::OkDialog(const std::string &title, const std::string &msg,
 
     okButton = new Button(_("OK"), "ok", this);
 
+    fontChanged();
+
+    add(mTextBox);
+    add(okButton);
+
+    setLocationRelativeTo(getParent());
+    setVisible(true);
+    okButton->requestFocus();
+}
+
+void OkDialog::fontChanged()
+{
+    Window::fontChanged();
+
     const int numRows = mTextBox->getNumberOfRows();
     const int fontHeight = getFont()->getHeight();
     const int height = numRows * fontHeight;
-    int width = getFont()->getWidth(title);
+    int width = getFont()->getWidth(getCaption());
 
     if (width < mTextBox->getMinWidth())
         width = mTextBox->getMinWidth();
@@ -59,13 +73,6 @@ OkDialog::OkDialog(const std::string &title, const std::string &msg,
     // 8 is the padding that GUIChan adds to button widgets
     // (top and bottom combined)
     okButton->setPosition((width - okButton->getWidth()) / 2, height + 8);
-
-    add(mTextBox);
-    add(okButton);
-
-    setLocationRelativeTo(getParent());
-    setVisible(true);
-    okButton->requestFocus();
 }
 
 unsigned int OkDialog::getNumRows()

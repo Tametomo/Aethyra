@@ -41,25 +41,28 @@ TextInputDialog::TextInputDialog(const std::string &caption):
     mOkButton = new Button(_("OK"), "ok", this);
     mCancelButton = new Button(_("Cancel"), "cancel", this);
 
+    fontChanged();
+    loadWindowState();
+}
+
+void TextInputDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     place(0, 0, mValueField, 4);
     place(2, 1, mCancelButton);
     place(3, 1, mOkButton);
 
     adjustSize();
-    loadWindowState();
 }
 
 void TextInputDialog::adjustSize()
 {
     const int titleWidth = 3 * getFont()->getWidth(getCaption()) / 2;
     const int fontHeight = getFont()->getHeight();
-
-    // These two adjustments seem to get ignored completely by the layout code.
-    // This isn't remotely cool, and should get corrected. Otherwise, we could
-    // just set the row height and column widths based on the values generated
-    // here.
-    mOkButton->adjustSize();
-    mCancelButton->adjustSize();
 
     setWidth(titleWidth + 4 * getPadding());
     setHeight(fontHeight + mOkButton->getHeight() +
@@ -72,11 +75,6 @@ void TextInputDialog::adjustSize()
     layout.setRowHeight(1, Layout::AUTO_SET);
     layout.setColWidth(2, Layout::AUTO_SET);
     layout.setColWidth(3, Layout::AUTO_SET);
-}
-
-void TextInputDialog::fontChanged()
-{
-    adjustSize();
 }
 
 std::string TextInputDialog::getValue()

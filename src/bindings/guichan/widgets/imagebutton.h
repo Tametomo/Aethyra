@@ -69,6 +69,7 @@ class ImageButton : public Button
          */
         void draw(gcn::Graphics *graphics);
 
+        virtual void fontChanged();
     private:
         Image* mImage;         /**< Image to display on the button */
         int mPadding;

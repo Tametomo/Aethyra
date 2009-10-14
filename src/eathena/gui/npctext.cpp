@@ -59,13 +59,22 @@ NpcTextDialog::NpcTextDialog():
     mScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
     mScrollArea->setVerticalScrollPolicy(gcn::ScrollArea::SHOW_ALWAYS);
 
+    fontChanged();
+    loadWindowState();
+}
+
+void NpcTextDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     place(0, 0, mScrollArea, 5).setPadding(3);
     place(4, 1, mButton);
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
-
-    loadWindowState();
 }
 
 void NpcTextDialog::setText(const std::string &text)

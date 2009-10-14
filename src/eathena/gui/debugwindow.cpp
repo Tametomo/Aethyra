@@ -43,6 +43,7 @@ DebugWindow::DebugWindow():
     Window(_("Debug"))
 {
     setWindowName("Debug");
+    saveVisibility(false);
 
     setResizable(true);
     setCloseButton(true);
@@ -55,14 +56,23 @@ DebugWindow::DebugWindow():
     mTileMouseLabel = new Label(strprintf(_("Cursor: (%d, %d)"), 0, 0));
     mParticleCountLabel = new Label(strprintf(_("Particle count: %d"), 0));
 
+    fontChanged();
+    loadWindowState();
+}
+
+void DebugWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     place(0, 0, mFPSLabel, 3);
     place(3, 0, mTileMouseLabel);
     place(0, 1, mMusicFileLabel, 3);
     place(3, 1, mParticleCountLabel);
     place(0, 2, mMapLabel, 4);
     place(0, 3, mMiniMapLabel, 4);
-
-    loadWindowState();
 }
 
 void DebugWindow::widgetShown(const gcn::Event& event)

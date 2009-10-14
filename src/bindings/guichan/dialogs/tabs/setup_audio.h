@@ -39,9 +39,13 @@ class Setup_Audio : public SetupTabContainer, public gcn::ActionListener
 
         void action(const gcn::ActionEvent &event);
 
+        void fontChanged();
     private:
         int mMusicVolume, mSfxVolume;
         bool mSoundEnabled;
+
+        gcn::Label *mSfxLabel;
+        gcn::Label *mMusicLabel;
 
         gcn::CheckBox *mSoundCheckBox;
         gcn::Slider *mSfxSlider, *mMusicSlider;

@@ -52,9 +52,11 @@ class ConfirmDialog : public Window, public gcn::ActionListener
          */
         void action(const gcn::ActionEvent &event);
 
+        void fontChanged();
     private:
         TextBox *mTextBox;
-        gcn::Button *okButton;
+        gcn::Button *yesButton;
+        gcn::Button *noButton;
 };
 
 #endif

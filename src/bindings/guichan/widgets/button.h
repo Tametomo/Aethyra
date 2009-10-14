@@ -61,6 +61,8 @@ class Button : public gcn::Button
          */
         void draw(gcn::Graphics *graphics);
 
+        virtual void fontChanged();
+
     protected:
         static float mAlpha;
         ProtectedFocusListener *mProtFocusListener;

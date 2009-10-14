@@ -26,10 +26,10 @@
 #include <guichan/color.hpp>
 #include <guichan/graphics.hpp>
 
+#include "../../core/image/image.h"
+
 const short defaultScreenWidth = 800;
 const short defaultScreenHeight = 600;
-
-class Image;
 
 class SDL_Surface;
 
@@ -66,6 +66,24 @@ struct ImageRect
     };
 
     Image *grid[9];
+
+    /**
+     * Returns the minimum width for the ImageRect.
+     */
+    const int getMinWidth() const
+    {
+        return (grid[0]->getWidth() + grid[3]->getWidth() +
+                grid[6]->getWidth());
+    }
+
+    /**
+     * Returns the minimum height for the ImageRect.
+     */
+    const int getMinHeight() const
+    {
+        return (grid[0]->getHeight() + grid[3]->getHeight() +
+                grid[6]->getHeight());
+    }
 };
 
 /**

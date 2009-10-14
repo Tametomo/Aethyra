@@ -39,6 +39,7 @@ class MiniStatusWindow : public Popup
 
         void draw(gcn::Graphics *graphics);
 
+        void fontChanged();
     private:
         /**
          * Updates this dialog with values from player_node.

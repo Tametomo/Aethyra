@@ -102,7 +102,7 @@ Setup_Players::Setup_Players():
     mPlayerTable->setLinewiseSelection(true);
     mPlayerTable->addActionListener(this);
 
-    gcn::Label *ignore_action_label = new Label(_("When ignoring:"));
+    mIgnoreActionLabel = new Label(_("When ignoring:"));
 
     mIgnoreActionChoicesBox->setActionEventId(ACTION_STRATEGY);
     mIgnoreActionChoicesBox->addActionListener(this);
@@ -120,28 +120,37 @@ Setup_Players::Setup_Players():
     mIgnoreActionChoicesBox->adjustHeight();
 
     reset();
-
-    // Do the layout
-    LayoutHelper h(this);
-    ContainerPlacer place = h.getPlacer(0, 0);
-
-    place(0, 0, mPlayerTitleTable, 4);
-    place(0, 1, mPlayerScrollArea, 4, 4).setPadding(2);
-    place(0, 5, mDeleteButton);
-    place(2, 5, ignore_action_label);
-    place(2, 6, mIgnoreActionChoicesBox, 2).setPadding(2);
-    place(2, 7, mDefaultTrading);
-    place(2, 8, mDefaultWhisper);
-
-    player_relations.addListener(this);
+    fontChanged();
 
     setDimension(gcn::Rectangle(0, 0, 325, 280));
+
+    player_relations.addListener(this);
 }
 
 Setup_Players::~Setup_Players(void)
 {
     player_relations.removeListener(this);
     delete mIgnoreActionChoicesModel;
+}
+
+void Setup_Players::fontChanged()
+{
+    SetupTabContainer::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    LayoutHelper h(this);
+    ContainerPlacer place = h.getPlacer(0, 0);
+
+    place(0, 0, mPlayerTitleTable, 4);
+    place(0, 1, mPlayerScrollArea, 4, 4).setPadding(2);
+    place(0, 5, mDeleteButton);
+    place(2, 5, mIgnoreActionLabel);
+    place(2, 6, mIgnoreActionChoicesBox, 2).setPadding(2);
+    place(2, 7, mDefaultTrading);
+    place(2, 8, mDefaultWhisper);
+    h.reflowLayout(325, 280);
 }
 
 void Setup_Players::reset()

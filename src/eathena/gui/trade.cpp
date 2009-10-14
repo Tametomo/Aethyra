@@ -64,11 +64,7 @@ TradeWindow::TradeWindow():
     setMinWidth(342);
     setMinHeight(209);
 
-    std::string longestName = getFont()->getWidth(_("OK")) >
-                              getFont()->getWidth(_("Trade")) ?
-                              _("OK") : _("Trade");
-
-    mOkButton = new Button(longestName, "ok", this);
+    mOkButton = new Button(_("OK"), "ok", this);
     mCancelButton = new Button(_("Cancel"), "cancel", this);
 
     mMyItemContainer = new ItemContainer(mMyInventory.get(), "showpopupmenumine", this);
@@ -89,6 +85,21 @@ TradeWindow::TradeWindow():
     mMoneyField->setWidth(50);
     mMoneyField->setRange(0, player_node->mGp);
 
+    fontChanged();
+    loadWindowState();
+}
+
+TradeWindow::~TradeWindow()
+{
+}
+
+void TradeWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     place(1, 0, mPartnerMoneyLabel);
     place(0, 1, mMyScroll).setPadding(3);
     place(1, 1, mPartnerScroll).setPadding(3);
@@ -99,20 +110,13 @@ TradeWindow::TradeWindow():
     place = getPlacer(0, 2);
     place(6, 0, mCancelButton);
     place(7, 0, mOkButton);
+
     Layout &layout = getLayout();
     layout.extend(0, 2, 2, 1);
     layout.setRowHeight(1, Layout::AUTO_SET);
     layout.setRowHeight(2, 0);
     layout.setColWidth(0, Layout::AUTO_SET);
     layout.setColWidth(1, Layout::AUTO_SET);
-
-    mOkButton->setCaption(_("OK"));
-
-    loadWindowState();
-}
-
-TradeWindow::~TradeWindow()
-{
 }
 
 void TradeWindow::addMoney(int amount)
@@ -173,6 +177,7 @@ void TradeWindow::reset()
     mMoneyField->setEnabled(true);
     mMoneyField->setValue(0);
     mMoneyField->setRange(0, player_node->mGp);
+    fontChanged();
 }
 
 void TradeWindow::receivedOk(bool own)
@@ -184,7 +189,9 @@ void TradeWindow::receivedOk(bool own)
         {
             mOkButton->setCaption(_("Trade"));
             mOkButton->setActionEventId("trade");
+            fontChanged();
             mOkButton->setEnabled(true);
+            mOkButton->requestFocus();
         }
         else
             mOkButton->setEnabled(false);
@@ -196,7 +203,9 @@ void TradeWindow::receivedOk(bool own)
         {
             mOkButton->setCaption(_("Trade"));
             mOkButton->setActionEventId("trade");
+            fontChanged();
             mOkButton->setEnabled(true);
+            mOkButton->requestFocus();
         }
     }
 }

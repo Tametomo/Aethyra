@@ -74,6 +74,8 @@ class DropDown : public gcn::DropDown
 
         void mouseWheelMovedDown(gcn::MouseEvent& mouseEvent);
 
+        void fontChanged() { adjustHeight(); }
+
     protected:
         /**
          * Draws the button with the little down arrow.

@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/font.hpp>
+
 #include "status.h"
 
 #include "../../bindings/guichan/layout.h"
@@ -27,7 +29,6 @@
 #include "../../bindings/guichan/widgets/button.h"
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/progressbar.h"
-#include "../../bindings/guichan/widgets/windowcontainer.h"
 
 #include "../../core/map/sprite/localplayer.h"
 
@@ -40,7 +41,6 @@ StatusWindow::StatusWindow(LocalPlayer *player):
 {
     setWindowName("Status");
     setCloseButton(true);
-    setDefaultSize(400, 315, ImageRect::CENTER);
 
     // ----------------------
     // Status Part
@@ -71,9 +71,9 @@ StatusWindow::StatusWindow(LocalPlayer *player):
     // ----------------------
 
     // Static Labels
-    gcn::Label *mStatsTitleLabel = new Label(_("Stats"));
-    gcn::Label *mStatsTotalLabel = new Label(_("Total"));
-    gcn::Label *mStatsCostLabel = new Label(_("Cost"));
+    mStatsTitleLabel = new Label(_("Stats"));
+    mStatsTotalLabel = new Label(_("Total"));
+    mStatsCostLabel = new Label(_("Cost"));
     mStatsTotalLabel->setAlignment(gcn::Graphics::CENTER);
 
     // Derived Stats
@@ -112,7 +112,20 @@ StatusWindow::StatusWindow(LocalPlayer *player):
     mStatsButton[4] = new Button("+", "DEX", this);
     mStatsButton[5] = new Button("+", "LUK", this);
 
-    // Assemble
+    setDefaultSize(30 * getFont()->getHeight() + (2 * mHpBar->getHeight()), 25 *
+                   getFont()->getHeight(), ImageRect::CENTER);
+
+    fontChanged();
+    loadWindowState();
+}
+
+void StatusWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     ContainerPlacer place;
     place = getPlacer(0, 0);
 
@@ -158,7 +171,11 @@ StatusWindow::StatusWindow(LocalPlayer *player):
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
 
-    loadWindowState();
+
+    setDefaultSize(30 * getFont()->getHeight() + (2 * mHpBar->getHeight()), 11 *
+                   getFont()->getHeight() + 170, ImageRect::CENTER);
+    setContentSize(35 * getFont()->getHeight() - getTitleBarHeight() - 2 *
+                   getPadding(), 11 * getFont()->getHeight() + 150);
 }
 
 void StatusWindow::update()

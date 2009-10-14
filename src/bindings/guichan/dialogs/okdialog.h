@@ -52,6 +52,7 @@ class OkDialog : public Window, public gcn::ActionListener
          */
         void action(const gcn::ActionEvent &event);
 
+        void fontChanged();
     private:
         TextBox *mTextBox;
         gcn::Button *okButton;

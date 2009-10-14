@@ -51,6 +51,7 @@ class DebugWindow : public Window
          */
         void widgetShown(const gcn::Event& event);
 
+        void fontChanged();
     private:
         gcn::Label *mMusicFileLabel, *mMapLabel, *mMiniMapLabel;
         gcn::Label *mTileMouseLabel, *mFPSLabel;

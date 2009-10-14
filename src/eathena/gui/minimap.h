@@ -75,6 +75,7 @@ class Minimap : public Window
          */
         void mouseReleased(gcn::MouseEvent &event);
 
+        void fontChanged();
     private:
         Image *mMapImage;
         float mWidthProportion;

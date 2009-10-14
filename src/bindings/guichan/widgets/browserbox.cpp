@@ -332,6 +332,11 @@ void BrowserBox::draw(gcn::Graphics *graphics)
     }
 }
 
+void BrowserBox::fontChanged()
+{
+    mLaidOutTextValid = false;
+}
+
 void BrowserBox::calculateTextLayout()
 {
     int x = 0, y = 0;

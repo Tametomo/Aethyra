@@ -25,3 +25,12 @@ SetupTabContainer::SetupTabContainer()
 {
     setOpaque(false);
 }
+
+void SetupTabContainer::fontChanged()
+{
+    std::list<Widget*>::iterator iter;
+    for (iter = mWidgets.begin(); iter != mWidgets.end(); ++iter)
+    {
+        (*iter)->fontChanged();
+    }
+}

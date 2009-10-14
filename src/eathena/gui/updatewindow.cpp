@@ -116,27 +116,9 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
     mProgressBar = new ProgressBar(0.0, 310, 20, gcn::Color(168, 116, 31));
     mProgressBar->setSmoothProgress(false);
 
-    std::string longest = getFont()->getWidth(_("Play")) >
-                          getFont()->getWidth(_("Cancel")) ?
-                          _("Play") : _("Cancel");
+    mStateButton = new Button(_("Cancel"), "cancel", this);
 
-    mStateButton = new Button(longest, "cancel", this);
-
-    ContainerPlacer place;
-    place = getPlacer(0, 0);
-
-    place(0, 0, mScrollArea, 5, 3).setPadding(3);
-    place(0, 3, mLabel, 5);
-    place(0, 4, mProgressBar, 5);
-    place(4, 5, mStateButton);
-
-    reflowLayout(320, 240);
-
-    Layout &layout = getLayout();
-    layout.setRowHeight(0, Layout::AUTO_SET);
-
-    mStateButton->setCaption(_("Cancel"));
-
+    fontChanged();
     setUpdatesDir(mUpdateHost);
 
     // Try to download the updates list
@@ -152,6 +134,27 @@ UpdaterWindow::~UpdaterWindow()
     ::remove((engine->getHomeDir() + "/" + mUpdatesDir + "/download.temp").c_str());
 
     delete[] mCurlError;
+}
+
+void UpdaterWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    ContainerPlacer place;
+    place = getPlacer(0, 0);
+
+    place(0, 0, mScrollArea, 5, 3).setPadding(3);
+    place(0, 3, mLabel, 5);
+    place(0, 4, mProgressBar, 5);
+    place(4, 5, mStateButton);
+
+    reflowLayout(320, 240);
+
+    Layout &layout = getLayout();
+    layout.setRowHeight(0, Layout::AUTO_SET);
 }
 
 void UpdaterWindow::setProgress(float p)
@@ -176,6 +179,7 @@ void UpdaterWindow::enable()
 {
     mStateButton->setCaption(_("Play"));
     mStateButton->setActionEventId("play");
+    fontChanged();
     mStateButton->requestFocus();
 }
 

@@ -76,31 +76,9 @@ Minimap::~Minimap()
     config.setValue(getWindowName() + "UserHeight", mUserHeight);
 }
 
-void Minimap::setMap(Map *map)
+void Minimap::fontChanged()
 {
-    // Set the title for the Minimap
-    std::string caption;
-
-    if (map)
-        caption = map->getName();
-
-    if (caption.empty())
-        caption = _("Map");
-
-    minimap->setCaption(caption);
-
-    // Remove the old image if there is one.
-    if (mMapImage)
-    {
-        mMapImage->decRef();
-        mMapImage = 0;
-    }
-
-    if (map)
-    {
-        ResourceManager *resman = ResourceManager::getInstance();
-        mMapImage = resman->getImage(map->getProperty("minimap"));
-    }
+    Window::fontChanged();
 
     if (mMapImage)
     {
@@ -117,9 +95,6 @@ void Minimap::setMap(Map *map)
         setMinWidth(mapWidth > titleWidth ? mapWidth : titleWidth);
         setMinHeight(mapHeight);
 
-        mWidthProportion = (float) mMapImage->getWidth() / map->getWidth();
-        mHeightProportion = (float) mMapImage->getHeight() / map->getHeight();
-
         setMaxWidth(mMapImage->getWidth() > titleWidth ?
                     mMapImage->getWidth() + paddingX : titleWidth);
         setMaxHeight(mMapImage->getHeight() + paddingY);
@@ -128,6 +103,41 @@ void Minimap::setMap(Map *map)
         saveRelativeLocation(getX(), getY());
 
         setVisible(mShow);
+    }
+}
+
+void Minimap::setMap(Map *map)
+{
+    // Set the title for the Minimap
+    std::string caption;
+
+    if (map)
+        caption = map->getName();
+
+    if (caption.empty())
+        caption = _("Map");
+
+    setCaption(caption);
+
+    // Remove the old image if there is one.
+    if (mMapImage)
+    {
+        mMapImage->decRef();
+        mMapImage = 0;
+    }
+
+    if (map)
+    {
+        ResourceManager *resman = ResourceManager::getInstance();
+        mMapImage = resman->getImage(map->getProperty("minimap"));
+    }
+
+    if (mMapImage)
+    {
+        mWidthProportion = (float) mMapImage->getWidth() / map->getWidth();
+        mHeightProportion = (float) mMapImage->getHeight() / map->getHeight();
+
+        fontChanged();
     }
     else
         setVisible(false);

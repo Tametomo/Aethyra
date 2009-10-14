@@ -66,8 +66,8 @@ Setup_Input::Setup_Input():
     mKeyList->addSelectionListener(this);
     mKeyList->addActionListener(this);
 
-    ScrollArea *scrollArea = new ScrollArea(mKeyList);
-    scrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
+    mScrollArea = new ScrollArea(mKeyList);
+    mScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
 
     mAssignKeyButton = new Button(_("Assign"), "assign", this);
     mAssignKeyButton->addActionListener(this);
@@ -76,16 +76,7 @@ Setup_Input::Setup_Input():
     mMakeDefaultButton = new Button(_("Default"), "default", this);
     mMakeDefaultButton->addActionListener(this);
 
-    // Do the layout
-    LayoutHelper h(this);
-    ContainerPlacer place = h.getPlacer(0, 0);
-
-    place(0, 0, scrollArea, 4, 7).setPadding(2);
-    place(0, 7, mMakeDefaultButton);
-    place(3, 7, mAssignKeyButton);
-    place(0, 8, mJoystickCheckbox, 3);
-    place(0, 9, mCalibrateLabel, 4);
-    place(0, 10, mCalibrateButton);
+    fontChanged();
 
     setDimension(gcn::Rectangle(0, 0, 325, 280));
 }
@@ -97,6 +88,26 @@ Setup_Input::~Setup_Input()
 
     delete mAssignKeyButton;
     delete mMakeDefaultButton;
+}
+
+void Setup_Input::fontChanged()
+{
+    SetupTabContainer::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    LayoutHelper h(this);
+    ContainerPlacer place = h.getPlacer(0, 0);
+
+    place(0, 0, mScrollArea, 4, 7).setPadding(2);
+    place(0, 7, mMakeDefaultButton);
+    place(3, 7, mAssignKeyButton);
+    place(0, 8, mJoystickCheckbox, 3);
+    place(0, 9, mCalibrateLabel, 4);
+    place(0, 10, mCalibrateButton);
+
+    h.reflowLayout(325, 280);
 }
 
 void Setup_Input::apply()

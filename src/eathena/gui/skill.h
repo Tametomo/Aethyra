@@ -79,9 +79,10 @@ class SkillDialog : public Window, public gcn::ActionListener,
          */
         void requestFocus();
 
+        void fontChanged();
     private:
         Table *mTable;
-        ScrollArea *skillScrollArea;
+        ScrollArea *mSkillScrollArea;
         SkillTableModel *mTableModel;
         gcn::Label *mPointsLabel;
         gcn::Button *mIncButton;

@@ -59,6 +59,8 @@ class CheckBox : public gcn::CheckBox
          */
         void drawBox(gcn::Graphics* graphics);
 
+        void fontChanged() { adjustSize(); }
+
     protected:
         static float mAlpha;
         ProtectedFocusListener *mProtFocusListener;

@@ -30,6 +30,7 @@
 #include "tabs/setup_input.h"
 
 #include "../layout.h"
+#include "../layouthelper.h"
 
 #include "../widgets/button.h"
 #include "../widgets/desktop.h"
@@ -69,29 +70,42 @@ Setup::Setup():
         mPanel->addTab(tab->getName(), tab);
     }
 
-    place(0, 0, mPanel, 7, 6).setPadding(2);
-
     for (int i = 0; buttonNames[i] != NULL; ++i)
     {
         Button *btn = new Button(gettext(buttonNames[i]), buttonNames[i], this);
-        place(i + 4, 6, btn);
-
-        // Store this button, as it needs to be enabled/disabled
-        if (!strcmp(buttonNames[i], N_("Reset Windows")))
-            mResetWindows = btn;
+        mButtons.push_back(btn);
     }
 
     setDefaultSize(width, height, ImageRect::CENTER);
 
-    Layout &layout = getLayout();
-    layout.setRowHeight(0, Layout::AUTO_SET);
-
+    fontChanged();
     loadWindowState();
 }
 
 Setup::~Setup()
 {
     delete_all(mTabs);
+}
+
+void Setup::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    place(0, 0, mPanel, 7, 6).setPadding(2);
+
+    int count = 0;
+    for (std::list<gcn::Button*>::iterator i = mButtons.begin(),
+         i_end = mButtons.end(); i != i_end; ++i, count++)
+    {
+        place(count + 4, 6, *i);
+    }
+
+    Layout &layout = getLayout();
+    layout.setRowHeight(0, Layout::AUTO_SET);
+    reflowLayout(340, 340);
 }
 
 void Setup::addTab(SetupTabContainer *tab)
@@ -102,7 +116,7 @@ void Setup::addTab(SetupTabContainer *tab)
 
 void Setup::removeTab(SetupTabContainer *tab)
 {
-    Tab* tabToDelete = mPanel->getTab(tab->getName());
+    gcn::Tab* tabToDelete = mPanel->getTab(tab->getName());
     mPanel->removeTab(tabToDelete);
 
     for (std::list<SetupTabContainer*>::iterator i = mTabs.begin(),
@@ -137,8 +151,8 @@ void Setup::action(const gcn::ActionEvent &event)
         config.removeAllValues("Height");
         config.removeAllValues("Width");
 
-        Widgets widgets = windowContainer->getWidgetList();
-        WidgetIterator iter;
+        WidgetList widgets = windowContainer->getWidgetList();
+        WidgetListIterator iter;
 
         for (iter = widgets.begin(); iter != widgets.end(); ++iter)
         {

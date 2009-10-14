@@ -25,9 +25,9 @@
 
 #include <guichan/actionlistener.hpp>
 
-#include "../../core/map/sprite/being.h"
-
 #include "../../bindings/guichan/widgets/window.h"
+
+#include "../../core/map/sprite/being.h"
 
 class BeingBox;
 class LocalPlayer;
@@ -64,6 +64,8 @@ class CharSelectDialog : public Window, public gcn::ActionListener
          * otherwise, it selects the new button.
          */
         void requestFocus();
+
+        void fontChanged();
 
     private:
         LockedArray<LocalPlayer*> *mCharInfo;
@@ -120,6 +122,7 @@ class CharCreateDialog : public Window, public gcn::ActionListener
          */
         void unlock();
 
+        void fontChanged();
     private:
         /**
          * Returns the name of the character to create.

@@ -78,6 +78,7 @@ class UpdaterWindow : public Window, public gcn::ActionListener
          */
         void requestFocus();
 
+        void fontChanged();
     private:
         /**
          * Set's progress bar status

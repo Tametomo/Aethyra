@@ -39,8 +39,8 @@ class ProgressBar;
  *
  * \ingroup Interface
  */
-class InventoryWindow : public Window, gcn::ActionListener,
-                                       gcn::SelectionListener
+class InventoryWindow : public Window, public gcn::ActionListener,
+                        public gcn::SelectionListener
 {
     public:
         /**
@@ -108,6 +108,7 @@ class InventoryWindow : public Window, gcn::ActionListener,
             mListeners.remove(listener);
         }
 
+        void fontChanged();
     private:
         ItemContainer *mItems;
 

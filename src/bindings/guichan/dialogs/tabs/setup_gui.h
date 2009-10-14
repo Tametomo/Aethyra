@@ -41,6 +41,7 @@ class Setup_Gui : public SetupTabContainer, public gcn::ActionListener
 
         void action(const gcn::ActionEvent &event);
 
+        void fontChanged();
     private:
         bool mFullScreenEnabled;
         bool mOpenGLEnabled;
@@ -53,9 +54,11 @@ class Setup_Gui : public SetupTabContainer, public gcn::ActionListener
 
         ModeListModel *mModeListModel;
 
-        gcn::Label *alphaLabel;
-        gcn::Label *mouseAlphaLabel;
-        gcn::Label *fontSizeLabel;
+        gcn::Label *mAlphaLabel;
+        gcn::Label *mMouseAlphaLabel;
+        gcn::Label *mFontLabel;
+
+        gcn::ScrollArea *mScrollArea;
 
         gcn::ListBox *mModeList;
         gcn::CheckBox *mFsCheckBox;

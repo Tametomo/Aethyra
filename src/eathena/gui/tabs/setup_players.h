@@ -38,33 +38,37 @@ class StaticTableModel;
 class Setup_Players : public SetupTabContainer, public gcn::ActionListener,
                       public PlayerRelationsListener
 {
-public:
-    Setup_Players();
-    virtual ~Setup_Players();
+    public:
+        Setup_Players();
+        virtual ~Setup_Players();
 
-    void apply();
-    void cancel() {};
+        void apply();
+        void cancel() {};
 
-    void reset();
+        void reset();
 
-    void action(const gcn::ActionEvent &event);
+        void action(const gcn::ActionEvent &event);
 
-    virtual void updatedPlayer(const std::string &name);
+        virtual void updatedPlayer(const std::string &name);
 
-private:
-    StaticTableModel *mPlayerTableTitleModel;
-    PlayerTableModel *mPlayerTableModel;
-    Table *mPlayerTable;
-    Table *mPlayerTitleTable;
-    gcn::ScrollArea *mPlayerScrollArea;
+        void fontChanged();
+    private:
+        StaticTableModel *mPlayerTableTitleModel;
+        PlayerTableModel *mPlayerTableModel;
+        Table *mPlayerTable;
+        Table *mPlayerTitleTable;
 
-    gcn::CheckBox *mDefaultTrading;
-    gcn::CheckBox *mDefaultWhisper;
+        gcn::ScrollArea *mPlayerScrollArea;
 
-    gcn::Button *mDeleteButton;
+        gcn::Label *mIgnoreActionLabel;
 
-    gcn::ListModel *mIgnoreActionChoicesModel;
-    gcn::DropDown *mIgnoreActionChoicesBox;
+        gcn::CheckBox *mDefaultTrading;
+        gcn::CheckBox *mDefaultWhisper;
+
+        gcn::Button *mDeleteButton;
+
+        gcn::ListModel *mIgnoreActionChoicesModel;
+        gcn::DropDown *mIgnoreActionChoicesBox;
 };
 
 extern Setup_Players *setupPlayers;

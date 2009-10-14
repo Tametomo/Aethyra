@@ -48,11 +48,12 @@ LoginDialog::LoginDialog(LoginData *loginData) :
     Window(_("Login")),
     mLoginData(loginData)
 {
-    gcn::Label *userLabel = new Label(_("Name:"));
-    gcn::Label *passLabel = new Label(_("Password:"));
-    gcn::Label *serverLabel = new Label(_("Server:"));
-    gcn::Label *portLabel = new Label(_("Port:"));
-    gcn::Label *dropdownLabel = new Label(_("Recent:"));
+    mUserLabel = new Label(_("Name:"));
+    mPassLabel = new Label(_("Password:"));
+    mServerLabel = new Label(_("Server:"));
+    mPortLabel = new Label(_("Port:"));
+    mDropdownLabel = new Label(_("Recent:"));
+
     std::vector<std::string> dfltServer;
     dfltServer.push_back("www.aethyra.org"); 
     dfltServer.push_back("www.aethyra.org");
@@ -93,11 +94,28 @@ LoginDialog::LoginDialog(LoginData *loginData) :
     mServerDropDown->addSelectionListener(this);
     mKeepCheck->addActionListener(this);
 
-    place(0, 0, userLabel);
-    place(0, 1, passLabel);
-    place(0, 2, serverLabel);
-    place(0, 3, portLabel);
-    place(0, 4, dropdownLabel);
+    fontChanged();
+
+    mOkButton->setEnabled(canSubmit());
+}
+
+LoginDialog::~LoginDialog()
+{
+    delete mServerList;
+}
+
+void LoginDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    place(0, 0, mUserLabel);
+    place(0, 1, mPassLabel);
+    place(0, 2, mServerLabel);
+    place(0, 3, mPortLabel);
+    place(0, 4, mDropdownLabel);
     place(1, 0, mUserField, 3).setPadding(1);
     place(1, 1, mPassField, 3).setPadding(1);
     place(1, 2, mServerField, 3).setPadding(1);
@@ -107,14 +125,8 @@ LoginDialog::LoginDialog(LoginData *loginData) :
     place(0, 6, mRegisterButton).setHAlign(LayoutCell::LEFT);
     place(2, 6, mCancelButton);
     place(3, 6, mOkButton);
+
     reflowLayout(250, 0);
-
-    mOkButton->setEnabled(canSubmit());
-}
-
-LoginDialog::~LoginDialog()
-{
-    delete mServerList;
 }
 
 void LoginDialog::action(const gcn::ActionEvent &event)

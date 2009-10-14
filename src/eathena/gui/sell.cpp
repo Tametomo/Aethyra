@@ -80,8 +80,25 @@ SellDialog::SellDialog():
 
     mShopItemList->setPriceCheck(false);
     mShopItemList->addSelectionListener(this);
+
     mSlider->setActionEventId("slider");
     mSlider->addActionListener(this);
+
+    fontChanged();
+    loadWindowState();
+}
+
+SellDialog::~SellDialog()
+{
+    delete mShopListModel;
+}
+
+void SellDialog::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
 
     ContainerPlacer place;
     place = getPlacer(0, 0);
@@ -98,13 +115,6 @@ SellDialog::SellDialog():
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
-
-    loadWindowState();
-}
-
-SellDialog::~SellDialog()
-{
-    delete mShopListModel;
 }
 
 void SellDialog::reset()

@@ -204,6 +204,8 @@ class ChatWindow : public Window, public gcn::ActionListener
          */
         void help(const std::string &msg1, const std::string &msg2);
 
+        void fontChanged();
+
     private:
         bool mTmpVisible;
 

@@ -68,6 +68,7 @@ class HelpDialog : public Window, public LinkHandler,
          */
         void close();
 
+        void fontChanged();
     private:
         void loadFile(const std::string &file);
 

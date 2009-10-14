@@ -49,8 +49,8 @@ Setup_Audio::Setup_Audio():
 {
     setName(_("Audio"));
 
-    gcn::Label *sfxLabel = new Label(_("Sfx volume"));
-    gcn::Label *musicLabel = new Label(_("Music volume"));
+    mSfxLabel = new Label(_("Sfx volume"));
+    mMusicLabel = new Label(_("Music volume"));
 
     mSfxSlider->setActionEventId("sfx");
     mMusicSlider->setActionEventId("music");
@@ -66,17 +66,28 @@ Setup_Audio::Setup_Audio():
     mSfxSlider->setWidth(90);
     mMusicSlider->setWidth(90);
 
-    // Do the layout
+    fontChanged();
+
+    setDimension(gcn::Rectangle(0, 0, 325, 280));
+}
+
+void Setup_Audio::fontChanged()
+{
+    SetupTabContainer::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
     LayoutHelper h(this);
     ContainerPlacer place = h.getPlacer(0, 0);
 
     place(0, 0, mSoundCheckBox);
     place(0, 1, mSfxSlider);
-    place(1, 1, sfxLabel);
+    place(1, 1, mSfxLabel);
     place(0, 2, mMusicSlider);
-    place(1, 2, musicLabel);
+    place(1, 2, mMusicLabel);
 
-    setDimension(gcn::Rectangle(0, 0, 325, 280));
+    h.reflowLayout(325, 280);
 }
 
 void Setup_Audio::apply()

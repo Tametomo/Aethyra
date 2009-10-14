@@ -33,11 +33,7 @@ Icon::Icon(const std::string &file, bool fixed):
     mFixed(fixed)
 {
     mImage = ResourceManager::getInstance()->getImage(file);
-
-    if (mImage)
-        setSize(mImage->getWidth(), mImage->getHeight());
-    else
-        setSize(0, 0);
+    fontChanged();
 }
 
 Icon::Icon(Image *image, bool fixed):
@@ -85,3 +81,4 @@ void Icon::draw(gcn::Graphics *g)
         graphics->drawImage(mImage, x, y);
     }
 }
+

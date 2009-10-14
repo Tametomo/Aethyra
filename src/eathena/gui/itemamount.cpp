@@ -79,24 +79,11 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
     mItemPopup->setOpaque(false);
 
     // Buttons
-    Button *okButton = new Button(_("OK"), "ok", this);
-    Button *cancelButton = new Button(_("Cancel"), "cancel", this);
-    Button *addAllButton = new Button(_("All"), "all", this);
+    mOkButton = new Button(_("OK"), "ok", this);
+    mCancelButton = new Button(_("Cancel"), "cancel", this);
+    mAddAllButton = new Button(_("All"), "all", this);
 
-    // Set positions
-    ContainerPlacer place;
-    place = getPlacer(0, 0);
-
-    place(0, 0, mItemIcon, 1, 3);
-    place(1, 1, mItemAmountSlide, 5);
-    place(6, 1, mItemAmountLabel, 2);
-    place(8, 1, addAllButton);
-    place = getPlacer(0, 3);
-    place(5, 0, cancelButton);
-    place(6, 0, okButton);
-
-    reflowLayout(225, 0);
-
+    fontChanged();
     resetAmount();
 
     switch (usage)
@@ -134,11 +121,33 @@ ItemAmountWindow::~ItemAmountWindow()
     mItemPopup = NULL;
 }
 
-// Show ItemTooltip
+void ItemAmountWindow::fontChanged()
+{
+    Window::fontChanged();
+
+    if (mWidgets.size() > 0)
+        clear();
+
+    // Set positions
+    ContainerPlacer place;
+    place = getPlacer(0, 0);
+
+    place(0, 0, mItemIcon, 1, 3);
+    place(1, 1, mItemAmountSlide, 5);
+    place(6, 1, mItemAmountLabel, 2);
+    place(8, 1, mAddAllButton);
+    place = getPlacer(0, 3);
+    place(5, 0, mCancelButton);
+    place(6, 0, mOkButton);
+
+    reflowLayout(225, 0);
+}
+
 void ItemAmountWindow::mouseMoved(gcn::MouseEvent &event)
 {
     Window::mouseMoved(event);
 
+    // Show ItemTooltip
     if (event.getSource() == mItemIcon)
     {
         mItemPopup->setItem(mItem->getInfo());

@@ -109,6 +109,8 @@ class BuyDialog : public Window, public gcn::ActionListener,
          * Resets the listbox selection on shown events.
          */
         void widgetShown(const gcn::Event& event);
+
+        void fontChanged();
     private:
         gcn::Button *mBuyButton;
         gcn::Button *mQuitButton;

@@ -98,6 +98,8 @@ class SellDialog : public Window, gcn::ActionListener, gcn::SelectionListener
          * Resets the listbox selection on shown events.
          */
         void widgetShown(const gcn::Event& event);
+
+        void fontChanged();
     private:
         /**
          * Updates the state of buttons and labels.

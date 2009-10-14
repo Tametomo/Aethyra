@@ -59,6 +59,8 @@ class RadioButton : public gcn::RadioButton
          */
         void draw(gcn::Graphics* graphics);
 
+        void fontChanged() { adjustSize(); }
+
     protected:
         static float mAlpha;
         static RadioButtonConfigListener *mConfigListener;

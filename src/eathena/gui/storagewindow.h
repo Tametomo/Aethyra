@@ -100,12 +100,16 @@ class StorageWindow : public Window, gcn::ActionListener, gcn::SelectionListener
 
         void selectNone() const;
 
+        void fontChanged();
     private:
         ItemContainer *mItems;
 
         int mSlots;
         int mUsedSlots;
+
+        gcn::Button *mCloseButton;
         gcn::Button *mRetrieveButton;
+
         gcn::ScrollArea *mInvenScroll;
 
         gcn::Label *mSlotsLabel;

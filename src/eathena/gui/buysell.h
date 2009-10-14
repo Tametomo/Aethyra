@@ -23,6 +23,8 @@
 #ifndef BUYSELL_H
 #define BUYSELL_H
 
+#include <vector>
+
 #include <guichan/actionlistener.hpp>
 
 #include "../../bindings/guichan/widgets/window.h"
@@ -55,8 +57,10 @@ class BuySellDialog : public Window, public gcn::ActionListener
          */
         void action(const gcn::ActionEvent &event);
 
+        void fontChanged();
+
     private:
-        gcn::Button* buyButton;
+        std::vector<gcn::Button *> mButtons;
 };
 
 extern BuySellDialog *buySellDialog;

@@ -73,6 +73,7 @@ class Setup_Input : public SetupTabContainer, public gcn::ActionListener,
          */
         void keyUnresolved();
 
+        void fontChanged();
     private:
         class KeyListModel *mKeyListModel;
 
@@ -80,6 +81,8 @@ class Setup_Input : public SetupTabContainer, public gcn::ActionListener,
         gcn::CheckBox *mJoystickCheckbox;
 
         gcn::ListBox *mKeyList;
+
+        gcn::ScrollArea *mScrollArea;
 
         gcn::Button *mCalibrateButton;
         gcn::Button *mAssignKeyButton;
