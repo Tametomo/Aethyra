@@ -125,10 +125,20 @@ static void printHelp()
 static void printVersion()
 {
 #ifdef PACKAGE_VERSION
-    std::cout << strprintf(_("Aethyra version %s"), PACKAGE_VERSION) << std::endl;
+    std::string version = PACKAGE_VERSION;
 #else
-    std::cout << _("Aethyra - Version not defined.") << std::endl;
+    std::string version = "not defined.";
 #endif
+    std::cout << strprintf(_("Aethyra - Version %s"), version.c_str())
+              << std::endl << std::endl
+              << _("\tCopyright (C) 2008-2009  Aethyra Development Team")
+              << std::endl << std::endl
+              << _("License GPLv2+: GNU GPL version 2 or later "
+                   "<http://gnu.org/licenses/gpl2.html>") << std::endl
+              << _("This is free software: you are free to change and "
+                   "redistribute it.") << std::endl
+              << _("There is NO WARRANTY, to the extent permitted by law.")
+              << std::endl << std::endl;
 }
 
 static void parseOptions(int argc, char *argv[], Options &options)

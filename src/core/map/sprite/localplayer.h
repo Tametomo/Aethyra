@@ -45,7 +45,12 @@ class LocalPlayer : public Player
     public:
         enum Attribute
         {
-            STR = 0xD, AGI = 0xE, VIT = 0xF, INT = 0x10, DEX = 0x11, LUK = 0x12
+            STR = 0xD,
+            AGI = 0xE,
+            VIT = 0xF,
+            INT = 0x10,
+            DEX = 0x11,
+            LUK = 0x12
         };
 
         /**

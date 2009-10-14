@@ -30,7 +30,7 @@
 #elif defined WIN32
 #include "winver.h"
 #elif defined __APPLE__
-#define PACKAGE_VERSION "0.0.29"
+#define PACKAGE_VERSION "0.0.29.1"
 #endif
 
 /*
@@ -52,17 +52,6 @@ enum {
     ERROR_STATE,
     UPDATE_STATE,
     CONNECTING_STATE
-};
-
-/* length definitions for several char[]s in order
- * to be able to use strncpy instead of strcpy for
- * security and stability reasons
- */
-enum {
-    LEN_MAX_USERNAME     = 25,
-    LEN_MIN_USERNAME     = 4,
-    LEN_MAX_PASSWORD     = 25,
-    LEN_MIN_PASSWORD     = 4
 };
 
 extern char n_server, n_character;

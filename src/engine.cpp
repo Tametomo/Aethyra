@@ -3,8 +3,7 @@
  *  Copyright (C) 2004  The Mana World Development Team
  *  Copyright (C) 2009  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
- *  from The Mana World.
+ *  This file is part of Aethyra.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +21,6 @@
  */
 
 #include <physfs.h>
-#include <SDL_image.h>
 
 #ifdef WIN32
 #include <SDL_syswm.h>
@@ -37,7 +35,7 @@
 
 #include <libxml/parser.h>
 
-#include <SDL/SDL_ttf.h>
+#include <SDL_image.h>
 
 #include "engine.h"
 #include "main.h"
@@ -112,7 +110,7 @@ Engine::Engine(const char *prog, const Options &gameOptions) :
 #if defined __APPLE__
     // Use Application Directory instead of .aethyra
     homeDir = std::string(PHYSFS_getUserDir()) +
-        "/Library/Application Support/Aethyra";
+                          "/Library/Application Support/Aethyra";
 #else
     homeDir = std::string(PHYSFS_getUserDir()) + "/.aethyra";
 #endif
@@ -290,8 +288,11 @@ void Engine::initConfig()
     if (configFile == NULL)
         configFile = fopen(configPath.c_str(), "wt");
 
+    // If we still can't open the file, then we inform the user that we can't,
+    // and log our failure.
     if (configFile == NULL)
     {
+        logger->log("Can't create %s. Using Defaults.", configPath.c_str());
         std::cout << strprintf("Can't create %s. Using Defaults.",
                                configPath.c_str()) << std::endl;
     }

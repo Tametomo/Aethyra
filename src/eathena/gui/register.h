@@ -34,6 +34,17 @@ class LoginData;
 class OkDialog;
 class WrongDataNoticeListener;
 
+/* length definitions for several char[]s in order
+ * to be able to use strncpy instead of strcpy for
+ * security and stability reasons
+ */
+enum {
+    LEN_MAX_USERNAME     = 25,
+    LEN_MIN_USERNAME     = 4,
+    LEN_MAX_PASSWORD     = 25,
+    LEN_MIN_PASSWORD     = 4
+};
+
 /**
  * The registration dialog.
  *
