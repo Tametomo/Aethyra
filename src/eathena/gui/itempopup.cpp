@@ -81,14 +81,19 @@ void ItemPopup::setItem(const ItemInfo &item)
     if (item.getName() == mItemName->getCaption())
         return;
 
-    mItemName->setFont(gui->getBoldFont());
     mItemName->setCaption(item.getName());
-    mItemName->setWidth(gui->getBoldFont()->getWidth(item.getName()));
+    mItemType = item.getType();
     mItemDesc->setTextWrapped(item.getDescription(), 196);
     mItemEffect->setTextWrapped(item.getEffect(), 196);
-    mItemWeight->setTextWrapped(_("Weight: ") + toString(item.getWeight()) +
-                                _(" grams"), 196);
-    mItemType = item.getType();
+    mItemWeight->setTextWrapped(strprintf(_("Weight: %d grams"),
+                                          item.getWeight()), 196);
+    adjustSize();
+}
+
+void ItemPopup::adjustSize()
+{
+    mItemName->setFont(gui->getBoldFont());
+    mItemName->setWidth(gui->getBoldFont()->getWidth(mItemName->getCaption()));
 
     int minWidth = mItemName->getWidth();
 
@@ -103,7 +108,7 @@ void ItemPopup::setItem(const ItemInfo &item)
     setWidth(minWidth);
 
     const int numRowsDesc = mItemDesc->getNumberOfRows();
-    const int numRowsEffect = item.getEffect().empty() ? 0 : 
+    const int numRowsEffect = mItemEffect->getText().empty() ? 0 : 
                               mItemEffect->getNumberOfRows();
     const int numRowsWeight = mItemWeight->getNumberOfRows();
     const int height = getFont()->getHeight();
@@ -116,6 +121,14 @@ void ItemPopup::setItem(const ItemInfo &item)
 
     mItemDesc->setPosition(getPadding(), 2 * height);
     mItemEffect->setPosition(getPadding(), (numRowsDesc + getPadding()) * height);
+}
+
+void ItemPopup::fontChanged()
+{
+    mItemDesc->setTextWrapped(mItemDesc->getRawText(), 196);
+    mItemEffect->setTextWrapped(mItemEffect->getRawText(), 196);
+    mItemWeight->setTextWrapped(mItemWeight->getRawText(), 196);
+    adjustSize();
 }
 
 void ItemPopup::updateColors()

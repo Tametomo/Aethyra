@@ -31,6 +31,7 @@
 
 TextBox::TextBox(TextWrapHandler *wrapHandler) :
     gcn::TextBox(),
+    mRawText(""),
     mWrapHandler(wrapHandler),
     mTextColor(&guiPalette->getColor(Palette::TEXT))
 {
@@ -55,13 +56,22 @@ void TextBox::setTextWrapped(const std::string &text, int maxDimension)
 
     mMinWidth = getFont()->getWidth(text);
 
-    std::string wrappedText = text;
+    mRawText = text;
+
+    std::string wrappedText;
 
     if (mWrapHandler)
     {
         mMinWidth = maxDimension;
-        wrappedText = mWrapHandler->wrapText(getFont(), text, mMinWidth);
+        wrappedText = mWrapHandler->wrapText(getFont(), mRawText, mMinWidth);
     }
 
     gcn::TextBox::setText(wrappedText);
+}
+
+void TextBox::fontChanged()
+{
+    gcn::TextBox::fontChanged();
+    setTextWrapped(mRawText, mMinWidth);
+    adjustSize();
 }

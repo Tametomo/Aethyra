@@ -176,7 +176,10 @@ void SkillDialog::cleanList()
 
 void SkillDialog::requestFocus()
 {
-    mIncButton->requestFocus();
+    if (mIncButton->isEnabled())
+        mIncButton->requestFocus();
+    else
+        mTable->requestFocus();
 }
 
 void SkillDialog::widgetShown(const gcn::Event& event)

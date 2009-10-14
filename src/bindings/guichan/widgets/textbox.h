@@ -58,6 +58,12 @@ class TextBox : public gcn::TextBox
         int getMinWidth() { return mMinWidth; }
 
         /**
+         * Gets the raw representation of the text in the textbox. Useful when
+         * regenerating text wrapping.
+         */
+        std::string getRawText() { return mRawText; }
+
+        /**
          * Draws the text.
          */
         inline void draw(gcn::Graphics *graphics)
@@ -66,10 +72,12 @@ class TextBox : public gcn::TextBox
             gcn::TextBox::draw(graphics);
         }
 
-        void fontChanged() { adjustSize(); }
+        void fontChanged();
 
     private:
         int mMinWidth;
+
+        std::string mRawText;
 
         TextWrapHandler *mWrapHandler;
 

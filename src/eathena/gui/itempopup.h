@@ -68,6 +68,12 @@ class ItemPopup : public Popup
          */
         void view(int x, int y);
 
+        /**
+         * Adjusts the item popup size as needed.
+         */
+        void adjustSize();
+
+        void fontChanged();
     private:
         gcn::Label *mItemName;
         TextBox *mItemDesc;

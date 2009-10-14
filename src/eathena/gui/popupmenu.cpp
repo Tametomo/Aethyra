@@ -33,6 +33,7 @@
 #include "slotselection.h"
 #include "storagewindow.h"
 #include "trade.h"
+#include "viewport.h"
 
 #include "../beingmanager.h"
 #include "../playerrelations.h"
@@ -78,7 +79,9 @@ PopupMenu::PopupMenu(MenuType type, gcn::Container *parent):
     mMappedListBox->setWrappingEnabled(true);
     mMappedListBox->setFollowingMouse(true);
     mMappedListBox->addActionListener(this);
+
     add(mMappedListBox);
+    addFocusListener(this);
 
     loadPopupConfiguration();
 }
@@ -425,4 +428,10 @@ void PopupMenu::requestFocus()
     mPreviousFocus = mFocusHandler->getFocused();
 
     mMappedListBox->requestFocus();
+}
+
+void PopupMenu::focusLost(const gcn::Event& event)
+{
+    if (mParent == viewport)
+        setVisible(false);
 }

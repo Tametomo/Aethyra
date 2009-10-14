@@ -134,11 +134,7 @@ EquipmentWindow::EquipmentWindow():
     mInvenScroll = new ScrollArea(mItems);
     mInvenScroll->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
 
-    std::string longestUseString = getFont()->getWidth(_("Equip")) >
-                                   getFont()->getWidth(_("Unequip")) ?
-                                   _("Equip") : _("Unequip");
-
-    mEquipButton = new Button(longestUseString, "equip", this);
+    mEquipButton = new Button(_("Equip"), "equip", this);
     mEquipButton->setEnabled(false);
 
     for (int i = EQUIP_LEGS_SLOT; i < EQUIP_VECTOREND; i++)

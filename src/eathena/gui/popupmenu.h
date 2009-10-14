@@ -24,6 +24,7 @@
 #define POPUP_MENU_H
 
 #include <guichan/actionlistener.hpp>
+#include <guichan/focuslistener.hpp>
 
 #include "../../bindings/guichan/widgets/popup.h"
 #include "../../bindings/guichan/widgets/windowcontainer.h"
@@ -48,7 +49,8 @@ enum MenuType {
 /**
  * Window showing popup menu.
  */
-class PopupMenu : public Popup, public gcn::ActionListener
+class PopupMenu : public Popup, public gcn::ActionListener,
+                  public gcn::FocusListener
 {
     public:
         /**
@@ -98,6 +100,10 @@ class PopupMenu : public Popup, public gcn::ActionListener
          */
         void requestFocus();
 
+        /**
+         * Removes the PopupMenu when focus is lost.
+         */
+        void focusLost(const gcn::Event& event);
     private:
         gcn::Widget *mPreviousFocus;
 

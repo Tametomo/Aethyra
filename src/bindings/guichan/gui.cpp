@@ -575,13 +575,13 @@ void Gui::changeFontSize(const int size)
     TrueTypeFont *boldFont = static_cast<TrueTypeFont*>(getBoldFont());
     TrueTypeFont *infoParticleFont = static_cast<TrueTypeFont*>(getInfoParticleFont());
 
-    guiFont->decRef();
-    mGuiFont = resman->getFont(path, size);
-    getTop()->setGlobalFont(mGuiFont);
     boldFont->decRef();
     mBoldFont = resman->getFont(path, size, 1);
     infoParticleFont->decRef();
     mInfoParticleFont = resman->getFont(path, size, 1);
+    guiFont->decRef();
+    mGuiFont = resman->getFont(path, size);
+    getTop()->setGlobalFont(mGuiFont);
 
     Widgets widgets = windowContainer->getWidgetList();
     WidgetIterator iter;
