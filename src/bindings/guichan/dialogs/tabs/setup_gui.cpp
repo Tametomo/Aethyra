@@ -270,6 +270,7 @@ void Setup_Gui::cancel()
 
     int val = (int) mFontSizeSlider->getValue();
     mFontSizeLabel->setCaption(strprintf(_("%d Point"), val));
+    mFontSizeLabel->adjustSize();
 
     config.setValue("screen", mFullScreenEnabled ? true : false);
     config.setValue("opengl", mOpenGLEnabled ? true : false);
@@ -318,6 +319,7 @@ void Setup_Gui::action(const gcn::ActionEvent &event)
     {
         const int val = (int) mFontSizeSlider->getValue();
         mFontSizeLabel->setCaption(strprintf(_("%d Point"), val));
+        mFontSizeLabel->adjustSize();
     }
     else if (event.getId() == "fpslimitcheckbox")
     {

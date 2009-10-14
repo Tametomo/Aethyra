@@ -422,6 +422,8 @@ void Setup_Colors::setGradTypeText(const Palette::GradientType &value)
             mGradTypeText->setCaption( _("Spectrum"));
             break;
     }
+
+    mGradTypeText->adjustSize();
 }
 
 void Setup_Colors::updateColor()

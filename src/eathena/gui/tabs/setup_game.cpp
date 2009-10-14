@@ -228,6 +228,8 @@ void Setup_Game::setSpeechModeLabel(const int value)
             mSpeechModeLabel->setCaption(_("Bubbles with names"));
             break;
     }
+
+    mSpeechModeLabel->adjustSize();
 }
 
 void Setup_Game::setOverlayDetailLabel(const int value)
@@ -244,6 +246,8 @@ void Setup_Game::setOverlayDetailLabel(const int value)
             mOverlayDetailLabel->setCaption(_("high"));
             break;
     }
+
+    mOverlayDetailLabel->adjustSize();
 }
 
 void Setup_Game::setParticleDetailLabel(const int value)
@@ -266,6 +270,8 @@ void Setup_Game::setParticleDetailLabel(const int value)
             mParticleDetailLabel->setCaption(_("max"));
             break;
     }
+
+    mParticleDetailLabel->adjustSize();
 }
 
 void Setup_Game::changeParticleDetailLevel(const int value)

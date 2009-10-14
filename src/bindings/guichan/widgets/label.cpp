@@ -29,3 +29,4 @@ void Label::draw(gcn::Graphics* graphics)
     setForegroundColor(guiPalette->getColor(Palette::TEXT));
     gcn::Label::draw(static_cast<gcn::Graphics*>(graphics));
 }
+

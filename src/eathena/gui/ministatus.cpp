@@ -61,6 +61,8 @@ void MiniStatusWindow::fontChanged()
 {
     Popup::fontChanged();
 
+    update();
+
     setContentSize(mXpBar->getX() + mXpBar->getWidth(),
                    mXpBar->getY() + mXpBar->getHeight());
 }

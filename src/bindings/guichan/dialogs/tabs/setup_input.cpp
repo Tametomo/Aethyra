@@ -176,12 +176,14 @@ void Setup_Input::action(const gcn::ActionEvent &event)
             mCalibrateButton->setCaption(_("Calibrate"));
             mCalibrateLabel->setCaption
                 (_("Press the button to start calibration"));
+            mCalibrateLabel->adjustSize();
             joystick->finishCalibration();
         }
         else
         {
             mCalibrateButton->setCaption(_("Stop"));
             mCalibrateLabel->setCaption(_("Rotate the stick"));
+            mCalibrateLabel->adjustSize();
             joystick->startCalibration();
         }
     }
