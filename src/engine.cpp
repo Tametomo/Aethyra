@@ -275,24 +275,6 @@ void Engine::initInternationalization()
 
 void Engine::initConfig()
 {
-    // Fill configuration with defaults
-    logger->log("Initializing configuration...");
-    config.setValue("host", "www.aethyra.org");
-    config.setValue("port", 21001);
-    config.setValue("hwaccel", 0);
-#if defined USE_OPENGL
-    config.setValue("opengl", 1);
-#else
-    config.setValue("opengl", 0);
-#endif
-    config.setValue("screen", 0);
-    config.setValue("guialpha", 0.8f);
-    config.setValue("remember", 1);
-    config.setValue("fpslimit", 0);
-    config.setValue("updatehost", "http://www.aethyra.org/updates");
-    config.setValue("customcursor", 1);
-    config.setValue("ChatLogLength", 128);
-
     // Checking if the configuration file exists... otherwise creates it with
     // default options !
     FILE *configFile = 0;
@@ -303,12 +285,10 @@ void Engine::initConfig()
 
     configFile = fopen(configPath.c_str(), "r");
 
-    // If we can't read it, it doesn't exist !
+    // If we can't read it, it doesn't exist, so we reopen the file in write
+    // mode and we create it.
     if (configFile == NULL)
-    {
-        // We reopen the file in write mode and we create it
         configFile = fopen(configPath.c_str(), "wt");
-    }
 
     if (configFile == NULL)
     {
@@ -330,10 +310,9 @@ void Engine::initWindow()
     static SDL_SysWMinfo pInfo;
     SDL_GetWMInfo(&pInfo);
     HICON icon = LoadIcon(GetModuleHandle(NULL), "A");
+
     if (icon)
-    {
         SetClassLong(pInfo.window, GCL_HICON, (LONG) icon);
-    }
 #else
     icon = IMG_Load(PKG_DATADIR "data/icons/aethyra.png");
     if (icon)
@@ -344,7 +323,7 @@ void Engine::initWindow()
 #endif
 
 #ifdef USE_OPENGL
-    bool useOpenGL = !options.noOpenGL && (config.getValue("opengl", 0) == 1);
+    bool useOpenGL = !options.noOpenGL && (config.getValue("opengl", 1) == 1);
 
     // Setup image loading for the right image format
     Image::setLoadAsOpenGL(useOpenGL);
