@@ -84,6 +84,7 @@ std::string errorMessage;
 
 Game *game;
 Engine *engine;
+Options options;
 
 CharServerHandler charServerHandler;
 LoginData loginData;
@@ -148,7 +149,7 @@ static void printVersion()
               << std::endl << std::endl;
 }
 
-static void parseOptions(int argc, char *argv[], Options &options)
+static void parseOptions(int argc, char *argv[])
 {
     const char *optstring = "hvud:U:P:Dp:C:H:O";
 
@@ -312,9 +313,7 @@ static void mapLogin(Network *network, LoginData *loginData)
 /** Main */
 int main(int argc, char *argv[])
 {
-    Options options;
-
-    parseOptions(argc, argv, options);
+    parseOptions(argc, argv);
 
     if (options.printVersion)
         printVersion();
@@ -325,7 +324,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    engine = new Engine(argv[0], options);
+    engine = new Engine(argv[0]);
 
     state = START_STATE; /**< Initial game state */
 

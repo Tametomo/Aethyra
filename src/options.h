@@ -52,4 +52,6 @@ struct Options
     std::string updateHost;
     std::string dataPath;
 };
+
+extern Options options;
 #endif

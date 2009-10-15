@@ -89,8 +89,7 @@ Sound sound;
 
 extern "C" char const *_nl_locale_name_default(void);
 
-Engine::Engine(const char *prog, const Options &gameOptions) : 
-    options(gameOptions)
+Engine::Engine(const char *prog)
 {
     // Initialize PhysicsFS
     PHYSFS_init(prog);

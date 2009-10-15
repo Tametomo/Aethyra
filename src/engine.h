@@ -38,12 +38,11 @@
 
 class LoginData;
 class Network;
-class Options;
 
 class Engine
 {
     public:
-        Engine(const char *prog, const Options &options);
+        Engine(const char *prog);
         ~Engine();
 
         const std::string &getHomeDir() { return homeDir; }
@@ -57,7 +56,6 @@ class Engine
 
         std::string homeDir;
 
-        Options options;
         Network *network;
 
         FILE *nullFile;
