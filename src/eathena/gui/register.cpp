@@ -69,10 +69,9 @@ void WrongDataNoticeListener::action(const gcn::ActionEvent &event)
         mTarget->requestFocus();
 }
 
-RegisterDialog::RegisterDialog(LoginData *loginData):
+RegisterDialog::RegisterDialog():
     Window(_("Register")),
-    mWrongDataNoticeListener(new WrongDataNoticeListener),
-    mLoginData(loginData)
+    mWrongDataNoticeListener(new WrongDataNoticeListener())
 {
     mUserLabel = new Label(_("Name:"));
     mPasswordLabel = new Label(_("Password:"));
@@ -80,11 +79,11 @@ RegisterDialog::RegisterDialog(LoginData *loginData):
     mServerLabel = new Label(_("Server:"));
     mPortLabel = new Label(_("Port:"));
 
-    mUserField = new TextField(loginData->username);
-    mPasswordField = new PasswordField(loginData->password);
+    mUserField = new TextField(loginData.username);
+    mPasswordField = new PasswordField(loginData.password);
     mConfirmField = new PasswordField;
-    mServerField = new TextField(loginData->hostname);
-    mPortField = new TextField(toString(loginData->port));
+    mServerField = new TextField(loginData.hostname);
+    mPortField = new TextField(toString(loginData.port));
 
     mMaleButton = new RadioButton(_("Male"), "sex", true);
     mFemaleButton = new RadioButton(_("Female"), "sex", false);
@@ -230,12 +229,12 @@ void RegisterDialog::action(const gcn::ActionEvent &event)
             // No errors detected, register the new user.
             mRegisterButton->setEnabled(false);
 
-            mLoginData->hostname = mServerField->getText();
-            mLoginData->port = getUShort(mPortField->getText());
-            mLoginData->username = mUserField->getText();
-            mLoginData->password = mPasswordField->getText();
-            mLoginData->username += mFemaleButton->isSelected() ? "_F" : "_M";
-            mLoginData->registerLogin = true;
+            loginData.hostname = mServerField->getText();
+            loginData.port = getUShort(mPortField->getText());
+            loginData.username = mUserField->getText();
+            loginData.password = mPasswordField->getText();
+            loginData.username += mFemaleButton->isSelected() ? "_F" : "_M";
+            loginData.registerLogin = true;
 
             state = ACCOUNT_STATE;
         }

@@ -72,9 +72,6 @@
 #include "eathena/net/network.h"
 #include "eathena/net/serverinfo.h"
 
-// Account infos
-char n_server, n_character;
-
 // TODO Anyone knows a good location for this? Or a way to make it non-global?
 class SERVER_INFO;
 SERVER_INFO **server_info;
@@ -88,7 +85,7 @@ Options options;
 
 CharServerHandler charServerHandler;
 LoginData loginData;
-LockedArray<LocalPlayer*> charInfo(MAX_SLOT + 1);
+LockedArray<LocalPlayer*> charInfo(MAX_PLAYER_SLOTS);
 
 Desktop *desktop;
 
@@ -220,19 +217,18 @@ static void parseOptions(int argc, char *argv[])
 }
 
 // TODO Find some nice place for these functions
-static void accountLogin(Network *network, LoginData *loginData)
+static void accountLogin()
 {
     logger->log("Trying to connect to account server...");
-    logger->log("Username is %s", loginData->username.c_str());
-    network->connect(loginData->hostname, loginData->port);
+    logger->log("Username is %s", loginData.username.c_str());
+    network->connect(loginData.hostname, loginData.port);
     network->registerHandler(&loginHandler);
-    loginHandler.setLoginData(loginData);
 
     // Send login infos
     MessageOut outMsg(0x0064);
     outMsg.writeInt32(0); // client version
-    outMsg.writeString(loginData->username, 24);
-    outMsg.writeString(loginData->password, 24);
+    outMsg.writeString(loginData.username, 24);
+    outMsg.writeString(loginData.password, 24);
 
     /*
      * eAthena calls the last byte "client version 2", but it isn't used at
@@ -243,48 +239,47 @@ static void accountLogin(Network *network, LoginData *loginData)
     outMsg.writeInt8(0x01);
 
     // Clear the password, avoids auto login when returning to login
-    loginData->password = "";
+    loginData.password = "";
 
     // Remove _M or _F from username after a login for registration purpose
-    if (loginData->registerLogin)
+    if (loginData.registerLogin)
     {
-        loginData->username =
-            loginData->username.substr(0, loginData->username.length() - 2);
+        loginData.username =
+            loginData.username.substr(0, loginData.username.length() - 2);
     }
 
     // TODO This is not the best place to save the config, but at least better
     // than the login gui window
-    if (loginData->remember)
+    if (loginData.remember)
     {
-        config.setValue("host", loginData->hostname);
-        config.setValue("username", loginData->username);
+        config.setValue("host", loginData.hostname);
+        config.setValue("username", loginData.username);
     }
-    config.setValue("remember", loginData->remember);
+    config.setValue("remember", loginData.remember);
 }
 
-static void charLogin(Network *network, LoginData *loginData)
+static void charLogin()
 {
     logger->log("Trying to connect to char server...");
-    network->connect(loginData->hostname, loginData->port);
+    network->connect(loginData.hostname, loginData.port);
     network->registerHandler(&charServerHandler);
     charServerHandler.setCharInfo(&charInfo);
-    charServerHandler.setLoginData(loginData);
 
     // Send login infos
     MessageOut outMsg(0x0065);
-    outMsg.writeInt32(loginData->account_ID);
-    outMsg.writeInt32(loginData->session_ID1);
-    outMsg.writeInt32(loginData->session_ID2);
+    outMsg.writeInt32(loginData.account_ID);
+    outMsg.writeInt32(loginData.session_ID1);
+    outMsg.writeInt32(loginData.session_ID2);
     // [Fate] The next word is unused by the old char server, so we squeeze in
     //        tmw client version information
     outMsg.writeInt16(CLIENT_PROTOCOL_VERSION);
-    outMsg.writeInt8(loginData->sex);
+    outMsg.writeInt8(loginData.sex);
 
     // We get 4 useless bytes before the real answer comes in
     network->skip(4);
 }
 
-static void mapLogin(Network *network, LoginData *loginData)
+static void mapLogin()
 {
     logger->log("Memorizing selected character %s",
             player_node->getName().c_str());
@@ -293,16 +288,16 @@ static void mapLogin(Network *network, LoginData *loginData)
     logger->log("Trying to connect to map server...");
     logger->log("Map: %s", map_path.c_str());
 
-    network->connect(loginData->hostname, loginData->port);
+    network->connect(loginData.hostname, loginData.port);
     network->registerHandler(&mapLoginHandler);
 
     // Send login infos
     MessageOut outMsg(0x0072);
-    outMsg.writeInt32(loginData->account_ID);
+    outMsg.writeInt32(loginData.account_ID);
     outMsg.writeInt32(player_node->mCharId);
-    outMsg.writeInt32(loginData->session_ID1);
-    outMsg.writeInt32(loginData->session_ID2);
-    outMsg.writeInt8(loginData->sex);
+    outMsg.writeInt32(loginData.session_ID1);
+    outMsg.writeInt32(loginData.session_ID2);
+    outMsg.writeInt8(loginData.sex);
 
     // We get 4 useless bytes before the real answer comes in
     network->skip(4);
@@ -442,18 +437,18 @@ int main(int argc, char *argv[])
                         state = ACCOUNT_STATE;
                     }
                     else
-                        desktop->changeCurrentDialog(new LoginDialog(&loginData));
+                        desktop->changeCurrentDialog(new LoginDialog());
                     break;
 
                 case REGISTER_STATE:
                     logger->log("State: REGISTER");
-                    desktop->changeCurrentDialog(new RegisterDialog(&loginData));
+                    desktop->changeCurrentDialog(new RegisterDialog());
                     break;
 
                 case CHAR_SERVER_STATE:
                     logger->log("State: CHAR_SERVER");
 
-                    if (n_server == 1)
+                    if (loginData.servers == 1)
                     {
                         SERVER_INFO *si = *server_info;
                         loginData.hostname = ipToString(si->address);
@@ -464,8 +459,7 @@ int main(int argc, char *argv[])
                     else
                     {
                         int nextState = UPDATE_STATE;
-                        desktop->changeCurrentDialog(new ServerListDialog(
-                                                         &loginData, nextState));
+                        desktop->changeCurrentDialog(new ServerListDialog(nextState));
 
                         if (options.chooseDefault || !options.playername.empty())
                         {
@@ -541,17 +535,17 @@ int main(int argc, char *argv[])
                 case CONNECTING_STATE:
                     logger->log("State: CONNECTING");
                     desktop->useProgressBar(_("Connecting to map server..."));
-                    mapLogin(network, &loginData);
+                    mapLogin();
                     break;
 
                 case CHAR_CONNECT_STATE:
                     desktop->useProgressBar(_("Connecting to character server..."));
-                    charLogin(network, &loginData);
+                    charLogin();
                     break;
 
                 case ACCOUNT_STATE:
                     desktop->useProgressBar(_("Connecting to account server..."));
-                    accountLogin(network, &loginData);
+                    accountLogin();
                     break;
 
                 case EXIT_STATE:

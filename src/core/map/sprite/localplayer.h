@@ -27,9 +27,6 @@
 
 #include "player.h"
 
-// TODO move into some sane place...
-#define MAX_SLOT 2
-
 class Equipment;
 class FloorItem;
 class ImageSet;

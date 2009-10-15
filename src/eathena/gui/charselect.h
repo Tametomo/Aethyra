@@ -37,6 +37,8 @@ class Player;
 template<class T>
 class LockedArray;
 
+#define MAX_PLAYER_SLOTS 3
+
 /**
  * Character selection dialog.
  *
@@ -150,5 +152,7 @@ class CharCreateDialog : public Window, public gcn::ActionListener
 
         int mSlot;
 };
+
+extern CharCreateDialog *charCreateDialog;
 
 #endif

@@ -27,8 +27,6 @@
 
 #include "messagehandler.h"
 
-struct LoginData;
-
 class LoginHandler : public MessageHandler
 {
     public:
@@ -36,10 +34,7 @@ class LoginHandler : public MessageHandler
 
         void handleMessage(MessageIn *msg);
 
-        void setLoginData(LoginData *loginData) { mLoginData = loginData; };
-
     private:
-        LoginData *mLoginData;
         std::string mUpdateHost;
 };
 

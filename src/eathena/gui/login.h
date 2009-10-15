@@ -33,8 +33,6 @@
 
 #include "../../bindings/guichan/widgets/window.h"
 
-class LoginData;
-
 /**
  * The login dialog.
  *
@@ -49,7 +47,7 @@ class LoginDialog : public Window, public gcn::ActionListener,
          *
          * @see Window::Window
          */
-        LoginDialog(LoginData *loginData);
+        LoginDialog();
 
         ~LoginDialog();
 
@@ -115,8 +113,6 @@ class LoginDialog : public Window, public gcn::ActionListener,
         gcn::Button *mOkButton;
         gcn::Button *mCancelButton;
         gcn::Button *mRegisterButton;
-
-        LoginData *mLoginData;
 
         /**
          * Helper class to keep a list of all the recent entries for the

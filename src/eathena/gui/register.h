@@ -30,7 +30,6 @@
 
 #include "../../bindings/guichan/widgets/window.h"
 
-class LoginData;
 class OkDialog;
 class WrongDataNoticeListener;
 
@@ -60,7 +59,7 @@ class RegisterDialog : public Window, public gcn::ActionListener,
          *
          * @see Window::Window
          */
-        RegisterDialog(LoginData *loginData);
+        RegisterDialog();
 
         /**
          * Destructor
@@ -127,8 +126,6 @@ class RegisterDialog : public Window, public gcn::ActionListener,
         gcn::RadioButton *mFemaleButton;
 
         WrongDataNoticeListener *mWrongDataNoticeListener;
-
-        LoginData *mLoginData;
 };
 
 #endif

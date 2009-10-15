@@ -89,17 +89,17 @@ void LoginHandler::handleMessage(MessageIn *msg)
             // Skip the length word
             msg->skip(2);
 
-            n_server = (msg->getLength() - 47) / 32;
+            loginData.servers = (msg->getLength() - 47) / 32;
             server_info =
-                (SERVER_INFO**) malloc(sizeof(SERVER_INFO*) * n_server);
+                (SERVER_INFO**) malloc(sizeof(SERVER_INFO*) * loginData.servers);
 
-            mLoginData->session_ID1 = msg->readInt32();
-            mLoginData->account_ID = msg->readInt32();
-            mLoginData->session_ID2 = msg->readInt32();
+            loginData.session_ID1 = msg->readInt32();
+            loginData.account_ID = msg->readInt32();
+            loginData.session_ID2 = msg->readInt32();
             msg->skip(30);                           // unknown
-            mLoginData->sex = msg->readInt8();
+            loginData.sex = msg->readInt8();
 
-            for (int i = 0; i < n_server; i++)
+            for (int i = 0; i < loginData.servers; i++)
             {
                 server_info[i] = new SERVER_INFO;
 
@@ -111,9 +111,9 @@ void LoginHandler::handleMessage(MessageIn *msg)
                 msg->skip(2);                        // unknown
 
                 logger->log("Network: Server: %s (%s:%d)",
-                        server_info[i]->name.c_str(),
-                        ipToString(server_info[i]->address),
-                        server_info[i]->port);
+                            server_info[i]->name.c_str(),
+                            ipToString(server_info[i]->address),
+                            server_info[i]->port);
             }
             state = CHAR_SERVER_STATE;
             break;

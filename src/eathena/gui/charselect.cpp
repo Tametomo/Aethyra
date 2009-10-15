@@ -28,7 +28,7 @@
 
 #include "../db/colordb.h"
 
-#include "../net/charserverhandler.h"
+#include "../net/logindata.h"
 #include "../net/messageout.h"
 
 #include "../../main.h"
@@ -49,8 +49,7 @@
 #include "../../core/utils/lockedarray.h"
 #include "../../core/utils/stringutils.h"
 
-// Defined in main.cpp, used here for setting the char create dialog
-extern CharServerHandler charServerHandler;
+CharCreateDialog *charCreateDialog;
 
 /**
  * Listener for confirming character deletion.
@@ -75,9 +74,8 @@ void CharDeleteConfirm::action(const gcn::ActionEvent &event)
 {
     //ConfirmDialog::action(event);
     if (event.getId() == "yes")
-    {
         master->attemptCharDelete();
-    }
+
     ConfirmDialog::action(event);
 }
 
@@ -134,7 +132,7 @@ void CharSelectDialog::fontChanged()
 
 void CharSelectDialog::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == "ok" && n_character > 0)
+    if (event.getId() == "ok" && loginData.slots > 0)
     {
         // Start game
         mNewDelCharButton->setEnabled(false);
@@ -146,32 +144,21 @@ void CharSelectDialog::action(const gcn::ActionEvent &event)
         attemptCharSelect();
     }
     else if (event.getId() == "cancel")
-    {
         state = EXIT_STATE;
-    }
     else if (event.getId() == "newdel")
     {
         // Check for a character
         if (mCharInfo->getEntry())
-        {
             new CharDeleteConfirm(this);
-        }
-        else if (n_character <= MAX_SLOT)
-        {
-            // Start new character dialog
-            CharCreateDialog *charCreateDialog =
-                new CharCreateDialog(this, mCharInfo->getPos(), mGender);
-            charServerHandler.setCharCreateDialog(charCreateDialog);
-        }
+        // Start new character dialog
+        else if (loginData.slots < MAX_PLAYER_SLOTS)
+            charCreateDialog = new CharCreateDialog(this, mCharInfo->getPos(),
+                                                    mGender);
     }
     else if (event.getId() == "previous")
-    {
         mCharInfo->prev();
-    }
     else if (event.getId() == "next")
-    {
         mCharInfo->next();
-    }
 }
 
 void CharSelectDialog::updatePlayerInfo()
@@ -332,9 +319,7 @@ void CharCreateDialog::fontChanged()
 CharCreateDialog::~CharCreateDialog()
 {
     delete mPlayer;
-
-    // Make sure the char server handler knows that we're gone
-    charServerHandler.setCharCreateDialog(NULL);
+    charCreateDialog = NULL;
 }
 
 void CharCreateDialog::action(const gcn::ActionEvent &event)
@@ -352,7 +337,7 @@ void CharCreateDialog::action(const gcn::ActionEvent &event)
         else
         {
             new OkDialog("Error",
-                    "Your name needs to be at least 4 characters.", this);
+                         "Your name needs to be at least 4 characters.", this);
         }
     }
     else if (event.getId() == "cancel")

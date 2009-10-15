@@ -32,9 +32,8 @@
 
 extern SERVER_INFO **server_info;
 
-ServerListDialog::ServerListDialog(LoginData *loginData, int nextState):
+ServerListDialog::ServerListDialog(int nextState):
     ListDialog("ServerSelect"),
-    mLoginData(loginData),
     mNextState(nextState)
 {
     setWindowName(_("Select Server"));
@@ -49,9 +48,9 @@ void ServerListDialog::action(const gcn::ActionEvent &event)
     {
         const SERVER_INFO *si = server_info[getSelected()];
 
-        mLoginData->hostname = ipToString(si->address);
-        mLoginData->port = si->port;
-        mLoginData->updateHost = si->updateHost;
+        loginData.hostname = ipToString(si->address);
+        loginData.port = si->port;
+        loginData.updateHost = si->updateHost;
 
         state = mNextState;
     }
@@ -61,7 +60,7 @@ void ServerListDialog::action(const gcn::ActionEvent &event)
 
 void ServerListDialog::widgetShown(const gcn::Event& event)
 {
-    for (int i = 0; i < n_server; i++)
+    for (int i = 0; i < loginData.servers; i++)
     {
         const SERVER_INFO *si = server_info[i];
         addOption(si->name + " (" + toString(si->online_users) + ")");

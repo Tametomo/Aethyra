@@ -73,7 +73,7 @@ void MapLoginHandler::handleMessage(MessageIn *msg)
             msg->readCoordinates(player_node->mX, player_node->mY, direction);
             msg->skip(2);      // unknown
             logger->log("Protocol: Player start position: (%d, %d), Direction: %d",
-                    player_node->mX, player_node->mY, direction);
+                        player_node->mX, player_node->mY, direction);
             state = GAME_STATE;
             break;
     }

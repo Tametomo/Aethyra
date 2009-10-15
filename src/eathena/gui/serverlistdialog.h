@@ -25,8 +25,6 @@
 
 #include "../../bindings/guichan/dialogs/listdialog.h"
 
-class LoginData;
-
 /**
  * A dialog for choosing which server to use when more than one is present.
  *
@@ -40,7 +38,7 @@ class ServerListDialog : public ListDialog
          *
          * @see Window::Window
          */
-        ServerListDialog(LoginData *loginData, int nextState);
+        ServerListDialog(int nextState);
 
         /**
          * Called when receiving actions from the widgets.
@@ -53,7 +51,6 @@ class ServerListDialog : public ListDialog
         void widgetShown(const gcn::Event& event);
 
     private:
-        LoginData *mLoginData;
         int mNextState;
 };
 

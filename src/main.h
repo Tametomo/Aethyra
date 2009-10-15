@@ -54,7 +54,6 @@ enum {
     CONNECTING_STATE
 };
 
-extern char n_server, n_character;
 extern unsigned char state;
 extern std::string errorMessage;
 

@@ -41,7 +41,7 @@
 #include "../../core/utils/stringutils.h"
 
 CharServerHandler::CharServerHandler():
-    mCharCreateDialog(0)
+    mCharInfo(NULL)
 {
     static const Uint16 _messages[] = {
         SMSG_CONNECTION_PROBLEM,
@@ -101,9 +101,9 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             msg->skip(16); // Unused
 
             // Derive number of characters from message length
-            n_character = (msg->getLength() - 24) / 106;
+            loginData.slots = (msg->getLength() - 24) / 106;
 
-            for (int i = 0; i < n_character; i++)
+            for (int i = 0; i < loginData.slots; i++)
             {
                 tempPlayer = readPlayerData(*msg, slot);
                 mCharInfo->select(slot);
@@ -136,28 +136,28 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             mCharInfo->unlock();
             mCharInfo->select(slot);
             mCharInfo->setEntry(tempPlayer);
-            n_character++;
+            loginData.slots++;
 
             // Close the character create dialog
-            if (mCharCreateDialog)
+            if (charCreateDialog)
             {
-                mCharCreateDialog->scheduleDelete();
-                mCharCreateDialog = 0;
+                charCreateDialog->scheduleDelete();
+                charCreateDialog = NULL;
             }
             break;
 
         case 0x006e:
             new OkDialog(_("Error"), _("Failed to create character. Most "
                                        "likely the name is already taken."));
-            if (mCharCreateDialog)
-                mCharCreateDialog->unlock();
+            if (charCreateDialog)
+                charCreateDialog->unlock();
             break;
 
         case 0x006f:
             delete mCharInfo->getEntry();
             mCharInfo->setEntry(0);
             mCharInfo->unlock();
-            n_character--;
+            loginData.slots--;
             new OkDialog(_("Info"), _("Character deleted."));
             break;
 
@@ -171,8 +171,8 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             slot = mCharInfo->getPos();
             msg->skip(4); // CharID, must be the same as player_node->charID
             map_path = msg->readString(16);
-            mLoginData->hostname = ipToString(msg->readInt32());
-            mLoginData->port = msg->readInt16();
+            loginData.hostname = ipToString(msg->readInt32());
+            loginData.port = msg->readInt16();
             mCharInfo->unlock();
             mCharInfo->select(0);
             // Clear unselected players infos
@@ -195,8 +195,8 @@ void CharServerHandler::handleMessage(MessageIn *msg)
 
 LocalPlayer *CharServerHandler::readPlayerData(MessageIn &msg, int &slot)
 {
-    LocalPlayer *tempPlayer = new LocalPlayer(mLoginData->account_ID, 0, NULL);
-    tempPlayer->setGender((mLoginData->sex == 0) ? GENDER_FEMALE : GENDER_MALE);
+    LocalPlayer *tempPlayer = new LocalPlayer(loginData.account_ID, 0, NULL);
+    tempPlayer->setGender((loginData.sex == 0) ? GENDER_FEMALE : GENDER_MALE);
 
     tempPlayer->mCharId = msg.readInt32();
     tempPlayer->setXp(msg.readInt32());
@@ -238,3 +238,4 @@ LocalPlayer *CharServerHandler::readPlayerData(MessageIn &msg, int &slot)
 
     return tempPlayer;
 }
+

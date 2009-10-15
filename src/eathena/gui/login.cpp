@@ -44,9 +44,8 @@
 
 static const int MAX_SERVER_LIST_SIZE = 5;
 
-LoginDialog::LoginDialog(LoginData *loginData) :
-    Window(_("Login")),
-    mLoginData(loginData)
+LoginDialog::LoginDialog() :
+    Window(_("Login"))
 {
     mUserLabel = new Label(_("Name:"));
     mPassLabel = new Label(_("Password:"));
@@ -65,13 +64,13 @@ LoginDialog::LoginDialog(LoginData *loginData) :
     mServerList = new DropDownList("MostRecent00", dfltServer, dfltPort,
                                    MAX_SERVER_LIST_SIZE);
 
-    mUserField = new TextField(mLoginData->username);
-    mPassField = new PasswordField(mLoginData->password);
+    mUserField = new TextField(loginData.username);
+    mPassField = new PasswordField(loginData.password);
     mServerField = new TextField(mServerList->getServerAt(0));
     mPortField = new TextField(mServerList->getPortAt(0));
     mServerDropDown = new DropDown(mServerList);
 
-    mKeepCheck = new CheckBox(_("Keep"), mLoginData->remember);
+    mKeepCheck = new CheckBox(_("Keep"), loginData.remember);
     mOkButton = new Button(_("OK"), "ok", this);
     mCancelButton = new Button(_("Cancel"), "cancel", this);
     mRegisterButton = new Button(_("Register"), "register", this);
@@ -133,14 +132,15 @@ void LoginDialog::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "ok" && canSubmit())
     {
-        mLoginData->hostname = mServerField->getText();
-        mLoginData->port = getUShort(mPortField->getText());
-        mLoginData->username = mUserField->getText();
-        mLoginData->password = mPassField->getText();
-        mLoginData->remember = mKeepCheck->isSelected();
-        mLoginData->registerLogin = false;
+        loginData.hostname = mServerField->getText();
+        loginData.port = getUShort(mPortField->getText());
+        loginData.username = mUserField->getText();
+        loginData.password = mPassField->getText();
+        loginData.remember = mKeepCheck->isSelected();
+        loginData.registerLogin = false;
 
         mOkButton->setEnabled(false);
+        mCancelButton->setEnabled(false);
         mRegisterButton->setEnabled(false);
         mServerList->save(mServerField->getText(), mPortField->getText());
         state = ACCOUNT_STATE;
@@ -152,15 +152,15 @@ void LoginDialog::action(const gcn::ActionEvent &event)
     else if (event.getId() == "register")
     {
         // Transfer these fields on to the register dialog
-        mLoginData->hostname = mServerField->getText();
+        loginData.hostname = mServerField->getText();
 
         if (isUShort(mPortField->getText()))
-            mLoginData->port = getUShort(mPortField->getText());
+            loginData.port = getUShort(mPortField->getText());
         else
-            mLoginData->port = 6901;
+            loginData.port = 6901;
 
-        mLoginData->username = mUserField->getText();
-        mLoginData->password = mPassField->getText();
+        loginData.username = mUserField->getText();
+        loginData.password = mPassField->getText();
 
         state = REGISTER_STATE;
     }

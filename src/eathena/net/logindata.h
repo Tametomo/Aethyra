@@ -38,8 +38,13 @@ struct LoginData
     int session_ID2;
     char sex;
 
+    int slots;                /**< Number of possible character slots */
+    int servers;              /**< Number of available servers to use */
+
     bool remember;            /**< Whether to store the username and host. */
     bool registerLogin;       /**< Whether an account is being registered. */
 };
+
+extern LoginData loginData;
 
 #endif
