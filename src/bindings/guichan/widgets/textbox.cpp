@@ -31,6 +31,7 @@
 
 TextBox::TextBox(TextWrapHandler *wrapHandler) :
     gcn::TextBox(),
+    mMaxDimension(100),
     mRawText(""),
     mWrapHandler(wrapHandler),
     mTextColor(&guiPalette->getColor(Palette::TEXT))
@@ -50,6 +51,8 @@ TextBox::~TextBox()
 
 void TextBox::setTextWrapped(const std::string &text, int maxDimension)
 {
+    mMaxDimension = maxDimension;
+
     // Make sure parent scroll area sets width of this widget
     if (getParent())
         getParent()->logic();
@@ -72,6 +75,6 @@ void TextBox::setTextWrapped(const std::string &text, int maxDimension)
 void TextBox::fontChanged()
 {
     gcn::TextBox::fontChanged();
-    setTextWrapped(mRawText, mMinWidth);
+    setTextWrapped(mRawText, mMaxDimension);
     adjustSize();
 }

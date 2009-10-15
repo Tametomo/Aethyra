@@ -76,6 +76,7 @@ class TextBox : public gcn::TextBox
 
     private:
         int mMinWidth;
+        int mMaxDimension;
 
         std::string mRawText;
 
