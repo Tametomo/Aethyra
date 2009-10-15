@@ -39,8 +39,7 @@ class CharServerHandler : public MessageHandler
 
         void handleMessage(MessageIn *msg);
 
-        void setCharInfo(LockedArray<LocalPlayer*> *charInfo)
-        { mCharInfo = charInfo; }
+        void login(LockedArray<LocalPlayer*> *charInfo);
 
     protected:
         LockedArray<LocalPlayer*> *mCharInfo;

@@ -34,6 +34,8 @@ class LoginHandler : public MessageHandler
 
         void handleMessage(MessageIn *msg);
 
+        void login();
+
     private:
         std::string mUpdateHost;
 };

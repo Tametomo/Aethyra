@@ -23,6 +23,8 @@
 #include "charserverhandler.h"
 #include "logindata.h"
 #include "messagein.h"
+#include "messageout.h"
+#include "network.h"
 #include "protocol.h"
 
 #include "../game.h"
@@ -40,8 +42,7 @@
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
-CharServerHandler::CharServerHandler():
-    mCharInfo(NULL)
+CharServerHandler::CharServerHandler()
 {
     static const Uint16 _messages[] = {
         SMSG_CONNECTION_PROBLEM,
@@ -237,5 +238,27 @@ LocalPlayer *CharServerHandler::readPlayerData(MessageIn &msg, int &slot)
     msg.readInt8();        // unknown
 
     return tempPlayer;
+}
+
+void CharServerHandler::login(LockedArray<LocalPlayer*> *charInfo)
+{
+    logger->log("Sending server client version and getting character data...");
+    network->disconnect();
+    network->connect(loginData.hostname, loginData.port);
+    network->registerHandler(this);
+    mCharInfo = charInfo;
+
+    // Send login infos
+    MessageOut outMsg(0x0065);
+    outMsg.writeInt32(loginData.account_ID);
+    outMsg.writeInt32(loginData.session_ID1);
+    outMsg.writeInt32(loginData.session_ID2);
+    // [Fate] The next word is unused by the old char server, so we squeeze in
+    //        tmw client version information
+    outMsg.writeInt16(CLIENT_PROTOCOL_VERSION);
+    outMsg.writeInt8(loginData.sex);
+
+    // We get 4 useless bytes before the real answer comes in
+    network->skip(4);
 }
 

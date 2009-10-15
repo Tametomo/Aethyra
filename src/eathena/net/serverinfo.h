@@ -34,4 +34,6 @@ struct SERVER_INFO
     std::string updateHost;
 };
 
+extern SERVER_INFO **server_info;
+
 #endif

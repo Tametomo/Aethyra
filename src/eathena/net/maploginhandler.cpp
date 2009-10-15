@@ -20,12 +20,18 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "logindata.h"
 #include "maploginhandler.h"
 #include "messagein.h"
+#include "messageout.h"
+#include "network.h"
 #include "protocol.h"
+
+#include "../game.h"
 
 #include "../../main.h"
 
+#include "../../core/configuration.h"
 #include "../../core/log.h"
 
 #include "../../core/map/sprite/localplayer.h"
@@ -77,4 +83,29 @@ void MapLoginHandler::handleMessage(MessageIn *msg)
             state = GAME_STATE;
             break;
     }
+}
+
+void MapLoginHandler::login()
+{
+    logger->log("Memorizing selected character %s",
+                player_node->getName().c_str());
+    config.setValue("lastCharacter", player_node->getName());
+
+    logger->log("Trying to connect to map server...");
+    logger->log("Map: %s", map_path.c_str());
+
+    network->disconnect();
+    network->connect(loginData.hostname, loginData.port);
+    network->registerHandler(this);
+
+    // Send login infos
+    MessageOut outMsg(0x0072);
+    outMsg.writeInt32(loginData.account_ID);
+    outMsg.writeInt32(player_node->mCharId);
+    outMsg.writeInt32(loginData.session_ID1);
+    outMsg.writeInt32(loginData.session_ID2);
+    outMsg.writeInt8(loginData.sex);
+
+    // We get 4 useless bytes before the real answer comes in
+    network->skip(4);
 }

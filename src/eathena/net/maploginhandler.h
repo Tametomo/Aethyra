@@ -31,6 +31,8 @@ class MapLoginHandler : public MessageHandler
         MapLoginHandler();
 
         void handleMessage(MessageIn *msg);
+
+        void login();
 };
 
 #endif

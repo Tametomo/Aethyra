@@ -72,10 +72,6 @@
 #include "eathena/net/network.h"
 #include "eathena/net/serverinfo.h"
 
-// TODO Anyone knows a good location for this? Or a way to make it non-global?
-class SERVER_INFO;
-SERVER_INFO **server_info;
-
 unsigned char state;
 std::string errorMessage;
 
@@ -209,98 +205,12 @@ static void parseOptions(int argc, char *argv[])
             case 'O':
                 options.noOpenGL = true;
 #ifndef USE_OPENGL
-                std::cout << _("--no-opengl is set by default (OpenGL has been disabled at build time)") << std::endl;
+                std::cout << _("--no-opengl is set by default (OpenGL has been "
+                               "disabled at build time)") << std::endl;
 #endif
                 break;
         }
     }
-}
-
-// TODO Find some nice place for these functions
-static void accountLogin()
-{
-    logger->log("Trying to connect to account server...");
-    logger->log("Username is %s", loginData.username.c_str());
-    network->connect(loginData.hostname, loginData.port);
-    network->registerHandler(&loginHandler);
-
-    // Send login infos
-    MessageOut outMsg(0x0064);
-    outMsg.writeInt32(0); // client version
-    outMsg.writeString(loginData.username, 24);
-    outMsg.writeString(loginData.password, 24);
-
-    /*
-     * eAthena calls the last byte "client version 2", but it isn't used at
-     * at all. We're retasking it, with bit 0 to indicate whether the client
-     * can handle the 0x63 "update host" packet. Clients prior to 0.0.25 send
-     * 0 here.
-     */
-    outMsg.writeInt8(0x01);
-
-    // Clear the password, avoids auto login when returning to login
-    loginData.password = "";
-
-    // Remove _M or _F from username after a login for registration purpose
-    if (loginData.registerLogin)
-    {
-        loginData.username =
-            loginData.username.substr(0, loginData.username.length() - 2);
-    }
-
-    // TODO This is not the best place to save the config, but at least better
-    // than the login gui window
-    if (loginData.remember)
-    {
-        config.setValue("host", loginData.hostname);
-        config.setValue("username", loginData.username);
-    }
-    config.setValue("remember", loginData.remember);
-}
-
-static void charLogin()
-{
-    logger->log("Trying to connect to char server...");
-    network->connect(loginData.hostname, loginData.port);
-    network->registerHandler(&charServerHandler);
-    charServerHandler.setCharInfo(&charInfo);
-
-    // Send login infos
-    MessageOut outMsg(0x0065);
-    outMsg.writeInt32(loginData.account_ID);
-    outMsg.writeInt32(loginData.session_ID1);
-    outMsg.writeInt32(loginData.session_ID2);
-    // [Fate] The next word is unused by the old char server, so we squeeze in
-    //        tmw client version information
-    outMsg.writeInt16(CLIENT_PROTOCOL_VERSION);
-    outMsg.writeInt8(loginData.sex);
-
-    // We get 4 useless bytes before the real answer comes in
-    network->skip(4);
-}
-
-static void mapLogin()
-{
-    logger->log("Memorizing selected character %s",
-            player_node->getName().c_str());
-    config.setValue("lastCharacter", player_node->getName());
-
-    logger->log("Trying to connect to map server...");
-    logger->log("Map: %s", map_path.c_str());
-
-    network->connect(loginData.hostname, loginData.port);
-    network->registerHandler(&mapLoginHandler);
-
-    // Send login infos
-    MessageOut outMsg(0x0072);
-    outMsg.writeInt32(loginData.account_ID);
-    outMsg.writeInt32(player_node->mCharId);
-    outMsg.writeInt32(loginData.session_ID1);
-    outMsg.writeInt32(loginData.session_ID2);
-    outMsg.writeInt8(loginData.sex);
-
-    // We get 4 useless bytes before the real answer comes in
-    network->skip(4);
 }
 
 } // namespace
@@ -535,17 +445,17 @@ int main(int argc, char *argv[])
                 case CONNECTING_STATE:
                     logger->log("State: CONNECTING");
                     desktop->useProgressBar(_("Connecting to map server..."));
-                    mapLogin();
+                    mapLoginHandler.login();
                     break;
 
                 case CHAR_CONNECT_STATE:
                     desktop->useProgressBar(_("Connecting to character server..."));
-                    charLogin();
+                    charServerHandler.login(&charInfo);
                     break;
 
                 case ACCOUNT_STATE:
                     desktop->useProgressBar(_("Connecting to account server..."));
-                    accountLogin();
+                    loginHandler.login();
                     break;
 
                 case EXIT_STATE:

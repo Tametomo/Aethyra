@@ -23,17 +23,20 @@
 #include "logindata.h"
 #include "loginhandler.h"
 #include "messagein.h"
+#include "messageout.h"
+#include "network.h"
 #include "protocol.h"
 #include "serverinfo.h"
 
 #include "../../main.h"
 
+#include "../../core/configuration.h"
 #include "../../core/log.h"
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
-extern SERVER_INFO **server_info;
+SERVER_INFO **server_info;
 
 LoginHandler::LoginHandler()
 {
@@ -82,7 +85,7 @@ void LoginHandler::handleMessage(MessageIn *msg)
              mUpdateHost = msg->readString(len);
 
              logger->log("Received update host \"%s\" from login server",
-                     mUpdateHost.c_str());
+                         mUpdateHost.c_str());
              break;
 
         case 0x0069:
@@ -158,4 +161,45 @@ void LoginHandler::handleMessage(MessageIn *msg)
             state = ERROR_STATE;
             break;
     }
+}
+
+void LoginHandler::login()
+{
+    logger->log("Trying to connect to account server...");
+    logger->log("Username is %s", loginData.username.c_str());
+    network->connect(loginData.hostname, loginData.port);
+    network->registerHandler(this);
+
+    // Send login infos
+    MessageOut outMsg(0x0064);
+    outMsg.writeInt32(0); // client version
+    outMsg.writeString(loginData.username, 24);
+    outMsg.writeString(loginData.password, 24);
+
+    /*
+     * eAthena calls the last byte "client version 2", but it isn't used at
+     * at all. We're retasking it, with bit 0 to indicate whether the client
+     * can handle the 0x63 "update host" packet. Clients prior to 0.0.25 send
+     * 0 here.
+     */
+    outMsg.writeInt8(0x01);
+
+    // Clear the password, avoids auto login when returning to login
+    loginData.password = "";
+
+    // Remove _M or _F from username after a login for registration purpose
+    if (loginData.registerLogin)
+    {
+        loginData.username =
+            loginData.username.substr(0, loginData.username.length() - 2);
+    }
+
+    // TODO This is not the best place to save the config, but at least better
+    // than the login gui window
+    if (loginData.remember)
+    {
+        config.setValue("host", loginData.hostname);
+        config.setValue("username", loginData.username);
+    }
+    config.setValue("remember", loginData.remember);
 }
