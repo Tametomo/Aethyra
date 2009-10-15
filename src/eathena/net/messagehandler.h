@@ -26,7 +26,6 @@
 #include <SDL_types.h>
 
 class MessageIn;
-class Network;
 
 class MessageHandler
 {
@@ -37,11 +36,6 @@ class MessageHandler
         virtual ~MessageHandler();
 
         virtual void handleMessage(MessageIn *msg) =0;
-
-        void setNetwork(Network *network);
-
-    protected:
-        Network *mNetwork;
 };
 
 #endif

@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -40,6 +41,16 @@ class MessageIn;
 class Network
 {
     public:
+        // ERROR replaced by NET_ERROR because already defined in Windows
+        enum NetState {
+            IDLE,
+            CONNECTED,
+            CONNECTING,
+            DATA,
+            NET_ERROR,
+            FATAL
+        };
+
         friend int networkThread(void *data);
         friend class MessageOut;
 
@@ -57,7 +68,7 @@ class Network
 
         void clearHandlers();
 
-        int getState() const { return mState; }
+        NetState getState() const { return mState; }
 
         const std::string& getError() const { return mError; }
 
@@ -75,19 +86,7 @@ class Network
 
         void flush();
 
-        // ERROR replaced by NET_ERROR because already defined in Windows
-        enum {
-            IDLE,
-            CONNECTED,
-            CONNECTING,
-            DATA,
-            NET_ERROR,
-            FATAL
-        };
-
     private:
-        static Network *instance();
-
         void setError(const std::string &error);
 
         void fatal(const std::string &error);
@@ -108,7 +107,7 @@ class Network
 
         unsigned int mToSkip;
 
-        int mState;
+        NetState mState;
         std::string mError;
 
         SDL_Thread *mWorkerThread;
@@ -117,8 +116,8 @@ class Network
         typedef std::map<Uint16, MessageHandler*> MessageHandlers;
         typedef MessageHandlers::iterator MessageHandlerIterator;
         MessageHandlers mMessageHandlers;
-
-        static Network *mInstance;
 };
+
+extern Network *network;
 
 #endif

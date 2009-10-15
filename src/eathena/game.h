@@ -28,21 +28,18 @@
 #include "../main.h"
 
 class MessageHandler;
-class Network;
 
 extern std::string map_path;
 
 class Game
 {
     public:
-        Game(Network *network);
+        Game();
         ~Game();
 
         void logic() const;
 
     private:
-        Network *mNetwork;
-
         typedef const std::auto_ptr<MessageHandler> MessageHandlerPtr;
         MessageHandlerPtr mBeingHandler;
         MessageHandlerPtr mBuySellHandler;

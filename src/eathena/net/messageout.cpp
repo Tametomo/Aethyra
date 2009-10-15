@@ -33,8 +33,7 @@ MessageOut::MessageOut(short id):
     mDataSize(0),
     mPos(0)
 {
-    mNetwork = Network::instance();
-    mData = mNetwork->mOutBuffer + mNetwork->mOutSize;
+    mData = network->mOutBuffer + network->mOutSize;
     writeInt16(id);
 }
 
@@ -42,7 +41,7 @@ void MessageOut::writeInt8(Sint8 value)
 {
     mData[mPos] = value;
     mPos += sizeof(Sint8);
-    mNetwork->mOutSize+= sizeof(Sint8);
+    network->mOutSize += sizeof(Sint8);
 }
 
 void MessageOut::writeInt16(Sint16 value)
@@ -53,7 +52,7 @@ void MessageOut::writeInt16(Sint16 value)
     (*(Sint16 *)(mData + mPos)) = value;
 #endif
     mPos += sizeof(Sint16);
-    mNetwork->mOutSize += sizeof(Sint16);
+    network->mOutSize += sizeof(Sint16);
 }
 
 void MessageOut::writeInt32(Sint32 value)
@@ -64,7 +63,7 @@ void MessageOut::writeInt32(Sint32 value)
     (*(Sint32 *)(mData + mPos)) = value;
 #endif
     mPos += sizeof(Sint32);
-    mNetwork->mOutSize += sizeof(Sint32);
+    network->mOutSize += sizeof(Sint32);
 }
 
 #define LOBYTE(w)  ((unsigned char)(w))
@@ -74,7 +73,7 @@ void MessageOut::writeCoordinates(unsigned short x, unsigned short y,
                                   unsigned char direction)
 {
     char *data = mData + mPos;
-    mNetwork->mOutSize += 3;
+    network->mOutSize += 3;
     mPos += 3;
 
     short temp;
@@ -142,14 +141,14 @@ void MessageOut::writeString(const std::string &string, int length)
     // Write the actual string
     memcpy(&mData[mPos], (void*)toWrite.c_str(), toWrite.length());
     mPos += toWrite.length();
-    mNetwork->mOutSize += toWrite.length();
+    network->mOutSize += toWrite.length();
 
     // Pad remaining space with zeros
     if (length > (int)toWrite.length())
     {
         memset(&mData[mPos], '\0', length - toWrite.length());
         mPos += length - toWrite.length();
-        mNetwork->mOutSize += length - toWrite.length();
+        network->mOutSize += length - toWrite.length();
     }
 }
 

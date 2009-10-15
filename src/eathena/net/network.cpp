@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -80,9 +81,11 @@ short packet_lengths[] = {
 
 const unsigned int BUFFER_SIZE = 65536;
 
+Network *network = NULL;
+
 int networkThread(void *data)
 {
-    Network *network = static_cast<Network*>(data);
+    network = static_cast<Network*>(data);
 
     if (!network->realConnect())
         return -1;
@@ -91,8 +94,6 @@ int networkThread(void *data)
 
     return 0;
 }
-
-Network *Network::mInstance = 0;
 
 Network::Network():
     mSocket(0),
@@ -104,19 +105,20 @@ Network::Network():
     mState(IDLE),
     mWorkerThread(0)
 {
+    logger->log("Creating new Network instance");
     mMutex = SDL_CreateMutex();
-    mInstance = this;
 }
 
 Network::~Network()
 {
+    logger->log("Shutting down Network instance");
     clearHandlers();
 
     if (mState != IDLE && mState != NET_ERROR)
         disconnect();
 
     SDL_DestroyMutex(mMutex);
-    mInstance = 0;
+    network = NULL;
 
     delete[] mInBuffer;
     delete[] mOutBuffer;
@@ -178,25 +180,16 @@ void Network::registerHandler(MessageHandler *handler)
 {
     for (const Uint16 *i = handler->handledMessages; *i; i++)
         mMessageHandlers[*i] = handler;
-
-    handler->setNetwork(this);
 }
 
 void Network::unregisterHandler(MessageHandler *handler)
 {
     for (const Uint16 *i = handler->handledMessages; *i; i++)
         mMessageHandlers.erase(*i);
-
-    handler->setNetwork(NULL);
 }
 
 void Network::clearHandlers()
 {
-    MessageHandlerIterator i;
-
-    for (i = mMessageHandlers.begin(); i != mMessageHandlers.end(); i++)
-        i->second->setNetwork(NULL);
-
     mMessageHandlers.clear();
 }
 
@@ -234,11 +227,10 @@ void Network::flush()
 
     SDL_mutexP(mMutex);
     ret = SDLNet_TCP_Send(mSocket, mOutBuffer, mOutSize);
+
     if (ret < (int)mOutSize)
-    {
-        setError("Error in SDLNet_TCP_Send(): " +
-                 std::string(SDLNet_GetError()));
-    }
+        setError(strprintf("Error in SDLNet_TCP_Send(): %s", SDLNet_GetError()));
+
     mOutSize = 0;
     SDL_mutexV(mMutex);
 }
@@ -348,16 +340,13 @@ void Network::receive()
 
     if (!(set = SDLNet_AllocSocketSet(1)))
     {
-        setError("Error in SDLNet_AllocSocketSet(): " +
-                 std::string(SDLNet_GetError()));
+        setError(strprintf("Error in SDLNet_AllocSocketSet(): %s",
+                           SDLNet_GetError()));
         return;
     }
 
     if (SDLNet_TCP_AddSocket(set, mSocket) == -1)
-    {
-        setError("Error in SDLNet_AddSocket(): " +
-                 std::string(SDLNet_GetError()));
-    }
+        setError(strprintf("Error in SDLNet_AddSocket(): %s", SDLNet_GetError()));
 
     while (mState == CONNECTED)
     {
@@ -386,8 +375,8 @@ void Network::receive()
                 }
                 else if (ret < 0)
                 {
-                    setError("Error in SDLNet_TCP_Recv(): " +
-                             std::string(SDLNet_GetError()));
+                    setError(strprintf("Error in SDLNet_TCP_Recv(): %s",
+                                       SDLNet_GetError()));
                 }
                 else
                 {
@@ -414,8 +403,9 @@ void Network::receive()
                 // more than one socket is ready..
                 // this should not happen since we only listen once socket.
                 std::stringstream errorStream;
-                errorStream << "Error in SDLNet_TCP_Recv(), " << numReady
-                            << " sockets are ready: " << SDLNet_GetError();
+                errorStream << strprintf("Error in SDLNet_TCP_Recv(), %d "
+                                         "sockets are ready: %s", numReady,
+                                         SDLNet_GetError());
                 setError(errorStream.str());
                 break;
         }
@@ -425,11 +415,6 @@ void Network::receive()
         logger->log("Error in SDLNet_DelSocket(): %s", SDLNet_GetError());
 
     SDLNet_FreeSocketSet(set);
-}
-
-Network *Network::instance()
-{
-    return mInstance;
 }
 
 void Network::setError(const std::string &error)

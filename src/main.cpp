@@ -355,10 +355,10 @@ int main(int argc, char *argv[])
 
         // Handle SDL events
         inputManager->handleInput();
-        engine->getNetwork()->flush();
-        engine->getNetwork()->dispatchMessages();
+        network->flush();
+        network->dispatchMessages();
 
-        const int netState = engine->getNetwork()->getState();
+        const int netState = network->getState();
 
         if (netState == Network::NET_ERROR || netState == Network::FATAL)
         {
@@ -367,8 +367,8 @@ int main(int argc, char *argv[])
 
             state = ERROR_STATE;
 
-            if (!engine->getNetwork()->getError().empty()) 
-                errorMessage = engine->getNetwork()->getError();
+            if (!network->getError().empty()) 
+                errorMessage = network->getError();
             else
                 errorMessage = _("Got disconnected from server!");
         }
@@ -395,8 +395,8 @@ int main(int argc, char *argv[])
                     break;
 
                 default:
-                    engine->getNetwork()->disconnect();
-                    engine->getNetwork()->clearHandlers();
+                    network->disconnect();
+                    network->clearHandlers();
                     break;
             }
 
@@ -504,13 +504,13 @@ int main(int argc, char *argv[])
                     desktop = NULL;
 
                     logger->log("State: GAME");
-                    game = new Game(engine->getNetwork());
+                    game = new Game();
                     game->logic();
                     delete game;
                     game = NULL;
 
-                    engine->getNetwork()->disconnect();
-                    engine->getNetwork()->clearHandlers();
+                    network->disconnect();
+                    network->clearHandlers();
                     break;
 
                 case UPDATE_STATE:
@@ -534,24 +534,24 @@ int main(int argc, char *argv[])
                     logger->log("State: ERROR");
                     desktop->showError(new OkDialog(_("Error"), errorMessage),
                                        errorState);
-                    engine->getNetwork()->disconnect();
-                    engine->getNetwork()->clearHandlers();
+                    network->disconnect();
+                    network->clearHandlers();
                     break;
 
                 case CONNECTING_STATE:
                     logger->log("State: CONNECTING");
                     desktop->useProgressBar(_("Connecting to map server..."));
-                    mapLogin(engine->getNetwork(), &loginData);
+                    mapLogin(network, &loginData);
                     break;
 
                 case CHAR_CONNECT_STATE:
                     desktop->useProgressBar(_("Connecting to character server..."));
-                    charLogin(engine->getNetwork(), &loginData);
+                    charLogin(network, &loginData);
                     break;
 
                 case ACCOUNT_STATE:
                     desktop->useProgressBar(_("Connecting to account server..."));
-                    accountLogin(engine->getNetwork(), &loginData);
+                    accountLogin(network, &loginData);
                     break;
 
                 case EXIT_STATE:

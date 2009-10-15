@@ -37,7 +37,6 @@
 #include "bindings/guichan/sdl/sdlgraphics.h"
 
 class LoginData;
-class Network;
 
 class Engine
 {
@@ -47,16 +46,12 @@ class Engine
 
         const std::string &getHomeDir() { return homeDir; }
 
-        Network *getNetwork() { return network; }
-
     private:
         void initConfig();
         void initInternationalization();
         void initWindow();
 
         std::string homeDir;
-
-        Network *network;
 
         FILE *nullFile;
         SDL_Surface *icon;

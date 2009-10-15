@@ -26,8 +26,6 @@
 #include <iosfwd>
 #include <SDL_types.h>
 
-class Network;
-
 /**
  * Used for building an outgoing message.
  */
@@ -60,8 +58,6 @@ class MessageOut
         void writeString(const std::string &string, int length = -1);
 
     private:
-        Network *mNetwork;
-
         char *mData;                         /**< Data building up. */
         unsigned int mDataSize;              /**< Size of data. */
         unsigned int mPos;                   /**< Position in the data. */

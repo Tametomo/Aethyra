@@ -25,19 +25,13 @@
 #include "messagehandler.h"
 #include "network.h"
 
-MessageHandler::MessageHandler():
-    mNetwork(0)
+MessageHandler::MessageHandler()
 {
 }
 
 MessageHandler::~MessageHandler()
 {
-    if (mNetwork)
-        mNetwork->unregisterHandler(this);
+    if (network)
+        network->unregisterHandler(this);
 }
 
-void MessageHandler::setNetwork(Network *network)
-{
-    assert(!(network && mNetwork));
-    mNetwork = network;
-}

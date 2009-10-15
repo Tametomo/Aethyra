@@ -227,8 +227,7 @@ static void destroyGuiWindows()
     SkillDB::unload();
 }
 
-Game::Game(Network *network):
-    mNetwork(network),
+Game::Game():
     mBeingHandler(new BeingHandler(config.getValue("EnableSync", 0) == 1)),
     mBuySellHandler(new BuySellHandler()),
     mChatHandler(new ChatHandler()),
@@ -321,16 +320,16 @@ Game::~Game()
     viewport = NULL;
 
     // Clear the network handlers
-    mNetwork->unregisterHandler(mBeingHandler.get());
-    mNetwork->unregisterHandler(mBuySellHandler.get());
-    mNetwork->unregisterHandler(mChatHandler.get());
-    mNetwork->unregisterHandler(mEquipmentHandler.get());
-    mNetwork->unregisterHandler(mInventoryHandler.get());
-    mNetwork->unregisterHandler(mItemHandler.get());
-    mNetwork->unregisterHandler(mNpcHandler.get());
-    mNetwork->unregisterHandler(mPlayerHandler.get());
-    mNetwork->unregisterHandler(mSkillHandler.get());
-    mNetwork->unregisterHandler(mTradeHandler.get());
+    network->unregisterHandler(mBeingHandler.get());
+    network->unregisterHandler(mBuySellHandler.get());
+    network->unregisterHandler(mChatHandler.get());
+    network->unregisterHandler(mEquipmentHandler.get());
+    network->unregisterHandler(mInventoryHandler.get());
+    network->unregisterHandler(mItemHandler.get());
+    network->unregisterHandler(mNpcHandler.get());
+    network->unregisterHandler(mPlayerHandler.get());
+    network->unregisterHandler(mSkillHandler.get());
+    network->unregisterHandler(mTradeHandler.get());
 }
 
 void Game::logic() const
@@ -357,15 +356,15 @@ void Game::logic() const
         gui->logic();
 
         // Handle network stuff
-        mNetwork->flush();
-        mNetwork->dispatchMessages();
+        network->flush();
+        network->dispatchMessages();
 
-        if (!mNetwork->isConnected())
+        if (!network->isConnected())
         {
             if (!disconnectedDialog)
             {
-                if (!mNetwork->getError().empty()) 
-                    errorMessage = mNetwork->getError();
+                if (!network->getError().empty()) 
+                    errorMessage = network->getError();
                 else
                     errorMessage = _("Got disconnected from server!");
 
