@@ -158,6 +158,8 @@ void Setup_Gui::fontChanged()
     place(2, 9, mFontSizeLabel, 3).setPadding(2);
 
     h.reflowLayout(325, 200);
+
+    restoreFocus();
 }
 
 void Setup_Gui::apply()

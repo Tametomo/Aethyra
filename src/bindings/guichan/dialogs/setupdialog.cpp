@@ -106,6 +106,8 @@ void Setup::fontChanged()
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
     reflowLayout(340, 340);
+
+    restoreFocus();
 }
 
 void Setup::addTab(SetupTabContainer *tab)

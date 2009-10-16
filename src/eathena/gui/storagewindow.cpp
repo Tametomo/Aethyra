@@ -108,6 +108,8 @@ void StorageWindow::fontChanged()
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, mRetrieveButton->getHeight());
+
+    restoreFocus();
 }
 
 void StorageWindow::logic()

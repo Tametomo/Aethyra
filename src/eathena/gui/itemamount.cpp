@@ -141,6 +141,7 @@ void ItemAmountWindow::fontChanged()
     place(6, 0, mOkButton);
 
     reflowLayout(225, 0);
+    restoreFocus();
 }
 
 void ItemAmountWindow::mouseMoved(gcn::MouseEvent &event)

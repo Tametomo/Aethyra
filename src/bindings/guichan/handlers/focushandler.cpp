@@ -24,6 +24,11 @@
 
 #include "../widgets/window.h"
 
+FocusHandler::FocusHandler():
+    mPrevFocus(NULL)
+{
+}
+
 void FocusHandler::requestModalFocus(gcn::Widget *widget)
 {
     /* If there is another widget with modal focus, remove its modal focus
@@ -103,4 +108,17 @@ void FocusHandler::checkForWindow()
             widget = widget->getParent();
         }
     }
+}
+
+void FocusHandler::storeFocus()
+{
+    mPrevFocus = getFocused();
+}
+
+void FocusHandler::restoreFocus()
+{
+    if (mPrevFocus != NULL)
+        requestFocus(mPrevFocus);
+
+    mPrevFocus = NULL;
 }

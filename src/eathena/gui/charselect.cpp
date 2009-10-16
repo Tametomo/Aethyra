@@ -128,6 +128,8 @@ void CharSelectDialog::fontChanged()
     place(5, 0, mSelectButton);
 
     reflowLayout(250, 0);
+
+    restoreFocus();
 }
 
 void CharSelectDialog::action(const gcn::ActionEvent &event)
@@ -312,8 +314,7 @@ void CharCreateDialog::fontChanged()
 
     reflowLayout(225, 0);
 
-    setLocationRelativeTo(getParent());
-    setVisible(true);
+    restoreFocus();
 }
 
 CharCreateDialog::~CharCreateDialog()

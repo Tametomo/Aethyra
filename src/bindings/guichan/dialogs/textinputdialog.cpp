@@ -57,6 +57,7 @@ void TextInputDialog::fontChanged()
     place(3, 1, mOkButton);
 
     adjustSize();
+    restoreFocus();
 }
 
 void TextInputDialog::adjustSize()

@@ -789,14 +789,7 @@ void Window::fontChanged()
 
 void Window::clear()
 {
-    mPreviousFocus = NULL;
-
-    std::list<Widget*>::iterator iter;
-    for (iter = mWidgets.begin(); iter != mWidgets.end(); ++iter)
-    {
-        if ((*iter)->isFocused())
-            mPreviousFocus = (*iter);
-    }
+    gui->storeFocus();
 
     gcn::BasicContainer::clear();
 
@@ -813,10 +806,6 @@ void Window::clear()
 
 void Window::restoreFocus()
 {
-    if (!mPreviousFocus)
-        return;
-
-    mPreviousFocus->requestFocus();
-    mPreviousFocus = NULL;
+    gui->restoreFocus();
 }
 

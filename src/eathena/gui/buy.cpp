@@ -112,6 +112,8 @@ void BuyDialog::fontChanged()
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
+
+    restoreFocus();
 }
 
 void BuyDialog::setMoney(int amount)

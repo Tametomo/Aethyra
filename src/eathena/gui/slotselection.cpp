@@ -96,6 +96,7 @@ void SlotSelectionWindow::fontChanged()
     place(5, 0, mOkButton);
 
     reflowLayout(225, 0);
+    restoreFocus();
 }
 
 void SlotSelectionWindow::reset()

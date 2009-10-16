@@ -150,7 +150,9 @@ void Setup_Players::fontChanged()
     place(2, 6, mIgnoreActionChoicesBox, 2).setPadding(2);
     place(2, 7, mDefaultTrading);
     place(2, 8, mDefaultWhisper);
+
     h.reflowLayout(325, 280);
+    restoreFocus();
 }
 
 void Setup_Players::reset()

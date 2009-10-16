@@ -128,6 +128,7 @@ void InventoryWindow::fontChanged()
     layout.setRowHeight(0, mDropButton->getHeight());
 
     refreshLayout();
+    restoreFocus();
 }
 
 void InventoryWindow::logic()
@@ -262,7 +263,6 @@ void InventoryWindow::updateButtons()
     mTradeButton->setEnabled(selectedItem != NULL && tradeWindow->canTrade() &&
                              !tradeWindow->tradingItem(selectedItem));
     fontChanged();
-    restoreFocus();
 }
 
 Item* InventoryWindow::getSelectedItem() const

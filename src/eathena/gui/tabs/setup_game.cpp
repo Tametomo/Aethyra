@@ -129,6 +129,7 @@ void Setup_Game::fontChanged()
     place(3, 4, mParticleDetailLabel, 3).setPadding(2);
 
     h.reflowLayout(340, 280);
+    restoreFocus();
 }
 
 void Setup_Game::apply()

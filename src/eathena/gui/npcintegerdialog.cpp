@@ -68,6 +68,8 @@ void NpcIntegerDialog::fontChanged()
     place(0, 0, resetButton);
     place(2, 0, cancelButton);
     place(3, 0, okButton);
+
+    restoreFocus();
 }
 
 void NpcIntegerDialog::setRange(const int min, const int max)

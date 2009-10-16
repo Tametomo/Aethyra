@@ -203,6 +203,8 @@ void Setup_Colors::fontChanged()
     place(5, 11, mGradDelayText).setPadding(1);
 
     h.reflowLayout(325, 280);
+
+    restoreFocus();
 }
 
 void Setup_Colors::action(const gcn::ActionEvent &event)

@@ -176,6 +176,8 @@ void StatusWindow::fontChanged()
                    getFont()->getHeight() + 170, ImageRect::CENTER);
     setContentSize(35 * getFont()->getHeight() - getTitleBarHeight() - 2 *
                    getPadding(), 11 * getFont()->getHeight() + 150);
+
+    restoreFocus();
 }
 
 void StatusWindow::update()

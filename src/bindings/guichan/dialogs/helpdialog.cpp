@@ -74,6 +74,8 @@ void HelpDialog::fontChanged()
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
+
+    restoreFocus();
 }
 
 void HelpDialog::action(const gcn::ActionEvent &event)

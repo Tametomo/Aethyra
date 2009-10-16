@@ -73,6 +73,8 @@ void BuySellDialog::fontChanged()
                    getTitleBarHeight()), ImageRect::CENTER);
 
     setContentSize(x, (2 * y + mButtons[0]->getHeight()));
+
+    restoreFocus();
 }
 
 void BuySellDialog::logic()

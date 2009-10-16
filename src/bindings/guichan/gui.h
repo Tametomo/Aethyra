@@ -162,6 +162,16 @@ class Gui : public gcn::Gui
          */
         void changeFontSize(const int size);
 
+        /**
+         * Stores the currently focused widget for recall later.
+         */
+        void storeFocus();
+
+        /**
+         * Restores a stored widget to focus.
+         */
+        void restoreFocus();
+
     protected:
         void handleMouseMoved(const gcn::MouseInput &mouseInput);
         

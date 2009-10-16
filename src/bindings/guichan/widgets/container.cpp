@@ -22,8 +22,21 @@
 
 #include "container.h"
 
+#include "../gui.h"
+
 Container::~Container()
 {
     while (!mWidgets.empty())
         delete mWidgets.front();
+}
+
+void Container::clear()
+{
+    gui->storeFocus();
+    gcn::Container::clear();
+}
+
+void Container::restoreFocus()
+{
+    gui->restoreFocus();
 }

@@ -150,6 +150,7 @@ void RegisterDialog::fontChanged()
     place(2, 0, mRegisterButton);
 
     reflowLayout(250, 0);
+    restoreFocus();
 }
 
 void RegisterDialog::action(const gcn::ActionEvent &event)

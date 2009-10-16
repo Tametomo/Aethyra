@@ -126,6 +126,7 @@ void LoginDialog::fontChanged()
     place(3, 6, mOkButton);
 
     reflowLayout(250, 0);
+    restoreFocus();
 }
 
 void LoginDialog::action(const gcn::ActionEvent &event)

@@ -73,6 +73,8 @@ void DebugWindow::fontChanged()
     place(3, 1, mParticleCountLabel);
     place(0, 2, mMapLabel, 4);
     place(0, 3, mMiniMapLabel, 4);
+
+    restoreFocus();
 }
 
 void DebugWindow::widgetShown(const gcn::Event& event)

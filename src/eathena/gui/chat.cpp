@@ -151,6 +151,8 @@ void ChatWindow::fontChanged()
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
     layout.setMargin(2);
+
+    restoreFocus();
 }
 
 void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)

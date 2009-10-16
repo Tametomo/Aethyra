@@ -91,6 +91,8 @@ void SkillDialog::fontChanged()
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
+
+    restoreFocus();
 }
 
 void SkillDialog::action(const gcn::ActionEvent &event)

@@ -157,7 +157,7 @@ Gui::Gui(Graphics *graphics):
 
     // Set focus handler
     delete mFocusHandler;
-    mFocusHandler = new FocusHandler;
+    mFocusHandler = new FocusHandler();
 
     // Initialize timers
     fps = 0;
@@ -564,6 +564,20 @@ const int Gui::getFontHeight() const
     return mGuiFont->getHeight();
 }
 
+void Gui::storeFocus()
+{
+    FocusHandler *fh = static_cast<FocusHandler*>(mFocusHandler);
+
+    fh->storeFocus();
+}
+
+void Gui::restoreFocus()
+{
+    FocusHandler *fh = static_cast<FocusHandler*>(mFocusHandler);
+
+    fh->restoreFocus();
+}
+
 void Gui::changeFontSize(const int size)
 {
     ResourceManager *resman = ResourceManager::getInstance();
@@ -595,8 +609,6 @@ void Gui::changeFontSize(const int size)
         if (window)
             window->refreshLayout();
     }
-
-    Window::restoreFocus();
 
     if (desktop)
         desktop->resize();

@@ -95,6 +95,8 @@ void Setup_Audio::fontChanged()
     place(1, 2, mMusicLabel);
 
     h.reflowLayout(325, 280);
+
+    restoreFocus();
 }
 
 void Setup_Audio::apply()

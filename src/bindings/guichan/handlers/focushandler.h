@@ -35,6 +35,8 @@
 class FocusHandler : public gcn::FocusHandler
 {
     public:
+        FocusHandler();
+
         /**
          * Sets modal focus to a widget. When there is already a modal widget
          * then that widget loses modal focus and will regain it after this
@@ -62,6 +64,16 @@ class FocusHandler : public gcn::FocusHandler
         void tabNext();
         void tabPrevious();
 
+        /**
+         * Store away a widget that has focus so that it can be recalled later.
+         */
+        void storeFocus();
+
+        /**
+         * Restores focus to a previously saved widget.
+         */
+        void restoreFocus();
+
     private:
         /**
          * Checks to see if the widget tabbed to is in a window, and if it is,
@@ -73,6 +85,8 @@ class FocusHandler : public gcn::FocusHandler
          * Stack of widgets that have requested modal forcus.
          */
         std::list<gcn::Widget*> mModalStack;
+
+        gcn::Widget *mPrevFocus;
 };
 
 #endif

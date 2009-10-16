@@ -108,6 +108,8 @@ void Setup_Input::fontChanged()
     place(0, 10, mCalibrateButton);
 
     h.reflowLayout(325, 280);
+
+    restoreFocus();
 }
 
 void Setup_Input::apply()

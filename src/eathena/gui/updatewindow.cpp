@@ -155,6 +155,8 @@ void UpdaterWindow::fontChanged()
 
     Layout &layout = getLayout();
     layout.setRowHeight(0, Layout::AUTO_SET);
+
+    restoreFocus();
 }
 
 void UpdaterWindow::setProgress(float p)
@@ -180,7 +182,6 @@ void UpdaterWindow::enable()
     mStateButton->setCaption(_("Play"));
     mStateButton->setActionEventId("play");
     fontChanged();
-    restoreFocus();
 }
 
 void UpdaterWindow::action(const gcn::ActionEvent &event)

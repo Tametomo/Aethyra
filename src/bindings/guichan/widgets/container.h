@@ -34,6 +34,10 @@ class Container : public gcn::Container
 {
     public:
         ~Container();
+
+        virtual void clear();
+
+        void restoreFocus();
 };
 
 #endif
