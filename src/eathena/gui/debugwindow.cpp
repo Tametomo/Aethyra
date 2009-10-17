@@ -64,6 +64,9 @@ void DebugWindow::fontChanged()
 {
     Window::fontChanged();
 
+    mTileMouseLabel->setCaption(strprintf(_("Cursor: (%d, %d)"), 999, 999));
+    mParticleCountLabel = new Label(strprintf(_("Particle count: %d"), 99999));
+
     if (mWidgets.size() > 0)
         clear();
 
