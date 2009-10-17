@@ -36,25 +36,23 @@
 /*
  * Client different States
  */
-enum {
-    EXIT_STATE,
-    LOADDATA_STATE,
+enum State {
+    ERROR_STATE,
     START_STATE,
     LOGIN_STATE,
-    ACCOUNT_STATE,
     REGISTER_STATE,
-    CHAR_CONNECT_STATE,
+    ACCOUNT_STATE,
     CHAR_SERVER_STATE,
-    CHAR_SELECT_STATE,
-    CHAR_NEW_STATE,
-    CHAR_DEL_STATE,
-    GAME_STATE,
-    ERROR_STATE,
     UPDATE_STATE,
-    CONNECTING_STATE
+    LOADDATA_STATE,
+    CHAR_CONNECT_STATE,
+    CHAR_SELECT_STATE,
+    CONNECTING_STATE,
+    GAME_STATE,
+    EXIT_STATE
 };
 
-extern unsigned char state;
+extern State state;
 extern std::string errorMessage;
 
 #endif

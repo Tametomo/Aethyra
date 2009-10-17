@@ -34,8 +34,6 @@
 
 #include "../sdl/sdlgraphics.h"
 
-#include "../../../main.h"
-
 #include "../../../core/configuration.h"
 #include "../../../core/log.h"
 #include "../../../core/resourcemanager.h"
@@ -45,7 +43,7 @@
 
 #include "../../../core/utils/gettext.h"
 
-unsigned char error = '\0';
+State error = ERROR_STATE;
 
 namespace
 {
@@ -213,7 +211,7 @@ void Desktop::changeCurrentDialog(Window* window)
     positionDialog(currentDialog);
 }
 
-void Desktop::showError(OkDialog* window, unsigned char errorState)
+void Desktop::showError(OkDialog* window, State errorState)
 {
     error = errorState;
     currentDialog = window;

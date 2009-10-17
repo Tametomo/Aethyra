@@ -72,7 +72,7 @@
 #include "eathena/net/network.h"
 #include "eathena/net/serverinfo.h"
 
-unsigned char state;
+State state;
 std::string errorMessage;
 
 Game *game;
@@ -88,8 +88,6 @@ Desktop *desktop;
 // This anonymous namespace hides whatever is inside from other modules.
 namespace
 {
-std::string updateHost;
-
 LoginHandler loginHandler;
 MapLoginHandler mapLoginHandler;
 
@@ -233,7 +231,7 @@ int main(int argc, char *argv[])
 
     state = START_STATE; /**< Initial game state */
 
-    unsigned int oldstate = !state; // We start with a status change.
+    State oldstate = ERROR_STATE; // We start with a status change.
 
     game = NULL;
 
@@ -255,8 +253,8 @@ int main(int argc, char *argv[])
     while (state != EXIT_STATE)
     {
         Window* currentDialog;
-        unsigned char errorState = loginData.registerLogin ? REGISTER_STATE :
-                                                             LOGIN_STATE;
+        State errorState = loginData.registerLogin ? REGISTER_STATE :
+                                                     LOGIN_STATE;
 
         // Handle SDL events
         inputManager->handleInput();
@@ -309,24 +307,12 @@ int main(int argc, char *argv[])
 
             switch (state)
             {
-                case LOADDATA_STATE:
-                    logger->log("State: LOADDATA");
-
-                    // Add customdata directory
-                    ResourceManager::getInstance()->searchAndAddArchives(
-                        "customdata/", "zip", false);
-
-                    // Load XML databases
-                    ColorDB::load();
-                    EffectDB::load();
-                    EmoteDB::load();
-                    ItemDB::load();
-                    MonsterDB::load();
-                    NPCDB::load();
-                    SkillDB::load();
-                    Being::load(); // Hairstyles
-
-                    state = CHAR_CONNECT_STATE;
+                case ERROR_STATE:
+                    logger->log("State: ERROR");
+                    desktop->showError(new OkDialog(_("Error"), errorMessage),
+                                       errorState);
+                    network->disconnect();
+                    network->clearHandlers();
                     break;
 
                 case START_STATE:
@@ -355,6 +341,11 @@ int main(int argc, char *argv[])
                     desktop->changeCurrentDialog(new RegisterDialog());
                     break;
 
+                case ACCOUNT_STATE:
+                    desktop->useProgressBar(_("Connecting to account server..."));
+                    loginHandler.login();
+                    break;
+
                 case CHAR_SERVER_STATE:
                     logger->log("State: CHAR_SERVER");
 
@@ -368,8 +359,7 @@ int main(int argc, char *argv[])
                     }
                     else
                     {
-                        int nextState = UPDATE_STATE;
-                        desktop->changeCurrentDialog(new ServerListDialog(nextState));
+                        desktop->changeCurrentDialog(new ServerListDialog());
 
                         if (options.chooseDefault || !options.playername.empty())
                         {
@@ -379,6 +369,52 @@ int main(int argc, char *argv[])
                         }
                     }
                     break;
+
+                case UPDATE_STATE:
+                    {
+                        logger->log("State: UPDATE");
+
+                        const std::string updateHost = (!options.updateHost.empty() ?
+                                                         options.updateHost :
+                                                         loginData.updateHost);
+
+                        if (!options.skipUpdate)
+                        {
+                            UpdaterWindow *updateDialog = new UpdaterWindow(updateHost);
+                            desktop->changeCurrentDialog(updateDialog);
+                            desktop->reload();
+                        }
+                        else
+                            state = LOADDATA_STATE;
+
+                    }
+                    break;
+
+                case LOADDATA_STATE:
+                    logger->log("State: LOADDATA");
+
+                    // Add customdata directory
+                    ResourceManager::getInstance()->searchAndAddArchives(
+                        "customdata/", "zip", false);
+
+                    // Load XML databases
+                    ColorDB::load();
+                    EffectDB::load();
+                    EmoteDB::load();
+                    ItemDB::load();
+                    MonsterDB::load();
+                    NPCDB::load();
+                    SkillDB::load();
+                    Being::load(); // Hairstyles
+
+                    state = CHAR_CONNECT_STATE;
+                    break;
+
+                case CHAR_CONNECT_STATE:
+                    desktop->useProgressBar(_("Connecting to character server..."));
+                    charServerHandler.login(&charInfo);
+                    break;
+
                 case CHAR_SELECT_STATE:
                     logger->log("State: CHAR_SELECT");
                     desktop->changeCurrentDialog(new CharSelectDialog(&charInfo,
@@ -401,13 +437,19 @@ int main(int argc, char *argv[])
 
                     break;
 
+                case CONNECTING_STATE:
+                    logger->log("State: CONNECTING");
+                    desktop->useProgressBar(_("Connecting to map server..."));
+                    mapLoginHandler.login();
+                    break;
+
                 case GAME_STATE:
+                    logger->log("State: GAME");
                     sound.fadeOutMusic(1000);
 
                     delete desktop;
                     desktop = NULL;
 
-                    logger->log("State: GAME");
                     game = new Game();
                     game->logic();
                     delete game;
@@ -415,47 +457,6 @@ int main(int argc, char *argv[])
 
                     network->disconnect();
                     network->clearHandlers();
-                    break;
-
-                case UPDATE_STATE:
-                    logger->log("State: UPDATE");
-
-                    updateHost = (!options.updateHost.empty() ?
-                                  options.updateHost : loginData.updateHost);
-
-                    if (!options.skipUpdate)
-                    {
-                        UpdaterWindow *updateDialog = new UpdaterWindow(updateHost);
-                        desktop->changeCurrentDialog(updateDialog);
-                        desktop->reload();
-                    }
-                    else
-                        state = LOADDATA_STATE;
-
-                    break;
-
-                case ERROR_STATE:
-                    logger->log("State: ERROR");
-                    desktop->showError(new OkDialog(_("Error"), errorMessage),
-                                       errorState);
-                    network->disconnect();
-                    network->clearHandlers();
-                    break;
-
-                case CONNECTING_STATE:
-                    logger->log("State: CONNECTING");
-                    desktop->useProgressBar(_("Connecting to map server..."));
-                    mapLoginHandler.login();
-                    break;
-
-                case CHAR_CONNECT_STATE:
-                    desktop->useProgressBar(_("Connecting to character server..."));
-                    charServerHandler.login(&charInfo);
-                    break;
-
-                case ACCOUNT_STATE:
-                    desktop->useProgressBar(_("Connecting to account server..."));
-                    loginHandler.login();
                     break;
 
                 case EXIT_STATE:

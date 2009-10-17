@@ -38,7 +38,7 @@ class ServerListDialog : public ListDialog
          *
          * @see Window::Window
          */
-        ServerListDialog(int nextState);
+        ServerListDialog();
 
         /**
          * Called when receiving actions from the widgets.
@@ -49,9 +49,6 @@ class ServerListDialog : public ListDialog
          * Initialize the server list.
          */
         void widgetShown(const gcn::Event& event);
-
-    private:
-        int mNextState;
 };
 
 #endif

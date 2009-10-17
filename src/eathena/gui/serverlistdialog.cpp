@@ -30,11 +30,8 @@
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
-extern SERVER_INFO **server_info;
-
-ServerListDialog::ServerListDialog(int nextState):
-    ListDialog("ServerSelect"),
-    mNextState(nextState)
+ServerListDialog::ServerListDialog():
+    ListDialog("ServerSelect")
 {
     setWindowName(_("Select Server"));
     saveVisibility(false);
@@ -52,7 +49,7 @@ void ServerListDialog::action(const gcn::ActionEvent &event)
         loginData.port = si->port;
         loginData.updateHost = si->updateHost;
 
-        state = mNextState;
+        state = UPDATE_STATE;
     }
     else if (event.getId() == "cancel")
         state = LOGIN_STATE;

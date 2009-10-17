@@ -28,6 +28,8 @@
 
 #include "../guichanfwd.h"
 
+#include "../../../main.h"
+
 class Window;
 class Image;
 class OkDialog;
@@ -64,7 +66,7 @@ class Desktop : public Container
          * Shows an error dialog. The state variable is used to determine what
          * state the client should switch to after the error.
          */
-        void showError(OkDialog* window, unsigned char state);
+        void showError(OkDialog* window, State state);
 
         /**
          * Returns the current dialog for the current state.
