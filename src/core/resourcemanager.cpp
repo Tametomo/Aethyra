@@ -40,6 +40,8 @@
 #include "sound/music.h"
 #include "sound/soundeffect.h"
 
+#include "../engine.h"
+
 #include "../bindings/guichan/truetypefont.h"
 
 ResourceManager *ResourceManager::instance = NULL;
