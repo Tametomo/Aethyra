@@ -196,10 +196,10 @@ void Setup_Gui::apply()
                 if (!graphics->setFullscreen(fullscreen))
                 {
                     std::stringstream error;
-                    error << _("Failed to switch to ") <<
-                        (fullscreen ? _("windowed") : _("fullscreen")) <<
-                        _("mode and restoration of old mode also failed!") <<
-                        std::endl;
+                    error << strprintf(_("Failed to switch to %s mode and "
+                                         "restoration of old mode also "
+                                         "failed!"), (fullscreen ? _("windowed") :
+                                       _("fullscreen"))) << std::endl;
                     logger->error(error.str());
                 }
             }
