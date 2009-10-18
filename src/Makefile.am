@@ -1,7 +1,10 @@
 AUTOMAKE_OPTIONS = subdir-objects
 
 bin_PROGRAMS = aethyra
-aethyra_SOURCES = bindings/guichan/graphics.cpp \
+aethyra_SOURCES = \
+	      bindings/curl/downloadwrapper.cpp \
+	      bindings/curl/downloadwrapper.h \
+	      bindings/guichan/graphics.cpp \
 	      bindings/guichan/graphics.h \
 	      bindings/guichan/guichanfwd.h \
 	      bindings/guichan/gui.cpp \
@@ -147,6 +150,8 @@ aethyra_SOURCES = bindings/guichan/graphics.cpp \
 	      bindings/sdl/keyboardconfig.h \
 	      bindings/sdl/sound.cpp \
 	      bindings/sdl/sound.h \
+	      bindings/update/downloadupdates.cpp \
+	      bindings/update/downloadupdates.h \
 	      core/configlistener.h \
 	      core/configuration.cpp \
 	      core/configuration.h \

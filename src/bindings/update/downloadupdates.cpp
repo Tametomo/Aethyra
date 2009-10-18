@@ -359,7 +359,7 @@ int DownloadUpdates::downloadThreadWithThis()
         lines.push_back(_("##1  The update process is incomplete."));
         lines.push_back(_("##1  It is strongly recommended that"));
         lines.push_back(_("##1  you try again later"));
-        lines.push_back(mCurlError);
+        //lines.push_back(mCurlError);
         mListener->downloadTextUpdate(lines);
 
         //continue, as it can still load any files that have downloaded

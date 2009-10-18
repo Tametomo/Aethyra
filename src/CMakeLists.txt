@@ -56,6 +56,8 @@ MARK_AS_ADVANCED(SDL_INCLUDE_DIR)
 MARK_AS_ADVANCED(SDL_LIBRARY)
 
 SET(SRCS
+    bindings/curl/downloadwrapper.cpp
+    bindings/curl/downloadwrapper.h
     bindings/guichan/graphics.cpp
     bindings/guichan/graphics.h
     bindings/guichan/guichanfwd.h
@@ -202,6 +204,8 @@ SET(SRCS
     bindings/sdl/keyboardconfig.h
     bindings/sdl/sound.cpp
     bindings/sdl/sound.h
+    bindings/update/downloadupdates.cpp
+    bindings/update/downloadupdates.h
     core/configlistener.h
     core/configuration.cpp
     core/configuration.h
