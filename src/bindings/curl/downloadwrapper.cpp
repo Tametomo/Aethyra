@@ -25,6 +25,7 @@
 
 #include <iostream>
 #include <zlib.h>
+#include <ctype.h>
 
 #include <curl/curl.h>
 
@@ -237,13 +238,31 @@ bool UpdateResource::isSaneToDownload() const
     // Sanity checks for security issues.  Ideally this would
     // be in a library, but PhysFS doesn't provide it for
     // native filenames.
-    if (std::string::npos != mFullPath.find(".."))
+
+    // Check for a directory traversal attempt.
+    // As a special case, we allow filenames such as
+    //   update-548aa36..ac86ea6.zip
+    // which contain one ".." between two hex digits
+    // (matching Git's commit..commit notation)
+    std::string::size_type pos = mFullPath.find("..");
+    if (std::string::npos != pos)
     {
-        logger->log("Error: suspect directory traversal ('..') in '%s'",
-                mFullPath.c_str());
-        return false;
-        //TODO currently this will bale out on TMW's updates
-        //(which use the Git commit..commit notation)
+        // Contains a "..".  Check the special case
+        if ((pos > 0) &&
+            (pos < (mFullPath.size() - 3)) &&
+            (std::string::npos == mFullPath.find("..", pos + 1)) &&
+            isxdigit(mFullPath[pos - 1]) &&
+            isxdigit(mFullPath[pos + 2]))
+        {
+            logger->log("Info: recognised special case '..' in '%s'",
+                    mFullPath.c_str());
+        }
+        else
+        {
+            logger->log("Error: suspect directory traversal ('..') in '%s'",
+                    mFullPath.c_str());
+            return false;
+        }
     }
 
     // Check for scp URLs (as in libcurl-tutorial(3) )

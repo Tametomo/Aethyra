@@ -342,9 +342,7 @@ int DownloadUpdates::downloadThreadWithThis()
         lines.push_back(
             _("An update failed a security check, see log for details."));
         lines.push_back(
-            _("The official TMW server triggers a false positive here."));
-        lines.push_back(
-            _("The developer apologises for releasing with this bug."));
+            _("The program will automatically quit when you press 'play'."));
         mListener->downloadTextUpdate(lines);
 
         /* UPDATE_COMPLETE:  Wait for user to press "play", then crash. */
