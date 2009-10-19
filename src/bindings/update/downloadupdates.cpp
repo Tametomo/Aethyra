@@ -331,22 +331,19 @@ int DownloadUpdates::downloadThreadWithThis()
 
     if (securityWorries)
     {
-        //TODO bail out
-        //This should show a warning and quit, which will fit in to the
-        //refactored StateManager; but would need a different implementation
-        //before that refactor.
-        //For now, it will fail in an ugly way - the following lines will
-        //avoid the security problem (the files don't get downloaded or added
-        //to ResourceManager), then crash out with "can't load items.xml".
+        // This gives the user a nice prompt informing them that the update
+        // downloading has failed, and gives them a chance to see why it failed.
+        //
+        // This will be able to be handled much more gracefully once the
+        // refactored StateManager is available.
         std::vector<std::string> lines;
         lines.push_back(
-            _("An update failed a security check, see log for details."));
-        lines.push_back(
-            _("The program will automatically quit when you press 'play'."));
+            _("An update failed a security check, see log for details. If this "
+              "persists, report this issue with your log file on the forums."));
         mListener->downloadTextUpdate(lines);
 
         /* UPDATE_COMPLETE:  Wait for user to press "play", then crash. */
-        mListener->downloadComplete();
+        mListener->downloadFailed();
         return 0;
     }
 

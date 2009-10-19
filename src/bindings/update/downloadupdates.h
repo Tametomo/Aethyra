@@ -41,6 +41,7 @@ public:
     virtual void downloadTextUpdate(const std::vector<std::string>& news) = 0;
     virtual void downloadProgress(float totalProgress, const std::string& currentFile, float fileProgress) = 0;
     virtual void downloadComplete() = 0;
+    virtual void downloadFailed() = 0;
 };
 
 /**

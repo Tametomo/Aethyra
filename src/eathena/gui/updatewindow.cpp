@@ -108,6 +108,19 @@ void UpdaterWindow::downloadComplete()
     // (this will leave the download bar reflecting the situation)
 }
 
+void UpdaterWindow::downloadFailed()
+{
+    //TODO needs thread safety
+    mStateButton->setCaption(_("Quit"));
+    mStateButton->setActionEventId("quit");
+    fontChanged();
+
+    MutexLocker lock(&mLabelMutex);
+    mNewLabelCaption = "";
+    // leave mNewProgress as it is, in case the user cancelled
+    // (this will leave the download bar reflecting the situation)
+}
+
 void UpdaterWindow::requestFocus()
 {
     if (mStateButton->isEnabled())
@@ -137,6 +150,10 @@ void UpdaterWindow::action(const gcn::ActionEvent &event)
     {
         mStateButton->setEnabled(false);
         state = LOADDATA_STATE;
+    }
+    else if (event.getId() == "quit")
+    {
+        state = EXIT_STATE;
     }
 }
 

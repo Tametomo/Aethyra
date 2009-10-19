@@ -89,7 +89,7 @@ class UpdaterWindow : public Window, public gcn::ActionListener,
         void downloadProgress(float totalProgress,
                 const std::string& currentFile, float fileProgress);
         void downloadComplete();
-
+        void downloadFailed();
 
     private:
         /**
