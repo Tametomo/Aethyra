@@ -204,7 +204,7 @@ void Player::setHairStyle(const int style, const int color)
 {
     Being::setHairStyle(style, color);
 
-    setSprite(HAIR_SPRITE, style * -1, ColorDB::get(color));
+    setSprite(HAIR_SPRITE, -mHairStyle, ColorDB::get(mHairColor));
     setAction(mAction);
 }
 
