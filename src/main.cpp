@@ -385,8 +385,12 @@ int main(int argc, char *argv[])
                             desktop->reload();
                         }
                         else
+                        {
+                            DownloadUpdates *download = new DownloadUpdates(updateHost, NULL);
+                            download->addUpdatesToResman();
+                            delete download;
                             state = LOADDATA_STATE;
-
+                        }
                     }
                     break;
 

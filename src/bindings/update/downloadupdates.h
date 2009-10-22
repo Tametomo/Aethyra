@@ -75,6 +75,13 @@ public:
      */
     void userCancelled();
 
+    /**
+     * Reads the file "{Updates Directory}/resources2.txt" and attempts to load
+     * each update mentioned in it.  The files need to have been downloaded
+     * already - this just passes filenames to ResourceManager.
+     */
+    void addUpdatesToResman();
+
 private:
     /**
      * Parse the update host and determine the updates directory
@@ -94,13 +101,6 @@ private:
      * Populates mResources.
      */
     void parseResourcesFile();
-
-    /**
-     * Reads the file "{Updates Directory}/resources2.txt" and attempts to load
-     * each update mentioned in it.  The files need to have been downloaded
-     * already - this just passes filenames to ResourceManager.
-     */
-    void addUpdatesToResman();
 
     int updateState;
 

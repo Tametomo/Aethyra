@@ -39,27 +39,27 @@
 
 namespace
 {
-        /**
-         * Load the given file into a vector of strings.
-         */
-        std::vector<std::string> loadTextFile(const std::string &fileName)
+    /**
+     * Load the given file into a vector of strings.
+     */
+    std::vector<std::string> loadTextFile(const std::string &fileName)
+    {
+        std::vector<std::string> lines;
+        std::ifstream fin(fileName.c_str());
+
+        if (!fin)
         {
-            std::vector<std::string> lines;
-            std::ifstream fin(fileName.c_str());
-
-            if (!fin)
-            {
-                logger->log("Couldn't load text file: %s", fileName.c_str());
-                return lines;
-            }
-
-            std::string line;
-
-            while (getline(fin, line))
-                lines.push_back(line);
-
+            logger->log("Couldn't load text file: %s", fileName.c_str());
             return lines;
         }
+
+        std::string line;
+
+        while (getline(fin, line))
+            lines.push_back(line);
+
+        return lines;
+    }
 };
 
 
@@ -276,7 +276,7 @@ int DownloadUpdates::downloadThreadWithThis()
             securityWorries = true;
         }
 
-        if (success)
+        if (success && mListener)
         {
             // Display news to user, with warning at start
             std::vector<std::string> lines = loadTextFile(fullPath);
@@ -310,7 +310,10 @@ int DownloadUpdates::downloadThreadWithThis()
         for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
         {
             if (mUserCancel)
+            {
+                addUpdatesToResman();
                 break;
+            }
 
             if ((*itr)->isSaneToDownload())
             {
@@ -329,7 +332,7 @@ int DownloadUpdates::downloadThreadWithThis()
         }
     }
 
-    if (securityWorries)
+    if (securityWorries && mListener)
     {
         // This gives the user a nice prompt informing them that the update
         // downloading has failed, and gives them a chance to see why it failed.
@@ -347,7 +350,7 @@ int DownloadUpdates::downloadThreadWithThis()
         return 0;
     }
 
-    if (!success)
+    if (!success && mListener)
     {
         // This is really UI, probably better in updatewindow.cpp
         std::vector<std::string> lines;
@@ -365,7 +368,9 @@ int DownloadUpdates::downloadThreadWithThis()
     // The downloading has finished (or been cancelled)
     addUpdatesToResman();
 
-    mListener->downloadComplete();
+    if (mListener)
+        mListener->downloadComplete();
+
     /* UPDATE_COMPLETE:  Waiting for user to press "play". */
 
     return 0;
@@ -388,7 +393,8 @@ int DownloadUpdates::downloadProgress(UpdateResource* resource,
     // (The +2 is for news.txt and resources2.txt)
     float totalProgress = (mFilesComplete + progress) / (mResources.size() + 2);
 
-    mListener->downloadProgress(totalProgress, resource->getName(), progress);
+    if (mListener)
+        mListener->downloadProgress(totalProgress, resource->getName(), progress);
 
     // If the action was canceled return an error code to stop the mThread
     if (mUserCancel)
