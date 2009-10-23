@@ -135,6 +135,8 @@ void EmoteWindow::mouseClicked(gcn::MouseEvent &event)
 
 void EmoteWindow::requestFocus()
 {
+    Window::requestFocus();
+
     mEmotes->requestFocus();
 }
 

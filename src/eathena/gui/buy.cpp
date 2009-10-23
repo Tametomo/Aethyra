@@ -258,6 +258,8 @@ int BuyDialog::getNumberOfElements()
 
 void BuyDialog::requestFocus()
 {
+    Window::requestFocus();
+
     if (getNumberOfElements() > 0)
         mShopItemList->requestFocus();
 }

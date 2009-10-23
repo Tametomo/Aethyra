@@ -209,5 +209,7 @@ void StorageWindow::selectNone() const
 
 void StorageWindow::requestFocus()
 {
+    Window::requestFocus();
+
     mItems->requestFocus();
 }

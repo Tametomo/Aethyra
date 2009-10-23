@@ -110,6 +110,8 @@ void ListDialog::action(const gcn::ActionEvent &event)
 
 void ListDialog::requestFocus()
 {
+    Window::requestFocus();
+
     if (getNumberOfElements() > 0)
         mOptionList->requestFocus();
 

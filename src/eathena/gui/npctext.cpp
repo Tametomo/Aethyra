@@ -138,6 +138,8 @@ void NpcTextDialog::widgetResized(const gcn::Event &event)
 
 void NpcTextDialog::requestFocus()
 {
+    Window::requestFocus();
+
     mButton->requestFocus();
 }
 

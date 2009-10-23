@@ -313,6 +313,8 @@ std::string LoginDialog::DropDownList::getPortAt(int i)
 
 void LoginDialog::requestFocus()
 {
+    Window::requestFocus();
+
     if (mUserField->getText().empty())
         mUserField->requestFocus();
     else

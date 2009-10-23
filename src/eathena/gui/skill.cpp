@@ -178,6 +178,8 @@ void SkillDialog::cleanList()
 
 void SkillDialog::requestFocus()
 {
+    Window::requestFocus();
+
     if (mIncButton->isEnabled())
         mIncButton->requestFocus();
     else

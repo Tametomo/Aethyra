@@ -284,6 +284,8 @@ int SellDialog::getNumberOfElements()
 
 void SellDialog::requestFocus()
 {
+    Window::requestFocus();
+
     if (getNumberOfElements() > 0)
         mShopItemList->requestFocus();
 }

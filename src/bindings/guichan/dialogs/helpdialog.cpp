@@ -114,6 +114,8 @@ void HelpDialog::loadFile(const std::string &file)
 
 void HelpDialog::requestFocus()
 {
+    Window::requestFocus();
+
     mOkButton->requestFocus();
 }
 

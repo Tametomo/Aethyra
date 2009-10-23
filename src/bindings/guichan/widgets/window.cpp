@@ -121,6 +121,11 @@ Window::~Window()
         delete skinLoader;
 }
 
+void Window::requestFocus()
+{
+    mFocusHandler->focusNone();
+}
+
 void Window::setWindowContainer(WindowContainer *wc)
 {
     windowContainer = wc;
@@ -450,6 +455,9 @@ void Window::mousePressed(gcn::MouseEvent &event)
 
         // Handle window resizing
         mouseResize = getResizeHandles(event);
+
+        if (event.getSource() == this)
+            requestFocus();
     }
 }
 

@@ -69,6 +69,12 @@ class Window : public gcn::Window, public gcn::WidgetListener
         ~Window();
 
         /**
+         * Overrides the base Widget requestFocus() so that it focuses on
+         * nothing.
+         */
+        virtual void requestFocus();
+
+        /**
          * Sets the window container to be used by new windows.
          */
         static void setWindowContainer(WindowContainer *windowContainer);

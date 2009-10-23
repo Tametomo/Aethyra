@@ -168,6 +168,8 @@ void Setup::action(const gcn::ActionEvent &event)
 
 void Setup::requestFocus()
 {
+    Window::requestFocus();
+
     mPanel->requestFocus();
 }
 

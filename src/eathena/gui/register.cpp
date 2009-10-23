@@ -289,6 +289,8 @@ unsigned short RegisterDialog::getUShort(const std::string &str)
 
 void RegisterDialog::requestFocus()
 {
+    Window::requestFocus();
+
     mUserField->requestFocus();
     mUserField->setCaretPosition(mUserField->getText().length());
 }

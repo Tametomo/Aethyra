@@ -87,6 +87,8 @@ void BuySellDialog::logic()
 
 void BuySellDialog::requestFocus()
 {
+    Window::requestFocus();
+
     if (mButtons.size() > 0)
         mButtons[0]->requestFocus();
 }

@@ -291,6 +291,8 @@ void InventoryWindow::selectNone() const
 
 void InventoryWindow::requestFocus()
 {
+    Window::requestFocus();
+
     mItems->requestFocus();
 }
 

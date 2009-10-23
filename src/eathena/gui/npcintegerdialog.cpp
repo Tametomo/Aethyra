@@ -102,6 +102,8 @@ void NpcIntegerDialog::action(const gcn::ActionEvent &event)
 
 void NpcIntegerDialog::requestFocus()
 {
+    Window::requestFocus();
+
     mValueField->requestFocus();
 }
 

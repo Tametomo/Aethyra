@@ -104,6 +104,8 @@ void TextInputDialog::action(const gcn::ActionEvent &event)
 
 void TextInputDialog::requestFocus()
 {
+    Window::requestFocus();
+
     mValueField->requestFocus();
 }
 

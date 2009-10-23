@@ -123,6 +123,8 @@ void UpdaterWindow::downloadFailed()
 
 void UpdaterWindow::requestFocus()
 {
+    Window::requestFocus();
+
     if (mStateButton->isEnabled())
         mStateButton->requestFocus();
 }

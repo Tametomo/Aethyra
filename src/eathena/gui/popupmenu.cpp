@@ -425,6 +425,8 @@ void PopupMenu::showPopup(int x, int y)
 
 void PopupMenu::requestFocus()
 {
+    Popup::requestFocus();
+
     mPreviousFocus = mFocusHandler->getFocused();
 
     mMappedListBox->requestFocus();

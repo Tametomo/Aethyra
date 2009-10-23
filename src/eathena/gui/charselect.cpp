@@ -222,6 +222,8 @@ void CharSelectDialog::logic()
 
 void CharSelectDialog::requestFocus()
 {
+    Window::requestFocus();
+
     if (mSelectButton->isEnabled())
         mSelectButton->requestFocus();
     else

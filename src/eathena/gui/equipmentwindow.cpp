@@ -444,6 +444,7 @@ void EquipmentWindow::valueChanged(const gcn::SelectionEvent &event)
 
 void EquipmentWindow::requestFocus()
 {
+    Window::requestFocus();
     mItems->requestFocus();
 }
 

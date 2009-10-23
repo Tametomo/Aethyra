@@ -297,6 +297,8 @@ void TradeWindow::mouseClicked(gcn::MouseEvent &event)
 
 void TradeWindow::requestFocus()
 {
+    Window::requestFocus();
+
     mOkButton->requestFocus();
 }
 
