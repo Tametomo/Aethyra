@@ -360,7 +360,8 @@ void Window::widgetShown(const gcn::Event& event)
     mVisible = true;
 
     requestMoveToTop();
-    requestFocus();
+    if (config.getValue("autofocus", 1) == 1)
+        requestFocus();
 
     int widgetX, widgetY;
     getAbsolutePosition(widgetX, widgetY);
