@@ -27,7 +27,6 @@
 
 class Image;
 class Item;
-class ItemPopup;
 class ItemShortcutContainerConfigListener;
 class PopupMenu;
 
@@ -61,22 +60,11 @@ class ItemShortcutContainer : public ShortcutContainer
          */
         void mousePressed(gcn::MouseEvent &event);
 
-        /**
-         * Sets whether or not item popups should be shown.
-         */
-        static void enableItemPopup(bool enable);
-
     private:
         static ItemShortcutContainerConfigListener *mConfigListener;
         static int mInstances;
 
-        static bool mShowItemInfo;
-
-        static ItemPopup *mItemPopup;
         static PopupMenu *mPopupMenu;
-
-        void mouseExited(gcn::MouseEvent &event);
-        void mouseMoved(gcn::MouseEvent &event);
 };
 
 #endif

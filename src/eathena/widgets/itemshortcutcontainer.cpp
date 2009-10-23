@@ -25,7 +25,6 @@
 #include "../structs/inventory.h"
 #include "../structs/item.h"
 
-#include "../gui/itempopup.h"
 #include "../gui/popupmenu.h"
 
 #include "../handlers/itemshortcut.h"
@@ -46,8 +45,6 @@
 #include "../../core/utils/stringutils.h"
 
 int ItemShortcutContainer::mInstances = 0;
-bool ItemShortcutContainer::mShowItemInfo = false;
-ItemPopup *ItemShortcutContainer::mItemPopup = NULL;
 PopupMenu *ItemShortcutContainer::mPopupMenu = NULL;
 ItemShortcutContainerConfigListener *ItemShortcutContainer::mConfigListener = NULL;
 
@@ -60,12 +57,6 @@ class ItemShortcutContainerConfigListener : public ConfigListener
 
         void optionChanged(const std::string &name)
         {
-            if (name == "showItemPopups")
-            {
-                const bool enable = config.getValue("showItemPopups", true);
-                mItemContainer->enableItemPopup(enable);
-            }
-
             if (name == "guialpha")
             {
                 mItemContainer->mAlpha = config.getValue("guialpha", 0.8);
@@ -82,15 +73,10 @@ ItemShortcutContainer::ItemShortcutContainer():
     if (mInstances == 0)
     {
         mAlpha = config.getValue("guialpha", 0.8);
-        mShowItemInfo = config.getValue("showItemPopups", true);
-
-        mItemPopup = new ItemPopup();
-        mItemPopup->setOpaque(false);
 
         mPopupMenu = new PopupMenu(ITEM_SHORTCUT);
 
         mConfigListener = new ItemShortcutContainerConfigListener(this);
-        config.addListener("showItemPopups", mConfigListener);
         config.addListener("guialpha", mConfigListener);
     }
 
@@ -103,11 +89,9 @@ ItemShortcutContainer::~ItemShortcutContainer()
 
     if (mInstances == 0)
     {
-        config.removeListener("showItemPopups", mConfigListener);
         config.removeListener("guialpha", mConfigListener);
 
         delete mConfigListener;
-        delete mItemPopup;
         delete mPopupMenu;
     }
 }
@@ -204,45 +188,5 @@ void ItemShortcutContainer::mousePressed(gcn::MouseEvent &event)
         mPopupMenu->setItem(item);
         mPopupMenu->showPopup(gui->getMouseX(), gui->getMouseY());
     }
-}
-
-// Show ItemTooltip
-void ItemShortcutContainer::mouseMoved(gcn::MouseEvent &event)
-{
-    if (!mShowItemInfo)
-        return;
-
-    const int index = getIndexFromGrid(event.getX(), event.getY());
-    const int itemId = mShortcutHandler->getShortcut(index);
-
-    if (index == -1 || itemId < 0)
-        return;
-
-    Item *item = player_node->getInventory()->findItem(itemId);
-
-    if (item)
-    {
-        if (item->getInfo().getName() != mItemPopup->getItemName())
-            mItemPopup->setItem(item->getInfo());
-
-        mItemPopup->updateColors();
-        mItemPopup->view(gui->getMouseX(), gui->getMouseY());
-    }
-    else
-        mItemPopup->setVisible(false);
-}
-
-// Hide ItemTooltip
-void ItemShortcutContainer::mouseExited(gcn::MouseEvent &event)
-{
-    mItemPopup->setVisible(false);
-}
-
-void ItemShortcutContainer::enableItemPopup(bool enable)
-{
-    mShowItemInfo = enable;
-
-    if (!enable)
-        mItemPopup->setVisible(false);
 }
 
