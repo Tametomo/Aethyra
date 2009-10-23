@@ -103,6 +103,7 @@ class UpdaterWindow : public Window, public gcn::ActionListener,
          * a different thread to the UI thread.
          */
         std::string mNewLabelCaption;
+
         /**
          * New value for the progress bar.
          *

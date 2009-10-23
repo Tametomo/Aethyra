@@ -106,7 +106,6 @@ Network::Network():
     mWorkerThread(0)
 {
     logger->log("Creating new Network instance");
-    mMutex = SDL_CreateMutex();
 }
 
 Network::~Network()
@@ -117,7 +116,6 @@ Network::~Network()
     if (mState != IDLE && mState != NET_ERROR)
         disconnect();
 
-    SDL_DestroyMutex(mMutex);
     network = NULL;
 
     delete[] mInBuffer;
@@ -224,24 +222,23 @@ void Network::flush()
 
     int ret;
 
-
-    SDL_mutexP(mMutex);
+    mMutex.lock();
     ret = SDLNet_TCP_Send(mSocket, mOutBuffer, mOutSize);
 
     if (ret < (int)mOutSize)
         setError(strprintf("Error in SDLNet_TCP_Send(): %s", SDLNet_GetError()));
 
     mOutSize = 0;
-    SDL_mutexV(mMutex);
+    mMutex.unlock();
 }
 
 void Network::skip(int len)
 {
-    SDL_mutexP(mMutex);
+    mMutex.lock();
     mToSkip += len;
     if (!mInSize)
     {
-        SDL_mutexV(mMutex);
+        mMutex.unlock();
         return;
     }
 
@@ -256,14 +253,14 @@ void Network::skip(int len)
         mToSkip -= mInSize;
         mInSize = 0;
     }
-    SDL_mutexV(mMutex);
+    mMutex.unlock();
 }
 
 bool Network::messageReady()
 {
     int len = -1;
 
-    SDL_mutexP(mMutex);
+    mMutex.lock();
     if (mInSize >= 2)
     {
         len = packet_lengths[readWord(0)];
@@ -274,7 +271,7 @@ bool Network::messageReady()
     }
 
     bool ret = (mInSize >= static_cast<unsigned int>(len));
-    SDL_mutexV(mMutex);
+    mMutex.unlock();
 
     return ret;
 }
@@ -287,7 +284,7 @@ MessageIn Network::getNextMessage()
             break;
     }
 
-    SDL_mutexP(mMutex);
+    mMutex.lock();
     int msgId = readWord(0);
     int len = packet_lengths[msgId];
 
@@ -299,7 +296,7 @@ MessageIn Network::getNextMessage()
 #endif
 
     MessageIn msg(mInBuffer, len);
-    SDL_mutexV(mMutex);
+    mMutex.unlock();
 
     return msg;
 }
@@ -364,7 +361,7 @@ void Network::receive()
 
             case 1:
                 // Receive data from the socket
-                SDL_mutexP(mMutex);
+                mMutex.lock();
                 ret = SDLNet_TCP_Recv(mSocket, mInBuffer + mInSize, BUFFER_SIZE - mInSize);
 
                 if (!ret)
@@ -396,7 +393,7 @@ void Network::receive()
                         }
                     }
                 }
-                SDL_mutexV(mMutex);
+                mMutex.unlock();
                 break;
 
             default:

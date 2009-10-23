@@ -29,6 +29,8 @@
 #include <SDL_thread.h>
 #include <string>
 
+#include "../../core/utils/mutex.h"
+
 /**
  * Protocol version, reported to the eAthena char and mapserver who can adjust
  * the protocol accordingly.
@@ -111,7 +113,7 @@ class Network
         std::string mError;
 
         SDL_Thread *mWorkerThread;
-        SDL_mutex *mMutex;
+        Mutex mMutex;
 
         typedef std::map<Uint16, MessageHandler*> MessageHandlers;
         typedef MessageHandlers::iterator MessageHandlerIterator;
