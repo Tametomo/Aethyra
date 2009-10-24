@@ -1,8 +1,7 @@
 /*
  *  Download wrapper for libcurl
  *
- *  Copyright (C) 2004  The Mana World Development Team
- *  Copyright (C) 2009  The Aethyra Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -65,13 +64,13 @@ DownloadWrapper::DownloadWrapper(DownloadListener *listener) :
 }
 
 int DownloadWrapper::updateProgress(void *ptr, double dt, double dn, double ut,
-                                  double un)
+                                    double un)
 {
     DownloadWrapper *self = reinterpret_cast<DownloadWrapper *>(ptr);
     return self->mListener->downloadProgress(self->mResource, dn, dt);
 }
 
-bool DownloadWrapper::downloadSynchronous(CurlResourceUpdater* resource)
+bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
 {
     int attempts = 0;
     bool downloadComplete = false;
@@ -146,8 +145,8 @@ bool DownloadWrapper::downloadSynchronous(CurlResourceUpdater* resource)
             struct curl_slist *pHeaders = NULL;
             if (resource->getCachePolicy() == CACHE_REFRESH)
             {
-                // Make sure the resources2.txt and news.txt aren't cached,
-                // in order to always get the latest version.
+                // Make sure that files marked as CACHE_REFRESH are always 
+                // redownloaded, in order to always get the latest version.
                 pHeaders = curl_slist_append(pHeaders, "pragma: no-cache");
                 pHeaders =
                     curl_slist_append(pHeaders, "Cache-Control: no-cache");
@@ -156,9 +155,8 @@ bool DownloadWrapper::downloadSynchronous(CurlResourceUpdater* resource)
 
             if ((res = curl_easy_perform(curl)) != 0)
             {
-                std::cerr << _("curl error ") << res << ": "
-                          << mCurlError << _(" host: ") << resource->getUrl()
-                          << std::endl;
+                std::cerr << "curl error " << res << ": " << mCurlError
+                          << " host: " << resource->getUrl() << std::endl;
 
                 fclose(outfile);
                 ::remove(resource->getFullPath().c_str());
@@ -169,9 +167,7 @@ bool DownloadWrapper::downloadSynchronous(CurlResourceUpdater* resource)
             curl_easy_cleanup(curl);
 
             if (pHeaders)
-            {
                 curl_slist_free_all(pHeaders);
-            }
 
             // Check checksum
             if (resource->verify(outfile))
@@ -182,7 +178,7 @@ bool DownloadWrapper::downloadSynchronous(CurlResourceUpdater* resource)
             else
             {
                 policy = CACHE_REFRESH; // for intermediate web caches
-                fclose(outfile);    // must close before deleting for Windows
+                fclose(outfile);        // must close before deleting for Windows
                 ::remove(resource->getFullPath().c_str());
             }
         }
@@ -199,10 +195,8 @@ DownloadWrapper::~DownloadWrapper()
     delete[] mCurlError;
 }
 
-CurlResourceUpdater::CurlResourceUpdater(std::string name,
-            std::string url,
-            std::string fullPath,
-            CachePolicy cachePolicy) :
+GenericVerifier::GenericVerifier(std::string name, std::string url,
+                           std::string fullPath, CachePolicy cachePolicy) :
     mName(name),
     mUrl(url),
     mFullPath(fullPath),
@@ -210,30 +204,27 @@ CurlResourceUpdater::CurlResourceUpdater(std::string name,
 {
 }
 
-CurlResourceUpdaterAdler32::CurlResourceUpdaterAdler32(std::string name,
-            std::string url,
-            std::string fullPath,
-            CachePolicy cachePolicy,
-            unsigned long checksum) :
-    CurlResourceUpdater(name, url, fullPath, cachePolicy),
+Adler32Verifier::Adler32Verifier(std::string name, std::string url,
+                                 std::string fullPath, CachePolicy cachePolicy,
+                                 unsigned long checksum) :
+    GenericVerifier(name, url, fullPath, cachePolicy),
     mChecksum(checksum)
 {
 }
 
-bool CurlResourceUpdaterAdler32::verify(FILE* file) const
+bool Adler32Verifier::verify(FILE* file) const
 {
     unsigned long adler = fadler32(file);
     if (adler != mChecksum)
     {
-        logger->log(
-            _("Checksum for file %s failed: (%lx/%lx)"),
-            getName().c_str(), adler, mChecksum);
+        logger->log(_("Checksum for file %s failed: (%lx/%lx)"),
+                      getName().c_str(), adler, mChecksum);
         return false;
     }
     return true;
 }
 
-bool CurlResourceUpdater::isSaneToDownload() const
+bool GenericVerifier::isSaneToDownload() const
 {
     // Sanity checks for security issues.  Ideally this would
     // be in a library, but PhysFS doesn't provide it for
@@ -255,12 +246,12 @@ bool CurlResourceUpdater::isSaneToDownload() const
             isxdigit(mFullPath[pos + 2]))
         {
             logger->log("Info: recognised special case '..' in '%s'",
-                    mFullPath.c_str());
+                        mFullPath.c_str());
         }
         else
         {
             logger->log("Error: suspect directory traversal ('..') in '%s'",
-                    mFullPath.c_str());
+                        mFullPath.c_str());
             return false;
         }
     }
@@ -269,11 +260,8 @@ bool CurlResourceUpdater::isSaneToDownload() const
     // One of these compare()s needs to return zero.
     const std::string http("http://");
     const std::string  ftp( "ftp://");
-    if (mUrl.compare(0, http.size(), http) &&
-        mUrl.compare(0,  ftp.size(),  ftp))
-    {
+    if (mUrl.compare(0, http.size(), http) && mUrl.compare(0, ftp.size(), ftp))
         return false;
-    }
 
     // Haven't spotted anything, so let it through.
     return true;

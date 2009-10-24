@@ -1,7 +1,7 @@
 /*
  *  Download wrapper for libcurl
  *
- *  Copyright (C) 2009  The Aethyra Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #include <cstdio>
 
 /**
- * Whether to use a previously-downloaded version of an CurlResourceUpdater.
+ * Whether to use a previously-downloaded version of an GenericVerifier.
  *
  * If all of the following are true:
  * * a file with this name already exists
@@ -46,7 +46,7 @@ enum CachePolicy
 };
 
 
-class CurlResourceUpdater
+class GenericVerifier
 {
 public:
     /**
@@ -57,17 +57,17 @@ public:
      *@param fullPath Where to download it to
      *@param cachePolicy @see{CachePolicy}
      */
-    CurlResourceUpdater(std::string name, std::string url,
-            std::string fullPath, CachePolicy cachePolicy);
+    GenericVerifier(std::string name, std::string url, std::string fullPath,
+                    CachePolicy cachePolicy);
 
-    virtual ~CurlResourceUpdater() {};
+    virtual ~GenericVerifier() {};
 
     /**
-     * Returns true if the file passes whatever tests this CurlResourceUpdater has
+     * Returns true if the file passes whatever tests this GenericVerifier has
      * for spotting corrupt files.
      * (Checksums etc).
      *
-     * The basic CurlResourceUpdater has no checksum.
+     * The basic GenericVerifier has no checksum.
      */
     virtual bool verify(FILE* file) const { return true; }
 
@@ -102,9 +102,9 @@ private:
 };
 
 /**
- * CurlResourceUpdater that uses an Adler32 checksum to verify the downloaded file.
+ * GenericVerifier that uses an Adler32 checksum to verify the downloaded file.
  */
-class CurlResourceUpdaterAdler32 : public CurlResourceUpdater
+class Adler32Verifier : public GenericVerifier
 {
 public:
     /**
@@ -116,9 +116,8 @@ public:
      *@param checksum Adler32 checksum
      *@param cachePolicy @see{CachePolicy}
      */
-    CurlResourceUpdaterAdler32(std::string name, std::string url,
-            std::string fullPath, CachePolicy cachePolicy,
-            unsigned long checksum);
+    Adler32Verifier(std::string name, std::string url, std::string fullPath,
+                    CachePolicy cachePolicy, unsigned long checksum);
 
     virtual bool verify(FILE* file) const;
 
@@ -137,8 +136,8 @@ public:
      * The callee should return 0 to continue downloading,
      * or -1 to abort.
      */
-    virtual int downloadProgress(CurlResourceUpdater* resource,
-            double downloaded, double size) = 0;
+    virtual int downloadProgress(GenericVerifier* resource, double downloaded,
+                                 double size) = 0;
 };
 
 class DownloadWrapper
@@ -158,7 +157,7 @@ public:
      *
      *@return true if the download succeeded, false if it failed.
      */
-    bool downloadSynchronous(CurlResourceUpdater* resource);
+    bool downloadSynchronous(GenericVerifier* resource);
 
     ~DownloadWrapper();
 
@@ -166,8 +165,8 @@ private:
     /**
      * A libcurl callback for progress updates.
      */
-    static int updateProgress(void *ptr,
-                              double dt, double dn, double ut, double un);
+    static int updateProgress(void *ptr, double dt, double dn, double ut,
+                              double un);
 
     DownloadListener *mListener;
 
@@ -178,7 +177,7 @@ private:
      * What's being downloaded.
      * (null unless downloadSynchronous is running).
      */
-    CurlResourceUpdater* mResource;
+    GenericVerifier* mResource;
 };
 
 #endif

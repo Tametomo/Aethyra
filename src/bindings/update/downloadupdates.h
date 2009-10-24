@@ -39,7 +39,9 @@ class UpdaterListener
 {
 public:
     virtual void downloadTextUpdate(const std::vector<std::string>& news) = 0;
-    virtual void downloadProgress(float totalProgress, const std::string& currentFile, float fileProgress) = 0;
+    virtual void downloadProgress(float totalProgress, 
+                                  const std::string& currentFile,
+                                  float fileProgress) = 0;
     virtual void downloadComplete() = 0;
     virtual void downloadFailed() = 0;
 };
@@ -55,8 +57,7 @@ public:
      *
      * @param updateHost Host where to get the updated files.
      */
-    DownloadUpdates(const std::string &updateHost,
-            UpdaterListener* listener);
+    DownloadUpdates(const std::string &updateHost, UpdaterListener* listener);
 
     ~DownloadUpdates();
 
@@ -66,8 +67,8 @@ public:
     void download();
 
     // from DownloadListener
-    int downloadProgress(CurlResourceUpdater* resource,
-            double downloaded, double size);
+    int downloadProgress(GenericVerifier* resource, double downloaded,
+                         double size);
 
     /**
      * The user has press the cancel button (or whatever
@@ -126,7 +127,7 @@ private:
     int mFilesComplete;
 
     /** List of files to download. */
-    std::vector<CurlResourceUpdater*> mResources;
+    std::vector<GenericVerifier*> mResources;
 
     UpdaterListener* mListener;
 };
