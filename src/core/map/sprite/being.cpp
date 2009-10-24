@@ -590,6 +590,11 @@ Being::Type Being::getType() const
         return UNKNOWN;
 }
 
+void Being::setWalkSpeed(const Uint16 &speed)
+{
+    mWalkSpeed = speed > 0 ? speed <= 1000 ? speed : 1000 : 1;
+}
+
 const int Being::getOffset(const char &pos, const char &neg) const
 {
     // Check whether we're walking in the requested direction

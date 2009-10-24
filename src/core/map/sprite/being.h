@@ -281,7 +281,7 @@ class Being : public Sprite
         /**
          * Sets the walk speed.
          */
-        void setWalkSpeed(const Uint16 &speed) { mWalkSpeed = speed; }
+        void setWalkSpeed(const Uint16 &speed);
 
         /**
          * Gets the sprite id.
