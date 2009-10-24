@@ -25,7 +25,7 @@
 #include <cstdio>
 
 /**
- * Whether to use a previously-downloaded version of an UpdateResource.
+ * Whether to use a previously-downloaded version of an CurlResourceUpdater.
  *
  * If all of the following are true:
  * * a file with this name already exists
@@ -46,7 +46,7 @@ enum CachePolicy
 };
 
 
-class UpdateResource
+class CurlResourceUpdater
 {
 public:
     /**
@@ -57,17 +57,17 @@ public:
      *@param fullPath Where to download it to
      *@param cachePolicy @see{CachePolicy}
      */
-    UpdateResource(std::string name, std::string url,
+    CurlResourceUpdater(std::string name, std::string url,
             std::string fullPath, CachePolicy cachePolicy);
 
-    virtual ~UpdateResource() {};
+    virtual ~CurlResourceUpdater() {};
 
     /**
-     * Returns true if the file passes whatever tests this UpdateResource has
+     * Returns true if the file passes whatever tests this CurlResourceUpdater has
      * for spotting corrupt files.
      * (Checksums etc).
      *
-     * The basic UpdateResource has no checksum.
+     * The basic CurlResourceUpdater has no checksum.
      */
     virtual bool verify(FILE* file) const { return true; }
 
@@ -102,9 +102,9 @@ private:
 };
 
 /**
- * UpdateResource that uses an Adler32 checksum to verify the downloaded file.
+ * CurlResourceUpdater that uses an Adler32 checksum to verify the downloaded file.
  */
-class UpdateResourceAdler32 : public UpdateResource
+class CurlResourceUpdaterAdler32 : public CurlResourceUpdater
 {
 public:
     /**
@@ -116,7 +116,7 @@ public:
      *@param checksum Adler32 checksum
      *@param cachePolicy @see{CachePolicy}
      */
-    UpdateResourceAdler32(std::string name, std::string url,
+    CurlResourceUpdaterAdler32(std::string name, std::string url,
             std::string fullPath, CachePolicy cachePolicy,
             unsigned long checksum);
 
@@ -137,7 +137,7 @@ public:
      * The callee should return 0 to continue downloading,
      * or -1 to abort.
      */
-    virtual int downloadProgress(UpdateResource* resource,
+    virtual int downloadProgress(CurlResourceUpdater* resource,
             double downloaded, double size) = 0;
 };
 
@@ -158,7 +158,7 @@ public:
      *
      *@return true if the download succeeded, false if it failed.
      */
-    bool downloadSynchronous(UpdateResource* resource);
+    bool downloadSynchronous(CurlResourceUpdater* resource);
 
     ~DownloadWrapper();
 
@@ -178,7 +178,7 @@ private:
      * What's being downloaded.
      * (null unless downloadSynchronous is running).
      */
-    UpdateResource* mResource;
+    CurlResourceUpdater* mResource;
 };
 
 #endif

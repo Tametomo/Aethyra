@@ -11,11 +11,11 @@ How to compile Aethyra
 * Install TortoiseSVN (http://tortoisesvn.tigris.org/)
 * Install Code::Blocks with the MingW libraries (http://www.codeblocks.org/)
 * Get the Windows compile tools through TortoiseSVN using this repository path:
-svn://www.aethyra.org/builds/windows/LinuxXcompileBuildSupport
+svn://www.aethyra.org/builds/windows/resources
   and install it to the same directory that the code is in.
 * Launch Code::Blocks and load the aethyra.cbp file in the source code directory,
   then click build > build.
-* Copy the DLL files from the LinuxXcompileBuildSupport\dll folder to the same
+* Copy the DLL files from the resources\dll folder to the same
   folder where aethyra.exe built (the same directory where aethyra.cbp is located)
 * (Optional) Get the latest music files, and paste them in the data\music directory.
 

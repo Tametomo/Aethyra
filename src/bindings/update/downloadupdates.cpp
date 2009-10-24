@@ -82,7 +82,7 @@ DownloadUpdates::~DownloadUpdates()
         SDL_WaitThread(mThread, NULL);
     }
 
-    typedef std::vector<UpdateResource*>::const_iterator CI;
+    typedef std::vector<CurlResourceUpdater*>::const_iterator CI;
     for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
     {
         delete *itr;
@@ -115,7 +115,7 @@ void DownloadUpdates::addUpdatesToResman()
 
     ResourceManager *resman = ResourceManager::getInstance();
 
-    typedef std::vector<UpdateResource*>::const_iterator CI;
+    typedef std::vector<CurlResourceUpdater*>::const_iterator CI;
     for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
     {
         if ((*itr)->isSaneToDownload())
@@ -215,7 +215,7 @@ std::string DownloadUpdates::getUpdatesDirFullPath()
 
 void DownloadUpdates::parseResourcesFile()
 {
-    typedef std::vector<UpdateResource*>::const_iterator CIR;
+    typedef std::vector<CurlResourceUpdater*>::const_iterator CIR;
     for (CIR itr = mResources.begin() ; itr != mResources.end() ; itr++)
     {
         delete *itr;
@@ -240,7 +240,7 @@ void DownloadUpdates::parseResourcesFile()
         std::string url = mUpdateHost + "/" + file;
         std::string fullPath = getUpdatesDirFullPath() + file;
 
-        UpdateResourceAdler32* resource = new UpdateResourceAdler32(file, url,
+        CurlResourceUpdaterAdler32* resource = new CurlResourceUpdaterAdler32(file, url,
                 fullPath, CACHE_OK, checksum);
         mResources.push_back(resource);
     }
@@ -267,7 +267,7 @@ int DownloadUpdates::downloadThreadWithThis()
         std::string file = "news.txt";
         std::string url = mUpdateHost + "/" + file;
         std::string fullPath = getUpdatesDirFullPath() + file;
-        UpdateResource resource(file, url, fullPath, CACHE_REFRESH);
+        CurlResourceUpdater resource(file, url, fullPath, CACHE_REFRESH);
         if (resource.isSaneToDownload())
             success = dw.downloadSynchronous(&resource);
         else
@@ -291,7 +291,7 @@ int DownloadUpdates::downloadThreadWithThis()
         std::string file = "resources2.txt";
         std::string url = mUpdateHost + "/" + file;
         std::string fullPath = getUpdatesDirFullPath() + file;
-        UpdateResource resource(file, url, fullPath, CACHE_REFRESH);
+        CurlResourceUpdater resource(file, url, fullPath, CACHE_REFRESH);
         if (resource.isSaneToDownload())
             success = dw.downloadSynchronous(&resource);
         else
@@ -306,7 +306,7 @@ int DownloadUpdates::downloadThreadWithThis()
     {
         mFilesComplete++;
         parseResourcesFile();
-        typedef std::vector<UpdateResource*>::const_iterator CI;
+        typedef std::vector<CurlResourceUpdater*>::const_iterator CI;
         for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
         {
             if (mUserCancel)
@@ -376,7 +376,7 @@ int DownloadUpdates::downloadThreadWithThis()
     return 0;
 }
 
-int DownloadUpdates::downloadProgress(UpdateResource* resource,
+int DownloadUpdates::downloadProgress(CurlResourceUpdater* resource,
         double downloaded, double size)
 {
     float progress = downloaded / size;

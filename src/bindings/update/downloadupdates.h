@@ -66,7 +66,7 @@ public:
     void download();
 
     // from DownloadListener
-    int downloadProgress(UpdateResource* resource,
+    int downloadProgress(CurlResourceUpdater* resource,
             double downloaded, double size);
 
     /**
@@ -126,7 +126,7 @@ private:
     int mFilesComplete;
 
     /** List of files to download. */
-    std::vector<UpdateResource*> mResources;
+    std::vector<CurlResourceUpdater*> mResources;
 
     UpdaterListener* mListener;
 };

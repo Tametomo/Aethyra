@@ -102,6 +102,8 @@
 			<Option target="default" />
 		</Unit>
 
+		<Unit filename="src\bindings\curl\downloadwrapper.cpp" />
+		<Unit filename="src\bindings\curl\downloadwrapper.h" />
 		<Unit filename="src\bindings\guichan\graphics.cpp" />
 		<Unit filename="src\bindings\guichan\graphics.h" />
 		<Unit filename="src\bindings\guichan\guichanfwd.h" />
@@ -248,6 +250,8 @@
 		<Unit filename="src\bindings\sdl\keyboardconfig.h" />
 		<Unit filename="src\bindings\sdl\sound.cpp" />
 		<Unit filename="src\bindings\sdl\sound.h" />
+		<Unit filename="src\bindings\update\downloadupdates.cpp" />
+		<Unit filename="src\bindings\update\downloadupdates.h" />
 		<Unit filename="src\core\configlistener.h" />
 		<Unit filename="src\core\configuration.cpp" />
 		<Unit filename="src\core\configuration.h" />

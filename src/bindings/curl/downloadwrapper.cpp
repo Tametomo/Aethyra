@@ -71,7 +71,7 @@ int DownloadWrapper::updateProgress(void *ptr, double dt, double dn, double ut,
     return self->mListener->downloadProgress(self->mResource, dn, dt);
 }
 
-bool DownloadWrapper::downloadSynchronous(UpdateResource* resource)
+bool DownloadWrapper::downloadSynchronous(CurlResourceUpdater* resource)
 {
     int attempts = 0;
     bool downloadComplete = false;
@@ -199,7 +199,7 @@ DownloadWrapper::~DownloadWrapper()
     delete[] mCurlError;
 }
 
-UpdateResource::UpdateResource(std::string name,
+CurlResourceUpdater::CurlResourceUpdater(std::string name,
             std::string url,
             std::string fullPath,
             CachePolicy cachePolicy) :
@@ -210,17 +210,17 @@ UpdateResource::UpdateResource(std::string name,
 {
 }
 
-UpdateResourceAdler32::UpdateResourceAdler32(std::string name,
+CurlResourceUpdaterAdler32::CurlResourceUpdaterAdler32(std::string name,
             std::string url,
             std::string fullPath,
             CachePolicy cachePolicy,
             unsigned long checksum) :
-    UpdateResource(name, url, fullPath, cachePolicy),
+    CurlResourceUpdater(name, url, fullPath, cachePolicy),
     mChecksum(checksum)
 {
 }
 
-bool UpdateResourceAdler32::verify(FILE* file) const
+bool CurlResourceUpdaterAdler32::verify(FILE* file) const
 {
     unsigned long adler = fadler32(file);
     if (adler != mChecksum)
@@ -233,7 +233,7 @@ bool UpdateResourceAdler32::verify(FILE* file) const
     return true;
 }
 
-bool UpdateResource::isSaneToDownload() const
+bool CurlResourceUpdater::isSaneToDownload() const
 {
     // Sanity checks for security issues.  Ideally this would
     // be in a library, but PhysFS doesn't provide it for
