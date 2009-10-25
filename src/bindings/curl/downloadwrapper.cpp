@@ -1,6 +1,7 @@
 /*
  *  Download wrapper for libcurl
  *
+ *  Copyright (C) 2009  The Mana World Development Team
  *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
@@ -196,7 +197,7 @@ DownloadWrapper::~DownloadWrapper()
 }
 
 GenericVerifier::GenericVerifier(std::string name, std::string url,
-                           std::string fullPath, CachePolicy cachePolicy) :
+                                 std::string fullPath, CachePolicy cachePolicy) :
     mName(name),
     mUrl(url),
     mFullPath(fullPath),
