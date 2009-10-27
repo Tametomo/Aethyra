@@ -117,7 +117,7 @@ void EmoteWindow::valueChanged(const gcn::SelectionEvent &event)
 
         const int index = mEmotes->getSelectedEmote();
 
-        if (index > 0 && index <= EmoteDB::getLast())
+        if (index > 0 && index <= (EmoteDB::getLast() + 1))
             emoteShortcut->setSelected(index);
         else
             emoteShortcut->setSelected(-1);
