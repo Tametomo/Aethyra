@@ -65,6 +65,12 @@ class StatusWindow : public Window, public gcn::ActionListener
         void widgetShown(const gcn::Event& event);
 
         void fontChanged();
+
+        /**
+         * Overridden from the requestFocus inherited from the Window class to
+         * do nothing, since there are no focusable widgets in this Window.
+         */
+        void requestFocus() {};
     private:
         LocalPlayer *mPlayer;
 
