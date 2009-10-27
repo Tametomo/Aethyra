@@ -166,6 +166,12 @@ class ItemContainer : public gcn::Widget, gcn::KeyListener, gcn::MouseListener,
         void setSelectedItemIndex(int index);
 
         /**
+         * Sets the currently selected item using an existing item.  Invalid
+         * items set `no item'.
+         */
+        void setSelectedItem(Item *item);
+
+        /**
          * Whether the item should be shown
          */
         bool passesFilter(const Item* item) const;

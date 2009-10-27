@@ -84,7 +84,7 @@ ItemContainer::ItemContainer(Inventory *inventory,
     mInventory(inventory),
     mSelectedItemIndex(NO_ITEM),
     mLastSelectedItemId(NO_ITEM),
-    mEquipSlotsFilter(-1)
+    mEquipSlotsFilter(NO_ITEM)
 {
     if (!actionEventId.empty())
         setActionEventId(actionEventId);
@@ -310,6 +310,24 @@ void ItemContainer::refindSelectedItem()
     mLastSelectedItemId = mSelectedItemIndex = NO_ITEM;
 }
 
+void ItemContainer::setSelectedItem(Item *item)
+{
+    const int newSelectedItemIndex = getVisibleSlot(item);
+
+    if (mSelectedItemIndex != newSelectedItemIndex)
+    {
+        mSelectedItemIndex = newSelectedItemIndex;
+
+        if (mSelectedItemIndex == NO_ITEM)
+            mLastSelectedItemId = NO_ITEM;
+        else
+            mLastSelectedItemId = item->getId();
+
+        showItemPopup(mShowItemInfo);
+        distributeValueChangedEvent();
+    }
+}
+
 void ItemContainer::setSelectedItemIndex(int index)
 {
     int newSelectedItemIndex;
@@ -379,7 +397,10 @@ void ItemContainer::showItemPopup(bool show)
     Item *item = getSelectedItem();
 
     if (!item || item->getQuantity() <= 0 || !passesFilter(item))
+    {
+        mItemPopup->setVisible(false);
         return;
+    }
 
     if (item->getInfo().getName() != mItemPopup->getItemName())
         mItemPopup->setItem(item->getInfo());
@@ -510,10 +531,7 @@ void ItemContainer::mousePressed(gcn::MouseEvent &event)
     {
         Item *item = getItem(event.getX(), event.getY());
 
-        if (item)
-            setSelectedItemIndex(item->getInvIndex());
-        else
-            setSelectedItemIndex(NO_ITEM);
+        setSelectedItem(item);
     }
 }
 
@@ -563,7 +581,7 @@ Item* ItemContainer::getItem(const int posX, const int posY)
 
 Item* ItemContainer::getItemInVisibleSlot(const int gridSlot)
 {
-    int itemCount = -1;
+    int itemCount = NO_ITEM;
     for (int i = 0; i < mInventory->getSize(); i++)
     {
         Item *item = mInventory->getItem(i);
@@ -582,7 +600,7 @@ Item* ItemContainer::getItemInVisibleSlot(const int gridSlot)
 
 int ItemContainer::getVisibleSlot(const Item* searchItem) const
 {
-    int itemCount = -1;
+    int itemCount = NO_ITEM;
     for (int i = 0; i < mInventory->getSize(); i++)
     {
         Item *item = mInventory->getItem(i);
@@ -596,7 +614,7 @@ int ItemContainer::getVisibleSlot(const Item* searchItem) const
             return itemCount;
     }
 
-    return -1;
+    return NO_ITEM;
 }
 
 void ItemContainer::setTypeFilter(const std::string& type)

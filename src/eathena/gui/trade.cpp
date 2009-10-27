@@ -231,15 +231,16 @@ const bool TradeWindow::tradingItem(const Item* item)
 
 void TradeWindow::valueChanged(const gcn::SelectionEvent &event)
 {
-    Item *item;
+    Item *item = mMyItemContainer->getSelectedItem();
 
     /* If an item is selected in one container, make sure no item is selected
      * in the other container.
      */
-    if (event.getSource() == mMyItemContainer &&
-       (item = mMyItemContainer->getSelectedItem()))
+    if (event.getSource() == mMyItemContainer && item)
         mPartnerItemContainer->selectNone();
-    else if ((item = mPartnerItemContainer->getSelectedItem()))
+
+    item = mPartnerItemContainer->getSelectedItem();
+    if (event.getSource() == mPartnerItemContainer && item)
         mMyItemContainer->selectNone();
 }
 
