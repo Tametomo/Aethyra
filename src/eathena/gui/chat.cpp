@@ -89,7 +89,7 @@ ChatWindow::ChatWindow():
 
     mTextOutput = new BrowserBox(BrowserBox::AUTO_WRAP);
     mTextOutput->setOpaque(false);
-    mTextOutput->setMaxRow((int) config.getValue("ChatLogLength", 128));
+    mTextOutput->setMaxRow(config.getValue("ChatLogLength", 128));
     mTextOutput->setLinkHandler(mItemLinkHandler);
 
     mScrollArea = new ScrollArea(mTextOutput);

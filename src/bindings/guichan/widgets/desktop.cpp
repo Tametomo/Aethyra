@@ -70,8 +70,8 @@ Desktop::Desktop():
 {
     currentDialog = NULL;
 
-    setWidth((int) config.getValue("screenwidth", defaultScreenWidth));
-    setHeight((int) config.getValue("screenheight", defaultScreenHeight));
+    setWidth(config.getValue("screenwidth", defaultScreenWidth));
+    setHeight(config.getValue("screenheight", defaultScreenHeight));
     setOpaque(false);
 
 #ifdef PACKAGE_VERSION
@@ -178,9 +178,9 @@ Image *Desktop::changeWallpaper(const std::string &wallpaper)
         int height = getHeight();
 
         if (newAspectRatio > aspectRatio)
-            width = height * aspectRatio;
+            width = (int) (height * aspectRatio);
         else if (aspectRatio > newAspectRatio)
-            height = height / aspectRatio;
+            height = (int) (height / aspectRatio);
 
         temp = manager->getResizedImage(wallpaper, width, height);
     }

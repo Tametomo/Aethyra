@@ -290,7 +290,7 @@ void Map::draw(Graphics *graphics, int scrollX, int scrollY)
     }
 
     drawOverlay(graphics, scrollX, scrollY,
-            (int) config.getValue("OverlayDetail", 2));
+            config.getValue("OverlayDetail", 2));
 }
 
 void Map::drawOverlay(Graphics *graphics, const float scrollX,

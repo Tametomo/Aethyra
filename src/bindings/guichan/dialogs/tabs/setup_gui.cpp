@@ -60,7 +60,7 @@ Setup_Gui::Setup_Gui():
     mCustomCursorEnabled(config.getValue("customcursor", true)),
     mOpacity(config.getValue("guialpha", 0.8)),
     mMouseOpacity(config.getValue("mousealpha", 0.7)),
-    mFps((int) config.getValue("fpslimit", 0)),
+    mFps(config.getValue("fpslimit", 0)),
     mScreenWidth(graphics->getWidth()),
     mScreenHeight(graphics->getHeight()),
     mModeListModel(new ModeListModel),
@@ -73,7 +73,7 @@ Setup_Gui::Setup_Gui():
     mFpsCheckBox(new CheckBox(_("FPS Limit:"))),
     mFpsSlider(new Slider(5, 200)),
     mFpsField(new TextField),
-    mFontSize((int) config.getValue("fontSize", 11)),
+    mFontSize(config.getValue("fontSize", 11)),
     mFontSizeSlider(new Slider(8, 14)),
     mFontSizeLabel(new Label(""))
 {
@@ -117,7 +117,7 @@ Setup_Gui::Setup_Gui():
     mFpsSlider->addActionListener(this);
     mFontSizeSlider->addActionListener(this);
 
-    mFontSize = (int) config.getValue("fontSize", 11);
+    mFontSize = config.getValue("fontSize", 11);
     mFontSizeLabel->setCaption(strprintf(_("%d Point"), mFontSize));
     mFontSizeSlider->setValue(mFontSize);
 
@@ -246,9 +246,9 @@ void Setup_Gui::apply()
     mCustomCursorEnabled = config.getValue("customcursor", true);
     mOpacity = config.getValue("guialpha", 0.8);
     mMouseOpacity = config.getValue("mousealpha", 0.7);
-    mScreenWidth = (int) config.getValue("screenwidth", 800);
-    mScreenHeight = (int) config.getValue("screenheight", 600);
-    mFontSize = (int) config.getValue("fontSize", 11);
+    mScreenWidth = config.getValue("screenwidth", 800);
+    mScreenHeight = config.getValue("screenheight", 600);
+    mFontSize = config.getValue("fontSize", 11);
 }
 
 void Setup_Gui::cancel()

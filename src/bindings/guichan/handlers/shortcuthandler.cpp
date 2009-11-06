@@ -66,7 +66,7 @@ void ShortcutHandler::load()
     }
 
     for (int i = 0; i < SHORTCUTS; i++)
-        mIndex[i] = (int) config.getValue(mPrefix + toString(i), -1);
+        mIndex[i] = config.getValue(mPrefix + toString(i), -1);
 }
 
 void ShortcutHandler::save() const

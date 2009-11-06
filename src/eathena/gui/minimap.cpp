@@ -1,8 +1,9 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004-2005  The Mana World Development Team
+ *  Copyright (C) 2008  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
+ *  This file is part of Aethyra derived from original code
  *  from The Mana World.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -58,8 +59,8 @@ Minimap::Minimap():
     setCloseButton(true);
 
     mShow = config.getValue(getWindowName() + "Show", true);
-    mUserWidth = (int) config.getValue(getWindowName() + "UserWidth", 100);
-    mUserHeight = (int) config.getValue(getWindowName() + "UserHeight", 100);
+    mUserWidth = config.getValue(getWindowName() + "UserWidth", 100);
+    mUserHeight = config.getValue(getWindowName() + "UserHeight", 100);
 
     setDefaultSize(100, 100, ImageRect::UPPER_LEFT, 5, 25);
 

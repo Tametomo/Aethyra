@@ -63,11 +63,11 @@ Joystick::Joystick(int no):
     logger->log("Hats: %i", SDL_JoystickNumHats(mJoystick));
     logger->log("Buttons: %i", SDL_JoystickNumButtons(mJoystick));
 
-    mEnabled = (int) config.getValue("joystickEnabled", 0) != 0;
-    mUpTolerance = (int) config.getValue("upTolerance", 100);
-    mDownTolerance = (int) config.getValue("downTolerance", 100);
-    mLeftTolerance = (int) config.getValue("leftTolerance", 100);
-    mRightTolerance = (int) config.getValue("rightTolerance", 100);
+    mEnabled = config.getValue("joystickEnabled", 0) != 0;
+    mUpTolerance = config.getValue("upTolerance", 100);
+    mDownTolerance = config.getValue("downTolerance", 100);
+    mLeftTolerance = config.getValue("leftTolerance", 100);
+    mRightTolerance = config.getValue("rightTolerance", 100);
 }
 
 Joystick::~Joystick()

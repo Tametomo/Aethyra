@@ -58,10 +58,10 @@ Viewport::Viewport():
     setOpaque(false);
     addMouseListener(this);
 
-    mScrollLaziness = (int) config.getValue("ScrollLaziness", 16);
-    mScrollRadius = (int) config.getValue("ScrollRadius", 0);
-    mScrollCenterOffsetX = (int) config.getValue("ScrollCenterOffsetX", 0);
-    mScrollCenterOffsetY = (int) config.getValue("ScrollCenterOffsetY", 0);
+    mScrollLaziness = config.getValue("ScrollLaziness", 16);
+    mScrollRadius = config.getValue("ScrollRadius", 0);
+    mScrollCenterOffsetX = config.getValue("ScrollCenterOffsetX", 0);
+    mScrollCenterOffsetY = config.getValue("ScrollCenterOffsetY", 0);
 
     config.addListener("ScrollLaziness", this);
     config.addListener("ScrollRadius", this);
@@ -371,6 +371,6 @@ void Viewport::closePopupMenu()
 
 void Viewport::optionChanged(const std::string &name)
 {
-    mScrollLaziness = (int) config.getValue("ScrollLaziness", 32);
-    mScrollRadius = (int) config.getValue("ScrollRadius", 32);
+    mScrollLaziness = config.getValue("ScrollLaziness", 32);
+    mScrollRadius = config.getValue("ScrollRadius", 32);
 }

@@ -264,7 +264,7 @@ void Palette::addColor(Palette::ColorType type, int rgb,
         rgbValue = atoi(rgbString.c_str());
     gcn::Color trueCol = rgbValue;
     grad = (GradientType) config.getValue(*configName + "Gradient", grad);
-    delay = (int) config.getValue(*configName + "Delay", delay);
+    delay = config.getValue(*configName + "Delay", delay);
     mColVector[type].set(type, trueCol, grad, text, c, delay);
 
     if (grad != STATIC)

@@ -121,7 +121,7 @@ void KeyboardConfig::retrieve()
 {
     for (int i = 0; i < KEY_TOTAL; i++)
     {
-        mKey[i].value = (int) config.getValue(
+        mKey[i].value = config.getValue(
             mKey[i].configField, mKey[i].defaultValue);
     }
 }

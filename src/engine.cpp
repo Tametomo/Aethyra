@@ -338,11 +338,11 @@ void Engine::initWindow()
     graphics = new SDLGraphics();
 #endif
 
-    const int width = (int) config.getValue("screenwidth", defaultScreenWidth);
-    const int height = (int) config.getValue("screenheight", defaultScreenHeight);
+    const int width = config.getValue("screenwidth", defaultScreenWidth);
+    const int height = config.getValue("screenheight", defaultScreenHeight);
     const int bpp = 0;
-    const bool fullscreen = ((int) config.getValue("screen", 0) == 1);
-    const bool hwaccel = ((int) config.getValue("hwaccel", 0) == 1);
+    const bool fullscreen = (config.getValue("screen", 0) == 1);
+    const bool hwaccel = (config.getValue("hwaccel", 0) == 1);
 
     // Try to set the desired video mode
     if (!graphics->setVideoMode(width, height, bpp, fullscreen, hwaccel))

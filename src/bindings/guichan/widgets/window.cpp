@@ -590,8 +590,8 @@ void Window::loadWindowState()
 
     if (mGrip)
     {
-        int width = (int) config.getValue(name + "WinWidth", mDefaultWidth);
-        int height = (int) config.getValue(name + "WinHeight", mDefaultHeight);
+        int width = config.getValue(name + "WinWidth", mDefaultWidth);
+        int height = config.getValue(name + "WinHeight", mDefaultHeight);
 
         if (getMinWidth() > width)
             width = getMinWidth();
@@ -609,8 +609,8 @@ void Window::loadWindowState()
         setSize(mDefaultWidth, mDefaultHeight);
     }
 
-    int x = (int) config.getValue(name + "WinX", -1);
-    int y = (int) config.getValue(name + "WinY", -1);
+    int x = config.getValue(name + "WinX", -1);
+    int y = config.getValue(name + "WinY", -1);
 
     if (x != -1 || y != -1)
     {
@@ -621,9 +621,9 @@ void Window::loadWindowState()
         saveRelativeLocation(x, y);
     }
 
-    int position = (int) config.getValue(name + "Position", -1);
-    mOffsetX = (int) config.getValue(name + "OffsetX", mDefaultOffsetX);
-    mOffsetY = (int) config.getValue(name + "OffsetY", mDefaultOffsetY);
+    int position = config.getValue(name + "Position", -1);
+    mOffsetX = config.getValue(name + "OffsetX", mDefaultOffsetX);
+    mOffsetY = config.getValue(name + "OffsetY", mDefaultOffsetY);
 
     if (position != -1)
     {

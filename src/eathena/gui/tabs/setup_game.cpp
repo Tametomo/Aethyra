@@ -44,14 +44,14 @@ Setup_Game::Setup_Game():
     mNameEnabled(config.getValue("showownname", false)),
     mPickupChatEnabled(config.getValue("showpickupchat", true)),
     mPickupParticleEnabled(config.getValue("showpickupparticle", false)),
-    mSpeechMode((int) config.getValue("speech", 3)),
+    mSpeechMode(config.getValue("speech", 3)),
     mNameCheckBox(new CheckBox(_("Show name"), mNameEnabled)),
     mSpeechSlider(new Slider(0, 3)),
     mSpeechModeLabel(new Label("")),
-    mOverlayDetail((int) config.getValue("OverlayDetail", 2)),
+    mOverlayDetail(config.getValue("OverlayDetail", 2)),
     mOverlayDetailSlider(new Slider(0, 2)),
     mOverlayDetailLabel(new Label("")),
-    mParticleDetail(3 - (int) config.getValue("particleEmitterSkip", 1)),
+    mParticleDetail(3 - config.getValue("particleEmitterSkip", 1)),
     mParticleDetailSlider(new Slider(-1, 3)),
     mParticleDetailLabel(new Label("")),
     mPickupNotifyLabel(new Label(_("Show pickup notification"))),
@@ -138,9 +138,9 @@ void Setup_Game::apply()
     mNameEnabled = config.getValue("showownname", false);
     mPickupChatEnabled = config.getValue("showpickupchat", true);
     mPickupParticleEnabled = config.getValue("showpickupparticle", false);
-    mSpeechMode = (int) config.getValue("speech", 3);
-    mOverlayDetail = (int) config.getValue("OverlayDetail", 2);
-    mParticleDetail = 3 - (int) config.getValue("particleEmitterSkip", 1);
+    mSpeechMode = config.getValue("speech", 3);
+    mOverlayDetail = config.getValue("OverlayDetail", 2);
+    mParticleDetail = 3 - config.getValue("particleEmitterSkip", 1);
     config.setValue("particleeffects", mParticleDetail != -1);
 }
 

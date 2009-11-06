@@ -130,7 +130,7 @@ void PlayerRelationsManager::load()
     clear();
 
     mPersistIgnores = config.getValue(PERSIST_IGNORE_LIST, 1);
-    mDefaultPermissions = (int) config.getValue(DEFAULT_PERMISSIONS,
+    mDefaultPermissions = config.getValue(DEFAULT_PERMISSIONS,
                                                 mDefaultPermissions);
 
     std::string ignore_strategy_name = config.getValue(PLAYER_IGNORE_STRATEGY,

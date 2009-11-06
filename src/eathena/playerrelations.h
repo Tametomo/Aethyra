@@ -228,7 +228,7 @@ private:
     void signalUpdate(const std::string &name);
 
     bool mPersistIgnores; // If NOT set, we delete the ignored data upon reloading
-    unsigned int mDefaultPermissions;
+    int mDefaultPermissions;
 
     PlayerIgnoreStrategy *mIgnoreStrategy;
     RelationMap mRelations;

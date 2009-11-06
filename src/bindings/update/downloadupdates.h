@@ -59,7 +59,7 @@ public:
      */
     DownloadUpdates(const std::string &updateHost, UpdaterListener* listener);
 
-    ~DownloadUpdates();
+    virtual ~DownloadUpdates();
 
     /**
      * Spawn the asynchronous download thread.

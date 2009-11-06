@@ -40,8 +40,8 @@
 #include "../../../../core/utils/gettext.h"
 
 Setup_Audio::Setup_Audio():
-    mMusicVolume((int) config.getValue("musicVolume", defaultMusicVolume)),
-    mSfxVolume((int) config.getValue("sfxVolume", defaultSfxVolume)),
+    mMusicVolume(config.getValue("musicVolume", defaultMusicVolume)),
+    mSfxVolume(config.getValue("sfxVolume", defaultSfxVolume)),
     mSoundEnabled(config.getValue("sound", 1)),
     mSoundCheckBox(new CheckBox(_("Sound"), mSoundEnabled)),
     mSfxSlider(new Slider(0, sound.getMaxVolume())),
@@ -51,8 +51,8 @@ Setup_Audio::Setup_Audio():
 
     if (config.getValue("sound", 1))
     {
-        sound.setSfxVolume((int) config.getValue("sfxVolume", defaultSfxVolume));
-        sound.setMusicVolume((int) config.getValue("musicVolume",
+        sound.setSfxVolume(config.getValue("sfxVolume", defaultSfxVolume));
+        sound.setMusicVolume(config.getValue("musicVolume",
                                                    defaultMusicVolume));
     }
 
@@ -121,8 +121,8 @@ void Setup_Audio::apply()
     }
 
     mSoundEnabled = config.getValue("sound", 1);
-    mSfxVolume = (int) config.getValue("sfxVolume", defaultSfxVolume);
-    mMusicVolume = (int) config.getValue("musicVolume", defaultMusicVolume);
+    mSfxVolume = config.getValue("sfxVolume", defaultSfxVolume);
+    mMusicVolume = config.getValue("musicVolume", defaultMusicVolume);
 }
 
 void Setup_Audio::cancel()

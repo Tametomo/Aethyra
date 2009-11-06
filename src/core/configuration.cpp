@@ -92,10 +92,16 @@ std::string ConfigurationObject::getValue(const std::string &key, std::string de
     return ((iter != mOptions.end()) ? iter->second : deflt);
 }
 
-float ConfigurationObject::getValue(const std::string &key, float deflt)
+double ConfigurationObject::getValue(const std::string &key, double deflt)
 {
     OptionIterator iter = mOptions.find(key);
     return (iter != mOptions.end()) ? atof(iter->second.c_str()) : deflt;
+}
+
+int ConfigurationObject::getValue(const std::string &key, int deflt)
+{
+    OptionIterator iter = mOptions.find(key);
+    return (iter != mOptions.end()) ? atoi(iter->second.c_str()) : deflt;
 }
 
 void ConfigurationObject::deleteList(const std::string &name)

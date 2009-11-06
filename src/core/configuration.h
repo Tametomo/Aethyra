@@ -123,7 +123,15 @@ class ConfigurationObject
          * \param key Option identifier.
          * \param deflt Default option if not there or error.
          */
-        float getValue(const std::string &key, float deflt);
+        double getValue(const std::string &key, double deflt);
+
+        /**
+         * Gets a value as integer (int).
+         *
+         * \param key Option identifier.
+         * \param deflt Default option if not there or error.
+         */
+        int getValue(const std::string &key, int deflt);
 
         /**
          * Re-sets all data in the configuration

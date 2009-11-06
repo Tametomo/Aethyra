@@ -189,8 +189,8 @@ class Gui : public gcn::Gui
         TrueTypeFont *mBoldFont;              /**< Font for bolded text*/
         bool mCustomCursor;                   /**< Show custom cursor */
         ImageSet *mMouseCursors;              /**< Mouse cursor images */
-        float mMaxMouseCursorAlpha;           /**< Cursor opacity/transparency. */
-        float mMouseCursorAlpha;              /**< Current cursor opacity/transparency.
+        double mMaxMouseCursorAlpha;          /**< Cursor opacity/transparency. */
+        double mMouseCursorAlpha;             /**< Current cursor opacity/transparency.
                                                    Changes as the cursor fades
                                                    out due to inactivity. */
         int mMouseX;                          /**< Current mouse X position in

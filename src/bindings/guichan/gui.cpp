@@ -92,7 +92,7 @@ class GuiConfigListener : public ConfigListener
             }
             else if (name == "mousealpha")
             {
-                mGui->setMouseAlpha((float) config.getValue("mousealpha", 0.7f));
+                mGui->setMouseAlpha(config.getValue("mousealpha", 0.7f));
             }
         }
     private:
@@ -179,7 +179,7 @@ Gui::Gui(Graphics *graphics):
     std::string path = resman->getPath("fonts/dejavusans.ttf");
     try
     {
-        const int fontSize = (int) config.getValue("fontSize", 11);
+        const int fontSize = config.getValue("fontSize", 11);
         mGuiFont = resman->getFont(path, fontSize);
         mInfoParticleFont = resman->getFont(path, fontSize, 1);
         mBoldFont = resman->getFont(path, fontSize, 1);
@@ -198,7 +198,7 @@ Gui::Gui(Graphics *graphics):
     config.addListener("customcursor", mConfigListener);
 
     // Set the initial mouse cursor opacity
-    mMaxMouseCursorAlpha = (float) config.getValue("mousealpha", 0.7f);
+    mMaxMouseCursorAlpha = config.getValue("mousealpha", 0.7f);
     config.addListener("mousealpha", mConfigListener);
 
     // Initialize frame limiting
@@ -303,7 +303,7 @@ void Gui::logic()
         // Fade out mouse cursor after extended inactivity
         if (get_elapsed_time(mMouseInactivityTimer) < 15000)
         {
-            const float alpha = std::min(mMouseCursorAlpha + 0.05f, 1.0f);
+            const double alpha = std::min(mMouseCursorAlpha + 0.05, 1.0);
             mMouseCursorAlpha = std::min(mMaxMouseCursorAlpha, alpha);
         }
         else if (mMouseInactivityTimer > MAX_TIME)
@@ -312,7 +312,7 @@ void Gui::logic()
         }
         else
         {
-            mMouseCursorAlpha = std::max(0.0f, mMouseCursorAlpha - 0.005f);
+            mMouseCursorAlpha = std::max(0.0, mMouseCursorAlpha - 0.005);
         }
     }
 
@@ -324,7 +324,7 @@ void Gui::logic()
 
 void Gui::framerateChanged()
 {
-    const int fpsLimit = (int) config.getValue("fpslimit", 0);
+    const int fpsLimit = config.getValue("fpslimit", 0);
 
     SDL_setFramerate(&fpsm, fpsLimit > 0 ? fpsLimit : 60);
 }

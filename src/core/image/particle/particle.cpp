@@ -92,9 +92,9 @@ Particle::~Particle()
 
 void Particle::setupEngine()
 {
-    Particle::maxCount = (int) config.getValue("particleMaxCount", 3000);
-    Particle::fastPhysics = (int) config.getValue("particleFastPhysics", 0);
-    Particle::emitterSkip = (int) config.getValue("particleEmitterSkip", 1) + 1;
+    Particle::maxCount = config.getValue("particleMaxCount", 3000);
+    Particle::fastPhysics = config.getValue("particleFastPhysics", 0);
+    Particle::emitterSkip = config.getValue("particleEmitterSkip", 1) + 1;
     disableAutoDelete();
     logger->log("Particle engine set up");
 }
