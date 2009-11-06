@@ -259,7 +259,9 @@ void Engine::initInternationalization()
 #if ENABLE_NLS
 #ifdef WIN32
     putenv(("LANG=" + std::string(_nl_locale_name_default())).c_str());
-    // mingw doesn't like LOCALEDIR to be defined for some reason
+#endif
+#ifdef CODEBLOCKS
+    // Code::Blocks doesn't like LOCALEDIR to be defined for some reason
     bindtextdomain("aethyra", "translations/");
 #else
     bindtextdomain("aethyra", LOCALEDIR);
