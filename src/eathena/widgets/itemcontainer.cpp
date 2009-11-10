@@ -256,8 +256,7 @@ void ItemContainer::recalculateHeight()
     }
 
     const int cols = std::max(1, getWidth() / gridWidth);
-    const int rows = ((numOfItems + 1) / cols) + 
-                     ((numOfItems + 1) % cols > 0 ? 1 : 0);
+    const int rows = (numOfItems / cols) + (numOfItems % cols > 0 ? 1 : 0);
     const int height = rows * gridHeight + 8;
 
     if (height != getHeight())
