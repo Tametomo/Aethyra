@@ -75,25 +75,13 @@ void InventoryHandler::handleMessage(MessageIn *msg)
     {
         case SMSG_PLAYER_INVENTORY:
         case SMSG_PLAYER_STORAGE_ITEMS:
-            switch (msg->getId())
+            if (msg->getId() == SMSG_PLAYER_INVENTORY)
             {
-                case SMSG_PLAYER_INVENTORY:
-                    // Clear inventory - this will be a complete refresh
-                    inventory->clear();
-                    break;
-                case SMSG_PLAYER_STORAGE_ITEMS:
-                    /*
-                     * This packet will always be followed by a
-                     * SMSG_PLAYER_STORAGE_EQUIP packet.  The two packets
-                     * together comprise a complete refresh of storage, so
-                     * clear storage here
-                     */
-                    storage->clear();
-                    break;
-                default:
-                    logger->log("HOW DID WE GET HERE?");
-                    return;
+                // Clear inventory - this will be a complete refresh
+                inventory->clear();
+                break;
             }
+
             msg->readInt16();  // length
             number = (msg->getLength() - 4) / 18;
 
@@ -290,6 +278,7 @@ void InventoryHandler::handleMessage(MessageIn *msg)
             /*
              * Storage access has been closed
              */
+            storage->clear();
             player_node->setInStorage(false);
             break;
     }
