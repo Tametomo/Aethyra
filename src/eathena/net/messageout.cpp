@@ -47,7 +47,8 @@ void MessageOut::writeInt8(Sint8 value)
 void MessageOut::writeInt16(Sint16 value)
 {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    (*(Sint16 *)(mData + mPos)) = SDL_Swap16(value);
+    Sint16 swap = SDL_Swap16(value);
+    memcpy(mData + mPos, &swap, sizeof(Sint16));
 #else
     (*(Sint16 *)(mData + mPos)) = value;
 #endif
@@ -58,7 +59,8 @@ void MessageOut::writeInt16(Sint16 value)
 void MessageOut::writeInt32(Sint32 value)
 {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    (*(Sint32 *)(mData + mPos)) = SDL_Swap32(value);
+    Sint32 swap = SDL_Swap32(value);
+    memcpy(mData + mPos, &swap, sizeof(Sint32));
 #else
     (*(Sint32 *)(mData + mPos)) = value;
 #endif
