@@ -50,7 +50,7 @@ int MessageIn::readInt8()
 
 int MessageIn::readInt16()
 {
-    int value = -1;
+    Sint16 value = -1;
     if (mPos + 2 <= mLength)
     {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -58,7 +58,7 @@ int MessageIn::readInt16()
         memcpy(&swap, mData + mPos, sizeof(Sint16));
         value = SDL_Swap16(swap);
 #else
-        value = (*(Sint16*)(mData + mPos));
+        memcpy(&value, mData + mPos, sizeof(Sint16));
 #endif
     }
     mPos += 2;
@@ -67,7 +67,7 @@ int MessageIn::readInt16()
 
 int MessageIn::readInt32()
 {
-    int value = -1;
+    Sint32 value = -1;
     if (mPos + 4 <= mLength)
     {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -75,7 +75,7 @@ int MessageIn::readInt32()
         memcpy(&swap, mData + mPos, sizeof(Sint32));
         value = SDL_Swap32(swap);
 #else
-        value = (*(Sint32*)(mData + mPos));
+        memcpy(&value, mData + mPos, sizeof(Sint32));
 #endif
     }
     mPos += 4;

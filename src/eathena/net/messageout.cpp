@@ -50,7 +50,7 @@ void MessageOut::writeInt16(Sint16 value)
     Sint16 swap = SDL_Swap16(value);
     memcpy(mData + mPos, &swap, sizeof(Sint16));
 #else
-    (*(Sint16 *)(mData + mPos)) = value;
+    memcpy(mData + mPos, &value, sizeof(Sint16));
 #endif
     mPos += sizeof(Sint16);
     network->mOutSize += sizeof(Sint16);
@@ -62,7 +62,7 @@ void MessageOut::writeInt32(Sint32 value)
     Sint32 swap = SDL_Swap32(value);
     memcpy(mData + mPos, &swap, sizeof(Sint32));
 #else
-    (*(Sint32 *)(mData + mPos)) = value;
+    memcpy(mData + mPos, &value, sizeof(Sint32));
 #endif
     mPos += sizeof(Sint32);
     network->mOutSize += sizeof(Sint32);
