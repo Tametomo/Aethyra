@@ -11,7 +11,7 @@ if [ -e $file1 ];then
         echo "Checking to ensure that required packages are installed"
         echo
         sudo apt-get install build-essential automake autoconf libtool cvs
-        sudo apt-get install autoconf gettext git git-core g++
+        sudo apt-get install autoconf gettext git git-core g++ libx11-dev
         sudo apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-net1.2-dev libsdl-mixer1.2-dev 
         sudo apt-get install libphysfs-dev libcurl4-openssl-dev libgl1-mesa-dev 
         sudo apt-get install libglu1-mesa-dev liballegro4.2-dev libxml2-dev
