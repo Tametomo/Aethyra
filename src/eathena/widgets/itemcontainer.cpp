@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -530,7 +531,8 @@ void ItemContainer::mousePressed(gcn::MouseEvent &event)
     {
         Item *item = getItem(event.getX(), event.getY());
 
-        setSelectedItem(item);
+        if (item)
+            setSelectedItemIndex(item->getInvIndex());
     }
 }
 
