@@ -310,6 +310,12 @@ int DownloadUpdates::downloadThreadWithThis()
             if (mUserCancel)
             {
                 addUpdatesToResman();
+
+                if (mThread && SDL_GetThreadID(mThread) != 0)
+                {
+                    SDL_WaitThread(mThread, NULL);
+                    mThread = NULL;
+                }
                 break;
             }
 
@@ -371,6 +377,7 @@ int DownloadUpdates::downloadThreadWithThis()
 
     /* UPDATE_COMPLETE:  Waiting for user to press "play". */
 
+    mThread = NULL;
     return 0;
 }
 
@@ -396,7 +403,14 @@ int DownloadUpdates::downloadProgress(GenericVerifier* resource,
 
     // If the action was canceled return an error code to stop the mThread
     if (mUserCancel)
+    {
+        if (mThread && SDL_GetThreadID(mThread) != 0)
+        {
+            SDL_WaitThread(mThread, NULL);
+            mThread = NULL;
+        }
         return -1;
+    }
 
     return 0;
 }
