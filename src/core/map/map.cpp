@@ -103,10 +103,11 @@ void TileAnimation::update(const int ticks)
 }
 
 MapLayer::MapLayer(const int x, const int y, const int width, const int height,
-                   const bool isFringeLayer):
+                   const bool isFringeLayer, const bool isVisible):
     mX(x), mY(y),
     mWidth(width), mHeight(height),
-    mIsFringeLayer(isFringeLayer)
+    mIsFringeLayer(isFringeLayer),
+    mIsVisible(isVisible)
 {
     const int size = mWidth * mHeight;
     mTiles = new Image*[size];
@@ -149,6 +150,9 @@ void MapLayer::draw(Graphics *graphics, int startX, int startY,
 
     for (int y = startY; y < endY; y++)
     {
+        if (!mIsVisible)
+            continue;
+
         // If drawing the fringe layer, make sure all sprites above this row of
         // tiles have been drawn
         if (mIsFringeLayer)

@@ -319,12 +319,13 @@ void MapReader::readLayer(const xmlNodePtr &node, Map *map)
 
     const bool isFringeLayer = (name.substr(0,6) == "fringe");
     const bool isCollisionLayer = (name.substr(0,9) == "collision");
+    const bool isVisible = XML::getProperty(node, "visible", 1);
 
     MapLayer *layer = 0;
 
     if (!isCollisionLayer)
     {
-        layer = new MapLayer(offsetX, offsetY, w, h, isFringeLayer);
+        layer = new MapLayer(offsetX, offsetY, w, h, isFringeLayer, isVisible);
         map->addLayer(layer);
     }
 

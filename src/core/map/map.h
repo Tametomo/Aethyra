@@ -98,7 +98,7 @@ class MapLayer
          * There can be only one fringe layer per map.
          */
         MapLayer(const int x, const int y, const int width, const int height,
-                 const bool isFringeLayer);
+                 const bool isFringeLayer, const bool isVisible = true);
 
         /**
          * Destructor.
@@ -136,6 +136,7 @@ class MapLayer
         int mX, mY;
         int mWidth, mHeight;
         bool mIsFringeLayer;    /**< Whether the sprites are drawn. */
+        bool mIsVisible;
         Image **mTiles;
 };
 
