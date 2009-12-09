@@ -89,18 +89,26 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
         FILE* newfile = fopen(resource->getFullPath().c_str(), "rb");
         if (newfile)
         {
-            if ((policy == CACHE_OK) &&
-                resource->verify(newfile))
+            if (policy == CACHE_OK)
             {
-                logger->log("%s already here and verified",
-                    resource->getName().c_str());
-                downloadComplete = true;
+                if (resource->verify(newfile))
+                {
+                    logger->log("%s already here and verified",
+                                resource->getName().c_str());
+                    downloadComplete = true;
 
-                // Obtain file size and make a download progress callback
-                fseek(newfile, 0, SEEK_END);
-                long fileSize = ftell(newfile);
-                (void) mListener->downloadProgress(resource,
-                        fileSize, fileSize);
+                    // Obtain file size and make a download progress callback
+                    fseek(newfile, 0, SEEK_END);
+                    long fileSize = ftell(newfile);
+                    (void) mListener->downloadProgress(resource, fileSize,
+                                                       fileSize);
+                }
+                else
+                {
+                    logger->log("%s already here, but doesn't verify",
+                                resource->getName().c_str());
+                    policy = CACHE_CORRUPTED;
+                }
 
                 fclose(newfile);
             }
@@ -116,6 +124,7 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
     while (attempts < 3 && !downloadComplete)
     {
         FILE *outfile = NULL;
+        const std::string temporaryPath = resource->getFullPath() + ".temp";
 
         curl = curl_easy_init();
 
@@ -123,7 +132,11 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
         {
             logger->log("Downloading: %s", resource->getUrl().c_str());
 
-            outfile = fopen(resource->getFullPath().c_str(), "w+b");
+            if (policy != CACHE_CORRUPTED)
+                outfile = fopen(resource->getFullPath().c_str(), "w+b");
+            else
+                outfile = fopen(temporaryPath.c_str(), "w+b");
+
             if (!outfile)
                 break;  // No point taking 3 attempts here
 
@@ -138,7 +151,7 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
             curl_easy_setopt(curl, CURLOPT_URL, resource->getUrl().c_str());
             curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0);
             curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION,
-                                   DownloadWrapper::updateProgress);
+                             DownloadWrapper::updateProgress);
             curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, this);
             curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
             curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 15);
@@ -149,8 +162,7 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
                 // Make sure that files marked as CACHE_REFRESH are always 
                 // redownloaded, in order to always get the latest version.
                 pHeaders = curl_slist_append(pHeaders, "pragma: no-cache");
-                pHeaders =
-                    curl_slist_append(pHeaders, "Cache-Control: no-cache");
+                pHeaders = curl_slist_append(pHeaders, "Cache-Control: no-cache");
                 curl_easy_setopt(curl, CURLOPT_HTTPHEADER, pHeaders);
             }
 
@@ -160,7 +172,10 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
                           << " host: " << resource->getUrl() << std::endl;
 
                 fclose(outfile);
-                ::remove(resource->getFullPath().c_str());
+                if (policy == CACHE_CORRUPTED)
+                    ::remove(temporaryPath.c_str());
+                else
+                    ::remove(resource->getFullPath().c_str());
                 attempts++;
                 continue;   //FIXME this leaks curl
             }
@@ -175,12 +190,25 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
             {
                 downloadComplete = true;
                 fclose(outfile);
+
+                if (policy == CACHE_CORRUPTED)
+                {
+                    // Any existing file with this name is deleted first,
+                    // otherwise the rename will fail on Windows.
+                    ::remove(resource->getFullPath().c_str());
+                    ::rename(temporaryPath.c_str(), resource->getFullPath().c_str());
+                }
             }
             else
             {
-                policy = CACHE_REFRESH; // for intermediate web caches
                 fclose(outfile);        // must close before deleting for Windows
-                ::remove(resource->getFullPath().c_str());
+                if (policy == CACHE_CORRUPTED)
+                    ::remove(temporaryPath.c_str());
+                else
+                {
+                    policy = CACHE_REFRESH; // for intermediate web caches
+                    ::remove(resource->getFullPath().c_str());
+                }
             }
         }
         attempts++;
@@ -198,10 +226,10 @@ DownloadWrapper::~DownloadWrapper()
 
 GenericVerifier::GenericVerifier(std::string name, std::string url,
                                  std::string fullPath, CachePolicy cachePolicy) :
+    mCachePolicy(cachePolicy),
     mName(name),
     mUrl(url),
-    mFullPath(fullPath),
-    mCachePolicy(cachePolicy)
+    mFullPath(fullPath)
 {
 }
 

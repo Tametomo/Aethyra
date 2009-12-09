@@ -382,7 +382,7 @@ int DownloadUpdates::downloadThreadWithThis()
 }
 
 int DownloadUpdates::downloadProgress(GenericVerifier* resource,
-        double downloaded, double size)
+                                      double downloaded, double size)
 {
     float progress = downloaded / size;
     if (progress != progress)
@@ -403,14 +403,7 @@ int DownloadUpdates::downloadProgress(GenericVerifier* resource,
 
     // If the action was canceled return an error code to stop the mThread
     if (mUserCancel)
-    {
-        if (mThread && SDL_GetThreadID(mThread) != 0)
-        {
-            SDL_WaitThread(mThread, NULL);
-            mThread = NULL;
-        }
         return -1;
-    }
 
     return 0;
 }

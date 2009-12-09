@@ -41,8 +41,9 @@
  */
 enum CachePolicy
 {
-    CACHE_OK,       /**< Use already-downloaded version. */
-    CACHE_REFRESH   /**< Re-download existing files. */
+    CACHE_OK,        /**< Use already-downloaded version. */
+    CACHE_CORRUPTED, /**< Version already exists, but doesn't match checksum */
+    CACHE_REFRESH    /**< Re-download existing files. */
 };
 
 
@@ -85,6 +86,12 @@ public:
 
     CachePolicy getCachePolicy() const { return mCachePolicy; }
 
+protected:
+    /**
+     * Use an HTTP "Cache-Contol: no-cache" header.
+     */
+    CachePolicy mCachePolicy;
+
 private:
     /** Display name */
     std::string mName;
@@ -94,11 +101,6 @@ private:
 
     /** Download to this file. */
     std::string mFullPath;
-
-    /**
-     * Use an HTTP "Cache-Contol: no-cache" header.
-     */
-    CachePolicy mCachePolicy;
 };
 
 /**
