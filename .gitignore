@@ -42,9 +42,9 @@ src/aethyra
 # files created during Windows build
 .objs
 *.dll
-aethyra.exe
-aethyra.depend
-aethyra.layout
+*.exe
+*.depend
+*.layout
 
 #files created by CMake
 cmake_install.cmake
