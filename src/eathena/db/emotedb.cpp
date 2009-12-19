@@ -21,11 +21,15 @@
 
 #include "emotedb.h"
 
+#include "../../bindings/guichan/handlers/shortcuthandler.h"
+
+#include "../../core/configuration.h"
 #include "../../core/log.h"
 
 #include "../../core/map/sprite/animatedsprite.h"
 
 #include "../../core/utils/dtor.h"
+#include "../../core/utils/stringutils.h"
 #include "../../core/utils/xml.h"
 
 namespace
@@ -52,6 +56,8 @@ void EmoteDB::load()
         logger->log("Emote Database: Error while loading emotes.xml!");
         return;
     }
+
+    int index = 0;
 
     //iterate <emote>s
     for_each_xml_child_node(emoteNode, rootNode)
@@ -87,6 +93,13 @@ void EmoteDB::load()
             }
         }
         mEmoteInfos[id] = currentInfo;
+
+        const bool valid = config.keyExists("emoteshortcut" + toString(index));
+
+        if (index < SHORTCUTS && !valid)
+            config.setValue("emoteshortcut" + toString(index), id + 1);
+
+        index++;
 
         if (id > mLastEmote)
             mLastEmote = id;

@@ -136,6 +136,13 @@ class ConfigurationObject
         int getValue(const std::string &key, int deflt);
 
         /**
+         * Whether or not a specific key exists yet or not.
+         *
+         * \param key Option identifier.
+         */
+        bool keyExists(const std::string &key);
+
+        /**
          * Re-sets all data in the configuration
          */
         virtual void clear(void);

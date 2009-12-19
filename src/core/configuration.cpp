@@ -104,6 +104,12 @@ int ConfigurationObject::getValue(const std::string &key, int deflt)
     return (iter != mOptions.end()) ? atoi(iter->second.c_str()) : deflt;
 }
 
+bool ConfigurationObject::keyExists(const std::string &key)
+{
+    OptionIterator iter = mOptions.find(key);
+    return (iter != mOptions.end());
+}
+
 void ConfigurationObject::deleteList(const std::string &name)
 {
     for (ConfigurationList::const_iterator it = mContainerOptions[name].begin();
