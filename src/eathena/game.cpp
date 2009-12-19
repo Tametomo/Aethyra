@@ -362,7 +362,7 @@ void Game::logic() const
                     errorMessage = _("Got disconnected from server!");
 
                 disconnectedDialog = new OkDialog(_("Network Error"),
-                                                    errorMessage);
+                                                    errorMessage, NULL, true);
                 disconnectedDialog->addActionListener(&exitListener);
                 disconnectedDialog->requestMoveToTop();
             }
