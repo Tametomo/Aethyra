@@ -172,9 +172,15 @@ void CharSelectDialog::action(const gcn::ActionEvent &event)
                                                     mGender);
     }
     else if (event.getId() == "previous")
+    {
         mCharInfo->prev();
+        updatePlayerInfo();
+    }
     else if (event.getId() == "next")
+    {
         mCharInfo->next();
+        updatePlayerInfo();
+    }
 }
 
 void CharSelectDialog::updatePlayerInfo()
@@ -226,12 +232,6 @@ void CharSelectDialog::attemptCharSelect()
     MessageOut outMsg(0x0066);
     outMsg.writeInt8(mCharInfo->getPos());
     mCharInfo->lock();
-}
-
-void CharSelectDialog::logic()
-{
-    Window::logic();
-    updatePlayerInfo();
 }
 
 void CharSelectDialog::requestFocus()

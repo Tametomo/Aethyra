@@ -60,8 +60,6 @@ class CharSelectDialog : public Window, public gcn::ActionListener
 
         void updatePlayerInfo();
 
-        void logic();
-
         bool selectByName(const std::string &name);
 
         /**
