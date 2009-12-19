@@ -53,7 +53,7 @@ Viewport::Viewport():
     mTileViewY(0),
     mShowDebugPath(false),
     mPlayerFollowMouse(false),
-    mWalkTime(0)
+    mWalkTime(-1)
 {
     setOpaque(false);
     addMouseListener(this);
