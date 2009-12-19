@@ -38,6 +38,7 @@
 
 #include "../../core/map/sprite/npc.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
@@ -55,7 +56,7 @@ BuyDialog::BuyDialog():
     setMinHeight(230);
     setDefaultSize(260, 230, ImageRect::CENTER);
 
-    mShopListModel = new ShopListModel;
+    mShopListModel = new ShopListModel();
 
     mShopItemList = new ShopListBox(mShopListModel, mShopListModel);
     mScrollArea = new ScrollArea(mShopItemList);
@@ -87,7 +88,7 @@ BuyDialog::BuyDialog():
 
 BuyDialog::~BuyDialog()
 {
-    delete mShopListModel;
+    destroy(mShopListModel);
 }
 
 void BuyDialog::fontChanged()

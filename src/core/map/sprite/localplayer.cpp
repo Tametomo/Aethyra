@@ -47,6 +47,8 @@
 
 #include "../../../bindings/sdl/sound.h"
 
+#include "../../../core/utils/dtor.h"
+
 #include "../../../eathena/gui/storagewindow.h"
 
 #include "../../../eathena/net/messageout.h"
@@ -92,13 +94,13 @@ LocalPlayer::LocalPlayer(const Uint32 &id, const Uint16 &job, Map *map):
 
 LocalPlayer::~LocalPlayer()
 {
-    delete mInventory;
-    delete mStorage;
+    destroy(mInventory);
+    destroy(mStorage);
 
     for (int i = Being::TC_SMALL; i < Being::NUM_TC; i++)
     {
-        delete mTargetCursor[0][i];
-        delete mTargetCursor[1][i];
+        destroy(mTargetCursor[0][i]);
+        destroy(mTargetCursor[1][i]);
         mTargetCursorImages[0][i]->decRef();
         mTargetCursorImages[1][i]->decRef();
     }
@@ -235,11 +237,7 @@ void LocalPlayer::setGM()
 
 void LocalPlayer::setName(const std::string &name)
 {
-    if (mName)
-    {
-        delete mName;
-        mName = 0;
-    }
+    destroy(mName);
 
     if (config.getValue("showownname", false))
         Player::setName(name);

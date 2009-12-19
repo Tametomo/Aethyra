@@ -37,10 +37,10 @@
 
 #include "sdl/sdlinput.h"
 
+#include "widgets/container.h"
 #include "widgets/desktop.h"
 #include "widgets/popup.h"
 #include "widgets/window.h"
-#include "widgets/windowcontainer.h"
 
 #include "../../core/configlistener.h"
 #include "../../core/configuration.h"
@@ -51,6 +51,7 @@
 #include "../../core/image/imageset.h"
 #include "../../core/image/imageloader.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 
 #include "../../eathena/gui/viewport.h"
@@ -152,11 +153,11 @@ Gui::Gui(Graphics *graphics):
     gcn::Image::setImageLoader(&imageLoader);
 
     // Set input
-    guiInput = new SDLInput;
+    guiInput = new SDLInput();
     setInput(guiInput);
 
     // Set focus handler
-    delete mFocusHandler;
+    destroy(mFocusHandler);
     mFocusHandler = new FocusHandler();
 
     // Initialize timers
@@ -166,11 +167,11 @@ Gui::Gui(Graphics *graphics):
     SDL_AddTimer(1000, nextSecond, NULL);                 // Seconds counter
 
     // Initialize top GUI widget
-    WindowContainer *guiTop = new WindowContainer();
+    Container *guiTop = new Container();
     guiTop->setDimension(gcn::Rectangle(0, 0, graphics->getWidth(),
                                         graphics->getHeight()));
     guiTop->setOpaque(false);
-    Window::setWindowContainer(guiTop);
+    windowContainer = guiTop;
     setTop(guiTop);
 
     ResourceManager *resman = ResourceManager::getInstance();
@@ -211,7 +212,7 @@ Gui::~Gui()
     config.removeListener("customcursor", mConfigListener);
     config.removeListener("fpslimit", mConfigListener);
     config.removeListener("mousealpha", mConfigListener);
-    delete mConfigListener;
+    destroy(mConfigListener);
 
     if (mMouseCursors)
         mMouseCursors->decRef();
@@ -221,7 +222,7 @@ Gui::~Gui()
     mInfoParticleFont->decRef();
     delete getTop();
 
-    delete guiInput;
+    destroy(guiInput);
 }
 
 void Gui::resize(const int width, const int height)

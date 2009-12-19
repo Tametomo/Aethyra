@@ -45,6 +45,7 @@
 
 #include "../core/map/sprite/localplayer.h"
 
+#include "../core/utils/dtor.h"
 #include "../core/utils/gettext.h"
 #include "../core/utils/stringutils.h"
 
@@ -55,7 +56,7 @@ MapLoader::MapLoader():
 
 MapLoader::~MapLoader()
 {
-    delete mCurrentMap;
+    destroy(mCurrentMap);
 }
 
 bool MapLoader::changeMap(const std::string &mapPath)
@@ -112,7 +113,7 @@ bool MapLoader::changeMap(const std::string &mapPath)
         sound.playMusic(newMusic);
 
     if (mCurrentMap)
-        delete mCurrentMap;
+        destroy(mCurrentMap);
 
     mCurrentMap = newMap;
 

@@ -24,10 +24,22 @@
 
 #include "../gui.h"
 
+#include "../../../core/utils/dtor.h"
+
+Container *windowContainer = NULL;
+
 Container::~Container()
 {
     while (!mWidgets.empty())
-        delete mWidgets.front();
+        destroy(mWidgets.front());
+}
+
+void Container::logic()
+{
+    delete_all(mDeathList);
+    mDeathList.clear();
+
+    gcn::Container::logic();
 }
 
 void Container::clear()
@@ -39,4 +51,9 @@ void Container::clear()
 void Container::restoreFocus()
 {
     gui->restoreFocus();
+}
+
+void Container::scheduleDelete(gcn::Widget *widget)
+{
+    mDeathList.push_back(widget);
 }

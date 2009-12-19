@@ -47,6 +47,7 @@
 
 #include "../../core/map/sprite/localplayer.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
@@ -90,7 +91,7 @@ StorageWindow::StorageWindow(int invSize):
 
 StorageWindow::~StorageWindow()
 {
-    delete mItems;
+    destroy(mItems);
 }
 
 void StorageWindow::fontChanged()

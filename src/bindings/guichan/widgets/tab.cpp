@@ -103,7 +103,7 @@ Tab::~Tab()
     if (mInstances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
         for (int mode = 0; mode < TAB_COUNT; mode++)
             for_each(tabImg[mode].grid, tabImg[mode].grid + 9, dtor<Image*>());

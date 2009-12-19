@@ -55,6 +55,7 @@
 
 #include "../../core/map/sprite/localplayer.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/lockedarray.h"
 #include "../../core/utils/stringutils.h"
@@ -127,11 +128,11 @@ ChatWindow::~ChatWindow()
     config.setValue("PartyPrefix", partyPrefix);
     config.setValue("ReturnToggles", mReturnToggles ? "1" : "0");
 
-    delete mRecorder;
-    delete mRecorderInput;
-    delete mToolTip;
-    delete mItemLinkHandler;
-    delete mParty;
+    destroy(mRecorder);
+    destroy(mRecorderInput);
+    destroy(mToolTip);
+    destroy(mItemLinkHandler);
+    destroy(mParty);
 }
 
 void ChatWindow::fontChanged()

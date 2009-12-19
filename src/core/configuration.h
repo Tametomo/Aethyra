@@ -31,6 +31,8 @@
 #include <map>
 #include <string>
 
+#include "utils/dtor.h"
+
 class ConfigListener;
 class ConfigurationObject;
 
@@ -171,7 +173,7 @@ class ConfigurationObject
                     nextobj->clear(); // you never know...
             }
 
-            delete nextobj;
+            destroy(nextobj);
         }
 
        /**

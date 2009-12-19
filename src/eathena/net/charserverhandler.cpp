@@ -39,6 +39,7 @@
 
 #include "../../core/map/sprite/localplayer.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
@@ -141,10 +142,8 @@ void CharServerHandler::handleMessage(MessageIn *msg)
 
             // Close the character create dialog
             if (charCreateDialog)
-            {
-                charCreateDialog->scheduleDelete();
-                charCreateDialog = NULL;
-            }
+                destroy(charCreateDialog);
+
             break;
 
         case 0x006e:
@@ -182,7 +181,7 @@ void CharServerHandler::handleMessage(MessageIn *msg)
                 LocalPlayer *tmp = mCharInfo->getEntry();
                 if (tmp != player_node)
                 {
-                    delete tmp;
+                    destroy(tmp);
                     mCharInfo->setEntry(0);
                 }
                 mCharInfo->next();

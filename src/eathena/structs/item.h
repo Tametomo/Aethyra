@@ -42,7 +42,7 @@ class Item
         /**
          * Destructor.
          */
-        ~Item();
+        virtual ~Item();
 
         /**
          * Sets the item id, identifying the item type.

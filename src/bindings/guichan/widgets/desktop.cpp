@@ -41,6 +41,7 @@
 #include "../../../core/image/image.h"
 #include "../../../core/image/wallpapermanager.h"
 
+#include "../../../core/utils/dtor.h"
 #include "../../../core/utils/gettext.h"
 
 State error = ERROR_STATE;
@@ -110,8 +111,7 @@ Desktop::Desktop():
 Desktop::~Desktop()
 {
 #ifdef PACKAGE_VERSION
-    delete versionLabel;
-    versionLabel = NULL;
+    destroy(versionLabel);
 #endif
     removeCurrentDialog();
 
@@ -226,8 +226,7 @@ Window* Desktop::getCurrentDialog()
 
 void Desktop::removeCurrentDialog()
 {
-    currentDialog->scheduleDelete();
-    currentDialog = NULL;
+    destroy(currentDialog);
 }
 
 void Desktop::resetProgressBar()

@@ -27,29 +27,30 @@
 #include "../handlers/wordtextwraphandler.h"
 
 #include "../widgets/button.h"
+#include "../widgets/container.h"
 #include "../widgets/textbox.h"
 
 #include "../../../core/utils/gettext.h"
 
 OkDialog::OkDialog(const std::string &title, const std::string &msg,
-                   Window *parent):
-    Window(title, true, parent)
+                   Window *parent, bool modal):
+    Window(title, modal, parent)
 {
     mTextBox = new TextBox(new WordTextWrapHandler());
     mTextBox->setEditable(false);
     mTextBox->setOpaque(false);
     mTextBox->setTextWrapped(msg, 260);
 
-    okButton = new Button(_("OK"), "ok", this);
+    mOkButton = new Button(_("OK"), "ok", this);
 
     fontChanged();
 
     add(mTextBox);
-    add(okButton);
+    add(mOkButton);
 
     setLocationRelativeTo(getParent());
     setVisible(true);
-    okButton->requestFocus();
+    mOkButton->requestFocus();
 }
 
 void OkDialog::fontChanged()
@@ -63,16 +64,21 @@ void OkDialog::fontChanged()
 
     if (width < mTextBox->getMinWidth())
         width = mTextBox->getMinWidth();
-    if (width < okButton->getWidth())
-        width = okButton->getWidth();
+    if (width < mOkButton->getWidth())
+        width = mOkButton->getWidth();
 
     setContentSize(mTextBox->getMinWidth() + fontHeight, height +
-                   fontHeight + okButton->getHeight());
+                   fontHeight + mOkButton->getHeight());
     mTextBox->setPosition(getPadding(), getPadding());
 
-    // 8 is the padding that GUIChan adds to button widgets
-    // (top and bottom combined)
-    okButton->setPosition((width - okButton->getWidth()) / 2, height + 8);
+    mOkButton->setPosition((width - mOkButton->getWidth()) / 2, height +
+                           (2 * mOkButton->getSpacing()));
+}
+
+void OkDialog::close()
+{
+    Window::close();
+    windowContainer->scheduleDelete(this);
 }
 
 unsigned int OkDialog::getNumRows()
@@ -85,11 +91,9 @@ void OkDialog::action(const gcn::ActionEvent &event)
     // Proxy button events to our listeners
     ActionListenerIterator i;
     for (i = mActionListeners.begin(); i != mActionListeners.end(); ++i)
-    {
         (*i)->action(event);
-    }
 
     // Can we receive anything else anyway?
     if (event.getId() == "ok")
-        scheduleDelete();
+        close();
 }

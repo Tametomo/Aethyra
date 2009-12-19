@@ -97,7 +97,7 @@ void ItemDB::load()
 
         if (id)
         {
-            ItemInfo *itemInfo = new ItemInfo;
+            ItemInfo *itemInfo = new ItemInfo();
             itemInfo->setId(id);
             itemInfo->setImageName(image);
             itemInfo->setName(name.empty() ? _("unnamed") : name);
@@ -162,8 +162,7 @@ void ItemDB::unload()
 {
     logger->log("Unloading item database...");
 
-    delete mUnknown;
-    mUnknown = NULL;
+    destroy(mUnknown);
 
     delete_all(mItemInfos);
     mItemInfos.clear();

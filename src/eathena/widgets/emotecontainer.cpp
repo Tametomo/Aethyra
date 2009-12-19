@@ -46,6 +46,8 @@
 #include "../../core/map/sprite/animatedsprite.h"
 #include "../../core/map/sprite/localplayer.h"
 
+#include "../../core/utils/dtor.h"
+
 const int EmoteContainer::gridWidth = 34;  // emote icon width + 4
 const int EmoteContainer::gridHeight = 36; // emote icon height + 4
 
@@ -118,14 +120,14 @@ EmoteContainer::~EmoteContainer()
         if (mSelImg)
             mSelImg->decRef();
 
-        delete mPopupMenu;
+        destroy(mPopupMenu);
     }
 
     if (mFocusHandler && mFocusHandler->isFocused(this))
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 void EmoteContainer::draw(gcn::Graphics *graphics)

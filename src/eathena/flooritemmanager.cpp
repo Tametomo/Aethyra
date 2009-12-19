@@ -42,6 +42,8 @@ FloorItem* FloorItemManager::create(const int id, const int itemId,
 void FloorItemManager::destroy(FloorItem *item)
 {
     mFloorItems.remove(item);
+
+    // TODO: Find out why this is an unsafe destroy and fix it
     delete item;
 }
 

@@ -23,6 +23,8 @@
 
 #include "../simpleanimation.h"
 
+#include "../../utils/dtor.h"
+
 #include "../../../bindings/guichan/graphics.h"
 
 #define PI 3.14159265
@@ -41,7 +43,7 @@ RotationalParticle::RotationalParticle(Map *map, xmlNodePtr animationNode):
 
 RotationalParticle::~RotationalParticle()
 {
-    delete mAnimation;
+    destroy(mAnimation);
     mImage = NULL;
 }
 

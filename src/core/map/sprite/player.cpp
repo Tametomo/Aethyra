@@ -32,6 +32,8 @@
 #include "../../../bindings/guichan/palette.h"
 #include "../../../bindings/guichan/text.h"
 
+#include "../../../core/utils/dtor.h"
+
 #include "../../../eathena/db/colordb.h"
 #include "../../../eathena/db/itemdb.h"
 
@@ -48,7 +50,7 @@ Player::Player(const int id, const int job, Map *map):
 
 Player::~Player()
 {
-    delete mName;
+    destroy(mName);
 }
 
 void Player::handleAttack(Being *victim, const int damage,
@@ -81,8 +83,7 @@ void Player::handleAttack(Being *victim, const int damage,
 
 void Player::setName(const std::string &name)
 {
-    if (mName)
-        delete mName;
+    destroy(mName);
 
     if (mIsGM)
     {
@@ -213,8 +214,7 @@ void Player::setSprite(const int slot, const int id, const std::string &color)
     // id = 0 means unequip
     if (id == 0)
     {
-        delete mSprites[slot];
-        mSprites[slot] = NULL;
+        destroy(mSprites[slot]);
 
         if (slot == WEAPON_SPRITE)
             mEquippedWeapon = NULL;
@@ -236,7 +236,7 @@ void Player::setSprite(const int slot, const int id, const std::string &color)
         if (equipmentSprite)
             equipmentSprite->setDirection(getSpriteDirection());
 
-        delete mSprites[slot];
+        destroy(mSprites[slot]);
         mSprites[slot] = equipmentSprite;
 
         if (slot == WEAPON_SPRITE)

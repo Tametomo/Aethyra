@@ -37,7 +37,7 @@ class SpeechBubble : public Popup
         /**
          * Constructor. Initializes the speech bubble.
          */
-        SpeechBubble(WindowContainer *wc);
+        SpeechBubble(Container *wc);
 
         /**
          * Adjusts the cached speech bubble area on font size change.

@@ -42,6 +42,7 @@
 
 #include "../../core/map/sprite/localplayer.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/stringutils.h"
 
 int ItemShortcutContainer::mInstances = 0;
@@ -91,8 +92,8 @@ ItemShortcutContainer::~ItemShortcutContainer()
     {
         config.removeListener("guialpha", mConfigListener);
 
-        delete mConfigListener;
-        delete mPopupMenu;
+        destroy(mConfigListener);
+        destroy(mPopupMenu);
     }
 }
 

@@ -38,6 +38,8 @@
 
 #include "../../core/map/sprite/animatedsprite.h"
 
+#include "../../core/utils/dtor.h"
+
 static const int MAX_ITEMS = 12;
 
 std::vector<const AnimatedSprite*> EmoteShortcutContainer::mEmoteImg;
@@ -86,7 +88,7 @@ EmoteShortcutContainer::~EmoteShortcutContainer()
     if (mInstances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
     }
 }
 

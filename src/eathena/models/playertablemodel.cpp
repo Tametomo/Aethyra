@@ -27,6 +27,8 @@
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/table.h"
 
+#include "../../core/utils/dtor.h"
+
 #define NAME_COLUMN 0
 #define RELATION_CHOICE_COLUMN 1
 
@@ -47,8 +49,9 @@ PlayerTableModel::PlayerTableModel(void) :
 PlayerTableModel::~PlayerTableModel(void)
 {
     freeWidgets();
+
     if (mPlayers)
-        delete mPlayers;
+        destroy(mPlayers);
 }
 
 int PlayerTableModel::getColumnWidth(int index)
@@ -65,7 +68,7 @@ void PlayerTableModel::playerRelationsUpdated(void)
     std::vector<std::string> *player_names = player_relations.getPlayers();
 
     if (mPlayers)
-        delete mPlayers;
+        destroy(mPlayers);
 
     mPlayers = player_names;
 
@@ -97,9 +100,7 @@ void PlayerTableModel::updateModelInRow(int row)
 void PlayerTableModel::freeWidgets(void)
 {
     if (mPlayers)
-        delete mPlayers;
-
-    mPlayers = NULL;
+        destroy(mPlayers);
 
     for (std::vector<gcn::Widget *>::const_iterator it = mWidgets.begin();
          it != mWidgets.end(); it++)

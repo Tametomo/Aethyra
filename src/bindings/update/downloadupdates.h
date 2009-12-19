@@ -38,6 +38,8 @@
 class UpdaterListener
 {
 public:
+    virtual ~UpdaterListener() {}
+
     virtual void downloadTextUpdate(const std::vector<std::string>& news) = 0;
     virtual void downloadProgress(float totalProgress, 
                                   const std::string& currentFile,

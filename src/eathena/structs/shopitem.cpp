@@ -22,6 +22,7 @@
 
 #include "shopitem.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/stringutils.h"
 
 ShopItem::ShopItem (const int inventoryIndex, const int id,
@@ -55,7 +56,7 @@ ShopItem::~ShopItem()
 
 void ShopItem::addDuplicate(const int inventoryIndex, const int quantity)
 {
-    DuplicateItem* di = new DuplicateItem;
+    DuplicateItem* di = new DuplicateItem();
     di->inventoryIndex = inventoryIndex;
     di->quantity = quantity;
     mDuplicates.push(di);
@@ -65,7 +66,7 @@ void ShopItem::addDuplicate(const int inventoryIndex, const int quantity)
 
 void ShopItem::addDuplicate()
 {
-    DuplicateItem* di = new DuplicateItem;
+    DuplicateItem* di = new DuplicateItem();
     di->inventoryIndex = -1;
     di->quantity = 0;
     mDuplicates.push(di);

@@ -28,6 +28,8 @@
 #include "../log.h"
 #include "../resourcemanager.h"
 
+#include "../utils/dtor.h"
+
 #include "../../bindings/guichan/graphics.h"
 
 SimpleAnimation::SimpleAnimation(Animation *animation):
@@ -165,5 +167,5 @@ Image *SimpleAnimation::getCurrentImage() const
 
 SimpleAnimation::~SimpleAnimation()
 {
-    delete mAnimation;
+    destroy(mAnimation);
 }

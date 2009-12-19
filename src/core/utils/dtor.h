@@ -27,10 +27,18 @@
 #include <functional>
 #include <utility>
 
+// Safer deletion of pointers
+template<class T>
+inline void destroy(T*& p)
+{
+    delete p;
+    p = NULL;
+}
+
 template<typename T>
 struct dtor : public std::unary_function <T, void>
 {
-    void operator()(T &ptr) { delete ptr; }
+    void operator()(T &ptr) { destroy(ptr); }
 };
 
 template<typename T1, typename T2>

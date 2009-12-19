@@ -26,6 +26,8 @@
 
 #include "../../../core/image/image.h"
 
+#include "../../../core/utils/dtor.h"
+
 int ShortcutContainer::mInstances = 0;
 float ShortcutContainer::mAlpha = 1.0;
 Image *ShortcutContainer::mBackgroundImg = NULL;
@@ -58,7 +60,7 @@ ShortcutContainer::ShortcutContainer(ShortcutHandler *shortcut):
 
 ShortcutContainer::~ShortcutContainer()
 {
-    delete mShortcutHandler;
+    destroy(mShortcutHandler);
     mInstances--;
 
     if (mInstances == 0)

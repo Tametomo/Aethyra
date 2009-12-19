@@ -204,8 +204,6 @@ SET(SRCS
     bindings/guichan/widgets/tooltip.h
     bindings/guichan/widgets/window.cpp
     bindings/guichan/widgets/window.h
-    bindings/guichan/widgets/windowcontainer.cpp
-    bindings/guichan/widgets/windowcontainer.h
     bindings/sdl/joystick.cpp
     bindings/sdl/joystick.h
     bindings/sdl/keyboardconfig.cpp

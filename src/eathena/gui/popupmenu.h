@@ -26,8 +26,8 @@
 #include <guichan/actionlistener.hpp>
 #include <guichan/focuslistener.hpp>
 
+#include "../../bindings/guichan/widgets/container.h"
 #include "../../bindings/guichan/widgets/popup.h"
-#include "../../bindings/guichan/widgets/windowcontainer.h"
 
 class Being;
 class FloorItem;

@@ -30,7 +30,9 @@
 
 #include "../../../core/image/image.h"
 
-Image *ResizeGrip::mGripImage = 0;
+#include "../../../core/utils/dtor.h"
+
+Image *ResizeGrip::mGripImage = NULL;
 int ResizeGrip::mInstances = 0;
 
 float ResizeGrip::mAlpha = 1.0;
@@ -84,7 +86,7 @@ ResizeGrip::~ResizeGrip()
     if (mInstances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
         mGripImage->decRef();
     }

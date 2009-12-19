@@ -108,7 +108,7 @@ void PlayerRelationsManager::clear()
     PlayerNames *names = getPlayers();
     for (PlayerNamesIterator it = names->begin(); it != names->end(); it++)
         removePlayer(*it);
-    delete names;
+    destroy(names);
 }
 
 #define PERSIST_IGNORE_LIST "persistent-player-list"
@@ -270,7 +270,7 @@ void PlayerRelationsManager::setRelation(const std::string &player_name,
 void PlayerRelationsManager::removePlayer(const std::string &name)
 {
     if (mRelations[name])
-        delete mRelations[name];
+        destroy(mRelations[name]);
 
     mRelations.erase(name);
 

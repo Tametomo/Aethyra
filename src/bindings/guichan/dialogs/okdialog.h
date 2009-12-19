@@ -43,9 +43,9 @@ class OkDialog : public Window, public gcn::ActionListener
          * @see Window::Window
          */
         OkDialog(const std::string &title, const std::string &msg,
-                 Window *parent = NULL);
+                 Window *parent = NULL, bool modal = false);
 
-        unsigned int getNumRows();
+        virtual void close();
 
         /**
          * Called when receiving actions from the widgets.
@@ -53,9 +53,11 @@ class OkDialog : public Window, public gcn::ActionListener
         void action(const gcn::ActionEvent &event);
 
         void fontChanged();
+
+        unsigned int getNumRows();
     private:
         TextBox *mTextBox;
-        gcn::Button *okButton;
+        gcn::Button *mOkButton;
 };
 
 #endif

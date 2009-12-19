@@ -36,7 +36,6 @@ class LayoutCell;
 class ResizeGrip;
 class Skin;
 class SkinLoader;
-class WindowContainer;
 
 /**
  * A window. This window can be dragged around and has a title bar. Windows are
@@ -73,11 +72,6 @@ class Window : public gcn::Window, public gcn::WidgetListener
          * nothing.
          */
         virtual void requestFocus();
-
-        /**
-         * Sets the window container to be used by new windows.
-         */
-        static void setWindowContainer(WindowContainer *windowContainer);
 
         /**
          * Draws the window.
@@ -214,12 +208,6 @@ class Window : public gcn::Window, public gcn::WidgetListener
          * @return The parent window or <code>NULL</code> if there is none.
          */
         Window *getParentWindow() const { return mParent; }
-
-        /**
-         * Schedule this window for deletion. It will be deleted at the start
-         * of the next logic update.
-         */
-        void scheduleDelete();
 
         /**
          * Starts window resizing when appropriate.

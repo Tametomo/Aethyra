@@ -78,7 +78,7 @@ TileAnimation::TileAnimation(Animation *ani):
 
 TileAnimation::~TileAnimation()
 {
-    delete mAnimation;
+    destroy(mAnimation);
 }
 
 void TileAnimation::update(const int ticks)

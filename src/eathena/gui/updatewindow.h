@@ -57,7 +57,7 @@ struct SDL_Thread;
  * \ingroup GUI
  */
 class UpdaterWindow : public Window, public gcn::ActionListener,
-        public UpdaterListener
+                      public UpdaterListener
 {
     public:
         /**
@@ -70,7 +70,7 @@ class UpdaterWindow : public Window, public gcn::ActionListener,
         /**
          * Destructor
          */
-        ~UpdaterWindow();
+        virtual ~UpdaterWindow();
 
         void action(const gcn::ActionEvent &event);
 

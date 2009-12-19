@@ -41,6 +41,7 @@
 
 #include "../../../../core/configuration.h"
 
+#include "../../../../core/utils/dtor.h"
 #include "../../../../core/utils/gettext.h"
 #include "../../../../core/utils/stringutils.h"
 
@@ -83,11 +84,11 @@ Setup_Input::Setup_Input():
 
 Setup_Input::~Setup_Input()
 {
-    delete mKeyList;
-    delete mKeyListModel;
+    destroy(mKeyList);
+    destroy(mKeyListModel);
 
-    delete mAssignKeyButton;
-    delete mMakeDefaultButton;
+    destroy(mAssignKeyButton);
+    destroy(mMakeDefaultButton);
 }
 
 void Setup_Input::fontChanged()

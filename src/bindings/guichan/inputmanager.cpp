@@ -44,6 +44,7 @@
 
 #include "../../core/map/sprite/localplayer.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 
 #include "../../eathena/beingmanager.h"
@@ -88,8 +89,6 @@ namespace
 
                 state = EXIT_STATE;
             }
-
-            exitConfirm = NULL;
         }
     } exitListener;
 }
@@ -105,8 +104,7 @@ InputManager::InputManager()
 
 InputManager::~InputManager()
 {
-    delete joystick;
-    joystick = NULL;
+    destroy(joystick);
 }
 
 void InputManager::forwardInput(const SDL_Event &event)
@@ -262,9 +260,9 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
             case KeyboardConfig::KEY_QUIT:
                 if (!exitConfirm)
                 {
-                    exitConfirm = new ConfirmDialog(_("Quit"),
-                                                    _("Are you sure you "
-                                                      "want to quit?"));
+                    exitConfirm = new ConfirmDialog(_("Quit"), _("Are you sure "
+                                                      "you want to quit?"),
+                                                      NULL, true);
                     exitConfirm->addActionListener(&exitListener);
                     exitConfirm->requestMoveToTop();
                 }

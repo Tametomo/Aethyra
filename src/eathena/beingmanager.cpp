@@ -114,7 +114,7 @@ Being *BeingManager::createBeing(int id, Uint16 job)
 void BeingManager::destroyBeing(Being *being)
 {
     mBeings.remove(being);
-    delete being;
+    destroy(being);
 }
 
 Being *BeingManager::findBeing(int id) const
@@ -198,7 +198,7 @@ void BeingManager::logic()
 
         if (being->mAction == Being::DEAD && being->mFrame >= 20)
         {
-            delete being;
+            destroy(being);
             i = mBeings.erase(i);
         }
         else

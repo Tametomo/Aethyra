@@ -43,7 +43,9 @@ class ConfirmDialog : public Window, public gcn::ActionListener
          * @see Window::Window
          */
         ConfirmDialog(const std::string &title, const std::string &msg,
-                      Window *parent = NULL);
+                      Window *parent = NULL, bool modal = false);
+
+        virtual void close();
 
         unsigned int getNumRows();
 
@@ -55,8 +57,8 @@ class ConfirmDialog : public Window, public gcn::ActionListener
         void fontChanged();
     private:
         TextBox *mTextBox;
-        gcn::Button *yesButton;
-        gcn::Button *noButton;
+        gcn::Button *mYesButton;
+        gcn::Button *mNoButton;
 };
 
 #endif

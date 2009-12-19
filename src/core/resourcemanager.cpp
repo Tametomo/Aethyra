@@ -40,6 +40,8 @@
 #include "sound/music.h"
 #include "sound/soundeffect.h"
 
+#include "utils/dtor.h"
+
 #include "../engine.h"
 
 #include "../bindings/guichan/truetypefont.h"
@@ -333,7 +335,7 @@ struct DyedImageLoader
         Resource *res = d ? Image::load(buffer, fileSize, *d)
                           : Image::load(buffer, fileSize);
         free(buffer);
-        delete d;
+        destroy(d);
         return res;
     }
 };
@@ -450,8 +452,7 @@ ResourceManager *ResourceManager::getInstance()
 
 void ResourceManager::deleteInstance()
 {
-    delete instance;
-    instance = NULL;
+    destroy(instance);
 }
 
 void *ResourceManager::loadFile(const std::string &fileName, int &fileSize)

@@ -29,7 +29,9 @@
 #include "dye.h"
 #include "image.h"
 
-#include "../../core/log.h"
+#include "../log.h"
+
+#include "../utils/dtor.h"
 
 #ifdef USE_OPENGL
 bool Image::mUseOpenGL = false;
@@ -128,7 +130,7 @@ Resource *Image::load(void *buffer, unsigned bufferSize, const Dye &dye)
         v->b = (*pixels >> 8 ) & 255;
         dye.update(v);
         *pixels = (v->r << 24) | (v->g << 16) | (v->b << 8) | alpha;
-        delete v;
+        destroy(v);
     }
 
     Image *image = load(surf);

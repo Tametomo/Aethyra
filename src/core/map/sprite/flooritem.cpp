@@ -26,6 +26,8 @@
 
 #include "../../image/image.h"
 
+#include "../../utils/dtor.h"
+
 #include "../../../bindings/guichan/graphics.h"
 
 #include "../../../eathena/structs/item.h"
@@ -49,7 +51,7 @@ FloorItem::~FloorItem()
     // Remove ourselves from the map
     mMap->removeSprite(mSpriteIterator);
 
-    delete mItem;
+    destroy(mItem);
 }
 
 const int FloorItem::getItemId() const

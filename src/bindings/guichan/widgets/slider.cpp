@@ -35,6 +35,8 @@
 
 #include "../../../core/image/image.h"
 
+#include "../../../core/utils/dtor.h"
+
 int Slider::mInstances = 0;
 Image *Slider::hStart, *Slider::hMid, *Slider::hEnd, *Slider::hGrip;
 Image *Slider::vStart, *Slider::vMid, *Slider::vEnd, *Slider::vGrip;
@@ -99,31 +101,31 @@ Slider::~Slider()
     if (mInstances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
-        delete hStart;
-        delete hStartHi;
-        delete hMid;
-        delete hMidHi;
-        delete hEnd;
-        delete hEndHi;
-        delete hGrip;
-        delete hGripHi;
-        delete vStart;
-        delete vStartHi;
-        delete vMid;
-        delete vMidHi;
-        delete vEnd;
-        delete vEndHi;
-        delete vGrip;
-        delete vGripHi;
+        destroy(hStart);
+        destroy(hStartHi);
+        destroy(hMid);
+        destroy(hMidHi);
+        destroy(hEnd);
+        destroy(hEndHi);
+        destroy(hGrip);
+        destroy(hGripHi);
+        destroy(vStart);
+        destroy(vStartHi);
+        destroy(vMid);
+        destroy(vMidHi);
+        destroy(vEnd);
+        destroy(vEndHi);
+        destroy(vGrip);
+        destroy(vGripHi);
     }
 
     if (mFocusHandler && mFocusHandler->isFocused(this))
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 void Slider::init()

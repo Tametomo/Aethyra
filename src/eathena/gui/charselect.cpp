@@ -40,16 +40,18 @@
 
 #include "../../bindings/guichan/widgets/beingbox.h"
 #include "../../bindings/guichan/widgets/button.h"
+#include "../../bindings/guichan/widgets/container.h"
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/textfield.h"
 
 #include "../../core/map/sprite/localplayer.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/lockedarray.h"
 #include "../../core/utils/stringutils.h"
 
-CharCreateDialog *charCreateDialog;
+CharCreateDialog *charCreateDialog = NULL;
 
 /**
  * Listener for confirming character deletion.
@@ -83,6 +85,7 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
                                    Gender gender):
     Window(_("Select Character")),
     mCharInfo(charInfo),
+    mCharDeleteConfirm(NULL),
     mGender(gender),
     mCharSelected(false)
 {
@@ -102,6 +105,12 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
     mCancelButton = new Button(_("Cancel"), "cancel", this);
 
     updatePlayerInfo();
+}
+
+CharSelectDialog::~CharSelectDialog()
+{
+    destroy(mCharDeleteConfirm);
+    mCharInfo->clear();
 }
 
 void CharSelectDialog::fontChanged()
@@ -151,7 +160,12 @@ void CharSelectDialog::action(const gcn::ActionEvent &event)
     {
         // Check for a character
         if (mCharInfo->getEntry())
-            new CharDeleteConfirm(this);
+        {
+            if (!mCharDeleteConfirm)
+                mCharDeleteConfirm = new CharDeleteConfirm(this);
+            else
+                mCharDeleteConfirm->setVisible(true);
+        }
         // Start new character dialog
         else if (loginData.slots < MAX_PLAYER_SLOTS)
             charCreateDialog = new CharCreateDialog(this, mCharInfo->getPos(),
@@ -321,7 +335,7 @@ void CharCreateDialog::fontChanged()
 
 CharCreateDialog::~CharCreateDialog()
 {
-    delete mPlayer;
+    destroy(mPlayer);
     charCreateDialog = NULL;
 }
 
@@ -344,7 +358,7 @@ void CharCreateDialog::action(const gcn::ActionEvent &event)
         }
     }
     else if (event.getId() == "cancel")
-        scheduleDelete();
+        close();
     else if (event.getId() == "nextcolor")
         mPlayer->setHairStyle(mPlayer->getHairStyle(),
                              (mPlayer->getHairColor() + 1) % numberOfColors);
@@ -357,6 +371,12 @@ void CharCreateDialog::action(const gcn::ActionEvent &event)
     else if (event.getId() == "prevstyle")
         mPlayer->setHairStyle((mPlayer->getHairStyle() + numberOfHair - 1) %
                                numberOfHair, mPlayer->getHairColor());
+}
+
+void CharCreateDialog::close()
+{
+    Window::close();
+    windowContainer->scheduleDelete(this);
 }
 
 std::string CharCreateDialog::getName()

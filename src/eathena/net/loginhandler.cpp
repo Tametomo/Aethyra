@@ -104,7 +104,7 @@ void LoginHandler::handleMessage(MessageIn *msg)
 
             for (int i = 0; i < loginData.servers; i++)
             {
-                server_info[i] = new SERVER_INFO;
+                server_info[i] = new SERVER_INFO();
 
                 server_info[i]->address = msg->readInt32();
                 server_info[i]->port = msg->readInt16();

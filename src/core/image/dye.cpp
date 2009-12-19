@@ -162,7 +162,7 @@ Dye::Dye(const std::string &description)
 Dye::~Dye()
 {
     for (int i = 0; i < 7; ++i)
-        delete mDyePalettes[i];
+        destroy(mDyePalettes[i]);
 }
 
 void Dye::update(gcn::Color *color) const

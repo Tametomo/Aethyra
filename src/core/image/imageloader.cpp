@@ -30,6 +30,8 @@
 
 #include "../resourcemanager.h"
 
+#include "../utils/dtor.h"
+
 ProxyImage::ProxyImage(SDL_Surface *s):
     mImage(NULL), mSDLImage(s)
 {
@@ -48,10 +50,7 @@ void ProxyImage::free()
         mSDLImage = NULL;
     }
     else if (mImage)
-    {
-        delete mImage;
-        mImage = NULL;
-    }
+        destroy(mImage);
 }
 
 int ProxyImage::getWidth() const

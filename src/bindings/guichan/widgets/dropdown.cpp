@@ -151,7 +151,7 @@ DropDown::~DropDown()
     if (instances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
         buttons[0][0]->decRef();
         buttons[0][1]->decRef();
@@ -161,13 +161,13 @@ DropDown::~DropDown()
         for_each(skin.grid, skin.grid + 9, dtor<Image*>());
     }
 
-    delete mScrollArea;
+    destroy(mScrollArea);
 
     if (mFocusHandler && mFocusHandler->isFocused(this))
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 void DropDown::draw(gcn::Graphics* graphics)

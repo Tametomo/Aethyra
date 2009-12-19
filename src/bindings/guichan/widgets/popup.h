@@ -24,7 +24,6 @@
 #define POPUP_H
 
 #include "container.h"
-#include "windowcontainer.h"
 
 #include "../guichanfwd.h"
 
@@ -177,12 +176,6 @@ class Popup : public Container
          * necessary.
          */
         virtual void adaptToNewSize() {}
-
-        /**
-         * Schedule this popup for deletion. It will be deleted at the start
-         * of the next logic update.
-         */
-        virtual void scheduleDelete();
 
         // Inherited from BasicContainer
 

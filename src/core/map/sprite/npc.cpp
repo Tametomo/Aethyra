@@ -28,6 +28,8 @@
 #include "../../../bindings/guichan/palette.h"
 #include "../../../bindings/guichan/text.h"
 
+#include "../../../core/utils/dtor.h"
+
 #include "../../../eathena/beingmanager.h"
 
 #include "../../../eathena/db/npcdb.h"
@@ -65,14 +67,14 @@ NPC::NPC(const int id, const int job, Map *map):
 
     loadInitialParticleEffects();
 
-    mName = 0;
+    mName = NULL;
 
     mNameColor = &guiPalette->getColor(Palette::NPC);
 }
 
 NPC::~NPC()
 {
-    delete mName;
+    destroy(mName);
 }
 
 void NPC::loadInitialParticleEffects()
@@ -96,7 +98,7 @@ void NPC::setName(const std::string &name)
 {
     const std::string displayName = name.substr(0, name.find('#', 0));
 
-    delete mName;
+    destroy(mName);
     mName = new Text(displayName, mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET,
                      gcn::Graphics::CENTER, &guiPalette->getColor(Palette::NPC));
     Being::setName(displayName + " (NPC)");

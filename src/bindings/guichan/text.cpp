@@ -30,6 +30,8 @@
 #include "../../core/configlistener.h"
 #include "../../core/configuration.h"
 
+#include "../../core/utils/dtor.h"
+
 int Text::mInstances = 0;
 
 class TextConfigListener : public ConfigListener
@@ -54,7 +56,7 @@ Text::Text(const std::string &text, int x, int y,
     mText(text),
     mColor(color)
 {
-    if (textManager == 0)
+    if (textManager == NULL)
         textManager = new TextManager();
 
     mConfigListener = new TextConfigListener(this);
@@ -118,10 +120,7 @@ Text::~Text()
     delete mConfigListener;
 
     if (--mInstances == 0)
-    {
-        delete textManager;
-        textManager = 0;
-    }
+        destroy(textManager);
 }
 
 void Text::draw(gcn::Graphics *graphics, int xOff, int yOff)

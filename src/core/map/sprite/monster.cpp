@@ -32,6 +32,8 @@
 
 #include "../../../bindings/sdl/sound.h"
 
+#include "../../../core/utils/dtor.h"
+
 #include "../../../eathena/db/monsterdb.h"
 #include "../../../eathena/db/monsterinfo.h"
 
@@ -74,7 +76,7 @@ Monster::Monster(const int id, const Uint16 &job, Map *map):
 
 Monster::~Monster()
 {
-    delete mText;
+    destroy(mText);
 }
 
 void Monster::loadInitialParticleEffects()
@@ -174,8 +176,8 @@ void Monster::handleAttack(Being *victim, const int damage,
     Being::handleAttack(victim, damage, type);
 
     const MonsterInfo &mi = getInfo();
-    sound.playSfx(mi.getSound((damage > 0) ?
-                MONSTER_EVENT_HIT : MONSTER_EVENT_MISS));
+    sound.playSfx(mi.getSound((damage > 0) ? MONSTER_EVENT_HIT :
+                                             MONSTER_EVENT_MISS));
 }
 
 void Monster::takeDamage(const Being *attacker, const int amount,
@@ -199,8 +201,7 @@ const MonsterInfo &Monster::getInfo() const
 
 void Monster::showName(const bool show)
 {
-    if (mText)
-        delete mText;
+    destroy(mText);
 
     if (show)
     {
@@ -209,8 +210,6 @@ void Monster::showName(const bool show)
                          gcn::Graphics::CENTER,
                          &guiPalette->getColor(Palette::MONSTER));
     }
-    else
-        mText = 0;
 }
 
 void Monster::updateCoords()

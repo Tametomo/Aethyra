@@ -25,6 +25,7 @@
 
 #include "../../core/map/sprite/animatedsprite.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/xml.h"
 
 namespace
@@ -100,11 +101,11 @@ void EmoteDB::unload()
     {
         while (!i->second->sprites.empty())
         {
-            delete i->second->sprites.front()->sprite;
-            delete i->second->sprites.front();
+            destroy(i->second->sprites.front()->sprite);
+            destroy(i->second->sprites.front());
             i->second->sprites.pop_front();
         }
-        delete i->second;
+        destroy(i->second);
     }
 
     mEmoteInfos.clear();

@@ -33,9 +33,9 @@
 #include "../layouthelper.h"
 
 #include "../widgets/button.h"
+#include "../widgets/container.h"
 #include "../widgets/desktop.h"
 #include "../widgets/tabbedarea.h"
-#include "../widgets/windowcontainer.h"
 
 #include "../../../core/configuration.h"
 

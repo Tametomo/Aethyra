@@ -130,6 +130,8 @@ private:
 class DownloadListener
 {
 public:
+    virtual ~DownloadListener() {}
+
     /**
      * Reports the number of bytes downloaded, and the
      * total number of bytes to download.
@@ -152,6 +154,8 @@ public:
      */
     DownloadWrapper(DownloadListener *listener);
 
+    virtual ~DownloadWrapper();
+
     /**
      * Perform a synchronous download, blocking the caller until
      * it completes.  During the download, there will be callbacks
@@ -160,8 +164,6 @@ public:
      *@return true if the download succeeded, false if it failed.
      */
     bool downloadSynchronous(GenericVerifier* resource);
-
-    ~DownloadWrapper();
 
 private:
     /**

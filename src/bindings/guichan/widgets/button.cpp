@@ -163,7 +163,7 @@ Button::~Button()
     if (mInstances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
         for (int mode = 0; mode < BUTTON_COUNT; mode++)
             for_each(button[mode].grid, button[mode].grid + 9, dtor<Image*>());
@@ -173,7 +173,7 @@ Button::~Button()
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 void Button::draw(gcn::Graphics *graphics)

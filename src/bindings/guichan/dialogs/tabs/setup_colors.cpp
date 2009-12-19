@@ -37,6 +37,7 @@
 
 #include "../../../../core/configuration.h"
 
+#include "../../../../core/utils/dtor.h"
 #include "../../../../core/utils/gettext.h"
 #include "../../../../core/utils/stringutils.h"
 
@@ -169,9 +170,9 @@ Setup_Colors::Setup_Colors() :
 Setup_Colors::~Setup_Colors()
 {
     if (mPreviewBox->getContent() == mPreview)
-        delete mTextPreview;
+        destroy(mTextPreview);
     else
-        delete mPreview;
+        destroy(mPreview);
 }
 
 void Setup_Colors::fontChanged()

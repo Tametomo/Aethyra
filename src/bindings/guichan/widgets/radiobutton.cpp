@@ -33,6 +33,8 @@
 
 #include "../../../core/image/image.h"
 
+#include "../../../core/utils/dtor.h"
+
 int RadioButton::instances = 0;
 float RadioButton::mAlpha = 1.0;
 RadioButtonConfigListener *RadioButton::mConfigListener = NULL;
@@ -66,7 +68,7 @@ class RadioButtonConfigListener : public ConfigListener
 };
 
 RadioButton::RadioButton(const std::string& caption, const std::string& group,
-        bool marked):
+                         bool marked):
     gcn::RadioButton(caption, group, marked)
 {
     if (instances == 0)
@@ -105,7 +107,7 @@ RadioButton::~RadioButton()
     if (instances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
         radioNormal->decRef();
         radioChecked->decRef();
@@ -117,7 +119,7 @@ RadioButton::~RadioButton()
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 void RadioButton::drawBox(gcn::Graphics* graphics)
@@ -142,8 +144,7 @@ void RadioButton::drawBox(gcn::Graphics* graphics)
 
 void RadioButton::draw(gcn::Graphics* graphics)
 {
-    graphics->pushClipArea(gcn::Rectangle(1, 1, getWidth() - 1,
-                                          getHeight() - 1));
+    graphics->pushClipArea(gcn::Rectangle(1, 1, getWidth() - 1, getHeight() - 1));
 
     drawBox(graphics);
 

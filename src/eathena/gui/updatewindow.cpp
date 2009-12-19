@@ -44,6 +44,7 @@
 #include "../../core/log.h"
 #include "../../core/resourcemanager.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
@@ -71,7 +72,7 @@ UpdaterWindow::~UpdaterWindow()
 {
     // This will block until the download thread exits
     // but that should happen within a second.
-    delete mLogic;
+    destroy(mLogic);
 }
 
 void UpdaterWindow::fontChanged()

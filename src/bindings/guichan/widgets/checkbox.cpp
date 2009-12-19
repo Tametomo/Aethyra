@@ -34,6 +34,8 @@
 
 #include "../../../core/image/image.h"
 
+#include "../../../core/utils/dtor.h"
+
 int CheckBox::instances = 0;
 float CheckBox::mAlpha = 1.0;
 CheckBoxConfigListener *CheckBox::mConfigListener = NULL;
@@ -118,21 +120,21 @@ CheckBox::~CheckBox()
     if (instances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
-        delete checkBoxNormal;
-        delete checkBoxNormalHighlight;
-        delete checkBoxChecked;
-        delete checkBoxCheckedHighlight;
-        delete checkBoxDisabled;
-        delete checkBoxDisabledChecked;
+        destroy(checkBoxNormal);
+        destroy(checkBoxNormalHighlight);
+        destroy(checkBoxChecked);
+        destroy(checkBoxCheckedHighlight);
+        destroy(checkBoxDisabled);
+        destroy(checkBoxDisabledChecked);
     }
 
     if (mFocusHandler && mFocusHandler->isFocused(this))
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 void CheckBox::draw(gcn::Graphics* graphics)

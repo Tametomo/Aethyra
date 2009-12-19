@@ -30,6 +30,8 @@
 
 #include "../../../core/configuration.h"
 
+#include "../../../core/utils/dtor.h"
+
 static const int SCROLL_PADDING = 0;
 
 int ShortcutWindow::mInstances = 0;
@@ -74,5 +76,5 @@ ShortcutWindow::ShortcutWindow(ShortcutContainer *content):
 
 ShortcutWindow::~ShortcutWindow()
 {
-    delete mItems;
+    destroy(mItems);
 }

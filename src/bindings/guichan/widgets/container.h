@@ -35,9 +35,44 @@ class Container : public gcn::Container
     public:
         ~Container();
 
+        /**
+         * Overridden to store the previously held focus when containers are
+         * reflowing their layouts, so that it can be restored later.
+         */
         virtual void clear();
 
+        /**
+         * Overridden to allow for widgets to be removed from the Container
+         * on the next logic tick.
+         *
+         * TODO: Remove the need for this, and make direct window deletion safe.
+         */
+        virtual void logic();
+
+        /**
+         * Restores focus to the last known focus holder.
+         */
         void restoreFocus();
+
+        /**
+         * Allows for a window to both be removed from this Container, as well
+         * as being deleted.
+         */
+        void scheduleDelete(gcn::Widget *widget);
+
+        /**
+         * Get the number of widget instances
+         */
+        int getNumberOfInstances() { return mWidgets.size(); }
+
+        /**
+         * Get the list of all widgets stored in this container
+         */
+        WidgetList getWidgetList() { return mWidgets; }
+    private:
+        WidgetList mDeathList;
 };
+
+extern Container *windowContainer;
 
 #endif

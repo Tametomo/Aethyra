@@ -41,6 +41,7 @@
 #include "../../core/map/sprite/localplayer.h"
 #include "../../core/map/sprite/npc.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/stringutils.h"
 
 extern volatile int tick_time;
@@ -74,7 +75,7 @@ Viewport::Viewport():
 
 Viewport::~Viewport()
 {
-    delete mPopupMenu;
+    destroy(mPopupMenu);
 }
 
 void Viewport::setMap(Map *map)
@@ -222,7 +223,7 @@ void Viewport::draw(gcn::Graphics *graphics)
 
 void Viewport::logic()
 {
-    WindowContainer::logic();
+    Container::logic();
 
     const int mouseX = gui->getMouseX();
     const int mouseY = gui->getMouseY();

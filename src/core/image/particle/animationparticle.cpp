@@ -24,6 +24,8 @@
 
 #include "../simpleanimation.h"
 
+#include "../../utils/dtor.h"
+
 #include "../../../bindings/guichan/graphics.h"
 
 AnimationParticle::AnimationParticle(Map *map, Animation *animation):
@@ -40,7 +42,7 @@ AnimationParticle::AnimationParticle(Map *map, xmlNodePtr animationNode):
 
 AnimationParticle::~AnimationParticle()
 {
-    delete mAnimation;
+    destroy(mAnimation);
     mImage = NULL;
 }
 

@@ -65,6 +65,7 @@
 
 #include "core/image/image.h"
 
+#include "core/utils/dtor.h"
 #include "core/utils/gettext.h"
 #include "core/utils/stringutils.h"
 
@@ -221,34 +222,33 @@ Engine::~Engine()
 {
     // Before config.write() so that global windows can get their settings
     // written to the configuration file.
-    delete debugWindow;
-    delete helpDialog;
-    delete setupWindow;
+    destroy(debugWindow);
+    destroy(helpDialog);
+    destroy(setupWindow);
 
-    setupWindow = NULL;
-
-    delete gui;
-    delete guiPalette;
+    destroy(gui);
+    destroy(guiPalette);
 
     config.write();
 
     // Shutdown libxml
     xmlCleanupParser();
 
-    delete graphics;
-    delete inputManager;
+    destroy(graphics);
+    destroy(inputManager);
 
     // Shutdown sound
     sound.close();
 
     ResourceManager::deleteInstance();
-    delete logger;
+
+    destroy(network);
+    SDLNet_Quit();
+
+    destroy(logger);
 
     SDL_FreeSurface(icon);
     PHYSFS_deinit();
-
-    delete network;
-    SDLNet_Quit();
 
     if (nullFile)
         fclose(nullFile);
@@ -276,7 +276,7 @@ void Engine::initConfig()
 {
     // Checking if the configuration file exists... otherwise creates it with
     // default options !
-    FILE *configFile = 0;
+    FILE *configFile = NULL;
     std::string configPath = options.configPath;
 
     if (configPath.empty())

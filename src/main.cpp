@@ -44,6 +44,7 @@
 
 #include "core/map/sprite/localplayer.h"
 
+#include "core/utils/dtor.h"
 #include "core/utils/gettext.h"
 #include "core/utils/lockedarray.h"
 #include "core/utils/stringutils.h"
@@ -388,7 +389,7 @@ int main(int argc, char *argv[])
                         {
                             DownloadUpdates *download = new DownloadUpdates(updateHost, NULL);
                             download->addUpdatesToResman();
-                            delete download;
+                            destroy(download);
                             state = LOADDATA_STATE;
                         }
                     }
@@ -451,13 +452,11 @@ int main(int argc, char *argv[])
                     logger->log("State: GAME");
                     sound.fadeOutMusic(1000);
 
-                    delete desktop;
-                    desktop = NULL;
+                    destroy(desktop);
 
                     game = new Game();
                     game->logic();
-                    delete game;
-                    game = NULL;
+                    destroy(game);
 
                     network->disconnect();
                     network->clearHandlers();
@@ -465,8 +464,7 @@ int main(int argc, char *argv[])
 
                 case EXIT_STATE:
                     logger->log("State: EXIT");
-                    delete desktop;
-                    desktop = NULL;
+                    destroy(desktop);
                     break;
 
                 default:
@@ -476,7 +474,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    delete engine;
+    destroy(engine);
     return 0;
 }
 

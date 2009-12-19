@@ -27,6 +27,8 @@
 
 #include "../../core/log.h"
 
+#include "../../core/utils/dtor.h"
+
 struct SlotUsed : public std::unary_function<Item*, bool>
 {
     bool operator()(const Item *item) const
@@ -45,7 +47,7 @@ Inventory::Inventory(const int size):
 Inventory::~Inventory()
 {
     for (int i = 0; i < mSize; i++)
-        delete mItems[i];
+        destroy(mItems[i]);
 
     delete [] mItems;
 }
@@ -54,7 +56,7 @@ Item* Inventory::getItem(const int index) const
 {
     if (index < 0 || index >= mSize || !mItems[index] ||
         mItems[index]->getQuantity() <= 0)
-        return 0;
+        return NULL;
 
     return mItems[index];
 }
@@ -115,8 +117,7 @@ void Inventory::removeItem(const int id)
 
 void Inventory::removeItemAt(const int index)
 {
-    delete mItems[index];
-    mItems[index] = 0;
+    destroy(mItems[index]);
 }
 
 const bool Inventory::contains(const Item *item) const

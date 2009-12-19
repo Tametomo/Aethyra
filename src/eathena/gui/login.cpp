@@ -39,6 +39,7 @@
 
 #include "../../core/configuration.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
@@ -100,7 +101,7 @@ LoginDialog::LoginDialog() :
 
 LoginDialog::~LoginDialog()
 {
-    delete mServerList;
+    destroy(mServerList);
 }
 
 void LoginDialog::fontChanged()

@@ -24,8 +24,8 @@
 #ifndef ITEMPOPUP_H
 #define ITEMPOPUP_H
 
+#include "../../bindings/guichan/widgets/container.h"
 #include "../../bindings/guichan/widgets/popup.h"
-#include "../../bindings/guichan/widgets/windowcontainer.h"
 
 class ItemInfo;
 class TextBox;

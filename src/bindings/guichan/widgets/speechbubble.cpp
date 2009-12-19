@@ -31,7 +31,7 @@
 
 #include "../handlers/wordtextwraphandler.h"
 
-SpeechBubble::SpeechBubble(WindowContainer *wc):
+SpeechBubble::SpeechBubble(Container *wc):
     Popup("Speech", "graphics/gui/speechbubble.xml", wc),
     mText("")
 {

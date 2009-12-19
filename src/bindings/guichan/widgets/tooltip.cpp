@@ -25,7 +25,6 @@
 
 #include "textbox.h"
 #include "tooltip.h"
-#include "windowcontainer.h"
 
 #include "../gui.h"
 #include "../graphics.h"
@@ -34,7 +33,7 @@
 
 #include "../handlers/wordtextwraphandler.h"
 
-ToolTip::ToolTip():
+ToolTip::ToolTip(gcn::Container *container):
     Container(),
     mText("")
 {
@@ -43,7 +42,7 @@ ToolTip::ToolTip():
     mToolTipBox->setOpaque(false);
 
     add(mToolTipBox);
-    windowContainer->add(this);
+    container->add(this);
 
     setVisible(false);
 }

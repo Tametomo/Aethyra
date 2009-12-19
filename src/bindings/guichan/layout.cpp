@@ -24,6 +24,8 @@
 
 #include "layout.h"
 
+#include "../../core/utils/dtor.h"
+
 ContainerPlacer ContainerPlacer::at(int x, int y)
 {
     return ContainerPlacer(mContainer, &mCell->at(x, y));
@@ -38,14 +40,18 @@ LayoutCell &ContainerPlacer::operator()
 
 LayoutCell::~LayoutCell()
 {
-    if (mType == ARRAY) delete mArray;
+    if (mType == ARRAY)
+        destroy(mArray);
 }
 
 LayoutArray &LayoutCell::getArray()
 {
     assert(mType != WIDGET);
-    if (mType == ARRAY) return *mArray;
-    mArray = new LayoutArray;
+
+    if (mType == ARRAY)
+        return *mArray;
+
+    mArray = new LayoutArray();
     mType = ARRAY;
     mExtent[0] = 1;
     mExtent[1] = 1;
@@ -58,10 +64,12 @@ LayoutArray &LayoutCell::getArray()
 void LayoutCell::reflow(int nx, int ny, int nw, int nh)
 {
     assert(mType != NONE);
+
     nx += mPadding;
     ny += mPadding;
     nw -= 2 * mPadding;
     nh -= 2 * mPadding;
+
     if (mType == ARRAY)
         mArray->reflow(nx, ny, nw, nh);
     else
@@ -72,11 +80,11 @@ void LayoutCell::computeSizes()
 {
     assert(mType == ARRAY);
 
-    for (std::vector< std::vector< LayoutCell * > >::iterator
+    for (std::vector<std::vector<LayoutCell*> >::iterator
          i = mArray->mCells.begin(), i_end = mArray->mCells.end();
          i != i_end; ++i)
     {
-        for (std::vector< LayoutCell * >::iterator
+        for (std::vector<LayoutCell*>::iterator
              j = i->begin(), j_end = i->end(); j != j_end; ++j)
         {
             LayoutCell *cell = *j;
@@ -94,10 +102,10 @@ LayoutArray::LayoutArray(): mSpacing(4)
 
 LayoutArray::~LayoutArray()
 {
-    for (std::vector< std::vector< LayoutCell * > >::iterator
+    for (std::vector<std::vector<LayoutCell*> >::iterator
          i = mCells.begin(), i_end = mCells.end(); i != i_end; ++i)
     {
-        for (std::vector< LayoutCell * >::iterator
+        for (std::vector<LayoutCell*>::iterator
              j = i->begin(), j_end = i->end(); j != j_end; ++j)
         {
             delete *j;
@@ -108,19 +116,21 @@ LayoutArray::~LayoutArray()
 LayoutCell &LayoutArray::at(int x, int y, int w, int h)
 {
     resizeGrid(x + w, y + h);
+
     LayoutCell *&cell = mCells[y][x];
     if (!cell)
-    {
-        cell = new LayoutCell;
-    }
+        cell = new LayoutCell();
+
     return *cell;
 }
 
 void LayoutArray::resizeGrid(int w, int h)
 {
-    bool extW = w && w > (int)mSizes[0].size(),
-         extH = h && h > (int)mSizes[1].size();
-    if (!extW && !extH) return;
+    bool extW = w && w > (int) mSizes[0].size();
+    bool extH = h && h > (int) mSizes[1].size();
+
+    if (!extW && !extH)
+        return;
 
     if (extH)
     {
@@ -130,11 +140,9 @@ void LayoutArray::resizeGrid(int w, int h)
     }
 
     if (extW)
-    {
         mSizes[0].resize(w, Layout::AUTO_DEF);
-    }
 
-    for (std::vector< std::vector< LayoutCell * > >::iterator
+    for (std::vector<std::vector<LayoutCell*> >::iterator
          i = mCells.begin(), i_end = mCells.end(); i != i_end; ++i)
     {
         i->resize(w, NULL);
@@ -156,7 +164,7 @@ void LayoutArray::setRowHeight(int n, int h)
 void LayoutArray::matchColWidth(int n1, int n2)
 {
     resizeGrid(std::max(n1, n2) + 1, 0);
-    std::vector< short > widths = getSizes(0, Layout::AUTO_DEF);
+    std::vector<short> widths = getSizes(0, Layout::AUTO_DEF);
     int s = std::max(widths[n1], widths[n2]);
     mSizes[0][n1] = s;
     mSizes[0][n2] = s;
@@ -173,6 +181,7 @@ LayoutCell &LayoutArray::place(gcn::Widget *widget, int x, int y, int w, int h)
 {
     LayoutCell &cell = at(x, y, w, h);
     assert(cell.mType == LayoutCell::NONE);
+
     cell.mType = LayoutCell::WIDGET;
     cell.mWidget = widget;
     cell.mSize[0] = w == 1 ? widget->getWidth() : 0;
@@ -182,9 +191,14 @@ LayoutCell &LayoutArray::place(gcn::Widget *widget, int x, int y, int w, int h)
     cell.mPadding = 0;
     cell.mAlign[0] = LayoutCell::FILL;
     cell.mAlign[1] = LayoutCell::FILL;
+
     short &cs = mSizes[0][x], &rs = mSizes[1][y];
-    if (cs == Layout::AUTO_DEF && w == 1) cs = 0;
-    if (rs == Layout::AUTO_DEF && h == 1) rs = 0;
+
+    if (cs == Layout::AUTO_DEF && w == 1)
+        cs = 0;
+    if (rs == Layout::AUTO_DEF && h == 1)
+        rs = 0;
+
     return cell;
 }
 
@@ -212,7 +226,7 @@ void LayoutArray::align(int &pos, int &size, int dim,
     }
 }
 
-std::vector< short > LayoutArray::getSizes(int dim, int upp) const
+std::vector<short> LayoutArray::getSizes(int dim, int upp) const
 {
     int gridW = mSizes[0].size(), gridH = mSizes[1].size();
     std::vector< short > sizes = mSizes[dim];
@@ -223,18 +237,21 @@ std::vector< short > LayoutArray::getSizes(int dim, int upp) const
         for (int gridX = 0; gridX < gridW; ++gridX)
         {
             LayoutCell const *cell = mCells[gridY][gridX];
-            if (!cell || cell->mType == LayoutCell::NONE) continue;
+            if (!cell || cell->mType == LayoutCell::NONE)
+                continue;
 
             if (cell->mExtent[dim] == 1)
             {
                 int n = dim == 0 ? gridX : gridY;
                 int s = cell->mSize[dim] + cell->mPadding * 2;
-                if (s > sizes[n]) sizes[n] = s;
+                if (s > sizes[n])
+                    sizes[n] = s;
             }
         }
     }
 
-    if (upp == Layout::AUTO_DEF) return sizes;
+    if (upp == Layout::AUTO_DEF)
+        return sizes;
 
     // Compute the FILL sizes.
     int nb = sizes.size();
@@ -254,11 +271,14 @@ std::vector< short > LayoutArray::getSizes(int dim, int upp) const
     }
     upp = upp + mSpacing;
 
-    if (nbFill == 0) return sizes;
+    if (nbFill == 0)
+        return sizes;
 
     for (int i = 0; i < nb; ++i)
     {
-        if (mSizes[dim][i] > Layout::AUTO_DEF) continue;
+        if (mSizes[dim][i] > Layout::AUTO_DEF)
+            continue;
+
         int s = upp / nbFill;
         sizes[i] += s;
         upp -= s;
@@ -275,7 +295,9 @@ int LayoutArray::getSize(int dim) const
     int nb = sizes.size();
     for (int i = 0; i < nb; ++i)
     {
-        if (sizes[i] > Layout::AUTO_DEF) size += sizes[i];
+        if (sizes[i] > Layout::AUTO_DEF)
+            size += sizes[i];
+
         size += mSpacing;
     }
     return size - mSpacing;
@@ -285,8 +307,8 @@ void LayoutArray::reflow(int nx, int ny, int nw, int nh)
 {
     int gridW = mSizes[0].size(), gridH = mSizes[1].size();
 
-    std::vector< short > widths  = getSizes(0, nw);
-    std::vector< short > heights = getSizes(1, nh);
+    std::vector<short> widths  = getSizes(0, nw);
+    std::vector<short> heights = getSizes(1, nh);
 
     int y = ny;
     for (int gridY = 0; gridY < gridH; ++gridY)

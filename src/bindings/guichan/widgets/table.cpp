@@ -116,13 +116,13 @@ Table::Table(TableModel *initial_model, gcn::Color background,
 Table::~Table(void)
 {
     uninstallActionListeners();
-    delete mModel;
+    destroy(mModel);
 
     if (mFocusHandler && mFocusHandler->isFocused(this))
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 TableModel* Table::getModel(void) const
@@ -193,25 +193,17 @@ void Table::setLinewiseSelection(bool linewise)
 
 int Table::getRowHeight(void)
 {
-    if (mModel)
-        return mModel->getRowHeight() + 1; // border
-    else
-        return 0;
+    return mModel ? (mModel->getRowHeight() + 1) : 0;
 }
 
 int Table::getColumnWidth(int i)
 {
-    if (mModel)
-        return mModel->getColumnWidth(i) + 1; // border
-    else
-        return 0;
+    return mModel ? (mModel->getColumnWidth(i) + 1) : 0;
 }
 
 void Table::setSelectedRow(int selected)
 {
-    if (!mModel)
-        mSelectedRow = -1;
-    else  if (selected < 0 && !mWrappingEnabled)
+    if (!mModel || (selected < 0 && !mWrappingEnabled))
         mSelectedRow = -1;
     else if (selected >= mModel->getRows() && mWrappingEnabled)
         mSelectedRow = 0;
@@ -431,8 +423,8 @@ void Table::mousePressed(gcn::MouseEvent& mouseEvent)
         int row = getRowForY(mouseEvent.getY());
         int column = getColumnForX(mouseEvent.getX());
 
-        if (row > -1 && column > -1 &&
-            row < mModel->getRows() && column < mModel->getColumns())
+        if (row > -1 && column > -1 && row < mModel->getRows() &&
+            column < mModel->getColumns())
         {
             mSelectedColumn = column;
             mSelectedRow = row;
@@ -501,10 +493,7 @@ gcn::Widget* Table::getWidgetAt(int x, int y)
     if (row > -1 && column > -1)
     {
         gcn::Widget *w = mModel->getElementAt(row, column);
-        if (w && w->isFocusable())
-            return w;
-        else
-            return NULL; // Grab the event locally
+        return (w && w->isFocusable()) ? w : NULL;
     }
     else
         return NULL;
@@ -517,10 +506,7 @@ int Table::getRowForY(int y)
    if (getRowHeight() > 0)
        row = y / getRowHeight();
 
-   if (row < 0 || row >= mModel->getRows())
-       return -1;
-   else
-       return row;
+   return ((row < 0 || row >= mModel->getRows()) ? -1 : row);
 }
 
 int Table::getColumnForX(int x)

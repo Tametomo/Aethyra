@@ -24,6 +24,7 @@
 
 #include "../../core/log.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/xml.h"
 
@@ -95,17 +96,17 @@ void NPCDB::unload()
     {
         while (!i->second->sprites.empty())
         {
-            delete i->second->sprites.front();
+            destroy(i->second->sprites.front());
             i->second->sprites.pop_front();
         }
-        delete i->second;
+        destroy(i->second);
     }
 
     mNPCInfos.clear();
 
     while (!mUnknown.sprites.empty())
     {
-        delete mUnknown.sprites.front();
+        destroy(mUnknown.sprites.front());
         mUnknown.sprites.pop_front();
     }
 

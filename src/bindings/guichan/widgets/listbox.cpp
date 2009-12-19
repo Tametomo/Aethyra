@@ -31,6 +31,8 @@
 
 #include "../sdl/sdlinput.h"
 
+#include "../../../core/utils/dtor.h"
+
 float ListBox::mAlpha = 1.0;
 
 ListBox::ListBox(gcn::ListModel *listModel, const std::string &actionEventId,
@@ -63,7 +65,7 @@ ListBox::~ListBox()
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 void ListBox::draw(gcn::Graphics *graphics)

@@ -36,6 +36,7 @@
 
 #include "../../core/map/sprite/localplayer.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
@@ -45,11 +46,16 @@ std::string tradePartnerName;
  * Listener for request trade dialogs
  */
 namespace {
+    ConfirmDialog *dlg = NULL;
+
     struct RequestTradeListener : public gcn::ActionListener
     {
         void action(const gcn::ActionEvent &event)
         {
             player_node->tradeReply(event.getId() == "yes");
+
+            if (event.getSource() == dlg)
+                destroy(dlg);
         };
     } listener;
 }
@@ -93,10 +99,10 @@ void TradeHandler::handleMessage(MessageIn *msg)
                     }
 
                     player_node->setTrading(true);
-                    ConfirmDialog *dlg;
-                    dlg = new ConfirmDialog(_("Request for Trade"),
-                            strprintf(_("%s wants to trade with you, do you "
-                                    "accept?"), tradePartnerName.c_str()));
+                    dlg = new ConfirmDialog(_("Request for Trade"), strprintf(_(
+                                              "%s wants to trade with you, do "
+                                              "you accept?"),
+                                              tradePartnerName.c_str()));
                     dlg->addActionListener(&listener);
                 }
                 else
@@ -124,7 +130,7 @@ void TradeHandler::handleMessage(MessageIn *msg)
                 case 3: // Trade accepted
                     tradeWindow->reset();
                     tradeWindow->setCaption(strprintf(_("Trade: You and %s"),
-                            tradePartnerName.c_str()));
+                                            tradePartnerName.c_str()));
                     tradeWindow->setVisible(true);
                     break;
                 case 4: // Trade cancelled

@@ -47,6 +47,7 @@
 
 #include "../../core/image/image.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/stringutils.h"
 
 const int ItemContainer::gridWidth = 36;  // item icon width + 4
@@ -141,20 +142,20 @@ ItemContainer::~ItemContainer()
     if (mInstances == 0)
     {
         config.removeListener("showItemPopups", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
         if (mSelImg)
             mSelImg->decRef();
 
-        delete mItemPopup;
-        delete mPopupMenu;
+        destroy(mItemPopup);
+        destroy(mPopupMenu);
     }
 
     if (mFocusHandler && mFocusHandler->isFocused(this))
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 void ItemContainer::logic()

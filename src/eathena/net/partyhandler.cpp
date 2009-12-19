@@ -30,8 +30,6 @@
 
 #include "../gui/chat.h"
 
-#include "../../bindings/guichan/dialogs/confirmdialog.h"
-
 PartyHandler::PartyHandler(Party *party) : mParty(party)
 {
     static const Uint16 _messages[] = {
@@ -110,9 +108,8 @@ void PartyHandler::handleMessage(MessageIn *msg)
             { // new block to enable local variables
                 int msgLength = msg->readInt16() - 8;
                 if (msgLength <= 0)
-                {
                     return;
-                }
+
                 int id = msg->readInt32();
                 Being *being = beingManager->findBeing(id);
                 std::string chatMsg = msg->readString(msgLength);

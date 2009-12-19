@@ -57,7 +57,7 @@ class ShopItem : public Item
         /**
          * Destructor.
          */
-        ~ShopItem();
+        virtual ~ShopItem();
 
         /**
          * Add a duplicate. Id and price will be taken from this item.

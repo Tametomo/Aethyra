@@ -24,7 +24,7 @@
 #include "text.h"
 #include "textmanager.h"
 
-TextManager *textManager = 0;
+TextManager *textManager = NULL;
 
 void TextManager::addText(Text *text)
 {
@@ -75,9 +75,8 @@ void TextManager::place(const Text *textObj, const Text *omit,
     for (TextList::const_iterator ptr = mTextList.begin(),
              pEnd = mTextList.end(); ptr != pEnd; ++ptr)
     {
-        if (*ptr != omit &&
-            (*ptr)->mX <= xRight &&
-            (*ptr)->mX + (*ptr)->mWidth > xLeft)
+        if (*ptr != omit && (*ptr)->mX <= xRight && (*ptr)->mX + 
+           (*ptr)->mWidth > xLeft)
         {
             int from = (*ptr)->mY - occupiedTop;
             int to = from + (*ptr)->mHeight - 1;
@@ -92,10 +91,9 @@ void TextManager::place(const Text *textObj, const Text *omit,
         }
     }
     bool ok = true;
+
     for (int i = wantedTop; i < wantedTop + h; ++i)
-    {
         ok = ok && !occupied[i];
-    }
 
     if (ok)
         return;
@@ -106,16 +104,11 @@ void TextManager::place(const Text *textObj, const Text *omit,
     for (int seek = wantedTop + h - 2; seek >= 0; --seek)
     {
         if (occupied[seek])
-        {
             consec = 0;
-        }
-        else
+        else if (++consec == h)
         {
-            if (++consec == h)
-            {
-                upSlot = seek;
-                break;
-            }
+            upSlot = seek;
+            break;
         }
     }
     int downSlot = -1;
@@ -123,38 +116,30 @@ void TextManager::place(const Text *textObj, const Text *omit,
     for (int seek = wantedTop + 1; seek < TEST; ++seek)
     {
         if (occupied[seek])
-        {
             consec = 0;
-        }
-        else
+        else if (++consec == h)
         {
-            if (++consec == h)
-            {
-                downSlot = seek - h + 1;
-                break;
-            }
+            downSlot = seek - h + 1;
+            break;
         }
     }
     if (upSlot == -1 && downSlot == -1) // no good solution, so leave as is
-    {
         return;
-    }
+
     if (upSlot == -1) // must go down
     {
         y += downSlot - wantedTop;
         return;
     }
+
     if (downSlot == -1) // must go up
     {
         y -= wantedTop - upSlot;
         return;
     }
+
     if (wantedTop - upSlot > downSlot - wantedTop) // down is better
-    {
         y += downSlot - wantedTop;
-    }
     else
-    {
         y -= wantedTop - upSlot;
-    }
 }

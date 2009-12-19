@@ -29,6 +29,8 @@
 
 #include "../palette.h"
 
+#include "../../../core/utils/dtor.h"
+
 TextBox::TextBox(TextWrapHandler *wrapHandler) :
     gcn::TextBox(),
     mMaxDimension(100),
@@ -45,8 +47,7 @@ TextBox::TextBox(TextWrapHandler *wrapHandler) :
 
 TextBox::~TextBox()
 {
-    delete mWrapHandler;
-    mWrapHandler = NULL;
+    destroy(mWrapHandler);
 }
 
 void TextBox::setTextWrapped(const std::string &text, int maxDimension)

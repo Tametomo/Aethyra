@@ -35,6 +35,7 @@
 #include "../image/image.h"
 
 #include "../utils/base64.h"
+#include "../utils/dtor.h"
 #include "../utils/stringutils.h"
 #include "../utils/xml.h"
 
@@ -321,7 +322,7 @@ void MapReader::readLayer(const xmlNodePtr &node, Map *map)
     const bool isCollisionLayer = (name.substr(0,9) == "collision");
     const bool isVisible = XML::getProperty(node, "visible", 1);
 
-    MapLayer *layer = 0;
+    MapLayer *layer = NULL;
 
     if (!isCollisionLayer)
     {
@@ -543,12 +544,12 @@ Tileset *MapReader::readTileset(xmlNodePtr node, const std::string &path,
                     logger->log("Animation length: %d", ani->getLength());
                 }
                 else
-                    delete ani;
+                    destroy(ani);
             }
         }
     }
 
-    delete doc;
+    destroy(doc);
 
     return set;
 }

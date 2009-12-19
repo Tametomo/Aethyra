@@ -25,6 +25,8 @@
 #include "particle.h"
 #include "particlecontainer.h"
 
+#include "../../utils/dtor.h"
+
 ParticleContainer::ParticleContainer(ParticleContainer *parent,
                                      const bool delParent) :
     mDelParent(delParent),
@@ -35,7 +37,7 @@ ParticleContainer::~ParticleContainer()
 {
     clearLocally();
     if (mNext && mDelParent)
-        delete mNext;
+        destroy(mNext);
 }
 
 void ParticleContainer::clear()
@@ -73,11 +75,14 @@ void ParticleList::removeLocally(Particle *particle)
 {
     for (std::list<Particle *>::iterator it = mElements.begin();
          it != mElements.end(); it++)
+    {
         if (*it == particle)
         {
             (*it)->kill();
+            // FIXME: cppcheck reports that this is a dangerous delete.
             mElements.erase(it);
         }
+    }
 }
 
 void ParticleList::clearLocally()

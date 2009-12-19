@@ -32,12 +32,14 @@
 #include "../../bindings/guichan/layout.h"
 
 #include "../../bindings/guichan/widgets/button.h"
+#include "../../bindings/guichan/widgets/container.h"
 #include "../../bindings/guichan/widgets/icon.h"
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/slider.h"
 
 #include "../../core/map/sprite/localplayer.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
@@ -117,8 +119,7 @@ ItemAmountWindow::ItemAmountWindow(int usage, Window *parent, Item *item):
 
 ItemAmountWindow::~ItemAmountWindow()
 {
-    delete mItemPopup;
-    mItemPopup = NULL;
+    destroy(mItemPopup);
 }
 
 void ItemAmountWindow::fontChanged()
@@ -212,5 +213,5 @@ void ItemAmountWindow::action(const gcn::ActionEvent &event)
 void ItemAmountWindow::close()
 {
     getParentWindow()->requestFocus();
-    scheduleDelete();
+    windowContainer->scheduleDelete(this);
 }

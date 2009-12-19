@@ -143,7 +143,7 @@ TextField::~TextField()
     if (instances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
         for_each(skin.grid, skin.grid + 9, dtor<Image*>());
     }
@@ -152,7 +152,7 @@ TextField::~TextField()
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 void TextField::draw(gcn::Graphics *graphics)

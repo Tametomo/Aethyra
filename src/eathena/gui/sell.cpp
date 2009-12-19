@@ -38,6 +38,7 @@
 
 #include "../../core/map/sprite/npc.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
@@ -66,8 +67,7 @@ SellDialog::SellDialog():
 
     mQuantityLabel = new Label(strprintf("%d / %d", mAmountItems, mMaxItems));
     mQuantityLabel->setAlignment(gcn::Graphics::CENTER);
-    mMoneyLabel = new Label(
-        strprintf(_("Price: %d GP / Total: %d GP"), 0, 0));
+    mMoneyLabel = new Label(strprintf(_("Price: %d GP / Total: %d GP"), 0, 0));
 
     mSellButton = new Button(_("Sell"), "sell", this);
     mQuitButton = new Button(_("Quit"), "quit", this);
@@ -90,7 +90,7 @@ SellDialog::SellDialog():
 
 SellDialog::~SellDialog()
 {
-    delete mShopListModel;
+    destroy(mShopListModel);
 }
 
 void SellDialog::fontChanged()

@@ -52,6 +52,7 @@
 
 #include "../../core/map/sprite/localplayer.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
@@ -160,11 +161,11 @@ EquipmentWindow::~EquipmentWindow()
 
     if (mInstances == 0)
     {
-        delete mItemPopup;
-        delete mPopupMenu;
+        destroy(mItemPopup);
+        destroy(mPopupMenu);
 
         config.removeListener("showItemPopups", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
     }
 }
 

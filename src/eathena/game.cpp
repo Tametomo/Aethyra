@@ -98,6 +98,7 @@
 
 #include "../core/map/sprite/localplayer.h"
 
+#include "../core/utils/dtor.h"
 #include "../core/utils/gettext.h"
 
 std::string map_path;
@@ -196,26 +197,26 @@ static void destroyGuiWindows()
 {
     logger->setChatWindow(NULL);
 
-    delete buyDialog;
-    delete buySellDialog;
-    delete chatWindow;
-    delete emoteShortcutWindow;
-    delete emoteWindow;
-    delete equipmentWindow;
-    delete inventoryWindow;
-    delete itemShortcutWindow;
-    delete menuBar;
-    delete minimap;
-    delete miniStatusWindow;
-    delete npcIntegerDialog;
-    delete npcListDialog;
-    delete npcStringDialog;
-    delete npcTextDialog;
-    delete sellDialog;
-    delete skillDialog;
-    delete statusWindow;
-    delete storageWindow;
-    delete tradeWindow;
+    destroy(buyDialog);
+    destroy(buySellDialog);
+    destroy(chatWindow);
+    destroy(emoteShortcutWindow);
+    destroy(emoteWindow);
+    destroy(equipmentWindow);
+    destroy(inventoryWindow);
+    destroy(itemShortcutWindow);
+    destroy(menuBar);
+    destroy(minimap);
+    destroy(miniStatusWindow);
+    destroy(npcIntegerDialog);
+    destroy(npcListDialog);
+    destroy(npcStringDialog);
+    destroy(npcTextDialog);
+    destroy(sellDialog);
+    destroy(skillDialog);
+    destroy(statusWindow);
+    destroy(storageWindow);
+    destroy(tradeWindow);
 
     // Unload XML databases
     ColorDB::unload();
@@ -302,22 +303,14 @@ Game::~Game()
     setupWindow->removeTab(setupGame);
     setupWindow->removeTab(setupPlayers);
 
-    delete setupGame;
-    setupGame = NULL;
-    delete setupPlayers;
-    setupPlayers = NULL;
-    delete beingManager;
-    beingManager = NULL;
-    delete floorItemManager;
-    floorItemManager = NULL;
-    delete player_node;
-    player_node = NULL;
-    delete particleEngine;
-    particleEngine = NULL;
-    delete mapLoader;
-    mapLoader = NULL;
-    delete viewport;
-    viewport = NULL;
+    destroy(setupGame);
+    destroy(setupPlayers);
+    destroy(beingManager);
+    destroy(floorItemManager);
+    destroy(player_node);
+    destroy(particleEngine);
+    destroy(mapLoader);
+    destroy(viewport);
 
     // Clear the network handlers
     network->unregisterHandler(mBeingHandler.get());

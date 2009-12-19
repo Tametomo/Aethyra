@@ -63,7 +63,7 @@ Setup_Gui::Setup_Gui():
     mFps(config.getValue("fpslimit", 0)),
     mScreenWidth(graphics->getWidth()),
     mScreenHeight(graphics->getHeight()),
-    mModeListModel(new ModeListModel),
+    mModeListModel(new ModeListModel()),
     mModeList(new ListBox(mModeListModel, "videomode", this)),
     mFsCheckBox(new CheckBox(_("Full screen"), mFullScreenEnabled)),
     mOpenGLCheckBox(new CheckBox(_("OpenGL"), mOpenGLEnabled)),
@@ -72,7 +72,7 @@ Setup_Gui::Setup_Gui():
     mMouseAlphaSlider(new Slider(0.2, 1.0)),
     mFpsCheckBox(new CheckBox(_("FPS Limit:"))),
     mFpsSlider(new Slider(5, 200)),
-    mFpsField(new TextField),
+    mFpsField(new TextField()),
     mFontSize(config.getValue("fontSize", 11)),
     mFontSizeSlider(new Slider(8, 14)),
     mFontSizeLabel(new Label(""))

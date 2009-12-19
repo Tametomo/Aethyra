@@ -85,24 +85,24 @@ StatusWindow::StatusWindow(LocalPlayer *player):
     mStatsEvadeLabel = new Label(_("% Evade:"));
     mStatsReflexLabel = new Label(_("% Reflex:"));
 
-    mStatsAttackPoints = new Label;
-    mStatsDefensePoints = new Label;
-    mStatsMagicAttackPoints = new Label;
-    mStatsMagicDefensePoints = new Label;
-    mStatsAccuracyPoints = new Label;
-    mStatsEvadePoints = new Label;
-    mStatsReflexPoints = new Label;
+    mStatsAttackPoints = new Label();
+    mStatsDefensePoints = new Label();
+    mStatsMagicAttackPoints = new Label();
+    mStatsMagicDefensePoints = new Label();
+    mStatsAccuracyPoints = new Label();
+    mStatsEvadePoints = new Label();
+    mStatsReflexPoints = new Label();
 
     // New labels
     for (int i = 0; i < 6; i++)
     {
         mStatsLabel[i] = new Label("0");
         mStatsLabel[i]->setAlignment(gcn::Graphics::CENTER);
-        mStatsDisplayLabel[i] = new Label;
+        mStatsDisplayLabel[i] = new Label();
         mPointsLabel[i] = new Label("0");
         mPointsLabel[i]->setAlignment(gcn::Graphics::CENTER);
     }
-    mRemainingStatsPointsLabel = new Label;
+    mRemainingStatsPointsLabel = new Label();
 
     // Set button events Id
     mStatsButton[0] = new Button("+", "STR", this);

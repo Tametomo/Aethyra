@@ -26,9 +26,9 @@
 #include <guichan/focushandler.hpp>
 #include <guichan/font.hpp>
 
+#include "container.h"
 #include "resizegrip.h"
 #include "window.h"
-#include "windowcontainer.h"
 
 #include "../gui.h"
 #include "../layout.h"
@@ -39,6 +39,8 @@
 #include "../../../core/log.h"
 
 #include "../../../core/image/image.h"
+
+#include "../../../core/utils/dtor.h"
 
 int Window::instances = 0;
 int Window::mouseResize = 0;
@@ -102,14 +104,16 @@ Window::~Window()
 
     saveWindowState();
 
-    delete mLayout;
+    destroy(mLayout);
 
     while (!mWidgets.empty())
     {
         if (mWidgets.front() == mPreviousFocus)
             mPreviousFocus = NULL;
-        delete mWidgets.front();
+        destroy(mWidgets.front());
     }
+
+    windowContainer->remove(this);
 
     removeWidgetListener(this);
 
@@ -118,17 +122,12 @@ Window::~Window()
     mSkin->instances--;
 
     if (instances == 0)
-        delete skinLoader;
+        destroy(skinLoader);
 }
 
 void Window::requestFocus()
 {
     mFocusHandler->focusNone();
-}
-
-void Window::setWindowContainer(WindowContainer *wc)
-{
-    windowContainer = wc;
 }
 
 void Window::draw(gcn::Graphics *graphics)
@@ -339,8 +338,7 @@ void Window::setResizable(bool r)
     else
     {
         remove(mGrip);
-        delete mGrip;
-        mGrip = NULL;
+        destroy(mGrip);
     }
 }
 
@@ -410,11 +408,6 @@ void Window::setCloseButton(bool flag)
 bool Window::isResizable()
 {
     return mGrip;
-}
-
-void Window::scheduleDelete()
-{
-    windowContainer->scheduleDelete(this);
 }
 
 void Window::close()
@@ -769,8 +762,7 @@ void Window::reflowLayout(int w, int h)
 {
     assert(mLayout);
     mLayout->reflow(w, h);
-    delete mLayout;
-    mLayout = NULL;
+    destroy(mLayout);
     setContentSize(w, h);
 }
 
@@ -807,10 +799,7 @@ void Window::clear()
         add(mGrip);
 
     if (mLayout)
-    {
-        delete mLayout;
-        mLayout = NULL;
-    }
+        destroy(mLayout);
 }
 
 void Window::restoreFocus()

@@ -108,7 +108,7 @@ BeingBox::~BeingBox()
     if (instances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
         for_each(background.grid, background.grid + 9, dtor<Image*>());
     }

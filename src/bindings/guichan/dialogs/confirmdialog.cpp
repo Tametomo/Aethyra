@@ -27,27 +27,28 @@
 #include "../handlers/wordtextwraphandler.h"
 
 #include "../widgets/button.h"
+#include "../widgets/container.h"
 #include "../widgets/textbox.h"
 
 #include "../../../core/utils/gettext.h"
 
 ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
-                             Window *parent):
-    Window(title, true, parent)
+                             Window *parent, bool modal):
+    Window(title, modal, parent)
 {
     mTextBox = new TextBox(new WordTextWrapHandler());
     mTextBox->setEditable(false);
     mTextBox->setOpaque(false);
     mTextBox->setTextWrapped(msg, 260);
 
-    yesButton = new Button(_("Yes"), "yes", this);
-    noButton = new Button(_("No"), "no", this);
+    mYesButton = new Button(_("Yes"), "yes", this);
+    mNoButton = new Button(_("No"), "no", this);
 
     fontChanged();
 
     add(mTextBox);
-    add(yesButton);
-    add(noButton);
+    add(mYesButton);
+    add(mNoButton);
 
     if (getParent())
     {
@@ -56,7 +57,7 @@ ConfirmDialog::ConfirmDialog(const std::string &title, const std::string &msg,
     }
 
     setVisible(true);
-    yesButton->requestFocus();
+    mYesButton->requestFocus();
 }
 
 void ConfirmDialog::fontChanged()
@@ -64,7 +65,7 @@ void ConfirmDialog::fontChanged()
     Window::fontChanged();
 
     const int numRows = mTextBox->getNumberOfRows();
-    const int inWidth = yesButton->getWidth() + noButton->getWidth() + 
+    const int inWidth = mYesButton->getWidth() + mNoButton->getWidth() + 
                         (2 * getPadding());
     const int fontHeight = getFont()->getHeight();
     const int height = numRows * fontHeight;
@@ -76,14 +77,19 @@ void ConfirmDialog::fontChanged()
         width = inWidth;
 
     setContentSize(mTextBox->getMinWidth() + fontHeight, height + fontHeight +
-                   noButton->getHeight());
+                   mNoButton->getHeight());
     mTextBox->setPosition(getPadding(), getPadding());
 
-    // 8 is the padding that GUIChan adds to button widgets
-    // (top and bottom combined)
-    yesButton->setPosition((width - inWidth) / 2, height + 8);
-    noButton->setPosition(yesButton->getX() + inWidth - noButton->getWidth(),
-                          height + 8);
+    mYesButton->setPosition((width - inWidth) / 2, height + 
+                            (2 * mYesButton->getSpacing()));
+    mNoButton->setPosition(mYesButton->getX() + inWidth - mNoButton->getWidth(),
+                           height + (2 * mNoButton->getSpacing()));
+}
+
+void ConfirmDialog::close()
+{
+    Window::close();
+    windowContainer->scheduleDelete(this);
 }
 
 unsigned int ConfirmDialog::getNumRows()
@@ -96,11 +102,9 @@ void ConfirmDialog::action(const gcn::ActionEvent &event)
     // Proxy button events to our listeners
     ActionListenerIterator i;
     for (i = mActionListeners.begin(); i != mActionListeners.end(); ++i)
-    {
         (*i)->action(event);
-    }
 
     // Can we receive anything else anyway?
     if (event.getId() == "yes" || event.getId() == "no")
-        scheduleDelete();
+        close();
 }

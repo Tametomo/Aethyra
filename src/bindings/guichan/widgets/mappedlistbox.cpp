@@ -33,6 +33,8 @@
 
 #include "../sdl/sdlinput.h"
 
+#include "../../../core/utils/dtor.h"
+
 MappedListBox::MappedListBox(MappedListModel *listModel) :
     mWrappingEnabled(false),
     mFollowingMouse(false)
@@ -64,7 +66,7 @@ MappedListBox::~MappedListBox()
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 void MappedListBox::draw(gcn::Graphics* graphics)

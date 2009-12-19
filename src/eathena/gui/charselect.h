@@ -30,6 +30,7 @@
 #include "../../core/map/sprite/being.h"
 
 class BeingBox;
+class ConfirmDialog;
 class LocalPlayer;
 class Network;
 class Player;
@@ -52,6 +53,8 @@ class CharSelectDialog : public Window, public gcn::ActionListener
          * Constructor.
          */
         CharSelectDialog(LockedArray<LocalPlayer*> *charInfo, Gender gender);
+
+        virtual ~CharSelectDialog();
 
         void action(const gcn::ActionEvent &event);
 
@@ -82,6 +85,8 @@ class CharSelectDialog : public Window, public gcn::ActionListener
         gcn::Label *mLevelLabel;
         gcn::Label *mJobLevelLabel;
         gcn::Label *mMoneyLabel;
+
+        ConfirmDialog *mCharDeleteConfirm;
 
         BeingBox *mBeingBox;
 
@@ -116,6 +121,8 @@ class CharCreateDialog : public Window, public gcn::ActionListener
          * Destructor.
          */
         ~CharCreateDialog();
+
+        virtual void close();
 
         void action(const gcn::ActionEvent &event);
 

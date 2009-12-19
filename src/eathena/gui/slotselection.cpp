@@ -30,6 +30,7 @@
 #include "../../bindings/guichan/layout.h"
 
 #include "../../bindings/guichan/widgets/button.h"
+#include "../../bindings/guichan/widgets/container.h"
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/slider.h"
 
@@ -141,5 +142,5 @@ void SlotSelectionWindow::close()
             break;
     }
 
-    scheduleDelete();
+    windowContainer->scheduleDelete(this);
 }

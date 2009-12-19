@@ -41,6 +41,7 @@
 #include "../../core/configuration.h"
 #include "../../core/log.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
@@ -81,7 +82,7 @@ RegisterDialog::RegisterDialog():
 
     mUserField = new TextField(loginData.username);
     mPasswordField = new PasswordField(loginData.password);
-    mConfirmField = new PasswordField;
+    mConfirmField = new PasswordField();
     mServerField = new TextField(loginData.hostname);
     mPortField = new TextField(toString(loginData.port));
 
@@ -120,7 +121,7 @@ RegisterDialog::RegisterDialog():
 
 RegisterDialog::~RegisterDialog()
 {
-    delete mWrongDataNoticeListener;
+    destroy(mWrongDataNoticeListener);
 }
 
 void RegisterDialog::fontChanged()

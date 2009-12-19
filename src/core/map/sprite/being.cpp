@@ -120,11 +120,11 @@ Being::Being(const int id, const int job, Map *map):
     mConfigListener = new BeingConfigListener(this);
     config.addListener("particleeffects", mConfigListener);
 
-    mSpeechBubble = NULL;
-
     mSpeech = "";
     mOldSpeech = "";
     mNameColor = &guiPalette->getColor(Palette::CHAT);
+
+    mSpeechBubble = NULL;
     mText = NULL;
 
     mLastUpdate = tick_time;
@@ -143,8 +143,8 @@ Being::~Being()
 
     setMap(NULL);
 
-    delete mSpeechBubble;
-    delete mText;
+    destroy(mSpeechBubble);
+    destroy(mText);
 }
 
 void Being::setDestination(const Uint16 &destX, const Uint16 &destY)
@@ -435,10 +435,7 @@ void Being::logic()
         {
             // Remove text and speechbubbles if speech boxes aren't being used
             if (mText)
-            {
-                delete mText;
-                mText = NULL;
-            }
+                destroy(mText);
             else if (mSpeechBubble)
                 mSpeechBubble->setVisible(false);
         }
@@ -531,9 +528,7 @@ void Being::drawSpeech(const int offsetX, const int offsetY)
         }
 
         if (mText)
-            delete mText;
-
-        mText = NULL;
+            destroy(mText);
 
         mOldSpeech = mSpeech;
         mSpeechBubble->setCaption(showName ? mName : "", mNameColor);
@@ -547,38 +542,30 @@ void Being::drawSpeech(const int offsetX, const int offsetY)
     }
     else if (mSpeechTime > 0 && speech == TEXT_OVERHEAD)
     {
-        if (mSpeech == mOldSpeech && mText && !mSpeechBubble)
-        {
+        if (mSpeech == mOldSpeech && mText)
             mText->adviseXY(mPx + X_SPEECH_OFFSET, mPy - Y_SPEECH_OFFSET);
-            return;
+        else
+        {
+            // don't introduce a memory leak
+            if (mSpeechBubble)
+                destroy(mSpeechBubble);
+            if (mText)
+                destroy(mText);
+
+            mOldSpeech = mSpeech;
+
+            mText = new Text(mSpeech, mPx + X_SPEECH_OFFSET, mPy - Y_SPEECH_OFFSET,
+                             gcn::Graphics::CENTER,
+                             &guiPalette->getColor(Palette::PARTICLE));
         }
-
-        if (mSpeechBubble)
-            delete mSpeechBubble;
-
-        mSpeechBubble = NULL;
-
-        // don't introduce a memory leak
-        if (mText)
-            delete mText;
-
-        mOldSpeech = mSpeech;
-
-        mText = new Text(mSpeech, mPx + X_SPEECH_OFFSET, mPy - Y_SPEECH_OFFSET,
-                         gcn::Graphics::CENTER,
-                         &guiPalette->getColor(Palette::PARTICLE));
     }
     else if (speech == NO_SPEECH)
     {
         if (mSpeechBubble)
-            delete mSpeechBubble;
-
-        mSpeechBubble = NULL;
-
+            destroy(mSpeechBubble);
         if (mText)
-            delete mText;
-
-        mText = NULL;
+            destroy(mText);
+        mOldSpeech = "";
     }
 }
 
@@ -598,7 +585,7 @@ void Being::setWalkSpeed(const Uint16 &speed)
 const int Being::getOffset(const char &pos, const char &neg) const
 {
     // Check whether we're walking in the requested direction
-    if (mAction != WALK ||  !(mDirection & (pos | neg)))
+    if (mAction != WALK || !(mDirection & (pos | neg)))
         return 0;
 
     int offset = (get_elapsed_time(mWalkTime) * 32) / mWalkSpeed;

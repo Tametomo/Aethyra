@@ -28,6 +28,8 @@
 #include "../../../core/configuration.h"
 #include "../../../core/log.h"
 
+#include "../../../core/utils/dtor.h"
+
 Popup::Popup(const std::string &name, const std::string &skin,
              gcn::Container *parent):
     mParentContainer(parent),
@@ -61,6 +63,7 @@ Popup::~Popup()
     logger->log("Popup::~Popup(\"%s\")", mPopupName.c_str());
 
     savePopupConfiguration();
+    setParentContainer(NULL);
 
     mSkin->instances--;
 }
@@ -169,13 +172,5 @@ void Popup::setMaxWidth(int width)
 void Popup::setMaxHeight(int height)
 {
     mMaxHeight = height;
-}
-
-void Popup::scheduleDelete()
-{
-    WindowContainer *container = dynamic_cast<WindowContainer*>(mParentContainer);
-
-    if (container)
-        container->scheduleDelete(this);
 }
 

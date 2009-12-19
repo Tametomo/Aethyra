@@ -46,7 +46,7 @@ std::string ShopListModel::getElementAt(int i)
 
 void ShopListModel::addItem(int inventoryIndex, int id, int quantity, int price)
 {
-    ShopItem* item = 0;
+    ShopItem* item = NULL;
 
     if (mMergeDuplicates)
         item = findItem(id);
@@ -94,5 +94,5 @@ ShopItem* ShopListModel::findItem(int id)
             return item;
     }
 
-    return 0;
+    return NULL;
 }

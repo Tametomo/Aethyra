@@ -36,7 +36,7 @@ class ToolTip : public Container
         /**
          * Constructor.
          */
-        ToolTip();
+        ToolTip(gcn::Container *container = windowContainer);
 
         /**
          * Draws the tooltip.

@@ -42,6 +42,7 @@
 
 #include "../../../core/configuration.h"
 
+#include "../../../core/utils/dtor.h"
 #include "../../../core/utils/gettext.h"
 
 #define COLUMNS_NR 2 // name plus listbox
@@ -91,8 +92,7 @@ Setup_Players::Setup_Players():
 
     for (int i = 0; i < COLUMNS_NR; i++)
     {
-        mPlayerTableTitleModel->set(0, i,
-                new Label(gettext(table_titles[i])));
+        mPlayerTableTitleModel->set(0, i, new Label(gettext(table_titles[i])));
     }
 
     mPlayerTitleTable->setLinewiseSelection(true);
@@ -130,7 +130,7 @@ Setup_Players::Setup_Players():
 Setup_Players::~Setup_Players(void)
 {
     player_relations.removeListener(this);
-    delete mIgnoreActionChoicesModel;
+    destroy(mIgnoreActionChoicesModel);
 }
 
 void Setup_Players::fontChanged()

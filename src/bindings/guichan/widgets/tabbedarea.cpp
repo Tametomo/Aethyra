@@ -31,6 +31,8 @@
 
 #include "../sdl/sdlinput.h"
 
+#include "../../../core/utils/dtor.h"
+
 TabbedArea::TabbedArea() :
     gcn::TabbedArea()
 {
@@ -52,7 +54,7 @@ TabbedArea::~TabbedArea()
         mFocusHandler->focusNone();
 
     removeFocusListener(mProtFocusListener);
-    delete mProtFocusListener;
+    destroy(mProtFocusListener);
 }
 
 int TabbedArea::getNumberOfTabs()

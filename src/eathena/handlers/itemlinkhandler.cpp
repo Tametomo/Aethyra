@@ -32,15 +32,17 @@
 
 #include "../../bindings/guichan/gui.h"
 
+#include "../../core/utils/dtor.h"
+
 ItemLinkHandler::ItemLinkHandler()
 {
-    mItemPopup = new ItemPopup;
+    mItemPopup = new ItemPopup();
     mItemPopup->setOpaque(false);
 }
 
 ItemLinkHandler::~ItemLinkHandler()
 {
-    delete mItemPopup;
+    destroy(mItemPopup);
 }
 
 void ItemLinkHandler::handleLink(const std::string &link)

@@ -124,7 +124,7 @@ ProgressBar::~ProgressBar()
     if (mInstances == 0)
     {
         config.removeListener("guialpha", mConfigListener);
-        delete mConfigListener;
+        destroy(mConfigListener);
 
         for_each(mBorder.grid, mBorder.grid + 9, dtor<Image*>());
     }

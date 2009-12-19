@@ -25,6 +25,7 @@
 
 #include "../../core/log.h"
 
+#include "../../core/utils/dtor.h"
 #include "../../core/utils/xml.h"
 
 #define HAIR_COLOR_FILE "colors.xml"
@@ -52,7 +53,7 @@ void ColorDB::load()
 
         TMWHair = true;
 
-        delete doc;
+        destroy(doc);
 
         doc = new XML::Document(TMW_COLOR_FILE);
         root = doc->rootNode();
@@ -62,7 +63,7 @@ void ColorDB::load()
             mColors[0] = mFail;
             mLoaded = true;
 
-            delete doc;
+            destroy(doc);
 
             return;
         }
@@ -81,7 +82,7 @@ void ColorDB::load()
         }
     }
 
-    delete doc;
+    destroy(doc);
 
     mLoaded = true;
 }

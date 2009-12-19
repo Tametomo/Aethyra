@@ -29,6 +29,8 @@
 
 #include "../../core/image/image.h"
 
+#include "../../core/utils/dtor.h"
+
 #define CACHE_SIZE 256
 
 class TextChunk
@@ -41,7 +43,7 @@ class TextChunk
 
         ~TextChunk()
         {
-            delete img;
+            destroy(img);
         }
 
         bool operator==(const std::string &str) const
