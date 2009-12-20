@@ -46,16 +46,11 @@ std::string tradePartnerName;
  * Listener for request trade dialogs
  */
 namespace {
-    ConfirmDialog *dlg = NULL;
-
     struct RequestTradeListener : public gcn::ActionListener
     {
         void action(const gcn::ActionEvent &event)
         {
             player_node->tradeReply(event.getId() == "yes");
-
-            if (event.getSource() == dlg)
-                destroy(dlg);
         };
     } listener;
 }
@@ -99,10 +94,11 @@ void TradeHandler::handleMessage(MessageIn *msg)
                     }
 
                     player_node->setTrading(true);
-                    dlg = new ConfirmDialog(_("Request for Trade"), strprintf(_(
-                                              "%s wants to trade with you, do "
-                                              "you accept?"),
-                                              tradePartnerName.c_str()));
+                    ConfirmDialog *dlg = new ConfirmDialog(_("Request for Trade"),
+                                                           strprintf(_("%s wants "
+                                                           "to trade with you, do "
+                                                           "you accept?"),
+                                                           tradePartnerName.c_str()));
                     dlg->addActionListener(&listener);
                 }
                 else

@@ -35,10 +35,6 @@
 #include "../core/utils/gettext.h"
 #include "../core/utils/stringutils.h"
 
-namespace {
-    ConfirmDialog *dlg = NULL;
-}
-
 Party::Party(ChatWindow *chat) :
     mChat(chat),
     mInviteListener(&mInParty)
@@ -125,9 +121,10 @@ void Party::invitedAsk(const std::string &nick, int gender,
     }
 
     mCreating = false;
-    dlg = new ConfirmDialog(_("Invite to party"), strprintf(_("%s invites you "
-                              "to join the %s party, do you accept?"),
-                              nick.c_str(), partyName.c_str()));
+    ConfirmDialog *dlg = new ConfirmDialog(_("Invite to party"), strprintf(_(
+                                             "%s invites you to join the %s "
+                                             "party, do you accept?"),
+                                             nick.c_str(), partyName.c_str()));
     dlg->addActionListener(&mInviteListener);
 }
 
@@ -138,9 +135,6 @@ void Party::InviteListener::action(const gcn::ActionEvent &event)
     const bool accept = event.getId() == "yes";
     outMsg.writeInt32(accept ? 1 : 0);
     *mInParty = *mInParty || accept;
-
-    if (event.getSource() == dlg)
-        destroy(dlg);
 }
 
 void Party::leftResponse(const std::string &nick) const
