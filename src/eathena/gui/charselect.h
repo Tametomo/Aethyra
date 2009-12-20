@@ -84,8 +84,6 @@ class CharSelectDialog : public Window, public gcn::ActionListener
         gcn::Label *mJobLevelLabel;
         gcn::Label *mMoneyLabel;
 
-        ConfirmDialog *mCharDeleteConfirm;
-
         BeingBox *mBeingBox;
 
         Gender mGender;

@@ -50,6 +50,8 @@ class LockedArray
         void next();
         void prev();
         void select(unsigned int pos);
+        void remove();
+        void remove(unsigned int pos);
         unsigned int getPos() const { return mCurEntry; }
 
         unsigned int getSize() const { return mSize; };
@@ -72,10 +74,13 @@ class LockedArray
 
 template<class T>
 LockedArray<T>::LockedArray(unsigned int size):
-    mSize(size), mData(new T[size]), mCurEntry(0), mLocked(false),
+    mSize(size),
+    mData(new T[size]),
+    mCurEntry(0),
+    mLocked(false),
     mFilled(false)
 {
-    std::fill_n(mData, mSize, (T)0);
+    std::fill_n(mData, mSize, (T) NULL);
 }
 
 template<class T>
@@ -115,19 +120,39 @@ void LockedArray<T>::select(unsigned int pos)
 }
 
 template<class T>
+void LockedArray<T>::remove(unsigned int pos)
+{
+    if (mLocked)
+        return;
+
+    destroy(mData[pos]);
+}
+
+template<class T>
+void LockedArray<T>::remove()
+{
+    if (mLocked)
+        return;
+
+    destroy(mData[mCurEntry]);
+}
+
+template<class T>
 void LockedArray<T>::clear()
 {
-    if (!mFilled) return;
+    if (!mFilled)
+        return;
 
     delete [] mData;
 
     mData = new T[mSize];
 
-    std::fill_n(mData, mSize, (T)0);
+    std::fill_n(mData, mSize, (T) NULL);
 
     mCurEntry = 0;
 
     mLocked = false;
+    mFilled = false;
 }
 
 #endif

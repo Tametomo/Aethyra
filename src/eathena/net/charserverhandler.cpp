@@ -156,9 +156,9 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             break;
 
         case 0x006f:
-            delete mCharInfo->getEntry();
             mCharInfo->setEntry(0);
             mCharInfo->unlock();
+            mCharInfo->remove();
             loginData.slots--;
             if (charSelectDialog)
                 charSelectDialog->updatePlayerInfo();

@@ -86,7 +86,6 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
                                    Gender gender):
     Window(_("Select Character")),
     mCharInfo(charInfo),
-    mCharDeleteConfirm(NULL),
     mGender(gender),
     mCharSelected(false)
 {
@@ -112,7 +111,6 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
 
 CharSelectDialog::~CharSelectDialog()
 {
-    destroy(mCharDeleteConfirm);
     mCharInfo->clear();
 
     charSelectDialog = NULL;
@@ -166,15 +164,14 @@ void CharSelectDialog::action(const gcn::ActionEvent &event)
         // Check for a character
         if (mCharInfo->getEntry())
         {
-            if (!mCharDeleteConfirm)
-                mCharDeleteConfirm = new CharDeleteConfirm(this);
-            else
-                mCharDeleteConfirm->setVisible(true);
+            new CharDeleteConfirm(this);
         }
         // Start new character dialog
-        else if (loginData.slots < MAX_PLAYER_SLOTS)
+        else if (loginData.slots < MAX_PLAYER_SLOTS && !charCreateDialog)
+        {
             charCreateDialog = new CharCreateDialog(this, mCharInfo->getPos(),
                                                     mGender);
+        }
     }
     else if (event.getId() == "previous")
     {
