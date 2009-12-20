@@ -102,6 +102,8 @@ class CharSelectDialog : public Window, public gcn::ActionListener
         void attemptCharSelect();
 };
 
+extern CharSelectDialog *charSelectDialog;
+
 /**
  * Character creation dialog.
  *

@@ -139,6 +139,8 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             mCharInfo->select(slot);
             mCharInfo->setEntry(tempPlayer);
             loginData.slots++;
+            if (charSelectDialog)
+                charSelectDialog->updatePlayerInfo();
 
             // Close the character create dialog
             if (charCreateDialog)
@@ -158,6 +160,8 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             mCharInfo->setEntry(0);
             mCharInfo->unlock();
             loginData.slots--;
+            if (charSelectDialog)
+                charSelectDialog->updatePlayerInfo();
             new OkDialog(_("Info"), _("Character deleted."));
             break;
 

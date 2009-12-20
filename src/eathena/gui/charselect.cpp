@@ -52,6 +52,7 @@
 #include "../../core/utils/stringutils.h"
 
 CharCreateDialog *charCreateDialog = NULL;
+CharSelectDialog *charSelectDialog = NULL;
 
 /**
  * Listener for confirming character deletion.
@@ -89,6 +90,8 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
     mGender(gender),
     mCharSelected(false)
 {
+    charSelectDialog = this;
+
     // Control that shows the Player
     mBeingBox = new BeingBox();
     mBeingBox->setWidth(74);
@@ -111,6 +114,8 @@ CharSelectDialog::~CharSelectDialog()
 {
     destroy(mCharDeleteConfirm);
     mCharInfo->clear();
+
+    charSelectDialog = NULL;
 }
 
 void CharSelectDialog::fontChanged()
