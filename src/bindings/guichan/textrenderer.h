@@ -40,16 +40,14 @@ class TextRenderer
                                   const gcn::Graphics::Alignment &align,
                                   const gcn::Color color, gcn::Font *font,
                                   const bool outline = false,
-                                  const bool shadow = false,
-                                  const int alpha = 255)
+                                  const bool shadow = false)
     {
         graphics->setFont(font);
 
         // Text shadow
         if (shadow)
         {
-            graphics->setColor(guiPalette->getColor(Palette::SHADOW, alpha / 2));
-
+            graphics->setColor(guiPalette->getColor(Palette::SHADOW, color.a / 2));
             if (outline)
                 graphics->drawText(text, x + 2, y + 2, align);
             else
@@ -60,7 +58,7 @@ class TextRenderer
         {
 
             // Text outline
-            graphics->setColor(guiPalette->getColor(Palette::OUTLINE, alpha));
+            graphics->setColor(guiPalette->getColor(Palette::OUTLINE, color.a));
             graphics->drawText(text, x + 1, y, align);
             graphics->drawText(text, x - 1, y, align);
             graphics->drawText(text, x, y + 1, align);

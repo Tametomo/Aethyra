@@ -74,5 +74,5 @@ void TextPreview::draw(gcn::Graphics* graphics)
     TextRenderer::renderText(graphics, *mText, 2, 2,  gcn::Graphics::LEFT,
                              gcn::Color(mTextColor->r, mTextColor->g,
                                         mTextColor->b, textAlpha),
-                             mFont, mOutline, mShadow, textAlpha);
+                             mFont, mOutline, mShadow);
 }

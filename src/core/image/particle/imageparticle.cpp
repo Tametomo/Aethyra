@@ -48,10 +48,8 @@ void ImageParticle::draw(Graphics *graphics, const int offsetX, const int offset
                          mImage->getHeight() / 2;
 
     // Check if on screen
-    if (screenX + mImage->getWidth() < 0 ||
-            screenX > graphics->getWidth() ||
-            screenY + mImage->getHeight() < 0 ||
-            screenY > graphics->getHeight())
+    if (screenX + mImage->getWidth() < 0 || screenX > graphics->getWidth() ||
+        screenY + mImage->getHeight() < 0 || screenY > graphics->getHeight())
     {
         return;
     }
