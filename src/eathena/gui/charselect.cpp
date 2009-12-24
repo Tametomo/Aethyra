@@ -44,6 +44,8 @@
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/textfield.h"
 
+#include "../../core/configuration.h"
+
 #include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/dtor.h"
@@ -106,6 +108,7 @@ CharSelectDialog::CharSelectDialog(LockedArray<LocalPlayer*> *charInfo,
     mSelectButton = new Button(_("OK"), "ok", this);
     mCancelButton = new Button(_("Cancel"), "cancel", this);
 
+    selectByName(config.getValue("lastCharacter", ""));
     updatePlayerInfo();
 }
 
