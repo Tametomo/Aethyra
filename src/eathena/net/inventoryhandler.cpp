@@ -75,12 +75,9 @@ void InventoryHandler::handleMessage(MessageIn *msg)
     {
         case SMSG_PLAYER_INVENTORY:
         case SMSG_PLAYER_STORAGE_ITEMS:
+            // Clear inventory - this will be a complete refresh
             if (msg->getId() == SMSG_PLAYER_INVENTORY)
-            {
-                // Clear inventory - this will be a complete refresh
                 inventory->clear();
-                break;
-            }
 
             msg->readInt16();  // length
             number = (msg->getLength() - 4) / 18;
