@@ -362,7 +362,7 @@ void Map::drawAmbientLayers(Graphics *graphics, const LayerType type,
                             const int detail)
 {
     // Detail 0: no overlays
-    if (detail <= 0)
+    if (detail <= 0 && type != BACKGROUND_LAYERS)
         return;
 
     // find out which layer list to draw
