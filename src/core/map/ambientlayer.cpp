@@ -20,14 +20,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "ambientoverlay.h"
+#include "ambientlayer.h"
 
 #include "../image/image.h"
 
 #include "../../bindings/guichan/graphics.h"
 
-AmbientOverlay::AmbientOverlay(Image *img, const float parallax,
-                               const float speedX, const float speedY):
+AmbientLayer::AmbientLayer(Image *img, const float parallax, const float speedX,
+                           const float speedY):
     mImage(img), mParallax(parallax),
     mPosX(0), mPosY(0),
     mSpeedX(speedX), mSpeedY(speedY)
@@ -35,15 +35,14 @@ AmbientOverlay::AmbientOverlay(Image *img, const float parallax,
     mImage->incRef();
 }
 
-AmbientOverlay::~AmbientOverlay()
+AmbientLayer::~AmbientLayer()
 {
     mImage->decRef();
 }
 
-void AmbientOverlay::update(const int timePassed, const float dx,
-                            const float dy)
+void AmbientLayer::update(const int timePassed, const float dx, const float dy)
 {
-    // Self scrolling of the overlay
+    // Self scrolling of the layer
     mPosX -= mSpeedX * timePassed / 10;
     mPosY -= mSpeedY * timePassed / 10;
 
@@ -66,7 +65,7 @@ void AmbientOverlay::update(const int timePassed, const float dx,
         mPosY += imgH;
 }
 
-void AmbientOverlay::draw(Graphics *graphics, const int x, const int y)
+void AmbientLayer::draw(Graphics *graphics, const int x, const int y)
 {
     graphics->drawImagePattern(mImage, (int) -mPosX, (int) -mPosY, x +
                               (int) mPosX, y + (int) mPosY);

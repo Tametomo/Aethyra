@@ -291,8 +291,8 @@
 		<Unit filename="src\core\image\particle\rotationalparticle.h" />
 		<Unit filename="src\core\image\particle\textparticle.cpp" />
 		<Unit filename="src\core\image\particle\textparticle.h" />
-		<Unit filename="src\core\map\ambientoverlay.cpp" />
-		<Unit filename="src\core\map\ambientoverlay.h" />
+		<Unit filename="src\core\map\ambientlayer.cpp" />
+		<Unit filename="src\core\map\ambientlayer.h" />
 		<Unit filename="src\core\map\map.cpp" />
 		<Unit filename="src\core\map\map.h" />
 		<Unit filename="src\core\map\mapreader.cpp" />

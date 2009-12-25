@@ -192,8 +192,8 @@ aethyra_SOURCES = \
 	      core/image/particle/rotationalparticle.h \
 	      core/image/particle/textparticle.cpp \
 	      core/image/particle/textparticle.h \
-	      core/map/ambientoverlay.cpp \
-	      core/map/ambientoverlay.h \
+	      core/map/ambientlayer.cpp \
+	      core/map/ambientlayer.h \
 	      core/map/map.cpp \
 	      core/map/map.h \
 	      core/map/mapreader.cpp \

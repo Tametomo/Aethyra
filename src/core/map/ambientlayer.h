@@ -20,13 +20,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef RESOURCES_AMBIENTOVERLAY_H
-#define RESOURCES_AMBIENTOVERLAY_H
+#ifndef RESOURCES_AMBIENTLAYER_H
+#define RESOURCES_AMBIENTLAYER_H
 
 class Graphics;
 class Image;
 
-class AmbientOverlay
+class AmbientLayer
 {
     public:
         /**
@@ -37,13 +37,13 @@ class AmbientOverlay
          * @param speedX scrolling speed in x-direction
          * @param speedY scrolling speed in y-direction
          */
-        AmbientOverlay(Image *img, const float parallax,
-                       const float speedX, const float speedY);
+        AmbientLayer(Image *img, const float parallax, const float speedX,
+                     const float speedY);
 
         /**
          * Destructor.
          */
-        ~AmbientOverlay();
+        ~AmbientLayer();
 
         void update(const int timePassed, const float dx, const float dy);
 

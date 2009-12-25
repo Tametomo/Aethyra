@@ -32,7 +32,7 @@
 #include "../image/particle/particlecontainer.h"
 
 class Animation;
-class AmbientOverlay;
+class AmbientLayer;
 class Graphics;
 class Image;
 class MapLayer;
@@ -158,10 +158,10 @@ class Map : public Properties
         ~Map();
 
         /**
-         * Initialize map overlays. Should be called after all the properties
+         * Initialize ambient layers. Has to be called after all the properties
          * are set.
          */
-        void initializeOverlays();
+        void initializeAmbientLayers();
 
         /**
          * Updates animations. Called as needed.
@@ -266,12 +266,24 @@ class Map : public Properties
         TileAnimation *getAnimationForGid(const int gid);
 
     private:
-        /**
-         * Draws the overlay graphic to the given graphics output.
-         */
-        void drawOverlay(Graphics *graphics, const float scrollX,
-                         const float scrollY, const int detail);
 
+        enum LayerType
+        {
+            FOREGROUND_LAYERS,
+            BACKGROUND_LAYERS
+        };
+
+        /**
+         * Updates scrolling of ambient layers. Has to be called each game tick.
+         */
+        void updateAmbientLayers(const float scrollX, const float scrollY);
+
+        /**
+         * Draws the foreground or background layers to the given graphics output.
+         */
+        void drawAmbientLayers(Graphics *graphics, const LayerType type,
+                               const float scrollX, const float scrollY,
+                               const int detail);
         /**
          * Tells whether a tile is occupied by a being.
          */
@@ -294,7 +306,8 @@ class Map : public Properties
         int mOnClosedList, mOnOpenList;
 
         // Overlay data
-        std::list<AmbientOverlay*> mOverlays;
+        std::list<AmbientLayer*> mBackgrounds;
+        std::list<AmbientLayer*> mForegrounds;
         float mLastScrollX;
         float mLastScrollY;
 
@@ -310,6 +323,7 @@ class Map : public Properties
         ParticleList mParticleList;
 
         std::map<int, TileAnimation*> mTileAnimations;
+
 };
 
 #endif

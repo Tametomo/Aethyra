@@ -22,13 +22,14 @@
 
 #include <queue>
 
-#include "ambientoverlay.h"
+#include "ambientlayer.h"
 #include "map.h"
 #include "tileset.h"
 
 #include "sprite/sprite.h"
 
 #include "../configuration.h"
+#include "../log.h"
 #include "../resourcemanager.h"
 
 #include "../image/image.h"
@@ -212,17 +213,39 @@ Map::~Map()
     delete[] mMetaTiles;
     delete_all(mLayers);
     delete_all(mTilesets);
-    delete_all(mOverlays);
+    delete_all(mForegrounds);
+    delete_all(mBackgrounds);
     delete_all(mTileAnimations);
 }
 
-void Map::initializeOverlays()
+void Map::initializeAmbientLayers()
 {
     ResourceManager *resman = ResourceManager::getInstance();
 
-    for (int i = 0; hasProperty("overlay" + toString(i) + "image"); i++)
+    // search for "foreground*", "background*" or "overlay*" (old term) in map
+    // properties
+    for (int i = 0; /* terminated by a break */; i++)
     {
-        const std::string name = "overlay" + toString(i);
+        std::string name;
+        LayerType type;
+
+        if (hasProperty("foreground" + toString(i) + "image"))
+        {
+            type = FOREGROUND_LAYERS;
+            name = "foreground" + toString(i);
+        }
+        else if (hasProperty("overlay" + toString(i) + "image"))
+        {
+            type = FOREGROUND_LAYERS;
+            name = "overlay" + toString(i);
+        }
+        else if (hasProperty("background" + toString(i) + "image"))
+        {
+            type = BACKGROUND_LAYERS;
+            name = "background" + toString(i);
+        }
+        else
+            break; // the FOR loop
 
         Image *img = resman->getImage(getProperty(name + "image"));
         const float speedX = getFloatProperty(name + "scrollX");
@@ -231,10 +254,14 @@ void Map::initializeOverlays()
 
         if (img)
         {
-            mOverlays.push_back(
-                    new AmbientOverlay(img, parallax, speedX, speedY));
+            if (type == FOREGROUND_LAYERS)
+                mForegrounds.push_back(new AmbientLayer(img, parallax, speedX,
+                                                        speedY));
+            else
+                mBackgrounds.push_back(new AmbientLayer(img, parallax, speedX,
+                                                        speedY));
 
-            // The AmbientOverlay takes control over the image.
+            // The AmbientLayer takes control over the image.
             img->decRef();
         }
     }
@@ -266,44 +293,45 @@ void Map::update(const int ticks)
     {
         iAni->second->update(ticks);
     }
+
 }
 
 void Map::draw(Graphics *graphics, int scrollX, int scrollY)
 {
-    int endPixelY = graphics->getHeight() + scrollY + mTileHeight - 1;
-
-    // TODO: Do this per-layer
-    endPixelY += mMaxTileHeight - mTileHeight;
-
+    //Calculate range of tiles which are on-screen
+    int endPixelY = graphics->getHeight() + scrollY + mTileHeight +
+                    mMaxTileHeight - mTileHeight - 1;
     int startX = scrollX / mTileWidth;
     int startY = scrollY / mTileHeight;
     int endX = (graphics->getWidth() + scrollX + mTileWidth - 1) / mTileWidth;
     int endY = endPixelY / mTileHeight;
 
-    // Make sure sprites are sorted
+    // Make sure sprites are sorted ascending by Y-coordinate so that they
+    // overlap correctly
     mSprites.sort(spriteCompare);
+
+    // update scrolling of all ambient layers
+    updateAmbientLayers(scrollX, scrollY);
+
+    // Draw backgrounds
+    drawAmbientLayers(graphics, BACKGROUND_LAYERS, scrollX, scrollY,
+                     (int) config.getValue("OverlayDetail", 2));
 
     // draw the game world
     Layers::const_iterator layeri = mLayers.begin();
     for (; layeri != mLayers.end(); ++layeri)
     {
-        (*layeri)->draw(graphics,
-                        startX, startY, endX, endY,
-                        scrollX, scrollY,
+        (*layeri)->draw(graphics, startX, startY, endX, endY, scrollX, scrollY,
                         mSprites);
     }
 
-    drawOverlay(graphics, scrollX, scrollY,
-            config.getValue("OverlayDetail", 2));
+    drawAmbientLayers(graphics, FOREGROUND_LAYERS, scrollX, scrollY,
+                     (int) config.getValue("OverlayDetail", 2));
 }
 
-void Map::drawOverlay(Graphics *graphics, const float scrollX,
-                      const float scrollY, const int detail)
+void Map::updateAmbientLayers(const float scrollX, const float scrollY)
 {
-    static int lastTick = tick_time;
-
-    // Detail 0: no overlays
-    if (detail <= 0) return;
+    static int lastTick = tick_time; // static = only initialized at first call
 
     if (mLastScrollX == 0.0f && mLastScrollY == 0.0f)
     {
@@ -313,21 +341,48 @@ void Map::drawOverlay(Graphics *graphics, const float scrollX,
     }
 
     // Update Overlays
-    int timePassed = get_elapsed_time(lastTick);
-    float dx = scrollX - mLastScrollX;
-    float dy = scrollY - mLastScrollY;
+    const float dx = scrollX - mLastScrollX;
+    const float dy = scrollY - mLastScrollY;
+    const int timePassed = get_elapsed_time(lastTick);
 
-    std::list<AmbientOverlay*>::iterator i;
-    for (i = mOverlays.begin(); i != mOverlays.end(); i++)
-    {
+    std::list<AmbientLayer*>::iterator i;
+
+    for (i = mBackgrounds.begin(); i != mBackgrounds.end(); i++)
         (*i)->update(timePassed, dx, dy);
-    }
+    for (i = mForegrounds.begin(); i != mForegrounds.end(); i++)
+        (*i)->update(timePassed, dx, dy);
+
     mLastScrollX = scrollX;
     mLastScrollY = scrollY;
     lastTick = tick_time;
+}
+
+void Map::drawAmbientLayers(Graphics *graphics, const LayerType type,
+                            const float scrollX, const float scrollY,
+                            const int detail)
+{
+    // Detail 0: no overlays
+    if (detail <= 0)
+        return;
+
+    // find out which layer list to draw
+    std::list<AmbientLayer*> *layers;
+    switch (type)
+    {
+        case FOREGROUND_LAYERS:
+            layers = &mForegrounds;
+            break;
+        case BACKGROUND_LAYERS:
+            layers = &mBackgrounds;
+            break;
+        default:
+            logger->log("Error: Unknown Ambient Layer Type");
+            return; // Unknown layer type, so bail out
+    }
 
     // Draw overlays
-    for (i = mOverlays.begin(); i != mOverlays.end(); i++)
+    for (std::list<AmbientLayer*>::iterator i = layers->begin();
+         i != layers->end(); i++)
     {
         (*i)->draw(graphics, graphics->getWidth(), graphics->getHeight());
 
@@ -342,8 +397,8 @@ class ContainsGidFunctor
     public:
         bool operator() (const Tileset* set) const
         {
-            return (set->getFirstGid() <= gid &&
-                    gid - set->getFirstGid() < (int)set->size());
+            return (set->getFirstGid() <= gid && gid - set->getFirstGid() <
+                   (int) set->size());
         }
         int gid;
 } containsGid;
@@ -353,7 +408,7 @@ Tileset* Map::getTilesetWithGid(const int gid) const
     containsGid.gid = gid;
 
     Tilesets::const_iterator i = find_if(mTilesets.begin(), mTilesets.end(),
-              containsGid);
+                                         containsGid);
 
     return (i == mTilesets.end()) ? NULL : *i;
 }
@@ -370,9 +425,7 @@ bool Map::occupied(const int x, const int y) const
     {
         // job 45 is a portal, they don't collide
         if ((*i)->mX == x && (*i)->mY == y && (*i)->mJob != 45)
-        {
             return true;
-        }
     }
 
     return false;
@@ -411,10 +464,7 @@ const std::string &Map::getMusicFile() const
 
 const std::string &Map::getName() const
 {
-    if (hasProperty("name"))
-        return getProperty("name");
-
-    return getProperty("mapname");
+    return (hasProperty("name") ? getProperty("name") : getProperty("mapname"));
 }
 
 Path Map::findPath(const int startX, const int startY, const int destX,
@@ -495,9 +545,7 @@ Path Map::findPath(const int startX, const int startY, const int destX,
                 // Skip if Gcost becomes too much
                 // Warning: probably not entirely accurate
                 if (Gcost > 200)
-                {
                     continue;
-                }
 
                 if (newTile->whichList != mOnOpenList)
                 {
@@ -600,8 +648,5 @@ TileAnimation* Map::getAnimationForGid(const int gid)
 {
     std::map<int, TileAnimation*>::iterator i = mTileAnimations.find(gid);
 
-    if (i == mTileAnimations.end())
-        return NULL;
-    else
-        return i->second;
+    return (i == mTileAnimations.end() ? NULL : i->second);
 }
