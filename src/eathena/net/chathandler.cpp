@@ -34,11 +34,10 @@
 #include "../beingmanager.h"
 
 #include "../../core/map/sprite/being.h"
+#include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
-
-extern Being *player_node;
 
 #define SERVER_NAME "Server"
 

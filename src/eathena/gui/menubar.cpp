@@ -24,23 +24,21 @@
 
 #include <guichan/actionlistener.hpp>
 
+#include "emotewindow.h"
+#include "equipmentwindow.h"
+#include "inventorywindow.h"
 #include "menubar.h"
+#include "skill.h"
+#include "status.h"
 
 #include "../../bindings/guichan/graphics.h"
+
+#include "../../bindings/guichan/dialogs/setupdialog.h"
 
 #include "../../bindings/guichan/widgets/button.h"
 #include "../../bindings/guichan/widgets/window.h"
 
 #include "../../core/utils/gettext.h"
-
-extern Window *emoteWindow;
-extern Window *equipmentWindow;
-extern Window *inventoryWindow;
-extern Window *setupWindow;
-extern Window *skillDialog;
-extern Window *statusWindow;
-
-bool menuBarFocused = false;
 
 namespace {
     struct MenuBarListener : public gcn::ActionListener

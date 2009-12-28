@@ -101,9 +101,9 @@ void UpdaterWindow::fontChanged()
 void UpdaterWindow::downloadComplete()
 {
     //TODO needs thread safety
+    MutexLocker lock(&mLabelMutex);
     enable();
 
-    MutexLocker lock(&mLabelMutex);
     mNewLabelCaption = "";
     // leave mNewProgress as it is, in case the user cancelled
     // (this will leave the download bar reflecting the situation)
@@ -112,11 +112,11 @@ void UpdaterWindow::downloadComplete()
 void UpdaterWindow::downloadFailed()
 {
     //TODO needs thread safety
+    MutexLocker lock(&mLabelMutex);
     mStateButton->setCaption(_("Quit"));
     mStateButton->setActionEventId("quit");
     fontChanged();
 
-    MutexLocker lock(&mLabelMutex);
     mNewLabelCaption = "";
     // leave mNewProgress as it is, in case the user cancelled
     // (this will leave the download bar reflecting the situation)

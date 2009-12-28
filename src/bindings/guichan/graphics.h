@@ -199,6 +199,11 @@ class Graphics : public gcn::Graphics
          */
         virtual SDL_Surface* getScreenshot() = 0;
 
+        /**
+         * Whether the graphics are available for drawing or not.
+         */
+        bool initialized() { return (mTarget != NULL); }
+
     protected:
         bool mFullscreen, mHWAccel;
         SDL_Surface *mTarget;

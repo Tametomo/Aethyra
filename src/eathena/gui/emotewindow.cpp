@@ -32,13 +32,12 @@
 
 #include "../../bindings/guichan/widgets/button.h"
 #include "../../bindings/guichan/widgets/scrollarea.h"
+#include "../../bindings/guichan/widgets/shortcutwindow.h"
 
 #include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
-
-extern Window *emoteShortcutWindow;
 
 EmoteWindow::EmoteWindow():
     Window(_("Emote"))

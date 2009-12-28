@@ -101,4 +101,6 @@ class Joystick
         void doCalibration();
 };
 
+extern Joystick *joystick;
+
 #endif // JOYSTICK_H

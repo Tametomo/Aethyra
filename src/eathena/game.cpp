@@ -105,34 +105,34 @@ std::string map_path;
 
 MapLoader *mapLoader = NULL;
 
-EmoteShortcut *emoteShortcut;
-ItemShortcut *itemShortcut;
+EmoteShortcut *emoteShortcut = NULL;
+ItemShortcut *itemShortcut = NULL;
 
 Setup_Game *setupGame = NULL;
 Setup_Players *setupPlayers = NULL;
 
 OkDialog *disconnectedDialog = NULL;
 
-BuyDialog *buyDialog;
-BuySellDialog *buySellDialog;
-ChatWindow *chatWindow;
-EmoteWindow *emoteWindow;
-EquipmentWindow *equipmentWindow;
-InventoryWindow *inventoryWindow;
-MenuBar *menuBar;
-Minimap *minimap;
-MiniStatusWindow *miniStatusWindow;
-NpcIntegerDialog *npcIntegerDialog;
-NpcListDialog *npcListDialog;
-NpcStringDialog *npcStringDialog;
-NpcTextDialog *npcTextDialog;
-SellDialog *sellDialog;
-ShortcutWindow *emoteShortcutWindow;
-ShortcutWindow *itemShortcutWindow;
-SkillDialog *skillDialog;
-StatusWindow *statusWindow;
-StorageWindow *storageWindow;
-TradeWindow *tradeWindow;
+BuyDialog *buyDialog = NULL;
+BuySellDialog *buySellDialog = NULL;
+ChatWindow *chatWindow = NULL;
+EmoteWindow *emoteWindow = NULL;
+EquipmentWindow *equipmentWindow = NULL;
+InventoryWindow *inventoryWindow = NULL;
+MenuBar *menuBar = NULL;
+Minimap *minimap = NULL;
+MiniStatusWindow *miniStatusWindow = NULL;
+NpcIntegerDialog *npcIntegerDialog = NULL;
+NpcListDialog *npcListDialog = NULL;
+NpcStringDialog *npcStringDialog = NULL;
+NpcTextDialog *npcTextDialog = NULL;
+SellDialog *sellDialog = NULL;
+ShortcutWindow *emoteShortcutWindow = NULL;
+ShortcutWindow *itemShortcutWindow = NULL;
+SkillDialog *skillDialog = NULL;
+StatusWindow *statusWindow = NULL;
+StorageWindow *storageWindow = NULL;
+TradeWindow *tradeWindow = NULL;
 
 BeingManager *beingManager = NULL;
 FloorItemManager *floorItemManager = NULL;

@@ -24,8 +24,7 @@
 #define GAME_H
 
 #include <memory>
-
-#include "../main.h"
+#include <string>
 
 class MessageHandler;
 

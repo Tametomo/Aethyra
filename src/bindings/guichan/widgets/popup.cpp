@@ -28,8 +28,6 @@
 #include "../../../core/configuration.h"
 #include "../../../core/log.h"
 
-#include "../../../core/utils/dtor.h"
-
 Popup::Popup(const std::string &name, const std::string &skin,
              gcn::Container *parent):
     mParentContainer(parent),

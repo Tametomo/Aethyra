@@ -45,8 +45,6 @@
 #include "../../../../core/utils/gettext.h"
 #include "../../../../core/utils/stringutils.h"
 
-extern Joystick *joystick;
-
 Setup_Input::Setup_Input():
     mKeyListModel(new KeyListModel()),
     mCalibrateLabel(new Label(_("Press the button to start calibration"))),

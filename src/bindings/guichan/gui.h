@@ -201,7 +201,7 @@ class Gui : public gcn::Gui
         int mMouseInactivityTimer;
         int mCursorType;
 
-        /** Used to determine whether to draw the next frame. */
+        /** Used to determine when to draw the next frame. */
         int mDrawTime;
 
         /** The minimum frame time (used for frame limiting). */

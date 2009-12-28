@@ -29,13 +29,13 @@
 
 #include <curl/curl.h>
 
+#include "downloadwrapper.h"
+
 #include "../../engine.h"
 
 #include "../../core/configuration.h"
 #include "../../core/log.h"
 #include "../../core/utils/gettext.h"
-
-#include "downloadwrapper.h"
 
 /**
  * Calculates the Alder-32 checksum for the given file.

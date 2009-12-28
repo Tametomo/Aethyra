@@ -25,6 +25,7 @@
 #include <guichan/font.hpp>
 #include <guichan/mouseinput.hpp>
 
+#include "equipmentwindow.h"
 #include "inventorywindow.h"
 #include "itemamount.h"
 #include "storagewindow.h"
@@ -45,14 +46,12 @@
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/progressbar.h"
 #include "../../bindings/guichan/widgets/scrollarea.h"
+#include "../../bindings/guichan/widgets/shortcutwindow.h"
 
 #include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
-
-extern Window *equipmentWindow;
-extern Window *itemShortcutWindow;
 
 InventoryWindow::InventoryWindow(int invSize):
     Window(_("Inventory")),

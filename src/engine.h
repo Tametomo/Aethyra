@@ -28,16 +28,15 @@
 
 #include <string>
 
-#include "options.h"
+#include <SDL.h>
 
-#ifdef USE_OPENGL
-#include "bindings/guichan/opengl/openglgraphics.h"
-#endif
-
-#include "bindings/guichan/sdl/sdlgraphics.h"
-
-class LoginData;
-
+/**
+ * The Engine class sets up the core program environment by initializing the
+ * window, setting up the graphics instances, and setting up all of the core
+ * program functionalities that are independent of any specific program type,
+ * including the local directory paths, initializing input devices, and logging
+ * functionality.
+ */
 class Engine
 {
     public:

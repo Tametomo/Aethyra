@@ -38,6 +38,8 @@ class Player;
 template<class T>
 class LockedArray;
 
+// TODO De-hardcode this value and have it settable depending on the server
+//      configuration.
 #define MAX_PLAYER_SLOTS 3
 
 /**

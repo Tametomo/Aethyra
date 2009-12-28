@@ -25,6 +25,8 @@
 #include <SDL.h>
 #include <SDL_thread.h>
 
+#include "downloadupdates.h"
+
 #include "../../engine.h"
 #include "../../main.h"
 
@@ -34,8 +36,6 @@
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
-
-#include "downloadupdates.h"
 
 namespace
 {
