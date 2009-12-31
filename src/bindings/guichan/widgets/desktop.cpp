@@ -214,6 +214,7 @@ void Desktop::changeCurrentDialog(Window* window)
 void Desktop::showError(OkDialog* window, State errorState)
 {
     error = errorState;
+    removeCurrentDialog();
     currentDialog = window;
     currentDialog->addActionListener(&errorListener);
     currentDialog = NULL;
