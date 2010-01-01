@@ -89,6 +89,8 @@ namespace
 
                 state = EXIT_STATE;
             }
+
+            exitConfirm = NULL;
         }
     } exitListener;
 }
