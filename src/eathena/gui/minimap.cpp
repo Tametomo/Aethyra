@@ -109,38 +109,32 @@ void Minimap::fontChanged()
 
 void Minimap::setMap(Map *map)
 {
-    // Set the title for the Minimap
-    std::string caption;
-
-    if (map)
-        caption = map->getName();
-
-    if (caption.empty())
-        caption = _("Map");
-
-    setCaption(caption);
-
     // Remove the old image if there is one.
     if (mMapImage)
     {
         mMapImage->decRef();
-        mMapImage = 0;
+        mMapImage = NULL;
     }
 
+    // Set the title for the Minimap
     if (map)
     {
         ResourceManager *resman = ResourceManager::getInstance();
         mMapImage = resman->getImage(map->getProperty("minimap"));
+
+        if (mMapImage)
+        {
+            const std::string caption = map->getName();
+
+            mWidthProportion = (float) mMapImage->getWidth() / map->getWidth();
+            mHeightProportion = (float) mMapImage->getHeight() / map->getHeight();
+            setCaption(caption.empty() ? _("Map") : caption);
+
+            fontChanged();
+        }
     }
 
-    if (mMapImage)
-    {
-        mWidthProportion = (float) mMapImage->getWidth() / map->getWidth();
-        mHeightProportion = (float) mMapImage->getHeight() / map->getHeight();
-
-        fontChanged();
-    }
-    else
+    if (!mMapImage)
         setVisible(false);
 }
 
@@ -166,6 +160,9 @@ void Minimap::draw(gcn::Graphics *graphics)
 {
     Window::draw(graphics);
 
+    if (!mMapImage)
+        return;
+
     const gcn::Rectangle a = getChildrenArea();
 
     graphics->pushClipArea(a);
@@ -173,32 +170,28 @@ void Minimap::draw(gcn::Graphics *graphics)
     int mapOriginX = 0;
     int mapOriginY = 0;
 
-    if (mMapImage)
+    if (mMapImage->getWidth() > a.width || mMapImage->getHeight() > a.height)
     {
-        if (mMapImage->getWidth() > a.width ||
-            mMapImage->getHeight() > a.height)
-        {
-            mapOriginX = (int) (((a.width) / 2) - (player_node->mX *
-                          mWidthProportion));
-            mapOriginY = (int) (((a.height) / 2) - (player_node->mY *
-                          mHeightProportion));
+        mapOriginX = (int) (((a.width) / 2) - (player_node->mX *
+                      mWidthProportion));
+        mapOriginY = (int) (((a.height) / 2) - (player_node->mY *
+                      mHeightProportion));
 
-            const int minOriginX = a.width - mMapImage->getWidth();
-            const int minOriginY = a.height - mMapImage->getHeight();
+        const int minOriginX = a.width - mMapImage->getWidth();
+        const int minOriginY = a.height - mMapImage->getHeight();
 
-            if (mapOriginX < minOriginX)
-                mapOriginX = minOriginX;
-            if (mapOriginY < minOriginY)
-                mapOriginY = minOriginY;
-            if (mapOriginX > 0)
-                mapOriginX = 0;
-            if (mapOriginY > 0)
-                mapOriginY = 0;
-        }
-
-        static_cast<Graphics*>(graphics)->
-            drawImage(mMapImage, mapOriginX, mapOriginY);
+        if (mapOriginX < minOriginX)
+            mapOriginX = minOriginX;
+        if (mapOriginY < minOriginY)
+            mapOriginY = minOriginY;
+        if (mapOriginX > 0)
+            mapOriginX = 0;
+        if (mapOriginY > 0)
+            mapOriginY = 0;
     }
+
+    static_cast<Graphics*>(graphics)->drawImage(mMapImage, mapOriginX,
+                                                mapOriginY);
 
     const Beings &beings = beingManager->getAll();
 
@@ -206,6 +199,12 @@ void Minimap::draw(gcn::Graphics *graphics)
          bi != bi_end; ++bi)
     {
         const Being *being = (*bi);
+        const int x = (int) (being->mX * mWidthProportion) + mapOriginX;
+        const int y = (int) (being->mY * mHeightProportion) + mapOriginY;
+
+        if ((x > getWidth() || x < 0) || (y > getHeight() || y < 0))
+            continue;
+
         int dotSize = 2;
 
         switch (being->getType())
@@ -225,7 +224,7 @@ void Minimap::draw(gcn::Graphics *graphics)
 
                     graphics->setColor(guiPalette->getColor(type));
                     break;
-                 }
+                }
 
             case Being::MONSTER:
                 graphics->setColor(guiPalette->getColor(Palette::MONSTER));
@@ -242,10 +241,8 @@ void Minimap::draw(gcn::Graphics *graphics)
         const int offsetHeight = (int) ((dotSize - 1) * mHeightProportion);
         const int offsetWidth = (int) ((dotSize - 1) * mWidthProportion);
 
-        graphics->fillRectangle(gcn::Rectangle((int) (being->mX *
-                                mWidthProportion) + mapOriginX - offsetWidth,
-                                (int) (being->mY * mHeightProportion) +
-                                mapOriginY - offsetHeight, dotSize, dotSize));
+        graphics->fillRectangle(gcn::Rectangle(x - offsetWidth, y - offsetHeight,
+                                               dotSize, dotSize));
     }
 
     graphics->popClipArea();
