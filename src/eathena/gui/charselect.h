@@ -30,10 +30,7 @@
 #include "../../core/map/sprite/being.h"
 
 class BeingBox;
-class ConfirmDialog;
 class LocalPlayer;
-class Network;
-class Player;
 
 template<class T>
 class LockedArray;
@@ -103,63 +100,5 @@ class CharSelectDialog : public Window, public gcn::ActionListener
 };
 
 extern CharSelectDialog *charSelectDialog;
-
-/**
- * Character creation dialog.
- *
- * \ingroup GUI
- */
-class CharCreateDialog : public Window, public gcn::ActionListener
-{
-    public:
-        /**
-         * Constructor.
-         */
-        CharCreateDialog(Window *parent, int slot, Gender gender);
-
-        /**
-         * Destructor.
-         */
-        ~CharCreateDialog();
-
-        virtual void close();
-
-        void action(const gcn::ActionEvent &event);
-
-        /**
-         * Unlocks the dialog, enabling the create character button again.
-         */
-        void unlock();
-
-        void fontChanged();
-    private:
-        /**
-         * Returns the name of the character to create.
-         */
-        std::string getName();
-
-        /**
-         * Communicate character creation to the server.
-         */
-        void attemptCharCreate();
-
-        gcn::TextField *mNameField;
-        gcn::Label *mNameLabel;
-        gcn::Button *mNextHairColorButton;
-        gcn::Button *mPrevHairColorButton;
-        gcn::Label *mHairColorLabel;
-        gcn::Button *mNextHairStyleButton;
-        gcn::Button *mPrevHairStyleButton;
-        gcn::Label *mHairStyleLabel;
-        gcn::Button *mCreateButton;
-        gcn::Button *mCancelButton;
-
-        Player *mPlayer;
-        BeingBox *mBeingBox;
-
-        int mSlot;
-};
-
-extern CharCreateDialog *charCreateDialog;
 
 #endif

@@ -377,6 +377,8 @@
 		<Unit filename="src\eathena\gui\buy.h" />
 		<Unit filename="src\eathena\gui\buysell.cpp" />
 		<Unit filename="src\eathena\gui\buysell.h" />
+		<Unit filename="src\eathena\gui\charcreate.cpp" />
+		<Unit filename="src\eathena\gui\charcreate.h" />
 		<Unit filename="src\eathena\gui\charselect.cpp" />
 		<Unit filename="src\eathena\gui\charselect.h" />
 		<Unit filename="src\eathena\gui\chat.cpp" />

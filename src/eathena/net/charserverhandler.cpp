@@ -29,6 +29,7 @@
 
 #include "../game.h"
 
+#include "../gui/charcreate.h"
 #include "../gui/charselect.h"
 
 #include "../../main.h"

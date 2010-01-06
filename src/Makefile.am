@@ -278,6 +278,8 @@ aethyra_SOURCES = \
 	      eathena/gui/buy.h \
 	      eathena/gui/buysell.cpp \
 	      eathena/gui/buysell.h \
+	      eathena/gui/charcreate.cpp \
+	      eathena/gui/charcreate.h \
 	      eathena/gui/charselect.cpp \
 	      eathena/gui/charselect.h \
 	      eathena/gui/chat.cpp \
