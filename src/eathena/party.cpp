@@ -164,10 +164,10 @@ void Party::help(const std::string &msg) const
     {
         mChat->chatLog(_("Command: /party <command> <args>"), BY_SERVER);
         mChat->chatLog(_("where <command> can be one of:"), BY_SERVER);
-        mChat->chatLog(_("   /new"), BY_SERVER);
-        mChat->chatLog(_("   /create"), BY_SERVER);
-        mChat->chatLog(_("   /prefix"), BY_SERVER);
-        mChat->chatLog(_("   /leave"), BY_SERVER);
+        mChat->chatLog("   /new", BY_SERVER);
+        mChat->chatLog("   /create", BY_SERVER);
+        mChat->chatLog("   /prefix", BY_SERVER);
+        mChat->chatLog("   /leave", BY_SERVER);
         mChat->chatLog(_("This command implements the partying function."),
                        BY_SERVER);
         mChat->chatLog(_("Type /help party <command> for further help."),
@@ -177,14 +177,14 @@ void Party::help(const std::string &msg) const
     {
         mChat->chatLog(_("Command: /party new <party-name>"), BY_SERVER);
         mChat->chatLog(_("Command: /party create <party-name>"), BY_SERVER);
-        mChat->chatLog(_("These commands create a new party <party-name."),
-                BY_SERVER);
+        mChat->chatLog(_("These commands create a new party <party-name>."),
+                         BY_SERVER);
     }
     else if (msg == "prefix")
     {
         mChat->chatLog(_("Command: /party prefix <prefix-char>"), BY_SERVER);
         mChat->chatLog(_("This command sets the party prefix character."),
-                       BY_SERVER);
+                         BY_SERVER);
         mChat->chatLog(_("Any message preceded by <prefix-char> is sent to "
                          "the party instead of everyone."), BY_SERVER);
         mChat->chatLog(_("Command: /party prefix"), BY_SERVER);
@@ -197,7 +197,7 @@ void Party::help(const std::string &msg) const
     {
         mChat->chatLog(_("Command: /party leave"), BY_SERVER);
         mChat->chatLog(_("This command causes the player to leave the party."),
-                BY_SERVER);
+                         BY_SERVER);
     }
     else
     {
