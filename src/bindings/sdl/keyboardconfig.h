@@ -161,7 +161,7 @@ class KeyboardConfig
             KEY_MOVE_LEFT,
             KEY_MOVE_RIGHT,
             KEY_ATTACK,
-            KEY_EMOTE_METAKEY,
+            KEY_METAKEY,
             KEY_CLEAR_TARGET,
             KEY_TARGET_MONSTER,
             KEY_TARGET_NPC,

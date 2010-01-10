@@ -219,6 +219,7 @@ void InputManager::handleJoystickInput(const SDL_Event &event)
 bool InputManager::handleKeyboardInput(const SDL_Event &event)
 {
     bool used = false;
+    bool metaKeyHeld = false;
 
     // Key press events
     if (event.type == SDL_KEYDOWN)
@@ -356,13 +357,14 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                     break;
             }
 
+            metaKeyHeld = keyboard.isKeyActive(keyboard.KEY_METAKEY);
+
             for (int i = 0; i <= SHORTCUTS; i++)
             {
-                ShortcutHandler *shortcut = 
-                    keyboard.isKeyActive(keyboard.KEY_EMOTE_METAKEY) ? (ShortcutHandler *) emoteShortcut :
-                                                                       (ShortcutHandler *) itemShortcut;
-                const int offset = keyboard.isKeyActive(keyboard.KEY_EMOTE_METAKEY) ?
-                    KeyboardConfig::KEY_EMOTE_SHORTCUT_1 : KeyboardConfig::KEY_ITEM_SHORTCUT_1;
+                ShortcutHandler *shortcut = metaKeyHeld ? (ShortcutHandler *) emoteShortcut :
+                                                          (ShortcutHandler *) itemShortcut;
+                const int offset = metaKeyHeld ? KeyboardConfig::KEY_EMOTE_SHORTCUT_1 :
+                                                 KeyboardConfig::KEY_ITEM_SHORTCUT_1;
 
                 if (keyboard.isKeyActive(i + offset))
                 {
@@ -548,7 +550,10 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
         else if (keyboard.isKeyActive(keyboard.KEY_MOVE_RIGHT))
             direction |= Being::RIGHT;
 
-        player_node->setWalkingDir(direction);
+        if (metaKeyHeld && direction != 0)
+            player_node->setDirection(direction);
+        else
+            player_node->setWalkingDir(direction);
     }
 
     return used;
