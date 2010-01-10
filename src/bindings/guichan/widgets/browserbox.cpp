@@ -453,7 +453,6 @@ void BrowserBox::calculateTextLayout()
 
             std::string::size_type len = end == std::string::npos ? end :
                                                                     end - start;
-            // This line throws an exception
             std::string part = (start == end) ? "" : row.substr(start, len);
 
             // Auto wrap mode
