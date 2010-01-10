@@ -113,6 +113,11 @@ class ChatWindow : public Window, public gcn::ActionListener
         ~ChatWindow();
 
         /**
+         * Readjust the chat window's current scroll as needed.
+         */
+        virtual void logic();
+
+        /**
          * Adds a line of text to our message list. Parameters:
          *
          * @param line Text message.
@@ -242,6 +247,8 @@ class ChatWindow : public Window, public gcn::ActionListener
                                          sent to the party */
         bool mReturnToggles;        /**< Marks whether <Return> toggles the chat
                                          log or not */
+        bool mAutoScroll;           /**< Whether or not the chat window should
+                                         autoscroll*/
         Party *mParty;
 };
 extern ChatWindow *chatWindow;

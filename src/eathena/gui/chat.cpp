@@ -62,7 +62,8 @@
 
 ChatWindow::ChatWindow():
     Window("", false, NULL, "graphics/gui/gui.xml", true),
-    mTmpVisible(false)
+    mTmpVisible(false),
+    mAutoScroll(false)
 {
     setWindowName("Chat");
 
@@ -133,6 +134,14 @@ ChatWindow::~ChatWindow()
     destroy(mToolTip);
     destroy(mItemLinkHandler);
     destroy(mParty);
+}
+
+void ChatWindow::logic()
+{
+    Window::logic();
+
+    if (mAutoScroll)
+        mScrollArea->setVerticalScrollAmount(mScrollArea->getVerticalMaxScroll());
 }
 
 void ChatWindow::fontChanged()
@@ -300,21 +309,12 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
 
     line = lineColor + timeStr.str() + tmp.nick + tmp.text;
 
-    // We look if the Vertical Scroll Bar is set at the max before
-    // adding a row, otherwise the max will always be a row higher
-    // at comparison.
-    if (mScrollArea->getVerticalScrollAmount() ==
-        mScrollArea->getVerticalMaxScroll())
-    {
-        mTextOutput->addRow(line);
-        mScrollArea->setVerticalScrollAmount(mScrollArea->
-                                             getVerticalMaxScroll());
-    }
-    else
-    {
-        mTextOutput->addRow(line);
-    }
+    // We look if the Vertical Scroll Bar is set at the max before adding a
+    // row, in order to check if we should scroll on the next logic loop.
+    mAutoScroll = (mScrollArea->getVerticalScrollAmount() ==
+                   mScrollArea->getVerticalMaxScroll());
 
+    mTextOutput->addRow(line);
     mRecorder->record(line.substr(3));
 }
 
