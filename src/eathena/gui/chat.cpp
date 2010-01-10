@@ -60,6 +60,8 @@
 #include "../../core/utils/lockedarray.h"
 #include "../../core/utils/stringutils.h"
 
+#include "../../../config.h"
+
 ChatWindow::ChatWindow():
     Window("", false, NULL, "graphics/gui/gui.xml", true),
     mTmpVisible(false),
@@ -651,10 +653,9 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
             // Format the time string properly
             std::stringstream timeStr;
             timeStr << "[" << ((((t / 60) / 60) % 24 < 10) ? "0" : "")
-                << (int) (((t / 60) / 60) % 24)
-                << ":" << (((t / 60) % 60 < 10) ? "0" : "")
-                << (int) ((t / 60) % 60)
-                << "] ";
+                    << (int) (((t / 60) / 60) % 24) << ":"
+                    << (((t / 60) % 60 < 10) ? "0" : "")
+                    << (int) ((t / 60) % 60) << "] ";
 
             mRecorder->record(timeStr.str() + strprintf(_("Present: %s; %s"),
                              response.c_str(), cpc));
@@ -670,6 +671,15 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
         std::stringstream actionStr;
         actionStr << "*" << msg << "*";
         chatSend(player_node->getName(), actionStr.str());
+    }
+    else if (command == "version" || command == "v")
+    {
+#ifdef PACKAGE_VERSION
+        std::string version = PACKAGE_VERSION;
+#else
+        std::string version = "not defined.";
+#endif
+        chatLog(strprintf(_("Aethyra - Version %s"), version.c_str()), BY_SERVER);
     }
     else
     {
@@ -870,6 +880,7 @@ void ChatWindow::help(const std::string &msg1, const std::string &msg2)
                   "external file."), BY_SERVER);
         chatLog(_("/toggle: Determine whether <return> toggles the chat log."),
                   BY_SERVER);
+        chatLog(_("/version: Displays the client version"), BY_SERVER);
         chatLog(_("/w <nick> <message>: Short form for /whisper."), BY_SERVER);
         chatLog(_("/where: Display map name."), BY_SERVER);
         chatLog(_("/whisper <nick> <message>: Sends a private <message> "
@@ -935,6 +946,12 @@ void ChatWindow::help(const std::string &msg1, const std::string &msg2)
         chatLog(_("Command: /toggle"), BY_SERVER);
         chatLog(_("This command displays the return toggle status."),
                   BY_SERVER);
+    }
+    else if (msg1 == "version" || msg1 == "v")
+    {
+        chatLog(_("Command: /version"), BY_SERVER);
+        chatLog(_("This command displays the current client version you are "
+                  "using."), BY_SERVER);
     }
     else if (msg1 == "where")
     {
