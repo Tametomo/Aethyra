@@ -35,9 +35,9 @@
 
 #include "../../core/utils/mutex.h"
 
-class BrowserBox;
 class Button;
 class ProgressBar;
+class RichTextBox;
 class ScrollArea;
 
 struct SDL_Thread;
@@ -123,9 +123,9 @@ class UpdaterWindow : public Window, public gcn::ActionListener,
         Mutex mLabelMutex;
 
         gcn::Label *mLabel;           /**< Progress bar caption. */
-        Button *mStateButton;          /**< Button to start playing/cancel. */
+        Button *mStateButton;         /**< Button to start playing/cancel. */
         ProgressBar *mProgressBar;    /**< Update progress bar. */
-        BrowserBox *mBrowserBox;      /**< Box to display news. */
+        RichTextBox *mRichTextBox;    /**< Box to display news. */
         ScrollArea *mScrollArea;      /**< Used to scroll news box. */
 
         /**

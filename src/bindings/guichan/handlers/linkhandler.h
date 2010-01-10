@@ -26,7 +26,7 @@
 #include <string>
 
 /**
- * A simple interface to windows that need to handle links from BrowserBox
+ * A simple interface to windows that need to handle links from the RichTextBox
  * widget.
  */
 class LinkHandler

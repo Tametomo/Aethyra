@@ -175,8 +175,6 @@
 		<Unit filename="src\bindings\guichan\sdl\sdlinput.h" />
 		<Unit filename="src\bindings\guichan\widgets\beingbox.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\beingbox.h" />
-		<Unit filename="src\bindings\guichan\widgets\browserbox.cpp" />
-		<Unit filename="src\bindings\guichan\widgets\browserbox.h" />
 		<Unit filename="src\bindings\guichan\widgets\button.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\button.h" />
 		<Unit filename="src\bindings\guichan\widgets\chatinput.cpp" />
@@ -213,6 +211,8 @@
 		<Unit filename="src\bindings\guichan\widgets\radiobutton.h" />
 		<Unit filename="src\bindings\guichan\widgets\resizegrip.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\resizegrip.h" />
+		<Unit filename="src\bindings\guichan\widgets\richtextbox.cpp" />
+		<Unit filename="src\bindings\guichan\widgets\richtextbox.h" />
 		<Unit filename="src\bindings\guichan\widgets\scrollarea.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\scrollarea.h" />
 		<Unit filename="src\bindings\guichan\widgets\setuptabcontainer.cpp" />

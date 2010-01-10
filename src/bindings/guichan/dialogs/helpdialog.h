@@ -29,7 +29,7 @@
 
 #include "../widgets/window.h"
 
-class BrowserBox;
+class RichTextBox;
 
 /**
  * The help dialog.
@@ -72,7 +72,7 @@ class HelpDialog : public Window, public LinkHandler,
     private:
         void loadFile(const std::string &file);
 
-        BrowserBox* mBrowserBox;
+        RichTextBox* mRichTextBox;
         gcn::ScrollArea *mScrollArea;
         gcn::Button *mOkButton;
 };

@@ -25,7 +25,7 @@
 #include "../layout.h"
 
 #include "../widgets/button.h"
-#include "../widgets/browserbox.h"
+#include "../widgets/richtextbox.h"
 #include "../widgets/scrollarea.h"
 
 #include "../../../core/resourcemanager.h"
@@ -45,9 +45,9 @@ HelpDialog::HelpDialog():
 
     setDefaultSize(500, 400, ImageRect::CENTER);
 
-    mBrowserBox = new BrowserBox();
-    mBrowserBox->setOpaque(false);
-    mScrollArea = new ScrollArea(mBrowserBox);
+    mRichTextBox = new RichTextBox();
+    mRichTextBox->setOpaque(false);
+    mScrollArea = new ScrollArea(mRichTextBox);
     mOkButton = new Button(_("Close"), "close", this);
 
     mScrollArea->setDimension(gcn::Rectangle(5, 5, 445,
@@ -55,7 +55,7 @@ HelpDialog::HelpDialog():
     mOkButton->setPosition(450 - mOkButton->getWidth(),
                            345 - mOkButton->getHeight());
 
-    mBrowserBox->setLinkHandler(this);
+    mRichTextBox->setLinkHandler(this);
 
     fontChanged();
     loadWindowState();
@@ -92,7 +92,7 @@ void HelpDialog::handleLink(const std::string& link)
 
 void HelpDialog::loadHelp(const std::string &helpFile)
 {
-    mBrowserBox->clearRows();
+    mRichTextBox->clearRows();
 
     loadFile("header");
     loadFile(helpFile);
@@ -108,7 +108,7 @@ void HelpDialog::loadFile(const std::string &file)
 
     for (unsigned int i = 0; i < lines.size(); ++i)
     {
-        mBrowserBox->addRow(lines[i]);
+        mRichTextBox->addRow(lines[i]);
     }
 }
 

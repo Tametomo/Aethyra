@@ -25,13 +25,13 @@
 #include <guichan/graphics.hpp>
 #include <guichan/font.hpp>
 
-#include "browserbox.h"
+#include "richtextbox.h"
 
 #include "../palette.h"
 
 #include "../handlers/linkhandler.h"
 
-BrowserBox::BrowserBox(unsigned int mode, bool opaque):
+RichTextBox::RichTextBox(unsigned int mode, bool opaque):
     gcn::Widget(),
     mLaidOutTextValid(false),
     mLinkHandler(NULL),
@@ -47,33 +47,33 @@ BrowserBox::BrowserBox(unsigned int mode, bool opaque):
     addWidgetListener(this);
 }
 
-BrowserBox::~BrowserBox()
+RichTextBox::~RichTextBox()
 {
     removeWidgetListener(this);
     removeMouseListener(this);
 }
 
-void BrowserBox::setLinkHandler(LinkHandler* linkHandler)
+void RichTextBox::setLinkHandler(LinkHandler* linkHandler)
 {
     mLinkHandler = linkHandler;
 }
 
-void BrowserBox::setOpaque(bool opaque)
+void RichTextBox::setOpaque(bool opaque)
 {
     mOpaque = opaque;
 }
 
-void BrowserBox::setHighlightMode(unsigned int highMode)
+void RichTextBox::setHighlightMode(unsigned int highMode)
 {
     mHighMode = highMode;
 }
 
-void BrowserBox::disableLinksAndUserColors()
+void RichTextBox::disableLinksAndUserColors()
 {
     mUseLinksAndUserColors = false;
 }
 
-void BrowserBox::addRow(const std::string &row)
+void RichTextBox::addRow(const std::string &row)
 {
     std::string newRow;
     gcn::Font *font = getFont();
@@ -86,7 +86,7 @@ void BrowserBox::addRow(const std::string &row)
     {
         std::string tmp = row;
         std::string::size_type idx1, idx2, idx3;
-        BROWSER_LINK bLink;
+        HYPERLINK hLink;
 
         // Check for links in format "@@link|Caption@@"
         idx1 = tmp.find("@@");
@@ -98,10 +98,10 @@ void BrowserBox::addRow(const std::string &row)
             if (idx2 == std::string::npos || idx3 == std::string::npos)
                 break;
 
-            bLink.link = tmp.substr(idx1 + 2, idx2 - (idx1 + 2));
-            bLink.caption = tmp.substr(idx2 + 1, idx3 - (idx2 + 1));
-            bLink.y1 = mTextRows.size() * font->getHeight();
-            bLink.y2 = bLink.y1 + font->getHeight();
+            hLink.link = tmp.substr(idx1 + 2, idx2 - (idx1 + 2));
+            hLink.caption = tmp.substr(idx2 + 1, idx3 - (idx2 + 1));
+            hLink.y1 = mTextRows.size() * font->getHeight();
+            hLink.y2 = hLink.y1 + font->getHeight();
 
             newRow += tmp.substr(0, idx1);
 
@@ -112,12 +112,12 @@ void BrowserBox::addRow(const std::string &row)
                 tmp2.erase(idx1, 3);
                 idx1 = tmp2.find("##");
             }
-            bLink.x1 = font->getWidth(tmp2) - 1;
-            bLink.x2 = bLink.x1 + font->getWidth(bLink.caption) + 1;
+            hLink.x1 = font->getWidth(tmp2) - 1;
+            hLink.x2 = hLink.x1 + font->getWidth(hLink.caption) + 1;
 
-            mLinks.push_back(bLink);
+            mLinks.push_back(hLink);
 
-            newRow += "##<" + bLink.caption;
+            newRow += "##<" + hLink.caption;
 
             tmp.erase(0, idx3 + 2);
             if (!tmp.empty())
@@ -146,14 +146,14 @@ void BrowserBox::addRow(const std::string &row)
              idx1 != std::string::npos; idx1 = plain.find("##"))
             plain.erase(idx1, 3);
 
-        // Adjust the BrowserBox size
+        // Adjust the RichTextBox size
         int w = font->getWidth(plain);
         if (w > getWidth())
             setWidth(w);
     }
 }
 
-void BrowserBox::logic()
+void RichTextBox::logic()
 {
     gcn::Widget::logic();
 
@@ -242,7 +242,7 @@ void BrowserBox::logic()
     }
 }
 
-void BrowserBox::clearRows()
+void RichTextBox::clearRows()
 {
     mTextRows.clear();
     mQueuedRows.clear();
@@ -257,7 +257,7 @@ void BrowserBox::clearRows()
 struct MouseOverLink
 {
     MouseOverLink(int x, int y) : mX(x),mY(y) { }
-    bool operator() (BROWSER_LINK &link)
+    bool operator() (HYPERLINK &link)
     {
         return (mX >= link.x1 && mX < link.x2 &&
                 mY >= link.y1 && mY < link.y2);
@@ -265,7 +265,7 @@ struct MouseOverLink
     int mX, mY;
 };
 
-void BrowserBox::mousePressed(gcn::MouseEvent &event)
+void RichTextBox::mousePressed(gcn::MouseEvent &event)
 {
     if (!mLinkHandler) return;
     LinkIterator i = find_if(mLinks.begin(), mLinks.end(),
@@ -275,7 +275,7 @@ void BrowserBox::mousePressed(gcn::MouseEvent &event)
         mLinkHandler->handleLink(i->link);
 }
 
-void BrowserBox::mouseMoved(gcn::MouseEvent &event)
+void RichTextBox::mouseMoved(gcn::MouseEvent &event)
 {
     LinkIterator i = find_if(mLinks.begin(), mLinks.end(),
                              MouseOverLink(event.getX(), event.getY()));
@@ -283,7 +283,7 @@ void BrowserBox::mouseMoved(gcn::MouseEvent &event)
     mSelectedLink = (i != mLinks.end()) ? (i - mLinks.begin()) : -1;
 }
 
-void BrowserBox::widgetResized(const gcn::Event &event)
+void RichTextBox::widgetResized(const gcn::Event &event)
 {
     /* Need to lay the text out again, as line-wrapping may
      * have changed.
@@ -291,7 +291,7 @@ void BrowserBox::widgetResized(const gcn::Event &event)
     mLaidOutTextValid = false;
 }
 
-void BrowserBox::draw(gcn::Graphics *graphics)
+void RichTextBox::draw(gcn::Graphics *graphics)
 {
     /* Forge's addition: The remaining code [in calculateTextLayout] get nuts
      *   on infinite loop when getWidth is 0 (how and why
@@ -350,12 +350,12 @@ void BrowserBox::draw(gcn::Graphics *graphics)
     }
 }
 
-void BrowserBox::fontChanged()
+void RichTextBox::fontChanged()
 {
     mLaidOutTextValid = false;
 }
 
-void BrowserBox::calculateTextLayout()
+void RichTextBox::calculateTextLayout()
 {
     int x = 0, y = 0;
     int wrappedLines = 0;

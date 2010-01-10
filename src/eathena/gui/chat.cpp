@@ -45,10 +45,10 @@
 
 #include "../../bindings/guichan/dialogs/textinputdialog.h"
 
-#include "../../bindings/guichan/widgets/browserbox.h"
 #include "../../bindings/guichan/widgets/chatinput.h"
 #include "../../bindings/guichan/widgets/imagebutton.h"
 #include "../../bindings/guichan/widgets/proxywidget.h"
+#include "../../bindings/guichan/widgets/richtextbox.h"
 #include "../../bindings/guichan/widgets/scrollarea.h"
 #include "../../bindings/guichan/widgets/tooltip.h"
 
@@ -91,7 +91,7 @@ ChatWindow::ChatWindow():
 
     mToolTip = new ToolTip();
 
-    mTextOutput = new BrowserBox(BrowserBox::AUTO_WRAP);
+    mTextOutput = new RichTextBox(RichTextBox::AUTO_WRAP);
     mTextOutput->setOpaque(false);
     mTextOutput->setMaxRow(config.getValue("ChatLogLength", 128));
     mTextOutput->setLinkHandler(mItemLinkHandler);
@@ -219,7 +219,7 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
             {
                 tmp.nick = strprintf(_("Global announcement from %s: "),
                                      tmp.nick.c_str());
-                lineColor = "##1"; // Equiv. to BrowserBox::RED
+                lineColor = "##1"; // Equiv. to RichTextBox::RED
             }
             break;
         case BY_PLAYER:

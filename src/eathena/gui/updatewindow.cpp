@@ -34,10 +34,10 @@
 
 #include "../../bindings/guichan/layout.h"
 
-#include "../../bindings/guichan/widgets/browserbox.h"
 #include "../../bindings/guichan/widgets/button.h"
 #include "../../bindings/guichan/widgets/label.h"
 #include "../../bindings/guichan/widgets/progressbar.h"
+#include "../../bindings/guichan/widgets/richtextbox.h"
 #include "../../bindings/guichan/widgets/scrollarea.h"
 
 #include "../../core/configuration.h"
@@ -51,9 +51,9 @@
 UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
     Window(_("Updating..."))
 {
-    mBrowserBox = new BrowserBox();
-    mBrowserBox->setOpaque(false);
-    mScrollArea = new ScrollArea(mBrowserBox);
+    mRichTextBox = new RichTextBox();
+    mRichTextBox->setOpaque(false);
+    mScrollArea = new ScrollArea(mRichTextBox);
 
     mLabel = new Label(_("Connecting..."));
 
@@ -189,12 +189,12 @@ void UpdaterWindow::logic()
 
         if (! mNewNews.empty())
         {
-            mBrowserBox->clearRows();
+            mRichTextBox->clearRows();
 
             for (std::vector<std::string>::iterator itr = mNewNews.begin() ;
                     itr != mNewNews.end() ; itr++)
             {
-                mBrowserBox->addRow(*itr);
+                mRichTextBox->addRow(*itr);
             }
 
             mScrollArea->setVerticalScrollAmount(0);

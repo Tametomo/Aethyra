@@ -27,9 +27,9 @@
 #include "../../gui.h"
 #include "../../layouthelper.h"
 
-#include "../../widgets/browserbox.h"
 #include "../../widgets/label.h"
 #include "../../widgets/listbox.h"
+#include "../../widgets/richtextbox.h"
 #include "../../widgets/scrollarea.h"
 #include "../../widgets/slider.h"
 #include "../../widgets/textfield.h"
@@ -56,7 +56,7 @@ Setup_Colors::Setup_Colors() :
 
     mTextPreview = new TextPreview(&rawmsg);
 
-    mPreview = new BrowserBox(BrowserBox::AUTO_WRAP);
+    mPreview = new RichTextBox(RichTextBox::AUTO_WRAP);
     mPreview->setOpaque(false);
 
     // don't do anything with links

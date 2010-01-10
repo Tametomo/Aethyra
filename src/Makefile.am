@@ -76,8 +76,6 @@ aethyra_SOURCES = \
 	      bindings/guichan/sdl/sdlinput.h \
 	      bindings/guichan/widgets/beingbox.cpp \
 	      bindings/guichan/widgets/beingbox.h \
-	      bindings/guichan/widgets/browserbox.cpp \
-	      bindings/guichan/widgets/browserbox.h \
 	      bindings/guichan/widgets/button.cpp \
 	      bindings/guichan/widgets/button.h \
 	      bindings/guichan/widgets/chatinput.cpp \
@@ -114,6 +112,8 @@ aethyra_SOURCES = \
 	      bindings/guichan/widgets/radiobutton.h \
 	      bindings/guichan/widgets/resizegrip.cpp \
 	      bindings/guichan/widgets/resizegrip.h \
+	      bindings/guichan/widgets/richtextbox.cpp \
+	      bindings/guichan/widgets/richtextbox.h \
 	      bindings/guichan/widgets/scrollarea.cpp \
 	      bindings/guichan/widgets/scrollarea.h \
 	      bindings/guichan/widgets/setuptabcontainer.cpp \

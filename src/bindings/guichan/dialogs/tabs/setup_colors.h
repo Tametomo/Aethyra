@@ -32,7 +32,7 @@
 
 #include "../../widgets/setuptabcontainer.h"
 
-class BrowserBox;
+class RichTextBox;
 class TextField;
 class TextPreview;
 
@@ -57,7 +57,7 @@ class Setup_Colors : public SetupTabContainer, public gcn::ActionListener,
 
         gcn::ListBox *mColorBox;
         gcn::ScrollArea *mScroll;
-        BrowserBox *mPreview;
+        RichTextBox *mPreview;
         TextPreview *mTextPreview;
         gcn::ScrollArea *mPreviewBox;
         int mSelected;

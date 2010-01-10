@@ -29,13 +29,13 @@
 
 #include "../../bindings/guichan/widgets/window.h"
 
-class BrowserBox;
 class ChatInput;
 class ImageButton;
 class ItemLinkHandler;
 class Party;
 class ProxyWidget;
 class Recorder;
+class RichTextBox;
 class ScrollArea;
 class TextInputDialog;
 class ToolTip;
@@ -228,7 +228,7 @@ class ChatWindow : public Window, public gcn::ActionListener
         std::string const_msg(CHATSKILL);
 
         ChatInput *mChatInput;      /**< Input box for typing chat messages */
-        BrowserBox *mTextOutput;    /**< Text box for displaying chat history */
+        RichTextBox *mTextOutput;   /**< Text box for displaying chat history */
         ScrollArea *mScrollArea;    /**< Scroll area around text output */
         ItemLinkHandler *mItemLinkHandler; /** Used for showing item popup on
                                                clicking links **/

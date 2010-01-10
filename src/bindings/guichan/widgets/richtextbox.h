@@ -20,8 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef BROWSERBOX_H
-#define BROWSERBOX_H
+#ifndef RICHTEXTBOX_H
+#define RICHTEXTBOX_H
 
 #include <list>
 #include <vector>
@@ -32,7 +32,7 @@
 
 class LinkHandler;
 
-struct BROWSER_LINK {
+struct HYPERLINK {
     int x1, x2, y1, y2;     /**< Where link is placed */
     std::string link;
     std::string caption;
@@ -42,19 +42,19 @@ struct BROWSER_LINK {
  * A simple browser box able to handle links and forward events to the
  * parent conteiner.
  */
-class BrowserBox : public gcn::Widget, public gcn::MouseListener,
-                   public gcn::WidgetListener
+class RichTextBox : public gcn::Widget, public gcn::MouseListener,
+                    public gcn::WidgetListener
 {
     public:
         /**
          * Constructor.
          */
-        BrowserBox(unsigned int mode = AUTO_SIZE, bool opaque = true);
+        RichTextBox(unsigned int mode = AUTO_SIZE, bool opaque = true);
 
         /**
          * Destructor.
          */
-        ~BrowserBox();
+        ~RichTextBox();
 
         /**
          * Sets the handler for links.
@@ -62,7 +62,7 @@ class BrowserBox : public gcn::Widget, public gcn::MouseListener,
         void setLinkHandler(LinkHandler *linkHandler);
 
         /**
-         * Sets the BrowserBox opacity.
+         * Sets the RichTextBox opacity.
          */
         void setOpaque(bool opaque);
 
@@ -115,13 +115,13 @@ class BrowserBox : public gcn::Widget, public gcn::MouseListener,
         void calculateTextLayout();
 
         /**
-         * Forces the BrowserBox to recalculate its lines, since the font
+         * Forces the RichTextBox to recalculate its lines, since the font
          * changed.
          */
         void fontChanged();
 
         /**
-         * BrowserBox modes.
+         * RichTextBox modes.
          */
         enum {
             AUTO_SIZE,
@@ -129,13 +129,13 @@ class BrowserBox : public gcn::Widget, public gcn::MouseListener,
         };
 
         /**
-         * BrowserBox colors.
+         * RichTextBox colors.
          *
          * NOTES (by Javila):
          *  - color values is "0x" prefix followed by HTML color style.
          *  - we can add up to 10 different colors: [0..9].
          *  - not all colors will be fine with all backgrounds due transparent
-         *    windows and widgets. So, I think it's better keep BrowserBox
+         *    windows and widgets. So, I think it's better keep RichTextBox
          *    opaque (white background) by default.
          */
         enum {
@@ -226,7 +226,7 @@ class BrowserBox : public gcn::Widget, public gcn::MouseListener,
          */
         bool mLaidOutTextValid;
 
-        typedef std::vector<BROWSER_LINK> Links;
+        typedef std::vector<HYPERLINK> Links;
         typedef Links::iterator LinkIterator;
         Links mLinks;
 
