@@ -29,6 +29,9 @@
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
+#include "../../bindings/guichan/dialogs/okdialog.h"
+#include "../../bindings/guichan/dialogs/setupdialog.h"
+
 #include "../../bindings/guichan/dialogs/tabs/setup_input.h"
 
 struct KeyData
@@ -138,16 +141,15 @@ void KeyboardConfig::makeDefault()
         mKey[i].value = mKey[i].defaultValue;
 }
 
-const bool KeyboardConfig::hasConflicts()
+KeyboardConfig::KeyPair KeyboardConfig::getConflicts()
 {
-    int i, j;
     /**
      * No need to parse the square matrix: only check one triangle
      * that's enough to detect conflicts
      */
-    for (i = 0; i < KEY_TOTAL; i++)
+    for (int i = 0; i < KEY_TOTAL; i++)
     {
-        for (j = i, j++; j < KEY_TOTAL; j++)
+        for (int j = i + 1; j < KEY_TOTAL; j++)
         {
             // Allow for item shortcut and emote keys to overlap, but no other keys
             // Also don't allow a key to be assigned to tab, since this
@@ -157,16 +159,28 @@ const bool KeyboardConfig::hasConflicts()
                   ((i >= KEY_EMOTE_SHORTCUT_1) && (i <= KEY_EMOTE_SHORTCUT_12))) &&
                   (mKey[i].value == mKey[j].value || mKey[i].value == SDLK_TAB))
             {
-                return true;
+                return KeyPair(i, j);
             }
         }
     }
-    return false;
+    return KeyPair(KEY_NO_VALUE, KEY_NO_VALUE);
 }
 
 void KeyboardConfig::callbackNewKey()
 {
     mSetupKey->newKeyCallback(mNewKeyIndex);
+
+    KeyPair conflicts = getConflicts();
+    if (conflicts.first != keyboard.KEY_NO_VALUE)
+    {
+        const std::string firstConflict = getKeyCaption(conflicts.first);
+        const std::string secondConflict = getKeyCaption(conflicts.second);
+        new OkDialog(_("Key Conflict(s) Detected."),
+                     strprintf(_("%s and %s keys overlap. "
+                                 "Resolve them, or gameplay may result "
+                                 "in strange behaviour."), firstConflict.c_str(),
+                                 secondConflict.c_str()), setupWindow);
+    }
 }
 
 void KeyboardConfig::lockKey(const int keyValue)

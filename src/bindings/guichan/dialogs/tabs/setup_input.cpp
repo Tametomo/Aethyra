@@ -24,8 +24,6 @@
 
 #include "setup_input.h"
 
-#include "../okdialog.h"
-
 #include "../../layouthelper.h"
 
 #include "../../models/keylistmodel.h"
@@ -120,13 +118,6 @@ void Setup_Input::apply()
 
     keyUnresolved();
 
-    if (keyboard.hasConflicts())
-    {
-        new OkDialog(_("Key Conflict(s) Detected."),
-                     _("Resolve them, or gameplay may result in strange "
-                       "behavior."));
-    }
-
     keyboard.setEnabled(true);
     keyboard.store();
 }
@@ -175,8 +166,8 @@ void Setup_Input::action(const gcn::ActionEvent &event)
         if (joystick->isCalibrating())
         {
             mCalibrateButton->setCaption(_("Calibrate"));
-            mCalibrateLabel->setCaption
-                (_("Press the button to start calibration"));
+            mCalibrateLabel->setCaption(_("Press the button to start "
+                                          "calibration"));
             mCalibrateLabel->adjustSize();
             joystick->finishCalibration();
         }

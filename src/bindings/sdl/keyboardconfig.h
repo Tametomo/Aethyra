@@ -27,6 +27,7 @@
 
 #include <list>
 #include <string>
+#include <utility>
 
 /**
  * Each key represents a key function. Such as 'Move up', 'Attack' etc.
@@ -63,11 +64,6 @@ class KeyboardConfig
          * Make the keys their default values.
          */
         void makeDefault();
-
-        /**
-         * Determines if any key assignments are the same as each other.
-         */
-        const bool hasConflicts();
 
         /**
          * Calls a function back so the key re-assignment(s) can be seen.
@@ -222,6 +218,14 @@ class KeyboardConfig
             KEY_TOTAL
         };
 
+        typedef std::pair<int, int> KeyPair;
+
+        /**
+         * Determines if any key assignments are the same as each other.
+         * If conflict found, returns the pair of keys that conflict. If not,
+         * it returns a key pair containing two KEY_NO_VALUEs.
+         */
+        KeyPair getConflicts();
     private:
         int mNewKeyIndex;              /**< Index of new key to be assigned */
         bool mEnabled;                 /**< Flag to respond to key input */
