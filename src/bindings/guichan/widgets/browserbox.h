@@ -1,9 +1,9 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
- *  from The Mana World.
+ *  This file is part of Aethyra.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -139,6 +139,7 @@ class BrowserBox : public gcn::Widget, public gcn::MouseListener,
          *    opaque (white background) by default.
          */
         enum {
+            BLACK = 0x000000,       /**< Color 0 */
             RED = 0xff0000,         /**< Color 1 */
             GREEN = 0x009000,       /**< Color 2 */
             BLUE = 0x0000ff,        /**< Color 3 */
@@ -159,14 +160,22 @@ class BrowserBox : public gcn::Widget, public gcn::MouseListener,
             BACKGROUND = 2
         };
 
-    private:
+        virtual void logic();
+
+    protected:
         /*
-         * mTextRows contains the raw text, before any
-         * layout or link-recognition operations.
+         * mTextRows contains the raw text, before any layout or
+         * link-recognition operations.
+         *
+         * mQueuedRows contains the rows added since the last logic update.
+         * Rows are cached in advance, rather than operating on them immediately
+         * in order to try to avoid degenerating into a O(n!) algorithm when
+         * adding rows, and instead have a series of O(n^2) readjustments.
          */
         typedef std::list<std::string> TextRows;
         typedef TextRows::iterator TextRowIterator;
         TextRows mTextRows;
+        TextRows mQueuedRows;
 
         /**
          * A result of parsing mTextRows which has been

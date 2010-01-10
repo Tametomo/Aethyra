@@ -1,9 +1,9 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
- *  from The Mana World.
+ *  This file is part of Aethyra.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,10 @@
 
 BrowserBox::BrowserBox(unsigned int mode, bool opaque):
     gcn::Widget(),
-    mMode(mode), mHighMode(UNDERLINE | BACKGROUND),
+    mLaidOutTextValid(false),
+    mLinkHandler(NULL),
+    mMode(mode),
+    mHighMode(UNDERLINE | BACKGROUND),
     mOpaque(opaque),
     mUseLinksAndUserColors(true),
     mSelectedLink(-1),
@@ -72,10 +75,7 @@ void BrowserBox::disableLinksAndUserColors()
 
 void BrowserBox::addRow(const std::string &row)
 {
-    std::string tmp = row;
     std::string newRow;
-    BROWSER_LINK bLink;
-    std::string::size_type idx1, idx2, idx3;
     gcn::Font *font = getFont();
 
     // Invalidate the cached prewrapped lines
@@ -84,6 +84,10 @@ void BrowserBox::addRow(const std::string &row)
     // Use links and user defined colors
     if (mUseLinksAndUserColors)
     {
+        std::string tmp = row;
+        std::string::size_type idx1, idx2, idx3;
+        BROWSER_LINK bLink;
+
         // Check for links in format "@@link|Caption@@"
         idx1 = tmp.find("@@");
         while (idx1 != std::string::npos)
@@ -132,30 +136,14 @@ void BrowserBox::addRow(const std::string &row)
     }
 
     mTextRows.push_back(newRow);
-
-    //discard older rows when a row limit has been set
-    if (mMaxRows > 0)
-    {
-        while (mTextRows.size() > mMaxRows)
-        {
-            mTextRows.pop_front();
-            for (unsigned int i = 0; i < mLinks.size(); i++)
-            {
-                mLinks[i].y1 -= font->getHeight();
-                mLinks[i].y2 -= font->getHeight();
-
-                if (mLinks[i].y1 < 0)
-                    mLinks.erase(mLinks.begin() + i);
-            }
-        }
-    }
+    mQueuedRows.push_back(newRow);
 
     // Auto size mode
     if (mMode == AUTO_SIZE)
     {
         std::string plain = newRow;
-        for (idx1 = plain.find("##"); idx1 != std::string::npos;
-             idx1 = plain.find("##"))
+        for (std::string::size_type idx1 = plain.find("##");
+             idx1 != std::string::npos; idx1 = plain.find("##"))
             plain.erase(idx1, 3);
 
         // Adjust the BrowserBox size
@@ -163,63 +151,101 @@ void BrowserBox::addRow(const std::string &row)
         if (w > getWidth())
             setWidth(w);
     }
+}
 
-    if (mMode == AUTO_WRAP)
+void BrowserBox::logic()
+{
+    gcn::Widget::logic();
+
+    if (!isVisible())
+        return;
+
+    if (!mQueuedRows.empty())
     {
-        unsigned int y = 0;
-        unsigned int nextChar;
-        const char *hyphen = "~";
-        int hyphenWidth = font->getWidth(hyphen);
-        int x = 0;
+        gcn::Font *font = getFont();
 
-        for (TextRowIterator i = mTextRows.begin(); i != mTextRows.end(); i++)
+        // discard older rows when a row limit has been set
+        if (mMaxRows > 0 && !mTextRows.empty())
         {
-            std::string row = *i;
-            for (unsigned int j = 0; j < row.size(); j++)
+            while (mTextRows.size() > mMaxRows)
             {
-                std::string character = row.substr(j, 1);
-                x += font->getWidth(character);
-                nextChar = j + 1;
-
-                // Wraping between words (at blank spaces)
-                if ((nextChar < row.size()) && (row.at(nextChar) == ' '))
+                mTextRows.pop_front();
+                for (unsigned int i = 0; i < mLinks.size(); i++)
                 {
-                    int nextSpacePos = row.find(" ", (nextChar + 1));
+                    mLinks[i].y1 -= font->getHeight();
+                    mLinks[i].y2 -= font->getHeight();
 
-                    if (nextSpacePos <= 0)
-                        nextSpacePos = row.size() - 1;
-
-                    int nextWordWidth = font->getWidth(
-                            row.substr(nextChar,
-                                (nextSpacePos - nextChar)));
-
-                    if ((x + nextWordWidth + 10) > getWidth())
-                    {
-                        x = 15; // Ident in new line
-                        y += 1;
-                        j++;
-                    }
-                }
-                // Wrapping looong lines (brutal force)
-                else if ((x + 2 * hyphenWidth) > getWidth())
-                {
-                    x = 15; // Ident in new line
-                    y += 1;
+                    if (mLinks[i].y1 < 0)
+                        mLinks.erase(mLinks.begin() + i);
                 }
             }
         }
 
-        setHeight(font->getHeight() * (mTextRows.size() + y));
+        if (mMode == AUTO_WRAP)
+        {
+            unsigned int y = 0;
+            unsigned int nextChar;
+            const char *hyphen = "~";
+            const int hyphenWidth = font->getWidth(hyphen);
+            int x = 0;
+
+            for (TextRowIterator i = mTextRows.begin(); i != mTextRows.end(); i++)
+            {
+                std::string row = *i;
+                for (unsigned int j = 0; j < row.size(); j++)
+                {
+                    std::string character = row.substr(j, 1);
+                    x += font->getWidth(character);
+                    nextChar = j + 1;
+
+                    // Wraping between words (at blank spaces)
+                    if ((nextChar < row.size()) && (row.at(nextChar) == ' '))
+                    {
+                        int nextSpacePos = row.find(" ", (nextChar + 1));
+
+                        if (nextSpacePos <= 0)
+                            nextSpacePos = row.size() - 1;
+
+                        int nextWordWidth = font->getWidth(row.substr(nextChar,
+                                                          (nextSpacePos -
+                                                           nextChar)));
+
+                        if ((x + nextWordWidth + 10) > getWidth())
+                        {
+                            x = 15; // Ident in new line
+                            y += 1;
+                            j++;
+                        }
+                    }
+                    // Wrapping looong lines (brutal force)
+                    else if ((x + 2 * hyphenWidth) > getWidth())
+                    {
+                        x = 15; // Ident in new line
+                        y += 1;
+                    }
+                }
+            }
+
+            setHeight(font->getHeight() * (mTextRows.size() + y));
+        }
+        else
+        {
+            setHeight(font->getHeight() * mTextRows.size());
+        }
+
+        mQueuedRows.clear();
     }
-    else
+
+    if (!mLaidOutTextValid)
     {
-        setHeight(font->getHeight() * mTextRows.size());
+        calculateTextLayout();
     }
 }
 
 void BrowserBox::clearRows()
 {
     mTextRows.clear();
+    mQueuedRows.clear();
     mLaidOutTextValid = false;
     mLaidOutText.clear();
     mLinks.clear();
@@ -252,7 +278,7 @@ void BrowserBox::mousePressed(gcn::MouseEvent &event)
 void BrowserBox::mouseMoved(gcn::MouseEvent &event)
 {
     LinkIterator i = find_if(mLinks.begin(), mLinks.end(),
-            MouseOverLink(event.getX(), event.getY()));
+                             MouseOverLink(event.getX(), event.getY()));
 
     mSelectedLink = (i != mLinks.end()) ? (i - mLinks.begin()) : -1;
 }
@@ -274,17 +300,12 @@ void BrowserBox::draw(gcn::Graphics *graphics)
      *
      * The infinite loop (well, sort of) is the increasing of x
      * while trying to fit part into the current width
-     * (while (x + part..+10 > getWidth() ), which cannot be false)
+     * (while (x + part.. + 10 > getWidth()), which cannot be false)
      */
-    if (!isVisible() ||!getWidth()||!getHeight())
+    if (!isVisible() || !getWidth() || !getHeight())
        return;
 
     // End of Forge's addition
-
-    if (!mLaidOutTextValid)
-    {
-        calculateTextLayout();
-    }
 
     if (mOpaque)
     {
@@ -298,8 +319,7 @@ void BrowserBox::draw(gcn::Graphics *graphics)
         {
             graphics->setColor(guiPalette->getColor(Palette::HIGHLIGHT));
             graphics->fillRectangle(gcn::Rectangle(
-                        mLinks[mSelectedLink].x1,
-                        mLinks[mSelectedLink].y1,
+                        mLinks[mSelectedLink].x1, mLinks[mSelectedLink].y1,
                         mLinks[mSelectedLink].x2 - mLinks[mSelectedLink].x1,
                         mLinks[mSelectedLink].y2 - mLinks[mSelectedLink].y1));
         }
@@ -307,17 +327,15 @@ void BrowserBox::draw(gcn::Graphics *graphics)
         if ((mHighMode & UNDERLINE))
         {
             graphics->setColor(guiPalette->getColor(Palette::HYPERLINK));
-            graphics->drawLine(mLinks[mSelectedLink].x1,
-                               mLinks[mSelectedLink].y2,
-                               mLinks[mSelectedLink].x2,
-                               mLinks[mSelectedLink].y2);
+            graphics->drawLine(mLinks[mSelectedLink].x1, mLinks[mSelectedLink].y2,
+                               mLinks[mSelectedLink].x2, mLinks[mSelectedLink].y2);
         }
     }
 
     gcn::Font *font = getFont();
 
-    for (LaidOutTextIterator i = mLaidOutText.begin();
-            i != mLaidOutText.end(); i++)
+    for (LaidOutTextIterator i = mLaidOutText.begin(); i != mLaidOutText.end();
+         i++)
     {
         switch (i->type)
         {
@@ -368,14 +386,14 @@ void BrowserBox::calculateTextLayout()
         // TODO: Check if we must take texture size limits into account here
         // TODO: Check if some of the O(n) calls can be removed
         for (std::string::size_type start = 0, end = std::string::npos;
-                start != std::string::npos;
-                start = end, end = std::string::npos)
+             start != end; start = end, end = std::string::npos)
         {
             // Wrapped line continuation shall be indented.
             if (wrapped)
             {
                 y += font->getHeight();
                 x = 15;
+
                 // Clear flag, in case this line contains more than one part
                 wrapped = false;
             }
@@ -384,8 +402,8 @@ void BrowserBox::calculateTextLayout()
             if (mUseLinksAndUserColors)
                 end = row.find("##", start + 1);
 
-            if (mUseLinksAndUserColors ||
-                    (!mUseLinksAndUserColors && (start == 0)))
+            if (mUseLinksAndUserColors || (!mUseLinksAndUserColors &&
+                (start == 0)))
             {
                 // Check for color change in format "##x", x = [L,P,0..9]
                 if (row.find("##", start) == start && row.size() > start + 2)
@@ -422,9 +440,8 @@ void BrowserBox::calculateTextLayout()
                             case '7': selColor = PURPLE; break;
                             case '8': selColor = GRAY; break;
                             case '9': selColor = BROWN; break;
-                            case '0':
-                            default:
-                                selColor = textColor;
+                            case '0': selColor = BLACK; break;
+                            default : selColor = textColor; break;
                         }
                     }
                     start += 3;
@@ -434,13 +451,14 @@ void BrowserBox::calculateTextLayout()
                 }
             }
 
-            std::string::size_type len =
-                end == std::string::npos ? end : end - start;
-            std::string part = row.substr(start, len);
+            std::string::size_type len = end == std::string::npos ? end :
+                                                                    end - start;
+            // This line throws an exception
+            std::string part = (start == end) ? "" : row.substr(start, len);
 
             // Auto wrap mode
             if (mMode == AUTO_WRAP && (x + font->getWidth(part) + 10) >
-                getWidth())
+                getWidth() && !part.empty())
             {
                 bool forced = false;
                 char const *hyphen = "~";
@@ -470,14 +488,15 @@ void BrowserBox::calculateTextLayout()
 
                     end--; // And then to the last byte of the previous one
 
-                    part = row.substr(start, end - start + 1);
+                    part = (start == end) ? "" : row.substr(start,
+                                                            end - start + 1);
                 } while (end > start && (x + font->getWidth(part) + 10) > getWidth());
 
                 if (forced)
                 {
                     x -= hyphenWidth; // Remove the wrap-notifier accounting
-                    LaidOutPart temp(hyphen,
-                        getWidth() - hyphenWidth, y, selColor);
+                    LaidOutPart temp(hyphen, getWidth() - hyphenWidth, y,
+                                     selColor);
                     mLaidOutText.push_back(temp);
                     end++; // Skip to the next character
                 }
