@@ -141,7 +141,10 @@ void ChatWindow::logic()
     Window::logic();
 
     if (mAutoScroll)
+    {
+        mAutoScroll = false;
         mScrollArea->setVerticalScrollAmount(mScrollArea->getVerticalMaxScroll());
+    }
 }
 
 void ChatWindow::fontChanged()
