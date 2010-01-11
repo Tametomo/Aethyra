@@ -109,8 +109,16 @@ void RichTextBox::addRow(const std::string &row)
             idx1 = tmp2.find("##");
             while (idx1 != std::string::npos)
             {
-                tmp2.erase(idx1, 3);
-                idx1 = tmp2.find("##");
+                if ((idx1 + 3) != tmp2.size() && tmp2[idx1 + 3] == '#')
+                {
+                    tmp2.erase(idx1, 1);
+                    while (idx1 < tmp2.size() && tmp2[idx1] == '#');
+                        idx1++;
+                }
+                else
+                    tmp2.erase(idx1, 3);
+
+                idx1 = tmp2.find("##", idx1);
             }
             hLink.x1 = font->getWidth(tmp2) - 1;
             hLink.x2 = hLink.x1 + font->getWidth(hLink.caption) + 1;
@@ -144,7 +152,16 @@ void RichTextBox::addRow(const std::string &row)
         std::string plain = newRow;
         for (std::string::size_type idx1 = plain.find("##");
              idx1 != std::string::npos; idx1 = plain.find("##"))
+        {
+            if ((idx1 + 3) < plain.size() && plain[idx1 + 3] == '#')
+            {
+                plain.erase(idx1, 1);
+                while (idx1 < plain.size() && plain[idx1] == '#');
+                    idx1++;
+                continue;
+            }
             plain.erase(idx1, 3);
+        }
 
         // Adjust the RichTextBox size
         int w = font->getWidth(plain);
@@ -237,9 +254,7 @@ void RichTextBox::logic()
     }
 
     if (!mLaidOutTextValid)
-    {
         calculateTextLayout();
-    }
 }
 
 void RichTextBox::clearRows()
@@ -252,6 +267,17 @@ void RichTextBox::clearRows()
     setWidth(0);
     setHeight(0);
     mSelectedLink = -1;
+}
+
+void RichTextBox::sanitizeText(std::string &text)
+{
+    std::string::size_type start = text.find("##", 0);
+
+    while (start != std::string::npos)
+    {
+        text.insert(start, "#");
+        start = text.find("##", start + 2);
+    }
 }
 
 struct MouseOverLink
@@ -376,8 +402,8 @@ void RichTextBox::calculateTextLayout()
         // Check for separator lines
         if (row.find("---", 0) == 0)
         {
-            LaidOutPart temp(LaidOutPart::HORIZONTAL_RULE, row,
-                0, y + (font->getHeight() / 2), textColor);
+            LaidOutPart temp(LaidOutPart::HORIZONTAL_RULE, row, 0,
+                             y + (font->getHeight() / 2), textColor);
             mLaidOutText.push_back(temp);
             y += font->getHeight();
             continue;
@@ -388,6 +414,8 @@ void RichTextBox::calculateTextLayout()
         for (std::string::size_type start = 0, end = std::string::npos;
              start != end; start = end, end = std::string::npos)
         {
+            int escape = 0;
+
             // Wrapped line continuation shall be indented.
             if (wrapped)
             {
@@ -431,17 +459,50 @@ void RichTextBox::calculateTextLayout()
                     {
                         switch (c)
                         {
-                            case '1': selColor = RED; break;
-                            case '2': selColor = GREEN; break;
-                            case '3': selColor = BLUE; break;
-                            case '4': selColor = ORANGE; break;
-                            case '5': selColor = YELLOW; break;
-                            case '6': selColor = PINK; break;
-                            case '7': selColor = PURPLE; break;
-                            case '8': selColor = GRAY; break;
-                            case '9': selColor = BROWN; break;
-                            case '0': selColor = BLACK; break;
-                            default : selColor = textColor; break;
+                            case '1':
+                                selColor = RED;
+                                break;
+                            case '2':
+                                selColor = GREEN;
+                                break;
+                            case '3':
+                                selColor = BLUE;
+                                break;
+                            case '4':
+                                selColor = ORANGE;
+                                break;
+                            case '5':
+                                selColor = YELLOW;
+                                break;
+                            case '6':
+                                selColor = PINK;
+                                break;
+                            case '7':
+                                selColor = PURPLE;
+                                break;
+                            case '8':
+                                selColor = GRAY;
+                                break;
+                            case '9':
+                                selColor = BROWN;
+                                break;
+                            case '0':
+                                selColor = BLACK;
+                                break;
+                            case '#':
+                                {
+                                    while (start < row.size() &&
+                                           row[start] == '#')
+                                    {
+                                        start++;
+                                        escape++;
+                                    }
+                                    start -= 3;
+                                } 
+                                break;
+                            default :
+                                selColor = textColor;
+                                break;
                         }
                     }
                     start += 3;
@@ -449,6 +510,12 @@ void RichTextBox::calculateTextLayout()
                     if (start == row.size())
                         break;
                 }
+            }
+
+            if (escape > 0)
+            {
+                start -= escape - 1;
+                end += escape;
             }
 
             std::string::size_type len = end == std::string::npos ? end :

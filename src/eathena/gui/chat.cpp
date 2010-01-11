@@ -197,9 +197,8 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
     }
 
     // *implements actions in a backwards compatible way*
-    if (own == BY_PLAYER &&
-        tmp.text.at(0) == '*' &&
-        tmp.text.at(tmp.text.length()-1) == '*')
+    if (own == BY_PLAYER && tmp.text.at(0) == '*' &&
+        tmp.text.at(tmp.text.length() - 1) == '*')
     {
         tmp.text[0] = ' ';
         tmp.text.erase(tmp.text.length() - 1);
@@ -261,6 +260,9 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
         lineColor = "##S";
     }
 
+    // Remove any special formatting that players might do to their nicknames.
+    mTextOutput->sanitizeText(tmp.nick);
+
     if (tmp.nick.empty() && tmp.text.substr(0, 17) == "Visible GM status")
         player_node->setGM();
 
@@ -271,10 +273,9 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
     // Format the time string properly
     std::ostringstream timeStr;
     timeStr << "[" << ((((t / 60) / 60) % 24 < 10) ? "0" : "")
-        << (int) (((t / 60) / 60) % 24)
-        << ":" << (((t / 60) % 60 < 10) ? "0" : "")
-        << (int) ((t / 60) % 60)
-        << "] ";
+            << (int) (((t / 60) / 60) % 24)
+            << ":" << (((t / 60) % 60 < 10) ? "0" : "")
+            << (int) ((t / 60) % 60) << "] ";
 
     // Check for item link
     std::string::size_type start = tmp.text.find('[');

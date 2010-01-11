@@ -121,6 +121,12 @@ class RichTextBox : public gcn::Widget, public gcn::MouseListener,
         void fontChanged();
 
         /**
+         * Escapes color text strings, so that they aren't parsed in the
+         * RichTextBox.
+         */
+        void sanitizeText(std::string &text);
+
+        /**
          * RichTextBox modes.
          */
         enum {
