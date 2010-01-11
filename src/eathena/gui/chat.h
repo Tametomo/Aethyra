@@ -213,6 +213,8 @@ class ChatWindow : public Window, public gcn::ActionListener
 
     private:
         bool mTmpVisible;
+        bool mColorInjection; // Whether or not to allow the user to inject in
+                              // color tags.
 
         void whisper(const std::string &nick, std::string msg);
 

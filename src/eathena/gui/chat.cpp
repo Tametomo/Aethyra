@@ -121,6 +121,9 @@ ChatWindow::ChatWindow():
     // run the @assert command for the player again. Convenience for GMs.
     if (config.getValue(player_node->getName() + "GMassert", 0))
         chatSend(player_node->getName(), "@assert");
+
+
+    mColorInjection = config.getValue("ChatColorInjection", true);
 }
 
 ChatWindow::~ChatWindow()
@@ -129,6 +132,7 @@ ChatWindow::~ChatWindow()
     *partyPrefix = mPartyPrefix;
 
     config.setValue("PartyPrefix", partyPrefix);
+    config.setValue("ChatColorInjection", mColorInjection);
     config.setValue("ReturnToggles", mReturnToggles ? "1" : "0");
 
     destroy(mRecorder);
@@ -262,6 +266,9 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
 
     // Remove any special formatting that players might do to their nicknames.
     mTextOutput->sanitizeText(tmp.nick);
+
+    if (!mColorInjection)
+        mTextOutput->sanitizeText(tmp.text);
 
     if (tmp.nick.empty() && tmp.text.substr(0, 17) == "Visible GM status")
         player_node->setGM();
