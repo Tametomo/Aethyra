@@ -73,6 +73,9 @@ namespace Metric
     static std::string convert(const double &value, const int &precision = 2,
                                const bool &abbreviated = true)
     {
+        if (value == 0.0)
+            return strprintf("%.*f ", precision, value);
+
         int index;
 
         for (index = 0; index < NUMBER_OF_PREFIXES; index++)
