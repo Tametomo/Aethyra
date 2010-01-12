@@ -233,6 +233,7 @@ aethyra_SOURCES = \
 	      core/utils/fastsqrt.h \
 	      core/utils/gettext.h \
 	      core/utils/lockedarray.h \
+	      core/utils/metric.h \
 	      core/utils/mutex.h \
 	      core/utils/stringutils.cpp \
 	      core/utils/stringutils.h \

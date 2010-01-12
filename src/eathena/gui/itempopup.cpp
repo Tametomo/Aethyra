@@ -38,6 +38,7 @@
 #include "../../bindings/guichan/widgets/textbox.h"
 
 #include "../../core/utils/gettext.h"
+#include "../../core/utils/metric.h"
 #include "../../core/utils/stringutils.h"
 
 ItemPopup::ItemPopup(gcn::Container *parent):
@@ -85,8 +86,9 @@ void ItemPopup::setItem(const ItemInfo &item)
     mItemType = item.getType();
     mItemDesc->setTextWrapped(item.getDescription(), 196);
     mItemEffect->setTextWrapped(item.getEffect(), 196);
-    mItemWeight->setTextWrapped(strprintf(_("Weight: %d grams"),
-                                          item.getWeight()), 196);
+    mItemWeight->setTextWrapped(strprintf(_("Weight: %s%s"), Metric::convert(
+                                          item.getWeight(), 1, false).c_str(),
+                                          _("grams")), 196);
     adjustSize();
 }
 

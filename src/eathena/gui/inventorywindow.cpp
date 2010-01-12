@@ -51,6 +51,7 @@
 #include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/gettext.h"
+#include "../../core/utils/metric.h"
 #include "../../core/utils/stringutils.h"
 
 InventoryWindow::InventoryWindow(int invSize):
@@ -147,7 +148,10 @@ void InventoryWindow::logic()
 
         // Adjust weight progress bar
         mWeightBar->setProgress((float) mTotalWeight / mMaxWeight);
-        mWeightBar->setText(strprintf("%dg/%dg", mTotalWeight, mMaxWeight));
+        std::string totalWeight = Metric::convert(mTotalWeight);
+        std::string maxWeight = Metric::convert(mMaxWeight);
+        mWeightBar->setText(strprintf("%sg/%sg", totalWeight.c_str(),
+                                      maxWeight.c_str()));
     }
 
     if (mUsedSlots != usedSlots)

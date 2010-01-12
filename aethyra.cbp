@@ -332,6 +332,7 @@
 		<Unit filename="src\core\utils\fastsqrt.h" />
 		<Unit filename="src\core\utils\gettext.h" />
 		<Unit filename="src\core\utils\lockedarray.h" />
+		<Unit filename="src\core\utils\metric.h" />
 		<Unit filename="src\core\utils\mutex.h" />
 		<Unit filename="src\core\utils\stringutils.cpp" />
 		<Unit filename="src\core\utils\stringutils.h" />
