@@ -90,8 +90,9 @@ void Player::setName(const std::string &name)
     {
         mNameColor = &guiPalette->getColor(Palette::GM);
         /// TRANSLATORS: GM as in Game Master
-        mName = new FlashText("(" + _("GM") + ") " + name, mPx + NAME_X_OFFSET,
-                              mPy + NAME_Y_OFFSET, gcn::Graphics::CENTER,
+        std::string gmName = strprintf("%s%s%s%s", "(", _("GM"), ") ", name.c_str());
+        mName = new FlashText(gmName, mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET,
+                              gcn::Graphics::CENTER,
                               &guiPalette->getColor(Palette::GM_NAME));
     }
     else
