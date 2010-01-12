@@ -33,6 +33,7 @@
 #include "../../../bindings/guichan/text.h"
 
 #include "../../../core/utils/dtor.h"
+#include "../../../core/utils/gettext.h"
 
 #include "../../../eathena/db/colordb.h"
 #include "../../../eathena/db/itemdb.h"
@@ -88,8 +89,9 @@ void Player::setName(const std::string &name)
     if (mIsGM)
     {
         mNameColor = &guiPalette->getColor(Palette::GM);
-        mName = new FlashText("(GM) " + name, mPx + NAME_X_OFFSET, mPy +
-                              NAME_Y_OFFSET, gcn::Graphics::CENTER,
+        /// TRANSLATORS: GM as in Game Master
+        mName = new FlashText("(" + _("GM") + ") " + name, mPx + NAME_X_OFFSET,
+                              mPy + NAME_Y_OFFSET, gcn::Graphics::CENTER,
                               &guiPalette->getColor(Palette::GM_NAME));
     }
     else
