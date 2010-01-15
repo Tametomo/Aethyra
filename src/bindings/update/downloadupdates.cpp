@@ -25,6 +25,10 @@
 #include <SDL.h>
 #include <SDL_thread.h>
 
+#ifdef WIN32
+#include <windows.h>
+#endif
+
 #include "downloadupdates.h"
 
 #include "../../engine.h"

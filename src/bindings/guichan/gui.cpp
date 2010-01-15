@@ -231,14 +231,6 @@ void Gui::resize(const int width, const int height)
         height == graphics->getHeight()))
         return;
 
-    // TODO: If possible, fix resizing in place on Windows.
-    //
-    // Because: on Windows, the GL context get purged on resize!
-    // (well, not checked, but that what Internet reports)
-#ifdef WIN32
-    new OkDialog(_("Screen resolution changed"),
-                 _("Restart your client for the change to take effect."));
-#else
     Widgets widgets = windowContainer->getWidgetList();
     WidgetIterator iter;
 
@@ -285,7 +277,6 @@ void Gui::resize(const int width, const int height)
             continue;
         }
     }
-#endif
 
     config.setValue("screenwidth", width);
     config.setValue("screenheight", height);

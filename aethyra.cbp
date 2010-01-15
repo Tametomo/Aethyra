@@ -93,7 +93,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-s" />
-			<Add option="--enable-auto-import" />
+			<Add option="-enable-auto-import" />
 		</Linker>
 		<Unit filename="src\SDLMain.h" />
 		<Unit filename="src\aethyra.rc">
