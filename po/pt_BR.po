@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aethyra\n"
 "Report-Msgid-Bugs-To: irarice@gmail.com\n"
-"POT-Creation-Date: 2010-01-07 13:55-0700\n"
-"PO-Revision-Date: 2010-01-08 17:33+0000\n"
-"Last-Translator: Bruno <brunorafaelcardoso@gmail.com>\n"
+"POT-Creation-Date: 2010-01-20 14:33-0700\n"
+"PO-Revision-Date: 2009-10-06 02:01+0000\n"
+"Last-Translator: TeraByteS <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-20 18:16+0000\n"
+"X-Launchpad-Export-Date: 2010-01-20 21:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: src/bindings/curl/downloadwrapper.cpp:248
@@ -24,213 +24,220 @@ msgstr ""
 
 #: src/bindings/guichan/graphics.cpp:137
 msgid "Screenshot saved to ~/"
-msgstr ""
+msgstr "Screenshot salvo em ~/"
 
 #: src/bindings/guichan/graphics.cpp:144
 msgid "Saving screenshot failed!"
-msgstr ""
+msgstr "Falha ao salvar screenshot!"
 
 #: src/bindings/guichan/gui.cpp:239
 msgid "Screen resolution changed"
-msgstr ""
+msgstr "Resolução de tela alterada"
 
 #: src/bindings/guichan/gui.cpp:240
 msgid "Restart your client for the change to take effect."
-msgstr ""
+msgstr "Reincie o jogo para que as mudanças surtam efeito."
 
-#: src/bindings/guichan/inputmanager.cpp:265
-#: src/bindings/sdl/keyboardconfig.cpp:99 src/eathena/gui/buy.cpp:73
+#: src/bindings/guichan/inputmanager.cpp:266
+#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/gui/buy.cpp:73
 #: src/eathena/gui/sell.cpp:73 src/eathena/gui/updatewindow.cpp:116
 msgid "Quit"
 msgstr "Sair"
 
-#: src/bindings/guichan/inputmanager.cpp:265
+#: src/bindings/guichan/inputmanager.cpp:266
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "Tem certeza que deseja sair?"
 
-#: src/bindings/guichan/inputmanager.cpp:487
+#: src/bindings/guichan/inputmanager.cpp:489
 msgid "Ignoring incoming trade requests"
-msgstr ""
+msgstr "Ignorando propostas de negócios"
 
-#: src/bindings/guichan/inputmanager.cpp:494
+#: src/bindings/guichan/inputmanager.cpp:496
 msgid "Accepting incoming trade requests"
-msgstr ""
+msgstr "Aceitando propostas de negócios"
 
 #: src/bindings/guichan/palette.cpp:80 src/eathena/gui/tabs/setup_game.cpp:223
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
 #: src/bindings/guichan/palette.cpp:81
 msgid "Text Shadow"
-msgstr ""
+msgstr "Sombra do Texto"
 
 #: src/bindings/guichan/palette.cpp:82
 msgid "Text Outline"
-msgstr ""
+msgstr "Borda do texto"
 
 #: src/bindings/guichan/palette.cpp:83
 msgid "Progress Bar Labels"
-msgstr ""
+msgstr "Rótulos da barra de progresso"
 
 #: src/bindings/guichan/palette.cpp:85
 msgid "Background"
-msgstr ""
+msgstr "Fundo"
 
 #: src/bindings/guichan/palette.cpp:87
 msgid "Highlight"
-msgstr ""
+msgstr "Realçar"
 
 #: src/bindings/guichan/palette.cpp:88
 msgid "Tab Highlight"
-msgstr ""
+msgstr "Realçar aba"
 
 #: src/bindings/guichan/palette.cpp:89
 msgid "Item too expensive"
-msgstr ""
+msgstr "Item muito caro"
 
 #: src/bindings/guichan/palette.cpp:90
 msgid "Item is equipped"
-msgstr ""
+msgstr "Item está equipado"
 
 #: src/bindings/guichan/palette.cpp:92
 msgid "Chat"
-msgstr ""
+msgstr "Bate-papo"
 
 #: src/bindings/guichan/palette.cpp:93
 msgid "GM"
-msgstr ""
+msgstr "GM"
 
 #: src/bindings/guichan/palette.cpp:94
 msgid "Player"
-msgstr ""
+msgstr "Jogador"
 
 #: src/bindings/guichan/palette.cpp:95
 msgid "Whisper"
-msgstr ""
+msgstr "Sussurrar"
 
 #: src/bindings/guichan/palette.cpp:96
 msgid "Is"
-msgstr ""
+msgstr "É"
 
 #: src/bindings/guichan/palette.cpp:97
 msgid "Party"
-msgstr ""
+msgstr "Grupo"
 
 #: src/bindings/guichan/palette.cpp:98
 msgid "Server"
-msgstr ""
+msgstr "Servidor"
 
 #: src/bindings/guichan/palette.cpp:99
 msgid "Logger"
-msgstr ""
+msgstr "Histórico"
 
 #: src/bindings/guichan/palette.cpp:100
 msgid "Hyperlink"
-msgstr ""
+msgstr "Link"
 
 #: src/bindings/guichan/palette.cpp:102
 msgid "Being"
-msgstr ""
+msgstr "Ser"
 
 #: src/bindings/guichan/palette.cpp:103
+#, fuzzy
 msgid "Other Player's Names"
-msgstr ""
+msgstr "Nomes de outros jogadores"
 
 #: src/bindings/guichan/palette.cpp:104
 msgid "Own Name"
-msgstr ""
+msgstr "Próprio nome"
 
 #: src/bindings/guichan/palette.cpp:105
 msgid "GM Names"
-msgstr ""
+msgstr "Nomes dos GMs"
 
 #: src/bindings/guichan/palette.cpp:106
 msgid "NPCs"
-msgstr ""
+msgstr "NPCs"
 
 #: src/bindings/guichan/palette.cpp:107
 msgid "Monsters"
-msgstr ""
+msgstr "Monstros"
 
 #: src/bindings/guichan/palette.cpp:109
 msgid "Unknown Item Type"
-msgstr ""
+msgstr "Tipo de item desconhecido"
 
 #: src/bindings/guichan/palette.cpp:110
+#, fuzzy
 msgid "Generic"
-msgstr ""
+msgstr "Genéricos"
 
 #: src/bindings/guichan/palette.cpp:111
+#, fuzzy
 msgid "Hat"
-msgstr ""
+msgstr "Chapéus"
 
 #: src/bindings/guichan/palette.cpp:112
+#, fuzzy
 msgid "Usable"
-msgstr ""
+msgstr "Usáveis"
 
 #: src/bindings/guichan/palette.cpp:113
+#, fuzzy
 msgid "Shirt"
-msgstr ""
+msgstr "Camisas"
 
 #: src/bindings/guichan/palette.cpp:114
 msgid "1 Handed Weapons"
-msgstr ""
+msgstr "Armas para 1 mão"
 
 #: src/bindings/guichan/palette.cpp:115
 msgid "Pants"
-msgstr ""
+msgstr "Calças"
 
 #: src/bindings/guichan/palette.cpp:116
 msgid "Shoes"
-msgstr ""
+msgstr "Sapatos"
 
 #: src/bindings/guichan/palette.cpp:117
 msgid "2 Handed Weapons"
-msgstr ""
+msgstr "Armas para 2 mãos"
 
 #: src/bindings/guichan/palette.cpp:118
+#, fuzzy
 msgid "Shield"
-msgstr ""
+msgstr "Escudos"
 
 #: src/bindings/guichan/palette.cpp:119
+#, fuzzy
 msgid "Ring"
-msgstr ""
+msgstr "Anéis"
 
 #: src/bindings/guichan/palette.cpp:120
 msgid "Arms"
-msgstr ""
+msgstr "Armas"
 
 #: src/bindings/guichan/palette.cpp:121
 msgid "Ammo"
-msgstr ""
+msgstr "Munição"
 
 #: src/bindings/guichan/palette.cpp:123
 msgid "Particle Effects"
-msgstr ""
+msgstr "Efeitos de partícula"
 
 #: src/bindings/guichan/palette.cpp:124
 msgid "Pickup Notification"
-msgstr ""
+msgstr "Aviso de achado"
 
 #: src/bindings/guichan/palette.cpp:125
 msgid "Exp Notification"
-msgstr ""
+msgstr "Aviso de experiência"
 
 #: src/bindings/guichan/palette.cpp:127
 msgid "Player hits Monster"
-msgstr ""
+msgstr "Jogador acerta monstro"
 
 #: src/bindings/guichan/palette.cpp:129
 msgid "Monster hits Player"
-msgstr ""
+msgstr "Monstro acerta jogador"
 
 #: src/bindings/guichan/palette.cpp:130
 msgid "Critical Hit"
-msgstr ""
+msgstr "Golpe crítico"
 
 #: src/bindings/guichan/palette.cpp:131
 msgid "Misses"
-msgstr ""
+msgstr "Falhas"
 
 #: src/bindings/guichan/dialogs/confirmdialog.cpp:44
 msgid "Yes"
@@ -303,54 +310,54 @@ msgstr "Volume da Música"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:44
 msgid "This is what the color looks like"
-msgstr ""
+msgstr "A cor se parece com isso"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:49
 msgid "Colors"
-msgstr ""
+msgstr "Cores"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:70
 msgid "Type: "
-msgstr ""
+msgstr "Tipo: "
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:82
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:416
 msgid "Static"
-msgstr ""
+msgstr "Estático"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:84
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:85
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:419
 msgid "Pulse"
-msgstr ""
+msgstr "Pulso"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:86
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:87
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:422
 msgid "Rainbow"
-msgstr ""
+msgstr "Arco-íris"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:88
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:89
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:425
 msgid "Spectrum"
-msgstr ""
+msgstr "Espectro"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:93
 msgid "Delay: "
-msgstr ""
+msgstr "Atraso: "
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:110
 msgid "Red: "
-msgstr ""
+msgstr "Vermelho: "
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:127
 msgid "Green: "
-msgstr ""
+msgstr "Verde: "
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:144
 msgid "Blue: "
-msgstr ""
+msgstr "Azul: "
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:68
 msgid "Full screen"
@@ -377,12 +384,13 @@ msgid "Gui opacity"
 msgstr "Opacidade da GUI"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:87
+#, fuzzy
 msgid "Mouse opacity"
-msgstr ""
+msgstr "Opacidade da GUI"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:88
 msgid "Font size"
-msgstr ""
+msgstr "Tamanho da fonte"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:121
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:274
@@ -392,17 +400,17 @@ msgid "%d Point"
 msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:199
-#, c-format
+#, fuzzy, c-format
 msgid "Failed to switch to %s mode and restoration of old mode also failed!"
-msgstr ""
+msgstr "modo e restauração do antigo modo também falharam!"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:201
 msgid "windowed"
-msgstr ""
+msgstr "em janela"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
 msgid "fullscreen"
-msgstr ""
+msgstr "tela cheia"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:210
 msgid "Switching to full screen"
@@ -420,167 +428,159 @@ msgstr "Trocando OpenGL"
 msgid "Applying change to OpenGL requires restart."
 msgstr "Aplicando mudança a OpenGL requer reiniciar o jogo."
 
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:50
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:179
+#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:48
+#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:169
 msgid "Press the button to start calibration"
-msgstr "Aperto o botão para começar a calibração"
+msgstr "Aperte o botão para começar a calibração"
 
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:51
+#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:49
 msgid "Enable joystick"
 msgstr "Habilitar joystick"
 
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:53
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:177
+#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:51
+#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:168
 msgid "Calibrate"
 msgstr "Calibrar"
 
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:57
+#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:55
 msgid "Input"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:71
+#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:69
 msgid "Assign"
 msgstr "Atribuir"
 
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:75
+#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:73
 msgid "Default"
 msgstr "Padrão"
 
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:125
-msgid "Key Conflict(s) Detected."
-msgstr "Conflitos nas teclas detectado."
-
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:126
-msgid "Resolve them, or gameplay may result in strange behavior."
-msgstr ""
-
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:185
+#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:176
 msgid "Stop"
 msgstr "Parar"
 
-#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:186
+#: src/bindings/guichan/dialogs/tabs/setup_input.cpp:177
 msgid "Rotate the stick"
 msgstr "Gire o bastão"
 
-#: src/bindings/sdl/keyboardconfig.cpp:43
-msgid "Move Up"
-msgstr ""
-
-#: src/bindings/sdl/keyboardconfig.cpp:44
-msgid "Move Down"
-msgstr ""
-
-#: src/bindings/sdl/keyboardconfig.cpp:45
-msgid "Move Left"
-msgstr ""
-
 #: src/bindings/sdl/keyboardconfig.cpp:46
-msgid "Move Right"
-msgstr ""
+msgid "Move Up"
+msgstr "Mover para Cima"
 
 #: src/bindings/sdl/keyboardconfig.cpp:47
-msgid "Attack"
-msgstr ""
+msgid "Move Down"
+msgstr "Mover para Baixo"
 
 #: src/bindings/sdl/keyboardconfig.cpp:48
-msgid "Emote Meta Key"
-msgstr ""
+msgid "Move Left"
+msgstr "Esquerda"
 
 #: src/bindings/sdl/keyboardconfig.cpp:49
-msgid "Stop Attack"
-msgstr ""
+msgid "Move Right"
+msgstr "Direita"
 
 #: src/bindings/sdl/keyboardconfig.cpp:50
-msgid "Target Monster"
-msgstr ""
+msgid "Attack"
+msgstr "Atacar"
 
 #: src/bindings/sdl/keyboardconfig.cpp:51
-msgid "Target NPC"
+msgid "Meta Key"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:52
-msgid "Target Player"
-msgstr ""
+msgid "Stop Attack"
+msgstr "Parar ataque"
 
 #: src/bindings/sdl/keyboardconfig.cpp:53
-msgid "Being Menu"
-msgstr ""
+#, fuzzy
+msgid "Target Monster"
+msgstr "Selecionar o mais próximo"
 
 #: src/bindings/sdl/keyboardconfig.cpp:54
-msgid "Pickup"
-msgstr ""
+msgid "Target NPC"
+msgstr "Selecionar NPC"
 
 #: src/bindings/sdl/keyboardconfig.cpp:55
-msgid "Hide Windows"
-msgstr ""
+msgid "Target Player"
+msgstr "Selecionar Jogador"
 
 #: src/bindings/sdl/keyboardconfig.cpp:56
-msgid "Sit"
-msgstr ""
+#, fuzzy
+msgid "Being Menu"
+msgstr "Ser"
 
 #: src/bindings/sdl/keyboardconfig.cpp:57
-msgid "Screenshot"
-msgstr ""
+msgid "Pickup"
+msgstr "Pegar"
 
 #: src/bindings/sdl/keyboardconfig.cpp:58
-msgid "Enable/Disable Trading"
-msgstr ""
+msgid "Hide Windows"
+msgstr "Esconder janelas"
 
 #: src/bindings/sdl/keyboardconfig.cpp:59
-msgid "Find Path to Mouse"
-msgstr ""
+msgid "Sit"
+msgstr "Sentar"
 
 #: src/bindings/sdl/keyboardconfig.cpp:60
-msgid "Chat Window"
-msgstr ""
+msgid "Screenshot"
+msgstr "Screenshot"
 
 #: src/bindings/sdl/keyboardconfig.cpp:61
-msgid "Debug Window"
-msgstr ""
+msgid "Enable/Disable Trading"
+msgstr "Habilitar/Desabilitar Negociações"
 
 #: src/bindings/sdl/keyboardconfig.cpp:62
-msgid "Emote Window"
-msgstr ""
+msgid "Find Path to Mouse"
+msgstr "Encontrar rota para o mouse"
 
 #: src/bindings/sdl/keyboardconfig.cpp:63
-msgid "Emote Shortcut Window"
-msgstr ""
+msgid "Chat Window"
+msgstr "Janela de bate-papo"
 
 #: src/bindings/sdl/keyboardconfig.cpp:64
-msgid "Equipment Window"
-msgstr ""
+msgid "Debug Window"
+msgstr "Janela de depuração"
 
 #: src/bindings/sdl/keyboardconfig.cpp:65
-msgid "Help Window"
-msgstr ""
+#, fuzzy
+msgid "Emote Window"
+msgstr "Janela de atalho para Emoticons"
 
 #: src/bindings/sdl/keyboardconfig.cpp:66
-msgid "Inventory Window"
-msgstr ""
+msgid "Emote Shortcut Window"
+msgstr "Janela de atalho para Emoticons"
 
 #: src/bindings/sdl/keyboardconfig.cpp:67
-msgid "Item Shortcut Window"
-msgstr ""
+msgid "Equipment Window"
+msgstr "Janela de equipamento"
 
 #: src/bindings/sdl/keyboardconfig.cpp:68
-msgid "Minimap Window"
-msgstr ""
+msgid "Help Window"
+msgstr "Janela de Ajuda"
 
 #: src/bindings/sdl/keyboardconfig.cpp:69
-msgid "Setup Window"
-msgstr ""
+msgid "Inventory Window"
+msgstr "Janela de inventário"
 
 #: src/bindings/sdl/keyboardconfig.cpp:70
-msgid "Skill Window"
-msgstr ""
+msgid "Item Shortcut Window"
+msgstr "Janela de atalhos para itens"
 
 #: src/bindings/sdl/keyboardconfig.cpp:71
-msgid "Status Window"
-msgstr ""
+msgid "Minimap Window"
+msgstr "Janela de Minimapa"
 
 #: src/bindings/sdl/keyboardconfig.cpp:72
+msgid "Setup Window"
+msgstr "Janela de Configurações"
+
 #: src/bindings/sdl/keyboardconfig.cpp:73
+msgid "Skill Window"
+msgstr "Janela de Habilidade"
+
 #: src/bindings/sdl/keyboardconfig.cpp:74
+msgid "Status Window"
+msgstr "Janela de Status"
+
 #: src/bindings/sdl/keyboardconfig.cpp:75
 #: src/bindings/sdl/keyboardconfig.cpp:76
 #: src/bindings/sdl/keyboardconfig.cpp:77
@@ -590,13 +590,13 @@ msgstr ""
 #: src/bindings/sdl/keyboardconfig.cpp:81
 #: src/bindings/sdl/keyboardconfig.cpp:82
 #: src/bindings/sdl/keyboardconfig.cpp:83
-#, c-format
-msgid "Emote Shortcut %d"
-msgstr ""
-
 #: src/bindings/sdl/keyboardconfig.cpp:84
 #: src/bindings/sdl/keyboardconfig.cpp:85
 #: src/bindings/sdl/keyboardconfig.cpp:86
+#, c-format
+msgid "Emote Shortcut %d"
+msgstr "Atalho para Emoticon %d"
+
 #: src/bindings/sdl/keyboardconfig.cpp:87
 #: src/bindings/sdl/keyboardconfig.cpp:88
 #: src/bindings/sdl/keyboardconfig.cpp:89
@@ -606,35 +606,49 @@ msgstr ""
 #: src/bindings/sdl/keyboardconfig.cpp:93
 #: src/bindings/sdl/keyboardconfig.cpp:94
 #: src/bindings/sdl/keyboardconfig.cpp:95
+#: src/bindings/sdl/keyboardconfig.cpp:96
+#: src/bindings/sdl/keyboardconfig.cpp:97
+#: src/bindings/sdl/keyboardconfig.cpp:98
 #, c-format
 msgid "Item Shortcut %d"
-msgstr ""
+msgstr "Atalho para Ítem %d"
 
-#: src/bindings/sdl/keyboardconfig.cpp:96
+#: src/bindings/sdl/keyboardconfig.cpp:99
 msgid "Toggle Chat"
-msgstr ""
-
-#: src/bindings/sdl/keyboardconfig.cpp:97
-msgid "Scroll Chat Up"
-msgstr ""
-
-#: src/bindings/sdl/keyboardconfig.cpp:98
-msgid "Scroll Chat Down"
-msgstr ""
+msgstr "Alternar para chat"
 
 #: src/bindings/sdl/keyboardconfig.cpp:100
+msgid "Scroll Chat Up"
+msgstr "Rolar janela de chat para cima"
+
 #: src/bindings/sdl/keyboardconfig.cpp:101
-#, c-format
+msgid "Scroll Chat Down"
+msgstr "Rolar janela de chat para baixo"
+
+#: src/bindings/sdl/keyboardconfig.cpp:103
+#: src/bindings/sdl/keyboardconfig.cpp:104
+#, fuzzy, c-format
 msgid "Ignore Input %d"
-msgstr ""
+msgstr "Ignorar input 1"
+
+#: src/bindings/sdl/keyboardconfig.cpp:178
+msgid "Key Conflict(s) Detected."
+msgstr "Conflitos nas teclas detectado."
+
+#: src/bindings/sdl/keyboardconfig.cpp:179
+#, fuzzy, c-format
+msgid ""
+"%s and %s keys overlap. Resolve them, or gameplay may result in strange "
+"behaviour."
+msgstr "Corrija-os, ou o jogo irá se comportar de forma estranha."
 
 #: src/bindings/update/downloadupdates.cpp:163
 msgid "Invalid update host: "
-msgstr ""
+msgstr "Host de atualização inválido: "
 
 #: src/bindings/update/downloadupdates.cpp:200
 msgid "Error creating updates directory!"
-msgstr ""
+msgstr "Erro ao criar pasta de atualizações!"
 
 #: src/bindings/update/downloadupdates.cpp:348
 msgid ""
@@ -644,40 +658,40 @@ msgstr ""
 
 #: src/bindings/update/downloadupdates.cpp:361
 msgid "##1  The update process is incomplete."
-msgstr ""
+msgstr "##1  O processo de update está incompleto."
 
 #: src/bindings/update/downloadupdates.cpp:362
 msgid "##1  It is strongly recommended that"
-msgstr ""
+msgstr "##1 É altamente recomendado que"
 
 #: src/bindings/update/downloadupdates.cpp:363
 msgid "##1  you try again later"
-msgstr ""
+msgstr "##1  você tente novamente mais tarde"
 
 #: src/core/recorder.cpp:68
 msgid "Finishing recording."
-msgstr ""
+msgstr "Finalizando gravação."
 
 #: src/core/recorder.cpp:71
 msgid "Not currently recording."
-msgstr ""
+msgstr "Não há gravação neste momento."
 
 #: src/core/recorder.cpp:74
 msgid "Already recording."
-msgstr ""
+msgstr "Já está gravando."
 
 #: src/core/recorder.cpp:81
 msgid "Starting to record..."
-msgstr ""
+msgstr "Iniciando a gravação..."
 
 #: src/core/recorder.cpp:95
 msgid "Failed to start recording."
-msgstr ""
+msgstr "Falha ao iniciar gravação."
 
 #: src/core/map/sprite/being.cpp:220 src/eathena/db/itemdb.cpp:62
-#: src/eathena/gui/chat.cpp:290
+#: src/eathena/gui/chat.cpp:312
 msgid "Unknown item"
-msgstr ""
+msgstr "Item desconhecido"
 
 #: src/eathena/game.cpp:362 src/main.cpp:277
 msgid "Got disconnected from server!"
@@ -685,16 +699,16 @@ msgstr "Você foi desconectado do servidor!"
 
 #: src/eathena/game.cpp:364
 msgid "Network Error"
-msgstr ""
+msgstr "Erro de conexão"
 
 #: src/eathena/maploader.cpp:93
 msgid "Could not load map"
-msgstr ""
+msgstr "Impossível carregar mapa"
 
 #: src/eathena/maploader.cpp:94
 #, c-format
 msgid "Error while loading %s"
-msgstr ""
+msgstr "Erro ao carregar %s"
 
 #: src/eathena/party.cpp:52
 msgid "Not yet implemented!"
@@ -706,108 +720,101 @@ msgstr ""
 
 #: src/eathena/party.cpp:66
 msgid "Party name is missing."
-msgstr ""
+msgstr "Falta o nome do grupo."
 
 #: src/eathena/party.cpp:78
+#, fuzzy
 msgid "Left party."
-msgstr ""
+msgstr "Entrou para o grupo."
 
 #: src/eathena/party.cpp:86
 msgid "Party successfully created."
-msgstr ""
+msgstr "Grupo criado."
 
 #: src/eathena/party.cpp:90
 msgid "Could not create party."
-msgstr ""
+msgstr "Não foi possível criar o grupo."
 
 #: src/eathena/party.cpp:98
 #, c-format
 msgid "%s is already a member of a party."
-msgstr ""
+msgstr "%s já é membro de um grupo."
 
 #: src/eathena/party.cpp:102
 #, c-format
 msgid "%s refused your invitation."
-msgstr ""
+msgstr "%s recusou seu convite."
 
 #: src/eathena/party.cpp:106
 #, c-format
 msgid "%s is now a member of your party."
-msgstr ""
+msgstr "%s agora é um membro do seu grupo."
 
 #: src/eathena/party.cpp:119
 msgid "You can't have a blank party name!"
 msgstr ""
 
 #: src/eathena/party.cpp:124
+#, fuzzy
 msgid "Invite to party"
-msgstr ""
+msgstr "Inventório"
 
 #: src/eathena/party.cpp:125
-#, c-format
+#, fuzzy, c-format
 msgid "%s invites you to join the %s party, do you accept?"
-msgstr ""
+msgstr "%s te convidou para entrar no grupo %s."
 
 #: src/eathena/party.cpp:142
 #, c-format
 msgid "%s has left your party."
-msgstr ""
+msgstr "%s saiu do seu grupo."
 
 #: src/eathena/party.cpp:153
 msgid "Party chat received, but being is not a player"
 msgstr ""
 
 #: src/eathena/party.cpp:165
+#, fuzzy
 msgid "Command: /party <command> <args>"
-msgstr ""
+msgstr "Comando: /help <comando>"
 
 #: src/eathena/party.cpp:166
 msgid "where <command> can be one of:"
 msgstr ""
 
-#: src/eathena/party.cpp:167
-msgid "   /new"
-msgstr ""
-
-#: src/eathena/party.cpp:168
-msgid "   /create"
-msgstr ""
-
-#: src/eathena/party.cpp:169
-msgid "   /prefix"
-msgstr ""
-
-#: src/eathena/party.cpp:170
-msgid "   /leave"
-msgstr ""
-
 #: src/eathena/party.cpp:171
+#, fuzzy
 msgid "This command implements the partying function."
-msgstr ""
+msgstr "Este comando finaliza a sessão de gravação."
 
 #: src/eathena/party.cpp:173
 msgid "Type /help party <command> for further help."
 msgstr ""
 
 #: src/eathena/party.cpp:178
+#, fuzzy
 msgid "Command: /party new <party-name>"
-msgstr ""
+msgstr "Comando: /new <nome-do-grupo>"
 
 #: src/eathena/party.cpp:179
+#, fuzzy
 msgid "Command: /party create <party-name>"
-msgstr ""
+msgstr "Comando: /create <nome-do-grupo>"
 
 #: src/eathena/party.cpp:180
-msgid "These commands create a new party <party-name."
-msgstr ""
+#, fuzzy
+msgid "These commands create a new party <party-name>."
+msgstr "Estes comandos criam um novo grupo chamado <nome-do-grupo>."
 
 #: src/eathena/party.cpp:185
+#, fuzzy
 msgid "Command: /party prefix <prefix-char>"
-msgstr ""
+msgstr "Comando: /party <nick>"
 
 #: src/eathena/party.cpp:186
+#, fuzzy
 msgid "This command sets the party prefix character."
-msgstr ""
+msgstr "Limpa os logs do chat anterior."
 
 #: src/eathena/party.cpp:188
 msgid ""
@@ -816,37 +823,43 @@ msgid ""
 msgstr ""
 
 #: src/eathena/party.cpp:190
+#, fuzzy
 msgid "Command: /party prefix"
-msgstr ""
+msgstr "Comando: /party <nick>"
 
 #: src/eathena/party.cpp:191
+#, fuzzy
 msgid "This command reports the current party prefix character."
-msgstr ""
+msgstr "Sair do canal."
 
 #: src/eathena/party.cpp:198
+#, fuzzy
 msgid "Command: /party leave"
-msgstr ""
+msgstr "Comando: /leave"
 
 #: src/eathena/party.cpp:199
 msgid "This command causes the player to leave the party."
-msgstr ""
+msgstr "Este comando faz com que o jogador saia do grupo."
 
 #: src/eathena/party.cpp:204
+#, fuzzy
 msgid "Unknown /party command."
-msgstr ""
+msgstr "Comando desconhecido."
 
 #: src/eathena/party.cpp:205
+#, fuzzy
 msgid "Type /help party for a list of options."
-msgstr ""
+msgstr "Digite /help para uma lista de todos os comandos."
 
 #: src/eathena/db/itemdb.cpp:103 src/eathena/db/monsterdb.cpp:45
 #: src/eathena/db/monsterdb.cpp:63
 msgid "unnamed"
-msgstr ""
+msgstr "sem nome"
 
 #: src/eathena/db/npcdb.cpp:54
+#, fuzzy
 msgid "NPC Database: Error while loading npcs.xml!"
-msgstr ""
+msgstr "Erro ao carregar %s"
 
 #: src/eathena/gui/buy.cpp:46 src/eathena/gui/buy.cpp:72
 #: src/eathena/gui/buysell.cpp:35
@@ -855,13 +868,13 @@ msgstr "Comprar"
 
 #: src/eathena/gui/buy.cpp:70 src/eathena/gui/buy.cpp:252
 #: src/eathena/gui/sell.cpp:70 src/eathena/gui/sell.cpp:276
-#, c-format
+#, fuzzy, c-format
 msgid "Price: %d GP / Total: %d GP"
-msgstr "Preço: %d GP / Total: %d GP"
+msgstr "Preço: %s / Total: %s"
 
 #: src/eathena/gui/buy.cpp:74 src/eathena/gui/sell.cpp:74
 msgid "Max"
-msgstr ""
+msgstr "Máximo"
 
 #: src/eathena/gui/buy.cpp:75 src/eathena/gui/buy.cpp:217
 #: src/eathena/gui/buy.cpp:237 src/eathena/gui/sell.cpp:75
@@ -919,21 +932,21 @@ msgstr "Tem certeza que deseja excluir este personagem?"
 msgid "Select Character"
 msgstr "Selecionar personagem"
 
-#: src/eathena/gui/charselect.cpp:94 src/eathena/gui/charselect.cpp:191
-#: src/eathena/gui/charselect.cpp:206
+#: src/eathena/gui/charselect.cpp:94 src/eathena/gui/charselect.cpp:187
+#: src/eathena/gui/charselect.cpp:201
 #, c-format
 msgid "Name: %s"
 msgstr "Nome: %s"
 
-#: src/eathena/gui/charselect.cpp:95 src/eathena/gui/charselect.cpp:192
-#: src/eathena/gui/charselect.cpp:207 src/eathena/gui/status.cpp:49
+#: src/eathena/gui/charselect.cpp:95 src/eathena/gui/charselect.cpp:188
+#: src/eathena/gui/charselect.cpp:202 src/eathena/gui/status.cpp:49
 #: src/eathena/gui/status.cpp:187
 #, c-format
 msgid "Level: %d"
 msgstr "Nível: %d"
 
-#: src/eathena/gui/charselect.cpp:96 src/eathena/gui/charselect.cpp:193
-#: src/eathena/gui/charselect.cpp:208
+#: src/eathena/gui/charselect.cpp:96 src/eathena/gui/charselect.cpp:189
+#: src/eathena/gui/charselect.cpp:203
 #, c-format
 msgid "Job Level: %d"
 msgstr "Nível de Trabalho: %d"
@@ -951,406 +964,459 @@ msgstr "Anterior"
 msgid "Next"
 msgstr "Próximo"
 
-#: src/eathena/gui/charselect.cpp:101 src/eathena/gui/charselect.cpp:210
+#: src/eathena/gui/charselect.cpp:101 src/eathena/gui/charselect.cpp:205
 msgid "New"
 msgstr "Novo"
 
-#: src/eathena/gui/charselect.cpp:194
-#, c-format
+#: src/eathena/gui/charselect.cpp:190
+#, fuzzy, c-format
 msgid "Gold: %d"
-msgstr "Ouro: %d"
+msgstr "Trabalho: %d"
 
-#: src/eathena/gui/charselect.cpp:197
+#: src/eathena/gui/charselect.cpp:193
 #: src/eathena/gui/tabs/setup_players.cpp:79
 msgid "Delete"
 msgstr "Excluir"
 
-#: src/eathena/gui/charselect.cpp:209
+#: src/eathena/gui/charselect.cpp:204
 #, c-format
 msgid "Money: %s"
-msgstr ""
+msgstr "Dinheiro: %s"
 
-#: src/eathena/gui/chat.cpp:83
+#: src/eathena/gui/chat.cpp:86
 msgid "File name to record to:"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:201
+#: src/eathena/gui/chat.cpp:218
+#, fuzzy
 msgid "Global announcement: "
-msgstr ""
+msgstr "Anúncio geral:"
 
-#: src/eathena/gui/chat.cpp:206
-#, c-format
+#: src/eathena/gui/chat.cpp:223
+#, fuzzy, c-format
 msgid "Global announcement from %s: "
-msgstr ""
+msgstr "Anúncio geral de %s:"
 
-#: src/eathena/gui/chat.cpp:220 src/eathena/gui/login.cpp:53
+#: src/eathena/gui/chat.cpp:237 src/eathena/gui/login.cpp:53
 #: src/eathena/gui/register.cpp:80
 msgid "Server:"
 msgstr "Servidor:"
 
-#: src/eathena/gui/chat.cpp:230
+#: src/eathena/gui/chat.cpp:247
 #, c-format
 msgid "%s whispers: "
-msgstr ""
+msgstr "%s envia a mensagem privada: "
 
-#: src/eathena/gui/chat.cpp:398
+#: src/eathena/gui/chat.cpp:411
+#, fuzzy
 msgid "Stop Recording"
-msgstr ""
+msgstr "Parar gravação"
 
-#: src/eathena/gui/chat.cpp:399
+#: src/eathena/gui/chat.cpp:412
+#, fuzzy
 msgid "Start Recording"
-msgstr ""
+msgstr "Parar gravação"
 
-#: src/eathena/gui/chat.cpp:444
+#: src/eathena/gui/chat.cpp:457
 #, c-format
 msgid "Whispering to %s: %s"
 msgstr "Sussurrando para %s: %s"
 
-#: src/eathena/gui/chat.cpp:467
+#: src/eathena/gui/chat.cpp:480
 msgid "Trying to send a blank party message."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:548
+#: src/eathena/gui/chat.cpp:561
 msgid "Return toggles chat."
-msgstr ""
+msgstr "Enter alterna para o chat."
 
-#: src/eathena/gui/chat.cpp:549
+#: src/eathena/gui/chat.cpp:562
 msgid "Message closes chat."
-msgstr ""
+msgstr "A mensagem fecha o chat."
 
-#: src/eathena/gui/chat.cpp:557
+#: src/eathena/gui/chat.cpp:570
 msgid "Return now toggles chat."
-msgstr ""
+msgstr "Agora enter alterna para o chat."
 
-#: src/eathena/gui/chat.cpp:564
+#: src/eathena/gui/chat.cpp:577
 msgid "Message now closes chat."
-msgstr ""
+msgstr "Agora a mensagem fecha o chat."
 
-#: src/eathena/gui/chat.cpp:569
+#: src/eathena/gui/chat.cpp:582
+#, fuzzy
 msgid ""
 "Options to /toggle are \"yes\", \"no\", \"true\", \"false\", \"1\", \"0\"."
 msgstr ""
+"Opções para /%s são \"yes\" e \"no\", \"true\" e \"false\", \"1\" e \"0\"."
 
-#: src/eathena/gui/chat.cpp:576
+#: src/eathena/gui/chat.cpp:589
 msgid "Unknown party command... Type \"/help\" party for more information."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:619
+#: src/eathena/gui/chat.cpp:632
 msgid "No such spell!"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:641
-#, c-format
+#: src/eathena/gui/chat.cpp:654
+#, fuzzy, c-format
 msgid "%u players are present."
-msgstr ""
+msgstr "%d jogadores estão presentes."
 
-#: src/eathena/gui/chat.cpp:656
-#, c-format
+#: src/eathena/gui/chat.cpp:668
+#, fuzzy, c-format
 msgid "Present: %s; %s"
-msgstr ""
+msgstr "Presente: "
 
-#: src/eathena/gui/chat.cpp:658
+#: src/eathena/gui/chat.cpp:670
 msgid "Attendance written to record log."
-msgstr ""
+msgstr "Presença gravada no registro do log."
 
-#: src/eathena/gui/chat.cpp:662
+#: src/eathena/gui/chat.cpp:674
 msgid "Present: "
+msgstr "Presente: "
+
+#: src/eathena/gui/chat.cpp:690 src/main.cpp:132
+#, c-format
+msgid "Aethyra - Version %s"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:673 src/eathena/gui/chat.cpp:960
+#: src/eathena/gui/chat.cpp:694 src/eathena/gui/chat.cpp:988
 msgid "Unknown command."
 msgstr "Comando desconhecido."
 
-#: src/eathena/gui/chat.cpp:685
+#: src/eathena/gui/chat.cpp:706
 msgid "Trade failed!"
 msgstr "Falha na negociação!"
 
-#: src/eathena/gui/chat.cpp:688
+#: src/eathena/gui/chat.cpp:709
 msgid "Emote failed!"
 msgstr "Falha no Emote!"
 
-#: src/eathena/gui/chat.cpp:691
+#: src/eathena/gui/chat.cpp:712
 msgid "Sit failed!"
 msgstr "Falha ao sentar!"
 
-#: src/eathena/gui/chat.cpp:694
+#: src/eathena/gui/chat.cpp:715
 msgid "Chat creating failed!"
 msgstr "Falha ao criar Chat!"
 
-#: src/eathena/gui/chat.cpp:697
+#: src/eathena/gui/chat.cpp:718
 msgid "Could not join party!"
 msgstr "Impossivel entrar no grupo!"
 
-#: src/eathena/gui/chat.cpp:700
+#: src/eathena/gui/chat.cpp:721
 msgid "Cannot shout!"
 msgstr "Impossivel gritar!"
 
-#: src/eathena/gui/chat.cpp:709
+#: src/eathena/gui/chat.cpp:730
 msgid "You have not yet reached a high enough lvl!"
 msgstr "Você ainda não tem nivel necessário!"
 
-#: src/eathena/gui/chat.cpp:712
+#: src/eathena/gui/chat.cpp:733
 msgid "Insufficient HP!"
 msgstr "HP insuficiente!"
 
-#: src/eathena/gui/chat.cpp:715
+#: src/eathena/gui/chat.cpp:736
 msgid "Insufficient SP!"
 msgstr "SP insuficiente!"
 
-#: src/eathena/gui/chat.cpp:718
+#: src/eathena/gui/chat.cpp:739
 msgid "You have no memos!"
-msgstr "Você não tem nenhuma nota armazenada"
+msgstr "Você não tem nenhuma nota armazenada!"
 
-#: src/eathena/gui/chat.cpp:721
+#: src/eathena/gui/chat.cpp:742
 msgid "You cannot do that right now!"
 msgstr "Você não pode fazer isso agora!"
 
-#: src/eathena/gui/chat.cpp:724
+#: src/eathena/gui/chat.cpp:745
+#, fuzzy
 msgid "Seems you need more GP... ;-)"
-msgstr ""
+msgstr "Parece que você precisa de mais dinheiro... ;-)"
 
-#: src/eathena/gui/chat.cpp:727
+#: src/eathena/gui/chat.cpp:748
 msgid "You cannot use this skill with that kind of weapon!"
-msgstr "Você não pode usar essa Skill com esse tipo de arma."
+msgstr "Você não pode usar essa habilidade com esse tipo de arma!"
 
-#: src/eathena/gui/chat.cpp:730
+#: src/eathena/gui/chat.cpp:751
 msgid "You need another red gem!"
 msgstr "Você precisa de outra gema vermelha!"
 
-#: src/eathena/gui/chat.cpp:733
+#: src/eathena/gui/chat.cpp:754
 msgid "You need another blue gem!"
-msgstr "Você precisa de outra gema azul!"
+msgstr "Você precisa de outra jóia azul!"
 
-#: src/eathena/gui/chat.cpp:736
+#: src/eathena/gui/chat.cpp:757
 msgid "You're carrying to much to do this!"
 msgstr "Você está com muita carga para fazer isso!"
 
-#: src/eathena/gui/chat.cpp:739
+#: src/eathena/gui/chat.cpp:760
 msgid "Huh? What's that?"
 msgstr "Hã? O que é isso?"
 
-#: src/eathena/gui/chat.cpp:748
+#: src/eathena/gui/chat.cpp:769
 msgid "Warp failed..."
 msgstr "Falha ao transportar..."
 
-#: src/eathena/gui/chat.cpp:751
+#: src/eathena/gui/chat.cpp:772
 msgid "Could not steal anything..."
 msgstr "Não foi possível roubar nada..."
 
-#: src/eathena/gui/chat.cpp:754
+#: src/eathena/gui/chat.cpp:775
 msgid "Poison had no effect..."
 msgstr "Veneno não surtiu efeito..."
 
-#: src/eathena/gui/chat.cpp:832
+#: src/eathena/gui/chat.cpp:853
 #, c-format
 msgid "The current party prefix is %s."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:836
+#: src/eathena/gui/chat.cpp:857
 msgid "Party prefix must be one character long."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:840
+#: src/eathena/gui/chat.cpp:861
 msgid "Cannot use a '/' as the prefix."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:844
+#: src/eathena/gui/chat.cpp:865
 #, c-format
 msgid "Changing prefix to %s."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:855
+#: src/eathena/gui/chat.cpp:876
 msgid "-- Help --"
 msgstr "--Ajuda--"
 
-#: src/eathena/gui/chat.cpp:858
+#: src/eathena/gui/chat.cpp:879
+#, fuzzy
 msgid "/announce: Global announcement (GM only)."
-msgstr ""
+msgstr "/announce > Anuciamento Global (Somente GM)"
 
-#: src/eathena/gui/chat.cpp:859
+#: src/eathena/gui/chat.cpp:880
+#, fuzzy
 msgid "/clear: Clears this window."
-msgstr ""
+msgstr "/clear > Limpa janela atual"
 
-#: src/eathena/gui/chat.cpp:860
+#: src/eathena/gui/chat.cpp:881
+#, fuzzy
 msgid "/help: Display this help."
-msgstr ""
+msgstr "/help > Exibe esta ajuda."
 
-#: src/eathena/gui/chat.cpp:861
+#: src/eathena/gui/chat.cpp:882
+#, fuzzy
 msgid "/me <message>: Tell something about yourself."
-msgstr ""
+msgstr "/me > Diz alguma coisa sobre você"
 
-#: src/eathena/gui/chat.cpp:862
+#: src/eathena/gui/chat.cpp:883
 msgid "/msg <nick> <message>: Alternate form for /whisper."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:864
+#: src/eathena/gui/chat.cpp:885
 msgid "/party <command> <params>: Party commands."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:865
+#: src/eathena/gui/chat.cpp:886
+#, fuzzy
 msgid "/present: Get list of players present."
 msgstr ""
+"/present > Pegar a lista de jogadores presentes (Enviou log de chat. Se "
+"logando)"
 
-#: src/eathena/gui/chat.cpp:866
+#: src/eathena/gui/chat.cpp:887
+#, fuzzy
 msgid "/record <filename>: Start recording the chat to an external file."
-msgstr ""
+msgstr "/record > Começar a gravar o chat em um arquivo externo"
 
-#: src/eathena/gui/chat.cpp:868
+#: src/eathena/gui/chat.cpp:889
+#, fuzzy
 msgid "/toggle: Determine whether <return> toggles the chat log."
-msgstr ""
+msgstr "/toggle > Determina se <enter> alterna para o log de chat"
 
-#: src/eathena/gui/chat.cpp:870
+#: src/eathena/gui/chat.cpp:891
+#, fuzzy
+msgid "/version: Displays the client version"
+msgstr "  -v --version : Exibe a versão"
+
+#: src/eathena/gui/chat.cpp:892
 msgid "/w <nick> <message>: Short form for /whisper."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:871
+#: src/eathena/gui/chat.cpp:893
+#, fuzzy
 msgid "/where: Display map name."
-msgstr ""
+msgstr "/where > Exibe o nome do mapa"
 
-#: src/eathena/gui/chat.cpp:872
+#: src/eathena/gui/chat.cpp:894
+#, fuzzy
 msgid "/whisper <nick> <message>: Sends a private <message> to <nick>."
-msgstr ""
+msgstr "Este comando envia o texto <mensagem> para <nick>."
 
-#: src/eathena/gui/chat.cpp:874
+#: src/eathena/gui/chat.cpp:896
+#, fuzzy
 msgid "/who: Display number of online users."
-msgstr ""
+msgstr "/who > Exibe o número de usuários online"
 
-#: src/eathena/gui/chat.cpp:875
+#: src/eathena/gui/chat.cpp:897
 msgid "For more information, type /help <command>."
-msgstr ""
+msgstr "Para mais informações, digite /help <comando>."
 
-#: src/eathena/gui/chat.cpp:879
+#: src/eathena/gui/chat.cpp:901
+#, fuzzy
 msgid "Command: /announce <msg>."
-msgstr ""
+msgstr "Comando: /announce <msg>"
 
-#: src/eathena/gui/chat.cpp:880
+#: src/eathena/gui/chat.cpp:902
 msgid "*** only available to a GM ***"
 msgstr "*** Disponivel apenas para GM's ***"
 
-#: src/eathena/gui/chat.cpp:881
+#: src/eathena/gui/chat.cpp:903
 msgid "This command sends the message <msg> to all players currently online."
-msgstr ""
-"Este comando envia uma mensagem <msg> para todos os jogadores online."
+msgstr "Este comando envia a mensagem <msg> para todos os jogadores online."
 
-#: src/eathena/gui/chat.cpp:886
+#: src/eathena/gui/chat.cpp:908
 msgid "Command: /clear"
-msgstr "Comandos: /clear"
+msgstr "Comando: /clear"
 
-#: src/eathena/gui/chat.cpp:887
+#: src/eathena/gui/chat.cpp:909
 msgid "This command clears the chat log of previous chat."
 msgstr "Limpa os logs do chat anterior."
 
-#: src/eathena/gui/chat.cpp:892
+#: src/eathena/gui/chat.cpp:914
 msgid "Command: /help"
 msgstr "Comando: /help"
 
-#: src/eathena/gui/chat.cpp:893
+#: src/eathena/gui/chat.cpp:915
 msgid "This command displays a list of all commands available."
 msgstr "Exibe uma lista de todos os comandos disponiveis."
 
-#: src/eathena/gui/chat.cpp:895
+#: src/eathena/gui/chat.cpp:917
 msgid "Command: /help <command>"
 msgstr "Comando: /help <comando>"
 
-#: src/eathena/gui/chat.cpp:896
+#: src/eathena/gui/chat.cpp:918
 msgid "This command displays help on <command>."
 msgstr "Exibe o conteudo de ajuda de <comando>"
 
-#: src/eathena/gui/chat.cpp:900
+#: src/eathena/gui/chat.cpp:922
+#, fuzzy
 msgid "Command: /me <msg>"
-msgstr ""
+msgstr "Comando: /me <mensagem>"
 
-#: src/eathena/gui/chat.cpp:901
+#: src/eathena/gui/chat.cpp:923
 msgid "This command tell others you are (doing) <msg>."
-msgstr ""
+msgstr "Este comando diz aos outros o que eu estou (fazendo) <msg>."
 
-#: src/eathena/gui/chat.cpp:910
+#: src/eathena/gui/chat.cpp:932
 msgid "Command: /present"
-msgstr ""
+msgstr "Comando: /present"
 
-#: src/eathena/gui/chat.cpp:911
+#: src/eathena/gui/chat.cpp:933
 msgid ""
 "This command gets a list of players within hearing and sends it to either "
 "the record log if recording, or the chat log otherwise."
 msgstr ""
+"Este comando obtém uma lista dos Jogadores ao alcance e a envia para o log "
+"de registro do chat ou, caso haja uma gravação em andamento, para o log de "
+"gravação."
 
-#: src/eathena/gui/chat.cpp:917
+#: src/eathena/gui/chat.cpp:939
 msgid "Command: /record <filename>"
-msgstr ""
+msgstr "Comando: /record <nome_do_arquivo>"
 
-#: src/eathena/gui/chat.cpp:918
+#: src/eathena/gui/chat.cpp:940
 msgid "This command starts recording the chat log to the file <filename>."
 msgstr ""
+"Este comando inicia a gravação do registro de bate-papo para o arquivo "
+"<nome_do_arquivo>."
 
-#: src/eathena/gui/chat.cpp:920
+#: src/eathena/gui/chat.cpp:942
 msgid "Command: /record"
-msgstr ""
+msgstr "Comando: /record"
 
-#: src/eathena/gui/chat.cpp:921
+#: src/eathena/gui/chat.cpp:943
 msgid "This command finishes a recording session."
-msgstr ""
+msgstr "Este comando finaliza a sessão de gravação."
 
-#: src/eathena/gui/chat.cpp:925
+#: src/eathena/gui/chat.cpp:947
 msgid "Command: /toggle <state>"
-msgstr ""
+msgstr "Comando: /toggle <estado>"
 
-#: src/eathena/gui/chat.cpp:926
+#: src/eathena/gui/chat.cpp:948
 msgid ""
 "This command sets whether the return key should toggle the chat log, or "
 "whether the chat log turns off automatically."
 msgstr ""
+"Este comando define se a tecla enter deve alternar para o log do chat ou se "
+"o log do chat fica oculto automaticamente."
 
-#: src/eathena/gui/chat.cpp:929
+#: src/eathena/gui/chat.cpp:951
 msgid ""
-"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or "
-"\"0\", \"no\", \"false\" to turn the toggle off."
+"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or \"0"
+"\", \"no\", \"false\" to turn the toggle off."
 msgstr ""
+"<estado> pode ser \"1\", \"yes\" e \"true\" para ativar ou \"0\", \"no\" e "
+"\"false\" para desativar."
 
-#: src/eathena/gui/chat.cpp:932
+#: src/eathena/gui/chat.cpp:954
 msgid "Command: /toggle"
-msgstr ""
+msgstr "Comando: /toggle"
 
-#: src/eathena/gui/chat.cpp:933
+#: src/eathena/gui/chat.cpp:955
 msgid "This command displays the return toggle status."
-msgstr ""
+msgstr "Este comando mostra o status do botão alternar."
 
-#: src/eathena/gui/chat.cpp:938
+#: src/eathena/gui/chat.cpp:960
+#, fuzzy
+msgid "Command: /version"
+msgstr "Comando: /users"
+
+#: src/eathena/gui/chat.cpp:961
+#, fuzzy
+msgid "This command displays the current client version you are using."
+msgstr ""
+"Este comando exibe a atual opção de compartilhamento de itens do grupo."
+
+#: src/eathena/gui/chat.cpp:966
 msgid "Command: /where"
 msgstr "Comando: /where"
 
-#: src/eathena/gui/chat.cpp:939
+#: src/eathena/gui/chat.cpp:967
 msgid "This command displays the name of the current map."
 msgstr "Mostra o nome do mapa atual."
 
-#: src/eathena/gui/chat.cpp:944
+#: src/eathena/gui/chat.cpp:972
+#, fuzzy
 msgid "Command: /msg <nick> <msg>"
-msgstr ""
+msgstr "Comando: /msg <nick> <mensagem>"
 
-#: src/eathena/gui/chat.cpp:945
+#: src/eathena/gui/chat.cpp:973
+#, fuzzy
 msgid "Command: /whisper <nick> <msg>"
-msgstr "Comando: /whisper <nick> <msg>"
+msgstr "Comando: /whisper <nick> <mensagem>"
 
-#: src/eathena/gui/chat.cpp:946
+#: src/eathena/gui/chat.cpp:974
+#, fuzzy
 msgid "Command: /w <nick> <msg>"
-msgstr "Comando: /w <nick> <msg>"
+msgstr "Comando: /w <nick> <mensagem>"
 
-#: src/eathena/gui/chat.cpp:947
+#: src/eathena/gui/chat.cpp:975
+#, fuzzy
 msgid "This command sends the message <msg> to <nick>."
-msgstr "Envia uma mensagem <msg> para <nick>."
+msgstr "Este comando envia o texto <mensagem> para <nick>."
 
-#: src/eathena/gui/chat.cpp:949
+#: src/eathena/gui/chat.cpp:977
 msgid "If the <nick> has spaces in it, enclose it in double quotes (\")."
 msgstr "Se <nick> possuir espaços, coloque dentro de parenteses (\")."
 
-#: src/eathena/gui/chat.cpp:954
+#: src/eathena/gui/chat.cpp:982
 msgid "Command: /who"
 msgstr "Comando: /who"
 
-#: src/eathena/gui/chat.cpp:955
+#: src/eathena/gui/chat.cpp:983
 msgid "This command displays the number of players currently online."
-msgstr "Exibe o total de jogadores online."
+msgstr "Exibe o número total de jogadores online."
 
-#: src/eathena/gui/chat.cpp:961
+#: src/eathena/gui/chat.cpp:989
 msgid "Type /help for a list of commands."
 msgstr "Digite /help para uma lista de todos os comandos."
 
@@ -1364,19 +1430,19 @@ msgid "%d FPS"
 msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:53 src/eathena/gui/debugwindow.cpp:102
-#, c-format
+#, fuzzy, c-format
 msgid "Music: %s"
-msgstr ""
+msgstr "Tópico: %s"
 
 #: src/eathena/gui/debugwindow.cpp:54 src/eathena/gui/debugwindow.cpp:121
-#, c-format
+#, fuzzy, c-format
 msgid "Map: %s"
-msgstr ""
+msgstr "Nome: %s"
 
 #: src/eathena/gui/debugwindow.cpp:55 src/eathena/gui/debugwindow.cpp:119
-#, c-format
+#, fuzzy, c-format
 msgid "Minimap: %s"
-msgstr ""
+msgstr "MiniMapa"
 
 #: src/eathena/gui/debugwindow.cpp:56 src/eathena/gui/debugwindow.cpp:67
 #: src/eathena/gui/debugwindow.cpp:112
@@ -1386,23 +1452,24 @@ msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:57 src/eathena/gui/debugwindow.cpp:68
 #: src/eathena/gui/debugwindow.cpp:125
-#, c-format
+#, fuzzy, c-format
 msgid "Particle count: %d"
-msgstr ""
+msgstr "Efeitos de partícula"
 
 #: src/eathena/gui/emotewindow.cpp:43 src/eathena/gui/menubar.cpp:65
 msgid "Emote"
 msgstr ""
 
-#: src/eathena/gui/emotewindow.cpp:52 src/eathena/gui/inventorywindow.cpp:75
-#: src/eathena/gui/inventorywindow.cpp:256 src/eathena/gui/popupmenu.cpp:303
+#: src/eathena/gui/emotewindow.cpp:52 src/eathena/gui/inventorywindow.cpp:76
+#: src/eathena/gui/inventorywindow.cpp:260 src/eathena/gui/popupmenu.cpp:303
 #: src/eathena/gui/popupmenu.cpp:402 src/eathena/gui/skill.cpp:66
 msgid "Use"
 msgstr "Usar"
 
-#: src/eathena/gui/emotewindow.cpp:58 src/eathena/gui/inventorywindow.cpp:81
+#: src/eathena/gui/emotewindow.cpp:58 src/eathena/gui/inventorywindow.cpp:82
+#, fuzzy
 msgid "Shortcuts"
-msgstr ""
+msgstr "Atalho"
 
 #: src/eathena/gui/equipmentwindow.cpp:96 src/eathena/gui/menubar.cpp:62
 msgid "Equipment"
@@ -1410,71 +1477,81 @@ msgstr "Equipamento"
 
 #: src/eathena/gui/equipmentwindow.cpp:138
 #: src/eathena/gui/equipmentwindow.cpp:433
-#: src/eathena/gui/inventorywindow.cpp:256 src/eathena/gui/popupmenu.cpp:300
+#: src/eathena/gui/inventorywindow.cpp:260 src/eathena/gui/popupmenu.cpp:300
 msgid "Equip"
 msgstr "Equipar"
 
 #: src/eathena/gui/equipmentwindow.cpp:433
-#: src/eathena/gui/inventorywindow.cpp:255 src/eathena/gui/popupmenu.cpp:298
+#: src/eathena/gui/inventorywindow.cpp:259 src/eathena/gui/popupmenu.cpp:298
 msgid "Unequip"
 msgstr "Desequipar"
 
-#: src/eathena/gui/inventorywindow.cpp:57 src/eathena/gui/menubar.cpp:63
+#: src/eathena/gui/inventorywindow.cpp:58 src/eathena/gui/menubar.cpp:63
 msgid "Inventory"
 msgstr "Inventório"
 
-#: src/eathena/gui/inventorywindow.cpp:67 src/eathena/gui/popupmenu.cpp:309
+#: src/eathena/gui/inventorywindow.cpp:68 src/eathena/gui/popupmenu.cpp:309
 #: src/eathena/gui/trade.cpp:54 src/eathena/gui/trade.cpp:193
 #: src/eathena/gui/trade.cpp:207
 msgid "Trade"
-msgstr "Comércio"
+msgstr "Negócio"
 
-#: src/eathena/gui/inventorywindow.cpp:71 src/eathena/gui/popupmenu.cpp:312
+#: src/eathena/gui/inventorywindow.cpp:72 src/eathena/gui/popupmenu.cpp:312
 msgid "Store"
-msgstr ""
+msgstr "Guardar"
 
-#: src/eathena/gui/inventorywindow.cpp:78 src/eathena/gui/popupmenu.cpp:305
+#: src/eathena/gui/inventorywindow.cpp:79 src/eathena/gui/popupmenu.cpp:305
 msgid "Drop"
 msgstr "Descartar"
 
-#: src/eathena/gui/inventorywindow.cpp:93
-msgid "Slots: "
-msgstr ""
-
 #: src/eathena/gui/inventorywindow.cpp:94
+#, fuzzy
+msgid "Slots: "
+msgstr "Entradas:"
+
+#: src/eathena/gui/inventorywindow.cpp:95
 msgid "Weight: "
-msgstr ""
+msgstr "Peso: "
 
 #: src/eathena/gui/itemamount.cpp:86
 msgid "All"
-msgstr ""
+msgstr "Tudo"
 
 #: src/eathena/gui/itemamount.cpp:95 src/eathena/gui/itemamount.cpp:99
 #: src/eathena/gui/itemamount.cpp:103 src/eathena/gui/itemamount.cpp:107
-#, c-format
+#, fuzzy, c-format
 msgid "Select amount of items to %s."
-msgstr ""
+msgstr "Escolha a quantidade de itens para guardar."
 
 #: src/eathena/gui/itemamount.cpp:95
+#, fuzzy
 msgid "trade"
-msgstr ""
+msgstr "Negócio"
 
 #: src/eathena/gui/itemamount.cpp:99
+#, fuzzy
 msgid "drop"
-msgstr ""
+msgstr "Descartar"
 
 #: src/eathena/gui/itemamount.cpp:103
+#, fuzzy
 msgid "store"
-msgstr ""
+msgstr "Guardar"
 
 #: src/eathena/gui/itemamount.cpp:107
+#, fuzzy
 msgid "retrieve"
-msgstr ""
+msgstr "Retirar"
 
-#: src/eathena/gui/itempopup.cpp:88
-#, c-format
-msgid "Weight: %d grams"
-msgstr ""
+#: src/eathena/gui/itempopup.cpp:89
+#, fuzzy, c-format
+msgid "Weight: %s%s"
+msgstr "Peso: "
+
+#: src/eathena/gui/itempopup.cpp:91
+#, fuzzy
+msgid "grams"
+msgstr "Armas"
 
 #: src/eathena/gui/login.cpp:49
 msgid "Login"
@@ -1490,11 +1567,11 @@ msgstr "Porta:"
 
 #: src/eathena/gui/login.cpp:55
 msgid "Recent:"
-msgstr ""
+msgstr "Recente:"
 
 #: src/eathena/gui/login.cpp:74
 msgid "Keep"
-msgstr "Manter"
+msgstr ""
 
 #: src/eathena/gui/login.cpp:77 src/eathena/gui/register.cpp:74
 #: src/eathena/gui/register.cpp:91
@@ -1511,7 +1588,7 @@ msgstr "Habilidades"
 
 #: src/eathena/gui/minimap.cpp:52 src/eathena/gui/minimap.cpp:131
 msgid "Map"
-msgstr ""
+msgstr "Mapa"
 
 #: src/eathena/gui/npcintegerdialog.cpp:38
 #: src/eathena/gui/npcstringdialog.cpp:35
@@ -1520,24 +1597,25 @@ msgstr ""
 
 #: src/eathena/gui/npcintegerdialog.cpp:47
 msgid "Reset"
-msgstr ""
+msgstr "Resetar"
 
 #: src/eathena/gui/npclistdialog.cpp:37 src/eathena/gui/npctext.cpp:41
 msgid "NPC"
 msgstr "NPC"
 
 #: src/eathena/gui/popupmenu.cpp:315
+#, fuzzy
 msgid "Add to Item Shortcuts"
-msgstr ""
+msgstr "Atalho para Ítem %d"
 
 #: src/eathena/gui/popupmenu.cpp:318 src/eathena/gui/storagewindow.cpp:66
 msgid "Retrieve"
-msgstr ""
+msgstr "Retirar"
 
 #: src/eathena/gui/popupmenu.cpp:320
-#, c-format
+#, fuzzy, c-format
 msgid "Pick Up %s"
-msgstr ""
+msgstr "@@pegar|Pegar %s@@"
 
 #: src/eathena/gui/popupmenu.cpp:325
 msgid "Hide Item Info"
@@ -1548,56 +1626,59 @@ msgid "Show Item Info"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:330
+#, fuzzy
 msgid "Add to Chat"
-msgstr ""
+msgstr "@@chat|Adicionar ao chat@@"
 
 #: src/eathena/gui/popupmenu.cpp:338
+#, fuzzy
 msgid "Add name to chat"
-msgstr ""
+msgstr "@@name|Adiciona nome ao chat@@"
 
 #: src/eathena/gui/popupmenu.cpp:351
-#, c-format
+#, fuzzy, c-format
 msgid "Trade With %s"
-msgstr ""
+msgstr "Negociando com %s"
 
 #: src/eathena/gui/popupmenu.cpp:352 src/eathena/gui/popupmenu.cpp:390
-#, c-format
+#, fuzzy, c-format
 msgid "Attack %s"
-msgstr ""
+msgstr "Ataque %+d"
 
 #: src/eathena/gui/popupmenu.cpp:359
-#, c-format
+#, fuzzy, c-format
 msgid "Befriend %s"
-msgstr ""
+msgstr "@@friend|Fazer amizade com %s@@"
 
 #: src/eathena/gui/popupmenu.cpp:362
-#, c-format
+#, fuzzy, c-format
 msgid "Disregard %s"
-msgstr ""
+msgstr "Desconsiderado"
 
 #: src/eathena/gui/popupmenu.cpp:363
-#, c-format
+#, fuzzy, c-format
 msgid "Ignore %s"
-msgstr ""
+msgstr "Ignorado"
 
 #: src/eathena/gui/popupmenu.cpp:367
-#, c-format
+#, fuzzy, c-format
 msgid "Un-Ignore %s"
-msgstr ""
+msgstr "@@unignore|Deixar de ignorar %s@@"
 
 #: src/eathena/gui/popupmenu.cpp:370
-#, c-format
+#, fuzzy, c-format
 msgid "Completely ignore %s"
-msgstr ""
+msgstr "@@ignore|Ignorar completamente %s@@"
 
 #: src/eathena/gui/popupmenu.cpp:385
-#, c-format
+#, fuzzy, c-format
 msgid "Talk To %s"
-msgstr ""
+msgstr "@@talk|Falar com %s@@"
 
 #: src/eathena/gui/popupmenu.cpp:403
+#, fuzzy
 msgid "Add to Emote Shortcuts"
-msgstr ""
+msgstr "Atalho para Emoticon %d"
 
 #: src/eathena/gui/register.cpp:79
 msgid "Confirm:"
@@ -1654,20 +1735,24 @@ msgid "Up"
 msgstr "Acima"
 
 #: src/eathena/gui/skill.cpp:65
+#, fuzzy
 msgid "inc"
-msgstr ""
+msgstr "em chat"
 
 #: src/eathena/gui/skill.cpp:66
+#, fuzzy
 msgid "use"
-msgstr ""
+msgstr "Pulso"
 
 #: src/eathena/gui/slotselection.cpp:50
+#, fuzzy
 msgid "Select item shortcut slot to use."
-msgstr ""
+msgstr "Escolha a quantidade de itens para guardar."
 
 #: src/eathena/gui/slotselection.cpp:53
+#, fuzzy
 msgid "Select emote shortcut slot to use."
-msgstr ""
+msgstr "Escolha a quantidade de itens para guardar."
 
 #: src/eathena/gui/status.cpp:50 src/eathena/gui/status.cpp:190
 #, c-format
@@ -1675,25 +1760,25 @@ msgid "Job: %d"
 msgstr "Trabalho: %d"
 
 #: src/eathena/gui/status.cpp:51 src/eathena/gui/status.cpp:193
-#, c-format
+#, fuzzy, c-format
 msgid "Money: %d GP"
-msgstr "Dinheiro: %d GP"
+msgstr "Dinheiro: %d"
 
 #: src/eathena/gui/status.cpp:53
 msgid "HP:"
-msgstr ""
+msgstr "HP:"
 
 #: src/eathena/gui/status.cpp:58
 msgid "Exp:"
-msgstr ""
+msgstr "Exp:"
 
 #: src/eathena/gui/status.cpp:61
 msgid "MP:"
-msgstr ""
+msgstr "MP:"
 
 #: src/eathena/gui/status.cpp:66
 msgid "Job:"
-msgstr ""
+msgstr "Trabalho:"
 
 #: src/eathena/gui/status.cpp:74
 msgid "Stats"
@@ -1768,17 +1853,17 @@ msgstr "Pontos de Status Restantes: %d"
 
 #: src/eathena/gui/storagewindow.cpp:55
 msgid "Storage"
-msgstr ""
+msgstr "Armazenamento"
 
 #: src/eathena/gui/storagewindow.cpp:79
 msgid "Slots:"
-msgstr ""
+msgstr "Entradas:"
 
 #: src/eathena/gui/trade.cpp:82 src/eathena/gui/trade.cpp:127
 #: src/eathena/gui/trade.cpp:179
-#, c-format
+#, fuzzy, c-format
 msgid "You get %d GP."
-msgstr "Voc pegou %d GP."
+msgstr "Você obteve %s"
 
 #: src/eathena/gui/trade.cpp:83
 msgid "You give:"
@@ -1798,47 +1883,49 @@ msgstr "Jogar"
 
 #: src/eathena/gui/tabs/setup_game.cpp:48
 msgid "Show name"
-msgstr ""
+msgstr "Mostrar nome"
 
 #: src/eathena/gui/tabs/setup_game.cpp:57
 msgid "Show pickup notification"
-msgstr ""
+msgstr "Mostrar aviso de achado"
 
 #: src/eathena/gui/tabs/setup_game.cpp:58
 msgid "in chat"
-msgstr ""
+msgstr "em chat"
 
 #: src/eathena/gui/tabs/setup_game.cpp:59
 msgid "as particle"
-msgstr ""
+msgstr "como partícula"
 
 #: src/eathena/gui/tabs/setup_game.cpp:62
+#, fuzzy
 msgid "Game"
-msgstr ""
+msgstr "Nome"
 
 #: src/eathena/gui/tabs/setup_game.cpp:71
 msgid "Overhead text"
-msgstr ""
+msgstr "Texto sobrescrito"
 
 #: src/eathena/gui/tabs/setup_game.cpp:72
 msgid "Ambient FX"
 msgstr "Ambiente FX"
 
 #: src/eathena/gui/tabs/setup_game.cpp:73
+#, fuzzy
 msgid "Particle detail"
-msgstr ""
+msgstr "Detalhe de partículas"
 
 #: src/eathena/gui/tabs/setup_game.cpp:220
 msgid "No text"
-msgstr ""
+msgstr "Sem texto"
 
 #: src/eathena/gui/tabs/setup_game.cpp:226
 msgid "Bubbles, no names"
-msgstr ""
+msgstr "Bolhas, sem nomes"
 
 #: src/eathena/gui/tabs/setup_game.cpp:229
 msgid "Bubbles with names"
-msgstr ""
+msgstr "Bolhas com nomes"
 
 #: src/eathena/gui/tabs/setup_game.cpp:241
 #: src/eathena/gui/tabs/setup_game.cpp:259
@@ -1877,7 +1964,7 @@ msgstr "Permitir trocas"
 
 #: src/eathena/gui/tabs/setup_players.cpp:77
 msgid "Allow whispers"
-msgstr "Permitir sussuros"
+msgstr "Permitir mensagens particular"
 
 #: src/eathena/gui/tabs/setup_players.cpp:81
 msgid "Players"
@@ -1905,83 +1992,91 @@ msgstr "Ignorado"
 
 #: src/eathena/net/buysellhandler.cpp:111
 msgid "Nothing to sell."
-msgstr ""
+msgstr "Nada para vender."
 
 #: src/eathena/net/buysellhandler.cpp:119
 msgid "Thanks for buying."
-msgstr ""
+msgstr "Obrigado pela compra."
 
 #: src/eathena/net/buysellhandler.cpp:126
 msgid "Unable to buy."
-msgstr ""
+msgstr "Impossível comprar."
 
 #: src/eathena/net/buysellhandler.cpp:132
 msgid "Thanks for selling."
-msgstr ""
+msgstr "Obrigado pela venda."
 
 #: src/eathena/net/buysellhandler.cpp:134
 msgid "Unable to sell."
-msgstr ""
+msgstr "Impossibilitado de vender."
 
 #: src/eathena/net/charserverhandler.cpp:79
+#, fuzzy
 msgid "Authentication failed."
-msgstr ""
+msgstr "Falha de autenticação"
 
 #: src/eathena/net/charserverhandler.cpp:82
 msgid "Map server(s) offline."
 msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:85
+#, fuzzy
 msgid "This account is already logged in."
-msgstr ""
+msgstr "Existe alguém logado a esta conta"
 
 #: src/eathena/net/charserverhandler.cpp:88
+#, fuzzy
 msgid "Speed hack detected."
-msgstr ""
+msgstr "Hack de velocidade detectado"
 
 #: src/eathena/net/charserverhandler.cpp:91
+#, fuzzy
 msgid "Duplicated login."
-msgstr ""
+msgstr "Login duplicado"
 
 #: src/eathena/net/charserverhandler.cpp:94
+#, fuzzy
 msgid "Unknown connection error."
-msgstr ""
+msgstr "Erro de conexão desconhecido"
 
 #: src/eathena/net/charserverhandler.cpp:125
+#, fuzzy
 msgid "Access denied."
-msgstr ""
+msgstr "Acesso negado"
 
 #: src/eathena/net/charserverhandler.cpp:128
+#, fuzzy
 msgid "Cannot use this ID."
-msgstr ""
+msgstr "Não é possível usar este ID"
 
 #: src/eathena/net/charserverhandler.cpp:131
+#, fuzzy
 msgid "Unknown failure to select character."
-msgstr ""
+msgstr "Erro desconhecido ao selecionar personagem"
 
 #: src/eathena/net/charserverhandler.cpp:153
 msgid "Failed to create character. Most likely the name is already taken."
-msgstr ""
+msgstr "Erro ao criar personagem. Provavelmente o nome já está sendo usado."
 
 #: src/eathena/net/charserverhandler.cpp:166
 msgid "Info"
-msgstr ""
+msgstr "Informações"
 
 #: src/eathena/net/charserverhandler.cpp:166
 msgid "Character deleted."
-msgstr ""
+msgstr "Personagem deletado."
 
 #: src/eathena/net/charserverhandler.cpp:171
 msgid "Failed to delete character."
-msgstr ""
+msgstr "Falha ao deletar personagem."
 
 #: src/eathena/net/chathandler.cpp:76
 msgid "Whisper could not be sent, user is offline."
-msgstr ""
+msgstr "Impossível enviar mensagem privada, o usuário está desconectado."
 
 #: src/eathena/net/chathandler.cpp:79
 msgid "Whisper could not be sent, ignored by user."
-msgstr ""
+msgstr "Impossível enviar mensagem privada, você foi ignorado pelo usuário."
 
 #: src/eathena/net/chathandler.cpp:160
 #, c-format
@@ -1989,66 +2084,69 @@ msgid "Online users: %d"
 msgstr ""
 
 #: src/eathena/net/chathandler.cpp:167
+#, fuzzy
 msgid "MVP player"
-msgstr ""
+msgstr "Jogador"
 
 #: src/eathena/net/equipmenthandler.cpp:110
 msgid "Unable to equip."
-msgstr ""
+msgstr "Impossível equipar."
 
 #: src/eathena/net/equipmenthandler.cpp:153
 msgid "Unable to unequip."
-msgstr ""
+msgstr "Impossível desequipar."
 
 #: src/eathena/net/inventoryhandler.cpp:163
 msgid "Unable to pick up item."
-msgstr ""
+msgstr "Impossível pegar ítem."
 
 #: src/eathena/net/inventoryhandler.cpp:172
-#, c-format
+#, fuzzy, c-format
 msgid "You picked up %s [%s]."
-msgstr ""
+msgstr "Você pegou %s [@@%d|%s@@]."
 
 #: src/eathena/net/inventoryhandler.cpp:219
 msgid "Failed to use item."
-msgstr ""
+msgstr "Problemas ao usar ítem."
 
 #: src/eathena/net/loginhandler.cpp:66 src/eathena/net/maploginhandler.cpp:65
 msgid "Authentication failed"
-msgstr ""
+msgstr "Falha de autenticação"
 
 #: src/eathena/net/loginhandler.cpp:69
 msgid "No servers available"
-msgstr ""
+msgstr "Não há servidores disponíveis"
 
 #: src/eathena/net/loginhandler.cpp:72 src/eathena/net/maploginhandler.cpp:68
 msgid "This account is already logged in"
-msgstr ""
+msgstr "Existe alguém logado a esta conta"
 
 #: src/eathena/net/loginhandler.cpp:75 src/eathena/net/maploginhandler.cpp:71
 msgid "Unknown connection error"
-msgstr ""
+msgstr "Erro de conexão desconhecido"
 
 #: src/eathena/net/loginhandler.cpp:131
 msgid "Unregistered ID"
-msgstr ""
+msgstr "ID não registrado"
 
 #: src/eathena/net/loginhandler.cpp:134
 msgid "Wrong password"
-msgstr ""
+msgstr "Senha incorreta"
 
 #: src/eathena/net/loginhandler.cpp:137
 msgid "Account expired"
-msgstr ""
+msgstr "A conta expirou"
 
 #: src/eathena/net/loginhandler.cpp:140
 msgid "Rejected from server"
-msgstr ""
+msgstr "Rejeitado pelo servidor"
 
 #: src/eathena/net/loginhandler.cpp:144
 msgid ""
 "You have been permanently banned from the game. Please contact the GM Team."
 msgstr ""
+"Você foi permanentemente banido do jogo. Por favor entre em contato com "
+"algum GM."
 
 #: src/eathena/net/loginhandler.cpp:148
 #, c-format
@@ -2056,99 +2154,106 @@ msgid ""
 "You have been temporarily banned from the game until %s.\n"
 "Please contact the GM team via the forums."
 msgstr ""
+"Você banido do jogo até %s.\n"
+"Por favor entre em contato com algum GM através dos fóruns."
 
 #: src/eathena/net/loginhandler.cpp:155
 msgid "This user name is already taken"
-msgstr ""
+msgstr "Este nome de usuário já está em uso"
 
 #: src/eathena/net/loginhandler.cpp:158
 msgid "Unknown error"
-msgstr ""
+msgstr "Erro desconhecido"
 
 #: src/eathena/net/playerhandler.cpp:107
 msgid "You are dead."
-msgstr ""
+msgstr "Você está morto."
 
 #: src/eathena/net/playerhandler.cpp:108
 msgid "We regret to inform you that your character was killed in battle."
-msgstr ""
+msgstr "Lamentamos informar que seu personagem foi morto em combate."
 
 #: src/eathena/net/playerhandler.cpp:110
 msgid "You are not that alive anymore."
-msgstr ""
+msgstr "Você não está mais tão vivo."
 
 #: src/eathena/net/playerhandler.cpp:111
 msgid "The cold hands of the grim reaper are grabbing for your soul."
-msgstr ""
+msgstr "As mãos frias da morte estão levando sua alma."
 
 #: src/eathena/net/playerhandler.cpp:112
 msgid "Game Over!"
-msgstr ""
+msgstr "Fim de jogo!"
 
 #: src/eathena/net/playerhandler.cpp:113
+#, fuzzy
 msgid "Insert coin to continue"
-msgstr ""
+msgstr "Insira uma moeda para continuar."
 
 #: src/eathena/net/playerhandler.cpp:114
 msgid ""
 "No, kids. Your character did not really die. It... err... went to a better "
 "place."
 msgstr ""
+"Não, crianças. Seu personagem não morreu de verdade. Ele... err... foi para "
+"um lugar melhor."
 
 #: src/eathena/net/playerhandler.cpp:116
 msgid ""
 "Your plan of breaking your enemies weapon by bashing it with your throat "
 "failed."
 msgstr ""
+"Seu plano de quebrar as armas de seus inimigos com o seu pescoço não deu "
+"certo."
 
 #: src/eathena/net/playerhandler.cpp:118
 msgid "I guess this did not run too well."
-msgstr ""
+msgstr "Eu acho que isso não funcionou muito bem."
 
 #: src/eathena/net/playerhandler.cpp:120
 msgid "Do you want your possessions identified?"
-msgstr ""
+msgstr "Você quer uma identificação de suas posses?"
 
 #: src/eathena/net/playerhandler.cpp:122
 msgid "Sadly, no trace of you was ever found..."
-msgstr ""
+msgstr "Infelizmente, seus traços nunca foram encontrados..."
 
 #: src/eathena/net/playerhandler.cpp:124
 msgid "Annihilated."
-msgstr ""
+msgstr "Aniquilado."
 
 #: src/eathena/net/playerhandler.cpp:126
 msgid "Looks like you got your head handed to you."
-msgstr ""
+msgstr "Parece que te ofereceram sua própria cabeça."
 
 #: src/eathena/net/playerhandler.cpp:128
 msgid ""
 "You screwed up again, dump your body down the tubes and get you another one."
-msgstr ""
+msgstr "Você estragou tudo de novo, jogue fora seu corpo e arranje outro."
 
 #: src/eathena/net/playerhandler.cpp:131
 msgid "You're not dead yet. You're just resting."
-msgstr ""
+msgstr "Você não morreu ainda. Está apenas descansando."
 
 #: src/eathena/net/playerhandler.cpp:132
 msgid "You are no more."
-msgstr ""
+msgstr "Você não é mais."
 
 #: src/eathena/net/playerhandler.cpp:133
 msgid "You have ceased to be."
-msgstr ""
+msgstr "Você deixou de ser."
 
 #: src/eathena/net/playerhandler.cpp:134
 msgid "You've expired and gone to meet your maker."
-msgstr ""
+msgstr "Você expirou e foi encontrar seu criador."
 
 #: src/eathena/net/playerhandler.cpp:135
 msgid "You're a stiff."
-msgstr ""
+msgstr "Você é um cadáver."
 
 #: src/eathena/net/playerhandler.cpp:136
 msgid "Bereft of life, you rest in peace."
-msgstr ""
+msgstr "Sem vida, você descansa em paz."
 
 #: src/eathena/net/playerhandler.cpp:137
 msgid "If you weren't so animated, you'd be pushing up the daisies."
@@ -2156,7 +2261,7 @@ msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:138
 msgid "Your metabolic processes are now history."
-msgstr ""
+msgstr "Seus processos metabólicos agora são história."
 
 #: src/eathena/net/playerhandler.cpp:139
 msgid "You're off the twig."
@@ -2164,7 +2269,7 @@ msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:140
 msgid "You've kicked the bucket."
-msgstr ""
+msgstr "Você chutou o balde."
 
 #: src/eathena/net/playerhandler.cpp:141
 msgid ""
@@ -2174,7 +2279,7 @@ msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:143
 msgid "You are an ex-player."
-msgstr ""
+msgstr "Você é um ex-jogador"
 
 #: src/eathena/net/playerhandler.cpp:144
 msgid "You're pining for the fjords."
@@ -2182,52 +2287,54 @@ msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:255 src/eathena/net/playerhandler.cpp:278
 msgid "Message"
-msgstr ""
+msgstr "Mensagem"
 
 #: src/eathena/net/playerhandler.cpp:256
 msgid ""
 "You are carrying more than half your weight. You are unable to regain health."
 msgstr ""
+"Você está carregando mais que a metade de seu peso. Você não poderá mais "
+"recuperar HP."
 
 #: src/eathena/net/playerhandler.cpp:301
-#, c-format
+#, fuzzy, c-format
 msgid "You picked up %d GP"
-msgstr ""
+msgstr "Você pegou "
 
 #: src/eathena/net/playerhandler.cpp:387
 msgid "Equip arrows first."
-msgstr ""
+msgstr "Equipe as flechas primeiro."
 
 #: src/eathena/net/tradehandler.cpp:97
 msgid "Request for Trade"
-msgstr ""
+msgstr "Proposta de negociação"
 
 #: src/eathena/net/tradehandler.cpp:98
 #, c-format
 msgid "%s wants to trade with you, do you accept?"
-msgstr ""
+msgstr "%s quer negociar com você, você aceita?"
 
 #: src/eathena/net/tradehandler.cpp:115
 msgid "Trading isn't possible. Trade partner is too far away."
-msgstr ""
+msgstr "Negociação impossível. O parceiro de negócios está muito longe."
 
 #: src/eathena/net/tradehandler.cpp:119
 msgid "Trading isn't possible. Character doesn't exist."
-msgstr ""
+msgstr "Negociação impossível. O personagem não existe."
 
 #: src/eathena/net/tradehandler.cpp:123
 msgid "Trade cancelled due to an unknown reason."
-msgstr ""
+msgstr "Negociação cancelada devido a uma razão desconhecida."
 
 #: src/eathena/net/tradehandler.cpp:128
 #, c-format
 msgid "Trade: You and %s"
-msgstr ""
+msgstr "Negociação: Você e %s"
 
 #: src/eathena/net/tradehandler.cpp:135
 #, c-format
 msgid "Trade with %s cancelled."
-msgstr ""
+msgstr "Negociação com %s cancelada."
 
 #: src/eathena/net/tradehandler.cpp:145
 msgid "Unhandled trade cancel packet."
@@ -2235,28 +2342,28 @@ msgstr ""
 
 #: src/eathena/net/tradehandler.cpp:193
 msgid "Failed adding item. Trade partner is over weighted."
-msgstr ""
+msgstr "Erro ao adicionar item. Parceiro de negócios carregando muito peso."
 
 #: src/eathena/net/tradehandler.cpp:199
 msgid "Failed adding item. Trade partner has no free slot."
-msgstr ""
+msgstr "Erro ao adicionar item. Parceiro de negócios não tem slots livres."
 
 #: src/eathena/net/tradehandler.cpp:204
 msgid "Failed adding item for unknown reason."
-msgstr ""
+msgstr "Erro ao adicionar item devido a um motivo desconhecido."
 
 #: src/eathena/net/tradehandler.cpp:217
 msgid "Trade canceled."
-msgstr ""
+msgstr "Negociação cancelada."
 
 #: src/eathena/net/tradehandler.cpp:224
 msgid "Trade completed."
-msgstr ""
+msgstr "Negociação realizada."
 
 #: src/engine.cpp:127
-#, c-format
+#, fuzzy, c-format
 msgid "%s can't be created, but it doesn't exist! Exiting."
-msgstr ""
+msgstr " não foi possível criar, mas ela não existe! Saindo."
 
 #: src/engine.cpp:145
 msgid "Could not initialize SDL: "
@@ -2278,56 +2385,67 @@ msgid "Couldn't set %dx%dx%d video mode: %s"
 msgstr ""
 
 #: src/main.cpp:97
+#, fuzzy
 msgid "Options: "
-msgstr ""
+msgstr "Opções:"
 
 #: src/main.cpp:98
+#, fuzzy
 msgid "  -C --configfile\t: Configuration file to use"
-msgstr ""
+msgstr "  -C --config-file : Arquivo de configuração a ser usado"
 
 #: src/main.cpp:99
+#, fuzzy
 msgid "  -d --data\t\t: Directory to load game data from"
-msgstr ""
+msgstr "  -d --data : Pasta de onde os dados do jogo vão ser carregados"
 
 #: src/main.cpp:101
 msgid "  -D --default\t\t: Bypass the login process with default settings"
 msgstr ""
 
 #: src/main.cpp:103
+#, fuzzy
 msgid "  -h --help\t\t: Display this help"
-msgstr ""
+msgstr "  -h --help : Exibe esta ajuda"
 
 #: src/main.cpp:104
+#, fuzzy
 msgid "  -H --updatehost\t: Use this update host"
-msgstr ""
+msgstr "  -H --update-host : Usa este host de update"
 
 #: src/main.cpp:105
+#, fuzzy
 msgid "  -p --playername\t: Login with this player"
-msgstr ""
+msgstr "  -U --username : Efetua login com este usuário"
 
 #: src/main.cpp:106
+#, fuzzy
 msgid "  -P --password\t\t: Login with this password"
-msgstr ""
+msgstr "  -P --password : Efetua login com esta senha"
 
 #: src/main.cpp:107
+#, fuzzy
 msgid "  -u --skipupdate\t: Skip the update downloads"
-msgstr ""
+msgstr "  -u --skip-update : Não faz downloads de atualização"
 
 #: src/main.cpp:108
+#, fuzzy
 msgid "  -U --username\t\t: Login with this username"
-msgstr ""
+msgstr "  -U --username : Efetua login com este usuário"
 
 #: src/main.cpp:110
+#, fuzzy
 msgid "  -O --no-opengl\t: Disable OpenGL for this session"
-msgstr ""
+msgstr "  -O --no-opengl : Desabilita OpenGL nesta sessão"
 
 #: src/main.cpp:113
 msgid "  -O --no-opengl\t: Default (OpenGL has been disabled at build time)"
 msgstr ""
 
 #: src/main.cpp:116
+#, fuzzy
 msgid "  -v --version\t\t: Display the version"
-msgstr ""
+msgstr "  -v --version : Exibe a versão"
 
 #: src/main.cpp:118
 msgid "Report bugs at: http://www.aethyra.org/mantis"
@@ -2345,19 +2463,14 @@ msgstr ""
 msgid "IRC: irc.freenode.net\tChannel: #aethyra"
 msgstr ""
 
-#: src/main.cpp:132
-#, c-format
-msgid "Aethyra - Version %s"
-msgstr ""
-
 #: src/main.cpp:134
 msgid "\tCopyright (C) 2008-2009  Aethyra Development Team"
 msgstr ""
 
 #: src/main.cpp:136
 msgid ""
-"License GPLv2+: GNU GPL version 2 or later "
-"<http://gnu.org/licenses/gpl2.html>"
+"License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl2."
+"html>"
 msgstr ""
 
 #: src/main.cpp:138
@@ -2369,8 +2482,7 @@ msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
 #: src/main.cpp:207
-msgid ""
-"--no-opengl is set by default (OpenGL has been disabled at build time)"
+msgid "--no-opengl is set by default (OpenGL has been disabled at build time)"
 msgstr ""
 
 #: src/main.cpp:346
@@ -2384,140 +2496,3 @@ msgstr "Conectando ao servidor de personagens..."
 #: src/main.cpp:447
 msgid "Connecting to map server..."
 msgstr "Conectando ao servidor de mapas..."
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "Unknown command"
-#~ msgstr "Comando desconhecido"
-
-#~ msgid "Select amount of items to drop."
-#~ msgstr "Selecionar montante de itens para descartar."
-
-#~ msgid "MiniMap"
-#~ msgstr "MiniMapa"
-
-#~ msgid "@@talk|Talk To NPC@@"
-#~ msgstr "@@falar|Falar com NPC@@"
-
-#~ msgid "@@cancel|Cancel@@"
-#~ msgstr "@@cancelar|Cancelar@@"
-
-#~ msgid "@@use|Unequip@@"
-#~ msgstr "@@usar|Desequipar@@"
-
-#~ msgid "@@use|Equip@@"
-#~ msgstr "@@usar|Equipar@@"
-
-#~ msgid "@@use|Use@@"
-#~ msgstr "@@usar|Usar@@"
-
-#~ msgid "@@drop|Drop@@"
-#~ msgstr "@@descartar|Descartar@@"
-
-#~ msgid "Video"
-#~ msgstr "Vídeo"
-
-#~ msgid "Joystick"
-#~ msgstr "Joystick"
-
-#~ msgid "Keyboard"
-#~ msgstr "Teclado"
-
-#~ msgid "Save player list"
-#~ msgstr "Salvar lista de jogadores"
-
-#~ msgid "Scroll radius"
-#~ msgstr "Rolar radius"
-
-#~ msgid "Scroll laziness"
-#~ msgstr "Rolar Laziness"
-
-#~ msgid "Add"
-#~ msgstr "Adicionar"
-
-#~ msgid ""
-#~ "Failed adding item. You can not overlap one kind of item on the window."
-#~ msgstr ""
-#~ "Falha ao adicionar item. Você não pode duplicar um tipo de item na janela."
-
-#~ msgid "Completed"
-#~ msgstr "Concluído"
-
-#~ msgid "Unnamed"
-#~ msgstr "Sem nome"
-
-#~ msgid "Slots used: %d / %d"
-#~ msgstr "Slots usados: %d/%d"
-
-#~ msgid "@@description|Description@@"
-#~ msgstr "@@descrição|Descrição@@"
-
-#~ msgid "Remember Username"
-#~ msgstr "Lembrar nome de usuário"
-
-#~ msgid "Mystery Skill"
-#~ msgstr "Habilidade Mistério"
-
-#~ msgid "Change"
-#~ msgstr "Mudar"
-
-#~ msgid "Willpower:"
-#~ msgstr "Força de Vontade:"
-
-#~ msgid "Please distribute %d points"
-#~ msgstr "Por favor distribua %d pontos"
-
-#~ msgid "Character stats OK"
-#~ msgstr "Status do personagem OK"
-
-#~ msgid "Please remove %d points"
-#~ msgstr "Por favor remova %d pontos"
-
-#~ msgid "@@split|Split@@"
-#~ msgstr "@@dividir|Dividir@@"
-
-#~ msgid "Switch server"
-#~ msgstr "Trocar servidor"
-
-#~ msgid "Switch character"
-#~ msgstr "Trocar de Personagem"
-
-#~ msgid "Email:"
-#~ msgstr "Email:"
-
-#~ msgid "Choose your Mana World Server"
-#~ msgstr "Escolha seu Servidor de Mana World"
-
-#~ msgid "Please type both the address and the port of a server."
-#~ msgstr "Por favor especifique ambos os Endereços e a Porta do servidor"
-
-#~ msgid "Propose trade"
-#~ msgstr "Propor negócio"
-
-#~ msgid "Confirm trade"
-#~ msgstr "Confirmar negócio"
-
-#~ msgid "HP %+d"
-#~ msgstr "HP %+d"
-
-#~ msgid "MP %+d"
-#~ msgstr "MP %+d"
-
-#~ msgid "Confirm"
-#~ msgstr "Confirmar"
-
-#~ msgid "Charisma:"
-#~ msgstr "Carisma:"
-
-#~ msgid "Total Weight: %d - Maximum Weight: %d"
-#~ msgstr "Peso Total: %d - Peso Máximo: %d"
-
-#~ msgid "Account and Character Management"
-#~ msgstr "Gerenciamento de Conta e Personagem"
-
-#~ msgid "Change Email Address"
-#~ msgstr "Alterar e-mail"
-
-#~ msgid "Guilds"
-#~ msgstr "Guildas"
