@@ -1,25 +1,24 @@
-# Simplified Chinese translation for tmw
+# Simplified Chinese translation for aethyra
 # Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
-# This file is distributed under the same license as the tmw package.
+# This file is distributed under the same license as the aethyra package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: tmw\n"
+"Project-Id-Version: aethyra\n"
 "Report-Msgid-Bugs-To: irarice@gmail.com\n"
-"POT-Creation-Date: 2010-01-07 13:25-0700\n"
-"PO-Revision-Date: 2009-01-21 22:42+0800\n"
-"Last-Translator: Hong Hao <oahong@gmail.com>\n"
-"Language-Team: Simplified Chinese <themanaworld-devel@lists.sourceforge."
-"net>\n"
+"POT-Creation-Date: 2010-01-07 13:55-0700\n"
+"PO-Revision-Date: 2010-01-08 18:58+0000\n"
+"Last-Translator: Hong Hao <Unknown>\n"
+"Language-Team: Simplified Chinese <themanaworld-"
+"devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-01-21 13:16+0000\n"
+"X-Launchpad-Export-Date: 2010-01-20 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"Plural-Forms: nplurals=2; plural=1;\n"
-"X-Poedit-Language: Chinese\n"
 "X-Poedit-Country: China\n"
+"X-Poedit-Language: Chinese\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bindings/curl/downloadwrapper.cpp:248
@@ -32,18 +31,16 @@ msgid "Screenshot saved to ~/"
 msgstr ""
 
 #: src/bindings/guichan/graphics.cpp:144
-#, fuzzy
 msgid "Saving screenshot failed!"
-msgstr "原地休息失败！"
+msgstr ""
 
 #: src/bindings/guichan/gui.cpp:239
 msgid "Screen resolution changed"
 msgstr ""
 
 #: src/bindings/guichan/gui.cpp:240
-#, fuzzy
 msgid "Restart your client for the change to take effect."
-msgstr "重启生效"
+msgstr ""
 
 #: src/bindings/guichan/inputmanager.cpp:265
 #: src/bindings/sdl/keyboardconfig.cpp:99 src/eathena/gui/buy.cpp:73
@@ -52,9 +49,8 @@ msgid "Quit"
 msgstr "退出"
 
 #: src/bindings/guichan/inputmanager.cpp:265
-#, fuzzy
 msgid "Are you sure you want to quit?"
-msgstr "你确定想删除这个角色？"
+msgstr ""
 
 #: src/bindings/guichan/inputmanager.cpp:487
 msgid "Ignoring incoming trade requests"
@@ -65,9 +61,8 @@ msgid "Accepting incoming trade requests"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:80 src/eathena/gui/tabs/setup_game.cpp:223
-#, fuzzy
 msgid "Text"
-msgstr "下一个"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:81
 msgid "Text Shadow"
@@ -86,14 +81,12 @@ msgid "Background"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:87
-#, fuzzy
 msgid "Highlight"
-msgstr "高"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:88
-#, fuzzy
 msgid "Tab Highlight"
-msgstr "高"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:89
 msgid "Item too expensive"
@@ -104,37 +97,32 @@ msgid "Item is equipped"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:92
-#, fuzzy
 msgid "Chat"
-msgstr "建立"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:93
 msgid "GM"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:94
-#, fuzzy
 msgid "Player"
-msgstr "玩家"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:95
-#, fuzzy
 msgid "Whisper"
-msgstr "%s悄悄对你说："
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:96
 msgid "Is"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:97
-#, fuzzy
 msgid "Party"
-msgstr "开始"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:98
-#, fuzzy
 msgid "Server"
-msgstr "服务器："
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:99
 msgid "Logger"
@@ -153,28 +141,24 @@ msgid "Other Player's Names"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:104
-#, fuzzy
 msgid "Own Name"
-msgstr "姓名"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:105
-#, fuzzy
 msgid "GM Names"
-msgstr "姓名"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:106
-#, fuzzy
 msgid "NPCs"
-msgstr "NPC"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:107
 msgid "Monsters"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:109
-#, fuzzy
 msgid "Unknown Item Type"
-msgstr "未知指令"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:110
 msgid "Generic"
@@ -185,37 +169,32 @@ msgid "Hat"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:112
-#, fuzzy
 msgid "Usable"
-msgstr "使用"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:113
-#, fuzzy
 msgid "Shirt"
-msgstr "分离"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:114
 msgid "1 Handed Weapons"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:115
-#, fuzzy
 msgid "Pants"
-msgstr "开始"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:116
-#, fuzzy
 msgid "Shoes"
-msgstr "商店"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:117
 msgid "2 Handed Weapons"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:118
-#, fuzzy
 msgid "Shield"
-msgstr "出售"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:119
 msgid "Ring"
@@ -230,9 +209,8 @@ msgid "Ammo"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:123
-#, fuzzy
 msgid "Particle Effects"
-msgstr "纹理细节"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:124
 msgid "Pickup Notification"
@@ -251,9 +229,8 @@ msgid "Monster hits Player"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:130
-#, fuzzy
 msgid "Critical Hit"
-msgstr "生命"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:131
 msgid "Misses"
@@ -333,9 +310,8 @@ msgid "This is what the color looks like"
 msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:49
-#, fuzzy
 msgid "Colors"
-msgstr "关闭"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:70
 msgid "Type: "
@@ -343,16 +319,14 @@ msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:82
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:416
-#, fuzzy
 msgid "Static"
-msgstr "状态"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:84
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:85
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:419
-#, fuzzy
 msgid "Pulse"
-msgstr "使用"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:86
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:87
@@ -363,9 +337,8 @@ msgstr ""
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:88
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:89
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:425
-#, fuzzy
 msgid "Spectrum"
-msgstr "设置"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:93
 msgid "Delay: "
@@ -408,9 +381,8 @@ msgid "Gui opacity"
 msgstr "Gui 透明度"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:87
-#, fuzzy
 msgid "Mouse opacity"
-msgstr "Gui 透明度"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:88
 msgid "Font size"
@@ -433,9 +405,8 @@ msgid "windowed"
 msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
-#, fuzzy
 msgid "fullscreen"
-msgstr "全屏"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:210
 msgid "Switching to full screen"
@@ -484,9 +455,8 @@ msgid "Key Conflict(s) Detected."
 msgstr "检测到按键冲突。"
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:126
-#, fuzzy
 msgid "Resolve them, or gameplay may result in strange behavior."
-msgstr "解决按键冲突，否者游戏过程中可能发生奇怪行为。"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:185
 msgid "Stop"
@@ -513,32 +483,28 @@ msgid "Move Right"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:47
-#, fuzzy
 msgid "Attack"
-msgstr "攻击:"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:48
 msgid "Emote Meta Key"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:49
-#, fuzzy
 msgid "Stop Attack"
-msgstr "攻击:"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:50
-#, fuzzy
 msgid "Target Monster"
-msgstr "玩家"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:51
 msgid "Target NPC"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:52
-#, fuzzy
 msgid "Target Player"
-msgstr "玩家"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:53
 msgid "Being Menu"
@@ -549,14 +515,12 @@ msgid "Pickup"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:55
-#, fuzzy
 msgid "Hide Windows"
-msgstr "重置窗口"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:56
-#, fuzzy
 msgid "Sit"
-msgstr "分离"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:57
 msgid "Screenshot"
@@ -571,38 +535,32 @@ msgid "Find Path to Mouse"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:60
-#, fuzzy
 msgid "Chat Window"
-msgstr "重置窗口"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:61
-#, fuzzy
 msgid "Debug Window"
-msgstr "重置窗口"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:62
-#, fuzzy
 msgid "Emote Window"
-msgstr "发送表情失败！"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:63
 msgid "Emote Shortcut Window"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:64
-#, fuzzy
 msgid "Equipment Window"
-msgstr "装备"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:65
-#, fuzzy
 msgid "Help Window"
-msgstr "重置窗口"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:66
-#, fuzzy
 msgid "Inventory Window"
-msgstr "物品栏"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:67
 msgid "Item Shortcut Window"
@@ -613,19 +571,16 @@ msgid "Minimap Window"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:69
-#, fuzzy
 msgid "Setup Window"
-msgstr "重置窗口"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:70
-#, fuzzy
 msgid "Skill Window"
-msgstr "技能点数：%d"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:71
-#, fuzzy
 msgid "Status Window"
-msgstr "状态"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:72
 #: src/bindings/sdl/keyboardconfig.cpp:73
@@ -639,9 +594,9 @@ msgstr "状态"
 #: src/bindings/sdl/keyboardconfig.cpp:81
 #: src/bindings/sdl/keyboardconfig.cpp:82
 #: src/bindings/sdl/keyboardconfig.cpp:83
-#, fuzzy, c-format
+#, c-format
 msgid "Emote Shortcut %d"
-msgstr "快捷键"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:84
 #: src/bindings/sdl/keyboardconfig.cpp:85
@@ -655,9 +610,9 @@ msgstr "快捷键"
 #: src/bindings/sdl/keyboardconfig.cpp:93
 #: src/bindings/sdl/keyboardconfig.cpp:94
 #: src/bindings/sdl/keyboardconfig.cpp:95
-#, fuzzy, c-format
+#, c-format
 msgid "Item Shortcut %d"
-msgstr "快捷键"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:96
 msgid "Toggle Chat"
@@ -673,9 +628,9 @@ msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:100
 #: src/bindings/sdl/keyboardconfig.cpp:101
-#, fuzzy, c-format
+#, c-format
 msgid "Ignore Input %d"
-msgstr "忽略"
+msgstr ""
 
 #: src/bindings/update/downloadupdates.cpp:163
 msgid "Invalid update host: "
@@ -712,9 +667,8 @@ msgid "Not currently recording."
 msgstr ""
 
 #: src/core/recorder.cpp:74
-#, fuzzy
 msgid "Already recording."
-msgstr "连接中..."
+msgstr ""
 
 #: src/core/recorder.cpp:81
 msgid "Starting to record..."
@@ -726,9 +680,8 @@ msgstr ""
 
 #: src/core/map/sprite/being.cpp:220 src/eathena/db/itemdb.cpp:62
 #: src/eathena/gui/chat.cpp:290
-#, fuzzy
 msgid "Unknown item"
-msgstr "未知指令"
+msgstr ""
 
 #: src/eathena/game.cpp:362 src/main.cpp:277
 msgid "Got disconnected from server!"
@@ -739,9 +692,8 @@ msgid "Network Error"
 msgstr ""
 
 #: src/eathena/maploader.cpp:93
-#, fuzzy
 msgid "Could not load map"
-msgstr "不能加入工会！"
+msgstr ""
 
 #: src/eathena/maploader.cpp:94
 #, c-format
@@ -769,9 +721,8 @@ msgid "Party successfully created."
 msgstr ""
 
 #: src/eathena/party.cpp:90
-#, fuzzy
 msgid "Could not create party."
-msgstr "不能加入工会！"
+msgstr ""
 
 #: src/eathena/party.cpp:98
 #, c-format
@@ -793,9 +744,8 @@ msgid "You can't have a blank party name!"
 msgstr ""
 
 #: src/eathena/party.cpp:124
-#, fuzzy
 msgid "Invite to party"
-msgstr "物品栏"
+msgstr ""
 
 #: src/eathena/party.cpp:125
 #, c-format
@@ -812,9 +762,8 @@ msgid "Party chat received, but being is not a player"
 msgstr ""
 
 #: src/eathena/party.cpp:165
-#, fuzzy
 msgid "Command: /party <command> <args>"
-msgstr "指令： /help <指令>"
+msgstr ""
 
 #: src/eathena/party.cpp:166
 msgid "where <command> can be one of:"
@@ -825,9 +774,8 @@ msgid "   /new"
 msgstr ""
 
 #: src/eathena/party.cpp:168
-#, fuzzy
 msgid "   /create"
-msgstr "建立"
+msgstr ""
 
 #: src/eathena/party.cpp:169
 msgid "   /prefix"
@@ -838,18 +786,16 @@ msgid "   /leave"
 msgstr ""
 
 #: src/eathena/party.cpp:171
-#, fuzzy
 msgid "This command implements the partying function."
-msgstr "该指令显现<指令>的帮助信息"
+msgstr ""
 
 #: src/eathena/party.cpp:173
 msgid "Type /help party <command> for further help."
 msgstr ""
 
 #: src/eathena/party.cpp:178
-#, fuzzy
 msgid "Command: /party new <party-name>"
-msgstr "指令： /announce <信息>"
+msgstr ""
 
 #: src/eathena/party.cpp:179
 msgid "Command: /party create <party-name>"
@@ -864,9 +810,8 @@ msgid "Command: /party prefix <prefix-char>"
 msgstr ""
 
 #: src/eathena/party.cpp:186
-#, fuzzy
 msgid "This command sets the party prefix character."
-msgstr "该指令可清除历史聊天记录。"
+msgstr ""
 
 #: src/eathena/party.cpp:188
 msgid ""
@@ -875,40 +820,33 @@ msgid ""
 msgstr ""
 
 #: src/eathena/party.cpp:190
-#, fuzzy
 msgid "Command: /party prefix"
-msgstr "指令： /clear"
+msgstr ""
 
 #: src/eathena/party.cpp:191
-#, fuzzy
 msgid "This command reports the current party prefix character."
-msgstr "该指令可清除历史聊天记录。"
+msgstr ""
 
 #: src/eathena/party.cpp:198
-#, fuzzy
 msgid "Command: /party leave"
-msgstr "指令： /clear"
+msgstr ""
 
 #: src/eathena/party.cpp:199
-#, fuzzy
 msgid "This command causes the player to leave the party."
-msgstr "该指令可清除历史聊天记录。"
+msgstr ""
 
 #: src/eathena/party.cpp:204
-#, fuzzy
 msgid "Unknown /party command."
-msgstr "未知命令"
+msgstr ""
 
 #: src/eathena/party.cpp:205
-#, fuzzy
 msgid "Type /help party for a list of options."
-msgstr "输入 /help 获取指令列表。"
+msgstr ""
 
 #: src/eathena/db/itemdb.cpp:103 src/eathena/db/monsterdb.cpp:45
 #: src/eathena/db/monsterdb.cpp:63
-#, fuzzy
 msgid "unnamed"
-msgstr "未知物品"
+msgstr ""
 
 #: src/eathena/db/npcdb.cpp:54
 msgid "NPC Database: Error while loading npcs.xml!"
@@ -926,9 +864,8 @@ msgid "Price: %d GP / Total: %d GP"
 msgstr "价格：%d 金币/总数：%d 金币"
 
 #: src/eathena/gui/buy.cpp:74 src/eathena/gui/sell.cpp:74
-#, fuzzy
 msgid "Max"
-msgstr "最大"
+msgstr ""
 
 #: src/eathena/gui/buy.cpp:75 src/eathena/gui/buy.cpp:217
 #: src/eathena/gui/buy.cpp:237 src/eathena/gui/sell.cpp:75
@@ -1033,23 +970,22 @@ msgid "Delete"
 msgstr "删除"
 
 #: src/eathena/gui/charselect.cpp:209
-#, fuzzy, c-format
+#, c-format
 msgid "Money: %s"
-msgstr "金钱：%d"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:83
 msgid "File name to record to:"
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:201
-#, fuzzy
 msgid "Global announcement: "
-msgstr "全局公告："
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:206
-#, fuzzy, c-format
+#, c-format
 msgid "Global announcement from %s: "
-msgstr "%s 全局公告："
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:220 src/eathena/gui/login.cpp:53
 #: src/eathena/gui/register.cpp:80
@@ -1057,19 +993,17 @@ msgid "Server:"
 msgstr "服务器："
 
 #: src/eathena/gui/chat.cpp:230
-#, fuzzy, c-format
+#, c-format
 msgid "%s whispers: "
-msgstr "允许私语"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:398
-#, fuzzy
 msgid "Stop Recording"
-msgstr "连接中..."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:399
-#, fuzzy
 msgid "Start Recording"
-msgstr "连接中..."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:444
 #, c-format
@@ -1172,14 +1106,12 @@ msgid "You have no memos!"
 msgstr "没有备忘录"
 
 #: src/eathena/gui/chat.cpp:721
-#, fuzzy
 msgid "You cannot do that right now!"
-msgstr "你现在无法办到！"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:724
-#, fuzzy
 msgid "Seems you need more GP... ;-)"
-msgstr "你需要更多钞票……;-)"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:727
 msgid "You cannot use this skill with that kind of weapon!"
@@ -1227,37 +1159,33 @@ msgid "Cannot use a '/' as the prefix."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:844
-#, fuzzy, c-format
+#, c-format
 msgid "Changing prefix to %s."
-msgstr "改变成OpenGL"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:855
 msgid "-- Help --"
 msgstr "-- 帮助 --"
 
 #: src/eathena/gui/chat.cpp:858
-#, fuzzy
 msgid "/announce: Global announcement (GM only)."
-msgstr "/announce: 全局通告（只有GM可使用）"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:859
-#, fuzzy
 msgid "/clear: Clears this window."
-msgstr "/clear: 清除聊天记录"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:860
-#, fuzzy
 msgid "/help: Display this help."
-msgstr "/help: 显示帮助信息"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:861
 msgid "/me <message>: Tell something about yourself."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:862
-#, fuzzy
 msgid "/msg <nick> <message>: Alternate form for /whisper."
-msgstr "/w <昵称> <信息>: /whisper的缩写形式"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:864
 msgid "/party <command> <params>: Party commands."
@@ -1276,34 +1204,28 @@ msgid "/toggle: Determine whether <return> toggles the chat log."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:870
-#, fuzzy
 msgid "/w <nick> <message>: Short form for /whisper."
-msgstr "/w <昵称> <信息>: /whisper的缩写形式"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:871
-#, fuzzy
 msgid "/where: Display map name."
-msgstr "/where: 显示地图名称"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:872
-#, fuzzy
 msgid "/whisper <nick> <message>: Sends a private <message> to <nick>."
-msgstr "/whisper <昵称> <信息>： 发送一条私密信息 <信息> 给 <昵称>"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:874
-#, fuzzy
 msgid "/who: Display number of online users."
-msgstr "/who: 显示在线用户数"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:875
-#, fuzzy
 msgid "For more information, type /help <command>."
-msgstr "输入/help <指令> 获取更多帮助信息"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:879
-#, fuzzy
 msgid "Command: /announce <msg>."
-msgstr "指令： /announce <信息>"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:880
 msgid "*** only available to a GM ***"
@@ -1338,19 +1260,16 @@ msgid "This command displays help on <command>."
 msgstr "该指令显现<指令>的帮助信息"
 
 #: src/eathena/gui/chat.cpp:900
-#, fuzzy
 msgid "Command: /me <msg>"
-msgstr "指令： /announce <信息>"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:901
-#, fuzzy
 msgid "This command tell others you are (doing) <msg>."
-msgstr "该指令显现<指令>的帮助信息"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:910
-#, fuzzy
 msgid "Command: /present"
-msgstr "指令: /where"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:911
 msgid ""
@@ -1359,29 +1278,24 @@ msgid ""
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:917
-#, fuzzy
 msgid "Command: /record <filename>"
-msgstr "指令： /clear"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:918
-#, fuzzy
 msgid "This command starts recording the chat log to the file <filename>."
-msgstr "该指令可清除历史聊天记录。"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:920
-#, fuzzy
 msgid "Command: /record"
-msgstr "指令： /clear"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:921
-#, fuzzy
 msgid "This command finishes a recording session."
-msgstr "该指令显现<指令>的帮助信息"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:925
-#, fuzzy
 msgid "Command: /toggle <state>"
-msgstr "指令： /announce <信息>"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:926
 msgid ""
@@ -1391,19 +1305,17 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:929
 msgid ""
-"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or \"0"
-"\", \"no\", \"false\" to turn the toggle off."
+"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or "
+"\"0\", \"no\", \"false\" to turn the toggle off."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:932
-#, fuzzy
 msgid "Command: /toggle"
-msgstr "指令： /clear"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:933
-#, fuzzy
 msgid "This command displays the return toggle status."
-msgstr "该条指令显示当前地图名。"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:938
 msgid "Command: /where"
@@ -1414,9 +1326,8 @@ msgid "This command displays the name of the current map."
 msgstr "该条指令显示当前地图名。"
 
 #: src/eathena/gui/chat.cpp:944
-#, fuzzy
 msgid "Command: /msg <nick> <msg>"
-msgstr "指令： /w <昵称> <信息>"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:945
 msgid "Command: /whisper <nick> <msg>"
@@ -1456,19 +1367,19 @@ msgid "%d FPS"
 msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:53 src/eathena/gui/debugwindow.cpp:102
-#, fuzzy, c-format
+#, c-format
 msgid "Music: %s"
-msgstr "姓名：%s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:54 src/eathena/gui/debugwindow.cpp:121
-#, fuzzy, c-format
+#, c-format
 msgid "Map: %s"
-msgstr "姓名：%s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:55 src/eathena/gui/debugwindow.cpp:119
-#, fuzzy, c-format
+#, c-format
 msgid "Minimap: %s"
-msgstr "姓名：%s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:56 src/eathena/gui/debugwindow.cpp:67
 #: src/eathena/gui/debugwindow.cpp:112
@@ -1478,9 +1389,9 @@ msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:57 src/eathena/gui/debugwindow.cpp:68
 #: src/eathena/gui/debugwindow.cpp:125
-#, fuzzy, c-format
+#, c-format
 msgid "Particle count: %d"
-msgstr "纹理细节"
+msgstr ""
 
 #: src/eathena/gui/emotewindow.cpp:43 src/eathena/gui/menubar.cpp:65
 msgid "Emote"
@@ -1493,9 +1404,8 @@ msgid "Use"
 msgstr "使用"
 
 #: src/eathena/gui/emotewindow.cpp:58 src/eathena/gui/inventorywindow.cpp:81
-#, fuzzy
 msgid "Shortcuts"
-msgstr "快捷键"
+msgstr ""
 
 #: src/eathena/gui/equipmentwindow.cpp:96 src/eathena/gui/menubar.cpp:62
 msgid "Equipment"
@@ -1523,18 +1433,16 @@ msgid "Trade"
 msgstr "交易"
 
 #: src/eathena/gui/inventorywindow.cpp:71 src/eathena/gui/popupmenu.cpp:312
-#, fuzzy
 msgid "Store"
-msgstr "停止"
+msgstr ""
 
 #: src/eathena/gui/inventorywindow.cpp:78 src/eathena/gui/popupmenu.cpp:305
 msgid "Drop"
 msgstr "丢弃"
 
 #: src/eathena/gui/inventorywindow.cpp:93
-#, fuzzy
 msgid "Slots: "
-msgstr "技能点数：%d"
+msgstr ""
 
 #: src/eathena/gui/inventorywindow.cpp:94
 msgid "Weight: "
@@ -1546,19 +1454,17 @@ msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:95 src/eathena/gui/itemamount.cpp:99
 #: src/eathena/gui/itemamount.cpp:103 src/eathena/gui/itemamount.cpp:107
-#, fuzzy, c-format
+#, c-format
 msgid "Select amount of items to %s."
-msgstr "请选择你分离的物品的数量"
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:95
-#, fuzzy
 msgid "trade"
-msgstr "交易"
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:99
-#, fuzzy
 msgid "drop"
-msgstr "丢弃"
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:103
 msgid "store"
@@ -1569,9 +1475,9 @@ msgid "retrieve"
 msgstr ""
 
 #: src/eathena/gui/itempopup.cpp:88
-#, fuzzy, c-format
+#, c-format
 msgid "Weight: %d grams"
-msgstr "负重：%d / %d"
+msgstr ""
 
 #: src/eathena/gui/login.cpp:49
 msgid "Login"
@@ -1607,9 +1513,8 @@ msgid "Skills"
 msgstr "技能"
 
 #: src/eathena/gui/minimap.cpp:52 src/eathena/gui/minimap.cpp:131
-#, fuzzy
 msgid "Map"
-msgstr "小地图"
+msgstr ""
 
 #: src/eathena/gui/npcintegerdialog.cpp:38
 #: src/eathena/gui/npcstringdialog.cpp:35
@@ -1617,27 +1522,25 @@ msgid "NPC Input"
 msgstr ""
 
 #: src/eathena/gui/npcintegerdialog.cpp:47
-#, fuzzy
 msgid "Reset"
-msgstr "注册"
+msgstr ""
 
 #: src/eathena/gui/npclistdialog.cpp:37 src/eathena/gui/npctext.cpp:41
 msgid "NPC"
 msgstr "NPC"
 
 #: src/eathena/gui/popupmenu.cpp:315
-#, fuzzy
 msgid "Add to Item Shortcuts"
-msgstr "快捷键"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:318 src/eathena/gui/storagewindow.cpp:66
 msgid "Retrieve"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:320
-#, fuzzy, c-format
+#, c-format
 msgid "Pick Up %s"
-msgstr "@@捡起|捡起%s@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:325
 msgid "Hide Item Info"
@@ -1656,14 +1559,14 @@ msgid "Add name to chat"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:351
-#, fuzzy, c-format
+#, c-format
 msgid "Trade With %s"
-msgstr "交易"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:352 src/eathena/gui/popupmenu.cpp:390
-#, fuzzy, c-format
+#, c-format
 msgid "Attack %s"
-msgstr "攻击:"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:359
 #, c-format
@@ -1671,19 +1574,19 @@ msgid "Befriend %s"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:362
-#, fuzzy, c-format
+#, c-format
 msgid "Disregard %s"
-msgstr "无视"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:363
-#, fuzzy, c-format
+#, c-format
 msgid "Ignore %s"
-msgstr "忽略"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:367
-#, fuzzy, c-format
+#, c-format
 msgid "Un-Ignore %s"
-msgstr "忽略"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:370
 #, c-format
@@ -1696,9 +1599,8 @@ msgid "Talk To %s"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:403
-#, fuzzy
 msgid "Add to Emote Shortcuts"
-msgstr "快捷键"
+msgstr ""
 
 #: src/eathena/gui/register.cpp:79
 msgid "Confirm:"
@@ -1759,19 +1661,16 @@ msgid "inc"
 msgstr ""
 
 #: src/eathena/gui/skill.cpp:66
-#, fuzzy
 msgid "use"
-msgstr "使用"
+msgstr ""
 
 #: src/eathena/gui/slotselection.cpp:50
-#, fuzzy
 msgid "Select item shortcut slot to use."
-msgstr "请选择交易的物品数量"
+msgstr ""
 
 #: src/eathena/gui/slotselection.cpp:53
-#, fuzzy
 msgid "Select emote shortcut slot to use."
-msgstr "请选择交易的物品数量"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:50 src/eathena/gui/status.cpp:190
 #, c-format
@@ -1796,9 +1695,8 @@ msgid "MP:"
 msgstr ""
 
 #: src/eathena/gui/status.cpp:66
-#, fuzzy
 msgid "Job:"
-msgstr "职业：%d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:74
 msgid "Stats"
@@ -1876,9 +1774,8 @@ msgid "Storage"
 msgstr ""
 
 #: src/eathena/gui/storagewindow.cpp:79
-#, fuzzy
 msgid "Slots:"
-msgstr "技能点数：%d"
+msgstr ""
 
 #: src/eathena/gui/trade.cpp:82 src/eathena/gui/trade.cpp:127
 #: src/eathena/gui/trade.cpp:179
@@ -1919,28 +1816,24 @@ msgid "as particle"
 msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:62
-#, fuzzy
 msgid "Game"
-msgstr "姓名"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:71
 msgid "Overhead text"
 msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:72
-#, fuzzy
 msgid "Ambient FX"
-msgstr "雾化效果"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:73
-#, fuzzy
 msgid "Particle detail"
-msgstr "纹理细节"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:220
-#, fuzzy
 msgid "No text"
-msgstr "下一个"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:226
 msgid "Bubbles, no names"
@@ -2006,9 +1899,8 @@ msgid "Friend"
 msgstr "好友"
 
 #: src/eathena/models/playerrelationlistmodel.h:48
-#, fuzzy
 msgid "Disregarded"
-msgstr "无视"
+msgstr ""
 
 #: src/eathena/models/playerrelationlistmodel.h:49
 msgid "Ignored"
@@ -2035,9 +1927,8 @@ msgid "Unable to sell."
 msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:79
-#, fuzzy
 msgid "Authentication failed."
-msgstr "聊天创建失败！"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:82
 msgid "Map server(s) offline."
@@ -2080,14 +1971,12 @@ msgid "Info"
 msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:166
-#, fuzzy
 msgid "Character deleted."
-msgstr "确认删除角色"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:171
-#, fuzzy
 msgid "Failed to delete character."
-msgstr "你的名字需要至少4个字符"
+msgstr ""
 
 #: src/eathena/net/chathandler.cpp:76
 msgid "Whisper could not be sent, user is offline."
@@ -2103,14 +1992,12 @@ msgid "Online users: %d"
 msgstr ""
 
 #: src/eathena/net/chathandler.cpp:167
-#, fuzzy
 msgid "MVP player"
-msgstr "玩家"
+msgstr ""
 
 #: src/eathena/net/equipmenthandler.cpp:110
-#, fuzzy
 msgid "Unable to equip."
-msgstr "卸下装备"
+msgstr ""
 
 #: src/eathena/net/equipmenthandler.cpp:153
 msgid "Unable to unequip."
@@ -2130,9 +2017,8 @@ msgid "Failed to use item."
 msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:66 src/eathena/net/maploginhandler.cpp:65
-#, fuzzy
 msgid "Authentication failed"
-msgstr "聊天创建失败！"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:69
 msgid "No servers available"
@@ -2147,23 +2033,20 @@ msgid "Unknown connection error"
 msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:131
-#, fuzzy
 msgid "Unregistered ID"
-msgstr "注销"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:134
-#, fuzzy
 msgid "Wrong password"
-msgstr "密码："
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:137
 msgid "Account expired"
 msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:140
-#, fuzzy
 msgid "Rejected from server"
-msgstr "和服务器失去连接"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:144
 msgid ""
@@ -2182,9 +2065,8 @@ msgid "This user name is already taken"
 msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:158
-#, fuzzy
 msgid "Unknown error"
-msgstr "未知指令"
+msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:107
 msgid "You are dead."
@@ -2195,9 +2077,8 @@ msgid "We regret to inform you that your character was killed in battle."
 msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:110
-#, fuzzy
 msgid "You are not that alive anymore."
-msgstr "你现在无法办到！"
+msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:111
 msgid "The cold hands of the grim reaper are grabbing for your soul."
@@ -2253,14 +2134,12 @@ msgid "You're not dead yet. You're just resting."
 msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:132
-#, fuzzy
 msgid "You are no more."
-msgstr "没有备忘录"
+msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:133
-#, fuzzy
 msgid "You have ceased to be."
-msgstr "没有备忘录"
+msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:134
 msgid "You've expired and gone to meet your maker."
@@ -2314,9 +2193,9 @@ msgid ""
 msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:301
-#, fuzzy, c-format
+#, c-format
 msgid "You picked up %d GP"
-msgstr "你得到%d GP."
+msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:387
 msgid "Equip arrows first."
@@ -2344,14 +2223,14 @@ msgid "Trade cancelled due to an unknown reason."
 msgstr ""
 
 #: src/eathena/net/tradehandler.cpp:128
-#, fuzzy, c-format
+#, c-format
 msgid "Trade: You and %s"
-msgstr "交易"
+msgstr ""
 
 #: src/eathena/net/tradehandler.cpp:135
-#, fuzzy, c-format
+#, c-format
 msgid "Trade with %s cancelled."
-msgstr "交易失败！"
+msgstr ""
 
 #: src/eathena/net/tradehandler.cpp:145
 msgid "Unhandled trade cancel packet."
@@ -2370,14 +2249,12 @@ msgid "Failed adding item for unknown reason."
 msgstr ""
 
 #: src/eathena/net/tradehandler.cpp:217
-#, fuzzy
 msgid "Trade canceled."
-msgstr "交易失败！"
+msgstr ""
 
 #: src/eathena/net/tradehandler.cpp:224
-#, fuzzy
 msgid "Trade completed."
-msgstr "已完成"
+msgstr ""
 
 #: src/engine.cpp:127
 #, c-format
@@ -2420,9 +2297,8 @@ msgid "  -D --default\t\t: Bypass the login process with default settings"
 msgstr ""
 
 #: src/main.cpp:103
-#, fuzzy
 msgid "  -h --help\t\t: Display this help"
-msgstr "/help: 显示帮助信息"
+msgstr ""
 
 #: src/main.cpp:104
 msgid "  -H --updatehost\t: Use this update host"
@@ -2483,8 +2359,8 @@ msgstr ""
 
 #: src/main.cpp:136
 msgid ""
-"License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl2."
-"html>"
+"License GPLv2+: GNU GPL version 2 or later "
+"<http://gnu.org/licenses/gpl2.html>"
 msgstr ""
 
 #: src/main.cpp:138
@@ -2496,7 +2372,8 @@ msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
 #: src/main.cpp:207
-msgid "--no-opengl is set by default (OpenGL has been disabled at build time)"
+msgid ""
+"--no-opengl is set by default (OpenGL has been disabled at build time)"
 msgstr ""
 
 #: src/main.cpp:346
@@ -2523,22 +2400,6 @@ msgstr "正在连接 地图 服务器..."
 #~ msgid "MiniMap"
 #~ msgstr "小地图"
 
-#, fuzzy
-#~ msgid "@@trade|Trade With %s@@"
-#~ msgstr "@@交易|与%s交易@@"
-
-#, fuzzy
-#~ msgid "@@attack|Attack %s@@"
-#~ msgstr "@@攻击|攻击%s@@"
-
-#, fuzzy
-#~ msgid "@@disregard|Disregard %s@@"
-#~ msgstr "无视"
-
-#, fuzzy
-#~ msgid "@@party-invite|Invite %s to party@@"
-#~ msgstr "物品栏"
-
 #~ msgid "@@talk|Talk To NPC@@"
 #~ msgstr "@@谈话|和NPC谈话@@"
 
@@ -2556,10 +2417,6 @@ msgstr "正在连接 地图 服务器..."
 
 #~ msgid "@@drop|Drop@@"
 #~ msgstr "@@丢弃|丢弃@@"
-
-#, fuzzy
-#~ msgid "Recorder"
-#~ msgstr "连接中..."
 
 #~ msgid "Video"
 #~ msgstr "视频"
@@ -2579,14 +2436,6 @@ msgstr "正在连接 地图 服务器..."
 #~ msgid "Scroll laziness"
 #~ msgstr "滑动延迟"
 
-#, fuzzy
-#~ msgid "Restart your client or change maps for the change to take effect."
-#~ msgstr "重启生效"
-
-#, fuzzy
-#~ msgid "skills.xml"
-#~ msgstr "技能"
-
 #~ msgid "Add"
 #~ msgstr "添加"
 
@@ -2597,32 +2446,8 @@ msgstr "正在连接 地图 服务器..."
 #~ msgid "Completed"
 #~ msgstr "已完成"
 
-#, fuzzy
-#~ msgid " cancelled"
-#~ msgstr "取消"
-
 #~ msgid "Unnamed"
 #~ msgstr "未知物品"
-
-#, fuzzy
-#~ msgid "Talk"
-#~ msgstr "总计"
-
-#, fuzzy
-#~ msgid "Select OK"
-#~ msgstr "选择服务器"
-
-#, fuzzy
-#~ msgid "Trying to connect to account server..."
-#~ msgstr "正在连接 帐号 服务器..."
-
-#, fuzzy
-#~ msgid "Trying to connect to char server..."
-#~ msgstr "正在连接 角色 服务器..."
-
-#, fuzzy
-#~ msgid "Trying to connect to map server..."
-#~ msgstr "正在连接 地图 服务器..."
 
 #~ msgid "Slots used: %d / %d"
 #~ msgstr "已使用槽： %d / %d"

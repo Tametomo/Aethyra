@@ -1,20 +1,20 @@
-# Finnish translation for tmw
+# Finnish translation for aethyra
 # Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
-# This file is distributed under the same license as the tmw package.
+# This file is distributed under the same license as the aethyra package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: tmw\n"
+"Project-Id-Version: aethyra\n"
 "Report-Msgid-Bugs-To: irarice@gmail.com\n"
-"POT-Creation-Date: 2010-01-07 13:25-0700\n"
-"PO-Revision-Date: 2008-12-30 10:23+0000\n"
+"POT-Creation-Date: 2010-01-07 13:55-0700\n"
+"PO-Revision-Date: 2010-01-08 20:43+0000\n"
 "Last-Translator: ville-v <villev90@gmail.com>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-01-06 12:40+0000\n"
+"X-Launchpad-Export-Date: 2010-01-20 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: src/bindings/curl/downloadwrapper.cpp:248
@@ -35,9 +35,8 @@ msgid "Screen resolution changed"
 msgstr ""
 
 #: src/bindings/guichan/gui.cpp:240
-#, fuzzy
 msgid "Restart your client for the change to take effect."
-msgstr "Ohjelma pitää käynnistää uudelleen, jotta muutokset astuvat voimaan."
+msgstr ""
 
 #: src/bindings/guichan/inputmanager.cpp:265
 #: src/bindings/sdl/keyboardconfig.cpp:99 src/eathena/gui/buy.cpp:73
@@ -46,9 +45,8 @@ msgid "Quit"
 msgstr "Sulje"
 
 #: src/bindings/guichan/inputmanager.cpp:265
-#, fuzzy
 msgid "Are you sure you want to quit?"
-msgstr "Oletko varma, että haluat poistaa tämän hahmon?"
+msgstr ""
 
 #: src/bindings/guichan/inputmanager.cpp:487
 msgid "Ignoring incoming trade requests"
@@ -59,9 +57,8 @@ msgid "Accepting incoming trade requests"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:80 src/eathena/gui/tabs/setup_game.cpp:223
-#, fuzzy
 msgid "Text"
-msgstr "Seuraava"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:81
 msgid "Text Shadow"
@@ -80,14 +77,12 @@ msgid "Background"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:87
-#, fuzzy
 msgid "Highlight"
-msgstr "korkea"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:88
-#, fuzzy
 msgid "Tab Highlight"
-msgstr "korkea"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:89
 msgid "Item too expensive"
@@ -98,9 +93,8 @@ msgid "Item is equipped"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:92
-#, fuzzy
 msgid "Chat"
-msgstr "Luo"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:93
 msgid "GM"
@@ -119,14 +113,12 @@ msgid "Is"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:97
-#, fuzzy
 msgid "Party"
-msgstr "Portti:"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:98
-#, fuzzy
 msgid "Server"
-msgstr "Palvelin:"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:99
 msgid "Logger"
@@ -145,19 +137,16 @@ msgid "Other Player's Names"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:104
-#, fuzzy
 msgid "Own Name"
-msgstr "Nimi:"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:105
-#, fuzzy
 msgid "GM Names"
-msgstr "Nimi:"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:106
-#, fuzzy
 msgid "NPCs"
-msgstr "Epäpelattava hahmo"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:107
 msgid "Monsters"
@@ -176,37 +165,32 @@ msgid "Hat"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:112
-#, fuzzy
 msgid "Usable"
-msgstr "Käytä"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:113
-#, fuzzy
 msgid "Shirt"
-msgstr "Jaa"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:114
 msgid "1 Handed Weapons"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:115
-#, fuzzy
 msgid "Pants"
-msgstr "Portti:"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:116
-#, fuzzy
 msgid "Shoes"
-msgstr "Lopeta"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:117
 msgid "2 Handed Weapons"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:118
-#, fuzzy
 msgid "Shield"
-msgstr "Myy"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:119
 msgid "Ring"
@@ -241,9 +225,8 @@ msgid "Monster hits Player"
 msgstr ""
 
 #: src/bindings/guichan/palette.cpp:130
-#, fuzzy
 msgid "Critical Hit"
-msgstr "Elinvoima:"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:131
 msgid "Misses"
@@ -332,16 +315,14 @@ msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:82
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:416
-#, fuzzy
 msgid "Static"
-msgstr "Hahmon tiedot"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:84
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:85
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:419
-#, fuzzy
 msgid "Pulse"
-msgstr "Käytä"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:86
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:87
@@ -352,9 +333,8 @@ msgstr ""
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:88
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:89
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:425
-#, fuzzy
 msgid "Spectrum"
-msgstr "Asetukset"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:93
 msgid "Delay: "
@@ -397,9 +377,8 @@ msgid "Gui opacity"
 msgstr "Käyttöliittymän läpinäkyvyys"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:87
-#, fuzzy
 msgid "Mouse opacity"
-msgstr "Käyttöliittymän läpinäkyvyys"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:88
 msgid "Font size"
@@ -422,9 +401,8 @@ msgid "windowed"
 msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
-#, fuzzy
 msgid "fullscreen"
-msgstr "Kokoruututila"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:210
 msgid "Switching to full screen"
@@ -465,9 +443,8 @@ msgid "Assign"
 msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:75
-#, fuzzy
 msgid "Default"
-msgstr "Poista"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:125
 msgid "Key Conflict(s) Detected."
@@ -502,18 +479,16 @@ msgid "Move Right"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:47
-#, fuzzy
 msgid "Attack"
-msgstr "Hyökkäys %+d"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:48
 msgid "Emote Meta Key"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:49
-#, fuzzy
 msgid "Stop Attack"
-msgstr "Hyökkäys %+d"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:50
 msgid "Target Monster"
@@ -536,14 +511,12 @@ msgid "Pickup"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:55
-#, fuzzy
 msgid "Hide Windows"
-msgstr "Palauta ikkunoiden oletusasetukset"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:56
-#, fuzzy
 msgid "Sit"
-msgstr "Jaa"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:57
 msgid "Screenshot"
@@ -558,38 +531,32 @@ msgid "Find Path to Mouse"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:60
-#, fuzzy
 msgid "Chat Window"
-msgstr "Palauta ikkunoiden oletusasetukset"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:61
-#, fuzzy
 msgid "Debug Window"
-msgstr "Palauta ikkunoiden oletusasetukset"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:62
-#, fuzzy
 msgid "Emote Window"
-msgstr "Palauta ikkunoiden oletusasetukset"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:63
 msgid "Emote Shortcut Window"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:64
-#, fuzzy
 msgid "Equipment Window"
-msgstr "Varusteet"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:65
-#, fuzzy
 msgid "Help Window"
-msgstr "Palauta ikkunoiden oletusasetukset"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:66
-#, fuzzy
 msgid "Inventory Window"
-msgstr "Tavaraluettelo"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:67
 msgid "Item Shortcut Window"
@@ -600,18 +567,16 @@ msgid "Minimap Window"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:69
-#, fuzzy
 msgid "Setup Window"
-msgstr "Palauta ikkunoiden oletusasetukset"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:70
 msgid "Skill Window"
 msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:71
-#, fuzzy
 msgid "Status Window"
-msgstr "Hahmon tiedot"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:72
 #: src/bindings/sdl/keyboardconfig.cpp:73
@@ -625,9 +590,9 @@ msgstr "Hahmon tiedot"
 #: src/bindings/sdl/keyboardconfig.cpp:81
 #: src/bindings/sdl/keyboardconfig.cpp:82
 #: src/bindings/sdl/keyboardconfig.cpp:83
-#, fuzzy, c-format
+#, c-format
 msgid "Emote Shortcut %d"
-msgstr "Pikavalinnat"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:84
 #: src/bindings/sdl/keyboardconfig.cpp:85
@@ -641,9 +606,9 @@ msgstr "Pikavalinnat"
 #: src/bindings/sdl/keyboardconfig.cpp:93
 #: src/bindings/sdl/keyboardconfig.cpp:94
 #: src/bindings/sdl/keyboardconfig.cpp:95
-#, fuzzy, c-format
+#, c-format
 msgid "Item Shortcut %d"
-msgstr "Pikavalinnat"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:96
 msgid "Toggle Chat"
@@ -698,9 +663,8 @@ msgid "Not currently recording."
 msgstr ""
 
 #: src/core/recorder.cpp:74
-#, fuzzy
 msgid "Already recording."
-msgstr "Yhdistetään..."
+msgstr ""
 
 #: src/core/recorder.cpp:81
 msgid "Starting to record..."
@@ -776,9 +740,8 @@ msgid "You can't have a blank party name!"
 msgstr ""
 
 #: src/eathena/party.cpp:124
-#, fuzzy
 msgid "Invite to party"
-msgstr "Tavaraluettelo"
+msgstr ""
 
 #: src/eathena/party.cpp:125
 #, c-format
@@ -807,9 +770,8 @@ msgid "   /new"
 msgstr ""
 
 #: src/eathena/party.cpp:168
-#, fuzzy
 msgid "   /create"
-msgstr "Luo"
+msgstr ""
 
 #: src/eathena/party.cpp:169
 msgid "   /prefix"
@@ -898,9 +860,8 @@ msgid "Price: %d GP / Total: %d GP"
 msgstr "Kappalehinta: %d GP / Yhteensä: %d GP"
 
 #: src/eathena/gui/buy.cpp:74 src/eathena/gui/sell.cpp:74
-#, fuzzy
 msgid "Max"
-msgstr "Apukartta"
+msgstr ""
 
 #: src/eathena/gui/buy.cpp:75 src/eathena/gui/buy.cpp:217
 #: src/eathena/gui/buy.cpp:237 src/eathena/gui/sell.cpp:75
@@ -922,9 +883,8 @@ msgid "Sell"
 msgstr "Myy"
 
 #: src/eathena/gui/buysell.cpp:42
-#, fuzzy
 msgid "Shop"
-msgstr "Lopeta"
+msgstr ""
 
 #: src/eathena/gui/charcreate.cpp:50
 msgid "Create Character"
@@ -956,9 +916,8 @@ msgid "Are you sure you want to delete this character?"
 msgstr "Oletko varma, että haluat poistaa tämän hahmon?"
 
 #: src/eathena/gui/charselect.cpp:83
-#, fuzzy
 msgid "Select Character"
-msgstr "Luo hahmo"
+msgstr ""
 
 #: src/eathena/gui/charselect.cpp:94 src/eathena/gui/charselect.cpp:191
 #: src/eathena/gui/charselect.cpp:206
@@ -975,9 +934,9 @@ msgstr "Taso: %d"
 
 #: src/eathena/gui/charselect.cpp:96 src/eathena/gui/charselect.cpp:193
 #: src/eathena/gui/charselect.cpp:208
-#, fuzzy, c-format
+#, c-format
 msgid "Job Level: %d"
-msgstr "Taso: %d"
+msgstr ""
 
 #: src/eathena/gui/charselect.cpp:97
 #, c-format
@@ -1007,9 +966,9 @@ msgid "Delete"
 msgstr "Poista"
 
 #: src/eathena/gui/charselect.cpp:209
-#, fuzzy, c-format
+#, c-format
 msgid "Money: %s"
-msgstr "Rahatilanne: %d"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:83
 msgid "File name to record to:"
@@ -1035,14 +994,12 @@ msgid "%s whispers: "
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:398
-#, fuzzy
 msgid "Stop Recording"
-msgstr "Yhdistetään..."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:399
-#, fuzzy
 msgid "Start Recording"
-msgstr "Yhdistetään..."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:444
 #, c-format
@@ -1198,9 +1155,9 @@ msgid "Cannot use a '/' as the prefix."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:844
-#, fuzzy, c-format
+#, c-format
 msgid "Changing prefix to %s."
-msgstr "Vaihdetaan OpenGL -toimintatilaan"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:855
 msgid "-- Help --"
@@ -1344,8 +1301,8 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:929
 msgid ""
-"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or \"0"
-"\", \"no\", \"false\" to turn the toggle off."
+"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or "
+"\"0\", \"no\", \"false\" to turn the toggle off."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:932
@@ -1406,19 +1363,19 @@ msgid "%d FPS"
 msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:53 src/eathena/gui/debugwindow.cpp:102
-#, fuzzy, c-format
+#, c-format
 msgid "Music: %s"
-msgstr "Nimi: %s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:54 src/eathena/gui/debugwindow.cpp:121
-#, fuzzy, c-format
+#, c-format
 msgid "Map: %s"
-msgstr "Nimi: %s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:55 src/eathena/gui/debugwindow.cpp:119
-#, fuzzy, c-format
+#, c-format
 msgid "Minimap: %s"
-msgstr "Nimi: %s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:56 src/eathena/gui/debugwindow.cpp:67
 #: src/eathena/gui/debugwindow.cpp:112
@@ -1428,9 +1385,9 @@ msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:57 src/eathena/gui/debugwindow.cpp:68
 #: src/eathena/gui/debugwindow.cpp:125
-#, fuzzy, c-format
+#, c-format
 msgid "Particle count: %d"
-msgstr "Tili: %s"
+msgstr ""
 
 #: src/eathena/gui/emotewindow.cpp:43 src/eathena/gui/menubar.cpp:65
 msgid "Emote"
@@ -1443,9 +1400,8 @@ msgid "Use"
 msgstr "Käytä"
 
 #: src/eathena/gui/emotewindow.cpp:58 src/eathena/gui/inventorywindow.cpp:81
-#, fuzzy
 msgid "Shortcuts"
-msgstr "Pikavalinnat"
+msgstr ""
 
 #: src/eathena/gui/equipmentwindow.cpp:96 src/eathena/gui/menubar.cpp:62
 msgid "Equipment"
@@ -1473,9 +1429,8 @@ msgid "Trade"
 msgstr ""
 
 #: src/eathena/gui/inventorywindow.cpp:71 src/eathena/gui/popupmenu.cpp:312
-#, fuzzy
 msgid "Store"
-msgstr "Lopeta"
+msgstr ""
 
 #: src/eathena/gui/inventorywindow.cpp:78 src/eathena/gui/popupmenu.cpp:305
 msgid "Drop"
@@ -1495,18 +1450,17 @@ msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:95 src/eathena/gui/itemamount.cpp:99
 #: src/eathena/gui/itemamount.cpp:103 src/eathena/gui/itemamount.cpp:107
-#, fuzzy, c-format
+#, c-format
 msgid "Select amount of items to %s."
-msgstr "Anna eri pinoon jaettavien tavaroiden määrä."
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:95
 msgid "trade"
 msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:99
-#, fuzzy
 msgid "drop"
-msgstr "Pudota"
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:103
 msgid "store"
@@ -1555,9 +1509,8 @@ msgid "Skills"
 msgstr "Taidot"
 
 #: src/eathena/gui/minimap.cpp:52 src/eathena/gui/minimap.cpp:131
-#, fuzzy
 msgid "Map"
-msgstr "Apukartta"
+msgstr ""
 
 #: src/eathena/gui/npcintegerdialog.cpp:38
 #: src/eathena/gui/npcstringdialog.cpp:35
@@ -1565,27 +1518,25 @@ msgid "NPC Input"
 msgstr ""
 
 #: src/eathena/gui/npcintegerdialog.cpp:47
-#, fuzzy
 msgid "Reset"
-msgstr "Rekisteröidy"
+msgstr ""
 
 #: src/eathena/gui/npclistdialog.cpp:37 src/eathena/gui/npctext.cpp:41
 msgid "NPC"
 msgstr "Epäpelattava hahmo"
 
 #: src/eathena/gui/popupmenu.cpp:315
-#, fuzzy
 msgid "Add to Item Shortcuts"
-msgstr "Pikavalinnat"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:318 src/eathena/gui/storagewindow.cpp:66
 msgid "Retrieve"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:320
-#, fuzzy, c-format
+#, c-format
 msgid "Pick Up %s"
-msgstr "@@pickup|Poimi %s@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:325
 msgid "Hide Item Info"
@@ -1604,14 +1555,14 @@ msgid "Add name to chat"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:351
-#, fuzzy, c-format
+#, c-format
 msgid "Trade With %s"
-msgstr "@@trade|Vaihda tavaroita %s kanssa@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:352 src/eathena/gui/popupmenu.cpp:390
-#, fuzzy, c-format
+#, c-format
 msgid "Attack %s"
-msgstr "Hyökkäys %+d"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:359
 #, c-format
@@ -1624,14 +1575,14 @@ msgid "Disregard %s"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:363
-#, fuzzy, c-format
+#, c-format
 msgid "Ignore %s"
-msgstr "@@guild|Kutsu %s mukaan kiltaan@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:367
-#, fuzzy, c-format
+#, c-format
 msgid "Un-Ignore %s"
-msgstr "@@guild|Kutsu %s mukaan kiltaan@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:370
 #, c-format
@@ -1644,9 +1595,8 @@ msgid "Talk To %s"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:403
-#, fuzzy
 msgid "Add to Emote Shortcuts"
-msgstr "Pikavalinnat"
+msgstr ""
 
 #: src/eathena/gui/register.cpp:79
 msgid "Confirm:"
@@ -1690,9 +1640,8 @@ msgid "Error"
 msgstr "Virhe"
 
 #: src/eathena/gui/serverlistdialog.cpp:36
-#, fuzzy
 msgid "Select Server"
-msgstr "Vaihda palvelinta"
+msgstr ""
 
 #: src/eathena/gui/skill.cpp:64 src/eathena/gui/skill.cpp:118
 #, c-format
@@ -1708,29 +1657,26 @@ msgid "inc"
 msgstr ""
 
 #: src/eathena/gui/skill.cpp:66
-#, fuzzy
 msgid "use"
-msgstr "Käytä"
+msgstr ""
 
 #: src/eathena/gui/slotselection.cpp:50
-#, fuzzy
 msgid "Select item shortcut slot to use."
-msgstr "Anna vaihdettavien tavaroiden määrä."
+msgstr ""
 
 #: src/eathena/gui/slotselection.cpp:53
-#, fuzzy
 msgid "Select emote shortcut slot to use."
-msgstr "Anna vaihdettavien tavaroiden määrä."
+msgstr ""
 
 #: src/eathena/gui/status.cpp:50 src/eathena/gui/status.cpp:190
-#, fuzzy, c-format
+#, c-format
 msgid "Job: %d"
-msgstr "Taso: %d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:51 src/eathena/gui/status.cpp:193
-#, fuzzy, c-format
+#, c-format
 msgid "Money: %d GP"
-msgstr "Rahatilanne: %d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:53
 msgid "HP:"
@@ -1745,14 +1691,12 @@ msgid "MP:"
 msgstr ""
 
 #: src/eathena/gui/status.cpp:66
-#, fuzzy
 msgid "Job:"
-msgstr "Taso: %d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:74
-#, fuzzy
 msgid "Stats"
-msgstr "Hahmon tiedot"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:75
 msgid "Total"
@@ -1763,24 +1707,20 @@ msgid "Cost"
 msgstr ""
 
 #: src/eathena/gui/status.cpp:80
-#, fuzzy
 msgid "Attack:"
-msgstr "Hyökkäys %+d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:81
-#, fuzzy
 msgid "Defense:"
-msgstr "Puolustus %+d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:82
-#, fuzzy
 msgid "M.Attack:"
-msgstr "Hyökkäys %+d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:83
-#, fuzzy
 msgid "M.Defense:"
-msgstr "Puolustus %+d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:84
 #, c-format
@@ -1797,29 +1737,24 @@ msgid "% Reflex:"
 msgstr ""
 
 #: src/eathena/gui/status.cpp:215
-#, fuzzy
 msgid "Strength"
-msgstr "Voima:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:216
-#, fuzzy
 msgid "Agility"
-msgstr "Ketteryys:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:217
-#, fuzzy
 msgid "Vitality"
-msgstr "Elinvoima:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:218
-#, fuzzy
 msgid "Intelligence"
-msgstr "Älykkyys:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:219
-#, fuzzy
 msgid "Dexterity"
-msgstr "Näppäryys:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:220
 msgid "Luck"
@@ -1877,9 +1812,8 @@ msgid "as particle"
 msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:62
-#, fuzzy
 msgid "Game"
-msgstr "Nimi:"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:71
 msgid "Overhead text"
@@ -1894,14 +1828,12 @@ msgid "Particle detail"
 msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:220
-#, fuzzy
 msgid "No text"
-msgstr "Seuraava"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:226
-#, fuzzy
 msgid "Bubbles, no names"
-msgstr "Näytä nimet"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:229
 msgid "Bubbles with names"
@@ -1931,9 +1863,8 @@ msgid "max"
 msgstr ""
 
 #: src/eathena/gui/tabs/setup_players.cpp:65
-#, fuzzy
 msgid "Name"
-msgstr "Nimi:"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_players.cpp:66
 msgid "Relation"
@@ -2036,14 +1967,12 @@ msgid "Info"
 msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:166
-#, fuzzy
 msgid "Character deleted."
-msgstr "Vahvista hahmon poistopyyntö"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:171
-#, fuzzy
 msgid "Failed to delete character."
-msgstr "Nimessäsi täytyy olla ainakin 4 merkkiä."
+msgstr ""
 
 #: src/eathena/net/chathandler.cpp:76
 msgid "Whisper could not be sent, user is offline."
@@ -2063,9 +1992,8 @@ msgid "MVP player"
 msgstr ""
 
 #: src/eathena/net/equipmenthandler.cpp:110
-#, fuzzy
 msgid "Unable to equip."
-msgstr "Poista varuste käytöstä"
+msgstr ""
 
 #: src/eathena/net/equipmenthandler.cpp:153
 msgid "Unable to unequip."
@@ -2101,24 +2029,20 @@ msgid "Unknown connection error"
 msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:131
-#, fuzzy
 msgid "Unregistered ID"
-msgstr "Poista palvelimelta"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:134
-#, fuzzy
 msgid "Wrong password"
-msgstr "Vaihda salasana"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:137
-#, fuzzy
 msgid "Account expired"
-msgstr "Tili: %s"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:140
-#, fuzzy
 msgid "Rejected from server"
-msgstr "Vaihda palvelinta"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:144
 msgid ""
@@ -2265,9 +2189,9 @@ msgid ""
 msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:301
-#, fuzzy, c-format
+#, c-format
 msgid "You picked up %d GP"
-msgstr "Sait %d GP"
+msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:387
 msgid "Equip arrows first."
@@ -2431,8 +2355,8 @@ msgstr ""
 
 #: src/main.cpp:136
 msgid ""
-"License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl2."
-"html>"
+"License GPLv2+: GNU GPL version 2 or later "
+"<http://gnu.org/licenses/gpl2.html>"
 msgstr ""
 
 #: src/main.cpp:138
@@ -2444,7 +2368,8 @@ msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
 #: src/main.cpp:207
-msgid "--no-opengl is set by default (OpenGL has been disabled at build time)"
+msgid ""
+"--no-opengl is set by default (OpenGL has been disabled at build time)"
 msgstr ""
 
 #: src/main.cpp:346
@@ -2456,9 +2381,8 @@ msgid "Connecting to character server..."
 msgstr ""
 
 #: src/main.cpp:447
-#, fuzzy
 msgid "Connecting to map server..."
-msgstr "Yhdistetään..."
+msgstr ""
 
 #~ msgid "Ok"
 #~ msgstr "Ok"
@@ -2469,23 +2393,11 @@ msgstr "Yhdistetään..."
 #~ msgid "MiniMap"
 #~ msgstr "Apukartta"
 
-#, fuzzy
-#~ msgid "@@attack|Attack %s@@"
-#~ msgstr "@@attack|Hyökkää %s kimppuun@@"
-
-#, fuzzy
-#~ msgid "@@party-invite|Invite %s to party@@"
-#~ msgstr "@@party|Kutsu %s mukaan ryhmääsi@@"
-
 #~ msgid "@@talk|Talk To NPC@@"
 #~ msgstr "@@talk|Puhu epäpelattavalle hahmolle@@"
 
 #~ msgid "@@cancel|Cancel@@"
 #~ msgstr "@@cancel|Peruuta@@"
-
-#, fuzzy
-#~ msgid "@@use|Unequip@@"
-#~ msgstr "@@use|Ota varuste käyttöön@@"
 
 #~ msgid "@@use|Equip@@"
 #~ msgstr "@@use|Ota varuste käyttöön@@"
@@ -2495,10 +2407,6 @@ msgstr "Yhdistetään..."
 
 #~ msgid "@@drop|Drop@@"
 #~ msgstr "@@drop|Pudota maahan@@"
-
-#, fuzzy
-#~ msgid "Recorder"
-#~ msgstr "Yhdistetään..."
 
 #~ msgid "Video"
 #~ msgstr "Kuva"
@@ -2515,37 +2423,8 @@ msgstr "Yhdistetään..."
 #~ msgid "Scroll laziness"
 #~ msgstr "Kameran perässälaahauksen tiukkuus"
 
-#, fuzzy
-#~ msgid "Restart your client or change maps for the change to take effect."
-#~ msgstr ""
-#~ "Ohjelma pitää käynnistää uudelleen, jotta muutokset astuvat voimaan."
-
-#, fuzzy
-#~ msgid "skills.xml"
-#~ msgstr "Taidot"
-
 #~ msgid "Add"
 #~ msgstr "Lisää"
-
-#, fuzzy
-#~ msgid " cancelled"
-#~ msgstr "Peru"
-
-#, fuzzy
-#~ msgid "Select OK"
-#~ msgstr "Vaihda palvelinta"
-
-#, fuzzy
-#~ msgid "Trying to connect to account server..."
-#~ msgstr "Yhdistetään..."
-
-#, fuzzy
-#~ msgid "Trying to connect to char server..."
-#~ msgstr "Yhdistetään..."
-
-#, fuzzy
-#~ msgid "Trying to connect to map server..."
-#~ msgstr "Yhdistetään..."
 
 #~ msgid "@@description|Description@@"
 #~ msgstr "@@description|Kuvaus@@"

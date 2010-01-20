@@ -1,20 +1,20 @@
-# Hebrew translation for tmw
+# Hebrew translation for aethyra
 # Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
-# This file is distributed under the same license as the tmw package.
+# This file is distributed under the same license as the aethyra package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: tmw\n"
+"Project-Id-Version: aethyra\n"
 "Report-Msgid-Bugs-To: irarice@gmail.com\n"
-"POT-Creation-Date: 2010-01-07 13:25-0700\n"
-"PO-Revision-Date: 2008-10-20 00:23+0000\n"
-"Last-Translator: Ddorda <d.dorda@gmail.com>\n"
+"POT-Creation-Date: 2010-01-07 13:55-0700\n"
+"PO-Revision-Date: 2010-01-19 20:33+0000\n"
+"Last-Translator: Snoopy <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-01-06 12:40+0000\n"
+"X-Launchpad-Export-Date: 2010-01-20 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: src/bindings/curl/downloadwrapper.cpp:248
@@ -24,20 +24,19 @@ msgstr ""
 
 #: src/bindings/guichan/graphics.cpp:137
 msgid "Screenshot saved to ~/"
-msgstr ""
+msgstr "תמונת־מסך נשמרה במיקום ~/"
 
 #: src/bindings/guichan/graphics.cpp:144
 msgid "Saving screenshot failed!"
-msgstr ""
+msgstr "שמירת תמונת־מסך נכשלה"
 
 #: src/bindings/guichan/gui.cpp:239
 msgid "Screen resolution changed"
-msgstr ""
+msgstr "רזולוציית מסך השתנה"
 
 #: src/bindings/guichan/gui.cpp:240
-#, fuzzy
 msgid "Restart your client for the change to take effect."
-msgstr "נדרש איתחול כדי שהשינויים יהיו ברי-תוקף."
+msgstr "טען מחדש כדי שהשינוי יחול."
 
 #: src/bindings/guichan/inputmanager.cpp:265
 #: src/bindings/sdl/keyboardconfig.cpp:99 src/eathena/gui/buy.cpp:73
@@ -46,208 +45,192 @@ msgid "Quit"
 msgstr "יציאה"
 
 #: src/bindings/guichan/inputmanager.cpp:265
-#, fuzzy
 msgid "Are you sure you want to quit?"
-msgstr "האם אתה בטוח כי ברצונך למחוק את השחקן?"
+msgstr "האם ברצונכם לצאת מהתוכנה?"
 
 #: src/bindings/guichan/inputmanager.cpp:487
 msgid "Ignoring incoming trade requests"
-msgstr ""
+msgstr "מתעלם מהצעות סחר נכנסות"
 
 #: src/bindings/guichan/inputmanager.cpp:494
 msgid "Accepting incoming trade requests"
-msgstr ""
+msgstr "מאשר הצעות סחר נכנסות"
 
 #: src/bindings/guichan/palette.cpp:80 src/eathena/gui/tabs/setup_game.cpp:223
-#, fuzzy
 msgid "Text"
-msgstr "הבא"
+msgstr "טקסט"
 
 #: src/bindings/guichan/palette.cpp:81
 msgid "Text Shadow"
-msgstr ""
+msgstr "הצללת טקסט"
 
 #: src/bindings/guichan/palette.cpp:82
 msgid "Text Outline"
-msgstr ""
+msgstr "מתאר הטקסט"
 
 #: src/bindings/guichan/palette.cpp:83
 msgid "Progress Bar Labels"
-msgstr ""
+msgstr "תוויות סרגל התקדמות"
 
 #: src/bindings/guichan/palette.cpp:85
 msgid "Background"
-msgstr ""
+msgstr "רקע"
 
 #: src/bindings/guichan/palette.cpp:87
-#, fuzzy
 msgid "Highlight"
-msgstr "גבוה"
+msgstr "הדגשה"
 
 #: src/bindings/guichan/palette.cpp:88
-#, fuzzy
 msgid "Tab Highlight"
-msgstr "גבוה"
+msgstr "לשונית הדגשה"
 
 #: src/bindings/guichan/palette.cpp:89
 msgid "Item too expensive"
-msgstr ""
+msgstr "החפץ יקר מדי"
 
 #: src/bindings/guichan/palette.cpp:90
 msgid "Item is equipped"
-msgstr ""
+msgstr "החפץ בשימוש"
 
 #: src/bindings/guichan/palette.cpp:92
-#, fuzzy
 msgid "Chat"
-msgstr "צור"
+msgstr "צ'אט"
 
 #: src/bindings/guichan/palette.cpp:93
 msgid "GM"
-msgstr ""
+msgstr "מנהל המשחק"
 
 #: src/bindings/guichan/palette.cpp:94
 msgid "Player"
-msgstr ""
+msgstr "שחקן"
 
 #: src/bindings/guichan/palette.cpp:95
 msgid "Whisper"
-msgstr ""
+msgstr "לחישה"
 
 #: src/bindings/guichan/palette.cpp:96
 msgid "Is"
-msgstr ""
+msgstr "הוא"
 
 #: src/bindings/guichan/palette.cpp:97
-#, fuzzy
 msgid "Party"
-msgstr "פורט:"
+msgstr "חבורה"
 
 #: src/bindings/guichan/palette.cpp:98
-#, fuzzy
 msgid "Server"
-msgstr "שרת:"
+msgstr "שרת"
 
 #: src/bindings/guichan/palette.cpp:99
 msgid "Logger"
-msgstr ""
+msgstr "רישום"
 
 #: src/bindings/guichan/palette.cpp:100
 msgid "Hyperlink"
-msgstr ""
+msgstr "היפר קישור"
 
 #: src/bindings/guichan/palette.cpp:102
 msgid "Being"
-msgstr ""
+msgstr "נהיה"
 
 #: src/bindings/guichan/palette.cpp:103
 msgid "Other Player's Names"
-msgstr ""
+msgstr "שמות של שחקנים אחרים"
 
 #: src/bindings/guichan/palette.cpp:104
-#, fuzzy
 msgid "Own Name"
-msgstr "שם:"
+msgstr "השם שלך"
 
 #: src/bindings/guichan/palette.cpp:105
-#, fuzzy
 msgid "GM Names"
-msgstr "שם:"
+msgstr "שמות המנהלים"
 
 #: src/bindings/guichan/palette.cpp:106
-#, fuzzy
 msgid "NPCs"
-msgstr "NPC"
+msgstr "דמויות"
 
 #: src/bindings/guichan/palette.cpp:107
 msgid "Monsters"
-msgstr ""
+msgstr "מפלצות"
 
 #: src/bindings/guichan/palette.cpp:109
 msgid "Unknown Item Type"
-msgstr ""
+msgstr "סוג חפץ לא ידוע"
 
 #: src/bindings/guichan/palette.cpp:110
 msgid "Generic"
-msgstr ""
+msgstr "כללי"
 
 #: src/bindings/guichan/palette.cpp:111
 msgid "Hat"
-msgstr ""
+msgstr "כובע"
 
 #: src/bindings/guichan/palette.cpp:112
-#, fuzzy
 msgid "Usable"
-msgstr "השתמש"
+msgstr "שמיש"
 
 #: src/bindings/guichan/palette.cpp:113
-#, fuzzy
 msgid "Shirt"
-msgstr "פצל"
+msgstr "חולצה"
 
 #: src/bindings/guichan/palette.cpp:114
 msgid "1 Handed Weapons"
-msgstr ""
+msgstr "נשקים ליד אחת"
 
 #: src/bindings/guichan/palette.cpp:115
-#, fuzzy
 msgid "Pants"
-msgstr "פורט:"
+msgstr "מכנסיים"
 
 #: src/bindings/guichan/palette.cpp:116
-#, fuzzy
 msgid "Shoes"
-msgstr "עצור"
+msgstr "נעליים"
 
 #: src/bindings/guichan/palette.cpp:117
 msgid "2 Handed Weapons"
-msgstr ""
+msgstr "נשקים לשתי ידיים"
 
 #: src/bindings/guichan/palette.cpp:118
-#, fuzzy
 msgid "Shield"
-msgstr "מכר"
+msgstr "מגן"
 
 #: src/bindings/guichan/palette.cpp:119
 msgid "Ring"
-msgstr ""
+msgstr "טבעת"
 
 #: src/bindings/guichan/palette.cpp:120
 msgid "Arms"
-msgstr ""
+msgstr "ידיים"
 
 #: src/bindings/guichan/palette.cpp:121
 msgid "Ammo"
-msgstr ""
+msgstr "תחמושת"
 
 #: src/bindings/guichan/palette.cpp:123
 msgid "Particle Effects"
-msgstr ""
+msgstr "אפקטים חלקיים"
 
 #: src/bindings/guichan/palette.cpp:124
 msgid "Pickup Notification"
-msgstr ""
+msgstr "הודעה על לקיחה"
 
 #: src/bindings/guichan/palette.cpp:125
 msgid "Exp Notification"
-msgstr ""
+msgstr "הודעה על נק' נסיון"
 
 #: src/bindings/guichan/palette.cpp:127
 msgid "Player hits Monster"
-msgstr ""
+msgstr "משתמש מכה מפלצת"
 
 #: src/bindings/guichan/palette.cpp:129
 msgid "Monster hits Player"
-msgstr ""
+msgstr "משתמש מכה משתמש"
 
 #: src/bindings/guichan/palette.cpp:130
-#, fuzzy
 msgid "Critical Hit"
-msgstr "חיוניות:"
+msgstr "מכה קריטית"
 
 #: src/bindings/guichan/palette.cpp:131
 msgid "Misses"
-msgstr ""
+msgstr "פספוס"
 
 #: src/bindings/guichan/dialogs/confirmdialog.cpp:44
 msgid "Yes"
@@ -260,12 +243,12 @@ msgstr "לא"
 #: src/bindings/guichan/dialogs/helpdialog.cpp:36
 #: src/bindings/guichan/dialogs/helpdialog.cpp:41
 msgid "Help"
-msgstr ""
+msgstr "עזרה"
 
 #: src/bindings/guichan/dialogs/helpdialog.cpp:51
 #: src/eathena/gui/storagewindow.cpp:69
 msgid "Close"
-msgstr ""
+msgstr "סגור"
 
 #: src/bindings/guichan/dialogs/listdialog.cpp:50
 #: src/bindings/guichan/dialogs/okdialog.cpp:44
@@ -275,7 +258,7 @@ msgstr ""
 #: src/eathena/gui/npctext.cpp:56 src/eathena/gui/slotselection.cpp:71
 #: src/eathena/gui/trade.cpp:67 src/eathena/gui/trade.cpp:174
 msgid "OK"
-msgstr ""
+msgstr "בסדר"
 
 #: src/bindings/guichan/dialogs/listdialog.cpp:51
 #: src/bindings/guichan/dialogs/setupdialog.cpp:55
@@ -320,57 +303,54 @@ msgstr "עוצמת מוזיקה"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:44
 msgid "This is what the color looks like"
-msgstr ""
+msgstr "כך הצבע נראה"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:49
 msgid "Colors"
-msgstr ""
+msgstr "צבעים"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:70
 msgid "Type: "
-msgstr ""
+msgstr "סוג "
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:82
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:416
-#, fuzzy
 msgid "Static"
-msgstr "מצב"
+msgstr "סטטי"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:84
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:85
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:419
-#, fuzzy
 msgid "Pulse"
-msgstr "השתמש"
+msgstr "פעימה"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:86
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:87
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:422
 msgid "Rainbow"
-msgstr ""
+msgstr "קשת בענן"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:88
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:89
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:425
-#, fuzzy
 msgid "Spectrum"
-msgstr "הגדרות"
+msgstr "מינסרה"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:93
 msgid "Delay: "
-msgstr ""
+msgstr "עיכוב: "
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:110
 msgid "Red: "
-msgstr ""
+msgstr "אדום: "
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:127
 msgid "Green: "
-msgstr ""
+msgstr "ירוק: "
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:144
 msgid "Blue: "
-msgstr ""
+msgstr "כחול: "
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:68
 msgid "Full screen"
@@ -390,20 +370,19 @@ msgstr "הגבלת FPS:"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:80
 msgid "GUI"
-msgstr ""
+msgstr "GUI"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:86
 msgid "Gui opacity"
 msgstr "אטימות Gui"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:87
-#, fuzzy
 msgid "Mouse opacity"
-msgstr "אטימות Gui"
+msgstr "אטימות העכבר"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:88
 msgid "Font size"
-msgstr ""
+msgstr "גודל הגופן"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:121
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:274
@@ -419,10 +398,9 @@ msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:201
 msgid "windowed"
-msgstr ""
+msgstr "בחלון"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
-#, fuzzy
 msgid "fullscreen"
 msgstr "מסך מלא"
 
@@ -458,24 +436,23 @@ msgstr "כייל"
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:57
 msgid "Input"
-msgstr ""
+msgstr "קלט"
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:71
 msgid "Assign"
-msgstr ""
+msgstr "הקצה"
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:75
-#, fuzzy
 msgid "Default"
-msgstr "מחק"
+msgstr "ברירת מחדל"
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:125
 msgid "Key Conflict(s) Detected."
-msgstr ""
+msgstr "נמצאו קונפליקטי מקשים."
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:126
 msgid "Resolve them, or gameplay may result in strange behavior."
-msgstr ""
+msgstr "לפתור אותן, או משחק עלולה לגרום להתנהגות מוזרה."
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:185
 msgid "Stop"
@@ -487,131 +464,119 @@ msgstr "סובב את המקל"
 
 #: src/bindings/sdl/keyboardconfig.cpp:43
 msgid "Move Up"
-msgstr ""
+msgstr "העברה מעלה"
 
 #: src/bindings/sdl/keyboardconfig.cpp:44
 msgid "Move Down"
-msgstr ""
+msgstr "העברה מטה"
 
 #: src/bindings/sdl/keyboardconfig.cpp:45
 msgid "Move Left"
-msgstr ""
+msgstr "הזז שמאלה"
 
 #: src/bindings/sdl/keyboardconfig.cpp:46
 msgid "Move Right"
-msgstr ""
+msgstr "הזז ימינה"
 
 #: src/bindings/sdl/keyboardconfig.cpp:47
-#, fuzzy
 msgid "Attack"
-msgstr "התקפה %+d"
+msgstr "תקוף"
 
 #: src/bindings/sdl/keyboardconfig.cpp:48
 msgid "Emote Meta Key"
-msgstr ""
+msgstr "Emote מטא קי"
 
 #: src/bindings/sdl/keyboardconfig.cpp:49
-#, fuzzy
 msgid "Stop Attack"
-msgstr "התקפה %+d"
+msgstr "הפסק לתקוף"
 
 #: src/bindings/sdl/keyboardconfig.cpp:50
 msgid "Target Monster"
-msgstr ""
+msgstr "כוון למפלצת"
 
 #: src/bindings/sdl/keyboardconfig.cpp:51
 msgid "Target NPC"
-msgstr ""
+msgstr "כוון לדמות"
 
 #: src/bindings/sdl/keyboardconfig.cpp:52
 msgid "Target Player"
-msgstr ""
+msgstr "כוון לשחקן"
 
 #: src/bindings/sdl/keyboardconfig.cpp:53
 msgid "Being Menu"
-msgstr ""
+msgstr "התפריט ברגע"
 
 #: src/bindings/sdl/keyboardconfig.cpp:54
 msgid "Pickup"
-msgstr ""
+msgstr "הרם"
 
 #: src/bindings/sdl/keyboardconfig.cpp:55
-#, fuzzy
 msgid "Hide Windows"
-msgstr "אתחל חלונות"
+msgstr "הסתר חלונות"
 
 #: src/bindings/sdl/keyboardconfig.cpp:56
-#, fuzzy
 msgid "Sit"
-msgstr "פצל"
+msgstr "שב"
 
 #: src/bindings/sdl/keyboardconfig.cpp:57
 msgid "Screenshot"
-msgstr ""
+msgstr "צילום מסך"
 
 #: src/bindings/sdl/keyboardconfig.cpp:58
 msgid "Enable/Disable Trading"
-msgstr ""
+msgstr "אפשר/בטל מסחר"
 
 #: src/bindings/sdl/keyboardconfig.cpp:59
 msgid "Find Path to Mouse"
-msgstr ""
+msgstr "מצא נתיב לעכבר"
 
 #: src/bindings/sdl/keyboardconfig.cpp:60
-#, fuzzy
 msgid "Chat Window"
-msgstr "אתחל חלונות"
+msgstr "חלון שיחה"
 
 #: src/bindings/sdl/keyboardconfig.cpp:61
-#, fuzzy
 msgid "Debug Window"
-msgstr "אתחל חלונות"
+msgstr "חלון ניפוי"
 
 #: src/bindings/sdl/keyboardconfig.cpp:62
-#, fuzzy
 msgid "Emote Window"
-msgstr "אתחל חלונות"
+msgstr "Emote חלון"
 
 #: src/bindings/sdl/keyboardconfig.cpp:63
 msgid "Emote Shortcut Window"
-msgstr ""
+msgstr "חלון קיצור־דרך לרגישון"
 
 #: src/bindings/sdl/keyboardconfig.cpp:64
-#, fuzzy
 msgid "Equipment Window"
-msgstr "ציוד"
+msgstr "חלון לבוש"
 
 #: src/bindings/sdl/keyboardconfig.cpp:65
-#, fuzzy
 msgid "Help Window"
-msgstr "אתחל חלונות"
+msgstr "חלון עזרה"
 
 #: src/bindings/sdl/keyboardconfig.cpp:66
-#, fuzzy
 msgid "Inventory Window"
-msgstr "ציוד"
+msgstr "חלון ציוד"
 
 #: src/bindings/sdl/keyboardconfig.cpp:67
 msgid "Item Shortcut Window"
-msgstr ""
+msgstr "חלון קיצור־דרך לחפץ"
 
 #: src/bindings/sdl/keyboardconfig.cpp:68
 msgid "Minimap Window"
-msgstr ""
+msgstr "חלון מיני מפה"
 
 #: src/bindings/sdl/keyboardconfig.cpp:69
-#, fuzzy
 msgid "Setup Window"
-msgstr "אתחל חלונות"
+msgstr "חלון הגדרות"
 
 #: src/bindings/sdl/keyboardconfig.cpp:70
 msgid "Skill Window"
-msgstr ""
+msgstr "חלון כישורים"
 
 #: src/bindings/sdl/keyboardconfig.cpp:71
-#, fuzzy
 msgid "Status Window"
-msgstr "מצב"
+msgstr "חלון מצב"
 
 #: src/bindings/sdl/keyboardconfig.cpp:72
 #: src/bindings/sdl/keyboardconfig.cpp:73
@@ -625,9 +590,9 @@ msgstr "מצב"
 #: src/bindings/sdl/keyboardconfig.cpp:81
 #: src/bindings/sdl/keyboardconfig.cpp:82
 #: src/bindings/sdl/keyboardconfig.cpp:83
-#, fuzzy, c-format
+#, c-format
 msgid "Emote Shortcut %d"
-msgstr "קיצור-דרך"
+msgstr "קיצור־דרך לריגשון %d"
 
 #: src/bindings/sdl/keyboardconfig.cpp:84
 #: src/bindings/sdl/keyboardconfig.cpp:85
@@ -641,21 +606,21 @@ msgstr "קיצור-דרך"
 #: src/bindings/sdl/keyboardconfig.cpp:93
 #: src/bindings/sdl/keyboardconfig.cpp:94
 #: src/bindings/sdl/keyboardconfig.cpp:95
-#, fuzzy, c-format
+#, c-format
 msgid "Item Shortcut %d"
-msgstr "קיצור-דרך"
+msgstr "קיצור־דרך לחפץ %d"
 
 #: src/bindings/sdl/keyboardconfig.cpp:96
 msgid "Toggle Chat"
-msgstr ""
+msgstr "סגירת הצ'אט"
 
 #: src/bindings/sdl/keyboardconfig.cpp:97
 msgid "Scroll Chat Up"
-msgstr ""
+msgstr "גלול שיחה למעלה"
 
 #: src/bindings/sdl/keyboardconfig.cpp:98
 msgid "Scroll Chat Down"
-msgstr ""
+msgstr "גלול שיחה למטה"
 
 #: src/bindings/sdl/keyboardconfig.cpp:100
 #: src/bindings/sdl/keyboardconfig.cpp:101
@@ -665,11 +630,11 @@ msgstr ""
 
 #: src/bindings/update/downloadupdates.cpp:163
 msgid "Invalid update host: "
-msgstr ""
+msgstr "שרת עדכון פגום: "
 
 #: src/bindings/update/downloadupdates.cpp:200
 msgid "Error creating updates directory!"
-msgstr ""
+msgstr "שגיאה ביצירת ספריית העדכונים!"
 
 #: src/bindings/update/downloadupdates.cpp:348
 msgid ""
@@ -679,106 +644,104 @@ msgstr ""
 
 #: src/bindings/update/downloadupdates.cpp:361
 msgid "##1  The update process is incomplete."
-msgstr ""
+msgstr "##1  תהליך העדכון לא תם."
 
 #: src/bindings/update/downloadupdates.cpp:362
 msgid "##1  It is strongly recommended that"
-msgstr ""
+msgstr "##1  מומלץ ביותר שתנסה שוב מאוחר יותר"
 
 #: src/bindings/update/downloadupdates.cpp:363
 msgid "##1  you try again later"
-msgstr ""
+msgstr "-"
 
 #: src/core/recorder.cpp:68
 msgid "Finishing recording."
-msgstr ""
+msgstr "מסיים להקליט."
 
 #: src/core/recorder.cpp:71
 msgid "Not currently recording."
-msgstr ""
+msgstr "אינו מקליט כרגע."
 
 #: src/core/recorder.cpp:74
-#, fuzzy
 msgid "Already recording."
-msgstr "מתחבר..."
+msgstr "כבר מקליט."
 
 #: src/core/recorder.cpp:81
 msgid "Starting to record..."
-msgstr ""
+msgstr "מתחיל להקליט..."
 
 #: src/core/recorder.cpp:95
 msgid "Failed to start recording."
-msgstr ""
+msgstr "שגיאה בהתחלת ההקלטה."
 
 #: src/core/map/sprite/being.cpp:220 src/eathena/db/itemdb.cpp:62
 #: src/eathena/gui/chat.cpp:290
 msgid "Unknown item"
-msgstr ""
+msgstr "חפץ לא ידוע"
 
 #: src/eathena/game.cpp:362 src/main.cpp:277
 msgid "Got disconnected from server!"
-msgstr ""
+msgstr "נותקת מהשרת!"
 
 #: src/eathena/game.cpp:364
 msgid "Network Error"
-msgstr ""
+msgstr "שגיאת רשת"
 
 #: src/eathena/maploader.cpp:93
 msgid "Could not load map"
-msgstr ""
+msgstr "לא ניתן לטעון את המפה"
 
 #: src/eathena/maploader.cpp:94
 #, c-format
 msgid "Error while loading %s"
-msgstr ""
+msgstr "שגיאה בעת טעינת %s"
 
 #: src/eathena/party.cpp:52
 msgid "Not yet implemented!"
-msgstr ""
+msgstr "עדיין לא יושם!"
 
 #: src/eathena/party.cpp:60
 msgid "Party command not known."
-msgstr ""
+msgstr "מפלגת חבורה לא ידוע."
 
 #: src/eathena/party.cpp:66
 msgid "Party name is missing."
-msgstr ""
+msgstr "שם חבורה חסר."
 
 #: src/eathena/party.cpp:78
 msgid "Left party."
-msgstr ""
+msgstr "עזבו חבורה"
 
 #: src/eathena/party.cpp:86
 msgid "Party successfully created."
-msgstr ""
+msgstr "חבורה נוצרה בהצלחה."
 
 #: src/eathena/party.cpp:90
 msgid "Could not create party."
-msgstr ""
+msgstr "לא היה ניתן ליצור חבורה."
 
 #: src/eathena/party.cpp:98
 #, c-format
 msgid "%s is already a member of a party."
-msgstr ""
+msgstr "%s כבר חבר בחבורה."
 
 #: src/eathena/party.cpp:102
 #, c-format
 msgid "%s refused your invitation."
-msgstr ""
+msgstr "%s דחה את הזמנתך."
 
 #: src/eathena/party.cpp:106
 #, c-format
 msgid "%s is now a member of your party."
-msgstr ""
+msgstr "%s הצטרף לחבורה."
 
 #: src/eathena/party.cpp:119
 msgid "You can't have a blank party name!"
 msgstr ""
 
 #: src/eathena/party.cpp:124
-#, fuzzy
 msgid "Invite to party"
-msgstr "ציוד"
+msgstr ""
 
 #: src/eathena/party.cpp:125
 #, c-format
@@ -788,7 +751,7 @@ msgstr ""
 #: src/eathena/party.cpp:142
 #, c-format
 msgid "%s has left your party."
-msgstr ""
+msgstr "%s עזב את החבורה שלך."
 
 #: src/eathena/party.cpp:153
 msgid "Party chat received, but being is not a player"
@@ -807,9 +770,8 @@ msgid "   /new"
 msgstr ""
 
 #: src/eathena/party.cpp:168
-#, fuzzy
 msgid "   /create"
-msgstr "צור"
+msgstr ""
 
 #: src/eathena/party.cpp:169
 msgid "   /prefix"
@@ -867,7 +829,7 @@ msgstr ""
 
 #: src/eathena/party.cpp:199
 msgid "This command causes the player to leave the party."
-msgstr ""
+msgstr "פקודה זו גורמת לשחקן לעזוב את החבורה."
 
 #: src/eathena/party.cpp:204
 msgid "Unknown /party command."
@@ -880,7 +842,7 @@ msgstr ""
 #: src/eathena/db/itemdb.cpp:103 src/eathena/db/monsterdb.cpp:45
 #: src/eathena/db/monsterdb.cpp:63
 msgid "unnamed"
-msgstr ""
+msgstr "ללא שם"
 
 #: src/eathena/db/npcdb.cpp:54
 msgid "NPC Database: Error while loading npcs.xml!"
@@ -898,9 +860,8 @@ msgid "Price: %d GP / Total: %d GP"
 msgstr "מחיר: %d זהב / סה\"כ %d זהב"
 
 #: src/eathena/gui/buy.cpp:74 src/eathena/gui/sell.cpp:74
-#, fuzzy
 msgid "Max"
-msgstr "מיני-מפה"
+msgstr "מקסימום"
 
 #: src/eathena/gui/buy.cpp:75 src/eathena/gui/buy.cpp:217
 #: src/eathena/gui/buy.cpp:237 src/eathena/gui/sell.cpp:75
@@ -922,9 +883,8 @@ msgid "Sell"
 msgstr "מכר"
 
 #: src/eathena/gui/buysell.cpp:42
-#, fuzzy
 msgid "Shop"
-msgstr "עצור"
+msgstr "חנות"
 
 #: src/eathena/gui/charcreate.cpp:50
 msgid "Create Character"
@@ -956,9 +916,8 @@ msgid "Are you sure you want to delete this character?"
 msgstr "האם אתה בטוח כי ברצונך למחוק את השחקן?"
 
 #: src/eathena/gui/charselect.cpp:83
-#, fuzzy
 msgid "Select Character"
-msgstr "צור שחקן"
+msgstr "בחר שחקן"
 
 #: src/eathena/gui/charselect.cpp:94 src/eathena/gui/charselect.cpp:191
 #: src/eathena/gui/charselect.cpp:206
@@ -975,9 +934,9 @@ msgstr "רמה: %d"
 
 #: src/eathena/gui/charselect.cpp:96 src/eathena/gui/charselect.cpp:193
 #: src/eathena/gui/charselect.cpp:208
-#, fuzzy, c-format
+#, c-format
 msgid "Job Level: %d"
-msgstr "רמה: %d"
+msgstr "רמת עבודה: %d"
 
 #: src/eathena/gui/charselect.cpp:97
 #, c-format
@@ -1007,9 +966,9 @@ msgid "Delete"
 msgstr "מחק"
 
 #: src/eathena/gui/charselect.cpp:209
-#, fuzzy, c-format
+#, c-format
 msgid "Money: %s"
-msgstr "זהב: %d"
+msgstr "כסף: %s"
 
 #: src/eathena/gui/chat.cpp:83
 msgid "File name to record to:"
@@ -1035,14 +994,12 @@ msgid "%s whispers: "
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:398
-#, fuzzy
 msgid "Stop Recording"
-msgstr "מתחבר..."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:399
-#, fuzzy
 msgid "Start Recording"
-msgstr "מתחבר..."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:444
 #, c-format
@@ -1063,11 +1020,11 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:557
 msgid "Return now toggles chat."
-msgstr ""
+msgstr "מקש האנטר כעת סוגר את תיבת הטקסט."
 
 #: src/eathena/gui/chat.cpp:564
 msgid "Message now closes chat."
-msgstr ""
+msgstr "ההודעה כעת סוגרת את תיבת הטקסט."
 
 #: src/eathena/gui/chat.cpp:569
 msgid ""
@@ -1094,43 +1051,43 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:658
 msgid "Attendance written to record log."
-msgstr ""
+msgstr "מקליט שמות נוכחים לרישום."
 
 #: src/eathena/gui/chat.cpp:662
 msgid "Present: "
-msgstr ""
+msgstr "נוכחים: "
 
 #: src/eathena/gui/chat.cpp:673 src/eathena/gui/chat.cpp:960
 msgid "Unknown command."
-msgstr ""
+msgstr "פקודה לא ידועה."
 
 #: src/eathena/gui/chat.cpp:685
 msgid "Trade failed!"
-msgstr ""
+msgstr "המסחר נכשל!"
 
 #: src/eathena/gui/chat.cpp:688
 msgid "Emote failed!"
-msgstr ""
+msgstr "הבעה נכשלה!"
 
 #: src/eathena/gui/chat.cpp:691
 msgid "Sit failed!"
-msgstr ""
+msgstr "הישיבה נכשלה!"
 
 #: src/eathena/gui/chat.cpp:694
 msgid "Chat creating failed!"
-msgstr ""
+msgstr "יצירת שיחה נכשלה!"
 
 #: src/eathena/gui/chat.cpp:697
 msgid "Could not join party!"
-msgstr ""
+msgstr "לא היה ניתן להצטרף קבוצה!"
 
 #: src/eathena/gui/chat.cpp:700
 msgid "Cannot shout!"
-msgstr ""
+msgstr "לא ניתן לצעוק!"
 
 #: src/eathena/gui/chat.cpp:709
 msgid "You have not yet reached a high enough lvl!"
-msgstr ""
+msgstr "לא הגעת לרמה גבוהה מספיק!"
 
 #: src/eathena/gui/chat.cpp:712
 msgid "Insufficient HP!"
@@ -1142,47 +1099,47 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:718
 msgid "You have no memos!"
-msgstr ""
+msgstr "אין תזכירים!"
 
 #: src/eathena/gui/chat.cpp:721
 msgid "You cannot do that right now!"
-msgstr ""
+msgstr "אינך יכול לעשות זאת כרגע!"
 
 #: src/eathena/gui/chat.cpp:724
 msgid "Seems you need more GP... ;-)"
-msgstr ""
+msgstr "נראה שאתה צריך יותר זהב ... ;-)"
 
 #: src/eathena/gui/chat.cpp:727
 msgid "You cannot use this skill with that kind of weapon!"
-msgstr ""
+msgstr "אינך יכול להשתמש בכישור עם נשק זה!"
 
 #: src/eathena/gui/chat.cpp:730
 msgid "You need another red gem!"
-msgstr ""
+msgstr "אתה צריך עוד אבן אדומה!"
 
 #: src/eathena/gui/chat.cpp:733
 msgid "You need another blue gem!"
-msgstr ""
+msgstr "אתה צריך עוד אבן כחולה!"
 
 #: src/eathena/gui/chat.cpp:736
 msgid "You're carrying to much to do this!"
-msgstr ""
+msgstr "אתה סוחב יותר מדי בכדי לעשות זאת!"
 
 #: src/eathena/gui/chat.cpp:739
 msgid "Huh? What's that?"
-msgstr ""
+msgstr "הא? מה זה?"
 
 #: src/eathena/gui/chat.cpp:748
 msgid "Warp failed..."
-msgstr ""
+msgstr "הפיתול נכשל...."
 
 #: src/eathena/gui/chat.cpp:751
 msgid "Could not steal anything..."
-msgstr ""
+msgstr "לא היה ניתן לגנוב דבר..."
 
 #: src/eathena/gui/chat.cpp:754
 msgid "Poison had no effect..."
-msgstr ""
+msgstr "לרעל לא הייתה כל השפעה..."
 
 #: src/eathena/gui/chat.cpp:832
 #, c-format
@@ -1198,13 +1155,13 @@ msgid "Cannot use a '/' as the prefix."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:844
-#, fuzzy, c-format
+#, c-format
 msgid "Changing prefix to %s."
-msgstr "משנה OpenGL"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:855
 msgid "-- Help --"
-msgstr ""
+msgstr "-- עזרה --"
 
 #: src/eathena/gui/chat.cpp:858
 msgid "/announce: Global announcement (GM only)."
@@ -1344,8 +1301,8 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:929
 msgid ""
-"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or \"0"
-"\", \"no\", \"false\" to turn the toggle off."
+"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or "
+"\"0\", \"no\", \"false\" to turn the toggle off."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:932
@@ -1406,19 +1363,19 @@ msgid "%d FPS"
 msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:53 src/eathena/gui/debugwindow.cpp:102
-#, fuzzy, c-format
+#, c-format
 msgid "Music: %s"
-msgstr "שם: %s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:54 src/eathena/gui/debugwindow.cpp:121
-#, fuzzy, c-format
+#, c-format
 msgid "Map: %s"
-msgstr "שם: %s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:55 src/eathena/gui/debugwindow.cpp:119
-#, fuzzy, c-format
+#, c-format
 msgid "Minimap: %s"
-msgstr "שם: %s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:56 src/eathena/gui/debugwindow.cpp:67
 #: src/eathena/gui/debugwindow.cpp:112
@@ -1428,9 +1385,9 @@ msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:57 src/eathena/gui/debugwindow.cpp:68
 #: src/eathena/gui/debugwindow.cpp:125
-#, fuzzy, c-format
+#, c-format
 msgid "Particle count: %d"
-msgstr "משתמש: %s"
+msgstr ""
 
 #: src/eathena/gui/emotewindow.cpp:43 src/eathena/gui/menubar.cpp:65
 msgid "Emote"
@@ -1443,9 +1400,8 @@ msgid "Use"
 msgstr "השתמש"
 
 #: src/eathena/gui/emotewindow.cpp:58 src/eathena/gui/inventorywindow.cpp:81
-#, fuzzy
 msgid "Shortcuts"
-msgstr "קיצור-דרך"
+msgstr ""
 
 #: src/eathena/gui/equipmentwindow.cpp:96 src/eathena/gui/menubar.cpp:62
 msgid "Equipment"
@@ -1473,9 +1429,8 @@ msgid "Trade"
 msgstr ""
 
 #: src/eathena/gui/inventorywindow.cpp:71 src/eathena/gui/popupmenu.cpp:312
-#, fuzzy
 msgid "Store"
-msgstr "עצור"
+msgstr ""
 
 #: src/eathena/gui/inventorywindow.cpp:78 src/eathena/gui/popupmenu.cpp:305
 msgid "Drop"
@@ -1495,18 +1450,17 @@ msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:95 src/eathena/gui/itemamount.cpp:99
 #: src/eathena/gui/itemamount.cpp:103 src/eathena/gui/itemamount.cpp:107
-#, fuzzy, c-format
+#, c-format
 msgid "Select amount of items to %s."
-msgstr "בחר כמות חפצים לפצל."
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:95
 msgid "trade"
 msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:99
-#, fuzzy
 msgid "drop"
-msgstr "השלך"
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:103
 msgid "store"
@@ -1555,9 +1509,8 @@ msgid "Skills"
 msgstr "כישורים"
 
 #: src/eathena/gui/minimap.cpp:52 src/eathena/gui/minimap.cpp:131
-#, fuzzy
 msgid "Map"
-msgstr "מיני-מפה"
+msgstr ""
 
 #: src/eathena/gui/npcintegerdialog.cpp:38
 #: src/eathena/gui/npcstringdialog.cpp:35
@@ -1565,27 +1518,25 @@ msgid "NPC Input"
 msgstr ""
 
 #: src/eathena/gui/npcintegerdialog.cpp:47
-#, fuzzy
 msgid "Reset"
-msgstr "הרשם"
+msgstr ""
 
 #: src/eathena/gui/npclistdialog.cpp:37 src/eathena/gui/npctext.cpp:41
 msgid "NPC"
 msgstr "NPC"
 
 #: src/eathena/gui/popupmenu.cpp:315
-#, fuzzy
 msgid "Add to Item Shortcuts"
-msgstr "קיצור-דרך"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:318 src/eathena/gui/storagewindow.cpp:66
 msgid "Retrieve"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:320
-#, fuzzy, c-format
+#, c-format
 msgid "Pick Up %s"
-msgstr "@@pickup|הרם %s@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:325
 msgid "Hide Item Info"
@@ -1604,14 +1555,14 @@ msgid "Add name to chat"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:351
-#, fuzzy, c-format
+#, c-format
 msgid "Trade With %s"
-msgstr "@@trade|סחור עם %s@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:352 src/eathena/gui/popupmenu.cpp:390
-#, fuzzy, c-format
+#, c-format
 msgid "Attack %s"
-msgstr "התקפה %+d"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:359
 #, c-format
@@ -1624,14 +1575,14 @@ msgid "Disregard %s"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:363
-#, fuzzy, c-format
+#, c-format
 msgid "Ignore %s"
-msgstr "@@guild|הזמן את %s@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:367
-#, fuzzy, c-format
+#, c-format
 msgid "Un-Ignore %s"
-msgstr "@@guild|הזמן את %s@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:370
 #, c-format
@@ -1644,9 +1595,8 @@ msgid "Talk To %s"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:403
-#, fuzzy
 msgid "Add to Emote Shortcuts"
-msgstr "קיצור-דרך"
+msgstr ""
 
 #: src/eathena/gui/register.cpp:79
 msgid "Confirm:"
@@ -1690,9 +1640,8 @@ msgid "Error"
 msgstr "שגיאה"
 
 #: src/eathena/gui/serverlistdialog.cpp:36
-#, fuzzy
 msgid "Select Server"
-msgstr "החלף שרת"
+msgstr ""
 
 #: src/eathena/gui/skill.cpp:64 src/eathena/gui/skill.cpp:118
 #, c-format
@@ -1708,29 +1657,26 @@ msgid "inc"
 msgstr ""
 
 #: src/eathena/gui/skill.cpp:66
-#, fuzzy
 msgid "use"
-msgstr "השתמש"
+msgstr ""
 
 #: src/eathena/gui/slotselection.cpp:50
-#, fuzzy
 msgid "Select item shortcut slot to use."
-msgstr "בחר כמות חפצים לסחור."
+msgstr ""
 
 #: src/eathena/gui/slotselection.cpp:53
-#, fuzzy
 msgid "Select emote shortcut slot to use."
-msgstr "בחר כמות חפצים לסחור."
+msgstr ""
 
 #: src/eathena/gui/status.cpp:50 src/eathena/gui/status.cpp:190
-#, fuzzy, c-format
+#, c-format
 msgid "Job: %d"
-msgstr "רמה: %d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:51 src/eathena/gui/status.cpp:193
-#, fuzzy, c-format
+#, c-format
 msgid "Money: %d GP"
-msgstr "זהב: %d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:53
 msgid "HP:"
@@ -1745,14 +1691,12 @@ msgid "MP:"
 msgstr ""
 
 #: src/eathena/gui/status.cpp:66
-#, fuzzy
 msgid "Job:"
-msgstr "רמה: %d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:74
-#, fuzzy
 msgid "Stats"
-msgstr "מצב"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:75
 msgid "Total"
@@ -1763,24 +1707,20 @@ msgid "Cost"
 msgstr ""
 
 #: src/eathena/gui/status.cpp:80
-#, fuzzy
 msgid "Attack:"
-msgstr "התקפה %+d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:81
-#, fuzzy
 msgid "Defense:"
-msgstr "הגנה %+d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:82
-#, fuzzy
 msgid "M.Attack:"
-msgstr "התקפה %+d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:83
-#, fuzzy
 msgid "M.Defense:"
-msgstr "הגנה %+d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:84
 #, c-format
@@ -1797,29 +1737,24 @@ msgid "% Reflex:"
 msgstr ""
 
 #: src/eathena/gui/status.cpp:215
-#, fuzzy
 msgid "Strength"
-msgstr "עוצמה:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:216
-#, fuzzy
 msgid "Agility"
-msgstr "זריזות:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:217
-#, fuzzy
 msgid "Vitality"
-msgstr "חיוניות:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:218
-#, fuzzy
 msgid "Intelligence"
-msgstr "תבונה:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:219
-#, fuzzy
 msgid "Dexterity"
-msgstr "מיומנות:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:220
 msgid "Luck"
@@ -1877,9 +1812,8 @@ msgid "as particle"
 msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:62
-#, fuzzy
 msgid "Game"
-msgstr "שם:"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:71
 msgid "Overhead text"
@@ -1894,14 +1828,12 @@ msgid "Particle detail"
 msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:220
-#, fuzzy
 msgid "No text"
-msgstr "הבא"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:226
-#, fuzzy
 msgid "Bubbles, no names"
-msgstr "שמות גלויים"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:229
 msgid "Bubbles with names"
@@ -1931,9 +1863,8 @@ msgid "max"
 msgstr ""
 
 #: src/eathena/gui/tabs/setup_players.cpp:65
-#, fuzzy
 msgid "Name"
-msgstr "שם:"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_players.cpp:66
 msgid "Relation"
@@ -2036,14 +1967,12 @@ msgid "Info"
 msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:166
-#, fuzzy
 msgid "Character deleted."
-msgstr "אשר מחיקת שחקן"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:171
-#, fuzzy
 msgid "Failed to delete character."
-msgstr "יש להכניס לפחות 4 תוים בשם."
+msgstr ""
 
 #: src/eathena/net/chathandler.cpp:76
 msgid "Whisper could not be sent, user is offline."
@@ -2063,9 +1992,8 @@ msgid "MVP player"
 msgstr ""
 
 #: src/eathena/net/equipmenthandler.cpp:110
-#, fuzzy
 msgid "Unable to equip."
-msgstr "הורד"
+msgstr ""
 
 #: src/eathena/net/equipmenthandler.cpp:153
 msgid "Unable to unequip."
@@ -2101,24 +2029,20 @@ msgid "Unknown connection error"
 msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:131
-#, fuzzy
 msgid "Unregistered ID"
-msgstr "בטל רישום"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:134
-#, fuzzy
 msgid "Wrong password"
-msgstr "שנה סיסמה"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:137
-#, fuzzy
 msgid "Account expired"
-msgstr "משתמש: %s"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:140
-#, fuzzy
 msgid "Rejected from server"
-msgstr "החלף שרת"
+msgstr ""
 
 #: src/eathena/net/loginhandler.cpp:144
 msgid ""
@@ -2265,9 +2189,9 @@ msgid ""
 msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:301
-#, fuzzy, c-format
+#, c-format
 msgid "You picked up %d GP"
-msgstr "אתה מקבל %d זהב."
+msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:387
 msgid "Equip arrows first."
@@ -2431,8 +2355,8 @@ msgstr ""
 
 #: src/main.cpp:136
 msgid ""
-"License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl2."
-"html>"
+"License GPLv2+: GNU GPL version 2 or later "
+"<http://gnu.org/licenses/gpl2.html>"
 msgstr ""
 
 #: src/main.cpp:138
@@ -2444,7 +2368,8 @@ msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
 #: src/main.cpp:207
-msgid "--no-opengl is set by default (OpenGL has been disabled at build time)"
+msgid ""
+"--no-opengl is set by default (OpenGL has been disabled at build time)"
 msgstr ""
 
 #: src/main.cpp:346
@@ -2456,9 +2381,8 @@ msgid "Connecting to character server..."
 msgstr ""
 
 #: src/main.cpp:447
-#, fuzzy
 msgid "Connecting to map server..."
-msgstr "מתחבר..."
+msgstr ""
 
 #~ msgid "Ok"
 #~ msgstr "אישור"
@@ -2469,23 +2393,11 @@ msgstr "מתחבר..."
 #~ msgid "MiniMap"
 #~ msgstr "מיני-מפה"
 
-#, fuzzy
-#~ msgid "@@attack|Attack %s@@"
-#~ msgstr "@@attack|תקוף את %s@@"
-
-#, fuzzy
-#~ msgid "@@party-invite|Invite %s to party@@"
-#~ msgstr "@@party|הזמן את %s להצטרף למסיבה@@"
-
 #~ msgid "@@talk|Talk To NPC@@"
 #~ msgstr "@@talk|דבר אל NPC@@"
 
 #~ msgid "@@cancel|Cancel@@"
 #~ msgstr "@@cancel|ביטול@@"
-
-#, fuzzy
-#~ msgid "@@use|Unequip@@"
-#~ msgstr "@@use|החזק@@"
 
 #~ msgid "@@use|Equip@@"
 #~ msgstr "@@use|החזק@@"
@@ -2495,10 +2407,6 @@ msgstr "מתחבר..."
 
 #~ msgid "@@drop|Drop@@"
 #~ msgstr "@@drop|השלך@@"
-
-#, fuzzy
-#~ msgid "Recorder"
-#~ msgstr "מתחבר..."
 
 #~ msgid "Video"
 #~ msgstr "וידאו"
@@ -2515,36 +2423,8 @@ msgstr "מתחבר..."
 #~ msgid "Scroll laziness"
 #~ msgstr "עצלנות גלילה"
 
-#, fuzzy
-#~ msgid "Restart your client or change maps for the change to take effect."
-#~ msgstr "נדרש איתחול כדי שהשינויים יהיו ברי-תוקף."
-
-#, fuzzy
-#~ msgid "skills.xml"
-#~ msgstr "כישורים"
-
 #~ msgid "Add"
 #~ msgstr "הוסף"
-
-#, fuzzy
-#~ msgid " cancelled"
-#~ msgstr "ביטול"
-
-#, fuzzy
-#~ msgid "Select OK"
-#~ msgstr "החלף שרת"
-
-#, fuzzy
-#~ msgid "Trying to connect to account server..."
-#~ msgstr "מתחבר..."
-
-#, fuzzy
-#~ msgid "Trying to connect to char server..."
-#~ msgstr "מתחבר..."
-
-#, fuzzy
-#~ msgid "Trying to connect to map server..."
-#~ msgstr "מתחבר..."
 
 #~ msgid "@@description|Description@@"
 #~ msgstr "@@description|תיאור@@"
