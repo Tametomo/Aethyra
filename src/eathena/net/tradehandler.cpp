@@ -41,6 +41,7 @@
 #include "../../core/utils/stringutils.h"
 
 std::string tradePartnerName;
+ConfirmDialog *confirmDlg;
 
 /**
  * Listener for request trade dialogs
@@ -50,8 +51,9 @@ namespace {
     {
         void action(const gcn::ActionEvent &event)
         {
+            confirmDlg = NULL;
             player_node->tradeReply(event.getId() == "yes");
-        };
+        }
     } listener;
 }
 
@@ -68,6 +70,8 @@ TradeHandler::TradeHandler()
         0
     };
     handledMessages = _messages;
+
+    confirmDlg = NULL;
 }
 
 
@@ -76,36 +80,39 @@ void TradeHandler::handleMessage(MessageIn *msg)
     switch (msg->getId())
     {
         case SMSG_TRADE_REQUEST:
+            {
                 // If a trade window or request window is already open, send a
                 // trade cancel to any other trade request.
                 //
                 // Note that it would be nice if the server would prevent this
                 // situation, and that the requesting player would get a
                 // special message about the player being occupied.
-                tradePartnerName = msg->readString(24);
+                std::string tradePartnerNameTemp = msg->readString(24);
 
                 if (player_relations.hasPermission(tradePartnerName,
                                                    PlayerRelation::TRADE))
                 {
-                    if (!player_node->tradeRequestOk())
+                    if (!player_node->tradeRequestOk() || confirmDlg)
                     {
                         player_node->tradeReply(false);
                         break;
                     }
 
+                    tradePartnerName = tradePartnerNameTemp;
                     player_node->setTrading(true);
-                    ConfirmDialog *dlg = new ConfirmDialog(_("Request for Trade"),
-                                                           strprintf(_("%s wants "
-                                                           "to trade with you, do "
-                                                           "you accept?"),
-                                                           tradePartnerName.c_str()));
-                    dlg->addActionListener(&listener);
+                    confirmDlg = new ConfirmDialog(_("Request for Trade"),
+                                                     strprintf(_("%s wants "
+                                                     "to trade with you, do "
+                                                     "you accept?"),
+                                                     tradePartnerName.c_str()));
+                    confirmDlg->addActionListener(&listener);
                 }
                 else
                 {
                     player_node->tradeReply(false);
                     break;
                 }
+            }
             break;
 
         case SMSG_TRADE_RESPONSE:
@@ -169,7 +176,8 @@ void TradeHandler::handleMessage(MessageIn *msg)
             // Trade: New Item add response (was 0x00ea, now 01b1)
             {
                 const int index = msg->readInt16();
-                Item *item = player_node->getInventory()->getItem(index - INVENTORY_OFFSET);
+                Item *item = player_node->getInventory()->getItem(index -
+                                                                  INVENTORY_OFFSET);
                 if (!item)
                 {
                     tradeWindow->receivedOk(true);
