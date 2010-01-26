@@ -170,44 +170,11 @@ void SDLGraphics::setColor(const gcn::Color& color)
     mAlpha = color.a != 255;
 }
 
-bool SDLGraphics::resizeVideoMode(int w, int h)
-{
-    logger->log("Changing video mode %dx%d %s", w, h, 
-                mFullscreen ? "fullscreen" : "windowed");
-
-    int displayFlags = SDL_ANYFORMAT;
-
-    if (mFullscreen)
-        displayFlags |= SDL_FULLSCREEN;
-
-    if (mHWAccel)
-        displayFlags |= SDL_HWSURFACE | SDL_DOUBLEBUF;
-    else
-        displayFlags |= SDL_SWSURFACE;
-
-    SDL_Surface *target = SDL_SetVideoMode(w, h, 0, displayFlags);
-
-    if (!target)
-        return false;
-
-    setTarget(target);
-    Graphics::popClipArea();
-    _beginDraw();
-
-    return true;
-}
-
 bool SDLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
 {
-    logger->log("Setting video mode %dx%d %s", w, h, fs ? "fullscreen" :
-                "windowed");
-
-    logger->log("Bits per pixel: %d", bpp);
+    Graphics::setVideoMode(w, h, bpp, fs, hwaccel);
 
     int displayFlags = SDL_ANYFORMAT;
-
-    mFullscreen = fs;
-    mHWAccel = hwaccel;
 
     if (fs)
         displayFlags |= SDL_FULLSCREEN;
@@ -295,7 +262,8 @@ bool SDLGraphics::drawImage(Image *image, int srcX, int srcY, int dstX, int dstY
 void SDLGraphics::drawImagePattern(Image *image, int x, int y, int w, int h)
 {
     // Check that preconditions for blitting are met.
-    if (!mTarget || !image || !image->mImage) return;
+    if (!mTarget || !image || !image->mImage)
+        return;
 
     const int iw = image->getWidth();
     const int ih = image->getHeight();

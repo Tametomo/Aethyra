@@ -59,67 +59,20 @@ void OpenGLGraphics::setSync(bool sync)
     mSync = sync;
 }
 
-bool OpenGLGraphics::resizeVideoMode(int w,int h)
-{
-    logger->log("Changing video mode %dx%d %s", w, h, 
-                mFullscreen ? "fullscreen" : "windowed");
-
-    int displayFlags = SDL_ANYFORMAT | SDL_OPENGL;
-
-    if (mFullscreen)
-        displayFlags |= SDL_FULLSCREEN;
-
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-    if (!(mTarget = SDL_SetVideoMode(w, h, 0, displayFlags)))
-        return false;
-
-    glViewport(0, 0, w, h);
-
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-    int gotDoubleBuffer;
-    SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &gotDoubleBuffer);
-    logger->log("Using OpenGL %s double buffering.",
-            (gotDoubleBuffer ? "with" : "without"));
-
-    char const *glExtensions = (char const *)glGetString(GL_EXTENSIONS);
-    GLint texSize;
-    bool rectTex = strstr(glExtensions, "GL_ARB_texture_rectangle");
-    if (rectTex)
-    {
-        Image::mTextureType = GL_TEXTURE_RECTANGLE_ARB;
-        glGetIntegerv(GL_MAX_RECTANGLE_TEXTURE_SIZE_ARB, &texSize);
-    }
-    else
-    {
-        Image::mTextureType = GL_TEXTURE_2D;
-        glGetIntegerv(GL_MAX_TEXTURE_SIZE, &texSize);
-    }
-    Image::mTextureSize = texSize;
-    logger->log("OpenGL texture size: %d pixels%s", Image::mTextureSize,
-                rectTex ? " (rectangle textures)" : "");
-
-    gcn::Graphics::popClipArea();
-    _beginDraw();
-    return true;
-}
-
 bool OpenGLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
 {
-    logger->log("Setting video mode %dx%d %s", w, h, fs ? "fullscreen" :
-                "windowed");
+    Graphics::setVideoMode(w, h, bpp, fs, hwaccel);
 
     int displayFlags = SDL_ANYFORMAT | SDL_OPENGL;
-
-    mFullscreen = fs;
-    mHWAccel = hwaccel;
 
     if (fs)
         displayFlags |= SDL_FULLSCREEN;
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    if (!(mTarget = SDL_SetVideoMode(w, h, bpp, displayFlags)))
+    mTarget = SDL_SetVideoMode(w, h, bpp, displayFlags);
+
+    if (!mTarget)
         return false;
 
 #ifdef __APPLE__
@@ -171,9 +124,8 @@ bool OpenGLGraphics::drawImage(Image *image, int x, int y)
     return drawImage(image, 0, 0, x, y, image->getWidth(), image->getHeight());
 }
 
-static inline void drawQuad(Image *image,
-                            int srcX, int srcY, int dstX, int dstY,
-                            int width, int height)
+static inline void drawQuad(Image *image, int srcX, int srcY, int dstX,
+                            int dstY, int width, int height)
 {
     if (image->getTextureType() == GL_TEXTURE_2D)
     {
@@ -205,9 +157,8 @@ static inline void drawQuad(Image *image,
     }
 }
 
-bool OpenGLGraphics::drawImage(Image *image, int srcX, int srcY,
-                               int dstX, int dstY,
-                               int width, int height, bool useColor)
+bool OpenGLGraphics::drawImage(Image *image, int srcX, int srcY, int dstX,
+                               int dstY, int width, int height, bool useColor)
 {
     if (!image)
         return false;

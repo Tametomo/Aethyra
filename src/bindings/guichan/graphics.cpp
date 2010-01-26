@@ -37,13 +37,53 @@
 
 #include "../../eathena/gui/chat.h"
 
+Graphics::Graphics():
+    mTarget(NULL),
+    mWidth(0),
+    mHeight(0),
+    mBpp(0),
+    mAlpha(false),
+    mFullscreen(false),
+    mHWAccel(false)
+{
+}
+
+bool Graphics::resizeVideoMode(int w, int h)
+{
+    bool success = setVideoMode(w, h, mBpp, mFullscreen, mHWAccel);
+
+    if (success)
+    {
+        gcn::Graphics::popClipArea();
+        _beginDraw();
+    }
+
+    return success;
+}
+
+bool Graphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
+{
+    logger->log("Setting video mode %dx%d %s", w, h, fs ? "fullscreen" :
+                "windowed");
+
+    logger->log("Bits per pixel: %d", bpp);
+
+    mWidth = w;
+    mHeight = h;
+    mBpp = bpp;
+    mFullscreen = fs;
+    mHWAccel = hwaccel;
+
+    return true;
+}
+
 bool Graphics::setFullscreen(bool fs)
 {
     if (mFullscreen == fs)
         return true;
 
-    return setVideoMode(mTarget->w, mTarget->h, mTarget->format->BitsPerPixel,
-                        fs, mHWAccel);
+
+    return setVideoMode(mWidth, mHeight, mBpp, fs, mHWAccel);
 }
 
 void Graphics::drawImageRect(int x, int y, int w, int h, Image *topLeft,
@@ -90,12 +130,12 @@ void Graphics::drawImageRect(int x, int y, int w, int h,
 
 int Graphics::getWidth()
 {
-    return mTarget->w;
+    return mWidth;
 }
 
 int Graphics::getHeight()
 {
-    return mTarget->h;
+    return mHeight;
 }
 
 void saveScreenshot()

@@ -95,7 +95,7 @@ class Graphics : public gcn::Graphics
         /**
          * Constructor.
          */
-        Graphics() {}
+        Graphics();
 
         /**
          * Destructor.
@@ -121,7 +121,7 @@ class Graphics : public gcn::Graphics
         /**
          * Try to create a window with the given settings.
          */
-        virtual bool setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel) = 0;
+        virtual bool setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel);
 
         /**
          * Set fullscreen mode.
@@ -131,7 +131,7 @@ class Graphics : public gcn::Graphics
         /**
          * Try to change the size of the window
          */
-        virtual bool resizeVideoMode(int w,int h) = 0;
+        bool resizeVideoMode(int w, int h);
 
         /**
          * Blits an image onto the screen.
@@ -205,10 +205,14 @@ class Graphics : public gcn::Graphics
         bool initialized() { return (mTarget != NULL); }
 
     protected:
-        bool mFullscreen, mHWAccel;
         SDL_Surface *mTarget;
         gcn::Color mColor;
+        int mWidth;
+        int mHeight;
+        int mBpp;
         bool mAlpha;
+        bool mFullscreen;
+        bool mHWAccel;
 };
 
 void saveScreenshot();

@@ -66,11 +66,6 @@ class SDLGraphics : public Graphics
         virtual bool setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel);
 
         /**
-         * Try to change the size of the window
-         */
-        virtual bool resizeVideoMode(int w,int h);
-
-        /**
          * Blits an image onto the screen.
          *
          * @return <code>true</code> if the image was blitted properly
