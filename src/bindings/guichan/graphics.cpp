@@ -37,6 +37,10 @@
 
 #include "../../eathena/gui/chat.h"
 
+#ifdef HAVE_CONFIG_H
+#include "../../../config.h"
+#endif
+
 Graphics::Graphics():
     mTarget(NULL),
     mWidth(0),
@@ -82,8 +86,12 @@ bool Graphics::setFullscreen(bool fs)
     if (mFullscreen == fs)
         return true;
 
-
+#ifdef X11
+    logger->log("Switching to %s mode", fs ? "fullscreen" : "windowed");
+    return SDL_WM_ToggleFullScreen(mTarget);
+#else
     return setVideoMode(mWidth, mHeight, mBpp, fs, mHWAccel);
+#endif
 }
 
 void Graphics::drawImageRect(int x, int y, int w, int h, Image *topLeft,

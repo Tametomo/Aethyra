@@ -178,37 +178,31 @@ void Setup_Gui::apply()
     bool fullscreen = mFsCheckBox->isSelected();
     if (fullscreen != (config.getValue("screen", false) == 1))
     {
-        /* The OpenGL test is only necessary on Windows, since switching
-         * to/from full screen works fine on Linux. On Windows we'd have to
-         * reinitialize the OpenGL state and reload all textures.
+        /* Currently, switching to fullscreen mode in windows with SDL or OpenGL
+         * modes will lock up the screen and cause graphical flickers.
+         *
+         *  TODO: Remove this if this issue ever gets fixed locally, or if it's
+         *        found to be a bug upstream in SDL and gets fixed later.
          *
          * See http://libsdl.org/cgi/docwiki.cgi/SDL_SetVideoMode
          */
 
 #ifdef WIN32
-        // checks for opengl usage
-        if (!(config.getValue("opengl", USE_OPENGL) == 1))
+        new OkDialog(_("Switching to full screen"),
+                     _("Restart needed for changes to take effect."));
+#else
+        if (!graphics->setFullscreen(fullscreen))
         {
-#endif
+            fullscreen = !fullscreen;
             if (!graphics->setFullscreen(fullscreen))
             {
-                fullscreen = !fullscreen;
-                if (!graphics->setFullscreen(fullscreen))
-                {
-                    std::stringstream error;
-                    error << strprintf(_("Failed to switch to %s mode and "
-                                         "restoration of old mode also "
-                                         "failed!"), (fullscreen ? _("windowed") :
-                                       _("fullscreen"))) << std::endl;
-                    logger->error(error.str());
-                }
+                std::stringstream error;
+                error << strprintf(_("Failed to switch to %s mode and "
+                                     "restoration of old mode also "
+                                     "failed!"), (fullscreen ? _("windowed") :
+                                   _("fullscreen"))) << std::endl;
+                logger->error(error.str());
             }
-#ifdef WIN32
-        }
-        else
-        {
-            new OkDialog(_("Switching to full screen"),
-                         _("Restart needed for changes to take effect."));
         }
 #endif
         config.setValue("screen", fullscreen ? true : false);

@@ -56,6 +56,10 @@
 
 #include "../../eathena/gui/viewport.h"
 
+#ifdef HAVE_CONFIG_H
+#include "../../../config.h"
+#endif
+
 typedef std::list<gcn::Widget*> Widgets;
 typedef Widgets::iterator WidgetIterator;
 
@@ -230,6 +234,24 @@ void Gui::resize(const int width, const int height)
     if (width < 0 || height < 0 || (width == graphics->getWidth() &&
         height == graphics->getHeight()))
         return;
+
+#ifdef WIN32
+    /** Don't allow for resizing in windows when in fullscreen mode, because
+     *  this currently appears to cause the screen to be turned sideways and
+     *  being unable to use the mouse without ALT+F4. While this may cause a
+     *  different issue for some people, or none at all, it's best to disable
+     *  resizing while in fullscreen mode for now.
+     *
+     *  TODO: Remove this if this issue ever gets fixed locally, or if it's
+     *        found to be a bug upstream in SDL and gets fixed later.
+     */
+    if (graphics->getTarget()->flags & SDL_FULLSCREEN)
+    {
+        new OkDialog(_("Switching resolutions"),
+                     _("Restart needed for changes to take effect."));
+        return;
+    }
+#endif
 
     Widgets widgets = windowContainer->getWidgetList();
     WidgetIterator iter;
