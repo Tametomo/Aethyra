@@ -130,7 +130,7 @@ Engine::Engine(const char *prog)
     }
 
     // Set log file
-    logger->setLogFile(homeDir + std::string("/aethyra.log"));
+    logger->setLogFile(homeDir + std::string("/runtime.log"));
 
 #ifdef PACKAGE_VERSION
     logger->log("Starting Aethyra Version %s.", PACKAGE_VERSION);
