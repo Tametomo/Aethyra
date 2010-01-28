@@ -217,6 +217,11 @@ static void parseOptions(int argc, char *argv[])
 /** Main */
 int main(int argc, char *argv[])
 {
+#if defined(DEBUG) && defined(WIN32)
+    // load mingw crash handler. Won't fail if dll is not present.
+    LoadLibrary("exchndl.dll");
+#endif
+
     parseOptions(argc, argv);
 
     if (options.printVersion)
