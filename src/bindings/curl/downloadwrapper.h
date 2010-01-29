@@ -46,6 +46,7 @@ enum CachePolicy
     CACHE_REFRESH    /**< Re-download existing files. */
 };
 
+typedef void CURL;
 
 class GenericVerifier
 {
@@ -165,6 +166,8 @@ public:
      */
     bool downloadSynchronous(GenericVerifier* resource);
 
+    void cancelDownload();
+
 private:
     /**
      * A libcurl callback for progress updates.
@@ -172,7 +175,11 @@ private:
     static int updateProgress(void *ptr, double dt, double dn, double ut,
                               double un);
 
+    bool mCanceled;
+
     DownloadListener *mListener;
+
+    CURL *mCurl;
 
     /** Buffer for libcurl's human readable error messages. */
     char *mCurlError;

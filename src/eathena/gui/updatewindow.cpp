@@ -104,7 +104,7 @@ void UpdaterWindow::downloadComplete()
     MutexLocker lock(&mLabelMutex);
     enable();
 
-    mNewLabelCaption = "";
+    mNewLabelCaption = _("Update Complete");
     // leave mNewProgress as it is, in case the user cancelled
     // (this will leave the download bar reflecting the situation)
 }
@@ -165,8 +165,9 @@ void UpdaterWindow::downloadProgress(float totalProgress,
 {
     // Do delayed label text update, since Guichan isn't thread-safe
     MutexLocker lock(&mLabelMutex);
-    mNewLabelCaption = currentFile +
-        " (" + toString((int) (fileProgress * 100)) + "%)";
+    mNewLabelCaption = currentFile +" (" + toString((int) (fileProgress * 100)) +
+                       "%) " + _("Total Progress") + " (" +
+                       toString((int) (totalProgress * 100)) + "%)";
 
     mNewProgress = totalProgress;
 }

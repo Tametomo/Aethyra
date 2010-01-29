@@ -57,10 +57,18 @@ static unsigned long fadler32(FILE *file)
 }
 
 DownloadWrapper::DownloadWrapper(DownloadListener *listener) :
+    mCanceled(false),
     mListener(listener),
+    mCurl(curl_easy_init()),
     mCurlError(new char[CURL_ERROR_SIZE])
 {
     mCurlError[0] = 0;
+}
+
+DownloadWrapper::~DownloadWrapper()
+{
+    curl_easy_cleanup(mCurl);
+    delete[] mCurlError;
 }
 
 int DownloadWrapper::updateProgress(void *ptr, double dt, double dn, double ut,
@@ -72,12 +80,7 @@ int DownloadWrapper::updateProgress(void *ptr, double dt, double dn, double ut,
 
 bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
 {
-    int attempts = 0;
-    bool downloadComplete = false;
-    CURL *curl;
-    CURLcode res;
-
-    if (!resource->isSaneToDownload())
+    if (!resource || !resource->isSaneToDownload())
         return false;
 
     mResource = resource;
@@ -94,13 +97,15 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
                 {
                     logger->log("%s already here and verified",
                                 resource->getName().c_str());
-                    downloadComplete = true;
 
                     // Obtain file size and make a download progress callback
                     fseek(newfile, 0, SEEK_END);
                     long fileSize = ftell(newfile);
                     (void) mListener->downloadProgress(resource, fileSize,
                                                        fileSize);
+
+                    fclose(newfile);
+                    return true;
                 }
                 else
                 {
@@ -120,14 +125,15 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
         }
     }
 
+    int attempts = 0;
+    bool downloadComplete = false;
+    CURLcode res;
+    FILE *outfile = NULL;
+    const std::string temporaryPath = resource->getFullPath() + ".temp";
+
     while (attempts < 3 && !downloadComplete)
     {
-        FILE *outfile = NULL;
-        const std::string temporaryPath = resource->getFullPath() + ".temp";
-
-        curl = curl_easy_init();
-
-        if (curl)
+        if (mCurl)
         {
             logger->log("Downloading: %s", resource->getUrl().c_str());
 
@@ -139,21 +145,27 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
             if (!outfile)
                 break;  // No point taking 3 attempts here
 
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, outfile);
+            if (mCanceled)
+            {
+                fclose(outfile);
+                break;
+            }
+
+            curl_easy_setopt(mCurl, CURLOPT_WRITEDATA, outfile);
 
 #ifdef PACKAGE_VERSION
-            curl_easy_setopt(curl, CURLOPT_USERAGENT, "Aethyra/" PACKAGE_VERSION);
+            curl_easy_setopt(mCurl, CURLOPT_USERAGENT, "Aethyra/" PACKAGE_VERSION);
 #else
-            curl_easy_setopt(curl, CURLOPT_USERAGENT, "Aethyra");
+            curl_easy_setopt(mCurl, CURLOPT_USERAGENT, "Aethyra");
 #endif
-            curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, mCurlError);
-            curl_easy_setopt(curl, CURLOPT_URL, resource->getUrl().c_str());
-            curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0);
-            curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION,
+            curl_easy_setopt(mCurl, CURLOPT_ERRORBUFFER, mCurlError);
+            curl_easy_setopt(mCurl, CURLOPT_URL, resource->getUrl().c_str());
+            curl_easy_setopt(mCurl, CURLOPT_NOPROGRESS, 0);
+            curl_easy_setopt(mCurl, CURLOPT_PROGRESSFUNCTION,
                              DownloadWrapper::updateProgress);
-            curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, this);
-            curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
-            curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 15);
+            curl_easy_setopt(mCurl, CURLOPT_PROGRESSDATA, this);
+            curl_easy_setopt(mCurl, CURLOPT_NOSIGNAL, 1);
+            curl_easy_setopt(mCurl, CURLOPT_CONNECTTIMEOUT, 15);
 
             struct curl_slist *pHeaders = NULL;
             if (resource->getCachePolicy() == CACHE_REFRESH)
@@ -162,10 +174,10 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
                 // redownloaded, in order to always get the latest version.
                 pHeaders = curl_slist_append(pHeaders, "pragma: no-cache");
                 pHeaders = curl_slist_append(pHeaders, "Cache-Control: no-cache");
-                curl_easy_setopt(curl, CURLOPT_HTTPHEADER, pHeaders);
+                curl_easy_setopt(mCurl, CURLOPT_HTTPHEADER, pHeaders);
             }
 
-            if ((res = curl_easy_perform(curl)) != 0)
+            if ((res = curl_easy_perform(mCurl)) != 0)
             {
                 std::cerr << "curl error " << res << ": " << mCurlError
                           << " host: " << resource->getUrl() << std::endl;
@@ -175,11 +187,13 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
                     ::remove(temporaryPath.c_str());
                 else
                     ::remove(resource->getFullPath().c_str());
-                attempts++;
-                continue;   //FIXME this leaks curl
-            }
 
-            curl_easy_cleanup(curl);
+                if (pHeaders)
+                    curl_slist_free_all(pHeaders);
+
+                attempts++;
+                continue;
+            }
 
             if (pHeaders)
                 curl_slist_free_all(pHeaders);
@@ -218,9 +232,11 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
     return downloadComplete;
 }
 
-DownloadWrapper::~DownloadWrapper()
+void DownloadWrapper::cancelDownload()
 {
-    delete[] mCurlError;
+    // This triggers a cancel on the current download next time libcurl calls
+    // the status fuction (which happens at least once every second).
+    mCanceled = true;
 }
 
 GenericVerifier::GenericVerifier(std::string name, std::string url,

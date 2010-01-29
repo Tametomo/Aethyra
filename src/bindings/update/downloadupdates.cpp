@@ -73,6 +73,7 @@ DownloadUpdates::DownloadUpdates(const std::string &updateHost,
     mUpdateHost(updateHost),
     mUpdatesDir(""),
     mUserCancel(false),
+    mFilesComplete(0),
     mListener(listener)
 {
     setUpdatesDir(mUpdateHost);
@@ -224,8 +225,8 @@ void DownloadUpdates::parseResourcesFile()
     }
     mResources.clear();
 
-    std::vector<std::string> lines =
-            loadTextFile(getUpdatesDirFullPath() + "resources2.txt");
+    std::vector<std::string> lines = loadTextFile(getUpdatesDirFullPath() +
+                                                  "resources2.txt");
 
     typedef std::vector<std::string>::const_iterator CIS;
     for (CIS itr = lines.begin(); itr != lines.end(); itr++)
@@ -264,12 +265,13 @@ int DownloadUpdates::downloadThreadWithThis()
 
     // The comments here have the pre-refactor state names
 
-    /* UPDATE_NEWS:      Download news.txt file. */
+    /* UPDATE_LIST:      Download resources2.txt. */
     {
-        std::string file = "news.txt";
+        std::string file = "resources2.txt";
         std::string url = mUpdateHost + "/" + file;
         std::string fullPath = getUpdatesDirFullPath() + file;
         GenericVerifier resource(file, url, fullPath, CACHE_REFRESH);
+
         if (resource.isSaneToDownload())
             success = dw.downloadSynchronous(&resource);
         else
@@ -277,6 +279,28 @@ int DownloadUpdates::downloadThreadWithThis()
             success = false;
             securityWorries = true;
         }
+
+        if (success)
+            parseResourcesFile();
+    }
+
+    /* UPDATE_NEWS:      Download news.txt file. */
+    if (success)
+    {
+        std::string file = "news.txt";
+        std::string url = mUpdateHost + "/" + file;
+        std::string fullPath = getUpdatesDirFullPath() + file;
+        GenericVerifier resource(file, url, fullPath, CACHE_REFRESH);
+
+        if (resource.isSaneToDownload())
+            success = dw.downloadSynchronous(&resource);
+        else
+        {
+            success = false;
+            securityWorries = true;
+        }
+
+        mFilesComplete++;
 
         if (success && mListener)
         {
@@ -286,33 +310,16 @@ int DownloadUpdates::downloadThreadWithThis()
         }
     }
 
-    /* UPDATE_LIST:      Download resources2.txt. */
-    if (success)
-    {
-        mFilesComplete++;
-        std::string file = "resources2.txt";
-        std::string url = mUpdateHost + "/" + file;
-        std::string fullPath = getUpdatesDirFullPath() + file;
-        GenericVerifier resource(file, url, fullPath, CACHE_REFRESH);
-        if (resource.isSaneToDownload())
-            success = dw.downloadSynchronous(&resource);
-        else
-        {
-            success = false;
-            securityWorries = true;
-        }
-    }
-
     /* UPDATE_RESOURCES: Download .zip files named in resources2.txt. */
     if (success)
     {
         mFilesComplete++;
-        parseResourcesFile();
         typedef std::vector<GenericVerifier*>::const_iterator CI;
         for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
         {
             if (mUserCancel)
             {
+                dw.cancelDownload();
                 addUpdatesToResman();
 
                 if (mThread && SDL_GetThreadID(mThread) != 0)
@@ -353,7 +360,7 @@ int DownloadUpdates::downloadThreadWithThis()
               "persists, report this issue with your log file on the forums."));
         mListener->downloadTextUpdate(lines);
 
-        /* UPDATE_COMPLETE:  Wait for user to press "play", then crash. */
+        /* UPDATE_COMPLETE:  Wait for user to press "play", then exit. */
         mListener->downloadFailed();
         return 0;
     }
@@ -389,6 +396,7 @@ int DownloadUpdates::downloadProgress(GenericVerifier* resource,
                                       double downloaded, double size)
 {
     float progress = downloaded / size;
+
     if (progress != progress)
         progress = 0.0f; // check for NaN
     if (progress < 0.0f)
@@ -399,15 +407,15 @@ int DownloadUpdates::downloadProgress(GenericVerifier* resource,
 
     // Make the progress bar display overall progress, not just for this file
     // (inaccurate as it assumes all files are the same size)
-    // (The +2 is for news.txt and resources2.txt)
-    float totalProgress = (mFilesComplete + progress) / (mResources.size() + 2);
+    // NOTE: This loops to 100% twice: once when downloading the resources2.txt
+    //       file, since at that point it doesn't know if there will be other
+    //       files, and later again when all of the files are completed.
+    float totalFiles = (float) (mResources.size() <= 0) ? 1 : (mResources.size() + 2);
+    float totalProgress = (mFilesComplete + progress) / totalFiles;
 
-    if (mListener)
+    if (mListener && resource)
         mListener->downloadProgress(totalProgress, resource->getName(), progress);
 
     // If the action was canceled return an error code to stop the mThread
-    if (mUserCancel)
-        return -1;
-
-    return 0;
+    return (mUserCancel ? -1 : 0);
 }
