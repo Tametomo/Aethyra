@@ -398,7 +398,7 @@ int DownloadUpdates::downloadThreadWithThis()
 int DownloadUpdates::downloadProgress(GenericVerifier* resource,
                                       double downloaded, double size)
 {
-    // 
+    // Prevent crashing the client unnecessarily
     if (!resource)
         return -1;
 
