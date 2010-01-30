@@ -188,8 +188,8 @@ void EquipmentWindow::widgetResized(const gcn::Event &event)
     const gcn::Rectangle &area = getChildrenArea();
     const int padding = 2 * getPadding();
 
-    mInvenScroll->setDimension(gcn::Rectangle(175, 20, area.width - 190,
-                                              area.height - 80));
+    mInvenScroll->setDimension(gcn::Rectangle(175, 8, area.width - 185,
+                                              area.height - 45));
 
     mEquipButton->setPosition((area.width  - mEquipButton->getWidth()  - padding),
                                area.height - mEquipButton->getHeight() - padding);
