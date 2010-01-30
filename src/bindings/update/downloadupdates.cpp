@@ -48,6 +48,8 @@ namespace
      */
     std::vector<std::string> loadTextFile(const std::string &fileName)
     {
+        logger->log("Loading text file: %s", fileName.c_str());
+
         std::vector<std::string> lines;
         std::ifstream fin(fileName.c_str());
 
@@ -87,11 +89,8 @@ DownloadUpdates::~DownloadUpdates()
         SDL_WaitThread(mThread, NULL);
     }
 
-    typedef std::vector<GenericVerifier*>::const_iterator CI;
-    for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
-    {
-        delete *itr;
-    }
+    delete_all(mResources);
+    mResources.clear();
 }
 
 void DownloadUpdates::download()
@@ -111,6 +110,8 @@ void DownloadUpdates::userCancelled()
 
 void DownloadUpdates::addUpdatesToResman()
 {
+    mMutex.lock();
+
     // If the user cancelled in UPDATE_NEWS or UPDATE_LIST, mResources hasn't been
     // populated yet.  But we might have all the updates already.
     if (mResources.empty())
@@ -131,6 +132,8 @@ void DownloadUpdates::addUpdatesToResman()
             //update after the one being downloaded failed the check.
         }
     }
+
+    mMutex.unlock();
 }
 
 void DownloadUpdates::setUpdatesDir(std::string &updateHost)
@@ -145,7 +148,7 @@ void DownloadUpdates::setUpdatesDir(std::string &updateHost)
     if (updateHost.empty())
     {
         updateHost = config.getValue("updatehost",
-                                     "http://www.aethyra.org/updates");
+                                     "http://209.168.213.109/updates");
     }
 
     // Remove any trailing slash at the end of the update host
@@ -218,11 +221,9 @@ std::string DownloadUpdates::getUpdatesDirFullPath()
 
 void DownloadUpdates::parseResourcesFile()
 {
-    typedef std::vector<GenericVerifier*>::const_iterator CIR;
-    for (CIR itr = mResources.begin() ; itr != mResources.end() ; itr++)
-    {
-        delete *itr;
-    }
+    mMutex.lock();
+
+    delete_all(mResources);
     mResources.clear();
 
     std::vector<std::string> lines = loadTextFile(getUpdatesDirFullPath() +
@@ -247,6 +248,8 @@ void DownloadUpdates::parseResourcesFile()
                                                         CACHE_OK, checksum);
         mResources.push_back(resource);
     }
+
+    mMutex.unlock();
 }
 
 
@@ -305,8 +308,8 @@ int DownloadUpdates::downloadThreadWithThis()
         if (success && mListener)
         {
             // Display news to user, with warning at start
-            std::vector<std::string> lines = loadTextFile(fullPath);
-            mListener->downloadTextUpdate(lines);
+            mLines = loadTextFile(fullPath);
+            mListener->downloadTextUpdate(mLines);
         }
     }
 
@@ -354,11 +357,11 @@ int DownloadUpdates::downloadThreadWithThis()
         //
         // This will be able to be handled much more gracefully once the
         // refactored StateManager is available.
-        std::vector<std::string> lines;
-        lines.push_back(
+        mLines.clear();
+        mLines.push_back(
             _("An update failed a security check, see log for details. If this "
               "persists, report this issue with your log file on the forums."));
-        mListener->downloadTextUpdate(lines);
+        mListener->downloadTextUpdate(mLines);
 
         /* UPDATE_COMPLETE:  Wait for user to press "play", then exit. */
         mListener->downloadFailed();
@@ -368,12 +371,12 @@ int DownloadUpdates::downloadThreadWithThis()
     if (!success && mListener)
     {
         // This is really UI, probably better in updatewindow.cpp
-        std::vector<std::string> lines;
-        lines.push_back(_("##1  The update process is incomplete."));
-        lines.push_back(_("##1  It is strongly recommended that"));
-        lines.push_back(_("##1  you try again later"));
-        //lines.push_back(mCurlError);
-        mListener->downloadTextUpdate(lines);
+        mLines.clear();
+        mLines.push_back(_("##1  The update process is incomplete."));
+        mLines.push_back(_("##1  It is strongly recommended that"));
+        mLines.push_back(_("##1  you try again later"));
+        //mLines.push_back(mCurlError);
+        mListener->downloadTextUpdate(mLines);
 
         //continue, as it can still load any files that have downloaded
         //(this (!success) case includes the user pressing "cancel")
@@ -395,6 +398,12 @@ int DownloadUpdates::downloadThreadWithThis()
 int DownloadUpdates::downloadProgress(GenericVerifier* resource,
                                       double downloaded, double size)
 {
+    // 
+    if (!resource)
+        return -1;
+
+    mMutex.lock();
+
     float progress = downloaded / size;
 
     if (progress != progress)
@@ -415,6 +424,8 @@ int DownloadUpdates::downloadProgress(GenericVerifier* resource,
 
     if (mListener && resource)
         mListener->downloadProgress(totalProgress, resource->getName(), progress);
+
+    mMutex.unlock();
 
     // If the action was canceled return an error code to stop the mThread
     return (mUserCancel ? -1 : 0);

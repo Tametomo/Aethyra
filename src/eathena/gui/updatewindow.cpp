@@ -49,7 +49,8 @@
 #include "../../core/utils/stringutils.h"
 
 UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
-    Window(_("Updating..."))
+    Window(_("Updating...")),
+    labelState(IDLE_LABEL)
 {
     mRichTextBox = new RichTextBox();
     mRichTextBox->setOpaque(false);
@@ -100,9 +101,8 @@ void UpdaterWindow::fontChanged()
 
 void UpdaterWindow::downloadComplete()
 {
-    //TODO needs thread safety
     MutexLocker lock(&mLabelMutex);
-    enable();
+    labelState = PLAY_LABEL;
 
     mNewLabelCaption = _("Update Complete");
     // leave mNewProgress as it is, in case the user cancelled
@@ -111,13 +111,10 @@ void UpdaterWindow::downloadComplete()
 
 void UpdaterWindow::downloadFailed()
 {
-    //TODO needs thread safety
     MutexLocker lock(&mLabelMutex);
-    mStateButton->setCaption(_("Quit"));
-    mStateButton->setActionEventId("quit");
-    fontChanged();
+    labelState = FAIL_LABEL;
 
-    mNewLabelCaption = "";
+    mNewLabelCaption = _("Update Failed");
     // leave mNewProgress as it is, in case the user cancelled
     // (this will leave the download bar reflecting the situation)
 }
@@ -137,10 +134,19 @@ void UpdaterWindow::enable()
     fontChanged();
 }
 
+void UpdaterWindow::quit()
+{
+    mStateButton->setCaption(_("Quit"));
+    mStateButton->setActionEventId("quit");
+    fontChanged();
+}
+
 void UpdaterWindow::downloadTextUpdate(const std::vector<std::string>& news)
 {
-    MutexLocker lock(&mLabelMutex);
-    mNewNews = news;
+    {
+        MutexLocker lock(&mLabelMutex);
+        mNewNews = news;
+    }
 }
 
 void UpdaterWindow::action(const gcn::ActionEvent &event)
@@ -164,12 +170,16 @@ void UpdaterWindow::downloadProgress(float totalProgress,
         const std::string& currentFile, float fileProgress)
 {
     // Do delayed label text update, since Guichan isn't thread-safe
-    MutexLocker lock(&mLabelMutex);
-    mNewLabelCaption = currentFile +" (" + toString((int) (fileProgress * 100)) +
-                       "%) " + _("Total Progress") + " (" +
-                       toString((int) (totalProgress * 100)) + "%)";
+    {
+        MutexLocker lock(&mLabelMutex);
 
-    mNewProgress = totalProgress;
+        mNewLabelCaption = currentFile +" (" + toString((int) (fileProgress *
+                           100)) + "%) " + _("Total Progress") + " (" +
+                           toString((int) (totalProgress * 100)) + "%)";
+
+        mNewProgress = totalProgress;
+        labelState = DOWNLOAD_LABEL;
+    }
 }
 
 void UpdaterWindow::logic()
@@ -186,14 +196,28 @@ void UpdaterWindow::logic()
             mLabel->adjustSize();
 
             mProgressBar->setProgress(mNewProgress);
+
+            switch (labelState)
+            {
+                case PLAY_LABEL:
+                    enable();
+                    break;
+                case FAIL_LABEL:
+                    quit();
+                    break;
+                default:
+                    break;
+            }
+
+            labelState = IDLE_LABEL;
         }
 
         if (! mNewNews.empty())
         {
             mRichTextBox->clearRows();
 
-            for (std::vector<std::string>::iterator itr = mNewNews.begin() ;
-                    itr != mNewNews.end() ; itr++)
+            for (std::vector<std::string>::const_iterator itr = mNewNews.begin();
+                 itr != mNewNews.end(); itr++)
             {
                 mRichTextBox->addRow(*itr);
             }

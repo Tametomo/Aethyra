@@ -60,7 +60,8 @@ DownloadWrapper::DownloadWrapper(DownloadListener *listener) :
     mCanceled(false),
     mListener(listener),
     mCurl(curl_easy_init()),
-    mCurlError(new char[CURL_ERROR_SIZE])
+    mCurlError(new char[CURL_ERROR_SIZE]),
+    mResource(NULL)
 {
     mCurlError[0] = 0;
 }
@@ -131,7 +132,7 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
     FILE *outfile = NULL;
     const std::string temporaryPath = resource->getFullPath() + ".temp";
 
-    while (attempts < 3 && !downloadComplete)
+    while (attempts < 3 && !downloadComplete && !mCanceled)
     {
         if (mCurl)
         {
@@ -144,12 +145,6 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
 
             if (!outfile)
                 break;  // No point taking 3 attempts here
-
-            if (mCanceled)
-            {
-                fclose(outfile);
-                break;
-            }
 
             curl_easy_setopt(mCurl, CURLOPT_WRITEDATA, outfile);
 

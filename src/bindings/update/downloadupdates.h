@@ -105,13 +105,13 @@ private:
      */
     void parseResourcesFile();
 
-    int updateState;
-
     /**
      * The thread function that download the files.
      */
     static int downloadThread(void *ptr);
     int downloadThreadWithThis();
+
+    Mutex mMutex;
 
     /** A thread that use libcurl to download updates. */
     SDL_Thread *mThread;
@@ -130,6 +130,9 @@ private:
 
     /** List of files to download. */
     std::vector<GenericVerifier*> mResources;
+
+    /** Lines to write to the updater listener */
+    std::vector<std::string> mLines;
 
     UpdaterListener* mListener;
 };
