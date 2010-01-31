@@ -58,3 +58,11 @@ lib/*
 packaging/windows/upx/*
 data/music/*.ogg
 
+# files created by gtags
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+
+# generated for nsis build
+translations/*
