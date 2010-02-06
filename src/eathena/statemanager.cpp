@@ -321,8 +321,6 @@ void StateManager::setState(const State state)
             desktop->useProgressBar(_("Connecting to map server..."));
             network->unregisterHandler(mCharServerHandler.get());
             mMapLoginHandler.get()->login();
-
-            setState(GAME_STATE);
             break;
 
         case GAME_STATE:

@@ -258,9 +258,21 @@ Game::Game():
     gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
     top->add(viewport);
     viewport->requestMoveToBottom();
-    viewport->setVisible(false);
 
     createGuiWindows();
+
+    /*
+     * To prevent the server from sending data before the client
+     * has initialized, Sanga modified the July 2008 eAthena client
+     * to wait for a "ping" from the client to complete its
+     * initialization. Eventually, this will not be needed.
+     *
+     * Note: This only affects the latest eAthena version.  This
+     * packet is handled by the older version, but its response
+     * is ignored by the client
+     */
+    MessageOut msg(CMSG_CLIENT_PING);
+    msg.writeInt32(tick_time);
 
     map_path = map_path.substr(0, map_path.rfind("."));
     mapLoader->changeMap(map_path);

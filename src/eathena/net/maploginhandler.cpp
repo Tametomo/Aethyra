@@ -85,9 +85,7 @@ void MapLoginHandler::handleMessage(MessageIn *msg)
             logger->log("Protocol: Player start position: (%d, %d), Direction: %d",
                          player_node->mX, player_node->mY, direction);
 
-            // Force the server to resend the being data.
-            viewport->setVisible(true);
-            MessageOut outMsg(CMSG_MAP_LOADED);
+            stateManager->setState(GAME_STATE);
             break;
     }
 }
@@ -115,4 +113,7 @@ void MapLoginHandler::login()
 
     // We get 4 useless bytes before the real answer comes in
     network->skip(4);
+
+    // Force the server to resend the being data.
+    MessageOut mapMsg(CMSG_MAP_LOADED);
 }
