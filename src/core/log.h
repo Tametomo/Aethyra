@@ -72,7 +72,11 @@ class Logger
          * possible, but if not possible, it will show a pop-up on Windows and
          * Mac, or print to standard error everywhere else.
          */
-        void error(const std::string &error_text);
+        void error(const char *error_text, ...)
+#ifdef __GNUC__
+            __attribute__((__format__(__printf__, 2, 3)))
+#endif
+            ;
 
     private:
         std::ofstream mLogFile;

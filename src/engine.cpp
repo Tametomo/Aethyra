@@ -107,13 +107,13 @@ Engine::Engine(const char *prog)
     // Checking if home folder exists.
 #if defined WIN32
     if (!CreateDirectory(homeDir.c_str(), 0) &&
-            GetLastError() != ERROR_ALREADY_EXISTS)
+         GetLastError() != ERROR_ALREADY_EXISTS)
 #else
     if ((mkdir(homeDir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0) &&
-            (errno != EEXIST))
+        (errno != EEXIST))
 #endif
-        logger->error(strprintf(_("%s can't be created, but it doesn't exist! "
-                                  "Exiting."), homeDir.c_str()));
+        logger->error(_("%s can't be created, but it doesn't exist! Exiting."),
+                        homeDir.c_str());
 
     // Set log file
     logger->setLogFile(homeDir + std::string("/runtime.log"));
@@ -127,8 +127,7 @@ Engine::Engine(const char *prog)
     // Initialize SDL
     logger->log("Initializing SDL...");
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
-        logger->error(strprintf(_("Could not initialize SDL: %s"),
-                                  SDL_GetError()));
+        logger->error(_("Could not initialize SDL: %s"), SDL_GetError());
 
     atexit(SDL_Quit);
 
@@ -138,8 +137,8 @@ Engine::Engine(const char *prog)
     ResourceManager *resman = ResourceManager::getInstance();
 
     if (!resman->setWriteDir(homeDir))
-        logger->error(strprintf(_("%s couldn't be set as home directory! "
-                                  "Exiting."), homeDir.c_str()));
+        logger->error(_("%s couldn't be set as home directory! Exiting."),
+                        homeDir.c_str());
 
     // Add the user's homedir to PhysicsFS search path
     resman->addToSearchPath(homeDir, false);
@@ -307,8 +306,8 @@ void Engine::initWindow()
 
     // Try to set the desired video mode
     if (!graphics->setVideoMode(width, height, bpp, fullscreen, hwaccel))
-        logger->error(strprintf(_("Couldn't set %dx%dx%d video mode: %s"),
-                                  width, height, bpp, SDL_GetError()));
+        logger->error(_("Couldn't set %dx%dx%d video mode: %s"), width, height,
+                      bpp, SDL_GetError());
 
     // Initialize for drawing
     graphics->_beginDraw();

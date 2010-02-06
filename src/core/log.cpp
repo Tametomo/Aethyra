@@ -107,21 +107,28 @@ void Logger::log(const char *log_text, ...)
     delete[] buf;
 }
 
-void Logger::error(const std::string &error_text)
+void Logger::error(const char *error_text, ...)
 {
-    log("Error: %s", error_text.c_str());
+    char* buf = new char[1024];
+    va_list ap;
+
+    // Use a temporary buffer to fill in the variables
+    va_start(ap, error_text);
+    vsprintf(buf, error_text, ap);
+    va_end(ap);
+
+    log("Error: %s", buf);
 
     if (graphics && graphics->initialized())
-        stateManager->handleException(error_text, LOGOUT_STATE);
+        stateManager->handleException(buf, LOGOUT_STATE);
     else
     {
 #ifdef WIN32
-        MessageBox(NULL, error_text.c_str(), "Error", MB_ICONERROR | MB_OK);
+        MessageBox(NULL, buf, "Error", MB_ICONERROR | MB_OK);
 #elif defined __APPLE__
         Str255 msg;
         CFStringRef error;
-        error = CFStringCreateWithCString(NULL, error_text.c_str(),
-                                          kCFStringEncodingMacRoman);
+        error = CFStringCreateWithCString(NULL, buf, kCFStringEncodingMacRoman);
         CFStringGetPascalString(error, msg, 255, kCFStringEncodingMacRoman);
         StandardAlert(kAlertStopAlert, "\pError", (ConstStr255Param) msg, NULL,
                       NULL);
@@ -130,4 +137,7 @@ void Logger::error(const std::string &error_text)
 #endif
         exit(1);
     }
+
+    // Delete temporary buffer
+    delete[] buf;
 }

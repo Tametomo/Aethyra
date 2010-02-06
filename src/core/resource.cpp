@@ -41,7 +41,7 @@ void Resource::decRef()
 {
     // Reference may not already have reached zero
     if (mRefCount == 0)
-        logger->error(strprintf("mRefCount may not be zero for %s", mIdPath.c_str()));
+        logger->error("mRefCount may not be zero for %s", mIdPath.c_str());
 
     mRefCount--;
 
