@@ -7,52 +7,43 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aethyra\n"
 "Report-Msgid-Bugs-To: irarice@gmail.com\n"
-"POT-Creation-Date: 2010-01-20 14:33-0700\n"
+"POT-Creation-Date: 2010-02-05 20:17-0700\n"
 "PO-Revision-Date: 2010-01-08 18:04+0000\n"
 "Last-Translator: TomasKovacik <nail@nodomain.sk>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-20 18:16+0000\n"
+"X-Launchpad-Export-Date: 2010-02-06 03:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: src/bindings/curl/downloadwrapper.cpp:248
+#: src/bindings/curl/downloadwrapper.cpp:259
 #, c-format
 msgid "Checksum for file %s failed: (%lx/%lx)"
 msgstr ""
 
-#: src/bindings/guichan/graphics.cpp:137
+#: src/bindings/guichan/graphics.cpp:185
 msgid "Screenshot saved to ~/"
 msgstr ""
 
-#: src/bindings/guichan/graphics.cpp:144
+#: src/bindings/guichan/graphics.cpp:192
 msgid "Saving screenshot failed!"
 msgstr ""
 
-#: src/bindings/guichan/gui.cpp:239
-msgid "Screen resolution changed"
+#: src/bindings/guichan/gui.cpp:250
+msgid "Switching resolutions"
 msgstr ""
 
-#: src/bindings/guichan/gui.cpp:240
-msgid "Restart your client for the change to take effect."
+#: src/bindings/guichan/gui.cpp:251
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:192
+msgid "Restart needed for changes to take effect."
 msgstr ""
 
-#: src/bindings/guichan/inputmanager.cpp:266
-#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/gui/buy.cpp:73
-#: src/eathena/gui/sell.cpp:73 src/eathena/gui/updatewindow.cpp:116
-msgid "Quit"
-msgstr "Ukončiť"
-
-#: src/bindings/guichan/inputmanager.cpp:266
-msgid "Are you sure you want to quit?"
-msgstr ""
-
-#: src/bindings/guichan/inputmanager.cpp:489
+#: src/bindings/guichan/inputmanager.cpp:454
 msgid "Ignoring incoming trade requests"
 msgstr ""
 
-#: src/bindings/guichan/inputmanager.cpp:496
+#: src/bindings/guichan/inputmanager.cpp:461
 msgid "Accepting incoming trade requests"
 msgstr ""
 
@@ -96,7 +87,7 @@ msgstr ""
 msgid "Chat"
 msgstr ""
 
-#: src/bindings/guichan/palette.cpp:93
+#: src/bindings/guichan/palette.cpp:93 src/core/map/sprite/player.cpp:93
 msgid "GM"
 msgstr ""
 
@@ -268,12 +259,12 @@ msgstr ""
 #: src/eathena/gui/login.cpp:76 src/eathena/gui/npcintegerdialog.cpp:46
 #: src/eathena/gui/popupmenu.cpp:408 src/eathena/gui/register.cpp:92
 #: src/eathena/gui/slotselection.cpp:72 src/eathena/gui/trade.cpp:68
-#: src/eathena/gui/updatewindow.cpp:63
+#: src/eathena/gui/updatewindow.cpp:68
 msgid "Cancel"
 msgstr "Zrušiť"
 
 #: src/bindings/guichan/dialogs/setupdialog.cpp:46
-#: src/bindings/guichan/widgets/desktop.cpp:92 src/eathena/gui/menubar.cpp:66
+#: src/bindings/guichan/widgets/desktop.cpp:86 src/eathena/gui/menubar.cpp:66
 msgid "Setup"
 msgstr ""
 
@@ -385,38 +376,34 @@ msgid "Font size"
 msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:121
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:274
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:323
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:268
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:317
 #, c-format
 msgid "%d Point"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:199
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:191
+msgid "Switching to full screen"
+msgstr ""
+
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:200
 #, c-format
 msgid "Failed to switch to %s mode and restoration of old mode also failed!"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:201
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
 msgid "windowed"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:203
 msgid "fullscreen"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:210
-msgid "Switching to full screen"
-msgstr ""
-
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:211
-msgid "Restart needed for changes to take effect."
-msgstr ""
-
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:223
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:217
 msgid "Changing OpenGL"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:224
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:218
 msgid "Applying change to OpenGL requires restart."
 msgstr ""
 
@@ -614,6 +601,12 @@ msgstr ""
 msgid "Scroll Chat Down"
 msgstr ""
 
+#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/statemanager.cpp:420
+#: src/eathena/gui/buy.cpp:73 src/eathena/gui/sell.cpp:73
+#: src/eathena/gui/updatewindow.cpp:143
+msgid "Quit"
+msgstr "Ukončiť"
+
 #: src/bindings/sdl/keyboardconfig.cpp:103
 #: src/bindings/sdl/keyboardconfig.cpp:104
 #, c-format
@@ -631,29 +624,30 @@ msgid ""
 "behaviour."
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:163
-msgid "Invalid update host: "
+#: src/bindings/update/downloadupdates.cpp:172
+#, c-format
+msgid "Invalid update host: %s"
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:200
+#: src/bindings/update/downloadupdates.cpp:209
 msgid "Error creating updates directory!"
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:348
+#: src/bindings/update/downloadupdates.cpp:363
 msgid ""
 "An update failed a security check, see log for details. If this persists, "
 "report this issue with your log file on the forums."
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:361
+#: src/bindings/update/downloadupdates.cpp:376
 msgid "##1  The update process is incomplete."
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:362
+#: src/bindings/update/downloadupdates.cpp:377
 msgid "##1  It is strongly recommended that"
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:363
+#: src/bindings/update/downloadupdates.cpp:378
 msgid "##1  you try again later"
 msgstr ""
 
@@ -682,12 +676,84 @@ msgstr ""
 msgid "Unknown item"
 msgstr ""
 
-#: src/eathena/game.cpp:362 src/main.cpp:277
-msgid "Got disconnected from server!"
+#: src/core/utils/metric.h:44
+msgid "yocto"
 msgstr ""
 
-#: src/eathena/game.cpp:364
-msgid "Network Error"
+#: src/core/utils/metric.h:45
+msgid "zepto"
+msgstr ""
+
+#: src/core/utils/metric.h:46
+msgid "atto"
+msgstr ""
+
+#: src/core/utils/metric.h:47
+msgid "fempto"
+msgstr ""
+
+#: src/core/utils/metric.h:48
+msgid "pico"
+msgstr ""
+
+#: src/core/utils/metric.h:49
+msgid "nano"
+msgstr ""
+
+#: src/core/utils/metric.h:50
+msgid "micro"
+msgstr ""
+
+#: src/core/utils/metric.h:51
+msgid "milli"
+msgstr ""
+
+#: src/core/utils/metric.h:52
+msgid "centi"
+msgstr ""
+
+#: src/core/utils/metric.h:53
+msgid "deci"
+msgstr ""
+
+#: src/core/utils/metric.h:55
+msgid "deca"
+msgstr ""
+
+#: src/core/utils/metric.h:56
+msgid "hecto"
+msgstr ""
+
+#: src/core/utils/metric.h:57
+msgid "kilo"
+msgstr ""
+
+#: src/core/utils/metric.h:58
+msgid "mega"
+msgstr ""
+
+#: src/core/utils/metric.h:59
+msgid "giga"
+msgstr ""
+
+#: src/core/utils/metric.h:60
+msgid "tera"
+msgstr ""
+
+#: src/core/utils/metric.h:61
+msgid "peta"
+msgstr ""
+
+#: src/core/utils/metric.h:62
+msgid "exa"
+msgstr ""
+
+#: src/core/utils/metric.h:63
+msgid "zetta"
+msgstr ""
+
+#: src/core/utils/metric.h:64
+msgid "yotta"
 msgstr ""
 
 #: src/eathena/maploader.cpp:93
@@ -824,6 +890,34 @@ msgstr ""
 
 #: src/eathena/party.cpp:205
 msgid "Type /help party for a list of options."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:183 src/eathena/gui/register.cpp:226
+msgid "Error"
+msgstr ""
+
+#: src/eathena/statemanager.cpp:219
+msgid "Connecting to account server..."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:294
+msgid "Connecting to character server..."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:321
+msgid "Connecting to map server..."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:368
+msgid "Unknown program state. Exiting."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:393
+msgid "Got disconnected from server!"
+msgstr ""
+
+#: src/eathena/statemanager.cpp:421
+msgid "Are you sure you want to quit?"
 msgstr ""
 
 #: src/eathena/db/itemdb.cpp:103 src/eathena/db/monsterdb.cpp:45
@@ -1044,7 +1138,7 @@ msgstr ""
 msgid "Present: "
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:690 src/main.cpp:132
+#: src/eathena/gui/chat.cpp:690 src/main.cpp:80
 #, c-format
 msgid "Aethyra - Version %s"
 msgstr ""
@@ -1642,11 +1736,6 @@ msgstr ""
 msgid "Passwords do not match."
 msgstr ""
 
-#: src/eathena/gui/register.cpp:226 src/eathena/net/charserverhandler.cpp:153
-#: src/eathena/net/charserverhandler.cpp:171 src/main.cpp:313
-msgid "Error"
-msgstr ""
-
 #: src/eathena/gui/serverlistdialog.cpp:36
 msgid "Select Server"
 msgstr ""
@@ -1658,14 +1747,6 @@ msgstr ""
 
 #: src/eathena/gui/skill.cpp:65
 msgid "Up"
-msgstr ""
-
-#: src/eathena/gui/skill.cpp:65
-msgid "inc"
-msgstr ""
-
-#: src/eathena/gui/skill.cpp:66
-msgid "use"
 msgstr ""
 
 #: src/eathena/gui/slotselection.cpp:50
@@ -1791,16 +1872,28 @@ msgstr ""
 msgid "You give:"
 msgstr ""
 
-#: src/eathena/gui/updatewindow.cpp:52
+#: src/eathena/gui/updatewindow.cpp:56
 msgid "Updating..."
 msgstr ""
 
-#: src/eathena/gui/updatewindow.cpp:58
+#: src/eathena/gui/updatewindow.cpp:63
 msgid "Connecting..."
 msgstr ""
 
-#: src/eathena/gui/updatewindow.cpp:135
+#: src/eathena/gui/updatewindow.cpp:111
+msgid "Update Complete"
+msgstr ""
+
+#: src/eathena/gui/updatewindow.cpp:121
+msgid "Update Failed"
+msgstr ""
+
+#: src/eathena/gui/updatewindow.cpp:136
 msgid "Play"
+msgstr ""
+
+#: src/eathena/gui/updatewindow.cpp:181
+msgid "Total Progress"
 msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:48
@@ -1966,19 +2059,19 @@ msgstr ""
 msgid "Unknown failure to select character."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:153
+#: src/eathena/net/charserverhandler.cpp:154
 msgid "Failed to create character. Most likely the name is already taken."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:166
+#: src/eathena/net/charserverhandler.cpp:168
 msgid "Info"
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:166
+#: src/eathena/net/charserverhandler.cpp:168
 msgid "Character deleted."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:171
+#: src/eathena/net/charserverhandler.cpp:173
 msgid "Failed to delete character."
 msgstr ""
 
@@ -2020,35 +2113,35 @@ msgstr ""
 msgid "Failed to use item."
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:66 src/eathena/net/maploginhandler.cpp:65
+#: src/eathena/net/loginhandler.cpp:67 src/eathena/net/maploginhandler.cpp:69
 msgid "Authentication failed"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:69
+#: src/eathena/net/loginhandler.cpp:70
 msgid "No servers available"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:72 src/eathena/net/maploginhandler.cpp:68
+#: src/eathena/net/loginhandler.cpp:73 src/eathena/net/maploginhandler.cpp:72
 msgid "This account is already logged in"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:75 src/eathena/net/maploginhandler.cpp:71
+#: src/eathena/net/loginhandler.cpp:76 src/eathena/net/maploginhandler.cpp:75
 msgid "Unknown connection error"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:131
+#: src/eathena/net/loginhandler.cpp:132
 msgid "Unregistered ID"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:134
+#: src/eathena/net/loginhandler.cpp:135
 msgid "Wrong password"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:137
+#: src/eathena/net/loginhandler.cpp:138
 msgid "Account expired"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:140
+#: src/eathena/net/loginhandler.cpp:141
 msgid "Rejected from server"
 msgstr ""
 
@@ -2064,12 +2157,18 @@ msgid ""
 "Please contact the GM team via the forums."
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:155
+#: src/eathena/net/loginhandler.cpp:154
 msgid "This user name is already taken"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:158
+#: src/eathena/net/loginhandler.cpp:157
 msgid "Unknown error"
+msgstr ""
+
+#: src/eathena/net/network.cpp:209
+msgid ""
+"Packet length too short. Please report this error to the server you are "
+"connecting to."
 msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:107
@@ -2205,183 +2304,171 @@ msgstr ""
 msgid "Equip arrows first."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:97
+#: src/eathena/net/tradehandler.cpp:103
 msgid "Request for Trade"
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:98
+#: src/eathena/net/tradehandler.cpp:104
 #, c-format
 msgid "%s wants to trade with you, do you accept?"
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:115
+#: src/eathena/net/tradehandler.cpp:122
 msgid "Trading isn't possible. Trade partner is too far away."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:119
+#: src/eathena/net/tradehandler.cpp:126
 msgid "Trading isn't possible. Character doesn't exist."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:123
+#: src/eathena/net/tradehandler.cpp:130
 msgid "Trade cancelled due to an unknown reason."
-msgstr ""
-
-#: src/eathena/net/tradehandler.cpp:128
-#, c-format
-msgid "Trade: You and %s"
 msgstr ""
 
 #: src/eathena/net/tradehandler.cpp:135
 #, c-format
+msgid "Trade: You and %s"
+msgstr ""
+
+#: src/eathena/net/tradehandler.cpp:142
+#, c-format
 msgid "Trade with %s cancelled."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:145
+#: src/eathena/net/tradehandler.cpp:152
 msgid "Unhandled trade cancel packet."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:193
+#: src/eathena/net/tradehandler.cpp:201
 msgid "Failed adding item. Trade partner is over weighted."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:199
+#: src/eathena/net/tradehandler.cpp:207
 msgid "Failed adding item. Trade partner has no free slot."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:204
+#: src/eathena/net/tradehandler.cpp:212
 msgid "Failed adding item for unknown reason."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:217
+#: src/eathena/net/tradehandler.cpp:225
 msgid "Trade canceled."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:224
+#: src/eathena/net/tradehandler.cpp:232
 msgid "Trade completed."
 msgstr ""
 
-#: src/engine.cpp:127
+#: src/engine.cpp:115
 #, c-format
 msgid "%s can't be created, but it doesn't exist! Exiting."
 msgstr ""
 
-#: src/engine.cpp:145
-msgid "Could not initialize SDL: "
+#: src/engine.cpp:130
+#, c-format
+msgid "Could not initialize SDL: %s"
 msgstr ""
 
-#: src/engine.cpp:158
+#: src/engine.cpp:141
 #, c-format
 msgid "%s couldn't be set as home directory! Exiting."
 msgstr ""
 
-#: src/engine.cpp:178
-#, c-format
+#: src/engine.cpp:158
 msgid "Can't find Resources directory!\n"
 msgstr ""
 
-#: src/engine.cpp:352
+#: src/engine.cpp:310
 #, c-format
 msgid "Couldn't set %dx%dx%d video mode: %s"
 msgstr ""
 
-#: src/main.cpp:97
+#: src/main.cpp:45
 msgid "Options: "
 msgstr ""
 
-#: src/main.cpp:98
+#: src/main.cpp:46
 msgid "  -C --configfile\t: Configuration file to use"
 msgstr ""
 
-#: src/main.cpp:99
+#: src/main.cpp:47
 msgid "  -d --data\t\t: Directory to load game data from"
 msgstr ""
 
-#: src/main.cpp:101
+#: src/main.cpp:49
 msgid "  -D --default\t\t: Bypass the login process with default settings"
 msgstr ""
 
-#: src/main.cpp:103
+#: src/main.cpp:51
 msgid "  -h --help\t\t: Display this help"
 msgstr ""
 
-#: src/main.cpp:104
+#: src/main.cpp:52
 msgid "  -H --updatehost\t: Use this update host"
 msgstr ""
 
-#: src/main.cpp:105
+#: src/main.cpp:53
 msgid "  -p --playername\t: Login with this player"
 msgstr ""
 
-#: src/main.cpp:106
+#: src/main.cpp:54
 msgid "  -P --password\t\t: Login with this password"
 msgstr ""
 
-#: src/main.cpp:107
+#: src/main.cpp:55
 msgid "  -u --skipupdate\t: Skip the update downloads"
 msgstr ""
 
-#: src/main.cpp:108
+#: src/main.cpp:56
 msgid "  -U --username\t\t: Login with this username"
 msgstr ""
 
-#: src/main.cpp:110
+#: src/main.cpp:58
 msgid "  -O --no-opengl\t: Disable OpenGL for this session"
 msgstr ""
 
-#: src/main.cpp:113
+#: src/main.cpp:61
 msgid "  -O --no-opengl\t: Default (OpenGL has been disabled at build time)"
 msgstr ""
 
-#: src/main.cpp:116
+#: src/main.cpp:64
 msgid "  -v --version\t\t: Display the version"
 msgstr ""
 
-#: src/main.cpp:118
+#: src/main.cpp:66
 msgid "Report bugs at: http://www.aethyra.org/mantis"
 msgstr ""
 
-#: src/main.cpp:120
+#: src/main.cpp:68
 msgid "Homepage: http://www.aethyra.org"
 msgstr ""
 
-#: src/main.cpp:121
+#: src/main.cpp:69
 msgid "Forums: http://www.aethyra.org/forums"
 msgstr ""
 
-#: src/main.cpp:122
+#: src/main.cpp:70
 msgid "IRC: irc.freenode.net\tChannel: #aethyra"
 msgstr ""
 
-#: src/main.cpp:134
+#: src/main.cpp:82
 msgid "\tCopyright (C) 2008-2009  Aethyra Development Team"
 msgstr ""
 
-#: src/main.cpp:136
+#: src/main.cpp:84
 msgid ""
 "License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl2."
 "html>"
 msgstr ""
 
-#: src/main.cpp:138
+#: src/main.cpp:86
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
 
-#: src/main.cpp:140
+#: src/main.cpp:88
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: src/main.cpp:207
+#: src/main.cpp:155
 msgid "--no-opengl is set by default (OpenGL has been disabled at build time)"
-msgstr ""
-
-#: src/main.cpp:346
-msgid "Connecting to account server..."
-msgstr ""
-
-#: src/main.cpp:419
-msgid "Connecting to character server..."
-msgstr ""
-
-#: src/main.cpp:447
-msgid "Connecting to map server..."
 msgstr ""

@@ -20,9 +20,11 @@ src/bindings/sdl/keyboardconfig.cpp
 src/bindings/update/downloadupdates.cpp
 src/core/recorder.cpp
 src/core/map/sprite/being.cpp
-src/eathena/game.cpp
+src/core/map/sprite/player.cpp
+src/core/utils/metric.h
 src/eathena/maploader.cpp
 src/eathena/party.cpp
+src/eathena/statemanager.cpp
 src/eathena/db/itemdb.cpp
 src/eathena/db/monsterdb.cpp
 src/eathena/db/npcdb.cpp
@@ -64,6 +66,7 @@ src/eathena/net/equipmenthandler.cpp
 src/eathena/net/inventoryhandler.cpp
 src/eathena/net/loginhandler.cpp
 src/eathena/net/maploginhandler.cpp
+src/eathena/net/network.cpp
 src/eathena/net/playerhandler.cpp
 src/eathena/net/tradehandler.cpp
 src/engine.cpp

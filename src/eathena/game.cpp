@@ -96,7 +96,6 @@
 #include "../core/map/sprite/localplayer.h"
 
 #include "../core/utils/dtor.h"
-#include "../core/utils/gettext.h"
 
 std::string map_path;
 

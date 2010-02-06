@@ -7,52 +7,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aethyra\n"
 "Report-Msgid-Bugs-To: irarice@gmail.com\n"
-"POT-Creation-Date: 2010-01-20 14:33-0700\n"
-"PO-Revision-Date: 2009-12-13 09:30+0000\n"
+"POT-Creation-Date: 2010-02-05 20:17-0700\n"
+"PO-Revision-Date: 2010-01-23 10:31+0000\n"
 "Last-Translator: nafterburner <nafterburner@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-20 21:16+0000\n"
+"X-Launchpad-Export-Date: 2010-02-06 03:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: src/bindings/curl/downloadwrapper.cpp:248
+#: src/bindings/curl/downloadwrapper.cpp:259
 #, c-format
 msgid "Checksum for file %s failed: (%lx/%lx)"
 msgstr ""
 
-#: src/bindings/guichan/graphics.cpp:137
+#: src/bindings/guichan/graphics.cpp:185
 msgid "Screenshot saved to ~/"
 msgstr "Screenshot spremljen u ~/"
 
-#: src/bindings/guichan/graphics.cpp:144
+#: src/bindings/guichan/graphics.cpp:192
 msgid "Saving screenshot failed!"
 msgstr "Spremanje screenshot-a nije uspjelo!"
 
-#: src/bindings/guichan/gui.cpp:239
-msgid "Screen resolution changed"
+#: src/bindings/guichan/gui.cpp:250
+#, fuzzy
+msgid "Switching resolutions"
 msgstr "Rezolucija Ekrana promijenjena"
 
-#: src/bindings/guichan/gui.cpp:240
-msgid "Restart your client for the change to take effect."
-msgstr "Ponovo pokrenite klijent da bi promjene bile efektne."
+#: src/bindings/guichan/gui.cpp:251
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:192
+msgid "Restart needed for changes to take effect."
+msgstr "Potrebno je ponovno pokrenuti klijent za izvršavanje promjena."
 
-#: src/bindings/guichan/inputmanager.cpp:266
-#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/gui/buy.cpp:73
-#: src/eathena/gui/sell.cpp:73 src/eathena/gui/updatewindow.cpp:116
-msgid "Quit"
-msgstr "Izlaz"
-
-#: src/bindings/guichan/inputmanager.cpp:266
-msgid "Are you sure you want to quit?"
-msgstr "Jeste li sigurni da želite odustati?"
-
-#: src/bindings/guichan/inputmanager.cpp:489
+#: src/bindings/guichan/inputmanager.cpp:454
 msgid "Ignoring incoming trade requests"
 msgstr "Ignoriranje dolaznih zahtjeva za trgovanje"
 
-#: src/bindings/guichan/inputmanager.cpp:496
+#: src/bindings/guichan/inputmanager.cpp:461
 msgid "Accepting incoming trade requests"
 msgstr "Prihvaćanje dolaznih zahtjeva za trgovanje"
 
@@ -96,7 +88,7 @@ msgstr "Predmet je opremljen"
 msgid "Chat"
 msgstr "Chat"
 
-#: src/bindings/guichan/palette.cpp:93
+#: src/bindings/guichan/palette.cpp:93 src/core/map/sprite/player.cpp:93
 msgid "GM"
 msgstr "GM"
 
@@ -133,9 +125,8 @@ msgid "Being"
 msgstr "Biće"
 
 #: src/bindings/guichan/palette.cpp:103
-#, fuzzy
 msgid "Other Player's Names"
-msgstr "Imena Drugih Igrača"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:104
 msgid "Own Name"
@@ -158,24 +149,20 @@ msgid "Unknown Item Type"
 msgstr "Nepoznat Tip Predmeta"
 
 #: src/bindings/guichan/palette.cpp:110
-#, fuzzy
 msgid "Generic"
-msgstr "Generički"
+msgstr "Opći"
 
 #: src/bindings/guichan/palette.cpp:111
-#, fuzzy
 msgid "Hat"
-msgstr "Šeširi"
+msgstr "Šešir"
 
 #: src/bindings/guichan/palette.cpp:112
-#, fuzzy
 msgid "Usable"
-msgstr "Upotrijebi"
+msgstr "Upotrebljivo"
 
 #: src/bindings/guichan/palette.cpp:113
-#, fuzzy
 msgid "Shirt"
-msgstr "Košulje"
+msgstr "Košulja"
 
 #: src/bindings/guichan/palette.cpp:114
 msgid "1 Handed Weapons"
@@ -194,14 +181,12 @@ msgid "2 Handed Weapons"
 msgstr "2 Ručno Oružje"
 
 #: src/bindings/guichan/palette.cpp:118
-#, fuzzy
 msgid "Shield"
-msgstr "Štitovi"
+msgstr "Štit"
 
 #: src/bindings/guichan/palette.cpp:119
-#, fuzzy
 msgid "Ring"
-msgstr "Prstenovi"
+msgstr ""
 
 #: src/bindings/guichan/palette.cpp:120
 msgid "Arms"
@@ -275,12 +260,12 @@ msgstr "U redu"
 #: src/eathena/gui/login.cpp:76 src/eathena/gui/npcintegerdialog.cpp:46
 #: src/eathena/gui/popupmenu.cpp:408 src/eathena/gui/register.cpp:92
 #: src/eathena/gui/slotselection.cpp:72 src/eathena/gui/trade.cpp:68
-#: src/eathena/gui/updatewindow.cpp:63
+#: src/eathena/gui/updatewindow.cpp:68
 msgid "Cancel"
 msgstr "Poništi"
 
 #: src/bindings/guichan/dialogs/setupdialog.cpp:46
-#: src/bindings/guichan/widgets/desktop.cpp:92 src/eathena/gui/menubar.cpp:66
+#: src/bindings/guichan/widgets/desktop.cpp:86 src/eathena/gui/menubar.cpp:66
 msgid "Setup"
 msgstr "Podešavanje"
 
@@ -377,54 +362,49 @@ msgstr "Ograničenje sličica u sekundi"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:80
 msgid "GUI"
-msgstr ""
+msgstr "GUI"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:86
 msgid "Gui opacity"
 msgstr "Prozirnost sučelja"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:87
-#, fuzzy
 msgid "Mouse opacity"
-msgstr "Prozirnost sučelja"
+msgstr ""
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:88
 msgid "Font size"
 msgstr "Veličina fonta"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:121
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:274
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:323
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:268
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:317
 #, c-format
 msgid "%d Point"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:199
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:191
+msgid "Switching to full screen"
+msgstr "Prebacivanje u pregled na čitavom ekranu"
+
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:200
 #, c-format
 msgid "Failed to switch to %s mode and restoration of old mode also failed!"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:201
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
 msgid "windowed"
 msgstr "uokvireno"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:203
 msgid "fullscreen"
 msgstr "cijeli ekran"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:210
-msgid "Switching to full screen"
-msgstr "Prebacivanje u pregled na čitavom ekranu"
-
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:211
-msgid "Restart needed for changes to take effect."
-msgstr "Potrebno je ponovno pokrenuti klijent za izvršavanje promjena."
-
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:223
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:217
 msgid "Changing OpenGL"
 msgstr "Promjena OpenGL-a"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:224
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:218
 msgid "Applying change to OpenGL requires restart."
 msgstr "Izmjene OpenGL-a zahtjevaju ponovno pokretanje klijenta."
 
@@ -444,7 +424,7 @@ msgstr "Kalibriraj"
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:55
 msgid "Input"
-msgstr ""
+msgstr "Unos"
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:69
 msgid "Assign"
@@ -491,9 +471,8 @@ msgid "Stop Attack"
 msgstr "Prekini Napad"
 
 #: src/bindings/sdl/keyboardconfig.cpp:53
-#, fuzzy
 msgid "Target Monster"
-msgstr "Ciljaj Najbližeg"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:54
 msgid "Target NPC"
@@ -504,9 +483,8 @@ msgid "Target Player"
 msgstr "Ciljaj Igrača"
 
 #: src/bindings/sdl/keyboardconfig.cpp:56
-#, fuzzy
 msgid "Being Menu"
-msgstr "Biće"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:57
 msgid "Pickup"
@@ -541,9 +519,8 @@ msgid "Debug Window"
 msgstr "Debug Prozor"
 
 #: src/bindings/sdl/keyboardconfig.cpp:65
-#, fuzzy
 msgid "Emote Window"
-msgstr "Prozor Prečica za Ispoljavanje emocija"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:66
 msgid "Emote Shortcut Window"
@@ -625,11 +602,17 @@ msgstr "Pomakni Chat Gore"
 msgid "Scroll Chat Down"
 msgstr "Pomakni Chat Dolje"
 
+#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/statemanager.cpp:420
+#: src/eathena/gui/buy.cpp:73 src/eathena/gui/sell.cpp:73
+#: src/eathena/gui/updatewindow.cpp:143
+msgid "Quit"
+msgstr "Izlaz"
+
 #: src/bindings/sdl/keyboardconfig.cpp:103
 #: src/bindings/sdl/keyboardconfig.cpp:104
-#, fuzzy, c-format
+#, c-format
 msgid "Ignore Input %d"
-msgstr "Ignorirano"
+msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:178
 msgid "Key Conflict(s) Detected."
@@ -642,29 +625,30 @@ msgid ""
 "behaviour."
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:163
-msgid "Invalid update host: "
+#: src/bindings/update/downloadupdates.cpp:172
+#, c-format
+msgid "Invalid update host: %s"
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:200
+#: src/bindings/update/downloadupdates.cpp:209
 msgid "Error creating updates directory!"
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:348
+#: src/bindings/update/downloadupdates.cpp:363
 msgid ""
 "An update failed a security check, see log for details. If this persists, "
 "report this issue with your log file on the forums."
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:361
+#: src/bindings/update/downloadupdates.cpp:376
 msgid "##1  The update process is incomplete."
 msgstr "##1  Proces ažuriranja je nepotpun."
 
-#: src/bindings/update/downloadupdates.cpp:362
+#: src/bindings/update/downloadupdates.cpp:377
 msgid "##1  It is strongly recommended that"
 msgstr "##1  Vrlo je preporučljivo da"
 
-#: src/bindings/update/downloadupdates.cpp:363
+#: src/bindings/update/downloadupdates.cpp:378
 msgid "##1  you try again later"
 msgstr "##1  pokušate ponovno kasnije"
 
@@ -693,13 +677,88 @@ msgstr "Neuspjeli početak snimanja."
 msgid "Unknown item"
 msgstr "Nepoznati predmet"
 
-#: src/eathena/game.cpp:362 src/main.cpp:277
-msgid "Got disconnected from server!"
+#: src/core/utils/metric.h:44
+msgid "yocto"
 msgstr ""
 
-#: src/eathena/game.cpp:364
-msgid "Network Error"
-msgstr "Mreža Greška"
+#: src/core/utils/metric.h:45
+msgid "zepto"
+msgstr ""
+
+#: src/core/utils/metric.h:46
+msgid "atto"
+msgstr ""
+
+#: src/core/utils/metric.h:47
+msgid "fempto"
+msgstr ""
+
+#: src/core/utils/metric.h:48
+msgid "pico"
+msgstr ""
+
+#: src/core/utils/metric.h:49
+msgid "nano"
+msgstr ""
+
+#: src/core/utils/metric.h:50
+msgid "micro"
+msgstr ""
+
+#: src/core/utils/metric.h:51
+msgid "milli"
+msgstr ""
+
+#: src/core/utils/metric.h:52
+#, fuzzy
+msgid "centi"
+msgstr "Novije:"
+
+#: src/core/utils/metric.h:53
+msgid "deci"
+msgstr ""
+
+#: src/core/utils/metric.h:55
+msgid "deca"
+msgstr ""
+
+#: src/core/utils/metric.h:56
+msgid "hecto"
+msgstr ""
+
+#: src/core/utils/metric.h:57
+#, fuzzy
+msgid "kilo"
+msgstr "Vještine"
+
+#: src/core/utils/metric.h:58
+msgid "mega"
+msgstr ""
+
+#: src/core/utils/metric.h:59
+msgid "giga"
+msgstr ""
+
+#: src/core/utils/metric.h:60
+msgid "tera"
+msgstr ""
+
+#: src/core/utils/metric.h:61
+msgid "peta"
+msgstr ""
+
+#: src/core/utils/metric.h:62
+msgid "exa"
+msgstr ""
+
+#: src/core/utils/metric.h:63
+msgid "zetta"
+msgstr ""
+
+#: src/core/utils/metric.h:64
+#, fuzzy
+msgid "yotta"
+msgstr "Total"
 
 #: src/eathena/maploader.cpp:93
 msgid "Could not load map"
@@ -723,9 +782,8 @@ msgid "Party name is missing."
 msgstr "Ime partije nedostaje."
 
 #: src/eathena/party.cpp:78
-#, fuzzy
 msgid "Left party."
-msgstr "Pridružen pertiji."
+msgstr ""
 
 #: src/eathena/party.cpp:86
 msgid "Party successfully created."
@@ -755,14 +813,13 @@ msgid "You can't have a blank party name!"
 msgstr ""
 
 #: src/eathena/party.cpp:124
-#, fuzzy
 msgid "Invite to party"
-msgstr "Zalihe"
+msgstr ""
 
 #: src/eathena/party.cpp:125
-#, fuzzy, c-format
+#, c-format
 msgid "%s invites you to join the %s party, do you accept?"
-msgstr "%s vas je pozvao/la da se pridružite %s partiji."
+msgstr ""
 
 #: src/eathena/party.cpp:142
 #, c-format
@@ -774,47 +831,40 @@ msgid "Party chat received, but being is not a player"
 msgstr ""
 
 #: src/eathena/party.cpp:165
-#, fuzzy
 msgid "Command: /party <command> <args>"
-msgstr "Naredba: /pomoć <naredba>"
+msgstr ""
 
 #: src/eathena/party.cpp:166
 msgid "where <command> can be one of:"
 msgstr ""
 
 #: src/eathena/party.cpp:171
-#, fuzzy
 msgid "This command implements the partying function."
-msgstr "Ova naredba završava sesiju snimanja."
+msgstr ""
 
 #: src/eathena/party.cpp:173
 msgid "Type /help party <command> for further help."
 msgstr ""
 
 #: src/eathena/party.cpp:178
-#, fuzzy
 msgid "Command: /party new <party-name>"
-msgstr "Naredba: /new <ime-partije>"
+msgstr ""
 
 #: src/eathena/party.cpp:179
-#, fuzzy
 msgid "Command: /party create <party-name>"
-msgstr "Naredba: /create <ime-partije>"
+msgstr ""
 
 #: src/eathena/party.cpp:180
-#, fuzzy
 msgid "These commands create a new party <party-name>."
-msgstr "Ove naredbe kreira novu partiju zvanu <party-name>."
+msgstr ""
 
 #: src/eathena/party.cpp:185
-#, fuzzy
 msgid "Command: /party prefix <prefix-char>"
-msgstr "Naredba: /party <nick>"
+msgstr ""
 
 #: src/eathena/party.cpp:186
-#, fuzzy
 msgid "This command sets the party prefix character."
-msgstr "Ova naredba briše chat log prethodnog chata."
+msgstr ""
 
 #: src/eathena/party.cpp:188
 msgid ""
@@ -823,33 +873,56 @@ msgid ""
 msgstr ""
 
 #: src/eathena/party.cpp:190
-#, fuzzy
 msgid "Command: /party prefix"
-msgstr "Naredba: /party <nick>"
+msgstr ""
 
 #: src/eathena/party.cpp:191
-#, fuzzy
 msgid "This command reports the current party prefix character."
-msgstr "Ova naredba napušta trenutni kanal."
+msgstr ""
 
 #: src/eathena/party.cpp:198
-#, fuzzy
 msgid "Command: /party leave"
-msgstr "Naredba: /leave"
+msgstr ""
 
 #: src/eathena/party.cpp:199
 msgid "This command causes the player to leave the party."
 msgstr ""
 
 #: src/eathena/party.cpp:204
-#, fuzzy
 msgid "Unknown /party command."
-msgstr "Nepoznata naredba."
+msgstr ""
 
 #: src/eathena/party.cpp:205
-#, fuzzy
 msgid "Type /help party for a list of options."
-msgstr "Upišite /help za listu svih naredbi."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:183 src/eathena/gui/register.cpp:226
+msgid "Error"
+msgstr "Greška"
+
+#: src/eathena/statemanager.cpp:219
+msgid "Connecting to account server..."
+msgstr "Spajanje na poslužitelja korisnika..."
+
+#: src/eathena/statemanager.cpp:294
+msgid "Connecting to character server..."
+msgstr "Spajanje na poslužitelja likova..."
+
+#: src/eathena/statemanager.cpp:321
+msgid "Connecting to map server..."
+msgstr "Spajanje na poslužitelja karti..."
+
+#: src/eathena/statemanager.cpp:368
+msgid "Unknown program state. Exiting."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:393
+msgid "Got disconnected from server!"
+msgstr ""
+
+#: src/eathena/statemanager.cpp:421
+msgid "Are you sure you want to quit?"
+msgstr "Jeste li sigurni da želite odustati?"
 
 #: src/eathena/db/itemdb.cpp:103 src/eathena/db/monsterdb.cpp:45
 #: src/eathena/db/monsterdb.cpp:63
@@ -857,9 +930,8 @@ msgid "unnamed"
 msgstr "neimenovano"
 
 #: src/eathena/db/npcdb.cpp:54
-#, fuzzy
 msgid "NPC Database: Error while loading npcs.xml!"
-msgstr "Greška prilikom učitavanja %s"
+msgstr ""
 
 #: src/eathena/gui/buy.cpp:46 src/eathena/gui/buy.cpp:72
 #: src/eathena/gui/buysell.cpp:35
@@ -868,9 +940,9 @@ msgstr "Kupi"
 
 #: src/eathena/gui/buy.cpp:70 src/eathena/gui/buy.cpp:252
 #: src/eathena/gui/sell.cpp:70 src/eathena/gui/sell.cpp:276
-#, fuzzy, c-format
+#, c-format
 msgid "Price: %d GP / Total: %d GP"
-msgstr "Cijena: %s / Ukupno: %s"
+msgstr "Cijena: %d zlatnika / Ukupno: %d zlatnika"
 
 #: src/eathena/gui/buy.cpp:74 src/eathena/gui/sell.cpp:74
 msgid "Max"
@@ -969,9 +1041,9 @@ msgid "New"
 msgstr "Novi"
 
 #: src/eathena/gui/charselect.cpp:190
-#, fuzzy, c-format
+#, c-format
 msgid "Gold: %d"
-msgstr "Zadatak: %d"
+msgstr "Zlato: %d"
 
 #: src/eathena/gui/charselect.cpp:193
 #: src/eathena/gui/tabs/setup_players.cpp:79
@@ -988,14 +1060,13 @@ msgid "File name to record to:"
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:218
-#, fuzzy
 msgid "Global announcement: "
-msgstr "Javna obavijest:"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:223
-#, fuzzy, c-format
+#, c-format
 msgid "Global announcement from %s: "
-msgstr "Javna obavijest od %s:"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:237 src/eathena/gui/login.cpp:53
 #: src/eathena/gui/register.cpp:80
@@ -1008,14 +1079,12 @@ msgid "%s whispers: "
 msgstr "%s šaptanje: "
 
 #: src/eathena/gui/chat.cpp:411
-#, fuzzy
 msgid "Stop Recording"
-msgstr "Prestanak snimanja"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:412
-#, fuzzy
 msgid "Start Recording"
-msgstr "Prestanak snimanja"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:457
 #, c-format
@@ -1043,10 +1112,9 @@ msgid "Message now closes chat."
 msgstr "Poruka sada zatvara chat."
 
 #: src/eathena/gui/chat.cpp:582
-#, fuzzy
 msgid ""
 "Options to /toggle are \"yes\", \"no\", \"true\", \"false\", \"1\", \"0\"."
-msgstr "Opcije za /%s su \"yes\", \"no\", \"true\", \"false\", \"1\", \"0\"."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:589
 msgid "Unknown party command... Type \"/help\" party for more information."
@@ -1057,14 +1125,14 @@ msgid "No such spell!"
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:654
-#, fuzzy, c-format
+#, c-format
 msgid "%u players are present."
-msgstr "%d igrača je prisutno."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:668
-#, fuzzy, c-format
+#, c-format
 msgid "Present: %s; %s"
-msgstr "Pokloniti: "
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:670
 msgid "Attendance written to record log."
@@ -1074,7 +1142,7 @@ msgstr "Prisutnost zapisana u evidentni dnevnik."
 msgid "Present: "
 msgstr "Pokloniti: "
 
-#: src/eathena/gui/chat.cpp:690 src/main.cpp:132
+#: src/eathena/gui/chat.cpp:690 src/main.cpp:80
 #, c-format
 msgid "Aethyra - Version %s"
 msgstr ""
@@ -1128,9 +1196,8 @@ msgid "You cannot do that right now!"
 msgstr "Ne možeš to učiniti sad!"
 
 #: src/eathena/gui/chat.cpp:745
-#, fuzzy
 msgid "Seems you need more GP... ;-)"
-msgstr "Čini se da trebate više novca... ;-)"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:748
 msgid "You cannot use this skill with that kind of weapon!"
@@ -1187,24 +1254,20 @@ msgid "-- Help --"
 msgstr "-- Pomoć --"
 
 #: src/eathena/gui/chat.cpp:879
-#, fuzzy
 msgid "/announce: Global announcement (GM only)."
-msgstr "/announce > Globalna obavijest (samo GM)"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:880
-#, fuzzy
 msgid "/clear: Clears this window."
-msgstr "/clear > Očisti ovaj prozor"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:881
-#, fuzzy
 msgid "/help: Display this help."
-msgstr "/help > Prikaži ovu pomoć."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:882
-#, fuzzy
 msgid "/me <message>: Tell something about yourself."
-msgstr "/me > Recite nešto o sebi"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:883
 msgid "/msg <nick> <message>: Alternate form for /whisper."
@@ -1219,46 +1282,40 @@ msgid "/present: Get list of players present."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:887
-#, fuzzy
 msgid "/record <filename>: Start recording the chat to an external file."
-msgstr "/record > Započni snimanje chat-a u eksternoj datoteci"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:889
 msgid "/toggle: Determine whether <return> toggles the chat log."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:891
-#, fuzzy
 msgid "/version: Displays the client version"
-msgstr "  -v --version     : Prikaži verziju"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:892
 msgid "/w <nick> <message>: Short form for /whisper."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:893
-#, fuzzy
 msgid "/where: Display map name."
-msgstr "/where > Prikaži ime karte"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:894
-#, fuzzy
 msgid "/whisper <nick> <message>: Sends a private <message> to <nick>."
-msgstr "Ova naredba šalje tekst <message> za <nick>."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:896
-#, fuzzy
 msgid "/who: Display number of online users."
-msgstr "/who > Prikaži broj trenutno prijavljenih korisnika"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:897
 msgid "For more information, type /help <command>."
 msgstr "Za više informacija, utipkajte /pomoć <naredba>."
 
 #: src/eathena/gui/chat.cpp:901
-#, fuzzy
 msgid "Command: /announce <msg>."
-msgstr "Command: /announce <msg>"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:902
 msgid "*** only available to a GM ***"
@@ -1293,9 +1350,8 @@ msgid "This command displays help on <command>."
 msgstr "Ova naredba prikazuje pomoć pri <naredba>."
 
 #: src/eathena/gui/chat.cpp:922
-#, fuzzy
 msgid "Command: /me <msg>"
-msgstr "Naredba: /me <message>"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:923
 msgid "This command tell others you are (doing) <msg>."
@@ -1352,14 +1408,12 @@ msgid "This command displays the return toggle status."
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:960
-#, fuzzy
 msgid "Command: /version"
-msgstr "Naredba: /users"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:961
-#, fuzzy
 msgid "This command displays the current client version you are using."
-msgstr "Ova naredba prikazuje broj igrača trenutno online."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:966
 msgid "Command: /where"
@@ -1370,24 +1424,20 @@ msgid "This command displays the name of the current map."
 msgstr "Ova naredba prikazuje naziv trenutne karte."
 
 #: src/eathena/gui/chat.cpp:972
-#, fuzzy
 msgid "Command: /msg <nick> <msg>"
-msgstr "Naredba: /msg <nick> <message>"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:973
-#, fuzzy
 msgid "Command: /whisper <nick> <msg>"
-msgstr "Naredba: /whisper <nick> <message>"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:974
-#, fuzzy
 msgid "Command: /w <nick> <msg>"
-msgstr "Naredba: /w <nick> <message>"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:975
-#, fuzzy
 msgid "This command sends the message <msg> to <nick>."
-msgstr "Ova naredba šalje tekst <message> za <nick>."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:977
 msgid "If the <nick> has spaces in it, enclose it in double quotes (\")."
@@ -1416,19 +1466,19 @@ msgid "%d FPS"
 msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:53 src/eathena/gui/debugwindow.cpp:102
-#, fuzzy, c-format
+#, c-format
 msgid "Music: %s"
-msgstr "Tema: %s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:54 src/eathena/gui/debugwindow.cpp:121
-#, fuzzy, c-format
+#, c-format
 msgid "Map: %s"
-msgstr "Ime: %s"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:55 src/eathena/gui/debugwindow.cpp:119
-#, fuzzy, c-format
+#, c-format
 msgid "Minimap: %s"
-msgstr "Prozor Minikarte"
+msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:56 src/eathena/gui/debugwindow.cpp:67
 #: src/eathena/gui/debugwindow.cpp:112
@@ -1438,9 +1488,9 @@ msgstr ""
 
 #: src/eathena/gui/debugwindow.cpp:57 src/eathena/gui/debugwindow.cpp:68
 #: src/eathena/gui/debugwindow.cpp:125
-#, fuzzy, c-format
+#, c-format
 msgid "Particle count: %d"
-msgstr "Efekti Čestica"
+msgstr ""
 
 #: src/eathena/gui/emotewindow.cpp:43 src/eathena/gui/menubar.cpp:65
 msgid "Emote"
@@ -1453,9 +1503,8 @@ msgid "Use"
 msgstr "Upotrijebi"
 
 #: src/eathena/gui/emotewindow.cpp:58 src/eathena/gui/inventorywindow.cpp:82
-#, fuzzy
 msgid "Shortcuts"
-msgstr "Kratica"
+msgstr ""
 
 #: src/eathena/gui/equipmentwindow.cpp:96 src/eathena/gui/menubar.cpp:62
 msgid "Equipment"
@@ -1491,9 +1540,8 @@ msgid "Drop"
 msgstr "Ispusti"
 
 #: src/eathena/gui/inventorywindow.cpp:94
-#, fuzzy
 msgid "Slots: "
-msgstr "Mjesta:"
+msgstr ""
 
 #: src/eathena/gui/inventorywindow.cpp:95
 msgid "Weight: "
@@ -1505,39 +1553,34 @@ msgstr "Sve"
 
 #: src/eathena/gui/itemamount.cpp:95 src/eathena/gui/itemamount.cpp:99
 #: src/eathena/gui/itemamount.cpp:103 src/eathena/gui/itemamount.cpp:107
-#, fuzzy, c-format
+#, c-format
 msgid "Select amount of items to %s."
-msgstr "Odaberite količinu predmeta za spremanje."
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:95
-#, fuzzy
 msgid "trade"
-msgstr "Trgovanje"
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:99
-#, fuzzy
 msgid "drop"
-msgstr "Ispusti"
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:103
-#, fuzzy
 msgid "store"
-msgstr "Pohrani"
+msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:107
-#, fuzzy
 msgid "retrieve"
-msgstr "Preuzmi"
+msgstr ""
 
 #: src/eathena/gui/itempopup.cpp:89
-#, fuzzy, c-format
+#, c-format
 msgid "Weight: %s%s"
-msgstr "Težina: "
+msgstr ""
 
 #: src/eathena/gui/itempopup.cpp:91
-#, fuzzy
 msgid "grams"
-msgstr "Naoružanje"
+msgstr ""
 
 #: src/eathena/gui/login.cpp:49
 msgid "Login"
@@ -1590,18 +1633,17 @@ msgid "NPC"
 msgstr "NPC"
 
 #: src/eathena/gui/popupmenu.cpp:315
-#, fuzzy
 msgid "Add to Item Shortcuts"
-msgstr "Prečac do Predmeta %d"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:318 src/eathena/gui/storagewindow.cpp:66
 msgid "Retrieve"
 msgstr "Preuzmi"
 
 #: src/eathena/gui/popupmenu.cpp:320
-#, fuzzy, c-format
+#, c-format
 msgid "Pick Up %s"
-msgstr "Pokupi"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:325
 msgid "Hide Item Info"
@@ -1612,59 +1654,56 @@ msgid "Show Item Info"
 msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:330
-#, fuzzy
 msgid "Add to Chat"
-msgstr "@@chat|Dudaj u chat@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:338
-#, fuzzy
 msgid "Add name to chat"
-msgstr "@@name|Dodaj ime u chat@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:351
-#, fuzzy, c-format
+#, c-format
 msgid "Trade With %s"
-msgstr "Trgovanje s %s"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:352 src/eathena/gui/popupmenu.cpp:390
-#, fuzzy, c-format
+#, c-format
 msgid "Attack %s"
-msgstr "Napad %+d"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:359
-#, fuzzy, c-format
+#, c-format
 msgid "Befriend %s"
-msgstr "@@friend|Budi prijatelj %s@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:362
-#, fuzzy, c-format
+#, c-format
 msgid "Disregard %s"
-msgstr "Zanemareno"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:363
-#, fuzzy, c-format
+#, c-format
 msgid "Ignore %s"
-msgstr "Ignorirano"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:367
-#, fuzzy, c-format
+#, c-format
 msgid "Un-Ignore %s"
-msgstr "@@unignore|Prestani Ignorirati %s@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:370
-#, fuzzy, c-format
+#, c-format
 msgid "Completely ignore %s"
-msgstr "@@ignore|Potpuno ignoriraj %s@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:385
-#, fuzzy, c-format
+#, c-format
 msgid "Talk To %s"
-msgstr "@@talk|Govori S %s@@"
+msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:403
-#, fuzzy
 msgid "Add to Emote Shortcuts"
-msgstr "Prečica za Ispoljavanje emocija %d"
+msgstr ""
 
 #: src/eathena/gui/register.cpp:79
 msgid "Confirm:"
@@ -1702,11 +1741,6 @@ msgstr "Lozinka mora biti kraća od %d znakova."
 msgid "Passwords do not match."
 msgstr "Lozinke se ne podudaraju."
 
-#: src/eathena/gui/register.cpp:226 src/eathena/net/charserverhandler.cpp:153
-#: src/eathena/net/charserverhandler.cpp:171 src/main.cpp:313
-msgid "Error"
-msgstr "Greška"
-
 #: src/eathena/gui/serverlistdialog.cpp:36
 msgid "Select Server"
 msgstr "Odaberi poslužitelj"
@@ -1720,25 +1754,13 @@ msgstr "Bodovi vještine: %d"
 msgid "Up"
 msgstr "Gore"
 
-#: src/eathena/gui/skill.cpp:65
-#, fuzzy
-msgid "inc"
-msgstr "u chat-u"
-
-#: src/eathena/gui/skill.cpp:66
-#, fuzzy
-msgid "use"
-msgstr "Pulsiranje"
-
 #: src/eathena/gui/slotselection.cpp:50
-#, fuzzy
 msgid "Select item shortcut slot to use."
-msgstr "Odaberite količinu predmeta za spremanje."
+msgstr ""
 
 #: src/eathena/gui/slotselection.cpp:53
-#, fuzzy
 msgid "Select emote shortcut slot to use."
-msgstr "Odaberite količinu predmeta za spremanje."
+msgstr ""
 
 #: src/eathena/gui/status.cpp:50 src/eathena/gui/status.cpp:190
 #, c-format
@@ -1746,9 +1768,9 @@ msgid "Job: %d"
 msgstr "Zadatak: %d"
 
 #: src/eathena/gui/status.cpp:51 src/eathena/gui/status.cpp:193
-#, fuzzy, c-format
+#, c-format
 msgid "Money: %d GP"
-msgstr "Novac: %d"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:53
 msgid "HP:"
@@ -1795,14 +1817,14 @@ msgid "M.Defense:"
 msgstr "M.Obrana:"
 
 #: src/eathena/gui/status.cpp:84
-#, fuzzy, c-format
+#, c-format
 msgid "% Accuracy:"
-msgstr "% Preciznost:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:85
-#, fuzzy, c-format
+#, c-format
 msgid "% Evade:"
-msgstr "% Izbjegavanje:"
+msgstr ""
 
 #: src/eathena/gui/status.cpp:86
 msgid "% Reflex:"
@@ -1847,25 +1869,39 @@ msgstr "Mjesta:"
 
 #: src/eathena/gui/trade.cpp:82 src/eathena/gui/trade.cpp:127
 #: src/eathena/gui/trade.cpp:179
-#, fuzzy, c-format
+#, c-format
 msgid "You get %d GP."
-msgstr "Vi dobijete %s."
+msgstr ""
 
 #: src/eathena/gui/trade.cpp:83
 msgid "You give:"
 msgstr "Daješ:"
 
-#: src/eathena/gui/updatewindow.cpp:52
+#: src/eathena/gui/updatewindow.cpp:56
 msgid "Updating..."
 msgstr "Ažuriranje"
 
-#: src/eathena/gui/updatewindow.cpp:58
+#: src/eathena/gui/updatewindow.cpp:63
 msgid "Connecting..."
 msgstr "Spajanje..."
 
-#: src/eathena/gui/updatewindow.cpp:135
+#: src/eathena/gui/updatewindow.cpp:111
+#, fuzzy
+msgid "Update Complete"
+msgstr "Trgovanje je završeno."
+
+#: src/eathena/gui/updatewindow.cpp:121
+#, fuzzy
+msgid "Update Failed"
+msgstr "Neuspjela razmjena!"
+
+#: src/eathena/gui/updatewindow.cpp:136
 msgid "Play"
 msgstr "Igraj"
+
+#: src/eathena/gui/updatewindow.cpp:181
+msgid "Total Progress"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:48
 msgid "Show name"
@@ -1884,9 +1920,8 @@ msgid "as particle"
 msgstr "kao čestica"
 
 #: src/eathena/gui/tabs/setup_game.cpp:62
-#, fuzzy
 msgid "Game"
-msgstr "Ime"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:71
 msgid "Overhead text"
@@ -1897,9 +1932,8 @@ msgid "Ambient FX"
 msgstr "Efekti okruženja"
 
 #: src/eathena/gui/tabs/setup_game.cpp:73
-#, fuzzy
 msgid "Particle detail"
-msgstr "Detalji Čestica"
+msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:220
 msgid "No text"
@@ -1997,62 +2031,54 @@ msgid "Unable to sell."
 msgstr "Nije moguće prodati."
 
 #: src/eathena/net/charserverhandler.cpp:79
-#, fuzzy
 msgid "Authentication failed."
-msgstr "Autentikacija nije uspjela"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:82
 msgid "Map server(s) offline."
 msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:85
-#, fuzzy
 msgid "This account is already logged in."
-msgstr "Ovaj korisnički račun je već prijavljen"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:88
-#, fuzzy
 msgid "Speed hack detected."
-msgstr "Otkrit brzi hack"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:91
-#, fuzzy
 msgid "Duplicated login."
-msgstr "Dvostruka prijava"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:94
-#, fuzzy
 msgid "Unknown connection error."
-msgstr "Nepoznata pogreška veze"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:125
-#, fuzzy
 msgid "Access denied."
-msgstr "Pristup odbijen"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:128
-#, fuzzy
 msgid "Cannot use this ID."
-msgstr "Ne mogu koristiti ovaj ID"
+msgstr ""
 
 #: src/eathena/net/charserverhandler.cpp:131
-#, fuzzy
 msgid "Unknown failure to select character."
-msgstr "Nepoznata greška pri odabiru lika"
+msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:153
+#: src/eathena/net/charserverhandler.cpp:154
 msgid "Failed to create character. Most likely the name is already taken."
 msgstr "Ne mogu stvoriti lik. Najvjerojatnije je ime već zauzeto."
 
-#: src/eathena/net/charserverhandler.cpp:166
+#: src/eathena/net/charserverhandler.cpp:168
 msgid "Info"
 msgstr "Info"
 
-#: src/eathena/net/charserverhandler.cpp:166
+#: src/eathena/net/charserverhandler.cpp:168
 msgid "Character deleted."
 msgstr "Lik izbrisan."
 
-#: src/eathena/net/charserverhandler.cpp:171
+#: src/eathena/net/charserverhandler.cpp:173
 msgid "Failed to delete character."
 msgstr "Neuspješno brisanje znaka."
 
@@ -2070,9 +2096,8 @@ msgid "Online users: %d"
 msgstr ""
 
 #: src/eathena/net/chathandler.cpp:167
-#, fuzzy
 msgid "MVP player"
-msgstr "Igrač"
+msgstr ""
 
 #: src/eathena/net/equipmenthandler.cpp:110
 msgid "Unable to equip."
@@ -2087,43 +2112,43 @@ msgid "Unable to pick up item."
 msgstr ""
 
 #: src/eathena/net/inventoryhandler.cpp:172
-#, fuzzy, c-format
+#, c-format
 msgid "You picked up %s [%s]."
-msgstr "Pokupili ste %s [@@%d|%s@@]."
+msgstr ""
 
 #: src/eathena/net/inventoryhandler.cpp:219
 msgid "Failed to use item."
 msgstr "Neuspješno korištenje predmeta."
 
-#: src/eathena/net/loginhandler.cpp:66 src/eathena/net/maploginhandler.cpp:65
+#: src/eathena/net/loginhandler.cpp:67 src/eathena/net/maploginhandler.cpp:69
 msgid "Authentication failed"
 msgstr "Autentikacija nije uspjela"
 
-#: src/eathena/net/loginhandler.cpp:69
+#: src/eathena/net/loginhandler.cpp:70
 msgid "No servers available"
 msgstr "Nema dostupnih poslužitelji"
 
-#: src/eathena/net/loginhandler.cpp:72 src/eathena/net/maploginhandler.cpp:68
+#: src/eathena/net/loginhandler.cpp:73 src/eathena/net/maploginhandler.cpp:72
 msgid "This account is already logged in"
 msgstr "Ovaj korisnički račun je već prijavljen"
 
-#: src/eathena/net/loginhandler.cpp:75 src/eathena/net/maploginhandler.cpp:71
+#: src/eathena/net/loginhandler.cpp:76 src/eathena/net/maploginhandler.cpp:75
 msgid "Unknown connection error"
 msgstr "Nepoznata pogreška veze"
 
-#: src/eathena/net/loginhandler.cpp:131
+#: src/eathena/net/loginhandler.cpp:132
 msgid "Unregistered ID"
 msgstr "Neregistriran ID"
 
-#: src/eathena/net/loginhandler.cpp:134
+#: src/eathena/net/loginhandler.cpp:135
 msgid "Wrong password"
 msgstr "Pogrešna lozinka"
 
-#: src/eathena/net/loginhandler.cpp:137
+#: src/eathena/net/loginhandler.cpp:138
 msgid "Account expired"
 msgstr "Račun je istekao"
 
-#: src/eathena/net/loginhandler.cpp:140
+#: src/eathena/net/loginhandler.cpp:141
 msgid "Rejected from server"
 msgstr "Odbijeno od poslužitelja"
 
@@ -2139,13 +2164,19 @@ msgid ""
 "Please contact the GM team via the forums."
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:155
+#: src/eathena/net/loginhandler.cpp:154
 msgid "This user name is already taken"
 msgstr "Ovo korisničko ime je već zauzeto"
 
-#: src/eathena/net/loginhandler.cpp:158
+#: src/eathena/net/loginhandler.cpp:157
 msgid "Unknown error"
 msgstr "Nepoznata greška"
+
+#: src/eathena/net/network.cpp:209
+msgid ""
+"Packet length too short. Please report this error to the server you are "
+"connecting to."
+msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:107
 msgid "You are dead."
@@ -2168,9 +2199,8 @@ msgid "Game Over!"
 msgstr "Kraj Igre!"
 
 #: src/eathena/net/playerhandler.cpp:113
-#, fuzzy
 msgid "Insert coin to continue"
-msgstr "Ubacite žeton za nastavak."
+msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:114
 msgid ""
@@ -2277,203 +2307,186 @@ msgstr ""
 "zdravlje."
 
 #: src/eathena/net/playerhandler.cpp:301
-#, fuzzy, c-format
+#, c-format
 msgid "You picked up %d GP"
-msgstr "Pokupili ste "
+msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:387
 msgid "Equip arrows first."
 msgstr "Prvo se opremite strijelama."
 
-#: src/eathena/net/tradehandler.cpp:97
+#: src/eathena/net/tradehandler.cpp:103
 msgid "Request for Trade"
 msgstr "Zahtjev za Trgovanje"
 
-#: src/eathena/net/tradehandler.cpp:98
+#: src/eathena/net/tradehandler.cpp:104
 #, c-format
 msgid "%s wants to trade with you, do you accept?"
 msgstr "%s želi trgovati s vama, prihvaćate li?"
 
-#: src/eathena/net/tradehandler.cpp:115
+#: src/eathena/net/tradehandler.cpp:122
 msgid "Trading isn't possible. Trade partner is too far away."
 msgstr "Trgovanje nije moguće. Trgovački partner je predaleko."
 
-#: src/eathena/net/tradehandler.cpp:119
+#: src/eathena/net/tradehandler.cpp:126
 msgid "Trading isn't possible. Character doesn't exist."
 msgstr "Trgovanje nije moguće. Lik ne postoji."
 
-#: src/eathena/net/tradehandler.cpp:123
+#: src/eathena/net/tradehandler.cpp:130
 msgid "Trade cancelled due to an unknown reason."
 msgstr "Trgovanje otkazano zbog nepoznatih razloga."
 
-#: src/eathena/net/tradehandler.cpp:128
+#: src/eathena/net/tradehandler.cpp:135
 #, c-format
 msgid "Trade: You and %s"
 msgstr "Trgujte: Vi i %s"
 
-#: src/eathena/net/tradehandler.cpp:135
+#: src/eathena/net/tradehandler.cpp:142
 #, c-format
 msgid "Trade with %s cancelled."
 msgstr "Trgovanje s %s otkazano."
 
-#: src/eathena/net/tradehandler.cpp:145
+#: src/eathena/net/tradehandler.cpp:152
 msgid "Unhandled trade cancel packet."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:193
+#: src/eathena/net/tradehandler.cpp:201
 msgid "Failed adding item. Trade partner is over weighted."
 msgstr "Neuspješno dodavanje predmeta. Trgovinski partner je preopterećen."
 
-#: src/eathena/net/tradehandler.cpp:199
+#: src/eathena/net/tradehandler.cpp:207
 msgid "Failed adding item. Trade partner has no free slot."
 msgstr ""
 "Neuspješno dodavanje predmeta. Trgovinski partner nema slobodnog prostora."
 
-#: src/eathena/net/tradehandler.cpp:204
+#: src/eathena/net/tradehandler.cpp:212
 msgid "Failed adding item for unknown reason."
 msgstr "Neuspješno dodavanje predmeta, iz nepoznatog razloga."
 
-#: src/eathena/net/tradehandler.cpp:217
+#: src/eathena/net/tradehandler.cpp:225
 msgid "Trade canceled."
 msgstr "Otkazano trgovanje."
 
-#: src/eathena/net/tradehandler.cpp:224
+#: src/eathena/net/tradehandler.cpp:232
 msgid "Trade completed."
 msgstr "Trgovanje je završeno."
 
-#: src/engine.cpp:127
-#, fuzzy, c-format
+#: src/engine.cpp:115
+#, c-format
 msgid "%s can't be created, but it doesn't exist! Exiting."
-msgstr " ne može biti stvoren, ali ne postoji! Izlaz."
-
-#: src/engine.cpp:145
-msgid "Could not initialize SDL: "
 msgstr ""
 
-#: src/engine.cpp:158
+#: src/engine.cpp:130
+#, c-format
+msgid "Could not initialize SDL: %s"
+msgstr ""
+
+#: src/engine.cpp:141
 #, c-format
 msgid "%s couldn't be set as home directory! Exiting."
 msgstr ""
 
-#: src/engine.cpp:178
-#, c-format
+#: src/engine.cpp:158
 msgid "Can't find Resources directory!\n"
 msgstr ""
 
-#: src/engine.cpp:352
+#: src/engine.cpp:310
 #, c-format
 msgid "Couldn't set %dx%dx%d video mode: %s"
 msgstr ""
 
-#: src/main.cpp:97
-#, fuzzy
+#: src/main.cpp:45
 msgid "Options: "
-msgstr "Opcije:"
+msgstr ""
 
-#: src/main.cpp:98
-#, fuzzy
+#: src/main.cpp:46
 msgid "  -C --configfile\t: Configuration file to use"
-msgstr "  -C --config-file : Konfiguracijska datoteka za korištenje"
+msgstr ""
 
-#: src/main.cpp:99
-#, fuzzy
+#: src/main.cpp:47
 msgid "  -d --data\t\t: Directory to load game data from"
-msgstr "  -d --data        : Direktorij iz kojeg se učitavaju podaci igre"
+msgstr ""
 
-#: src/main.cpp:101
+#: src/main.cpp:49
 msgid "  -D --default\t\t: Bypass the login process with default settings"
 msgstr ""
 
-#: src/main.cpp:103
-#, fuzzy
+#: src/main.cpp:51
 msgid "  -h --help\t\t: Display this help"
-msgstr "  -h --help        : Prikaži ovu pomoć"
+msgstr ""
 
-#: src/main.cpp:104
-#, fuzzy
+#: src/main.cpp:52
 msgid "  -H --updatehost\t: Use this update host"
-msgstr "  -u --skip-update : Preskoči preuzimanje ažuriranja"
+msgstr ""
 
-#: src/main.cpp:105
-#, fuzzy
+#: src/main.cpp:53
 msgid "  -p --playername\t: Login with this player"
-msgstr "  -U --username    : Prijava s ovim korisničkim imenom"
+msgstr ""
 
-#: src/main.cpp:106
-#, fuzzy
+#: src/main.cpp:54
 msgid "  -P --password\t\t: Login with this password"
-msgstr "  -P --password    : Prijava s ovom lozinkom"
+msgstr ""
 
-#: src/main.cpp:107
-#, fuzzy
+#: src/main.cpp:55
 msgid "  -u --skipupdate\t: Skip the update downloads"
-msgstr "  -u --skip-update : Preskoči preuzimanje ažuriranja"
+msgstr ""
 
-#: src/main.cpp:108
-#, fuzzy
+#: src/main.cpp:56
 msgid "  -U --username\t\t: Login with this username"
-msgstr "  -U --username    : Prijava s ovim korisničkim imenom"
+msgstr ""
 
-#: src/main.cpp:110
-#, fuzzy
+#: src/main.cpp:58
 msgid "  -O --no-opengl\t: Disable OpenGL for this session"
-msgstr "  -O --no-opengl   : Onemogući OpenGL za ovu sesiju"
+msgstr ""
 
-#: src/main.cpp:113
+#: src/main.cpp:61
 msgid "  -O --no-opengl\t: Default (OpenGL has been disabled at build time)"
 msgstr ""
 
-#: src/main.cpp:116
-#, fuzzy
+#: src/main.cpp:64
 msgid "  -v --version\t\t: Display the version"
-msgstr "  -v --version     : Prikaži verziju"
+msgstr ""
 
-#: src/main.cpp:118
+#: src/main.cpp:66
 msgid "Report bugs at: http://www.aethyra.org/mantis"
 msgstr ""
 
-#: src/main.cpp:120
+#: src/main.cpp:68
 msgid "Homepage: http://www.aethyra.org"
 msgstr ""
 
-#: src/main.cpp:121
+#: src/main.cpp:69
 msgid "Forums: http://www.aethyra.org/forums"
 msgstr ""
 
-#: src/main.cpp:122
+#: src/main.cpp:70
 msgid "IRC: irc.freenode.net\tChannel: #aethyra"
 msgstr ""
 
-#: src/main.cpp:134
+#: src/main.cpp:82
 msgid "\tCopyright (C) 2008-2009  Aethyra Development Team"
 msgstr ""
 
-#: src/main.cpp:136
+#: src/main.cpp:84
 msgid ""
 "License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl2."
 "html>"
 msgstr ""
 
-#: src/main.cpp:138
+#: src/main.cpp:86
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
 
-#: src/main.cpp:140
+#: src/main.cpp:88
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: src/main.cpp:207
+#: src/main.cpp:155
 msgid "--no-opengl is set by default (OpenGL has been disabled at build time)"
 msgstr ""
 
-#: src/main.cpp:346
-msgid "Connecting to account server..."
-msgstr "Spajanje na poslužitelja korisnika..."
+#~ msgid "Restart your client for the change to take effect."
+#~ msgstr "Ponovo pokrenite klijent da bi promjene bile efektne."
 
-#: src/main.cpp:419
-msgid "Connecting to character server..."
-msgstr "Spajanje na poslužitelja likova..."
-
-#: src/main.cpp:447
-msgid "Connecting to map server..."
-msgstr "Spajanje na poslužitelja karti..."
+#~ msgid "Network Error"
+#~ msgstr "Mreža Greška"

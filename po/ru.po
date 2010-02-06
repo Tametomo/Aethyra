@@ -7,52 +7,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aethyra\n"
 "Report-Msgid-Bugs-To: irarice@gmail.com\n"
-"POT-Creation-Date: 2010-01-20 14:33-0700\n"
-"PO-Revision-Date: 2010-01-19 21:57+0000\n"
+"POT-Creation-Date: 2010-02-05 20:17-0700\n"
+"PO-Revision-Date: 2010-01-23 21:18+0000\n"
 "Last-Translator: Snoopy <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-20 18:16+0000\n"
+"X-Launchpad-Export-Date: 2010-02-06 03:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: src/bindings/curl/downloadwrapper.cpp:248
+#: src/bindings/curl/downloadwrapper.cpp:259
 #, c-format
 msgid "Checksum for file %s failed: (%lx/%lx)"
 msgstr ""
 
-#: src/bindings/guichan/graphics.cpp:137
+#: src/bindings/guichan/graphics.cpp:185
 msgid "Screenshot saved to ~/"
 msgstr "Снимок экрана сохранен в ~/"
 
-#: src/bindings/guichan/graphics.cpp:144
+#: src/bindings/guichan/graphics.cpp:192
 msgid "Saving screenshot failed!"
 msgstr "Ошибка при сохранении снимка экрана!"
 
-#: src/bindings/guichan/gui.cpp:239
-msgid "Screen resolution changed"
+#: src/bindings/guichan/gui.cpp:250
+#, fuzzy
+msgid "Switching resolutions"
 msgstr "Разрешение экрана изменен"
 
-#: src/bindings/guichan/gui.cpp:240
-msgid "Restart your client for the change to take effect."
-msgstr "Перезагрузите клиент, чтобы изменения вступили в силу."
+#: src/bindings/guichan/gui.cpp:251
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:192
+msgid "Restart needed for changes to take effect."
+msgstr "Для вступления в силу выбранных настроек требуется перезагрузка игры."
 
-#: src/bindings/guichan/inputmanager.cpp:266
-#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/gui/buy.cpp:73
-#: src/eathena/gui/sell.cpp:73 src/eathena/gui/updatewindow.cpp:116
-msgid "Quit"
-msgstr "Выход"
-
-#: src/bindings/guichan/inputmanager.cpp:266
-msgid "Are you sure you want to quit?"
-msgstr "Вы уверены, что хотите выйти?"
-
-#: src/bindings/guichan/inputmanager.cpp:489
+#: src/bindings/guichan/inputmanager.cpp:454
 msgid "Ignoring incoming trade requests"
 msgstr "Игнорировать предложения о торговле"
 
-#: src/bindings/guichan/inputmanager.cpp:496
+#: src/bindings/guichan/inputmanager.cpp:461
 msgid "Accepting incoming trade requests"
 msgstr "Принимать предложения о торговле"
 
@@ -96,7 +88,7 @@ msgstr "Предмет екипирован"
 msgid "Chat"
 msgstr "Чат"
 
-#: src/bindings/guichan/palette.cpp:93
+#: src/bindings/guichan/palette.cpp:93 src/core/map/sprite/player.cpp:93
 msgid "GM"
 msgstr "ГМ"
 
@@ -268,12 +260,12 @@ msgstr "OK"
 #: src/eathena/gui/login.cpp:76 src/eathena/gui/npcintegerdialog.cpp:46
 #: src/eathena/gui/popupmenu.cpp:408 src/eathena/gui/register.cpp:92
 #: src/eathena/gui/slotselection.cpp:72 src/eathena/gui/trade.cpp:68
-#: src/eathena/gui/updatewindow.cpp:63
+#: src/eathena/gui/updatewindow.cpp:68
 msgid "Cancel"
 msgstr "Отмена"
 
 #: src/bindings/guichan/dialogs/setupdialog.cpp:46
-#: src/bindings/guichan/widgets/desktop.cpp:92 src/eathena/gui/menubar.cpp:66
+#: src/bindings/guichan/widgets/desktop.cpp:86 src/eathena/gui/menubar.cpp:66
 msgid "Setup"
 msgstr "Настройка"
 
@@ -385,38 +377,36 @@ msgid "Font size"
 msgstr "Размер шрифта"
 
 #: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:121
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:274
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:323
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:268
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:317
 #, c-format
 msgid "%d Point"
 msgstr "точка %d"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:199
-#, c-format
-msgid "Failed to switch to %s mode and restoration of old mode also failed!"
-msgstr ""
-
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:201
-msgid "windowed"
-msgstr "оконный"
-
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
-msgid "fullscreen"
-msgstr "полный экран"
-
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:210
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:191
 msgid "Switching to full screen"
 msgstr "Переключение в полноэкранный режим"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:211
-msgid "Restart needed for changes to take effect."
-msgstr "Для вступления в силу выбранных настроек требуется перезагрузка игры."
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:200
+#, c-format
+msgid "Failed to switch to %s mode and restoration of old mode also failed!"
+msgstr ""
+"Не удалось перейти к %s режима и восстановление старого режима также не "
+"удалось"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:223
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
+msgid "windowed"
+msgstr "оконный"
+
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:203
+msgid "fullscreen"
+msgstr "полный экран"
+
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:217
 msgid "Changing OpenGL"
 msgstr "Переключение на OpenGL"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:224
+#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:218
 msgid "Applying change to OpenGL requires restart."
 msgstr "Переход к OpenGL требует перезагрузки игры."
 
@@ -614,6 +604,12 @@ msgstr "Прокрутить чат вверх"
 msgid "Scroll Chat Down"
 msgstr "Прокрутить чат вниз"
 
+#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/statemanager.cpp:420
+#: src/eathena/gui/buy.cpp:73 src/eathena/gui/sell.cpp:73
+#: src/eathena/gui/updatewindow.cpp:143
+msgid "Quit"
+msgstr "Выход"
+
 #: src/bindings/sdl/keyboardconfig.cpp:103
 #: src/bindings/sdl/keyboardconfig.cpp:104
 #, c-format
@@ -625,21 +621,22 @@ msgid "Key Conflict(s) Detected."
 msgstr "Обнаружены конфликты клавиш!"
 
 #: src/bindings/sdl/keyboardconfig.cpp:179
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s and %s keys overlap. Resolve them, or gameplay may result in strange "
 "behaviour."
-msgstr "Их решения, или игры может привести к странным поведением."
+msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:163
-msgid "Invalid update host: "
+#: src/bindings/update/downloadupdates.cpp:172
+#, fuzzy, c-format
+msgid "Invalid update host: %s"
 msgstr "Неверное принимающей обновление: "
 
-#: src/bindings/update/downloadupdates.cpp:200
+#: src/bindings/update/downloadupdates.cpp:209
 msgid "Error creating updates directory!"
 msgstr "Ошибка создания каталога обновлений!"
 
-#: src/bindings/update/downloadupdates.cpp:348
+#: src/bindings/update/downloadupdates.cpp:363
 msgid ""
 "An update failed a security check, see log for details. If this persists, "
 "report this issue with your log file on the forums."
@@ -647,15 +644,15 @@ msgstr ""
 "Не удалось обновить проверку безопасности, см. журнал для деталей. При этом "
 "сохраняется, сообщите об этой проблеме с лог-файл на форумах."
 
-#: src/bindings/update/downloadupdates.cpp:361
+#: src/bindings/update/downloadupdates.cpp:376
 msgid "##1  The update process is incomplete."
 msgstr "##1  Процесс обновления не завершен!"
 
-#: src/bindings/update/downloadupdates.cpp:362
+#: src/bindings/update/downloadupdates.cpp:377
 msgid "##1  It is strongly recommended that"
 msgstr "##1  Настоятельно рекомендуется"
 
-#: src/bindings/update/downloadupdates.cpp:363
+#: src/bindings/update/downloadupdates.cpp:378
 msgid "##1  you try again later"
 msgstr "##1  попытаться еще раз немного погодя"
 
@@ -684,13 +681,86 @@ msgstr "Не удалось начать запись."
 msgid "Unknown item"
 msgstr "Неизвестный предмет"
 
-#: src/eathena/game.cpp:362 src/main.cpp:277
-msgid "Got disconnected from server!"
-msgstr "Отключено от сервера!"
+#: src/core/utils/metric.h:44
+msgid "yocto"
+msgstr ""
 
-#: src/eathena/game.cpp:364
-msgid "Network Error"
-msgstr "Ошибка сети"
+#: src/core/utils/metric.h:45
+msgid "zepto"
+msgstr ""
+
+#: src/core/utils/metric.h:46
+msgid "atto"
+msgstr ""
+
+#: src/core/utils/metric.h:47
+msgid "fempto"
+msgstr ""
+
+#: src/core/utils/metric.h:48
+msgid "pico"
+msgstr ""
+
+#: src/core/utils/metric.h:49
+msgid "nano"
+msgstr ""
+
+#: src/core/utils/metric.h:50
+msgid "micro"
+msgstr ""
+
+#: src/core/utils/metric.h:51
+msgid "milli"
+msgstr ""
+
+#: src/core/utils/metric.h:52
+msgid "centi"
+msgstr ""
+
+#: src/core/utils/metric.h:53
+msgid "deci"
+msgstr ""
+
+#: src/core/utils/metric.h:55
+msgid "deca"
+msgstr ""
+
+#: src/core/utils/metric.h:56
+msgid "hecto"
+msgstr ""
+
+#: src/core/utils/metric.h:57
+#, fuzzy
+msgid "kilo"
+msgstr "Умения"
+
+#: src/core/utils/metric.h:58
+msgid "mega"
+msgstr ""
+
+#: src/core/utils/metric.h:59
+msgid "giga"
+msgstr ""
+
+#: src/core/utils/metric.h:60
+msgid "tera"
+msgstr ""
+
+#: src/core/utils/metric.h:61
+msgid "peta"
+msgstr ""
+
+#: src/core/utils/metric.h:62
+msgid "exa"
+msgstr ""
+
+#: src/core/utils/metric.h:63
+msgid "zetta"
+msgstr ""
+
+#: src/core/utils/metric.h:64
+msgid "yotta"
+msgstr ""
 
 #: src/eathena/maploader.cpp:93
 msgid "Could not load map"
@@ -787,9 +857,8 @@ msgid "Command: /party create <party-name>"
 msgstr "Команда: /party create <Название группы>"
 
 #: src/eathena/party.cpp:180
-#, fuzzy
 msgid "These commands create a new party <party-name>."
-msgstr "Эти команды создают новую партию (группу) <группы / партия имя.>"
+msgstr ""
 
 #: src/eathena/party.cpp:185
 msgid "Command: /party prefix <prefix-char>"
@@ -804,6 +873,8 @@ msgid ""
 "Any message preceded by <prefix-char> is sent to the party instead of "
 "everyone."
 msgstr ""
+"Любое сообщение предшествовала <prefix-char> направляется участнику вместо "
+"каждого."
 
 #: src/eathena/party.cpp:190
 msgid "Command: /party prefix"
@@ -828,6 +899,34 @@ msgstr "Неизвестная /party команда."
 #: src/eathena/party.cpp:205
 msgid "Type /help party for a list of options."
 msgstr "запишите /help для получения списка опций."
+
+#: src/eathena/statemanager.cpp:183 src/eathena/gui/register.cpp:226
+msgid "Error"
+msgstr "Ошибка"
+
+#: src/eathena/statemanager.cpp:219
+msgid "Connecting to account server..."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:294
+msgid "Connecting to character server..."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:321
+msgid "Connecting to map server..."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:368
+msgid "Unknown program state. Exiting."
+msgstr ""
+
+#: src/eathena/statemanager.cpp:393
+msgid "Got disconnected from server!"
+msgstr "Отключено от сервера!"
+
+#: src/eathena/statemanager.cpp:421
+msgid "Are you sure you want to quit?"
+msgstr "Вы уверены, что хотите выйти?"
 
 #: src/eathena/db/itemdb.cpp:103 src/eathena/db/monsterdb.cpp:45
 #: src/eathena/db/monsterdb.cpp:63
@@ -958,20 +1057,20 @@ msgstr "Удалить"
 #: src/eathena/gui/charselect.cpp:204
 #, c-format
 msgid "Money: %s"
-msgstr ""
+msgstr "Деньги: %s"
 
 #: src/eathena/gui/chat.cpp:86
 msgid "File name to record to:"
-msgstr ""
+msgstr "Имя файла для записи:"
 
 #: src/eathena/gui/chat.cpp:218
 msgid "Global announcement: "
-msgstr ""
+msgstr "Глобальные объявления: "
 
 #: src/eathena/gui/chat.cpp:223
 #, c-format
 msgid "Global announcement from %s: "
-msgstr ""
+msgstr "Глобальное объявление от %s: "
 
 #: src/eathena/gui/chat.cpp:237 src/eathena/gui/login.cpp:53
 #: src/eathena/gui/register.cpp:80
@@ -981,84 +1080,87 @@ msgstr "Сервер:"
 #: src/eathena/gui/chat.cpp:247
 #, c-format
 msgid "%s whispers: "
-msgstr ""
+msgstr "%s шепчет: "
 
 #: src/eathena/gui/chat.cpp:411
 msgid "Stop Recording"
-msgstr ""
+msgstr "Завершить запись"
 
 #: src/eathena/gui/chat.cpp:412
 msgid "Start Recording"
-msgstr ""
+msgstr "Начать запись"
 
 #: src/eathena/gui/chat.cpp:457
 #, c-format
 msgid "Whispering to %s: %s"
-msgstr ""
+msgstr "Вы прошептали %s: %s"
 
 #: src/eathena/gui/chat.cpp:480
 msgid "Trying to send a blank party message."
-msgstr ""
+msgstr "Пытается отправить пустое сообщение участнику."
 
 #: src/eathena/gui/chat.cpp:561
 msgid "Return toggles chat."
-msgstr ""
+msgstr "Enter переключает вас на окно чата."
 
 #: src/eathena/gui/chat.cpp:562
 msgid "Message closes chat."
-msgstr ""
+msgstr "Сообщение закрывает чат."
 
 #: src/eathena/gui/chat.cpp:570
 msgid "Return now toggles chat."
-msgstr ""
+msgstr "Теперь Return переключает чат."
 
 #: src/eathena/gui/chat.cpp:577
 msgid "Message now closes chat."
-msgstr ""
+msgstr "Теперь сообщение закрывает чат."
 
 #: src/eathena/gui/chat.cpp:582
 msgid ""
 "Options to /toggle are \"yes\", \"no\", \"true\", \"false\", \"1\", \"0\"."
 msgstr ""
+"Варианты /toggle являются \"yes\", \"no\", \"true\", \"false\", \"1\", \"0\"."
 
 #: src/eathena/gui/chat.cpp:589
 msgid "Unknown party command... Type \"/help\" party for more information."
 msgstr ""
+"Неизвестная команда партии ... Введите \"/ Help\" группы для более подробной "
+"информации."
 
 #: src/eathena/gui/chat.cpp:632
 msgid "No such spell!"
-msgstr ""
+msgstr "Нет такого заклинания!"
 
 #: src/eathena/gui/chat.cpp:654
 #, c-format
 msgid "%u players are present."
-msgstr ""
+msgstr "%u игроков присутствуют."
 
 #: src/eathena/gui/chat.cpp:668
 #, c-format
 msgid "Present: %s; %s"
-msgstr ""
+msgstr "присутствуют: %s; %s"
 
 #: src/eathena/gui/chat.cpp:670
 msgid "Attendance written to record log."
-msgstr ""
+msgstr "Посещаемость записывается в запись лога."
 
 #: src/eathena/gui/chat.cpp:674
 msgid "Present: "
-msgstr ""
+msgstr "Он-лайн: "
 
-#: src/eathena/gui/chat.cpp:690 src/main.cpp:132
+#: src/eathena/gui/chat.cpp:690 src/main.cpp:80
 #, c-format
 msgid "Aethyra - Version %s"
 msgstr ""
 
 #: src/eathena/gui/chat.cpp:694 src/eathena/gui/chat.cpp:988
 msgid "Unknown command."
-msgstr ""
+msgstr "Неизвесная команда"
 
 #: src/eathena/gui/chat.cpp:706
 msgid "Trade failed!"
-msgstr ""
+msgstr "Торговля не удалось!"
 
 #: src/eathena/gui/chat.cpp:709
 msgid "Emote failed!"
@@ -1066,31 +1168,31 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:712
 msgid "Sit failed!"
-msgstr ""
+msgstr "Сядьте не удалось!"
 
 #: src/eathena/gui/chat.cpp:715
 msgid "Chat creating failed!"
-msgstr ""
+msgstr "Ошибка создания чат!"
 
 #: src/eathena/gui/chat.cpp:718
 msgid "Could not join party!"
-msgstr ""
+msgstr "Не может присоединиться к партии / группы!"
 
 #: src/eathena/gui/chat.cpp:721
 msgid "Cannot shout!"
-msgstr ""
+msgstr "не удалось кричать!"
 
 #: src/eathena/gui/chat.cpp:730
 msgid "You have not yet reached a high enough lvl!"
-msgstr ""
+msgstr "У Вас недостаточный уровень!"
 
 #: src/eathena/gui/chat.cpp:733
 msgid "Insufficient HP!"
-msgstr ""
+msgstr "Недостаточная HP!"
 
 #: src/eathena/gui/chat.cpp:736
 msgid "Insufficient SP!"
-msgstr ""
+msgstr "Недостаточная SP!"
 
 #: src/eathena/gui/chat.cpp:739
 msgid "You have no memos!"
@@ -1098,19 +1200,19 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:742
 msgid "You cannot do that right now!"
-msgstr ""
+msgstr "Вы не можете сделать это сейчас!"
 
 #: src/eathena/gui/chat.cpp:745
 msgid "Seems you need more GP... ;-)"
-msgstr ""
+msgstr "Похоже вам нужно больше GP ... ;-)"
 
 #: src/eathena/gui/chat.cpp:748
 msgid "You cannot use this skill with that kind of weapon!"
-msgstr ""
+msgstr "Вы не можете использовать это умение с этим видом оружия!"
 
 #: src/eathena/gui/chat.cpp:751
 msgid "You need another red gem!"
-msgstr ""
+msgstr "Вам нужен еще один красный камень!"
 
 #: src/eathena/gui/chat.cpp:754
 msgid "You need another blue gem!"
@@ -1118,11 +1220,11 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:757
 msgid "You're carrying to much to do this!"
-msgstr ""
+msgstr "Вы несёте слишком много, чтобы сделать это!"
 
 #: src/eathena/gui/chat.cpp:760
 msgid "Huh? What's that?"
-msgstr ""
+msgstr "А? Что это?"
 
 #: src/eathena/gui/chat.cpp:769
 msgid "Warp failed..."
@@ -1134,7 +1236,7 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:775
 msgid "Poison had no effect..."
-msgstr ""
+msgstr "Яд не подействовал..."
 
 #: src/eathena/gui/chat.cpp:853
 #, c-format
@@ -1156,7 +1258,7 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:876
 msgid "-- Help --"
-msgstr ""
+msgstr "-- Помощь --"
 
 #: src/eathena/gui/chat.cpp:879
 msgid "/announce: Global announcement (GM only)."
@@ -1224,23 +1326,23 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:902
 msgid "*** only available to a GM ***"
-msgstr ""
+msgstr "*** доступно только для GM ***"
 
 #: src/eathena/gui/chat.cpp:903
 msgid "This command sends the message <msg> to all players currently online."
-msgstr ""
+msgstr "Эта команда посылает <сообщение> всем игрокам в сети."
 
 #: src/eathena/gui/chat.cpp:908
 msgid "Command: /clear"
-msgstr ""
+msgstr "Команда: /clear"
 
 #: src/eathena/gui/chat.cpp:909
 msgid "This command clears the chat log of previous chat."
-msgstr ""
+msgstr "Эта команда очищает лог чата."
 
 #: src/eathena/gui/chat.cpp:914
 msgid "Command: /help"
-msgstr ""
+msgstr "Команда: /help"
 
 #: src/eathena/gui/chat.cpp:915
 msgid "This command displays a list of all commands available."
@@ -1252,7 +1354,7 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:918
 msgid "This command displays help on <command>."
-msgstr ""
+msgstr "Эта команда показывает помощь по <команде>."
 
 #: src/eathena/gui/chat.cpp:922
 msgid "Command: /me <msg>"
@@ -1260,75 +1362,79 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:923
 msgid "This command tell others you are (doing) <msg>."
-msgstr ""
+msgstr "Эта команда покажет другим игрокам, что вы (делаете) <сообщение>."
 
 #: src/eathena/gui/chat.cpp:932
 msgid "Command: /present"
-msgstr ""
+msgstr "Комманда: /present"
 
 #: src/eathena/gui/chat.cpp:933
 msgid ""
 "This command gets a list of players within hearing and sends it to either "
 "the record log if recording, or the chat log otherwise."
 msgstr ""
+"Комманда получпет список всех игроков, которых вы слышите и посылает его "
+"либо в лог-файл (если включена такая опция), либо в окно чата."
 
 #: src/eathena/gui/chat.cpp:939
 msgid "Command: /record <filename>"
-msgstr ""
+msgstr "Команда: /record <имя файла>"
 
 #: src/eathena/gui/chat.cpp:940
 msgid "This command starts recording the chat log to the file <filename>."
-msgstr ""
+msgstr "Эта команда начнет протоколирование окна чата в файл <имя файла>."
 
 #: src/eathena/gui/chat.cpp:942
 msgid "Command: /record"
-msgstr ""
+msgstr "Команда: /record"
 
 #: src/eathena/gui/chat.cpp:943
 msgid "This command finishes a recording session."
-msgstr ""
+msgstr "Эта команда завершает запись."
 
 #: src/eathena/gui/chat.cpp:947
 msgid "Command: /toggle <state>"
-msgstr ""
+msgstr "Комманда: /toggle <режим>"
 
 #: src/eathena/gui/chat.cpp:948
 msgid ""
 "This command sets whether the return key should toggle the chat log, or "
 "whether the chat log turns off automatically."
 msgstr ""
+"Эта комманда устанавливает, будет ли нажатие клавиши Enter переключать лог "
+"чата или же он (лог) будет выключен автоматически."
 
 #: src/eathena/gui/chat.cpp:951
 msgid ""
 "<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or \"0"
 "\", \"no\", \"false\" to turn the toggle off."
 msgstr ""
+"<режим> может быть \"1\", \"yes\", \"true\" дабы включить опцию или \"0\", "
+"\"no\", \"false\" чтобы выключить."
 
 #: src/eathena/gui/chat.cpp:954
 msgid "Command: /toggle"
-msgstr ""
+msgstr "Команда: /toggle"
 
 #: src/eathena/gui/chat.cpp:955
 msgid "This command displays the return toggle status."
-msgstr ""
+msgstr "Эта команда возвращает статус переключателя."
 
 #: src/eathena/gui/chat.cpp:960
-#, fuzzy
 msgid "Command: /version"
-msgstr "Команда: /party leave"
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:961
-#, fuzzy
 msgid "This command displays the current client version you are using."
-msgstr "Эта команда сообщает текущий характер префиксов группы."
+msgstr ""
 
 #: src/eathena/gui/chat.cpp:966
 msgid "Command: /where"
-msgstr ""
+msgstr "Команда: /where"
 
 #: src/eathena/gui/chat.cpp:967
 msgid "This command displays the name of the current map."
-msgstr ""
+msgstr "Эта команда показывает имя текущей карты."
 
 #: src/eathena/gui/chat.cpp:972
 msgid "Command: /msg <nick> <msg>"
@@ -1348,23 +1454,23 @@ msgstr ""
 
 #: src/eathena/gui/chat.cpp:977
 msgid "If the <nick> has spaces in it, enclose it in double quotes (\")."
-msgstr ""
+msgstr "Если ник содержит пробелы, заключите его в кавычки (\")."
 
 #: src/eathena/gui/chat.cpp:982
 msgid "Command: /who"
-msgstr ""
+msgstr "Команда: /who"
 
 #: src/eathena/gui/chat.cpp:983
 msgid "This command displays the number of players currently online."
-msgstr ""
+msgstr "Эта команда показывает число пользователей в сети в данный момент."
 
 #: src/eathena/gui/chat.cpp:989
 msgid "Type /help for a list of commands."
-msgstr ""
+msgstr "Введите /help для получения списка команд."
 
 #: src/eathena/gui/debugwindow.cpp:43
 msgid "Debug"
-msgstr ""
+msgstr "Отладка"
 
 #: src/eathena/gui/debugwindow.cpp:52 src/eathena/gui/debugwindow.cpp:101
 #, c-format
@@ -1410,7 +1516,7 @@ msgstr "Использовать"
 
 #: src/eathena/gui/emotewindow.cpp:58 src/eathena/gui/inventorywindow.cpp:82
 msgid "Shortcuts"
-msgstr ""
+msgstr "Ярлыки"
 
 #: src/eathena/gui/equipmentwindow.cpp:96 src/eathena/gui/menubar.cpp:62
 msgid "Equipment"
@@ -1435,11 +1541,11 @@ msgstr "Инвентарь"
 #: src/eathena/gui/trade.cpp:54 src/eathena/gui/trade.cpp:193
 #: src/eathena/gui/trade.cpp:207
 msgid "Trade"
-msgstr ""
+msgstr "Торговать"
 
 #: src/eathena/gui/inventorywindow.cpp:72 src/eathena/gui/popupmenu.cpp:312
 msgid "Store"
-msgstr ""
+msgstr "Хранить"
 
 #: src/eathena/gui/inventorywindow.cpp:79 src/eathena/gui/popupmenu.cpp:305
 msgid "Drop"
@@ -1451,11 +1557,11 @@ msgstr ""
 
 #: src/eathena/gui/inventorywindow.cpp:95
 msgid "Weight: "
-msgstr ""
+msgstr "Вес: "
 
 #: src/eathena/gui/itemamount.cpp:86
 msgid "All"
-msgstr ""
+msgstr "Всё"
 
 #: src/eathena/gui/itemamount.cpp:95 src/eathena/gui/itemamount.cpp:99
 #: src/eathena/gui/itemamount.cpp:103 src/eathena/gui/itemamount.cpp:107
@@ -1485,9 +1591,8 @@ msgid "Weight: %s%s"
 msgstr ""
 
 #: src/eathena/gui/itempopup.cpp:91
-#, fuzzy
 msgid "grams"
-msgstr "Рукоятки"
+msgstr "граммы"
 
 #: src/eathena/gui/login.cpp:49
 msgid "Login"
@@ -1524,7 +1629,7 @@ msgstr "Умения"
 
 #: src/eathena/gui/minimap.cpp:52 src/eathena/gui/minimap.cpp:131
 msgid "Map"
-msgstr ""
+msgstr "Карта"
 
 #: src/eathena/gui/npcintegerdialog.cpp:38
 #: src/eathena/gui/npcstringdialog.cpp:35
@@ -1533,7 +1638,7 @@ msgstr ""
 
 #: src/eathena/gui/npcintegerdialog.cpp:47
 msgid "Reset"
-msgstr ""
+msgstr "Сбросить"
 
 #: src/eathena/gui/npclistdialog.cpp:37 src/eathena/gui/npctext.cpp:41
 msgid "NPC"
@@ -1545,7 +1650,7 @@ msgstr ""
 
 #: src/eathena/gui/popupmenu.cpp:318 src/eathena/gui/storagewindow.cpp:66
 msgid "Retrieve"
-msgstr ""
+msgstr "Получить"
 
 #: src/eathena/gui/popupmenu.cpp:320
 #, c-format
@@ -1648,11 +1753,6 @@ msgstr "Пароль не должен содержать более %d симв
 msgid "Passwords do not match."
 msgstr "Пароли не совпадают."
 
-#: src/eathena/gui/register.cpp:226 src/eathena/net/charserverhandler.cpp:153
-#: src/eathena/net/charserverhandler.cpp:171 src/main.cpp:313
-msgid "Error"
-msgstr "Ошибка"
-
 #: src/eathena/gui/serverlistdialog.cpp:36
 msgid "Select Server"
 msgstr ""
@@ -1664,14 +1764,6 @@ msgstr ""
 
 #: src/eathena/gui/skill.cpp:65
 msgid "Up"
-msgstr ""
-
-#: src/eathena/gui/skill.cpp:65
-msgid "inc"
-msgstr ""
-
-#: src/eathena/gui/skill.cpp:66
-msgid "use"
 msgstr ""
 
 #: src/eathena/gui/slotselection.cpp:50
@@ -1797,16 +1889,29 @@ msgstr "Вы получили %d GP."
 msgid "You give:"
 msgstr "Вы отдаете:"
 
-#: src/eathena/gui/updatewindow.cpp:52
+#: src/eathena/gui/updatewindow.cpp:56
 msgid "Updating..."
 msgstr ""
 
-#: src/eathena/gui/updatewindow.cpp:58
+#: src/eathena/gui/updatewindow.cpp:63
 msgid "Connecting..."
 msgstr "Соединение..."
 
-#: src/eathena/gui/updatewindow.cpp:135
+#: src/eathena/gui/updatewindow.cpp:111
+msgid "Update Complete"
+msgstr ""
+
+#: src/eathena/gui/updatewindow.cpp:121
+#, fuzzy
+msgid "Update Failed"
+msgstr "Торговля не удалось!"
+
+#: src/eathena/gui/updatewindow.cpp:136
 msgid "Play"
+msgstr ""
+
+#: src/eathena/gui/updatewindow.cpp:181
+msgid "Total Progress"
 msgstr ""
 
 #: src/eathena/gui/tabs/setup_game.cpp:48
@@ -1972,19 +2077,19 @@ msgstr ""
 msgid "Unknown failure to select character."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:153
+#: src/eathena/net/charserverhandler.cpp:154
 msgid "Failed to create character. Most likely the name is already taken."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:166
+#: src/eathena/net/charserverhandler.cpp:168
 msgid "Info"
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:166
+#: src/eathena/net/charserverhandler.cpp:168
 msgid "Character deleted."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:171
+#: src/eathena/net/charserverhandler.cpp:173
 msgid "Failed to delete character."
 msgstr ""
 
@@ -2026,35 +2131,35 @@ msgstr ""
 msgid "Failed to use item."
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:66 src/eathena/net/maploginhandler.cpp:65
+#: src/eathena/net/loginhandler.cpp:67 src/eathena/net/maploginhandler.cpp:69
 msgid "Authentication failed"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:69
+#: src/eathena/net/loginhandler.cpp:70
 msgid "No servers available"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:72 src/eathena/net/maploginhandler.cpp:68
+#: src/eathena/net/loginhandler.cpp:73 src/eathena/net/maploginhandler.cpp:72
 msgid "This account is already logged in"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:75 src/eathena/net/maploginhandler.cpp:71
+#: src/eathena/net/loginhandler.cpp:76 src/eathena/net/maploginhandler.cpp:75
 msgid "Unknown connection error"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:131
+#: src/eathena/net/loginhandler.cpp:132
 msgid "Unregistered ID"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:134
+#: src/eathena/net/loginhandler.cpp:135
 msgid "Wrong password"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:137
+#: src/eathena/net/loginhandler.cpp:138
 msgid "Account expired"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:140
+#: src/eathena/net/loginhandler.cpp:141
 msgid "Rejected from server"
 msgstr ""
 
@@ -2070,12 +2175,18 @@ msgid ""
 "Please contact the GM team via the forums."
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:155
+#: src/eathena/net/loginhandler.cpp:154
 msgid "This user name is already taken"
 msgstr ""
 
-#: src/eathena/net/loginhandler.cpp:158
+#: src/eathena/net/loginhandler.cpp:157
 msgid "Unknown error"
+msgstr ""
+
+#: src/eathena/net/network.cpp:209
+msgid ""
+"Packet length too short. Please report this error to the server you are "
+"connecting to."
 msgstr ""
 
 #: src/eathena/net/playerhandler.cpp:107
@@ -2211,183 +2322,177 @@ msgstr ""
 msgid "Equip arrows first."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:97
+#: src/eathena/net/tradehandler.cpp:103
 msgid "Request for Trade"
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:98
+#: src/eathena/net/tradehandler.cpp:104
 #, c-format
 msgid "%s wants to trade with you, do you accept?"
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:115
+#: src/eathena/net/tradehandler.cpp:122
 msgid "Trading isn't possible. Trade partner is too far away."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:119
+#: src/eathena/net/tradehandler.cpp:126
 msgid "Trading isn't possible. Character doesn't exist."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:123
+#: src/eathena/net/tradehandler.cpp:130
 msgid "Trade cancelled due to an unknown reason."
-msgstr ""
-
-#: src/eathena/net/tradehandler.cpp:128
-#, c-format
-msgid "Trade: You and %s"
 msgstr ""
 
 #: src/eathena/net/tradehandler.cpp:135
 #, c-format
+msgid "Trade: You and %s"
+msgstr ""
+
+#: src/eathena/net/tradehandler.cpp:142
+#, c-format
 msgid "Trade with %s cancelled."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:145
+#: src/eathena/net/tradehandler.cpp:152
 msgid "Unhandled trade cancel packet."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:193
+#: src/eathena/net/tradehandler.cpp:201
 msgid "Failed adding item. Trade partner is over weighted."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:199
+#: src/eathena/net/tradehandler.cpp:207
 msgid "Failed adding item. Trade partner has no free slot."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:204
+#: src/eathena/net/tradehandler.cpp:212
 msgid "Failed adding item for unknown reason."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:217
+#: src/eathena/net/tradehandler.cpp:225
 msgid "Trade canceled."
 msgstr ""
 
-#: src/eathena/net/tradehandler.cpp:224
+#: src/eathena/net/tradehandler.cpp:232
 msgid "Trade completed."
 msgstr ""
 
-#: src/engine.cpp:127
+#: src/engine.cpp:115
 #, c-format
 msgid "%s can't be created, but it doesn't exist! Exiting."
 msgstr ""
 
-#: src/engine.cpp:145
-msgid "Could not initialize SDL: "
+#: src/engine.cpp:130
+#, c-format
+msgid "Could not initialize SDL: %s"
 msgstr ""
 
-#: src/engine.cpp:158
+#: src/engine.cpp:141
 #, c-format
 msgid "%s couldn't be set as home directory! Exiting."
 msgstr ""
 
-#: src/engine.cpp:178
-#, c-format
+#: src/engine.cpp:158
 msgid "Can't find Resources directory!\n"
 msgstr ""
 
-#: src/engine.cpp:352
+#: src/engine.cpp:310
 #, c-format
 msgid "Couldn't set %dx%dx%d video mode: %s"
 msgstr ""
 
-#: src/main.cpp:97
+#: src/main.cpp:45
 msgid "Options: "
 msgstr ""
 
-#: src/main.cpp:98
+#: src/main.cpp:46
 msgid "  -C --configfile\t: Configuration file to use"
 msgstr ""
 
-#: src/main.cpp:99
+#: src/main.cpp:47
 msgid "  -d --data\t\t: Directory to load game data from"
 msgstr ""
 
-#: src/main.cpp:101
+#: src/main.cpp:49
 msgid "  -D --default\t\t: Bypass the login process with default settings"
 msgstr ""
 
-#: src/main.cpp:103
+#: src/main.cpp:51
 msgid "  -h --help\t\t: Display this help"
 msgstr ""
 
-#: src/main.cpp:104
+#: src/main.cpp:52
 msgid "  -H --updatehost\t: Use this update host"
 msgstr ""
 
-#: src/main.cpp:105
+#: src/main.cpp:53
 msgid "  -p --playername\t: Login with this player"
 msgstr ""
 
-#: src/main.cpp:106
+#: src/main.cpp:54
 msgid "  -P --password\t\t: Login with this password"
 msgstr ""
 
-#: src/main.cpp:107
+#: src/main.cpp:55
 msgid "  -u --skipupdate\t: Skip the update downloads"
 msgstr ""
 
-#: src/main.cpp:108
+#: src/main.cpp:56
 msgid "  -U --username\t\t: Login with this username"
 msgstr ""
 
-#: src/main.cpp:110
+#: src/main.cpp:58
 msgid "  -O --no-opengl\t: Disable OpenGL for this session"
 msgstr ""
 
-#: src/main.cpp:113
+#: src/main.cpp:61
 msgid "  -O --no-opengl\t: Default (OpenGL has been disabled at build time)"
 msgstr ""
 
-#: src/main.cpp:116
+#: src/main.cpp:64
 msgid "  -v --version\t\t: Display the version"
 msgstr ""
 
-#: src/main.cpp:118
+#: src/main.cpp:66
 msgid "Report bugs at: http://www.aethyra.org/mantis"
 msgstr ""
 
-#: src/main.cpp:120
+#: src/main.cpp:68
 msgid "Homepage: http://www.aethyra.org"
 msgstr ""
 
-#: src/main.cpp:121
+#: src/main.cpp:69
 msgid "Forums: http://www.aethyra.org/forums"
 msgstr ""
 
-#: src/main.cpp:122
+#: src/main.cpp:70
 msgid "IRC: irc.freenode.net\tChannel: #aethyra"
 msgstr ""
 
-#: src/main.cpp:134
+#: src/main.cpp:82
 msgid "\tCopyright (C) 2008-2009  Aethyra Development Team"
 msgstr ""
 
-#: src/main.cpp:136
+#: src/main.cpp:84
 msgid ""
 "License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl2."
 "html>"
 msgstr ""
 
-#: src/main.cpp:138
+#: src/main.cpp:86
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
 
-#: src/main.cpp:140
+#: src/main.cpp:88
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: src/main.cpp:207
+#: src/main.cpp:155
 msgid "--no-opengl is set by default (OpenGL has been disabled at build time)"
 msgstr ""
 
-#: src/main.cpp:346
-msgid "Connecting to account server..."
-msgstr ""
+#~ msgid "Restart your client for the change to take effect."
+#~ msgstr "Перезагрузите клиент, чтобы изменения вступили в силу."
 
-#: src/main.cpp:419
-msgid "Connecting to character server..."
-msgstr ""
-
-#: src/main.cpp:447
-msgid "Connecting to map server..."
-msgstr ""
+#~ msgid "Network Error"
+#~ msgstr "Ошибка сети"
