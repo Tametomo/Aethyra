@@ -69,11 +69,6 @@ class Viewport : public Container, public gcn::MouseListener,
         Map *getMap() { return mCurrentMap; }
 
         /**
-         * Sets the map displayed by the viewport.
-         */
-        void setMap(Map *map);
-
-        /**
          *
          */
         std::string getMapName() { return mMapName; }
@@ -152,6 +147,11 @@ class Viewport : public Container, public gcn::MouseListener,
         bool changeMap(const std::string &mapName);
 
     private:
+        /**
+         * Sets the map displayed by the viewport.
+         */
+        void setMap(Map *map);
+
         Map *mCurrentMap;            /**< The current map. */
         std::string mMapName;
 
