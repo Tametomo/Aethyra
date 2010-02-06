@@ -32,8 +32,6 @@
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
-#define DEBUG 1
-
 /** Warning: buffers and other variables are shared,
     so there can be only one connection active at a time */
 
