@@ -134,6 +134,10 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
 
     while (attempts < 3 && !downloadComplete && !mCanceled)
     {
+#ifdef WIN32
+        curl_easy_cleanup(mCurl);
+        mCurl = curl_easy_init();
+#endif
         if (mCurl)
         {
             logger->log("Downloading: %s", resource->getUrl().c_str());
@@ -185,6 +189,7 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
 
                 if (pHeaders)
                     curl_slist_free_all(pHeaders);
+
 
                 attempts++;
                 continue;
