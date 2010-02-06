@@ -11,7 +11,7 @@ SetCompressor /SOLID lzma
 !define PRODUCT_NAME "Aethyra"
 !define PRODUCT_VERSION "0.0.29.1"
 !define PRODUCT_PUBLISHER "Aethyra Development Team"
-!define PRODUCT_WEB_SITE "http://aethyra.org"
+!define PRODUCT_WEB_SITE "http://aethyra.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\aethyra.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
@@ -53,7 +53,7 @@ SetCompressor /SOLID lzma
 !define MUI_FINISHPAGE_SHOWREADME 'notepad.exe "$\"$INSTDIR\README$\""'
 !define MUI_PAGE_CUSTOMFUNCTION_PRE changeFinishImage
 !define MUI_FINISHPAGE_LINK "Visit the Aethyra website for the latest news, FAQs and support"
-!define MUI_FINISHPAGE_LINK_LOCATION "http://aethyra.org"
+!define MUI_FINISHPAGE_LINK_LOCATION "http://aethyra.com"
 !insertmacro MUI_PAGE_FINISH
 
 Function Runaethyra

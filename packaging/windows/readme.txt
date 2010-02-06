@@ -11,7 +11,7 @@ How to compile Aethyra
 * Install TortoiseSVN (http://tortoisesvn.tigris.org/)
 * Install Code::Blocks with the MingW libraries (http://www.codeblocks.org/)
 * Get the Windows compile tools through TortoiseSVN using this repository path:
-svn://www.aethyra.org/builds/windows/resources
+svn://209.168.213.109/builds/windows/resources
   and install it to the same directory that the code is in.
 * Launch Code::Blocks and load the aethyra.cbp file in the source code directory,
   then click build > build.

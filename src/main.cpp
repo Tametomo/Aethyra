@@ -63,10 +63,10 @@ static void printHelp()
 #endif
               << _("  -v --version\t\t: Display the version") << std::endl
               << std::endl
-              << _("Report bugs at: http://www.aethyra.org/mantis")
+              << _("Report bugs at: http://www.aethyra.com/mantis")
               << std::endl
-              << _("Homepage: http://www.aethyra.org") << std::endl
-              << _("Forums: http://www.aethyra.org/forums") << std::endl
+              << _("Homepage: http://www.aethyra.com") << std::endl
+              << _("Forums: http://www.aethyra.com/forums") << std::endl
               << _("IRC: irc.freenode.net\tChannel: #aethyra") << std::endl;
 }
 

@@ -55,13 +55,11 @@ LoginDialog::LoginDialog() :
     mDropdownLabel = new Label(_("Recent:"));
 
     std::vector<std::string> dfltServer;
-    dfltServer.push_back("www.aethyra.org"); 
-    dfltServer.push_back("www.aethyra.org");
+    dfltServer.push_back("209.168.213.109");
     dfltServer.push_back("209.168.213.109");
     std::vector<std::string> dfltPort;
     dfltPort.push_back("21001");
     dfltPort.push_back("22001");
-    dfltPort.push_back("21001");
     mServerList = new DropDownList("MostRecent00", dfltServer, dfltPort,
                                    MAX_SERVER_LIST_SIZE);
 

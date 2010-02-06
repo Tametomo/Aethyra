@@ -4,6 +4,6 @@
 
            ##2Version:##6 Aethyra 0.0.29.1              ##2Date:##29 March 2009
  
-##2                    Website: http://www.aethyra.org
+##2                    Website: http://www.aethyra.com
  
  

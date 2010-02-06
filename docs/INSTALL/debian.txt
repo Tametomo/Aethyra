@@ -9,11 +9,11 @@ to for Aethyra...
 
 WARNING! These instructions are probably outdated!
 
-Check the forums (http://www.aethyra.org/forums/) where better help can be found.
+Check the forums (http://www.aethyra.com/forums/) where better help can be found.
 
 Aethyra project
 ======================
-Homepage: http://www.aethyra.org/
+Homepage: http://www.aethyra.com/
 IRC:      irc.freenode.net / #aethyra
 
 1) Installing Aethyra and dependencies
@@ -25,7 +25,7 @@ IRC:      irc.freenode.net / #aethyra
 =============================================
 
 Aethyra Debian Package can be installed under the Debian Testing and
-Unstable (Sarge/Sid). In order to have Mana Experiment working, you'll need
+Unstable (Sarge/Sid). In order to have Aethyra working, you'll need
 packages for SDL, SDL_mixer, SDL_image, libxml2, libphysfs and libguichan0.
 
 To install the dependencies, you can do type (as root):
@@ -53,7 +53,7 @@ And the debhelper tools:
 Download tmw from Subversion using the command (You'll need Subversion
 installed on your system):
 
-   svn co svn://www.aethyra.org/client/trunk aethyra
+   svn co svn://www.aethyra.com/client/trunk aethyra
 
 Rename the aethyra folder into aethyra-XXX and open a console in it.
 You can now type:

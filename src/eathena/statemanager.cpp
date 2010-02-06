@@ -139,7 +139,7 @@ StateManager::StateManager() :
     if (loginData.skipLogin)
         loginData.password = options.password;
 
-    loginData.hostname = config.getValue("host", "www.aethyra.org");
+    loginData.hostname = config.getValue("host", "209.168.213.109");
     loginData.port = (short) config.getValue("port", 21001);
     loginData.remember = config.getValue("remember", 0);
     loginData.registerLogin = false;
