@@ -22,7 +22,6 @@ src/core/recorder.cpp
 src/core/map/sprite/being.cpp
 src/core/map/sprite/player.cpp
 src/core/utils/metric.h
-src/eathena/maploader.cpp
 src/eathena/party.cpp
 src/eathena/statemanager.cpp
 src/eathena/db/itemdb.cpp
@@ -56,6 +55,7 @@ src/eathena/gui/status.cpp
 src/eathena/gui/storagewindow.cpp
 src/eathena/gui/trade.cpp
 src/eathena/gui/updatewindow.cpp
+src/eathena/gui/viewport.cpp
 src/eathena/gui/tabs/setup_game.cpp
 src/eathena/gui/tabs/setup_players.cpp
 src/eathena/models/playerrelationlistmodel.h

@@ -346,8 +346,6 @@
 		<Unit filename="src\eathena\flooritemmanager.h" />
 		<Unit filename="src\eathena\game.cpp" />
 		<Unit filename="src\eathena\game.h" />
-		<Unit filename="src\eathena\maploader.cpp" />
-		<Unit filename="src\eathena\maploader.h" />
 		<Unit filename="src\eathena\party.cpp" />
 		<Unit filename="src\eathena\party.h" />
 		<Unit filename="src\eathena\playerrelations.cpp" />

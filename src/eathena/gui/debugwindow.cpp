@@ -23,8 +23,6 @@
 #include "debugwindow.h"
 #include "viewport.h"
 
-#include "../maploader.h"
-
 #include "../../bindings/guichan/gui.h"
 #include "../../bindings/guichan/layout.h"
 
@@ -84,7 +82,7 @@ void DebugWindow::widgetShown(const gcn::Event& event)
 {
     Window::widgetShown(event);
 
-    if (!mapLoader)
+    if (!viewport)
     {
         mTileMouseLabel->setCaption("");
         mParticleCountLabel->setCaption("");
@@ -102,7 +100,7 @@ void DebugWindow::logic()
     mMusicFileLabel->setCaption(strprintf(_("Music: %s"),
                                           sound.getCurrentTrack().c_str()));
 
-    if (!mapLoader)
+    if (!viewport)
         return;
 
     // Get the current mouse position
@@ -112,7 +110,7 @@ void DebugWindow::logic()
     mTileMouseLabel->setCaption(strprintf(_("Cursor: (%d, %d)"), mouseTileX,
                                             mouseTileY));
 
-    Map *currentMap = mapLoader->getCurrentMap();
+    Map *currentMap = viewport->getMap();
 
     if (currentMap)
     {

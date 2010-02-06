@@ -247,8 +247,6 @@ aethyra_SOURCES = \
 	      eathena/flooritemmanager.h \
 	      eathena/game.cpp \
 	      eathena/game.h \
-	      eathena/maploader.cpp \
-	      eathena/maploader.h \
 	      eathena/party.cpp \
 	      eathena/party.h \
 	      eathena/playerrelations.cpp \

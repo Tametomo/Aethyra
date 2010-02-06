@@ -25,7 +25,8 @@
 #include "protocol.h"
 
 #include "../flooritemmanager.h"
-#include "../maploader.h"
+
+#include "../gui/viewport.h"
 
 ItemHandler::ItemHandler()
 {
@@ -55,7 +56,7 @@ void ItemHandler::handleMessage(MessageIn *msg)
             y = msg->readInt16();
             msg->skip(4);     // amount,subX,subY / subX,subY,amount
 
-            floorItemManager->create(id, itemId, x, y, mapLoader->getCurrentMap());
+            floorItemManager->create(id, itemId, x, y, viewport->getMap());
             break;
 
         case SMSG_ITEM_REMOVE:

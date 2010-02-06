@@ -22,6 +22,7 @@
 
 #include <guichan/actionevent.hpp>
 
+#include "minimap.h"
 #include "popupmenu.h"
 #include "viewport.h"
 
@@ -32,22 +33,34 @@
 #include "../../bindings/guichan/gui.h"
 #include "../../bindings/guichan/textmanager.h"
 
+#include "../../bindings/guichan/dialogs/okdialog.h"
+
 #include "../../bindings/sdl/keyboardconfig.h"
+#include "../../bindings/sdl/sound.h"
 
 #include "../../core/configuration.h"
+#include "../../core/log.h"
+#include "../../core/resourcemanager.h"
+
+#include "../../core/image/particle/particle.h"
 
 #include "../../core/map/map.h"
+#include "../../core/map/mapreader.h"
 
 #include "../../core/map/sprite/localplayer.h"
 #include "../../core/map/sprite/npc.h"
 
 #include "../../core/utils/dtor.h"
+#include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
 extern volatile int tick_time;
 
+std::string map_path;
+
 Viewport::Viewport():
-    mMap(0),
+    mCurrentMap(NULL),
+    mMapName(""),
     mPixelViewX(0.0f),
     mPixelViewY(0.0f),
     mTileViewX(0),
@@ -75,19 +88,20 @@ Viewport::Viewport():
 
 Viewport::~Viewport()
 {
+    destroy(mCurrentMap);
     destroy(mPopupMenu);
 }
 
 void Viewport::setMap(Map *map)
 {
-    mMap = map;
+    mCurrentMap = map;
 }
 
 void Viewport::draw(gcn::Graphics *graphics)
 {
     static int lastTick = tick_time;
 
-    if (!mMap || !player_node)
+    if (!mCurrentMap || !player_node)
     {
         graphics->setColor(gcn::Color(64, 64, 64));
         graphics->fillRectangle(gcn::Rectangle(0, 0, getWidth(), getHeight()));
@@ -149,10 +163,10 @@ void Viewport::draw(gcn::Graphics *graphics)
     };
 
     // Don't move camera so that the end of the map is on screen
-    const int viewXmax = (mMap->getWidth() * 32) - g->getWidth();
-    const int viewYmax = (mMap->getHeight() * 32) - g->getHeight();
+    const int viewXmax = (mCurrentMap->getWidth() * 32) - g->getWidth();
+    const int viewYmax = (mCurrentMap->getHeight() * 32) - g->getHeight();
 
-    if (mMap)
+    if (mCurrentMap)
     {
         if (mPixelViewX < 0)
             mPixelViewX = 0;
@@ -168,9 +182,9 @@ void Viewport::draw(gcn::Graphics *graphics)
     mTileViewY = (int) (mPixelViewY + 16) / 32;
 
     // Draw tiles and sprites
-    if (mMap)
+    if (mCurrentMap)
     {
-        mMap->draw(g, (int) mPixelViewX, (int) mPixelViewY);
+        mCurrentMap->draw(g, (int) mPixelViewX, (int) mPixelViewY);
 
         // Find a path from the player to the mouse, and draw it. This is for
         // debug purposes.
@@ -182,7 +196,7 @@ void Viewport::draw(gcn::Graphics *graphics)
             const int mouseTileX = mouseX / 32 + mTileViewX;
             const int mouseTileY = mouseY / 32 + mTileViewY;
 
-            Path debugPath = mMap->findPath(player_node->mX, player_node->mY,
+            Path debugPath = mCurrentMap->findPath(player_node->mX, player_node->mY,
                                             mouseTileX, mouseTileY);
 
             g->setColor(gcn::Color(255, 0, 0));
@@ -192,7 +206,7 @@ void Viewport::draw(gcn::Graphics *graphics)
                 const int squareY = i->y * 32 - (int) mPixelViewY + 12;
 
                 g->fillRectangle(gcn::Rectangle(squareX, squareY, 8, 8));
-                g->drawText(toString(mMap->getMetaTile(i->x, i->y)->Gcost),
+                g->drawText(toString(mCurrentMap->getMetaTile(i->x, i->y)->Gcost),
                                    squareX + 4, squareY + 12,
                                    gcn::Graphics::CENTER);
             }
@@ -229,7 +243,7 @@ void Viewport::logic()
     const int mouseY = gui->getMouseY();
     const Uint8 button = gui->getButtonState();
 
-    if (!mMap || !player_node)
+    if (!mCurrentMap || !player_node)
         return;
 
     if (mPlayerFollowMouse && button & SDL_BUTTON(1) &&
@@ -247,7 +261,7 @@ void Viewport::mousePressed(gcn::MouseEvent &event)
         return;
 
     // Check if we are alive and kickin'
-    if (!mMap || !player_node || player_node->mAction == Being::DEAD)
+    if (!mCurrentMap || !player_node || player_node->mAction == Being::DEAD)
         return;
 
     mPlayerFollowMouse = false;
@@ -334,7 +348,7 @@ void Viewport::mousePressed(gcn::MouseEvent &event)
 
 void Viewport::mouseDragged(gcn::MouseEvent &event)
 {
-    if (!mMap || !player_node)
+    if (!mCurrentMap || !player_node)
         return;
 
     if (mPlayerFollowMouse && mWalkTime == player_node->mWalkTime)
@@ -374,4 +388,65 @@ void Viewport::optionChanged(const std::string &name)
 {
     mScrollLaziness = config.getValue("ScrollLaziness", 32);
     mScrollRadius = config.getValue("ScrollRadius", 32);
+}
+
+bool Viewport::changeMap(const std::string &mapPath)
+{
+    // Clean up floor items, beings and particles
+    floorItemManager->clear();
+    beingManager->clear();
+
+    // Close the popup menu on map change so that invalid options can't be
+    // executed.
+    closePopupMenu();
+
+    // Unset the map of the player so that its particles are cleared before
+    // being deleted in the next step
+    if (player_node)
+        player_node->setMap(NULL);
+
+    particleEngine->clear();
+
+    mMapName = mapPath;
+
+    // Store full map path in global var
+    map_path = "maps/" + mapPath + ".tmx";
+    ResourceManager *resman = ResourceManager::getInstance();
+    if (!resman->exists(map_path))
+        map_path += ".gz";
+
+    // Attempt to load the new map
+    Map *newMap = MapReader::readMap(map_path);
+
+    if (!newMap)
+    {
+        logger->log("Error while loading %s", map_path.c_str());
+        new OkDialog(_("Could not load map"),
+                     strprintf(_("Error while loading %s"), map_path.c_str()));
+    }
+
+    // Notify the minimap and beingManager about the map change
+    minimap->setMap(newMap);
+    beingManager->setMap(newMap);
+    particleEngine->setMap(newMap);
+
+    keyboard.refreshActiveKeys();
+
+    // Initialize map-based particle effects
+    if (newMap)
+        newMap->initializeParticleEffects(particleEngine);
+
+    // Start playing new music file when necessary
+    std::string oldMusic = mCurrentMap ? mCurrentMap->getMusicFile() : "";
+    std::string newMusic = newMap ? newMap->getMusicFile() : "";
+
+    if (newMusic != oldMusic)
+        sound.playMusic(newMusic);
+
+    if (mCurrentMap)
+        destroy(mCurrentMap);
+
+    setMap(newMap);
+
+    return true;
 }

@@ -39,6 +39,8 @@ class Item;
 class Map;
 class PopupMenu;
 
+extern std::string map_path;
+
 /**
  * The viewport on the map. Displays the current map and handles mouse input
  * and the popup menu.
@@ -62,9 +64,19 @@ class Viewport : public Container, public gcn::MouseListener,
         ~Viewport();
 
         /**
+         * Gets the currently displayed map by the viewport.
+         */
+        Map *getMap() { return mCurrentMap; }
+
+        /**
          * Sets the map displayed by the viewport.
          */
         void setMap(Map *map);
+
+        /**
+         *
+         */
+        std::string getMapName() { return mMapName; }
 
         /**
          * Draws the viewport.
@@ -134,8 +146,14 @@ class Viewport : public Container, public gcn::MouseListener,
          */
         void scrollBy(float x, float y) { mPixelViewX += x; mPixelViewY += y; }
 
+        /**
+         * Sets the currently active map.
+         */
+        bool changeMap(const std::string &mapName);
+
     private:
-        Map *mMap;                   /**< The current map. */
+        Map *mCurrentMap;            /**< The current map. */
+        std::string mMapName;
 
         int mScrollRadius;
         int mScrollLaziness;

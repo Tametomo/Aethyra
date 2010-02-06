@@ -28,8 +28,6 @@
 
 class MessageHandler;
 
-extern std::string map_path;
-
 class Game
 {
     public:

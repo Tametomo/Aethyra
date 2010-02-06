@@ -25,9 +25,9 @@
 #include <guichan/focushandler.hpp>
 
 #include "chat.h"
+#include "viewport.h"
 
 #include "../beingmanager.h"
-#include "../game.h"
 #include "../party.h"
 
 #include "../db/iteminfo.h"

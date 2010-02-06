@@ -25,7 +25,6 @@
 #include "beingmanager.h"
 #include "flooritemmanager.h"
 #include "game.h"
-#include "maploader.h"
 #include "playerrelations.h"
 
 #include "db/colordb.h"
@@ -96,10 +95,6 @@
 #include "../core/map/sprite/localplayer.h"
 
 #include "../core/utils/dtor.h"
-
-std::string map_path;
-
-MapLoader *mapLoader = NULL;
 
 EmoteShortcut *emoteShortcut = NULL;
 ItemShortcut *itemShortcut = NULL;
@@ -248,7 +243,6 @@ Game::Game():
     // Initialize beings
     beingManager->setPlayer(player_node);
 
-    mapLoader = new MapLoader();
     particleEngine = new Particle(NULL);
     particleEngine->setupEngine();
 
@@ -275,7 +269,7 @@ Game::Game():
     msg.writeInt32(tick_time);
 
     map_path = map_path.substr(0, map_path.rfind("."));
-    mapLoader->changeMap(map_path);
+    viewport->changeMap(map_path);
     MessageOut outMsg(CMSG_MAP_LOADED);
 
     mGameTime = tick_time;
@@ -289,7 +283,6 @@ Game::~Game()
     destroy(floorItemManager);
     destroy(player_node);
     destroy(particleEngine);
-    destroy(mapLoader);
     destroy(viewport);
 
     // Clear the network handlers
@@ -307,8 +300,8 @@ Game::~Game()
 
 void Game::logic()
 {
-    if (mapLoader->getCurrentMap())
-        mapLoader->getCurrentMap()->update(get_elapsed_time(mGameTime));
+    if (viewport->getMap())
+        viewport->getMap()->update(get_elapsed_time(mGameTime));
 
     beingManager->logic();
 

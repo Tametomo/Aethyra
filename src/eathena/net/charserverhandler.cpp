@@ -27,11 +27,11 @@
 #include "network.h"
 #include "protocol.h"
 
-#include "../game.h"
 #include "../statemanager.h"
 
 #include "../gui/charcreate.h"
 #include "../gui/charselect.h"
+#include "../gui/viewport.h"
 
 #include "../../bindings/guichan/dialogs/okdialog.h"
 
