@@ -22,9 +22,9 @@
 
 #include "login.h"
 
-#include "../net/logindata.h"
+#include "../statemanager.h"
 
-#include "../../main.h"
+#include "../net/logindata.h"
 
 #include "../../bindings/guichan/layout.h"
 
@@ -145,11 +145,11 @@ void LoginDialog::action(const gcn::ActionEvent &event)
         mCancelButton->setEnabled(false);
         mRegisterButton->setEnabled(false);
         mServerList->save(mServerField->getText(), mPortField->getText());
-        state = ACCOUNT_STATE;
+        stateManager->setState(ACCOUNT_STATE);
     }
     else if (event.getId() == "cancel")
     {
-        state = EXIT_STATE;
+        stateManager->promptForQuit();
     }
     else if (event.getId() == "register")
     {
@@ -164,7 +164,7 @@ void LoginDialog::action(const gcn::ActionEvent &event)
         loginData.username = mUserField->getText();
         loginData.password = mPassField->getText();
 
-        state = REGISTER_STATE;
+        stateManager->setState(REGISTER_STATE);
     }
 }
 
@@ -186,7 +186,7 @@ bool LoginDialog::canSubmit()
            !mPassField->getText().empty() &&
            !mServerField->getText().empty() &&
            isUShort(mPortField->getText()) &&
-           state == LOGIN_STATE;
+           stateManager->getState() == LOGIN_STATE;
 }
 
 bool LoginDialog::isUShort(const std::string &str)

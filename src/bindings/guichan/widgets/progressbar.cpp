@@ -248,7 +248,7 @@ void ProgressBar::draw(gcn::Graphics *graphics)
     }
 }
 
-void ProgressBar::setProgress(float progress)
+void ProgressBar::setProgress(const float progress)
 {
     if (progress < 0.0f)
         mProgressToGo = 0.0;

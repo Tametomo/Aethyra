@@ -1,9 +1,8 @@
 /*
  *  Aethyra
- *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
- *  from The Mana World.
+ *  This file is part of Aethyra.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,74 +22,23 @@
 #include <getopt.h>
 #include <iostream>
 #include <unistd.h>
-#include <vector>
 
 #include "engine.h"
 #include "main.h"
 #include "options.h"
 
-#include "bindings/guichan/gui.h"
-#include "bindings/guichan/inputmanager.h"
-
-#include "bindings/guichan/dialogs/okdialog.h"
-
-#include "bindings/guichan/widgets/desktop.h"
-
-#include "bindings/sdl/sound.h"
-
-#include "core/configuration.h"
-#include "core/log.h"
-#include "core/resourcemanager.h"
-
-#include "core/map/sprite/localplayer.h"
-
 #include "core/utils/dtor.h"
 #include "core/utils/gettext.h"
-#include "core/utils/lockedarray.h"
 #include "core/utils/stringutils.h"
 
-#include "eathena/game.h"
- 
-#include "eathena/db/colordb.h"
-#include "eathena/db/effectdb.h"
-#include "eathena/db/emotedb.h"
-#include "eathena/db/itemdb.h"
-#include "eathena/db/monsterdb.h"
-#include "eathena/db/npcdb.h"
-#include "eathena/db/skilldb.h"
+#include "eathena/statemanager.h"
 
-#include "eathena/gui/charselect.h"
-#include "eathena/gui/login.h"
-#include "eathena/gui/register.h"
-#include "eathena/gui/serverlistdialog.h"
-#include "eathena/gui/updatewindow.h"
-
-#include "eathena/net/charserverhandler.h"
-#include "eathena/net/logindata.h"
-#include "eathena/net/loginhandler.h"
-#include "eathena/net/maploginhandler.h"
-#include "eathena/net/messageout.h"
-#include "eathena/net/network.h"
-#include "eathena/net/serverinfo.h"
-
-State state;
-std::string errorMessage;
-
-Game *game;
 Engine *engine;
 Options options;
+StateManager *stateManager;
 
-CharServerHandler charServerHandler;
-LoginData loginData;
-LockedArray<LocalPlayer*> charInfo(MAX_PLAYER_SLOTS);
-
-Desktop *desktop;
-
-// This anonymous namespace hides whatever is inside from other modules.
 namespace
 {
-LoginHandler loginHandler;
-MapLoginHandler mapLoginHandler;
 
 static void printHelp()
 {
@@ -228,258 +176,19 @@ int main(int argc, char *argv[])
         printVersion();
 
     if (options.printHelp)
-    {
         printHelp();
-        return 0;
-    }
-
-    engine = new Engine(argv[0]);
-
-    state = START_STATE; /**< Initial game state */
-
-    State oldstate = ERROR_STATE; // We start with a status change.
-
-    game = NULL;
-
-    loginData.username = options.username;
-
-    if (loginData.username.empty() && config.getValue("remember", 0))
-        loginData.username = config.getValue("username", "");
-
-    if (!options.password.empty())
-        loginData.password = options.password;
-
-    loginData.hostname = config.getValue("host", "www.aethyra.org");
-    loginData.port = (short) config.getValue("port", 21001);
-    loginData.remember = config.getValue("remember", 0);
-    loginData.registerLogin = false;
-
-    gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
-
-    while (state != EXIT_STATE)
+    else
     {
-        Window* currentDialog;
-        State errorState = loginData.registerLogin ? REGISTER_STATE :
-                                                     LOGIN_STATE;
+        engine = new Engine(argv[0]);
+        stateManager = new StateManager();
 
-        // Handle SDL events
-        inputManager->handleInput();
-        network->flush();
-        network->dispatchMessages();
+        while (stateManager && !stateManager->isExiting())
+            stateManager->logic();
 
-        const int netState = network->getState();
-
-        if (netState == Network::NET_ERROR || netState == Network::FATAL)
-        {
-            if (netState == Network::FATAL)
-                errorState = EXIT_STATE;
-
-            state = ERROR_STATE;
-
-            if (!network->getError().empty()) 
-                errorMessage = network->getError();
-            else
-                errorMessage = _("Got disconnected from server!");
-        }
-
-        gui->logic();
-
-        if (state != oldstate)
-        {
-            switch (oldstate)
-            {
-                // These states other than default don't cause a network
-                // disconnect
-                case UPDATE_STATE:
-                    desktop->reload();
-                    break;
-
-                case LOADDATA_STATE:
-                    break;
-
-                case ACCOUNT_STATE:
-                case CHAR_CONNECT_STATE:
-                case CONNECTING_STATE:
-                    desktop->resetProgressBar();
-                    break;
-
-                default:
-                    network->disconnect();
-                    network->clearHandlers();
-                    break;
-            }
-
-            oldstate = state;
-
-            switch (state)
-            {
-                case ERROR_STATE:
-                    logger->log("State: ERROR");
-                    desktop->showError(new OkDialog(_("Error"), errorMessage),
-                                       errorState);
-                    network->disconnect();
-                    network->clearHandlers();
-                    break;
-
-                case START_STATE:
-                    logger->log("State: START");
-
-                    desktop = new Desktop();
-                    top->add(desktop);
-
-                    state = LOGIN_STATE;
-                    break;
-
-                case LOGIN_STATE:
-                    logger->log("State: LOGIN");
-
-                    if (!loginData.password.empty())
-                    {
-                        loginData.registerLogin = false;
-                        state = ACCOUNT_STATE;
-                    }
-                    else
-                        desktop->changeCurrentDialog(new LoginDialog());
-                    break;
-
-                case REGISTER_STATE:
-                    logger->log("State: REGISTER");
-                    desktop->changeCurrentDialog(new RegisterDialog());
-                    break;
-
-                case ACCOUNT_STATE:
-                    desktop->useProgressBar(_("Connecting to account server..."));
-                    loginHandler.login();
-                    break;
-
-                case CHAR_SERVER_STATE:
-                    logger->log("State: CHAR_SERVER");
-
-                    if (loginData.servers == 1)
-                    {
-                        SERVER_INFO *si = *server_info;
-                        loginData.hostname = ipToString(si->address);
-                        loginData.port = si->port;
-                        loginData.updateHost = si->updateHost;
-                        state = UPDATE_STATE;
-                    }
-                    else
-                    {
-                        desktop->changeCurrentDialog(new ServerListDialog());
-
-                        if (options.chooseDefault || !options.playername.empty())
-                        {
-                            currentDialog = desktop->getCurrentDialog();
-                            ((ServerListDialog*) currentDialog)->action(
-                                gcn::ActionEvent(NULL, "ok"));
-                        }
-                    }
-                    break;
-
-                case UPDATE_STATE:
-                    {
-                        logger->log("State: UPDATE");
-
-                        const std::string updateHost = (!options.updateHost.empty() ?
-                                                         options.updateHost :
-                                                         loginData.updateHost);
-
-                        if (!options.skipUpdate)
-                        {
-                            UpdaterWindow *updateDialog = new UpdaterWindow(updateHost);
-                            desktop->changeCurrentDialog(updateDialog);
-                            desktop->reload();
-                        }
-                        else
-                        {
-                            DownloadUpdates *download = new DownloadUpdates(updateHost, NULL);
-                            download->addUpdatesToResman();
-                            destroy(download);
-                            state = LOADDATA_STATE;
-                        }
-                    }
-                    break;
-
-                case LOADDATA_STATE:
-                    logger->log("State: LOADDATA");
-
-                    // Add customdata directory
-                    ResourceManager::getInstance()->searchAndAddArchives(
-                        "customdata/", "zip", false);
-
-                    // Load XML databases
-                    ColorDB::load();
-                    EffectDB::load();
-                    EmoteDB::load();
-                    ItemDB::load();
-                    MonsterDB::load();
-                    NPCDB::load();
-                    SkillDB::load();
-                    Being::load(); // Hairstyles
-
-                    state = CHAR_CONNECT_STATE;
-                    break;
-
-                case CHAR_CONNECT_STATE:
-                    desktop->useProgressBar(_("Connecting to character server..."));
-                    charServerHandler.login(&charInfo);
-                    break;
-
-                case CHAR_SELECT_STATE:
-                    logger->log("State: CHAR_SELECT");
-                    desktop->changeCurrentDialog(new CharSelectDialog(&charInfo,
-                                                        (loginData.sex == 0) ?
-                                                         GENDER_FEMALE :
-                                                         GENDER_MALE));
-
-                    currentDialog = desktop->getCurrentDialog();
-
-                    if (((CharSelectDialog*) currentDialog)->selectByName(
-                            options.playername))
-                        options.chooseDefault = true;
-                    else
-                        ((CharSelectDialog*) currentDialog)->selectByName(
-                            config.getValue("lastCharacter", ""));
-
-                    if (options.chooseDefault)
-                        ((CharSelectDialog*) currentDialog)->action(
-                            gcn::ActionEvent(NULL, "ok"));
-
-                    break;
-
-                case CONNECTING_STATE:
-                    logger->log("State: CONNECTING");
-                    desktop->useProgressBar(_("Connecting to map server..."));
-                    mapLoginHandler.login();
-                    break;
-
-                case GAME_STATE:
-                    logger->log("State: GAME");
-                    sound.fadeOutMusic(1000);
-
-                    destroy(desktop);
-
-                    game = new Game();
-                    game->logic();
-                    destroy(game);
-
-                    network->disconnect();
-                    network->clearHandlers();
-                    break;
-
-                case EXIT_STATE:
-                    logger->log("State: EXIT");
-                    destroy(desktop);
-                    break;
-
-                default:
-                    state = EXIT_STATE;
-                    break;
-            }
-        }
+        destroy(stateManager);
+        destroy(engine);
     }
 
-    destroy(engine);
     return 0;
 }
 

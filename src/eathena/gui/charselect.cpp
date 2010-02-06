@@ -25,10 +25,10 @@
 #include "charcreate.h"
 #include "charselect.h"
 
+#include "../statemanager.h"
+
 #include "../net/logindata.h"
 #include "../net/messageout.h"
-
-#include "../../main.h"
 
 #include "../../bindings/guichan/layout.h"
 
@@ -155,7 +155,7 @@ void CharSelectDialog::action(const gcn::ActionEvent &event)
         attemptCharSelect();
     }
     else if (event.getId() == "cancel")
-        state = EXIT_STATE;
+        stateManager->promptForQuit();
     else if (event.getId() == "newdel")
     {
         // Check for a character

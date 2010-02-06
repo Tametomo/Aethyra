@@ -79,12 +79,9 @@
 #include "widgets/emoteshortcutcontainer.h"
 #include "widgets/itemshortcutcontainer.h"
 
-#include "../main.h"
-
 #include "../bindings/guichan/gui.h"
 #include "../bindings/guichan/inputmanager.h"
 
-#include "../bindings/guichan/dialogs/okdialog.h"
 #include "../bindings/guichan/dialogs/setupdialog.h"
 
 #include "../bindings/guichan/widgets/shortcutwindow.h"
@@ -108,11 +105,6 @@ MapLoader *mapLoader = NULL;
 EmoteShortcut *emoteShortcut = NULL;
 ItemShortcut *itemShortcut = NULL;
 
-Setup_Game *setupGame = NULL;
-Setup_Players *setupPlayers = NULL;
-
-OkDialog *disconnectedDialog = NULL;
-
 BuyDialog *buyDialog = NULL;
 BuySellDialog *buySellDialog = NULL;
 ChatWindow *chatWindow = NULL;
@@ -134,27 +126,13 @@ StatusWindow *statusWindow = NULL;
 StorageWindow *storageWindow = NULL;
 TradeWindow *tradeWindow = NULL;
 
+Setup_Game *setupGame = NULL;
+Setup_Players *setupPlayers = NULL;
+
 BeingManager *beingManager = NULL;
 FloorItemManager *floorItemManager = NULL;
 Particle* particleEngine = NULL;
 Viewport *viewport = NULL;                    /**< Viewport on the map. */
-
-/**
- * Listener used for exiting handling.
- */
-namespace
-{
-    struct ExitListener : public gcn::ActionListener
-    {
-        void action(const gcn::ActionEvent &event)
-        {
-            if (event.getId() == "ok")
-                state = EXIT_STATE;
-
-            disconnectedDialog = NULL;
-        }
-    } exitListener;
-}
 
 /**
  * Create all the various globally accessible gui windows
@@ -188,6 +166,13 @@ void createGuiWindows()
     statusWindow = new StatusWindow(player_node);
     storageWindow = new StorageWindow();
     tradeWindow = new TradeWindow();
+
+    // Add game specific tabs to the setup window
+    setupGame = new Setup_Game();
+    setupWindow->addTab(setupGame);
+
+    setupPlayers = new Setup_Players();
+    setupWindow->addTab(setupPlayers);
 }
 
 /**
@@ -218,6 +203,13 @@ static void destroyGuiWindows()
     destroy(storageWindow);
     destroy(tradeWindow);
 
+    // Remove some game specific tabs from the setup window
+    setupWindow->removeTab(setupGame);
+    setupWindow->removeTab(setupPlayers);
+
+    destroy(setupGame);
+    destroy(setupPlayers);
+
     // Unload XML databases
     ColorDB::unload();
     EffectDB::unload();
@@ -240,33 +232,6 @@ Game::Game():
     mSkillHandler(new SkillHandler()),
     mTradeHandler(new TradeHandler())
 {
-    // Create the viewport
-    viewport = new Viewport();
-
-    gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
-    top->add(viewport);
-    viewport->requestMoveToBottom();
-
-    createGuiWindows();
-
-    // Add game specific tabs to the setup window
-    setupGame = new Setup_Game();
-    setupWindow->addTab(setupGame);
-
-    setupPlayers = new Setup_Players();
-    setupWindow->addTab(setupPlayers);
-
-    mapLoader = new MapLoader();
-
-    beingManager = new BeingManager();
-    floorItemManager = new FloorItemManager();
-
-    particleEngine = new Particle(NULL);
-    particleEngine->setupEngine();
-
-    // Initialize beings
-    beingManager->setPlayer(player_node);
-
     network->registerHandler(mBeingHandler.get());
     network->registerHandler(mBuySellHandler.get());
     network->registerHandler(mChatHandler.get());
@@ -278,33 +243,37 @@ Game::Game():
     network->registerHandler(mSkillHandler.get());
     network->registerHandler(mTradeHandler.get());
 
-    /*
-     * To prevent the server from sending data before the client
-     * has initialized, Sanga modified the July 2008 eAthena client
-     * to wait for a "ping" from the client to complete its
-     * initialization. Eventually, this will not be needed.
-     *
-     * Note: This only affects the latest eAthena version.  This
-     * packet is handled by the older version, but its response
-     * is ignored by the client
-     */
-    MessageOut msg(CMSG_CLIENT_PING);
-    msg.writeInt32(tick_time);
+    beingManager = new BeingManager();
+    floorItemManager = new FloorItemManager();
+
+    // Initialize beings
+    beingManager->setPlayer(player_node);
+
+    mapLoader = new MapLoader();
+    particleEngine = new Particle(NULL);
+    particleEngine->setupEngine();
+
+    // Create the viewport
+    viewport = new Viewport();
+
+    gcn::Container *top = static_cast<gcn::Container*>(gui->getTop());
+    top->add(viewport);
+    viewport->requestMoveToBottom();
+    viewport->setVisible(false);
+
+    createGuiWindows();
 
     map_path = map_path.substr(0, map_path.rfind("."));
     mapLoader->changeMap(map_path);
     MessageOut outMsg(CMSG_MAP_LOADED);
+
+    mGameTime = tick_time;
 }
 
 Game::~Game()
 {
     destroyGuiWindows();
 
-    setupWindow->removeTab(setupGame);
-    setupWindow->removeTab(setupPlayers);
-
-    destroy(setupGame);
-    destroy(setupPlayers);
     destroy(beingManager);
     destroy(floorItemManager);
     destroy(player_node);
@@ -325,48 +294,25 @@ Game::~Game()
     network->unregisterHandler(mTradeHandler.get());
 }
 
-void Game::logic() const
+void Game::logic()
 {
-    int gameTime = tick_time;
+    if (mapLoader->getCurrentMap())
+        mapLoader->getCurrentMap()->update(get_elapsed_time(mGameTime));
 
-    while (state == GAME_STATE)
+    beingManager->logic();
+
+    // Update the particle engine
+    // TODO: Modify the particle engine to be able to update asynchronously
+    //       based on the ticks elapsed since the last update.
+    while (get_elapsed_time(mGameTime) > 0)
     {
-        if (mapLoader->getCurrentMap())
-            mapLoader->getCurrentMap()->update(get_elapsed_time(gameTime));
-
-        beingManager->logic();
-
-        // Handle all necessary game logic
-        while (get_elapsed_time(gameTime) > 0)
-        {
-            particleEngine->update();
-            gameTime++;
-        }
-
-        // This is done because at some point tick_time will wrap.
-        gameTime = tick_time;
-        inputManager->handleInput();
-        gui->logic();
-
-        // Handle network stuff
-        network->flush();
-        network->dispatchMessages();
-
-        if (!network->isConnected())
-        {
-            if (!disconnectedDialog)
-            {
-                if (!network->getError().empty()) 
-                    errorMessage = network->getError();
-                else
-                    errorMessage = _("Got disconnected from server!");
-
-                disconnectedDialog = new OkDialog(_("Network Error"),
-                                                    errorMessage, NULL, true);
-                disconnectedDialog->addActionListener(&exitListener);
-                disconnectedDialog->requestMoveToTop();
-            }
-        }
+        particleEngine->update();
+        mGameTime++;
     }
+
+    if (!network->isConnected())
+        network->interrupt();
+
+    mGameTime = tick_time;
 }
 

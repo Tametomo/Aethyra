@@ -50,7 +50,7 @@
 #include "../core/utils/stringutils.h"
 
 MapLoader::MapLoader():
-    mCurrentMap(0)
+    mCurrentMap(NULL)
 {
 }
 

@@ -68,8 +68,9 @@ class Logger
             ;
 
         /**
-         * Log an error and quit. The error will pop-up on Windows and Mac, and
-         * will be printed to standard error everywhere else.
+         * Log an error and quit. Attempts to display a GUIChan OK dialog when
+         * possible, but if not possible, it will show a pop-up on Windows and
+         * Mac, or print to standard error everywhere else.
          */
         void error(const std::string &error_text);
 

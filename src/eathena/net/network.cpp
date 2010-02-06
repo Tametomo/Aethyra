@@ -29,7 +29,10 @@
 
 #include "../../core/log.h"
 
+#include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
+
+#define DEBUG 1
 
 /** Warning: buffers and other variables are shared,
     so there can be only one connection active at a time */
@@ -126,7 +129,7 @@ bool Network::connect(const std::string &address, short port)
 {
     if (mState != IDLE && mState != NET_ERROR)
     {
-        logger->log("Tried to connect an already connected socket!");
+        setError("Tried to connect an already connected socket!");
         return false;
     }
 
@@ -159,6 +162,7 @@ bool Network::connect(const std::string &address, short port)
 
 void Network::disconnect()
 {
+    logger->log("Network::Disconnecting from %s:%i", mAddress.c_str(), mPort);
     mState = IDLE;
 
     if (mWorkerThread)
@@ -202,7 +206,8 @@ void Network::dispatchMessages()
         if (msg.getLength() == 0 || msg.getLength() == 1)
         {
             disconnect();
-            fatal("Packet length too short. The client will now exit.");
+            fatal(_("Packet length too short. Please report this error to the "
+                    "server you are connecting to."));
             return;
         }
 
@@ -225,7 +230,7 @@ void Network::flush()
     mMutex.lock();
     ret = SDLNet_TCP_Send(mSocket, mOutBuffer, mOutSize);
 
-    if (ret < (int)mOutSize)
+    if (ret < (int) mOutSize)
         setError(strprintf("Error in SDLNet_TCP_Send(): %s", SDLNet_GetError()));
 
     mOutSize = 0;
@@ -236,6 +241,7 @@ void Network::skip(int len)
 {
     mMutex.lock();
     mToSkip += len;
+
     if (!mInSize)
     {
         mMutex.unlock();
@@ -309,7 +315,7 @@ bool Network::realConnect()
     {
         std::string error = "Unable to resolve host \"" + mAddress + "\"";
         setError(error);
-        logger->log("SDLNet_ResolveHost: %s", error.c_str());
+        logger->error(strprintf("SDLNet_ResolveHost: %s", error.c_str()));
         return false;
     }
 
@@ -354,7 +360,7 @@ void Network::receive()
         switch (numReady)
         {
             case -1:
-                logger->log("Error: SDLNet_CheckSockets");
+                setError("Error: SDLNet_CheckSockets");
                 // FALLTHROUGH
             case 0:
                 break;
@@ -421,11 +427,19 @@ void Network::setError(const std::string &error)
     mState = NET_ERROR;
 }
 
+void Network::clearError()
+{
+    mError = "";
+    mState = IDLE;
+}
+
 void Network::fatal(const std::string &error)
 {
-    logger->log("Fatal network error: %s", error.c_str());
+    logger->error(strprintf("Fatal network error: %s", error.c_str()));
     mError = error;
-    mState = FATAL;
+    skip(mInSize);
+    disconnect();
+    clearHandlers();
 }
 
 Uint16 Network::readWord(int pos)

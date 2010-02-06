@@ -253,6 +253,8 @@ aethyra_SOURCES = \
 	      eathena/party.h \
 	      eathena/playerrelations.cpp \
 	      eathena/playerrelations.h \
+	      eathena/statemanager.cpp \
+	      eathena/statemanager.h \
 	      eathena/db/colordb.cpp \
 	      eathena/db/colordb.h \
 	      eathena/db/effectdb.cpp \

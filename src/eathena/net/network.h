@@ -49,8 +49,7 @@ class Network
             CONNECTED,
             CONNECTING,
             DATA,
-            NET_ERROR,
-            FATAL
+            NET_ERROR
         };
 
         friend int networkThread(void *data);
@@ -87,6 +86,10 @@ class Network
         void dispatchMessages();
 
         void flush();
+
+        void clearError();
+
+        void interrupt() { mState = NET_ERROR; }
 
     private:
         void setError(const std::string &error);

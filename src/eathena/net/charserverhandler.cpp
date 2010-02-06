@@ -28,11 +28,10 @@
 #include "protocol.h"
 
 #include "../game.h"
+#include "../statemanager.h"
 
 #include "../gui/charcreate.h"
 #include "../gui/charselect.h"
-
-#include "../../main.h"
 
 #include "../../bindings/guichan/dialogs/okdialog.h"
 
@@ -64,6 +63,7 @@ void CharServerHandler::handleMessage(MessageIn *msg)
 {
     int slot, flags, code;
     LocalPlayer *tempPlayer;
+    std::string error;
 
     logger->log("CharServerHandler: Packet ID: %x, Length: %d",
             msg->getId(), msg->getLength());
@@ -76,25 +76,25 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             switch (code)
             {
                 case 0:
-                    errorMessage = _("Authentication failed.");
+                    error = _("Authentication failed.");
                     break;
                 case 1:
-                    errorMessage = _("Map server(s) offline.");
+                    error = _("Map server(s) offline.");
                     break;
                 case 2:
-                    errorMessage = _("This account is already logged in.");
+                    error = _("This account is already logged in.");
                     break;
                 case 3:
-                    errorMessage = _("Speed hack detected.");
+                    error = _("Speed hack detected.");
                     break;
                 case 8:
-                    errorMessage = _("Duplicated login.");
+                    error = _("Duplicated login.");
                     break;
                 default:
-                    errorMessage = _("Unknown connection error.");
+                    error = _("Unknown connection error.");
                     break;
             }
-            state = ERROR_STATE;
+            stateManager->handleException(error, LOGIN_STATE);
             break;
 
         case 0x006b:
@@ -115,22 +115,23 @@ void CharServerHandler::handleMessage(MessageIn *msg)
                 tempPlayer->getName().c_str(), slot);
             }
 
-            state = CHAR_SELECT_STATE;
+            stateManager->setState(CHAR_SELECT_STATE);
             break;
 
         case 0x006c:
             switch (msg->readInt8())
             {
                 case 0:
-                    errorMessage = _("Access denied.");
+                    error = _("Access denied.");
                     break;
                 case 1:
-                    errorMessage = _("Cannot use this ID.");
+                    error = _("Cannot use this ID.");
                     break;
                 default:
-                    errorMessage = _("Unknown failure to select character.");
+                    error = _("Unknown failure to select character.");
                     break;
             }
+            stateManager->handleException(error, LOGIN_STATE);
             mCharInfo->unlock();
             break;
 
@@ -150,8 +151,9 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             break;
 
         case 0x006e:
-            new OkDialog(_("Error"), _("Failed to create character. Most "
-                                       "likely the name is already taken."));
+            stateManager->handleException(_("Failed to create character. Most "
+                                            "likely the name is already taken."),
+                                            LOGIN_STATE);
             if (charCreateDialog)
                 charCreateDialog->unlock();
             break;
@@ -168,7 +170,8 @@ void CharServerHandler::handleMessage(MessageIn *msg)
 
         case 0x0070:
             mCharInfo->unlock();
-            new OkDialog(_("Error"), _("Failed to delete character."));
+            stateManager->handleException(_("Failed to delete character."),
+                                            CHAR_SELECT_STATE);
             break;
 
         case 0x0071:
@@ -193,7 +196,7 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             } while (mCharInfo->getPos());
 
             mCharInfo->select(slot);
-            state = CONNECTING_STATE;
+            stateManager->setState(CONNECTING_STATE);
             break;
     }
 }
@@ -265,4 +268,3 @@ void CharServerHandler::login(LockedArray<LocalPlayer*> *charInfo)
     // We get 4 useless bytes before the real answer comes in
     network->skip(4);
 }
-

@@ -22,10 +22,10 @@
 
 #include "serverlistdialog.h"
 
+#include "../statemanager.h"
+
 #include "../net/logindata.h"
 #include "../net/serverinfo.h"
-
-#include "../../main.h"
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
@@ -49,10 +49,10 @@ void ServerListDialog::action(const gcn::ActionEvent &event)
         loginData.port = si->port;
         loginData.updateHost = si->updateHost;
 
-        state = UPDATE_STATE;
+        stateManager->setState(UPDATE_STATE);
     }
     else if (event.getId() == "cancel")
-        state = LOGIN_STATE;
+        stateManager->setState(LOGIN_STATE);
 }
 
 void ServerListDialog::widgetShown(const gcn::Event& event)

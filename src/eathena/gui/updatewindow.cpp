@@ -29,8 +29,12 @@
 
 #include "updatewindow.h"
 
+#include "../statemanager.h"
+
 #include "../../engine.h"
+#ifdef __APPLE__
 #include "../../main.h"
+#endif
 
 #include "../../bindings/guichan/layout.h"
 
@@ -158,11 +162,11 @@ void UpdaterWindow::action(const gcn::ActionEvent &event)
     else if (event.getId() == "play")
     {
         mStateButton->setEnabled(false);
-        state = LOADDATA_STATE;
+        stateManager->setState(LOADDATA_STATE);
     }
     else if (event.getId() == "quit")
     {
-        state = EXIT_STATE;
+        stateManager->setState(EXIT_STATE);
     }
 }
 

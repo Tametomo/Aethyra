@@ -26,6 +26,9 @@
 #include <SDL_syswm.h>
 #else
 #include <cerrno>
+
+#include <SDL_image.h>
+
 #include <sys/stat.h>
 #endif
 
@@ -35,8 +38,6 @@
 
 #include <libxml/parser.h>
 
-#include <SDL_image.h>
-
 #include "engine.h"
 #include "main.h"
 #include "options.h"
@@ -44,10 +45,8 @@
 #include "bindings/guichan/graphics.h"
 #include "bindings/guichan/gui.h"
 #include "bindings/guichan/inputmanager.h"
-#include "bindings/guichan/palette.h"
 
-#include "bindings/guichan/dialogs/helpdialog.h"
-#include "bindings/guichan/dialogs/setupdialog.h"
+#include "bindings/guichan/dialogs/okdialog.h"
 
 #ifdef USE_OPENGL
 #include "bindings/guichan/opengl/openglgraphics.h"
@@ -69,23 +68,13 @@
 #include "core/utils/gettext.h"
 #include "core/utils/stringutils.h"
 
-#include "eathena/gui/debugwindow.h"
-
-#include "eathena/net/logindata.h"
-#include "eathena/net/network.h"
-
-Graphics *graphics;
-
-DebugWindow *debugWindow;
-HelpDialog *helpDialog;
-Setup* setupWindow;
+Graphics *graphics = NULL;
 
 Configuration config;         /**< XML file configuration reader */
-Logger *logger;               /**< Log object */
+Logger *logger = NULL;        /**< Log object */
 
-Palette *guiPalette;
 KeyboardConfig keyboard;
-InputManager *inputManager;
+InputManager *inputManager = NULL;
 Sound sound;
 
 extern "C" char const *_nl_locale_name_default(void);
@@ -123,11 +112,8 @@ Engine::Engine(const char *prog)
     if ((mkdir(homeDir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0) &&
             (errno != EEXIST))
 #endif
-    {
-        std::cout << strprintf(_("%s can't be created, but it doesn't exist! "
-                                 "Exiting."), homeDir.c_str()) << std::endl;
-        exit(1);
-    }
+        logger->error(strprintf(_("%s can't be created, but it doesn't exist! "
+                                  "Exiting."), homeDir.c_str()));
 
     // Set log file
     logger->setLogFile(homeDir + std::string("/runtime.log"));
@@ -141,11 +127,9 @@ Engine::Engine(const char *prog)
     // Initialize SDL
     logger->log("Initializing SDL...");
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
-    {
-        std::cerr << _("Could not initialize SDL: ") << SDL_GetError()
-                  << std::endl;
-        exit(1);
-    }
+        logger->error(strprintf(_("Could not initialize SDL: %s"),
+                                  SDL_GetError()));
+
     atexit(SDL_Quit);
 
     SDL_EnableUNICODE(1);
@@ -154,11 +138,8 @@ Engine::Engine(const char *prog)
     ResourceManager *resman = ResourceManager::getInstance();
 
     if (!resman->setWriteDir(homeDir))
-    {
-        std::cout << strprintf(_("%s couldn't be set as home directory! "
-                                 "Exiting."), homeDir.c_str()) << std::endl;
-        exit(1);
-    }
+        logger->error(strprintf(_("%s couldn't be set as home directory! "
+                                  "Exiting."), homeDir.c_str()));
 
     // Add the user's homedir to PhysicsFS search path
     resman->addToSearchPath(homeDir, false);
@@ -174,9 +155,8 @@ Engine::Engine(const char *prog)
     char path[PATH_MAX];
     if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path,
                                           PATH_MAX))
-    {
-        fprintf(stderr, _("Can't find Resources directory!\n"));
-    }
+        logger->error(_("Can't find Resources directory!\n"));
+
     CFRelease(resourcesURL);
     strncat(path, "/data", PATH_MAX - 1);
     resman->addToSearchPath(path, true);
@@ -195,40 +175,22 @@ Engine::Engine(const char *prog)
     }
     catch (const char *err)
     {
-        state = ERROR_STATE;
-        errorMessage = err;
+        OkDialog *okDialog = new OkDialog("Warning: %s", err);
+        okDialog->requestMoveToTop();
         logger->log("Warning: %s", err);
     }
 
     // Initialize keyboard
     keyboard.init();
 
-    // Pallete colors are needed throughout the whole life of the program
-    guiPalette = new Palette();
-
-    setupWindow = new Setup();
-    debugWindow = new DebugWindow();
-    helpDialog = new HelpDialog();
-
     inputManager = new InputManager();
-
-    SDLNet_Init();
-    network = new Network();
 
     sound.playMusic("Magick - Real.ogg");
 }
 
 Engine::~Engine()
 {
-    // Before config.write() so that global windows can get their settings
-    // written to the configuration file.
-    destroy(debugWindow);
-    destroy(helpDialog);
-    destroy(setupWindow);
-
     destroy(gui);
-    destroy(guiPalette);
-
     config.write();
 
     // Shutdown libxml
@@ -241,9 +203,6 @@ Engine::~Engine()
     sound.close();
 
     ResourceManager::deleteInstance();
-
-    destroy(network);
-    SDLNet_Quit();
 
     destroy(logger);
 
@@ -343,16 +302,13 @@ void Engine::initWindow()
     const int width = config.getValue("screenwidth", defaultScreenWidth);
     const int height = config.getValue("screenheight", defaultScreenHeight);
     const int bpp = 0;
-    const bool fullscreen = (config.getValue("screen", 0) == 1);
-    const bool hwaccel = (config.getValue("hwaccel", 0) == 1);
+    const bool fullscreen = config.getValue("screen", 0) == 1;
+    const bool hwaccel = config.getValue("hwaccel", 0) == 1;
 
     // Try to set the desired video mode
     if (!graphics->setVideoMode(width, height, bpp, fullscreen, hwaccel))
-    {
-        std::cerr << strprintf(_("Couldn't set %dx%dx%d video mode: %s"), width,
-                                 height, bpp, SDL_GetError()) << std::endl;
-        exit(1);
-    }
+        logger->error(strprintf(_("Couldn't set %dx%dx%d video mode: %s"),
+                                  width, height, bpp, SDL_GetError()));
 
     // Initialize for drawing
     graphics->_beginDraw();

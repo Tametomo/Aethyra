@@ -28,8 +28,11 @@
 #include "protocol.h"
 
 #include "../game.h"
+#include "../statemanager.h"
 
-#include "../../main.h"
+#include "../gui/viewport.h"
+
+#include "../../bindings/guichan/gui.h"
 
 #include "../../core/configuration.h"
 #include "../../core/log.h"
@@ -52,6 +55,7 @@ void MapLoginHandler::handleMessage(MessageIn *msg)
 {
     int code;
     unsigned char direction;
+    std::string error;
 
     switch (msg->getId())
     {
@@ -62,16 +66,16 @@ void MapLoginHandler::handleMessage(MessageIn *msg)
             switch (code)
             {
                 case 0:
-                    errorMessage = _("Authentication failed");
+                    error = _("Authentication failed");
                     break;
                 case 2:
-                    errorMessage = _("This account is already logged in");
+                    error = _("This account is already logged in");
                     break;
                 default:
-                    errorMessage = _("Unknown connection error");
+                    error = _("Unknown connection error");
                     break;
             }
-            state = ERROR_STATE;
+            stateManager->handleException(error, LOGIN_STATE);
             break;
 
         case SMSG_LOGIN_SUCCESS:
@@ -79,8 +83,11 @@ void MapLoginHandler::handleMessage(MessageIn *msg)
             msg->readCoordinates(player_node->mX, player_node->mY, direction);
             msg->skip(2);      // unknown
             logger->log("Protocol: Player start position: (%d, %d), Direction: %d",
-                        player_node->mX, player_node->mY, direction);
-            state = GAME_STATE;
+                         player_node->mX, player_node->mY, direction);
+
+            // Force the server to resend the being data.
+            viewport->setVisible(true);
+            MessageOut outMsg(CMSG_MAP_LOADED);
             break;
     }
 }

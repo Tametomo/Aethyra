@@ -22,6 +22,7 @@
 #include <guichan/actionlistener.hpp>
 
 #include "button.h"
+#include "container.h"
 #include "desktop.h"
 #include "label.h"
 #include "progressbar.h"
@@ -34,6 +35,10 @@
 
 #include "../sdl/sdlgraphics.h"
 
+#ifdef __APPLE__
+#include "../../../main.h"
+#endif
+
 #include "../../../core/configuration.h"
 #include "../../../core/log.h"
 #include "../../../core/resourcemanager.h"
@@ -44,8 +49,6 @@
 #include "../../../core/utils/dtor.h"
 #include "../../../core/utils/gettext.h"
 
-State error = ERROR_STATE;
-
 namespace
 {
     struct SetupListener : public gcn::ActionListener
@@ -55,15 +58,6 @@ namespace
          */
         void action(const gcn::ActionEvent &event);
     } listener;
-
-
-    struct ErrorListener : public gcn::ActionListener
-    {
-        void action(const gcn::ActionEvent &event)
-        {
-            state = error;
-        }
-    } errorListener;
 }
 
 Desktop::Desktop():
@@ -211,15 +205,6 @@ void Desktop::changeCurrentDialog(Window* window)
     positionDialog(currentDialog);
 }
 
-void Desktop::showError(OkDialog* window, State errorState)
-{
-    error = errorState;
-    removeCurrentDialog();
-    currentDialog = window;
-    currentDialog->addActionListener(&errorListener);
-    currentDialog = NULL;
-}
-
 Window* Desktop::getCurrentDialog()
 {
     return currentDialog;
@@ -227,7 +212,8 @@ Window* Desktop::getCurrentDialog()
 
 void Desktop::removeCurrentDialog()
 {
-    destroy(currentDialog);
+    windowContainer->scheduleDelete(currentDialog);
+    currentDialog = NULL;
 }
 
 void Desktop::resetProgressBar()

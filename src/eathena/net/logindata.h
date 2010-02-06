@@ -43,6 +43,7 @@ struct LoginData
 
     bool remember;            /**< Whether to store the username and host. */
     bool registerLogin;       /**< Whether an account is being registered. */
+    bool skipLogin;           /**< Whether to skip logging in or not. */
 };
 
 extern LoginData loginData;

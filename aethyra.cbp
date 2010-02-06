@@ -352,6 +352,8 @@
 		<Unit filename="src\eathena\party.h" />
 		<Unit filename="src\eathena\playerrelations.cpp" />
 		<Unit filename="src\eathena\playerrelations.h" />
+		<Unit filename="src\eathena\statemanager.cpp" />
+		<Unit filename="src\eathena\statemanager.h" />
 		<Unit filename="src\eathena\db\colordb.cpp" />
 		<Unit filename="src\eathena\db\colordb.h" />
 		<Unit filename="src\eathena\db\effectdb.cpp" />

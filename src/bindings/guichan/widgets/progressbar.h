@@ -80,7 +80,7 @@ class ProgressBar : public gcn::Widget
         /**
          * Sets the current progress.
          */
-        void setProgress(float progress);
+        void setProgress(const float progress);
 
         /**
          * Returns the current progress.

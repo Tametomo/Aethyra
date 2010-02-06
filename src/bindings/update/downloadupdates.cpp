@@ -32,7 +32,6 @@
 #include "downloadupdates.h"
 
 #include "../../engine.h"
-#include "../../main.h"
 
 #include "../../core/configuration.h"
 #include "../../core/log.h"
@@ -40,6 +39,8 @@
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
+
+#include "../../eathena/statemanager.h"
 
 namespace
 {
@@ -168,8 +169,8 @@ void DownloadUpdates::setUpdatesDir(std::string &updateHost)
         else
         {
             logger->log("Error: Invalid update host: %s", updateHost.c_str());
-            errorMessage = _("Invalid update host: ") + updateHost;
-            state = ERROR_STATE;
+            stateManager->handleException(strprintf(_("Invalid update host: %s"),
+                                                    updateHost.c_str()), LOGIN_STATE);
         }
     }
     else
@@ -205,8 +206,8 @@ void DownloadUpdates::setUpdatesDir(std::string &updateHost)
             logger->log("Error: %s/%s can't be made, but doesn't exist!",
                         engine->getHomeDir().c_str(), mUpdatesDir.c_str());
 #endif
-            errorMessage = _("Error creating updates directory!");
-            state = ERROR_STATE;
+            stateManager->handleException(_("Error creating updates directory!"),
+                                          LOGIN_STATE);
 #if defined WIN32
             }
 #endif

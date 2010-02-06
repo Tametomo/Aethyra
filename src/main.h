@@ -1,9 +1,8 @@
 /*
  *  Aethyra
- *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
- *  from The Mana World.
+ *  This file is part of Aethyra.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,8 +22,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <string>
-
 #ifdef HAVE_CONFIG_H
 #include "../config.h"
 #elif defined WIN32
@@ -32,27 +29,5 @@
 #elif defined __APPLE__
 #define PACKAGE_VERSION "0.0.29.1"
 #endif
-
-/*
- * Client different States
- */
-enum State {
-    ERROR_STATE,
-    START_STATE,
-    LOGIN_STATE,
-    REGISTER_STATE,
-    ACCOUNT_STATE,
-    CHAR_SERVER_STATE,
-    UPDATE_STATE,
-    LOADDATA_STATE,
-    CHAR_CONNECT_STATE,
-    CHAR_SELECT_STATE,
-    CONNECTING_STATE,
-    GAME_STATE,
-    EXIT_STATE
-};
-
-extern State state;
-extern std::string errorMessage;
 
 #endif

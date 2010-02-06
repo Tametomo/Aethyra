@@ -36,9 +36,11 @@ class Game
         Game();
         ~Game();
 
-        void logic() const;
+        void logic();
 
     private:
+        int mGameTime;
+
         typedef const std::auto_ptr<MessageHandler> MessageHandlerPtr;
         MessageHandlerPtr mBeingHandler;
         MessageHandlerPtr mBuySellHandler;

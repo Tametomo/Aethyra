@@ -38,8 +38,6 @@
 #include "../net/messageout.h"
 #include "../net/protocol.h"
 
-#include "../../main.h"
-
 #include "../../bindings/guichan/gui.h"
 #include "../../bindings/guichan/layout.h"
 
@@ -61,6 +59,8 @@
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/lockedarray.h"
 #include "../../core/utils/stringutils.h"
+
+#include "../../../config.h"
 
 ChatWindow::ChatWindow():
     Window("", false, NULL, "graphics/gui/gui.xml", true),

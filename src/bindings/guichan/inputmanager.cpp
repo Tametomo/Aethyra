@@ -25,7 +25,6 @@
 #include "gui.h"
 #include "inputmanager.h"
 
-#include "dialogs/confirmdialog.h"
 #include "dialogs/helpdialog.h"
 #include "dialogs/okdialog.h"
 #include "dialogs/setupdialog.h"
@@ -36,9 +35,6 @@
 
 #include "../sdl/joystick.h"
 #include "../sdl/keyboardconfig.h"
-#include "../sdl/sound.h"
-
-#include "../../main.h"
 
 #include "../../core/log.h"
 
@@ -50,6 +46,7 @@
 #include "../../eathena/beingmanager.h"
 #include "../../eathena/flooritemmanager.h"
 #include "../../eathena/playerrelations.h"
+#include "../../eathena/statemanager.h"
 
 #include "../../eathena/gui/chat.h"
 #include "../../eathena/gui/debugwindow.h"
@@ -68,31 +65,9 @@
 
 Joystick *joystick = NULL;
 
-extern OkDialog *weightNotice;
-extern OkDialog *deathNotice;
-ConfirmDialog *exitConfirm = NULL;
-
-/**
- * Listener used for exiting handling.
- */
 namespace
 {
     bool targetKeyHeld = false;
-
-    struct ExitListener : public gcn::ActionListener
-    {
-        void action(const gcn::ActionEvent &event)
-        {
-            if (event.getId() == "yes" || event.getId() == "ok")
-            {
-                sound.fadeOutMusic(1000);
-
-                state = EXIT_STATE;
-            }
-
-            exitConfirm = NULL;
-        }
-    } exitListener;
 }
 
 InputManager::InputManager()
@@ -141,7 +116,7 @@ void InputManager::handleInput()
 
         // Quit event
         else if (event.type == SDL_QUIT)
-            state = EXIT_STATE;
+            stateManager->setState(QUIT_STATE);
 
         // Push input to GUI when not used
         if (!used)
@@ -156,7 +131,7 @@ void InputManager::handleJoystickInput(const SDL_Event &event)
     else
         return;
 
-    if (state != GAME_STATE)
+    if (!stateManager->isInGame())
         return;
 
     if (event.type == SDL_JOYBUTTONUP && !joystick->buttonPressed(3))
@@ -261,17 +236,7 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                 break;
             // Quitting confirmation dialog
             case KeyboardConfig::KEY_QUIT:
-                if (!exitConfirm)
-                {
-                    exitConfirm = new ConfirmDialog(_("Quit"), _("Are you sure "
-                                                      "you want to quit?"),
-                                                      NULL, true);
-                    exitConfirm->addActionListener(&exitListener);
-                    exitConfirm->requestMoveToTop();
-                }
-                else
-                    exitConfirm->action(gcn::ActionEvent(NULL, "no"));
-
+                stateManager->promptForQuit();
                 used = true;
                 break;
             case KeyboardConfig::KEY_WINDOW_DEBUG:
@@ -287,7 +252,7 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                 break;
         }
 
-        if (state == GAME_STATE)
+        if (stateManager->isInGame())
         {
             switch (tKey)
             {
@@ -532,7 +497,7 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
     // fixed and then moved to one of them (in case we ever use other input
     // libraries. If everything is already grouped together, it'd be easier to
     // adapt to a new library, instead of having to rely on special cases)
-    if (state == GAME_STATE && player_node->mAction != Being::DEAD && !used)
+    if (stateManager->isInGame() && player_node->mAction != Being::DEAD && !used)
     {
         unsigned char direction = 0;
 

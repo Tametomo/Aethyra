@@ -23,9 +23,9 @@
 #include "login.h"
 #include "register.h"
 
-#include "../net/logindata.h"
+#include "../statemanager.h"
 
-#include "../../main.h"
+#include "../net/logindata.h"
 
 #include "../../bindings/guichan/layout.h"
 
@@ -158,7 +158,7 @@ void RegisterDialog::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "cancel")
     {
-        state = LOGIN_STATE;
+        stateManager->setState(LOGIN_STATE);
     }
     else if (event.getId() == "register" && canSubmit())
     {
@@ -238,7 +238,7 @@ void RegisterDialog::action(const gcn::ActionEvent &event)
             loginData.username += mFemaleButton->isSelected() ? "_F" : "_M";
             loginData.registerLogin = true;
 
-            state = ACCOUNT_STATE;
+            stateManager->setState(ACCOUNT_STATE);
         }
     }
 }
@@ -255,7 +255,7 @@ bool RegisterDialog::canSubmit() const
            !mConfirmField->getText().empty() &&
            !mServerField->getText().empty() &&
            isUShort(mPortField->getText()) &&
-           state == REGISTER_STATE;
+           stateManager->getState() == REGISTER_STATE;
 }
 
 bool RegisterDialog::isUShort(const std::string &str)

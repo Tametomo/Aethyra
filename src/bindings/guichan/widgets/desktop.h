@@ -28,11 +28,8 @@
 
 #include "../guichanfwd.h"
 
-#include "../../../main.h"
-
 class Window;
 class Image;
-class OkDialog;
 class ProgressBar;
 
 /**
@@ -61,12 +58,6 @@ class Desktop : public Container
          * Changes the state's current dialog to the supplied dialog.
          */
         void changeCurrentDialog(Window* window);
-
-        /**
-         * Shows an error dialog. The state variable is used to determine what
-         * state the client should switch to after the error.
-         */
-        void showError(OkDialog* window, State state);
 
         /**
          * Returns the current dialog for the current state.
