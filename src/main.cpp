@@ -43,31 +43,40 @@ namespace
 static void printHelp()
 {
     std::cout << _("Options: ") << std::endl
-              << _("  -C --configfile\t: Configuration file to use") << std::endl
-              << _("  -d --data\t\t: Directory to load game data from")
+              << "  -C --configfile\t: " << _("Configuration file to use")
               << std::endl
-              << _("  -D --default\t\t: Bypass the login process with default "
-                   "settings") << std::endl
-              << _("  -h --help\t\t: Display this help") << std::endl
-              << _("  -H --updatehost\t: Use this update host") << std::endl
-              << _("  -p --playername\t: Login with this player") << std::endl
-              << _("  -P --password\t\t: Login with this password") << std::endl
-              << _("  -u --skipupdate\t: Skip the update downloads") << std::endl
-              << _("  -U --username\t\t: Login with this username") << std::endl
+              << "  -d --data\t\t: " << _("Directory to load game data from")
+              << std::endl
+              << "  -D --default\t\t: " << _("Bypass the login process with "
+                 "default settings") << std::endl
+              << "  -h --help\t\t: " << _("Display this help") << std::endl
+              << "  -H --updatehost\t: " << _("Use this update host")
+              << std::endl
+              << "  -p --playername\t: " << _("Login with this player")
+              << std::endl
+              << "  -P --password\t\t: " << _("Login with this password")
+              << std::endl
+              << "  -u --skipupdate\t: " << _("Skip the update downloads")
+              << std::endl
+              << "  -U --username\t\t: " << _("Login with this username")
+              << std::endl
+              << "  -O --no-opengl\t: "
 #ifdef USE_OPENGL
-              << _("  -O --no-opengl\t: Disable OpenGL for this session")
-              << std::endl
+              << _("Disable OpenGL for this session") << std::endl
 #else
-              << _("  -O --no-opengl\t: Default (OpenGL has been disabled at "
-                   "build time)") << std::endl
+              << _("Default (OpenGL has been disabled at build time)")
+              << std::endl
 #endif
-              << _("  -v --version\t\t: Display the version") << std::endl
+              << "  -v --version\t\t:" << _("Display the version") << std::endl
               << std::endl
-              << _("Report bugs at: http://www.aethyra.com/mantis")
-              << std::endl
-              << _("Homepage: http://www.aethyra.com") << std::endl
-              << _("Forums: http://www.aethyra.com/forums") << std::endl
-              << _("IRC: irc.freenode.net\tChannel: #aethyra") << std::endl;
+              << strprintf(_("Report bugs at: %s"),
+                             "http://www.aethyra.com/mantis") << std::endl
+              << strprintf(_("Homepage: %s"),
+                             "http://www.aethyra.com") << std::endl
+              << strprintf(_("Forums: %s"),
+                             "http://www.aethyra.com/forums") << std::endl
+              << strprintf(_("IRC: %s\tChannel: %s"), "irc.freenode.net", 
+                             "#aethyra") << std::endl;
 }
 
 static void printVersion()
@@ -79,7 +88,8 @@ static void printVersion()
 #endif
     std::cout << strprintf(_("Aethyra - Version %s"), version.c_str())
               << std::endl << std::endl
-              << _("\tCopyright (C) 2008-2009  Aethyra Development Team")
+              << strprintf(_("\tCopyright (C) %s  Aethyra Development Team"),
+                             "2008-2010")
               << std::endl << std::endl
               << _("License GPLv2+: GNU GPL version 2 or later "
                    "<http://gnu.org/licenses/gpl2.html>") << std::endl
