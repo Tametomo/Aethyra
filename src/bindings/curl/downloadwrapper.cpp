@@ -188,7 +188,10 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
                     ::remove(resource->getFullPath().c_str());
 
                 if (pHeaders)
+                {
+                    curl_easy_setopt(mCurl, CURLOPT_HTTPHEADER, NULL);
                     curl_slist_free_all(pHeaders);
+                }
 
 
                 attempts++;
@@ -196,7 +199,10 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
             }
 
             if (pHeaders)
+            {
+                curl_easy_setopt(mCurl, CURLOPT_HTTPHEADER, NULL);
                 curl_slist_free_all(pHeaders);
+            }
 
             // Check checksum
             if (resource->verify(outfile))
