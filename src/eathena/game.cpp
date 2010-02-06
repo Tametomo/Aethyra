@@ -26,6 +26,7 @@
 #include "flooritemmanager.h"
 #include "game.h"
 #include "playerrelations.h"
+#include "statemanager.h"
 
 #include "db/colordb.h"
 #include "db/effectdb.h"
@@ -90,8 +91,6 @@
 
 #include "../core/image/particle/particle.h"
 
-#include "../core/map/map.h"
-
 #include "../core/map/sprite/localplayer.h"
 
 #include "../core/utils/dtor.h"
@@ -126,7 +125,7 @@ Setup_Players *setupPlayers = NULL;
 BeingManager *beingManager = NULL;
 FloorItemManager *floorItemManager = NULL;
 Particle* particleEngine = NULL;
-Viewport *viewport = NULL;                    /**< Viewport on the map. */
+Viewport *viewport = NULL;                    /**< Viewport for the map. */
 
 /**
  * Create all the various globally accessible gui windows
@@ -268,9 +267,7 @@ Game::Game():
     MessageOut msg(CMSG_CLIENT_PING);
     msg.writeInt32(tick_time);
 
-    map_path = map_path.substr(0, map_path.rfind("."));
     viewport->changeMap(map_path);
-    MessageOut outMsg(CMSG_MAP_LOADED);
 
     mGameTime = tick_time;
 }
@@ -300,9 +297,6 @@ Game::~Game()
 
 void Game::logic()
 {
-    if (viewport->getMap())
-        viewport->getMap()->update(get_elapsed_time(mGameTime));
-
     beingManager->logic();
 
     // Update the particle engine

@@ -31,7 +31,6 @@
 
 #include "../gui/charcreate.h"
 #include "../gui/charselect.h"
-#include "../gui/viewport.h"
 
 #include "../../bindings/guichan/dialogs/okdialog.h"
 
@@ -179,6 +178,7 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             slot = mCharInfo->getPos();
             msg->skip(4); // CharID, must be the same as player_node->charID
             map_path = msg->readString(16);
+            logger->log("Map: %s", map_path.c_str());
             loginData.hostname = ipToString(msg->readInt32());
             loginData.port = msg->readInt16();
             mCharInfo->unlock();

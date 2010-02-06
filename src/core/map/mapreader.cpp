@@ -191,7 +191,8 @@ Map *MapReader::readMap(const std::string &filename)
     else
         logger->log("Error while parsing map file (%s)!", filename.c_str());
 
-    if (map) map->setProperty("_filename", filename);
+    if (map)
+        map->setProperty("_filename", filename);
 
     return map;
 }

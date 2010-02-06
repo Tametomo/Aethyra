@@ -21,7 +21,6 @@
  */
 
 #include "messagein.h"
-#include "messageout.h"
 #include "playerhandler.h"
 #include "protocol.h"
 
@@ -195,9 +194,7 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                 nearby = (viewport->getMapName() == mapPath);
 
                 // Switch the actual map, deleting the previous one if necessary
-                mapPath = mapPath.substr(0, mapPath.rfind("."));
-                if (viewport->changeMap(mapPath))
-                    MessageOut outMsg(CMSG_MAP_LOADED);
+                viewport->changeMap(mapPath);
 
                 current_npc = 0;
 

@@ -117,7 +117,7 @@ void DebugWindow::logic()
         mMiniMapLabel->setCaption(strprintf(_("Minimap: %s"),
                                             currentMap->getProperty("minimap").c_str()));
         mMapLabel->setCaption(strprintf(_("Map: %s"),
-                                        currentMap->getProperty("_filename").c_str()));
+                                        viewport->getMapPath().c_str()));
     }
 
     mParticleCountLabel->setCaption(strprintf(_("Particle count: %d"),

@@ -543,7 +543,8 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
     {
         // Display the current map, X, and Y
         std::ostringstream where;
-        where << map_path << " " << player_node->mX << "," << player_node->mY;
+        where << viewport->getMapPath() << " " << player_node->mX << ","
+              << player_node->mY;
         chatLog(where.str(), BY_SERVER);
     }
     else if (command == "who")

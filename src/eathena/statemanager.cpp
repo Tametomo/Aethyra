@@ -82,6 +82,8 @@ Setup* setupWindow = NULL;
 
 Palette *guiPalette = NULL;
 
+std::string map_path = "";
+
 /**
  * Listener used for exiting handling.
  */

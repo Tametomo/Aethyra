@@ -97,7 +97,6 @@ void MapLoginHandler::login()
     config.setValue("lastCharacter", player_node->getName());
 
     logger->log("Trying to connect to map server...");
-    logger->log("Map: %s", map_path.c_str());
 
     network->disconnect();
     network->connect(loginData.hostname, loginData.port);

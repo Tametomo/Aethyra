@@ -48,6 +48,9 @@ enum State {
     EXIT_STATE
 };
 
+// Used to keep track of the map path to use before the viewport is ready
+extern std::string map_path;
+
 class CharServerHandler;
 class LocalPlayer;
 class LoginHandler;

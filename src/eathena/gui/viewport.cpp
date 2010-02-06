@@ -29,6 +29,9 @@
 #include "../beingmanager.h"
 #include "../flooritemmanager.h"
 
+#include "../net/messageout.h"
+#include "../net/protocol.h"
+
 #include "../../bindings/guichan/graphics.h"
 #include "../../bindings/guichan/gui.h"
 #include "../../bindings/guichan/textmanager.h"
@@ -54,13 +57,10 @@
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
 
-extern volatile int tick_time;
-
-std::string map_path;
-
 Viewport::Viewport():
     mCurrentMap(NULL),
     mMapName(""),
+    mLastTick(tick_time),
     mPixelViewX(0.0f),
     mPixelViewY(0.0f),
     mTileViewX(0),
@@ -97,6 +97,11 @@ void Viewport::setMap(Map *map)
     mCurrentMap = map;
 }
 
+std::string Viewport::getMapPath()
+{
+    return mCurrentMap->getProperty("_filename");
+}
+
 void Viewport::draw(gcn::Graphics *graphics)
 {
     static int lastTick = tick_time;
@@ -107,6 +112,8 @@ void Viewport::draw(gcn::Graphics *graphics)
         graphics->fillRectangle(gcn::Rectangle(0, 0, getWidth(), getHeight()));
         return;
     }
+
+    mCurrentMap->update(get_elapsed_time(mLastTick));
 
     Graphics *g = static_cast<Graphics*>(graphics);
 
@@ -233,6 +240,7 @@ void Viewport::draw(gcn::Graphics *graphics)
     }
 
     drawChildren(g);
+    mLastTick = tick_time;
 }
 
 void Viewport::logic()
@@ -390,7 +398,7 @@ void Viewport::optionChanged(const std::string &name)
     mScrollRadius = config.getValue("ScrollRadius", 32);
 }
 
-bool Viewport::changeMap(const std::string &mapPath)
+bool Viewport::changeMap(const std::string &path)
 {
     // Clean up floor items, beings and particles
     floorItemManager->clear();
@@ -407,22 +415,22 @@ bool Viewport::changeMap(const std::string &mapPath)
 
     particleEngine->clear();
 
-    mMapName = mapPath;
+    mMapName = path.substr(0, path.rfind("."));
 
     // Store full map path in global var
-    map_path = "maps/" + mapPath + ".tmx";
+    std::string mapPath = "maps/" + mMapName + ".tmx";
     ResourceManager *resman = ResourceManager::getInstance();
-    if (!resman->exists(map_path))
-        map_path += ".gz";
+    if (!resman->exists(mapPath))
+        mapPath += ".gz";
 
     // Attempt to load the new map
-    Map *newMap = MapReader::readMap(map_path);
+    Map *newMap = MapReader::readMap(mapPath);
 
     if (!newMap)
     {
-        logger->log("Error while loading %s", map_path.c_str());
+        logger->log("Error while loading %s", mapPath.c_str());
         new OkDialog(_("Could not load map"),
-                     strprintf(_("Error while loading %s"), map_path.c_str()));
+                     strprintf(_("Error while loading %s"), mapPath.c_str()));
     }
 
     // Notify the minimap and beingManager about the map change
@@ -447,6 +455,7 @@ bool Viewport::changeMap(const std::string &mapPath)
         destroy(mCurrentMap);
 
     setMap(newMap);
+    MessageOut outMsg(CMSG_MAP_LOADED);
 
     return true;
 }
