@@ -55,8 +55,6 @@ class CharServerHandler;
 class LocalPlayer;
 class LoginHandler;
 class MapLoginHandler;
-class Options;
-class SERVER_INFO;
 
 /**
  * Manages state transitions within the program, including initializing all
