@@ -182,6 +182,9 @@ void StateManager::setState(const State state)
 
         case ERROR_STATE:
             logger->log("State: ERROR");
+            if (desktop)
+                desktop->resetProgressBar();
+
             errorDialog = new OkDialog(_("Error"), mError, NULL, true);
             errorDialog->addActionListener(&errorListener);
             errorDialog->requestMoveToTop();
