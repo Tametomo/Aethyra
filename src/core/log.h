@@ -25,8 +25,6 @@
 
 #include <fstream>
 
-class ChatWindow;
-
 /**
  * The Log Class : Useful to write debug or info messages
  */
@@ -56,7 +54,7 @@ class Logger
         /**
          * Enables logging to chat window
          */
-        void setChatWindow(ChatWindow *window) { mChatWindow = window; }
+        void setLogToChatWindow(bool value) { mLogToChatWindow = value; }
 
         /**
          * Enters a message in the log. The message will be timestamped.
@@ -81,7 +79,7 @@ class Logger
     private:
         std::ofstream mLogFile;
         bool mLogToStandardOut;
-        ChatWindow *mChatWindow;
+        bool mLogToChatWindow;
 };
 
 extern Logger *logger;

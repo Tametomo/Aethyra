@@ -173,7 +173,7 @@ void createGuiWindows()
  */
 static void destroyGuiWindows()
 {
-    logger->setChatWindow(NULL);
+    logger->setLogToChatWindow(false);
 
     destroy(buyDialog);
     destroy(buySellDialog);

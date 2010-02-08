@@ -43,7 +43,7 @@
 
 Logger::Logger():
     mLogToStandardOut(false),
-    mChatWindow(NULL)
+    mLogToChatWindow(false)
 {
 }
 
@@ -100,8 +100,8 @@ void Logger::log(const char *log_text, ...)
     if (mLogToStandardOut)
         std::cout << timeStr.str() << buf << std::endl;
 
-    if (mChatWindow)
-        mChatWindow->chatLog(buf, BY_LOGGER);
+    if (chatWindow && mLogToChatWindow)
+        chatWindow->chatLog(buf, BY_LOGGER);
 
     // Delete temporary buffer
     delete[] buf;

@@ -34,6 +34,7 @@
 #include "../../core/image/imagewriter.h"
 
 #include "../../core/utils/gettext.h"
+#include "../../core/utils/stringutils.h"
 
 #include "../../eathena/gui/chat.h"
 
@@ -180,16 +181,13 @@ void saveScreenshot()
     if (success)
     {
         if (chatWindow)
-        {
-            std::stringstream chatlogentry;
-            chatlogentry << _("Screenshot saved to ~/") << filenameSuffix.str();
-            chatWindow->chatLog(chatlogentry.str(), BY_SERVER);
-        }
+            chatWindow->chatLog(strprintf(_("Screenshot saved to %s"),
+                                filename.str().c_str()), BY_LOGGER);
     }
     else
     {
         if (chatWindow)
-            chatWindow->chatLog(_("Saving screenshot failed!"), BY_SERVER);
+            chatWindow->chatLog(_("Saving screenshot failed!"), BY_LOGGER);
 
         logger->log("Error: could not save screenshot.");
     }
