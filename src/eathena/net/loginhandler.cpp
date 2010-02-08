@@ -30,7 +30,6 @@
 
 #include "../statemanager.h"
 
-#include "../../core/configuration.h"
 #include "../../core/log.h"
 
 #include "../../core/utils/gettext.h"
@@ -119,7 +118,7 @@ void LoginHandler::handleMessage(MessageIn *msg)
                             ipToString(server_info[i]->address),
                             server_info[i]->port);
             }
-            stateManager->setState(CHAR_SERVER_STATE);
+            stateManager->setState(SERVER_SELECT_STATE);
             break;
 
         case 0x006a:
@@ -192,13 +191,4 @@ void LoginHandler::login()
         loginData.username =
             loginData.username.substr(0, loginData.username.length() - 2);
     }
-
-    // TODO This is not the best place to save the config, but at least better
-    // than the login gui window
-    if (loginData.remember)
-    {
-        config.setValue("host", loginData.hostname);
-        config.setValue("username", loginData.username);
-    }
-    config.setValue("remember", loginData.remember);
 }

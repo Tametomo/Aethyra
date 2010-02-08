@@ -238,7 +238,7 @@ void RegisterDialog::action(const gcn::ActionEvent &event)
             loginData.username += mFemaleButton->isSelected() ? "_F" : "_M";
             loginData.registerLogin = true;
 
-            stateManager->setState(ACCOUNT_STATE);
+            stateManager->setState(LOGINSERV_CONNECT_STATE);
         }
     }
 }

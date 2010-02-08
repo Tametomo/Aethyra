@@ -210,7 +210,7 @@ void StateManager::setState(const State state)
             if (loginData.skipLogin)
             {
                 loginData.registerLogin = false;
-                setState(ACCOUNT_STATE);
+                setState(LOGINSERV_CONNECT_STATE);
             }
             else
                 desktop->changeCurrentDialog(new LoginDialog());
@@ -221,14 +221,23 @@ void StateManager::setState(const State state)
             desktop->changeCurrentDialog(new RegisterDialog());
             break;
 
-        case ACCOUNT_STATE:
-            logger->log("State: ACCOUNT");
+        case LOGINSERV_CONNECT_STATE:
+            logger->log("State: ACCT_CONNECT");
             desktop->useProgressBar(_("Connecting to account server..."));
+
             mLoginHandler.get()->login();
             break;
 
-        case CHAR_SERVER_STATE:
-            logger->log("State: CHAR_SERVER");
+        case SERVER_SELECT_STATE:
+            logger->log("State: SERVER_SELECT");
+
+            // Only save the login data after a valid login
+            if (loginData.remember)
+            {
+                config.setValue("host", loginData.hostname);
+                config.setValue("username", loginData.username);
+            }
+            config.setValue("remember", loginData.remember);
 
             if (loginData.servers == 1)
             {
@@ -293,11 +302,11 @@ void StateManager::setState(const State state)
             // Reload in case there was a different wallpaper in the updates.
             desktop->reload();
 
-            setState(CHAR_CONNECT_STATE);
+            setState(CHARSERV_CONNECT_STATE);
             break;
 
-        case CHAR_CONNECT_STATE:
-            logger->log("State: CHAR_CONNECT");
+        case CHARSERV_CONNECT_STATE:
+            logger->log("State: CHARSERV_CONNECT");
             desktop->useProgressBar(_("Connecting to character server..."));
             network->unregisterHandler(mLoginHandler.get());
             mCharServerHandler.get()->login(&mCharInfo);
@@ -323,8 +332,8 @@ void StateManager::setState(const State state)
                     gcn::ActionEvent(NULL, "ok"));
             break;
 
-        case CONNECTING_STATE:
-            logger->log("State: CONNECTING");
+        case MAPSERV_CONNECT_STATE:
+            logger->log("State: MAPSERV_CONNECT");
             desktop->useProgressBar(_("Connecting to map server..."));
             network->unregisterHandler(mCharServerHandler.get());
             mMapLoginHandler.get()->login();

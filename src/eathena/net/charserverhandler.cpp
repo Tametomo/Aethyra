@@ -196,7 +196,7 @@ void CharServerHandler::handleMessage(MessageIn *msg)
             } while (mCharInfo->getPos());
 
             mCharInfo->select(slot);
-            stateManager->setState(CONNECTING_STATE);
+            stateManager->setState(MAPSERV_CONNECT_STATE);
             break;
     }
 }

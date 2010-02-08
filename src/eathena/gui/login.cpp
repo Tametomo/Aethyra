@@ -143,7 +143,7 @@ void LoginDialog::action(const gcn::ActionEvent &event)
         mCancelButton->setEnabled(false);
         mRegisterButton->setEnabled(false);
         mServerList->save(mServerField->getText(), mPortField->getText());
-        stateManager->setState(ACCOUNT_STATE);
+        stateManager->setState(LOGINSERV_CONNECT_STATE);
     }
     else if (event.getId() == "cancel")
     {

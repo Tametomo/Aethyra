@@ -171,7 +171,7 @@ void Engine::initSDL()
 
 void Engine::initResman()
 {
-    logger->log("Creating Resource Manager...");
+    logger->log("Creating resource manager...");
     ResourceManager *resman = ResourceManager::getInstance();
 
     if (!resman->setWriteDir(homeDir))
