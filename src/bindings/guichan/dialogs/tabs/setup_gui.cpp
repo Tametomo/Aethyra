@@ -129,6 +129,11 @@ Setup_Gui::Setup_Gui():
     setDimension(gcn::Rectangle(0, 0, 325, 200));
 }
 
+Setup_Gui::~Setup_Gui()
+{
+    delete mModeListModel;
+}
+
 void Setup_Gui::fontChanged()
 {
     SetupTabContainer::fontChanged();

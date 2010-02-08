@@ -35,6 +35,7 @@ class Setup_Gui : public SetupTabContainer, public gcn::ActionListener
 {
     public:
         Setup_Gui();
+        ~Setup_Gui();
 
         void apply();
         void cancel();
