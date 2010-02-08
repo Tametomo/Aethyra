@@ -198,6 +198,8 @@ void StateManager::setState(const State state)
             desktop = new Desktop();
             top->add(desktop);
 
+            sound.playMusic("Magick - Real.ogg");
+
             setState(LOGIN_STATE);
             break;
 

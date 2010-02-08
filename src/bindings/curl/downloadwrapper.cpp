@@ -30,8 +30,6 @@
 
 #include "downloadwrapper.h"
 
-#include "../../engine.h"
-
 #include "../../core/configuration.h"
 #include "../../core/log.h"
 #include "../../core/utils/gettext.h"

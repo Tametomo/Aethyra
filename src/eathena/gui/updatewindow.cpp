@@ -31,11 +31,6 @@
 
 #include "../statemanager.h"
 
-#include "../../engine.h"
-#ifdef __APPLE__
-#include "../../main.h"
-#endif
-
 #include "../../bindings/guichan/layout.h"
 
 #include "../../bindings/guichan/widgets/button.h"

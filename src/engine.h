@@ -22,10 +22,6 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#ifndef PKG_DATADIR
-#define PKG_DATADIR ""
-#endif
-
 #include <string>
 
 #include <SDL.h>
@@ -46,9 +42,14 @@ class Engine
         const std::string &getHomeDir() { return homeDir; }
 
     private:
-        void initConfig();
         void initInternationalization();
+        void initSDL();
+        void initResman();
+        void initConfig();
         void initWindow();
+        void initSound();
+
+        void setHomeDir();
 
         std::string homeDir;
 

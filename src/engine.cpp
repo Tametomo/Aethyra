@@ -55,7 +55,6 @@
 #include "bindings/guichan/sdl/sdlgraphics.h"
 #include "bindings/guichan/sdl/sdlinput.h"
 
-#include "bindings/sdl/keyboardconfig.h"
 #include "bindings/sdl/sound.h"
 
 #include "core/configuration.h"
@@ -73,7 +72,6 @@ Graphics *graphics = NULL;
 Configuration config;         /**< XML file configuration reader */
 Logger *logger = NULL;        /**< Log object */
 
-KeyboardConfig keyboard;
 InputManager *inputManager = NULL;
 Sound sound;
 
@@ -81,12 +79,21 @@ extern "C" char const *_nl_locale_name_default(void);
 
 Engine::Engine(const char *prog)
 {
+    initInternationalization();
+
     // Initialize PhysicsFS
     PHYSFS_init(prog);
+    setHomeDir();
 
+    // Set log file
     logger = new Logger();
+    logger->setLogFile(homeDir + std::string("/runtime.log"));
 
-    initInternationalization();
+#ifdef PACKAGE_VERSION
+    logger->log("Starting Aethyra Version %s.", PACKAGE_VERSION);
+#else
+    logger->log("Starting Aethyra - Version not defined.");
+#endif
 
     // Initialize libxml2 and check for potential ABI mismatches between
     // compiled version and the shared library actually used.
@@ -96,95 +103,15 @@ Engine::Engine(const char *prog)
     // Redirect libxml errors to /dev/null
     nullFile = fopen("/dev/null", "w");
     xmlSetGenericErrorFunc(nullFile, NULL);
-#if defined __APPLE__
-    // Use Application Directory instead of .aethyra
-    homeDir = std::string(PHYSFS_getUserDir()) +
-                          "/Library/Application Support/Aethyra";
-#else
-    homeDir = std::string(PHYSFS_getUserDir()) + "/.aethyra";
-#endif
 
-    // Checking if home folder exists.
-#if defined WIN32
-    if (!CreateDirectory(homeDir.c_str(), 0) &&
-         GetLastError() != ERROR_ALREADY_EXISTS)
-#else
-    if ((mkdir(homeDir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0) &&
-        (errno != EEXIST))
-#endif
-        logger->error(_("%s can't be created, but it doesn't exist! Exiting."),
-                        homeDir.c_str());
-
-    // Set log file
-    logger->setLogFile(homeDir + std::string("/runtime.log"));
-
-#ifdef PACKAGE_VERSION
-    logger->log("Starting Aethyra Version %s.", PACKAGE_VERSION);
-#else
-    logger->log("Starting Aethyra - Version not defined.");
-#endif
-
-    // Initialize SDL
-    logger->log("Initializing SDL...");
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
-        logger->error(_("Could not initialize SDL: %s"), SDL_GetError());
-
-    atexit(SDL_Quit);
-
-    SDL_EnableUNICODE(1);
-    SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-
-    ResourceManager *resman = ResourceManager::getInstance();
-
-    if (!resman->setWriteDir(homeDir))
-        logger->error(_("%s couldn't be set as home directory! Exiting."),
-                        homeDir.c_str());
-
-    // Add the user's homedir to PhysicsFS search path
-    resman->addToSearchPath(homeDir, false);
-
-    // Add the main data directories to our PhysicsFS search path
-    if (!options.dataPath.empty())
-        resman->addToSearchPath(options.dataPath, true);
-
-    resman->addToSearchPath("data", true);
-#if defined __APPLE__
-    CFBundleRef mainBundle = CFBundleGetMainBundle();
-    CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
-    char path[PATH_MAX];
-    if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path,
-                                          PATH_MAX))
-        logger->error(_("Can't find Resources directory!\n"));
-
-    CFRelease(resourcesURL);
-    strncat(path, "/data", PATH_MAX - 1);
-    resman->addToSearchPath(path, true);
-#else
-    resman->addToSearchPath(PKG_DATADIR "data", true);
-#endif
-
+    initSDL();
+    initResman();
     initConfig();
     initWindow();
+    initSound();
 
-    // Initialize sound engine
-    try
-    {
-        if (config.getValue("sound", 1) == 1)
-            sound.init();
-    }
-    catch (const char *err)
-    {
-        OkDialog *okDialog = new OkDialog("Warning: %s", err);
-        okDialog->requestMoveToTop();
-        logger->log("Warning: %s", err);
-    }
-
-    // Initialize keyboard
-    keyboard.init();
-
+    // Set up input devices and custom key shortcuts
     inputManager = new InputManager();
-
-    sound.playMusic("Magick - Real.ogg");
 }
 
 Engine::~Engine()
@@ -230,10 +157,56 @@ void Engine::initInternationalization()
 #endif
 }
 
+void Engine::initSDL()
+{
+    logger->log("Initializing SDL...");
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
+        logger->error(_("Could not initialize SDL: %s"), SDL_GetError());
+
+    atexit(SDL_Quit);
+
+    SDL_EnableUNICODE(1);
+    SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+}
+
+void Engine::initResman()
+{
+    logger->log("Creating Resource Manager...");
+    ResourceManager *resman = ResourceManager::getInstance();
+
+    if (!resman->setWriteDir(homeDir))
+        logger->error(_("%s couldn't be set as home directory! Exiting."),
+                        homeDir.c_str());
+
+    // Add the user's homedir to PhysicsFS search path
+    resman->addToSearchPath(homeDir, false);
+
+    // Add the main data directories to our PhysicsFS search path
+    if (!options.dataPath.empty())
+        resman->addToSearchPath(options.dataPath, true);
+
+    resman->addToSearchPath("data", true);
+#if defined __APPLE__
+    CFBundleRef mainBundle = CFBundleGetMainBundle();
+    CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
+    char path[PATH_MAX];
+    if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path,
+                                          PATH_MAX))
+        logger->error(_("Can't find Resources directory!\n"));
+
+    CFRelease(resourcesURL);
+    strncat(path, "/data", PATH_MAX - 1);
+    resman->addToSearchPath(path, true);
+#else
+    resman->addToSearchPath(PKG_DATADIR "data", true);
+#endif
+}
+
 void Engine::initConfig()
 {
     // Checking if the configuration file exists... otherwise creates it with
     // default options !
+    logger->log("Loading configuration settings...");
     FILE *configFile = NULL;
     std::string configPath = options.configPath;
 
@@ -266,6 +239,7 @@ void Engine::initWindow()
 {
     logger->log("Creating new SDL window...");
     SDL_WM_SetCaption("Aethyra", NULL);
+
 #ifdef WIN32
     static SDL_SysWMinfo pInfo;
     SDL_GetWMInfo(&pInfo);
@@ -292,11 +266,8 @@ void Engine::initWindow()
     if (useOpenGL)
         graphics = new OpenGLGraphics();
     else
-        graphics = new SDLGraphics();
-#else
-    // Create the graphics context
-    graphics = new SDLGraphics();
 #endif
+        graphics = new SDLGraphics();
 
     const int width = config.getValue("screenwidth", defaultScreenWidth);
     const int height = config.getValue("screenheight", defaultScreenHeight);
@@ -315,3 +286,40 @@ void Engine::initWindow()
     gui = new Gui(graphics);
 }
 
+void Engine::initSound()
+{
+    logger->log("Initializing sound for playback...");
+    try
+    {
+        if (config.getValue("sound", 1) == 1)
+            sound.init();
+    }
+    catch (const char *err)
+    {
+        OkDialog *okDialog = new OkDialog("Warning: %s", err);
+        okDialog->requestMoveToTop();
+        logger->log("Warning: %s", err);
+    }
+}
+
+void Engine::setHomeDir()
+{
+#if defined __APPLE__
+    // Use Application Directory instead of .aethyra
+    homeDir = std::string(PHYSFS_getUserDir()) +
+                          "/Library/Application Support/Aethyra";
+#else
+    homeDir = std::string(PHYSFS_getUserDir()) + "/.aethyra";
+#endif
+
+    // Checking if home folder exists.
+#if defined WIN32
+    if (!CreateDirectory(homeDir.c_str(), 0) &&
+         GetLastError() != ERROR_ALREADY_EXISTS)
+#else
+    if ((mkdir(homeDir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0) &&
+        (errno != EEXIST))
+#endif
+        logger->error(_("%s can't be created, but it doesn't exist! Exiting."),
+                        homeDir.c_str());
+}

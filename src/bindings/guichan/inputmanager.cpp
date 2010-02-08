@@ -63,6 +63,7 @@
 #include "../../eathena/handlers/emoteshortcut.h"
 #include "../../eathena/handlers/itemshortcut.h"
 
+KeyboardConfig keyboard;
 Joystick *joystick = NULL;
 
 namespace
@@ -72,6 +73,7 @@ namespace
 
 InputManager::InputManager()
 {
+    keyboard.init();
     Joystick::init();
     // TODO: The user should be able to choose which one to use
     // Open the first device

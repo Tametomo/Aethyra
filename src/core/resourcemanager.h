@@ -28,6 +28,10 @@
 #include <string>
 #include <vector>
 
+#ifndef PKG_DATADIR
+#define PKG_DATADIR ""
+#endif
+
 class Image;
 class ImageSet;
 class Music;
