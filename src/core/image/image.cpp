@@ -273,6 +273,7 @@ Image *Image::load(SDL_Surface *tmpImage)
     if (!image)
     {
         logger->log("Error: Image convert failed.");
+        delete [] imageAlphas;
         return NULL;
     }
 
