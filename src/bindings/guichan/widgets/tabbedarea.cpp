@@ -121,10 +121,47 @@ void TabbedArea::addTab(Tab *tab, gcn::Widget *widget)
     adjustSize();
 }
 
+void TabbedArea::removeTab(gcn::Tab *tab)
+{
+    mDeathList.push_back(tab);
+
+    int tabIndexToBeSelected = - 1;
+
+    if (tab == mSelectedTab)
+    {
+        int index = getSelectedTabIndex();
+
+        if (index == (int)mTabs.size() - 1 && mTabs.size() >= 2)
+            tabIndexToBeSelected = index--;
+        else if (index == (int)mTabs.size() - 1 && mTabs.size() == 1)
+            tabIndexToBeSelected = -1;
+        else
+            tabIndexToBeSelected = index;
+    }
+
+    if (tabIndexToBeSelected == -1)
+    {
+        mSelectedTab = NULL;
+        mWidgetContainer->clear();
+    }
+    else
+        setSelectedTab(tabIndexToBeSelected);
+}
+
 void TabbedArea::logic()
 {
+    for (std::list<gcn::Tab*>::iterator i = mDeathList.begin();
+         i != mDeathList.end(); i++)
+    {
+        gcn::TabbedArea::removeTab(*i);
+    }
+
+    mDeathList.clear();
+
     if (!isVisible())
         return;
+
+    gcn::TabbedArea::logic();
 
     logicChildren();
 }

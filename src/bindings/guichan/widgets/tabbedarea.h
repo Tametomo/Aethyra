@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2008  The Mana World Development Team
+ *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -26,6 +27,7 @@
 #include <guichan/widget.hpp>
 #include <guichan/widgets/tabbedarea.hpp>
 
+#include <list>
 #include <string>
 
 class ProtectedFocusListener;
@@ -79,6 +81,14 @@ class TabbedArea : public gcn::TabbedArea
         void addTab(Tab *tab, gcn::Widget *widget);
 
         /**
+         * Overridden from GUIChan's removeTab method in order to ensure safe
+         * deletion of tabs. Tabs removed through this function are added to a
+         * death list, then cleaned up later, so as to not cause complications
+         * when the particular tab's draw methods are called.
+         */
+        virtual void removeTab(gcn::Tab* tab);
+
+        /**
          * Overload the logic function since it's broken in guichan 0.8
          */
         void logic();
@@ -92,10 +102,17 @@ class TabbedArea : public gcn::TabbedArea
         void mousePressed(gcn::MouseEvent &mouseEvent);
 
         void fontChanged();
+
     protected:
         ProtectedFocusListener *mProtFocusListener;
-    private:
         typedef std::vector< std::pair<gcn::Tab*, gcn::Widget*> > TabContainer;
+
+        /**
+         * List of tabs which will be deleted from this widget on the next
+         * logic loop. Stored so as to not cause panics internally when a draw
+         * or logic loop comes up.
+         */
+        std::list<gcn::Tab*> mDeathList;
 };
 
 #endif
