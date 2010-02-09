@@ -75,7 +75,7 @@ void LoginHandler::handleMessage(MessageIn *msg)
                     error = _("Unknown connection error");
                     break;
             }
-            stateManager->handleException(error, LOGIN_STATE);
+            stateManager->handleException(error, START_STATE);
             break;
 
         case SMSG_UPDATE_HOST:

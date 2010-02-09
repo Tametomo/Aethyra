@@ -75,7 +75,7 @@ void MapLoginHandler::handleMessage(MessageIn *msg)
                     error = _("Unknown connection error");
                     break;
             }
-            stateManager->handleException(error, LOGIN_STATE);
+            stateManager->handleException(error, QUIT_STATE);
             break;
 
         case SMSG_LOGIN_SUCCESS:
