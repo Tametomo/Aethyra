@@ -65,20 +65,20 @@ void Recorder::changeRecordingStatus(const std::string &msg)
              * Message should go after mStream is closed so that it isn't
              * recorded.
              */
-            mChat->chatLog(_("Finishing recording."), BY_SERVER);
+            mChat->chatLog(_("Finishing recording."), BY_LOGGER);
         }
         else
-            mChat->chatLog(_("Not currently recording."), BY_SERVER);
+            mChat->chatLog(_("Not currently recording."), BY_LOGGER);
     }
     else if (mStream.is_open())
-        mChat->chatLog(_("Already recording."), BY_SERVER);
+        mChat->chatLog(_("Already recording."), BY_LOGGER);
     else
     {
         /*
          * Message should go before mStream is opened so that it isn't
          * recorded.
          */
-        mChat->chatLog(_("Starting to record..."), BY_SERVER);
+        mChat->chatLog(_("Starting to record..."), BY_LOGGER);
 
         std::stringstream file;
         file << PHYSFS_getUserDir();
@@ -92,6 +92,6 @@ void Recorder::changeRecordingStatus(const std::string &msg)
         mStream.open(file.str().c_str(), std::ios_base::app);
 
         if (!mStream.is_open())
-            mChat->chatLog(_("Failed to start recording."), BY_SERVER);
+            mChat->chatLog(_("Failed to start recording."), BY_LOGGER);
     }
 }
