@@ -36,9 +36,9 @@ class NPC : public Player
         ~NPC();
 
         /**
-         * Loads initial particle effects.
+         * Refreshes the current use policy for nonessential particle effects.
          */
-        void loadInitialParticleEffects();
+        virtual void refreshParticleEffects();
 
         void setName(const std::string &name);
         void setGender(const Gender &gender);

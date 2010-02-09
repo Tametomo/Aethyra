@@ -54,6 +54,7 @@ int Particle::maxCount = 0;
 int Particle::fastPhysics = 0;
 int Particle::emitterSkip = 1;
 const float Particle::PARTICLE_SKY = 800.0f;
+bool Particle::enabled = true;
 
 Particle::Particle(Map *map):
     mAlive(true),
@@ -95,6 +96,7 @@ void Particle::setupEngine()
     Particle::maxCount = config.getValue("particleMaxCount", 3000);
     Particle::fastPhysics = config.getValue("particleFastPhysics", 0);
     Particle::emitterSkip = config.getValue("particleEmitterSkip", 1) + 1;
+    Particle::enabled = config.getValue("particleeffects", true);
     disableAutoDelete();
     logger->log("Particle engine set up");
 }
@@ -245,13 +247,17 @@ void Particle::moveTo(const float x, const float y)
 
 void Particle::changeParticleDetailLevel(const int value)
 {
-    beingManager->loadParticleEffects();
+    const bool wasEnabled = enabled;
+    enabled = value > -1 && value < 4;
 
-    if (mMap)
+    if (enabled)
+        emitterSkip = 4 - value;
+
+    if (mMap && wasEnabled != enabled)
         mMap->initializeParticleEffects(particleEngine);
 
-    if (value > -1 && value < 4)
-        emitterSkip = 4 - value;
+    if (beingManager && wasEnabled != enabled)
+        beingManager->refreshParticleEffects();
 }
 
 Particle* Particle::addEffect(const std::string &particleEffectFile,

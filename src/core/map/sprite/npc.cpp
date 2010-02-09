@@ -65,7 +65,7 @@ NPC::NPC(const int id, const int job, Map *map):
         c++;
     }
 
-    loadInitialParticleEffects();
+    refreshParticleEffects();
 
     mName = NULL;
 
@@ -77,11 +77,11 @@ NPC::~NPC()
     destroy(mName);
 }
 
-void NPC::loadInitialParticleEffects()
+void NPC::refreshParticleEffects()
 {
     mChildParticleEffects.clear();
 
-    if (mParticleEffects)
+    if (Particle::enabled)
     {
         const NPCInfo info = NPCDB::get(job);
 

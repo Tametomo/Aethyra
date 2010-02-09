@@ -67,7 +67,7 @@ Monster::Monster(const int id, const Uint16 &job, Map *map):
         mSprites[c] = AnimatedSprite::load("graphics/sprites/error.xml");
     }
 
-    loadInitialParticleEffects();
+    refreshParticleEffects();
 
     mNameColor = &guiPalette->getColor(Palette::MONSTER);
 
@@ -79,11 +79,11 @@ Monster::~Monster()
     destroy(mText);
 }
 
-void Monster::loadInitialParticleEffects()
+void Monster::refreshParticleEffects()
 {
     mChildParticleEffects.clear();
 
-    if (mParticleEffects)
+    if (Particle::enabled)
     {
         const MonsterInfo& info = MonsterDB::get(job);
         const std::list<std::string> &particleEffects = info.getParticleEffects();
@@ -135,7 +135,7 @@ void Monster::setAction(const Action &action)
 
             //attack particle effect
             particleEffect = getInfo().getAttackParticleEffect();
-            if (!particleEffect.empty() && mParticleEffects)
+            if (!particleEffect.empty() && Particle::enabled)
             {
                 switch (mDirection)
                 {

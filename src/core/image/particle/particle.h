@@ -53,6 +53,8 @@ class Particle : public Sprite
         static int maxCount;             /**< Maximum number of particles */
         static int emitterSkip;          /**< Duration of pause between two
                                               emitter updates in ticks */
+        static bool enabled;             /**< Whether unnecessary particle
+                                              effects are enabled or not */
 
         /**
          * Constructor.

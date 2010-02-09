@@ -44,7 +44,6 @@
 #include "../../../bindings/sdl/sound.h"
 
 #include "../../../core/configuration.h"
-#include "../../../core/configlistener.h"
 #include "../../../core/log.h"
 
 #include "../../../core/map/map.h"
@@ -72,25 +71,6 @@ static const int Y_SPEECH_OFFSET = 60;
 static const int DEFAULT_WIDTH = 32;
 static const int DEFAULT_HEIGHT = 32;
 
-class BeingConfigListener : public ConfigListener
-{
-    public:
-        BeingConfigListener(Being *b):
-            mBeing(b)
-        {}
-
-        void optionChanged(const std::string &name)
-        {
-            if (name == "particleeffects")
-            {
-                const bool bParticleEffects = config.getValue("particleeffects", 1);
-                mBeing->setUseParticleEffects(bParticleEffects);
-            }
-        }
-    private:
-        Being *mBeing;
-};
-
 Being::Being(const int id, const int job, Map *map):
     mJob(job),
     mX(0), mY(0),
@@ -104,7 +84,6 @@ Being::Being(const int id, const int job, Map *map):
     mDirection(DOWN),
     mMap(NULL),
     mName(""),
-    mParticleEffects(config.getValue("particleeffects", 1)),
     mEquippedWeapon(NULL),
     mHairStyle(1), mHairColor(0),
     mGender(GENDER_UNSPECIFIED),
@@ -116,9 +95,6 @@ Being::Being(const int id, const int job, Map *map):
     mUsedTargetCursor(NULL)
 {
     setMap(map);
-
-    mConfigListener = new BeingConfigListener(this);
-    config.addListener("particleeffects", mConfigListener);
 
     mSpeech = "";
     mOldSpeech = "";
@@ -135,8 +111,6 @@ Being::~Being()
     mUsedTargetCursor = NULL;
     delete_all(mSprites);
     clearPath();
-
-    config.removeListener("particleeffects", mConfigListener);
 
     if (player_node && player_node->getTarget() == this)
         player_node->setTarget(NULL);

@@ -36,9 +36,9 @@ class Monster : public Being
         ~Monster();
 
         /**
-         * Loads initial particle effects.
+         * Refreshes the current use policy for nonessential particle effects.
          */
-        virtual void loadInitialParticleEffects();
+        virtual void refreshParticleEffects();
 
         virtual void logic();
 

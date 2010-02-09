@@ -38,9 +38,10 @@ class BeingManager
         ~BeingManager();
 
         /**
-         * Load particle effects.
+         * Refreshes the current use policy for nonessential particle effects
+         * for all beings.
          */
-        void loadParticleEffects() const;
+        void refreshParticleEffects() const;
 
         /**
          * Sets the map on which beings are created.

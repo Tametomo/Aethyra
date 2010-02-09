@@ -20,8 +20,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <typeinfo>
-
 #include "beingmanager.h"
 
 #include "net/messageout.h"
@@ -59,17 +57,12 @@ BeingManager::~BeingManager()
     clear();
 }
 
-void BeingManager::loadParticleEffects() const
+void BeingManager::refreshParticleEffects() const
 {
     for (Beings::const_iterator i = mBeings.begin(), i_end = mBeings.end();
          i != i_end; ++i)
     {
-        Being *being = (*i);
-
-        if (typeid(*being) == typeid(NPC))
-            static_cast<NPC*>(being)->loadInitialParticleEffects();
-        else if (typeid(*being) == typeid(Monster))
-            static_cast<Monster*>(being)->loadInitialParticleEffects();
+        (*i)->refreshParticleEffects();
     }
 }
 
