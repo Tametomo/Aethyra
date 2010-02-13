@@ -57,6 +57,7 @@ class Setup_Gui : public SetupTabContainer, public gcn::ActionListener
 
         gcn::Label *mAlphaLabel;
         gcn::Label *mMouseAlphaLabel;
+        gcn::Label *mFpsLabel;
         gcn::Label *mFontLabel;
 
         gcn::ScrollArea *mScrollArea;
@@ -70,7 +71,6 @@ class Setup_Gui : public SetupTabContainer, public gcn::ActionListener
         gcn::Slider *mMouseAlphaSlider;
         gcn::CheckBox *mFpsCheckBox;
         gcn::Slider *mFpsSlider;
-        gcn::TextField *mFpsField;
 
         int mFontSize;
         gcn::Slider *mFontSizeSlider;

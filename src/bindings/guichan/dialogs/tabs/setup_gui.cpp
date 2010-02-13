@@ -72,10 +72,9 @@ Setup_Gui::Setup_Gui():
     mMouseAlphaSlider(new Slider(0.2, 1.0)),
     mFpsCheckBox(new CheckBox(_("FPS Limit:"))),
     mFpsSlider(new Slider(5, 200)),
-    mFpsField(new TextField()),
     mFontSize(config.getValue("fontSize", 11)),
     mFontSizeSlider(new Slider(8, 14)),
-    mFontSizeLabel(new Label(""))
+    mFontSizeLabel(new Label())
 {
     setName(_("GUI"));
 
@@ -85,6 +84,7 @@ Setup_Gui::Setup_Gui():
 
     mAlphaLabel = new Label(_("Gui opacity"));
     mMouseAlphaLabel = new Label(_("Mouse opacity"));
+    mFpsLabel = new Label();
     mFontLabel = new Label(_("Font size"));
 
     mModeList->setEnabled(true);
@@ -96,9 +96,8 @@ Setup_Gui::Setup_Gui():
     mAlphaSlider->setValue(mOpacity);
     mMouseAlphaSlider->setValue(mMouseOpacity);
 
-    mFpsField->setText(toString(mFps));
-    mFpsField->setWidth(30);
-    mFpsField->setEnabled(false);
+    mFpsLabel->setCaption(toString(mFps));
+    mFpsLabel->adjustSize();
     mFpsSlider->setValue(mFps);
     mFpsSlider->setEnabled(mFps > 0);
     mFpsCheckBox->setSelected(mFps > 0);
@@ -159,7 +158,7 @@ void Setup_Gui::fontChanged()
     place(1, 8, mFpsCheckBox).setPadding(3);
     place(1, 9, mFontLabel);
 
-    place(2, 8, mFpsField).setPadding(1);
+    place(2, 8, mFpsLabel).setPadding(1);
     place(2, 9, mFontSizeLabel, 3).setPadding(2);
 
     h.reflowLayout(325, 200);
@@ -264,7 +263,7 @@ void Setup_Gui::cancel()
     text = (mFpsCheckBox->isSelected()) ? toString(mFps) : "";
 
     mFpsSlider->setEnabled(mFps > 0);
-    mFpsField->setText(text);
+    mFpsLabel->setCaption(text);
 
     int val = (int) mFontSizeSlider->getValue();
     mFontSizeLabel->setCaption(strprintf(_("%d Point"), val));
@@ -311,7 +310,8 @@ void Setup_Gui::action(const gcn::ActionEvent &event)
 
         text = (mFpsCheckBox->isSelected()) ? toString(fps) : "";
 
-        mFpsField->setText(text);
+        mFpsLabel->setCaption(text);
+        mFpsLabel->adjustSize();
     }
     else if (event.getId() == "fontsizeslider")
     {
@@ -335,7 +335,8 @@ void Setup_Gui::action(const gcn::ActionEvent &event)
         }
 
         mFpsSlider->setEnabled(fps > 0);
-        mFpsField->setText(text);
+        mFpsLabel->setCaption(text);
+        mFpsLabel->adjustSize();
     }
 }
 
