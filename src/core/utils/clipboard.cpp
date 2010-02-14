@@ -197,6 +197,8 @@ bool getClipboardContents(std::string& text)
         {
             text = strprintf("%s", data);
             XFree(data);
+
+            return true;
         }
     }
     return false;
