@@ -87,7 +87,7 @@ DownloadUpdates::~DownloadUpdates()
     if (mThread)
     {
         mUserCancel = true;
-        SDL_WaitThread(mThread, NULL);
+        SDL_KillThread(mThread);
     }
 
     delete_all(mResources);
@@ -253,13 +253,11 @@ void DownloadUpdates::parseResourcesFile()
     mMutex.unlock();
 }
 
-
 int DownloadUpdates::downloadThread(void *ptr)
 {
     DownloadUpdates *self = reinterpret_cast<DownloadUpdates *>(ptr);
     return self->downloadThreadWithThis();
 }
-
 
 int DownloadUpdates::downloadThreadWithThis()
 {

@@ -72,8 +72,6 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
 
 UpdaterWindow::~UpdaterWindow()
 {
-    // This will block until the download thread exits
-    // but that should happen within a second.
     destroy(mLogic);
 }
 

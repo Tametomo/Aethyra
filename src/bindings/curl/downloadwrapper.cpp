@@ -84,7 +84,6 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
 
     mResource = resource;
     CachePolicy policy = resource->getCachePolicy();
-    FILE *outfile = NULL;
     std::string downloadPath = resource->getFullPath();
     const std::string temporaryPath = downloadPath + ".temp";
 
@@ -157,7 +156,7 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
         {
             logger->log("Downloading: %s", resource->getUrl().c_str());
 
-            outfile = fopen(downloadPath.c_str(), "w+b");
+            FILE *outfile = fopen(downloadPath.c_str(), "w+b");
 
             if (!outfile)
                 break;  // No point taking 3 attempts here
