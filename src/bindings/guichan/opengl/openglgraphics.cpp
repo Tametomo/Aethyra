@@ -70,10 +70,12 @@ bool OpenGLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    mTarget = SDL_SetVideoMode(w, h, bpp, displayFlags);
+    SDL_Surface* target = SDL_SetVideoMode(w, h, bpp, displayFlags);
 
-    if (!mTarget)
+    if (!target)
         return false;
+
+    setTarget(target);
 
 #ifdef __APPLE__
     if (mSync)
