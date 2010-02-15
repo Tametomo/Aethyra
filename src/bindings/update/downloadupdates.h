@@ -83,7 +83,7 @@ public:
      * each update mentioned in it.  The files need to have been downloaded
      * already - this just passes filenames to ResourceManager.
      */
-    void addUpdatesToResman();
+    bool addUpdatesToResman();
 
 private:
     /**

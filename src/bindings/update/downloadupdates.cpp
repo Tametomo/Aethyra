@@ -109,7 +109,7 @@ void DownloadUpdates::userCancelled()
     mUserCancel = true;
 }
 
-void DownloadUpdates::addUpdatesToResman()
+bool DownloadUpdates::addUpdatesToResman()
 {
     mMutex.lock();
 
@@ -119,20 +119,26 @@ void DownloadUpdates::addUpdatesToResman()
         parseResourcesFile();
 
     ResourceManager *resman = ResourceManager::getInstance();
+    bool success = true;
 
     typedef std::vector<GenericVerifier*>::const_iterator CI;
     for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
     {
         if ((*itr)->isSaneToDownload())
         {
-            resman->addToSearchPath((*itr)->getFullPath(), false);
+            success = resman->addToSearchPath((*itr)->getFullPath(), false);
         }
         else
         {
             //TODO warn user - this is reachable if the user cancels and an
             //update after the one being downloaded failed the check.
         }
+
+        if (!success)
+            break;
     }
+
+    return success;
 
     mMutex.unlock();
 }
@@ -356,7 +362,7 @@ int DownloadUpdates::downloadThreadWithThis()
         stateManager->handleException(_("An update failed a security check, "
                                         "see log for details. If this persists,"
                                         " report this issue with your log file "
-                                        "on the forums."), LOGOUT_STATE);
+                                        "on the forums."), QUIT_STATE);
         mThread = NULL;
         return 0;
     }
@@ -373,17 +379,23 @@ int DownloadUpdates::downloadThreadWithThis()
 
         //continue, as it can still load any files that have downloaded
         //(this (!success) case includes the user pressing "cancel")
-        mListener->downloadFailed();
     }
 
     /* UPDATE_FINISH:    All downloads complete. */
-    // The downloading has finished (or been cancelled)
-    addUpdatesToResman();
+    // The downloading has finished (or been cancelled). The final success
+    // state will be entirely dependent on whether the updates can be loaded
+    // successfully.
+    success = addUpdatesToResman();
 
-    if (success && mListener)
-        mListener->downloadComplete();
+    if (mListener)
+    {
+        if (success)
+            mListener->downloadComplete();
+        else
+            mListener->downloadFailed();
+    }
 
-    /* UPDATE_COMPLETE:  Waiting for user to press "play". */
+    /* UPDATE_COMPLETE:  Waiting for user to press "play" or "quit". */
 
     mThread = NULL;
     return 0;
