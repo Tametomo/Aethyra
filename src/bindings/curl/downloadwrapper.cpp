@@ -91,6 +91,7 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
     // Check if the file already exists
     {
         FILE* newfile = fopen(resource->getFullPath().c_str(), "rb");
+        bool checkForTempFile = false;
         if (newfile)
         {
             if (policy == CACHE_OK)
@@ -107,34 +108,38 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
                                                        fileSize);
 
                     fclose(newfile);
-                    return true;
+                    return true; // No need to continue with the rest of the
+                                 // download thread
                 }
                 else
                 {
                     logger->log("%s already here, but doesn't verify",
                                 resource->getName().c_str());
-                    policy = CACHE_CORRUPTED;
-                    fclose(newfile);
-                    downloadPath = temporaryPath;
-
-                    newfile = fopen(temporaryPath.c_str(), "rb");
-                    if (newfile)
-                        ::remove(temporaryPath.c_str());
+                    policy = CACHE_REFRESH;
+                    checkForTempFile = true;
                 }
-
-                fclose(newfile);
             }
             else
             {
                 policy = CACHE_REFRESH;
-                fclose(newfile);    // must close before deleting for Windows
-                downloadPath = temporaryPath;
+                checkForTempFile = true;
+            }
+            fclose(newfile);    // must close before deleting for Windows
+        }
 
-                newfile = fopen(temporaryPath.c_str(), "rb");
-                if (newfile)
-                    ::remove(temporaryPath.c_str());
+        // Ensure that if a temporary download file exists, that it's deleted
+        // before we attempt to use it. This would only exist if the client
+        // was forced to quit before it was allowed to clean up after itself.
+        if (checkForTempFile)
+        {
+            newfile = fopen(temporaryPath.c_str(), "rb");
+            if (newfile)
+            {
+                ::remove(temporaryPath.c_str());
                 fclose(newfile);
             }
+
+            downloadPath = temporaryPath;
         }
     }
 
@@ -225,9 +230,7 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
             {
                 fclose(outfile);        // must close before deleting for Windows
                 ::remove(downloadPath.c_str());
-
-                if (policy != CACHE_CORRUPTED)
-                    policy = CACHE_REFRESH; // for intermediate web caches
+                policy = CACHE_REFRESH; // for intermediate web caches
             }
         }
         attempts++;

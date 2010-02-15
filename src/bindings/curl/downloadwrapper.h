@@ -42,7 +42,6 @@
 enum CachePolicy
 {
     CACHE_OK,        /**< Use already-downloaded version. */
-    CACHE_CORRUPTED, /**< Version already exists, but doesn't match checksum */
     CACHE_REFRESH    /**< Re-download existing files. */
 };
 
