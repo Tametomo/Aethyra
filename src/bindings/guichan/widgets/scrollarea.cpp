@@ -213,10 +213,13 @@ void ScrollArea::logic()
         }
     }
 
-    const int updateTicks = get_elapsed_time(mLastUpdate) / 100;
+    int updateTicks = get_elapsed_time(mLastUpdate) / 100;
 
-    if (updateTicks > 0)
+    while (updateTicks > 0)
+    {
         scroll();
+        updateTicks--;
+    }
 }
 
 void ScrollArea::draw(gcn::Graphics *graphics)
