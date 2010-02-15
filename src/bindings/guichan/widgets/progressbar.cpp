@@ -208,8 +208,13 @@ void ProgressBar::logic()
         if (mProgressToGo < mProgress)
             mProgress = std::max(0.0f, mProgress - (0.005f * updateTicks));
 
-        if (mProgress == 1.0f && mThrobber)
-            reset();
+        if (mThrobber)
+        {
+            if (mProgress == 1.0f)
+                mProgressToGo = 0.0f;
+            else if (mProgress == 0.0f)
+                mProgressToGo = 1.0f;
+        }
     }
     else
     {
