@@ -84,6 +84,9 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
 
     mResource = resource;
     CachePolicy policy = resource->getCachePolicy();
+    FILE *outfile = NULL;
+    std::string downloadPath = resource->getFullPath();
+    const std::string temporaryPath = downloadPath + ".temp";
 
     // Check if the file already exists
     {
@@ -111,6 +114,12 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
                     logger->log("%s already here, but doesn't verify",
                                 resource->getName().c_str());
                     policy = CACHE_CORRUPTED;
+                    fclose(newfile);
+                    downloadPath = temporaryPath;
+
+                    newfile = fopen(temporaryPath.c_str(), "rb");
+                    if (newfile)
+                        ::remove(temporaryPath.c_str());
                 }
 
                 fclose(newfile);
@@ -119,7 +128,12 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
             {
                 policy = CACHE_REFRESH;
                 fclose(newfile);    // must close before deleting for Windows
-                ::remove(resource->getFullPath().c_str());
+                downloadPath = temporaryPath;
+
+                newfile = fopen(temporaryPath.c_str(), "rb");
+                if (newfile)
+                    ::remove(temporaryPath.c_str());
+                fclose(newfile);
             }
         }
     }
@@ -127,8 +141,6 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
     int attempts = 0;
     bool downloadComplete = false;
     CURLcode res;
-    FILE *outfile = NULL;
-    const std::string temporaryPath = resource->getFullPath() + ".temp";
 
     while (attempts < 3 && !downloadComplete && !mCanceled)
     {
@@ -140,10 +152,7 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
         {
             logger->log("Downloading: %s", resource->getUrl().c_str());
 
-            if (policy != CACHE_CORRUPTED)
-                outfile = fopen(resource->getFullPath().c_str(), "w+b");
-            else
-                outfile = fopen(temporaryPath.c_str(), "w+b");
+            outfile = fopen(downloadPath.c_str(), "w+b");
 
             if (!outfile)
                 break;  // No point taking 3 attempts here
@@ -180,17 +189,13 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
                           << " host: " << resource->getUrl() << std::endl;
 
                 fclose(outfile);
-                if (policy == CACHE_CORRUPTED)
-                    ::remove(temporaryPath.c_str());
-                else
-                    ::remove(resource->getFullPath().c_str());
+                ::remove(downloadPath.c_str());
 
                 if (pHeaders)
                 {
                     curl_easy_setopt(mCurl, CURLOPT_HTTPHEADER, NULL);
                     curl_slist_free_all(pHeaders);
                 }
-
 
                 attempts++;
                 continue;
@@ -208,24 +213,21 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
                 downloadComplete = true;
                 fclose(outfile);
 
-                if (policy == CACHE_CORRUPTED)
+                if (downloadPath.compare(resource->getFullPath()) != 0)
                 {
                     // Any existing file with this name is deleted first,
                     // otherwise the rename will fail on Windows.
                     ::remove(resource->getFullPath().c_str());
-                    ::rename(temporaryPath.c_str(), resource->getFullPath().c_str());
+                    ::rename(downloadPath.c_str(), resource->getFullPath().c_str());
                 }
             }
             else
             {
                 fclose(outfile);        // must close before deleting for Windows
-                if (policy == CACHE_CORRUPTED)
-                    ::remove(temporaryPath.c_str());
-                else
-                {
+                ::remove(downloadPath.c_str());
+
+                if (policy != CACHE_CORRUPTED)
                     policy = CACHE_REFRESH; // for intermediate web caches
-                    ::remove(resource->getFullPath().c_str());
-                }
             }
         }
         attempts++;
