@@ -56,9 +56,11 @@ UpdaterWindow::UpdaterWindow(const std::string &updateHost) :
     mScrollArea = new ScrollArea(mRichTextBox);
 
     mLabel = new Label(_("Connecting..."));
+    mNewLabelCaption = mLabel->getCaption();
 
     mProgressBar = new ProgressBar(0.0, 310, 20, gcn::Color(168, 116, 31));
     mProgressBar->setSmoothProgress(false);
+    mProgressBar->toggleThrobbing(true);
 
     mStateButton = new Button(_("Cancel"), "cancel", this);
 
@@ -194,6 +196,7 @@ void UpdaterWindow::logic()
             mLabel->setCaption(mNewLabelCaption);
             mLabel->adjustSize();
 
+            mProgressBar->toggleThrobbing(false);
             mProgressBar->setProgress(mNewProgress);
 
             switch (labelState)

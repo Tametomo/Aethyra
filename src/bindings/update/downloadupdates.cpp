@@ -355,17 +355,11 @@ int DownloadUpdates::downloadThreadWithThis()
     {
         // This gives the user a nice prompt informing them that the update
         // downloading has failed, and gives them a chance to see why it failed.
-        //
-        // This will be able to be handled much more gracefully once the
-        // refactored StateManager is available.
-        mLines.clear();
-        mLines.push_back(
-            _("An update failed a security check, see log for details. If this "
-              "persists, report this issue with your log file on the forums."));
-        mListener->downloadTextUpdate(mLines);
-
-        /* UPDATE_COMPLETE:  Wait for user to press "play", then exit. */
-        mListener->downloadFailed();
+        stateManager->handleException(_("An update failed a security check, "
+                                        "see log for details. If this persists,"
+                                        " report this issue with your log file "
+                                        "on the forums."), LOGOUT_STATE);
+        mThread = NULL;
         return 0;
     }
 
@@ -381,13 +375,14 @@ int DownloadUpdates::downloadThreadWithThis()
 
         //continue, as it can still load any files that have downloaded
         //(this (!success) case includes the user pressing "cancel")
+        mListener->downloadFailed();
     }
 
     /* UPDATE_FINISH:    All downloads complete. */
     // The downloading has finished (or been cancelled)
     addUpdatesToResman();
 
-    if (mListener)
+    if (success && mListener)
         mListener->downloadComplete();
 
     /* UPDATE_COMPLETE:  Waiting for user to press "play". */
