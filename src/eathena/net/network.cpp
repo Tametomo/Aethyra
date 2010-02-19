@@ -313,7 +313,7 @@ bool Network::realConnect()
     {
         std::string error = "Unable to resolve host \"" + mAddress + "\"";
         setError(error);
-        logger->error("SDLNet_ResolveHost: %s", error.c_str());
+        logger->error(strprintf("SDLNet_ResolveHost: %s", error.c_str()));
         return false;
     }
 
@@ -433,7 +433,7 @@ void Network::clearError()
 
 void Network::fatal(const std::string &error)
 {
-    logger->error("Fatal network error: %s", error.c_str());
+    logger->error(strprintf("Fatal network error: %s", error.c_str()));
     mError = error;
     skip(mInSize);
     disconnect();

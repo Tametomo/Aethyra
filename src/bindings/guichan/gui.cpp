@@ -191,7 +191,8 @@ Gui::Gui(Graphics *graphics):
     }
     catch (gcn::Exception e)
     {
-        logger->error("Unable to load dejavusans.ttf: %s", e.getMessage().c_str());
+        logger->error(std::string("Unable to load dejavusans.ttf: ")
+            + e.getMessage());
     }
 
     gcn::Widget::setGlobalFont(mGuiFont);

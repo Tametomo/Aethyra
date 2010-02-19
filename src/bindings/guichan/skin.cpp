@@ -135,8 +135,9 @@ Skin* SkinLoader::load(const std::string &filename,
         rootNode = doc->rootNode();
         if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "skinset"))
         {
-            logger->error("Skinning failed. Check this skin file to make sure "
-                          "it's valid: %s", defaultPath.c_str());
+            logger->error(strprintf("Skinning failed. Check this skin file "
+                                    "to make sure it's valid: %s",
+                                    defaultPath.c_str()));
         }
     }
 
