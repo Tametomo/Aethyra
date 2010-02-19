@@ -112,7 +112,7 @@ void Logger::error(const std::string &error_text)
     log("Error: %s", error_text.c_str());
 
     if (graphics && graphics->initialized())
-        stateManager->handleException(error_text, LOGOUT_STATE);
+        stateManager->handleException(error_text.c_str(), LOGOUT_STATE);
     else
     {
 #ifdef WIN32
@@ -126,7 +126,7 @@ void Logger::error(const std::string &error_text)
         StandardAlert(kAlertStopAlert, "\pError", (ConstStr255Param) msg, NULL,
                       NULL);
 #else
-        std::cerr << "Error: " << error_text << std::endl;
+        std::cerr << "Error: " << error_text.c_str() << std::endl;
 #endif
         exit(1);
     }
