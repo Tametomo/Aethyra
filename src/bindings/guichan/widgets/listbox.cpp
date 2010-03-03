@@ -173,6 +173,23 @@ void ListBox::mouseWheelMovedDown(gcn::MouseEvent& mouseEvent)
     }
 }
 
+void ListBox::mousePressed(gcn::MouseEvent &mouseEvent)
+{
+    if (mouseEvent.getButton() == gcn::MouseEvent::LEFT)
+        setSelected(mouseEvent.getY() / getRowHeight());
+}
+
+void ListBox::mouseClicked(gcn::MouseEvent &mouseEvent)
+{
+    if (mouseEvent.getButton() == gcn::MouseEvent::LEFT)
+    {
+        setSelected(mouseEvent.getY() / getRowHeight());
+
+        if (mouseEvent.getClickCount() == 2)
+            distributeActionEvent();
+    }
+}
+
 void ListBox::mouseDragged(gcn::MouseEvent &event)
 {
     if (event.getButton() != gcn::MouseEvent::LEFT)
@@ -181,10 +198,4 @@ void ListBox::mouseDragged(gcn::MouseEvent &event)
     // Make list selection update on drag, but guard against negative y
     int y = std::max(0, event.getY());
     setSelected(y / getRowHeight());
-}
-
-void ListBox::mousePressed(gcn::MouseEvent &mouseEvent)
-{
-    if (mouseEvent.getButton() == gcn::MouseEvent::LEFT)
-        setSelected(mouseEvent.getY() / getRowHeight());
 }

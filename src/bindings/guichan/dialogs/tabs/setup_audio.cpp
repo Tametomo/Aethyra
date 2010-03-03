@@ -101,9 +101,9 @@ void Setup_Audio::fontChanged()
 
 void Setup_Audio::apply()
 {
+    config.setValue("sound", mSoundCheckBox->isSelected());
     if (mSoundCheckBox->isSelected())
     {
-        config.setValue("sound", 1);
         try
         {
             sound.init();
@@ -116,7 +116,6 @@ void Setup_Audio::apply()
     }
     else
     {
-        config.setValue("sound", 0);
         sound.close();
     }
 

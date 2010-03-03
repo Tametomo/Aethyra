@@ -66,6 +66,8 @@ class ListBox : public gcn::ListBox
 
         void mousePressed(gcn::MouseEvent &event);
 
+        void mouseClicked(gcn::MouseEvent &event);
+
         void mouseDragged(gcn::MouseEvent &event);
 
     protected:
