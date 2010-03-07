@@ -398,6 +398,8 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
 
                 if (keyboard.isKeyActive(keyboard.KEY_BEING_MENU))
                 {
+                    target = player_node->getTarget();
+
                     if (!target)
                         target = beingManager->findNearestLivingBeing(x, y, 20);
 
