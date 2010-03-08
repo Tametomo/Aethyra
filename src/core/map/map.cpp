@@ -457,12 +457,12 @@ void Map::removeSprite(SpriteIterator iterator)
     mSprites.erase(iterator);
 }
 
-const std::string &Map::getMusicFile() const
+const std::string Map::getMusicFile() const
 {
     return getProperty("music");
 }
 
-const std::string &Map::getName() const
+const std::string Map::getName() const
 {
     return (hasProperty("name") ? getProperty("name") : getProperty("mapname"));
 }

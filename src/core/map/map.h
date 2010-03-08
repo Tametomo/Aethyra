@@ -224,8 +224,8 @@ class Map : public Properties
          */
         int getTileHeight() const { return mTileHeight; }
 
-        const std::string &getMusicFile() const;
-        const std::string &getName() const;
+        const std::string getMusicFile() const;
+        const std::string getName() const;
 
         /**
          * Find a path from one location to the next.
