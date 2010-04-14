@@ -44,7 +44,7 @@ namespace Metric
         {-24, _("yocto"),  "y"},
         {-21, _("zepto"),  "z"},
         {-18, _("atto"),   "a"},
-        {-15, _("fempto"), "f"},
+        {-15, _("femto"), "f"},
         {-12, _("pico"),   "p"},
         {-9,  _("nano"),   "n"},
         {-6,  _("micro"),  "µ"},
