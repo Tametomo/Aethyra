@@ -77,7 +77,7 @@ echo "Now running make install. Please input your root password, if prompted to.
 if [ "$( cat /etc/issue | grep -i -c 'buntu' )" -gt 0 ];then
     sudo make install;
 else
-    su - -c "make install";
+    su -c "make install";
 fi
 
 echo
