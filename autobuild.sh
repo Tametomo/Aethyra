@@ -25,10 +25,10 @@ isFedoraBased='/etc/fedora-release'
 # Ensures that all of the required files for building are present
 echo "Checking to ensure that required packages are installed."
 if [ -e $isFedoraBased ];then
-    su - -c "yum install guichan-devel physfs-devel SDL_image-devel \ 
-             SDL_ttf-devel SDL_net-devel SDL_mixer-devel SDL-devel \
-             zlib-devel libcurl-devel libxml2-devel SDL_gfx-devel \
-             gettext"
+    su - -c "yum install g++ automake autoconf libtool make guichan-devel \
+             physfs-devel SDL_image-devel SDL_ttf-devel SDL_net-devel \
+             SDL_mixer-devel SDL-devel zlib-devel libcurl-devel libxml2-devel \
+             SDL_gfx-devel gettext xorg-x11-devel"
 elif [ -e $isDebianBased ];then
     # Ubuntu derived. Needs to use sudo by default.
     if [ "$( cat /etc/issue | grep -i -c 'buntu' )" -gt 0 ];then
@@ -57,11 +57,9 @@ else
 fi
 
 echo "Generating build information using aclocal, autoheader, automake and autoconf."
-echo
 
 # Regenerate configuration files
 autoreconf -i
-
 echo
 echo "Now configuring Aethyra"
 
