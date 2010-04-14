@@ -12,8 +12,9 @@
 ####  Get the full text of the GPL here:
 ####  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ########################################################################
-####  Auto building script to help simplify installing Aethyra from source code
-####  for several different distros.
+####  Auto updating script/initializer, which chainloads into the autobuilder
+####  script. Provided as an easy way in which users can keep their client
+####  up-to-date if compiling from source.
 ########################################################################
 if [ -n "$1" ]; then
     SCRIPT_PATH="$1";
