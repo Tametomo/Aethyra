@@ -21,6 +21,7 @@
 # Checks for various distros
 isDebianBased='/etc/debian_version'
 isFedoraBased='/etc/fedora-release'
+numberOfCPUs="`cat /proc/cpuinfo | grep processor | wc -l`"
 
 # Ensures that all of the required files for building are present
 echo "Checking to ensure that required packages are installed."
@@ -68,7 +69,7 @@ echo "Now configuring Aethyra"
 echo
 echo "Now running make"
 
-make
+make -j $numberOfCPUs
 strip src/aethyra
 
 echo
