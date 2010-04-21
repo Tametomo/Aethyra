@@ -16,6 +16,9 @@
 ####  script. Provided as an easy way in which users can keep their client
 ####  up-to-date if compiling from source.
 ########################################################################
+
+CURRENT_DIRECTORY=`pwd`;
+
 if [ -n "$1" ]; then
     SCRIPT_PATH="$1";
     cd $SCRIPT_PATH;
@@ -44,7 +47,6 @@ if [ -e $SCRIPT_PATH/.git ]; then
     # Run the autobuild script
     ./autobuild.sh;
     echo "Aethyra has been updated."
-    exit 1;
 else
     # Make this directory a git repo
     git init;
@@ -59,5 +61,7 @@ else
     # Run the autobuild script
     ./autobuild.sh
     echo "Congratulations on installing Aethyra! Enjoy!"
-    exit 1;
 fi
+
+cd $CURRENT_DIRECTORY
+exit 1;
