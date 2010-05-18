@@ -21,10 +21,9 @@
  */
 
 #include <cassert>
+#include <SDL_gfxPrimitives.h>
 
 #include <guichan/exception.hpp>
-
-#include <SDL/SDL_gfxPrimitives.h>
 
 #include "sdlgraphics.h"
 

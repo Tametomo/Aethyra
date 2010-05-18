@@ -24,12 +24,10 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include <guichan/gui.hpp>
-
-#include <SDL/SDL_framerate.h>
-
+#include <SDL_framerate.h>
 #include <SDL_types.h>
-#include <string>
+
+#include <guichan/gui.hpp>
 
 #include "guichanfwd.h"
 

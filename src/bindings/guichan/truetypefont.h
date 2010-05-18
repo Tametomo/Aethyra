@@ -26,13 +26,9 @@
 
 #include <list>
 #include <string>
+#include <SDL_ttf.h>
 
 #include <guichan/font.hpp>
-#ifndef __APPLE__
-#include <SDL/SDL_ttf.h>
-#else
-#include <SDL_ttf.h>
-#endif
 
 #include "../../core/resource.h"
 

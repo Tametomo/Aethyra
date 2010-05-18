@@ -59,8 +59,7 @@
 #define SDLINPUT_
 
 #include <queue>
-
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include <guichan/input.hpp>
 #include <guichan/keyinput.hpp>
