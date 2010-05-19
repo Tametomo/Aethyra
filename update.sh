@@ -44,7 +44,9 @@ if [ -e $SCRIPT_PATH/.git ]; then
     git remote set-url origin git://github.com/Tametomo/Aethyra.git;
     # Issue the git update command
     git pull;
-    # Run the autobuild script
+    # Run the autobuild script. Do not check for dependencies by default, since
+    # this should be an uncommon occurrance. TODO: Should this be run with a -D
+    # by default?
     ./autobuild.sh;
     echo "Aethyra has been updated."
 else
@@ -58,8 +60,9 @@ else
     git checkout --track -b master origin/master
     # Update the new repo to the current git head
     git pull;
-    # Run the autobuild script
-    ./autobuild.sh
+    # Run the autobuild script and ensure that all dependencies are present
+    # initially.
+    ./autobuild.sh -D;
     echo "Congratulations on installing Aethyra! Enjoy!"
 fi
 
