@@ -46,11 +46,12 @@ check_dependencies()
         fi 
         su - -c "yum install $packages"
     elif [ -e $isDebianBased ];then
-        packages="build-essential cvs g++ gettext git git-core \
-                  libcurl4-openssl-dev libgl1-mesa-dev libglu1-mesa-dev \
-                  libguichan-dev libphysfs-dev libsdl1.2-dev libsdl-gfx1.2-dev \
-                  libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-net1.2-dev \
-                  libsdl-ttf2.0-dev libtool libx11-dev libxml2-dev";
+        packages="g++ gettext git git-core libcurl4-openssl-dev libgl1-mesa-dev \
+                  libglu1-mesa-dev libguichan-dev libphysfs-dev libsdl1.2-dev \
+                  libsdl-gfx1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev \
+                  libsdl-net1.2-dev libsdl-ttf2.0-dev libtool libx11-dev \
+                  libxml2-dev";
+
         if [ $toolchain = 'gnu' ];then
             packages="$packages automake autoconf";
         else
