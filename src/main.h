@@ -25,7 +25,7 @@
 #ifdef HAVE_CONFIG_H
 #include "../config.h"
 #elif defined WIN32
-#include "winver.h"
+#include "platform/win32/winver.h"
 #elif defined __APPLE__
 #define PACKAGE_VERSION "0.0.29.1"
 #endif

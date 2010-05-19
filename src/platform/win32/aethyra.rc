@@ -12,7 +12,7 @@ FILETYPE VFT_APP {
         BLOCK "040904E4" {
             VALUE "CompanyName", "Aethyra Development Team"
             VALUE "FileVersion", PACKAGE_VERSION
-            VALUE "FileDescription", "Aethyra Experiment"
+            VALUE "FileDescription", "Aethyra"
             VALUE "LegalCopyright", "2009 (C)"
             VALUE "OriginalFilename", "aethyra.exe"
             VALUE "ProductName", "Aethyra MMORPG"

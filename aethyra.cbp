@@ -95,11 +95,6 @@
 			<Add option="-s" />
 			<Add option="-enable-auto-import" />
 		</Linker>
-		<Unit filename="src\SDLMain.h" />
-		<Unit filename="src\aethyra.rc">
-			<Option compilerVar="CPP" />
-			<Option target="windows" />
-		</Unit>
 
 		<Unit filename="src\bindings\curl\downloadwrapper.cpp" />
 		<Unit filename="src\bindings\curl\downloadwrapper.h" />
@@ -508,7 +503,14 @@
 		<Unit filename="src\main.cpp" />
 		<Unit filename="src\main.h" />
 		<Unit filename="src\options.h" />
-		<Unit filename="src\winver.h" />
+
+		<Unit filename="src\platform\win32\winver.h">
+			<Option target="windows" />
+		</Unit>
+		<Unit filename="src\platform\win32\aethyra.rc">
+			<Option compilerVar="CPP" />
+			<Option target="windows" />
+		</Unit>
 
 		<Extensions>
 			<code_completion />
