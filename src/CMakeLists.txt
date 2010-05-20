@@ -516,7 +516,8 @@ SET(SRCS
 IF (WIN32)
     SET(SRCS
         ${SRCS}
-        aethyra.rc
+        platform/win32/winver.h
+        platform/win32/aethyra.rc
     )
 ENDIF ()
 
