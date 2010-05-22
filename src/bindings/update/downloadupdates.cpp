@@ -113,11 +113,6 @@ bool DownloadUpdates::addUpdatesToResman()
 {
     mMutex.lock();
 
-    // If the user cancelled in UPDATE_NEWS or UPDATE_LIST, mResources hasn't been
-    // populated yet.  But we might have all the updates already.
-    if (mResources.empty())
-        parseResourcesFile();
-
     ResourceManager *resman = ResourceManager::getInstance();
     bool success = true;
 
@@ -125,14 +120,7 @@ bool DownloadUpdates::addUpdatesToResman()
     for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
     {
         if ((*itr)->isSaneToDownload())
-        {
             success = resman->addToSearchPath((*itr)->getFullPath(), false);
-        }
-        else
-        {
-            //TODO warn user - this is reachable if the user cancels and an
-            //update after the one being downloaded failed the check.
-        }
 
         if (!success)
             break;
@@ -143,11 +131,52 @@ bool DownloadUpdates::addUpdatesToResman()
     mMutex.unlock();
 }
 
+DownloadUpdates::VerificationStatus DownloadUpdates::verifyUpdates()
+{
+    mMutex.lock();
+
+    VerificationStatus status = CHECK_SUCCESSFUL;
+
+    typedef std::vector<GenericVerifier*>::const_iterator CI;
+    for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
+    {
+        // Hack to work around some compilers reducing logic checks to the
+        // enumeration check only.
+        bool success = (status == CHECK_SUCCESSFUL);
+
+        if ((*itr)->isSaneToDownload())
+        {
+            // If the file doesn't exist, throw a fatal error, so that the
+            // client doesn't proceed.
+            if (!(*itr)->fileExists())
+            {
+                status = CHECK_FAILURE;
+                break;
+            }
+            else if ((*itr)->verify() && success)
+                status = CHECK_SUCCESSFUL;
+            else
+                status = CHECK_UNSUCCESSFUL;
+        }
+        // The file name could potentially be an exploit. Don't allow the client
+        // to proceed.
+        else
+        {
+            status = CHECK_FAILURE;
+            break;
+        }
+    }
+
+    return status;
+
+    mMutex.unlock();
+}
+
 void DownloadUpdates::setUpdatesDir(std::string &updateHost)
 {
-    //TODO The updateHost is a server-supplied string - with a directory
-    //traversal attack from the directory-on-host part, it can create an
-    //arbitary directory.
+    // FIXME: The updateHost is a server-supplied string - with a directory
+    // traversal attack from the directory-on-host part, it can create an
+    // arbitary directory.
 
     std::stringstream updates;
 
@@ -226,7 +255,7 @@ std::string DownloadUpdates::getUpdatesDirFullPath()
     return engine->getHomeDir() + "/" + mUpdatesDir + "/";
 }
 
-void DownloadUpdates::parseResourcesFile()
+bool DownloadUpdates::parseResourcesFile()
 {
     mMutex.lock();
 
@@ -257,6 +286,8 @@ void DownloadUpdates::parseResourcesFile()
     }
 
     mMutex.unlock();
+
+    return (mResources.size() > 0);
 }
 
 int DownloadUpdates::downloadThread(void *ptr)
@@ -281,15 +312,24 @@ int DownloadUpdates::downloadThreadWithThis()
         GenericVerifier resource(file, url, fullPath, CACHE_REFRESH);
 
         if (resource.isSaneToDownload())
+        {
             success = dw.downloadSynchronous(&resource);
+        }
         else
         {
             success = false;
             securityWorries = true;
         }
 
-        if (success)
-            parseResourcesFile();
+        // Check to ensure that resources2.text exists, since download wasn't
+        // successful.
+        if (!success && !securityWorries)
+        {
+            securityWorries = !resource.fileExists();
+        }
+
+        if (!securityWorries)
+            success = parseResourcesFile();
     }
 
     /* UPDATE_NEWS:      Download news.txt file. */
@@ -301,7 +341,11 @@ int DownloadUpdates::downloadThreadWithThis()
         GenericVerifier resource(file, url, fullPath, CACHE_REFRESH);
 
         if (resource.isSaneToDownload())
-            success = dw.downloadSynchronous(&resource);
+        {
+            // Don't download the news file if user has already canceled.
+            if (!mUserCancel)
+                success = dw.downloadSynchronous(&resource);
+        }
         else
         {
             success = false;
@@ -319,7 +363,7 @@ int DownloadUpdates::downloadThreadWithThis()
     }
 
     /* UPDATE_RESOURCES: Download .zip files named in resources2.txt. */
-    if (success)
+    if (success && !mUserCancel)
     {
         mFilesComplete++;
         typedef std::vector<GenericVerifier*>::const_iterator CI;
@@ -328,7 +372,6 @@ int DownloadUpdates::downloadThreadWithThis()
             if (mUserCancel)
             {
                 dw.cancelDownload();
-                addUpdatesToResman();
 
                 if (mThread && SDL_GetThreadID(mThread) != 0)
                 {
@@ -355,6 +398,24 @@ int DownloadUpdates::downloadThreadWithThis()
         }
     }
 
+    /* UPDATE_FINISH:    All downloads complete. */
+    // The downloading has finished (or been cancelled). The final success
+    // state will be entirely dependent on whether the updates can be loaded
+    // successfully.
+
+    // Download canceled, so file verification needs to take place.
+    if (mUserCancel)
+    {
+        mListener->verifyingFiles();
+
+        VerificationStatus status = verifyUpdates();
+
+        success = (status == CHECK_SUCCESSFUL);
+
+        if (!securityWorries)
+            securityWorries = (status == CHECK_FAILURE);
+    }
+
     if (securityWorries && mListener)
     {
         // This gives the user a nice prompt informing them that the update
@@ -369,30 +430,35 @@ int DownloadUpdates::downloadThreadWithThis()
 
     if (!success && mListener)
     {
-        // This is really UI, probably better in updatewindow.cpp
-        mLines.clear();
-        mLines.push_back(_("##1  The update process is incomplete."));
-        mLines.push_back(_("##1  It is strongly recommended that"));
-        mLines.push_back(_("##1  you try again later"));
-        //mLines.push_back(mCurlError);
-        mListener->downloadTextUpdate(mLines);
+
 
         //continue, as it can still load any files that have downloaded
         //(this (!success) case includes the user pressing "cancel")
     }
+    bool filesVerified = success;
 
-    /* UPDATE_FINISH:    All downloads complete. */
-    // The downloading has finished (or been cancelled). The final success
-    // state will be entirely dependent on whether the updates can be loaded
-    // successfully.
     success = addUpdatesToResman();
 
     if (mListener)
     {
         if (success)
-            mListener->downloadComplete();
+        {
+            if (!filesVerified)
+                stateManager->setState(UPDATE_ERROR_STATE);
+            else
+                mListener->downloadComplete();
+        }
         else
+        {
+            // This is really UI, probably better in updatewindow.cpp
+            mLines.clear();
+            mLines.push_back(_("##1  The update process is incomplete."));
+            mLines.push_back(_("##1  It is strongly recommended that"));
+            mLines.push_back(_("##1  you try again later"));
+            mListener->downloadTextUpdate(mLines);
+
             mListener->downloadFailed();
+        }
     }
 
     /* UPDATE_COMPLETE:  Waiting for user to press "play" or "quit". */

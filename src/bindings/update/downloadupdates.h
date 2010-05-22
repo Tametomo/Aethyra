@@ -46,6 +46,7 @@ public:
                                   float fileProgress) = 0;
     virtual void downloadComplete() = 0;
     virtual void downloadFailed() = 0;
+    virtual void verifyingFiles() = 0;
 };
 
 /**
@@ -86,6 +87,13 @@ public:
     bool addUpdatesToResman();
 
 private:
+    enum VerificationStatus {
+        CHECK_STATUS_UNKNOWN = -1,
+        CHECK_FAILURE,
+        CHECK_UNSUCCESSFUL,
+        CHECK_SUCCESSFUL
+    };
+
     /**
      * Parse the update host and determine the updates directory
      * Then verify that the directory exists (creating if needed).
@@ -103,13 +111,18 @@ private:
      * Parse the contents of resources2.txt.
      * Populates mResources.
      */
-    void parseResourcesFile();
+    bool parseResourcesFile();
 
     /**
      * The thread function that download the files.
      */
     static int downloadThread(void *ptr);
     int downloadThreadWithThis();
+
+    /**
+     * Checks whether all updates pass file verification.
+     */
+    VerificationStatus verifyUpdates();
 
     Mutex mMutex;
 

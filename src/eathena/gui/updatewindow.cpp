@@ -118,6 +118,16 @@ void UpdaterWindow::downloadFailed()
     // (this will leave the download bar reflecting the situation)
 }
 
+void UpdaterWindow::verifyingFiles()
+{
+    MutexLocker lock(&mLabelMutex);
+    labelState = PLAY_LABEL;
+
+    mNewLabelCaption = _("Verifying Files");
+    // leave mNewProgress as it is, in case the user cancelled
+    // (this will leave the download bar reflecting the situation)
+}
+
 void UpdaterWindow::requestFocus()
 {
     Window::requestFocus();
@@ -199,7 +209,11 @@ void UpdaterWindow::logic()
 
             switch (labelState)
             {
+                case VERIFY_LABEL:
+                    mProgressBar->toggleThrobbing(true);
+                    break;
                 case PLAY_LABEL:
+                    mProgressBar->setProgress(1.0f);
                     enable();
                     break;
                 case FAIL_LABEL:

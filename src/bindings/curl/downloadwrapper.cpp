@@ -22,9 +22,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <iostream>
-#include <zlib.h>
 #include <ctype.h>
+#include <zlib.h>
 
 #include <curl/curl.h>
 
@@ -189,8 +188,8 @@ bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
 
             if ((res = curl_easy_perform(mCurl)) != 0)
             {
-                std::cerr << "curl error " << res << ": " << mCurlError
-                          << " host: " << resource->getUrl() << std::endl;
+                logger->log("curl error %d : %s host: %s", res,
+                            mCurlError, resource->getUrl().c_str());
 
                 fclose(outfile);
                 ::remove(downloadPath.c_str());
@@ -254,6 +253,14 @@ GenericVerifier::GenericVerifier(std::string name, std::string url,
     mUrl(url),
     mFullPath(fullPath)
 {
+}
+
+bool GenericVerifier::verify()
+{
+    FILE *newFile = fopen(mFullPath.c_str(), "rb");
+    bool verifies = verify(newFile);
+    fclose(newFile);
+    return verifies;
 }
 
 Adler32Verifier::Adler32Verifier(std::string name, std::string url,

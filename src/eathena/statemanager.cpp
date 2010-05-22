@@ -77,6 +77,7 @@ Game *game = NULL;
 DebugWindow *debugWindow = NULL;
 HelpDialog *helpDialog = NULL;
 ConfirmDialog *exitConfirm = NULL;
+ConfirmDialog * updateFailure = NULL;
 OkDialog *errorDialog = NULL;
 Setup* setupWindow = NULL;
 
@@ -101,6 +102,19 @@ struct ExitListener : public gcn::ActionListener
         exitConfirm = NULL;
     }
 } exitListener;
+
+struct UpdateFailureListener : public gcn::ActionListener
+{
+    void action(const gcn::ActionEvent &event)
+    {
+        if (event.getId() == "yes" || event.getId() == "ok")
+            stateManager->setState(UPDATE_STATE);
+        else if (event.getId() == "no")
+            stateManager->setState(LOADDATA_STATE);
+
+        updateFailure = NULL;
+    }
+} updateFailureListener;
 
 struct ErrorListener : public gcn::ActionListener
 {
@@ -279,6 +293,17 @@ void StateManager::setState(const State state)
                     destroy(download);
                     setState(LOADDATA_STATE);
                 }
+            }
+            break;
+
+        case UPDATE_ERROR_STATE:
+            {
+                logger->log("State: UPDATE_ERROR");
+                updateFailure = new ConfirmDialog(_("Update Verification Failed"),
+                                                  _("Would you like to try "
+                                                    "redownloading again?"));
+                updateFailure->addActionListener(&updateFailureListener);
+                updateFailure->requestMoveToTop();
             }
             break;
 

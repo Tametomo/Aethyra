@@ -21,8 +21,9 @@
 #ifndef _UPDATEDOWNLOAD_H
 #define _UPDATEDOWNLOAD_H
 
-#include <string>
 #include <cstdio>
+#include <string>
+#include <fstream>
 
 /**
  * Whether to use a previously-downloaded version of an GenericVerifier.
@@ -71,6 +72,24 @@ public:
      * The basic GenericVerifier has no checksum.
      */
     virtual bool verify(FILE* file) const { return true; }
+
+    /**
+     * Returns true if the file passes whatever tests this GenericVerifier has
+     * for spotting corrupt files.
+     * (Checksums etc).
+     *
+     * This version is for use when the file to be tested isn't already open.
+     */
+    bool verify();
+
+    /**
+     * Whether or not the file currently can be accessed or not.
+     */
+    bool fileExists()
+    {
+        std::ifstream testFile(mFullPath.c_str());
+        return testFile.is_open();
+    }
 
     /**
      * Run some sanity checks on the URL and local filename.

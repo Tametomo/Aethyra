@@ -91,11 +91,19 @@ class UpdaterWindow : public Window, public gcn::ActionListener,
         void downloadComplete();
         void downloadFailed();
 
+        /**
+         * Download canceled, so update thread is going to check if the files
+         * are valid.
+         */
+        void verifyingFiles();
+
     private:
         enum LabelState
         {
             IDLE_LABEL,      // Used when the label has already updated
             DOWNLOAD_LABEL,  // Label updated for download progress
+            VERIFY_LABEL,    // Label used when user cancels and updates need
+                             // verification still
             PLAY_LABEL,      // Updates completed successfully
             FAIL_LABEL       // Updates failed
         } labelState;
