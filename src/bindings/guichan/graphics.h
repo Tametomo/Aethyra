@@ -139,13 +139,13 @@ class Graphics : public gcn::Graphics
          * @return <code>true</code> if the image was blitted properly
          *         <code>false</code> otherwise.
          */
-        virtual bool drawImage(Image *image, int x, int y) = 0;
+        virtual bool drawImage(Image *image, int x, int y);
 
         /**
          * Overrides with our own drawing method.
          */
-        virtual void drawImage(gcn::Image const *image, int srcX, int srcY,
-                               int dstX, int dstY, int width, int height) = 0;
+        virtual void drawImage(const gcn::Image *image, int srcX, int srcY,
+                               int dstX, int dstY, int width, int height);
 
         /**
          * Blits an image onto the screen.

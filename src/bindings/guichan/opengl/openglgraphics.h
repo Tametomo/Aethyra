@@ -47,15 +47,8 @@ class OpenGLGraphics : public Graphics
          * @return <code>true</code> if the image was blitted properly
          *         <code>false</code> otherwise.
          */
-        bool drawImage(Image *image, int x, int y);
-
         bool drawImage(Image *image, int srcX, int srcY, int dstX, int dstY,
                        int width, int height, bool useColor = false);
-        /**
-         * Overrides with our own drawing method.
-         */
-        void drawImage(gcn::Image const *image, int srcX, int srcY,
-                       int dstX, int dstY, int width, int height);
 
         void drawImagePattern(Image *image, int x, int y, int w, int h);
 

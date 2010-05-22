@@ -32,7 +32,6 @@
 #include "../../../core/log.h"
 
 #include "../../../core/image/image.h"
-#include "../../../core/image/imageloader.h"
 
 #ifdef USE_OPENGL
 
@@ -111,19 +110,6 @@ bool OpenGLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
                 rectTex ? " (rectangle textures)" : "");
 
     return true;
-}
-
-void OpenGLGraphics::drawImage(gcn::Image const *image, int srcX, int srcY,
-                               int dstX, int dstY, int width, int height)
-{
-    ProxyImage const *srcImage = dynamic_cast< ProxyImage const * >(image);
-    assert(srcImage);
-    drawImage(srcImage->getImage(), srcX, srcY, dstX, dstY, width, height, true);
-}
-
-bool OpenGLGraphics::drawImage(Image *image, int x, int y)
-{
-    return drawImage(image, 0, 0, x, y, image->getWidth(), image->getHeight());
 }
 
 static inline void drawQuad(Image *image, int srcX, int srcY, int dstX,
@@ -265,10 +251,9 @@ SDL_Surface* OpenGLGraphics::getScreenshot()
     int h = mTarget->h;
     int w = mTarget->w;
 
-    SDL_Surface *screenshot = SDL_CreateRGBSurface(
-            SDL_SWSURFACE,
-            w, h, 24,
-            0xff0000, 0x00ff00, 0x0000ff, 0x000000);
+    SDL_Surface *screenshot = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 24,
+                                                   0xff0000, 0x00ff00, 0x0000ff,
+                                                   0x000000);
 
     if (SDL_MUSTLOCK(screenshot))
         SDL_LockSurface(screenshot);

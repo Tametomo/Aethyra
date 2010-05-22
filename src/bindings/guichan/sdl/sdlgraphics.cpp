@@ -30,7 +30,6 @@
 #include "../../../core/log.h"
 
 #include "../../../core/image/image.h"
-#include "../../../core/image/imageloader.h"
 
 SDLGraphics::SDLGraphics()
 {
@@ -220,19 +219,6 @@ bool SDLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
     logger->log("Available video memory: %d", vi->video_mem);
 
     return true;
-}
-
-void SDLGraphics::drawImage(const gcn::Image *image, int srcX, int srcY,
-                            int dstX, int dstY, int width, int height)
-{
-    const ProxyImage *srcImage = dynamic_cast<const ProxyImage* >(image);
-    assert(srcImage);
-    drawImage(srcImage->getImage(), srcX, srcY, dstX, dstY, width, height, true);
-}
-
-bool SDLGraphics::drawImage(Image *image, int x, int y)
-{
-    return drawImage(image, 0, 0, x, y, image->getWidth(), image->getHeight());
 }
 
 bool SDLGraphics::drawImage(Image *image, int srcX, int srcY, int dstX, int dstY,

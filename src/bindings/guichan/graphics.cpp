@@ -95,6 +95,19 @@ bool Graphics::setFullscreen(bool fs)
 #endif
 }
 
+bool Graphics::drawImage(Image *image, int x, int y)
+{
+    return drawImage(image, 0, 0, x, y, image->getWidth(), image->getHeight());
+}
+
+void Graphics::drawImage(const gcn::Image *image, int srcX, int srcY,
+                         int dstX, int dstY, int width, int height)
+{
+    const ProxyImage *srcImage = dynamic_cast< const ProxyImage* >(image);
+    assert(srcImage);
+    drawImage(srcImage->getImage(), srcX, srcY, dstX, dstY, width, height, true);
+}
+
 void Graphics::drawImageRect(int x, int y, int w, int h, Image *topLeft,
                              Image *topRight, Image *bottomLeft,
                              Image *bottomRight, Image *top, Image *right,
