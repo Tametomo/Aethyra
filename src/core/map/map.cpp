@@ -392,25 +392,18 @@ void Map::drawAmbientLayers(Graphics *graphics, const LayerType type,
     };
 }
 
-class ContainsGidFunctor
-{
-    public:
-        bool operator() (const Tileset* set) const
-        {
-            return (set->getFirstGid() <= gid && gid - set->getFirstGid() <
-                   (int) set->size());
-        }
-        int gid;
-} containsGid;
-
 Tileset* Map::getTilesetWithGid(const int gid) const
 {
-    containsGid.gid = gid;
+    Tileset *s = NULL;
 
-    Tilesets::const_iterator i = find_if(mTilesets.begin(), mTilesets.end(),
-                                         containsGid);
+    for (Tilesets::const_iterator it = mTilesets.begin(), 
+         it_end = mTilesets.end(); it < it_end && (*it)->getFirstGid() <= gid;
+         it++)
+    {
+        s = *it;
+    }
 
-    return (i == mTilesets.end()) ? NULL : *i;
+    return s;
 }
 
 void Map::setWalk(const int x, const int y, const bool walkable)
