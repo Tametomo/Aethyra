@@ -150,6 +150,8 @@ aethyra_SOURCES = \
 	      bindings/sdl/sound.h \
 	      bindings/update/downloadupdates.cpp \
 	      bindings/update/downloadupdates.h \
+	      bindings/zlib/memorytools.cpp \
+	      bindings/zlib/memorytools.h \
 	      core/configlistener.h \
 	      core/configuration.cpp \
 	      core/configuration.h \
