@@ -29,6 +29,8 @@
 
 #include "../../bindings/curl/downloadwrapper.h"
 
+#include "../../bindings/zlib/adler32.h"
+
 #include "../../core/utils/mutex.h"
 
 /**
@@ -70,7 +72,7 @@ public:
     void download();
 
     // from DownloadListener
-    int downloadProgress(GenericVerifier* resource, double downloaded,
+    int downloadProgress(DownloadVerifier* resource, double downloaded,
                          double size);
 
     /**
@@ -142,7 +144,7 @@ private:
     int mFilesComplete;
 
     /** List of files to download. */
-    std::vector<GenericVerifier*> mResources;
+    std::vector<DownloadVerifier*> mResources;
 
     /** Lines to write to the updater listener */
     std::vector<std::string> mLines;

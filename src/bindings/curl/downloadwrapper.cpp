@@ -1,7 +1,7 @@
 /*
  *  Download wrapper for libcurl
  *
- *  Copyright (C) 2009  The Mana World Development Team
+ *  Copyright (C) 2005  The Mana World Development Team
  *  Copyright (C) 2009  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
@@ -22,36 +22,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <ctype.h>
-#include <zlib.h>
+#include <cctype>
 
 #include <curl/curl.h>
 
 #include "downloadwrapper.h"
+#include "verifier.h"
 
-#include "../../core/configuration.h"
 #include "../../core/log.h"
-#include "../../core/utils/gettext.h"
-
-/**
- * Calculates the Alder-32 checksum for the given file.
- */
-static unsigned long fadler32(FILE *file)
-{
-    // Obtain file size
-    fseek(file, 0, SEEK_END);
-    long fileSize = ftell(file);
-    rewind(file);
-
-    // Calculate Adler-32 checksum
-    char *buffer = (char*) malloc(fileSize);
-    const size_t read = fread(buffer, 1, fileSize, file);
-    unsigned long adler = adler32(0L, Z_NULL, 0);
-    adler = adler32(adler, (Bytef*) buffer, read);
-    free(buffer);
-
-    return adler;
-}
 
 DownloadWrapper::DownloadWrapper(DownloadListener *listener) :
     mCanceled(false),
@@ -76,7 +54,7 @@ int DownloadWrapper::updateProgress(void *ptr, double dt, double dn, double ut,
     return self->mListener->downloadProgress(self->mResource, dn, dt);
 }
 
-bool DownloadWrapper::downloadSynchronous(GenericVerifier* resource)
+bool DownloadWrapper::downloadSynchronous(DownloadVerifier* resource)
 {
     if (!resource || !resource->isSaneToDownload())
         return false;
@@ -246,82 +224,3 @@ void DownloadWrapper::cancelDownload()
     mCanceled = true;
 }
 
-GenericVerifier::GenericVerifier(std::string name, std::string url,
-                                 std::string fullPath, CachePolicy cachePolicy) :
-    mCachePolicy(cachePolicy),
-    mName(name),
-    mUrl(url),
-    mFullPath(fullPath)
-{
-}
-
-bool GenericVerifier::verify()
-{
-    FILE *newFile = fopen(mFullPath.c_str(), "rb");
-    bool verifies = verify(newFile);
-    fclose(newFile);
-    return verifies;
-}
-
-Adler32Verifier::Adler32Verifier(std::string name, std::string url,
-                                 std::string fullPath, CachePolicy cachePolicy,
-                                 unsigned long checksum) :
-    GenericVerifier(name, url, fullPath, cachePolicy),
-    mChecksum(checksum)
-{
-}
-
-bool Adler32Verifier::verify(FILE* file) const
-{
-    unsigned long adler = fadler32(file);
-    if (adler != mChecksum)
-    {
-        logger->log(_("Checksum for file %s failed: (%lx/%lx)"),
-                      getName().c_str(), adler, mChecksum);
-        return false;
-    }
-    return true;
-}
-
-bool GenericVerifier::isSaneToDownload() const
-{
-    // Sanity checks for security issues.  Ideally this would
-    // be in a library, but PhysFS doesn't provide it for
-    // native filenames.
-
-    // Check for a directory traversal attempt.
-    // As a special case, we allow filenames such as
-    //   update-548aa36..ac86ea6.zip
-    // which contain one ".." between two hex digits
-    // (matching Git's commit..commit notation)
-    std::string::size_type pos = mFullPath.find("..");
-    if (std::string::npos != pos)
-    {
-        // Contains a "..".  Check the special case
-        if ((pos > 0) &&
-            (pos < (mFullPath.size() - 3)) &&
-            (std::string::npos == mFullPath.find("..", pos + 1)) &&
-            isxdigit(mFullPath[pos - 1]) &&
-            isxdigit(mFullPath[pos + 2]))
-        {
-            logger->log("Info: recognised special case '..' in '%s'",
-                        mFullPath.c_str());
-        }
-        else
-        {
-            logger->log("Error: suspect directory traversal ('..') in '%s'",
-                        mFullPath.c_str());
-            return false;
-        }
-    }
-
-    // Check for scp URLs (as in libcurl-tutorial(3) )
-    // One of these compare()s needs to return zero.
-    const std::string http("http://");
-    const std::string  ftp( "ftp://");
-    if (mUrl.compare(0, http.size(), http) && mUrl.compare(0, ftp.size(), ftp))
-        return false;
-
-    // Haven't spotted anything, so let it through.
-    return true;
-}

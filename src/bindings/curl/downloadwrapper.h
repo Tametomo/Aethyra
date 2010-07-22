@@ -21,130 +21,11 @@
 #ifndef _UPDATEDOWNLOAD_H
 #define _UPDATEDOWNLOAD_H
 
-#include <cstdio>
 #include <string>
-#include <fstream>
-
-/**
- * Whether to use a previously-downloaded version of an GenericVerifier.
- *
- * If all of the following are true:
- * * a file with this name already exists
- * * the policy is CACHE_OK
- * * verify() succeeds on that file
- * then DownloadWrapper leaves the existing file and reports success.
- *
- * If either of these are true:
- * * the policy is CACHE_REFRESH
- * * verify() fails (on an existing file)
- * then DownloadWrapper requests any intermediate web caches
- * to refresh their cache too.
- */
-enum CachePolicy
-{
-    CACHE_OK,        /**< Use already-downloaded version. */
-    CACHE_REFRESH    /**< Re-download existing files. */
-};
 
 typedef void CURL;
 
-class GenericVerifier
-{
-public:
-    /**
-     * Details of a file to download.
-     *
-     *@param name Name of the resource, used for display and logging
-     *@param url Where to download it from
-     *@param fullPath Where to download it to
-     *@param cachePolicy @see{CachePolicy}
-     */
-    GenericVerifier(std::string name, std::string url, std::string fullPath,
-                    CachePolicy cachePolicy);
-
-    virtual ~GenericVerifier() {};
-
-    /**
-     * Returns true if the file passes whatever tests this GenericVerifier has
-     * for spotting corrupt files.
-     * (Checksums etc).
-     *
-     * The basic GenericVerifier has no checksum.
-     */
-    virtual bool verify(FILE* file) const { return true; }
-
-    /**
-     * Returns true if the file passes whatever tests this GenericVerifier has
-     * for spotting corrupt files.
-     * (Checksums etc).
-     *
-     * This version is for use when the file to be tested isn't already open.
-     */
-    bool verify();
-
-    /**
-     * Whether or not the file currently can be accessed or not.
-     */
-    bool fileExists()
-    {
-        std::ifstream testFile(mFullPath.c_str());
-        return testFile.is_open();
-    }
-
-    /**
-     * Run some sanity checks on the URL and local filename.
-     *
-     * This is intended to be called (and handled specially) by users of the
-     * DownloadWrapper, not just as an assert in the DownloadWrapper itself.
-     */
-    bool isSaneToDownload() const;
-
-    const std::string getName() const { return mName; }
-    const std::string getUrl() const { return mUrl; }
-    const std::string getFullPath() const { return mFullPath; }
-
-    CachePolicy getCachePolicy() const { return mCachePolicy; }
-
-protected:
-    /**
-     * Use an HTTP "Cache-Contol: no-cache" header.
-     */
-    CachePolicy mCachePolicy;
-
-private:
-    /** Display name */
-    std::string mName;
-
-    /** Download from this URL. */
-    std::string mUrl;
-
-    /** Download to this file. */
-    std::string mFullPath;
-};
-
-/**
- * GenericVerifier that uses an Adler32 checksum to verify the downloaded file.
- */
-class Adler32Verifier : public GenericVerifier
-{
-public:
-    /**
-     * Details of a file to download.
-     *
-     *@param name Name of the resource, used for display and logging
-     *@param url Where to download it from
-     *@param fullPath Where to download it to
-     *@param checksum Adler32 checksum
-     *@param cachePolicy @see{CachePolicy}
-     */
-    Adler32Verifier(std::string name, std::string url, std::string fullPath,
-                    CachePolicy cachePolicy, unsigned long checksum);
-
-    virtual bool verify(FILE* file) const;
-
-private:
-    unsigned long mChecksum;
-};
+class DownloadVerifier;
 
 class DownloadListener
 {
@@ -159,7 +40,7 @@ public:
      * The callee should return 0 to continue downloading,
      * or -1 to abort.
      */
-    virtual int downloadProgress(GenericVerifier* resource, double downloaded,
+    virtual int downloadProgress(DownloadVerifier* resource, double downloaded,
                                  double size) = 0;
 };
 
@@ -182,7 +63,7 @@ public:
      *
      *@return true if the download succeeded, false if it failed.
      */
-    bool downloadSynchronous(GenericVerifier* resource);
+    bool downloadSynchronous(DownloadVerifier* resource);
 
     void cancelDownload();
 
@@ -206,7 +87,7 @@ private:
      * What's being downloaded.
      * (null unless downloadSynchronous is running).
      */
-    GenericVerifier* mResource;
+    DownloadVerifier* mResource;
 };
 
 #endif

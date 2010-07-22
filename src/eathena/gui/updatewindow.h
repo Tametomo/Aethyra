@@ -29,7 +29,7 @@
 #include <string>
 #include <vector>
 
-#include "../../bindings/update/downloadupdates.h"
+#include "../handlers/downloadupdates.h"
 
 #include "../../bindings/guichan/widgets/window.h"
 

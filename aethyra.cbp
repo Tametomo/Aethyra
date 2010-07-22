@@ -98,6 +98,8 @@
 
 		<Unit filename="src\bindings\curl\downloadwrapper.cpp" />
 		<Unit filename="src\bindings\curl\downloadwrapper.h" />
+		<Unit filename="src\bindings\curl\verifier.cpp" />
+		<Unit filename="src\bindings\curl\verifier.h" />
 		<Unit filename="src\bindings\guichan\graphics.cpp" />
 		<Unit filename="src\bindings\guichan\graphics.h" />
 		<Unit filename="src\bindings\guichan\guichanfwd.h" />
@@ -242,8 +244,8 @@
 		<Unit filename="src\bindings\sdl\keyboardconfig.h" />
 		<Unit filename="src\bindings\sdl\sound.cpp" />
 		<Unit filename="src\bindings\sdl\sound.h" />
-		<Unit filename="src\bindings\update\downloadupdates.cpp" />
-		<Unit filename="src\bindings\update\downloadupdates.h" />
+		<Unit filename="src\bindings\zlib\adler32.cpp" />
+		<Unit filename="src\bindings\zlib\adler32.h" />
 		<Unit filename="src\bindings\zlib\memorytools.cpp" />
 		<Unit filename="src\bindings\zlib\memorytools.h" />
 		<Unit filename="src\core\configlistener.h" />
@@ -431,6 +433,8 @@
 		<Unit filename="src\eathena\gui\updatewindow.cpp" />
 		<Unit filename="src\eathena\gui\viewport.cpp" />
 		<Unit filename="src\eathena\gui\viewport.h" />
+		<Unit filename="src\eathena\handlers\downloadupdates.cpp" />
+		<Unit filename="src\eathena\handlers\downloadupdates.h" />
 		<Unit filename="src\eathena\handlers\emoteshortcut.h" />
 		<Unit filename="src\eathena\handlers\itemlinkhandler.cpp" />
 		<Unit filename="src\eathena\handlers\itemlinkhandler.h" />

@@ -31,6 +31,8 @@
 
 #include "downloadupdates.h"
 
+#include "../statemanager.h"
+
 #include "../../engine.h"
 
 #include "../../core/configuration.h"
@@ -39,8 +41,6 @@
 
 #include "../../core/utils/gettext.h"
 #include "../../core/utils/stringutils.h"
-
-#include "../../eathena/statemanager.h"
 
 namespace
 {
@@ -116,7 +116,7 @@ bool DownloadUpdates::addUpdatesToResman()
     ResourceManager *resman = ResourceManager::getInstance();
     bool success = true;
 
-    typedef std::vector<GenericVerifier*>::const_iterator CI;
+    typedef std::vector<DownloadVerifier*>::const_iterator CI;
     for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
     {
         if ((*itr)->isSaneToDownload())
@@ -137,7 +137,7 @@ DownloadUpdates::VerificationStatus DownloadUpdates::verifyUpdates()
 
     VerificationStatus status = CHECK_SUCCESSFUL;
 
-    typedef std::vector<GenericVerifier*>::const_iterator CI;
+    typedef std::vector<DownloadVerifier*>::const_iterator CI;
     for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
     {
         // Hack to work around some compilers reducing logic checks to the
@@ -184,7 +184,7 @@ void DownloadUpdates::setUpdatesDir(std::string &updateHost)
     if (updateHost.empty())
     {
         updateHost = config.getValue("updatehost",
-                                     "http://209.168.213.109/updates");
+                                     "http://www.aethyraproject.org/updates");
     }
 
     // Remove any trailing slash at the end of the update host
@@ -309,7 +309,7 @@ int DownloadUpdates::downloadThreadWithThis()
         std::string file = "resources2.txt";
         std::string url = mUpdateHost + "/" + file;
         std::string fullPath = getUpdatesDirFullPath() + file;
-        GenericVerifier resource(file, url, fullPath, CACHE_REFRESH);
+        DownloadVerifier resource(file, url, fullPath, CACHE_REFRESH);
 
         if (resource.isSaneToDownload())
         {
@@ -338,7 +338,7 @@ int DownloadUpdates::downloadThreadWithThis()
         std::string file = "news.txt";
         std::string url = mUpdateHost + "/" + file;
         std::string fullPath = getUpdatesDirFullPath() + file;
-        GenericVerifier resource(file, url, fullPath, CACHE_REFRESH);
+        DownloadVerifier resource(file, url, fullPath, CACHE_REFRESH);
 
         if (resource.isSaneToDownload())
         {
@@ -366,7 +366,7 @@ int DownloadUpdates::downloadThreadWithThis()
     if (success && !mUserCancel)
     {
         mFilesComplete++;
-        typedef std::vector<GenericVerifier*>::const_iterator CI;
+        typedef std::vector<DownloadVerifier*>::const_iterator CI;
         for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
         {
             if (mUserCancel)
@@ -467,7 +467,7 @@ int DownloadUpdates::downloadThreadWithThis()
     return 0;
 }
 
-int DownloadUpdates::downloadProgress(GenericVerifier* resource,
+int DownloadUpdates::downloadProgress(DownloadVerifier* resource,
                                       double downloaded, double size)
 {
     // Prevent crashing the client unnecessarily

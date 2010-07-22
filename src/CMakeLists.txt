@@ -106,6 +106,8 @@ MARK_AS_ADVANCED(SDLNET_LIBRARY)
 SET(SRCS
     bindings/curl/downloadwrapper.cpp
     bindings/curl/downloadwrapper.h
+    bindings/curl/verifier.cpp
+    bindings/curl/verifier.h
     bindings/guichan/graphics.cpp
     bindings/guichan/graphics.h
     bindings/guichan/guichanfwd.h
@@ -250,8 +252,8 @@ SET(SRCS
     bindings/sdl/keyboardconfig.h
     bindings/sdl/sound.cpp
     bindings/sdl/sound.h
-    bindings/update/downloadupdates.cpp
-    bindings/update/downloadupdates.h
+    bindings/zlib/adler32.cpp
+    bindings/zlib/adler32.h
     bindings/zlib/memorytools.cpp
     bindings/zlib/memorytools.h
     core/configlistener.h
@@ -439,6 +441,8 @@ SET(SRCS
     eathena/gui/updatewindow.cpp
     eathena/gui/viewport.cpp
     eathena/gui/viewport.h
+    eathena/handlers/downloadupdates.cpp
+    eathena/handlers/downloadupdates.h
     eathena/handlers/emoteshortcut.h
     eathena/handlers/itemlinkhandler.cpp
     eathena/handlers/itemlinkhandler.h
