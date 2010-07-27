@@ -21,6 +21,7 @@
 #ifndef DOWNLOAD_VERIFIER_H
 #define DOWNLOAD_VERIFIER_H
 
+#include <fstream>
 #include <string>
 
 /**
@@ -38,9 +39,6 @@
  * then DownloadWrapper requests any intermediate web caches
  * to refresh their cache too.
  */
-
-#include <fstream>
-
 enum CachePolicy
 {
     CACHE_OK,        /**< Use already-downloaded version. */

@@ -33,6 +33,8 @@
 #include "../utils/dtor.h"
 
 #ifdef USE_OPENGL
+#include "../../bindings/guichan/opengl/openglgraphics.h"
+
 bool Image::mUseOpenGL = false;
 int Image::mTextureType = 0;
 int Image::mTextureSize = 0;
@@ -192,7 +194,7 @@ Image *Image::load(SDL_Surface *tmpImage)
 
         GLuint texture;
         glGenTextures(1, &texture);
-        glBindTexture(mTextureType, texture);
+        OpenGLGraphics::bindTexture(mTextureType, texture);
 
         if (SDL_MUSTLOCK(tmpImage))
             SDL_LockSurface(tmpImage);

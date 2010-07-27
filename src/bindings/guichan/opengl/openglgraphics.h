@@ -79,13 +79,24 @@ class OpenGLGraphics : public Graphics
          */
         SDL_Surface *getScreenshot();
 
+        static void bindTexture(GLenum target, GLuint texture);
+
     protected:
         void setTexturingAndBlending(bool enable);
+
+        void drawQuadArrayfi(int size);
+
+        void drawQuadArrayii(int size);
 
     private:
         bool mAlpha, mTexture;
         bool mColorAlpha;
         bool mSync;
+
+        GLfloat *mFloatTexArray;
+        GLint *mIntTexArray;
+        GLint *mIntVertArray;
+        static GLuint mLastImage;
 };
 
 #endif

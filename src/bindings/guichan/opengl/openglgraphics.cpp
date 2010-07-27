@@ -40,17 +40,26 @@
 #define GL_MAX_RECTANGLE_TEXTURE_SIZE_ARB 0x84F8
 #endif
 
+const unsigned int vertexBufSize = 500;
+
+GLuint OpenGLGraphics::mLastImage = NULL;
+
 OpenGLGraphics::OpenGLGraphics():
     mAlpha(false),
     mTexture(false),
     mColorAlpha(false),
     mSync(false)
 {
-    mTarget = NULL;
+    mFloatTexArray = new GLfloat[vertexBufSize * 4];
+    mIntTexArray = new GLint[vertexBufSize * 4];
+    mIntVertArray = new GLint[vertexBufSize * 4];
 }
 
 OpenGLGraphics::~OpenGLGraphics()
 {
+    delete[] mFloatTexArray;
+    delete[] mIntTexArray;
+    delete[] mIntVertArray;
 }
 
 void OpenGLGraphics::setSync(bool sync)
@@ -90,7 +99,7 @@ bool OpenGLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
     int gotDoubleBuffer;
     SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &gotDoubleBuffer);
     logger->log("Using OpenGL %s double buffering.",
-            (gotDoubleBuffer ? "with" : "without"));
+               (gotDoubleBuffer ? "with" : "without"));
 
     char const *glExtensions = (char const *)glGetString(GL_EXTENSIONS);
     GLint texSize;
@@ -118,30 +127,34 @@ static inline void drawQuad(Image *image, int srcX, int srcY, int dstX,
     if (image->getTextureType() == GL_TEXTURE_2D)
     {
         // Find OpenGL normalized texture coordinates.
-        float texX1 = srcX / (float) image->getTextureWidth();
-        float texY1 = srcY / (float) image->getTextureHeight();
-        float texX2 = (srcX + width) / (float) image->getTextureWidth();
-        float texY2 = (srcY + height) / (float) image->getTextureHeight();
+        const float texX1 = static_cast<float>(srcX) /
+                            static_cast<float>(image->getTextureWidth());
+        const float texY1 = static_cast<float>(srcY) /
+                            static_cast<float>(image->getTextureHeight());
+        const float texX2 = static_cast<float>(srcX + width) /
+                            static_cast<float>(image->getTextureWidth());
+        const float texY2 = static_cast<float>(srcY + height) /
+                            static_cast<float>(image->getTextureHeight());
 
-        glTexCoord2f(texX1, texY1);
-        glVertex2i(dstX, dstY);
-        glTexCoord2f(texX2, texY1);
-        glVertex2i(dstX + width, dstY);
-        glTexCoord2f(texX2, texY2);
-        glVertex2i(dstX + width, dstY + height);
-        glTexCoord2f(texX1, texY2);
-        glVertex2i(dstX, dstY + height);
+        GLfloat tex[] = { texX1, texY1, texX2, texY1, 
+                          texX2, texY2, texX1, texY2 };
+        GLint vert[] = { dstX, dstY, dstX + width, dstY,
+                         dstX + width, dstY + height, dstX, dstY + height };
+
+        glVertexPointer(2, GL_FLOAT, 0, &vert);
+        glTexCoordPointer(2, GL_INT, 0, &tex);
+        glDrawArrays(GL_QUADS, 0, 4);
     }
     else
     {
-        glTexCoord2i(srcX, srcY);
-        glVertex2i(dstX, dstY);
-        glTexCoord2i(srcX + width, srcY);
-        glVertex2i(dstX + width, dstY);
-        glTexCoord2i(srcX + width, srcY + height);
-        glVertex2i(dstX + width, dstY + height);
-        glTexCoord2i(srcX, srcY + height);
-        glVertex2i(dstX, dstY + height);
+        GLint tex[] = { srcX, srcY, srcX + width, srcY,
+                        srcX + width, srcY + height, srcX, srcY + height };
+        GLint vert[] = { dstX, dstY, dstX + width, dstY,
+                         dstX + width, dstY + height, dstX, dstY + height };
+
+        glVertexPointer(2, GL_INT, 0, &vert);
+        glTexCoordPointer(2, GL_INT, 0, &tex);
+        glDrawArrays(GL_QUADS, 0, 4);
     }
 }
 
@@ -157,23 +170,19 @@ bool OpenGLGraphics::drawImage(Image *image, int srcX, int srcY, int dstX,
     if (!useColor)
         glColor4f(1.0f, 1.0f, 1.0f, image->mAlpha);
 
-    glBindTexture(Image::mTextureType, image->mGLImage);
+    bindTexture(Image::mTextureType, image->mGLImage);
 
     setTexturingAndBlending(true);
 
-    // Draw a textured quad.
-    glBegin(GL_QUADS);
     drawQuad(image, srcX, srcY, dstX, dstY, width, height);
-    glEnd();
 
     if (!useColor)
-        glColor4ub(mColor.r, mColor.g, mColor.b, mColor.a);
+        glColor4ub(static_cast<GLubyte>(mColor.r), static_cast<GLubyte>(mColor.g),
+                   static_cast<GLubyte>(mColor.b), static_cast<GLubyte>(mColor.a));
 
     return true;
 }
 
-/* Optimising the functions that Graphics::drawImagePattern would call,
- * so that glBegin...glEnd are outside the main loop. */
 void OpenGLGraphics::drawImagePattern(Image *image, int x, int y, int w, int h)
 {
     if (!image)
@@ -188,15 +197,19 @@ void OpenGLGraphics::drawImagePattern(Image *image, int x, int y, int w, int h)
     const int srcX = image->mBounds.x;
     const int srcY = image->mBounds.y;
 
+    const float tw = static_cast<float>(image->getTextureWidth());
+    const float th = static_cast<float>(image->getTextureHeight());
+
+    unsigned int vp = 0;
+    const unsigned int vLimit = vertexBufSize * 4;
+
     glColor4f(1.0f, 1.0f, 1.0f, image->mAlpha);
 
-    glBindTexture(Image::mTextureType, image->mGLImage);
+    bindTexture(Image::mTextureType, image->mGLImage);
 
     setTexturingAndBlending(true);
 
     // Draw a set of textured rectangles
-    glBegin(GL_QUADS);
-
     for (int py = 0; py < h; py += ih)
     {
         const int height = (py + ih >= h) ? h - py : ih;
@@ -206,13 +219,53 @@ void OpenGLGraphics::drawImagePattern(Image *image, int x, int y, int w, int h)
             int width = (px + iw >= w) ? w - px : iw;
             int dstX = x + px;
 
-            drawQuad(image, srcX, srcY, dstX, dstY, width, height);
+            for (int i = 0; i < 4; i++)
+            {
+                const int offsetX = ((((i + 1) % 4) < 2) ? 0 : width);
+                const int offsetY = ((i < 2) ? 0 : height);
+                const int index = vp + (2 * i);
+
+                if (image->getTextureType() == GL_TEXTURE_2D)
+                {
+                    const float tx = static_cast<float>(srcX + offsetX) / tw;
+                    const float ty = static_cast<float>(srcY + offsetY) / th;
+
+                    mFloatTexArray[index] = tx;
+                    mFloatTexArray[index + 1] = ty;
+                }
+                else
+                {
+                    mIntTexArray[index] = srcX + offsetX;
+                    mIntTexArray[index + 1] = srcY + offsetY;
+                }
+
+                mIntVertArray[index] = dstX + offsetX;
+                mIntVertArray[index + 1] = dstY + offsetY;
+            }
+
+            vp += 8;
+            if (vp >= vLimit)
+            {
+                if (image->getTextureType() == GL_TEXTURE_2D)
+                    drawQuadArrayfi(vp);
+                else
+                    drawQuadArrayii(vp);
+
+                vp = 0;
+            }
         }
     }
 
-    glEnd();
+    if (vp > 0)
+    {
+        if (image->getTextureType() == GL_TEXTURE_2D)
+            drawQuadArrayfi(vp);
+        else
+            drawQuadArrayii(vp);
+    }
 
-    glColor4ub(mColor.r, mColor.g, mColor.b, mColor.a);
+     glColor4ub(static_cast<GLubyte>(mColor.r),	static_cast<GLubyte>(mColor.g),
+                static_cast<GLubyte>(mColor.b), static_cast<GLubyte>(mColor.a));
 }
 
 void OpenGLGraphics::updateScreen()
@@ -236,8 +289,12 @@ void OpenGLGraphics::_beginDraw()
     glLoadIdentity();
 
     glEnable(GL_SCISSOR_TEST);
+    glEnableClientState(GL_VERTEX_ARRAY);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
     pushClipArea(gcn::Rectangle(0, 0, mTarget->w, mTarget->h));
 }
@@ -303,9 +360,8 @@ bool OpenGLGraphics::pushClipArea(gcn::Rectangle area)
     glPushMatrix();
     glTranslatef(transX, transY, 0);
     glScissor(mClipStack.top().x,
-            mTarget->h - mClipStack.top().y - mClipStack.top().height,
-            mClipStack.top().width,
-            mClipStack.top().height);
+              mTarget->h - mClipStack.top().y - mClipStack.top().height,
+              mClipStack.top().width, mClipStack.top().height);
 
     return result;
 }
@@ -386,6 +442,7 @@ void OpenGLGraphics::setTexturingAndBlending(bool enable)
     }
     else
     {
+        mLastImage = NULL;
         if (mAlpha && !mColorAlpha)
         {
             glDisable(GL_BLEND);
@@ -411,12 +468,46 @@ void OpenGLGraphics::drawRectangle(const gcn::Rectangle& rect, bool filled)
 
     setTexturingAndBlending(false);
 
-    glBegin(filled ? GL_QUADS : GL_LINE_LOOP);
-    glVertex2f(rect.x + offset, rect.y + offset);
-    glVertex2f(rect.x + rect.width - offset, rect.y + offset);
-    glVertex2f(rect.x + rect.width - offset, rect.y + rect.height - offset);
-    glVertex2f(rect.x + offset, rect.y + rect.height - offset);
-    glEnd();
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    GLfloat vert[] =
+    {
+        rect.x + offset, rect.y + offset,
+        rect.x + rect.width - offset, rect.y + offset,
+        rect.x + rect.width - offset, rect.y + rect.height - offset,
+        rect.x + offset, rect.y + rect.height - offset
+    };
+
+    glVertexPointer(2, GL_FLOAT, 0, &vert);
+    glDrawArrays(filled ? GL_QUADS : GL_LINE_LOOP, 0, 4);
+
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 }
+
+void OpenGLGraphics::bindTexture(GLenum target, GLuint texture)
+{
+    if (mLastImage != texture)
+    {
+        mLastImage = texture;
+        glBindTexture(target, texture);
+    }
+}
+
+inline void OpenGLGraphics::drawQuadArrayfi(int size)
+{
+    glVertexPointer(2, GL_INT, 0, mIntVertArray);
+    glTexCoordPointer(2, GL_FLOAT, 0, mFloatTexArray);
+
+    glDrawArrays(GL_QUADS, 0, size / 2);
+}
+
+inline void OpenGLGraphics::drawQuadArrayii(int size)
+{
+    glVertexPointer(2, GL_INT, 0, mIntVertArray);
+    glTexCoordPointer(2, GL_INT, 0, mIntTexArray);
+
+    glDrawArrays(GL_QUADS, 0, size / 2);
+}
+
 
 #endif // USE_OPENGL
