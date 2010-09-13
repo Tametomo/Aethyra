@@ -56,6 +56,10 @@ Adler32Verifier::Adler32Verifier(std::string name, std::string url,
 
 bool Adler32Verifier::verify(FILE* file) const
 {
+    // Don't run a checksum on a nonexistant file
+    if (!file)
+        return false;
+
     unsigned long adler = fadler32(file);
     if (adler != mChecksum)
     {

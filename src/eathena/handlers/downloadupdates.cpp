@@ -76,6 +76,7 @@ DownloadUpdates::DownloadUpdates(const std::string &updateHost,
     mUpdateHost(updateHost),
     mUpdatesDir(""),
     mUserCancel(false),
+    mKnownError(false),
     mFilesComplete(0),
     mListener(listener)
 {
@@ -120,7 +121,13 @@ bool DownloadUpdates::addUpdatesToResman()
     for (CI itr = mResources.begin() ; itr != mResources.end() ; itr++)
     {
         if ((*itr)->isSaneToDownload())
-            success = resman->addToSearchPath((*itr)->getFullPath(), false);
+        {
+            // Don't attempt to load a nonexistent file
+            if ((*itr)->fileExists())
+                success = resman->addToSearchPath((*itr)->getFullPath(), false);
+            else
+                success = false;
+        }
 
         if (!success)
             break;
@@ -339,22 +346,22 @@ int DownloadUpdates::downloadThreadWithThis()
         std::string url = mUpdateHost + "/" + file;
         std::string fullPath = getUpdatesDirFullPath() + file;
         DownloadVerifier resource(file, url, fullPath, CACHE_REFRESH);
+        bool updatedNews = false;
 
         if (resource.isSaneToDownload())
         {
             // Don't download the news file if user has already canceled.
             if (!mUserCancel)
-                success = dw.downloadSynchronous(&resource);
+                updatedNews = dw.downloadSynchronous(&resource);
         }
         else
         {
-            success = false;
             securityWorries = true;
         }
 
         mFilesComplete++;
 
-        if (success && mListener)
+        if (updatedNews && mListener)
         {
             // Display news to user, with warning at start
             mLines = loadTextFile(fullPath);
@@ -450,12 +457,15 @@ int DownloadUpdates::downloadThreadWithThis()
         }
         else
         {
-            // This is really UI, probably better in updatewindow.cpp
-            mLines.clear();
-            mLines.push_back(_("##1  The update process is incomplete."));
-            mLines.push_back(_("##1  It is strongly recommended that"));
-            mLines.push_back(_("##1  you try again later"));
-            mListener->downloadTextUpdate(mLines);
+            if (!mKnownError)
+            {
+                // This is really UI, probably better in updatewindow.cpp
+                mLines.clear();
+                mLines.push_back(_("##1  The update process is incomplete."));
+                mLines.push_back(_("##1  It is strongly recommended that"));
+                mLines.push_back(_("##1  you try again later"));
+                mListener->downloadTextUpdate(mLines);
+            }
 
             mListener->downloadFailed();
         }
@@ -500,6 +510,8 @@ void DownloadUpdates::downloadUnreachable(DownloadVerifier& resource,
     mLines.push_back(_("##1  Please notify the server administrator of"));
     mLines.push_back(_("##1  this issue."));
     mListener->downloadTextUpdate(mLines);
+
+    mKnownError = true;
 }
 
 int DownloadUpdates::downloadProgress(DownloadVerifier* resource,
