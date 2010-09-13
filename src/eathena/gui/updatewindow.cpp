@@ -143,13 +143,6 @@ void UpdaterWindow::enable()
     fontChanged();
 }
 
-void UpdaterWindow::quit()
-{
-    mStateButton->setCaption(_("Quit"));
-    mStateButton->setActionEventId("quit");
-    fontChanged();
-}
-
 void UpdaterWindow::downloadTextUpdate(const std::vector<std::string>& news)
 {
     {
@@ -168,10 +161,6 @@ void UpdaterWindow::action(const gcn::ActionEvent &event)
     {
         mStateButton->setEnabled(false);
         stateManager->setState(LOADDATA_STATE);
-    }
-    else if (event.getId() == "quit")
-    {
-        stateManager->setState(EXIT_STATE);
     }
 }
 
@@ -209,15 +198,9 @@ void UpdaterWindow::logic()
 
             switch (labelState)
             {
-                case VERIFY_LABEL:
-                    mProgressBar->toggleThrobbing(true);
-                    break;
                 case PLAY_LABEL:
                     mProgressBar->setProgress(1.0f);
                     enable();
-                    break;
-                case FAIL_LABEL:
-                    quit();
                     break;
                 default:
                     break;

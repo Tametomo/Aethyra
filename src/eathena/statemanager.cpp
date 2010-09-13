@@ -77,7 +77,7 @@ Game *game = NULL;
 DebugWindow *debugWindow = NULL;
 HelpDialog *helpDialog = NULL;
 ConfirmDialog *exitConfirm = NULL;
-ConfirmDialog * updateFailure = NULL;
+ConfirmDialog *warningDialog = NULL;
 OkDialog *errorDialog = NULL;
 Setup* setupWindow = NULL;
 
@@ -85,51 +85,59 @@ Palette *guiPalette = NULL;
 
 std::string map_path = "";
 
+// Yes, these are global. No, this won't get fixed. It's within a local
+// namespace within this class so as to not be globally exposed, but is global
+// to avoid having to either friend class WarningListeners and ErrorListeners
+// (which has the problem in that these would need to be static within
+// StateManager, which in this case, really isn't all that different from a
+// global), or from exposing some helper functions which would allow for
+// transitioning to these states at an inappropriate time.
+namespace
+{
+    State mNextState = QUIT_STATE;
+    State mFailState = LOGIN_STATE;
+}
+
 /**
  * Listener used for exiting handling.
  */
-struct ExitListener : public gcn::ActionListener
+class ExitListener : public gcn::ActionListener
 {
     void action(const gcn::ActionEvent &event)
     {
-        if (event.getId() == "yes" || event.getId() == "ok")
-        {
-            sound.fadeOutMusic(1000);
-
-            stateManager->setState(QUIT_STATE);
-        }
-
         exitConfirm = NULL;
+
+        if (event.getId() == "yes" || event.getId() == "ok")
+            stateManager->setState(QUIT_STATE);
     }
 } exitListener;
 
-struct UpdateFailureListener : public gcn::ActionListener
+class WarningListener : public gcn::ActionListener
 {
     void action(const gcn::ActionEvent &event)
     {
+        warningDialog = NULL;
+
         if (event.getId() == "yes" || event.getId() == "ok")
-            stateManager->setState(UPDATE_STATE);
+            stateManager->setState(mNextState);
         else if (event.getId() == "no")
-            stateManager->setState(LOADDATA_STATE);
-
-        updateFailure = NULL;
+            stateManager->setState(mFailState);
     }
-} updateFailureListener;
+} warningListener;
 
-struct ErrorListener : public gcn::ActionListener
+class ErrorListener : public gcn::ActionListener
 {
     void action(const gcn::ActionEvent &event)
     {
         network->clearError();
         errorDialog = NULL;
 
-        stateManager->nextState();
+        stateManager->setState(mNextState);
     }
 } errorListener;
 
 StateManager::StateManager() :
     mState(EXIT_STATE),
-    mNextState(EXIT_STATE),
     mCharInfo(MAX_PLAYER_SLOTS),
     mError(""),
     mCharServerHandler(new CharServerHandler()),
@@ -176,11 +184,6 @@ StateManager::~StateManager()
     SDLNet_Quit();
 }
 
-void StateManager::nextState()
-{
-    setState(mNextState);
-}
-
 void StateManager::setState(const State state)
 {
     if (mState == state)
@@ -193,7 +196,6 @@ void StateManager::setState(const State state)
 
     switch (mState)
     {
-
         case ERROR_STATE:
             logger->log("State: ERROR");
             if (desktop)
@@ -202,6 +204,16 @@ void StateManager::setState(const State state)
             errorDialog = new OkDialog(_("Error"), mError, NULL, true);
             errorDialog->addActionListener(&errorListener);
             errorDialog->requestMoveToTop();
+            break;
+
+        case WARNING_STATE:
+            logger->log("State: WARNING");
+            if (desktop)
+                desktop->resetProgressBar();
+
+            warningDialog = new ConfirmDialog(_("Warning"), mError, NULL, true);
+            warningDialog->addActionListener(&warningListener);
+            warningDialog->requestMoveToTop();
             break;
 
         case START_STATE:
@@ -296,17 +308,6 @@ void StateManager::setState(const State state)
             }
             break;
 
-        case UPDATE_ERROR_STATE:
-            {
-                logger->log("State: UPDATE_ERROR");
-                updateFailure = new ConfirmDialog(_("Update Verification Failed"),
-                                                  _("Would you like to try "
-                                                    "redownloading again?"));
-                updateFailure->addActionListener(&updateFailureListener);
-                updateFailure->requestMoveToTop();
-            }
-            break;
-
         case LOADDATA_STATE:
             logger->log("State: LOADDATA");
 
@@ -380,6 +381,8 @@ void StateManager::setState(const State state)
             else
                 logger->log("State: LOGOUT");
 
+            sound.fadeOutMusic(1000);
+
             destroy(game);
 
             ColorDB::unload();
@@ -450,6 +453,19 @@ void StateManager::handleException(const std::string &mes, const State returnSta
     mError = mes;
 
     setState(ERROR_STATE);
+}
+
+void StateManager::handleWarning(const std::string &mes, const State nextState,
+                                 const State failState)
+{
+    if (warningDialog)
+        return;
+
+    mNextState = nextState;
+    mFailState = failState;
+    mError = mes;
+
+    setState(WARNING_STATE);
 }
 
 void StateManager::promptForQuit()

@@ -42,12 +42,37 @@ class UpdaterListener
 public:
     virtual ~UpdaterListener() {}
 
-    virtual void downloadTextUpdate(const std::vector<std::string>& news) = 0;
+    /**
+     * Gives the update listener some text which it can display to the user.
+     * This is likely to be some news that the update listener could display,
+     * but could include new features, etc.
+     */
+    virtual void downloadTextUpdate(const std::vector<std::string>& text) = 0;
+
+    /**
+     * Tells the update listener the current file being downloaded, the file's
+     * progress, and the total progress.
+     */
     virtual void downloadProgress(float totalProgress, 
                                   const std::string& currentFile,
                                   float fileProgress) = 0;
+
+    /**
+     * Tells the update listener that all downloading has completed. This
+     * doesn't imply that it has finished successfully (since there can still
+     * be some undetected errors).
+     */
     virtual void downloadComplete() = 0;
+
+    /**
+     * Tells the update listener that downloading didn't complete successfully
+     */
     virtual void downloadFailed() = 0;
+
+    /**
+     * Tells the update listener that the downloader is in the process of
+     * verifying files.
+     */
     virtual void verifyingFiles() = 0;
 };
 

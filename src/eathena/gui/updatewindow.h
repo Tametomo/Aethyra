@@ -102,8 +102,6 @@ class UpdaterWindow : public Window, public gcn::ActionListener,
         {
             IDLE_LABEL,      // Used when the label has already updated
             DOWNLOAD_LABEL,  // Label updated for download progress
-            VERIFY_LABEL,    // Label used when user cancels and updates need
-                             // verification still
             PLAY_LABEL,      // Updates completed successfully
             FAIL_LABEL       // Updates failed
         } labelState;
@@ -112,11 +110,6 @@ class UpdaterWindow : public Window, public gcn::ActionListener,
          * Enables play button
          */
         void enable();
-
-        /**
-         * Upating failed, so enable quit button
-         */
-        void quit();
 
         /**
          * The new label caption to be set in the logic method.

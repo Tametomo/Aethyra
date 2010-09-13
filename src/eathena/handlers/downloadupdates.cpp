@@ -305,7 +305,18 @@ int DownloadUpdates::downloadThread(void *ptr)
 int DownloadUpdates::downloadThreadWithThis()
 {
     DownloadWrapper dw(this);
+    mLines.clear();
+
+    /**
+     * success - states whether the client has all of the files it knows it
+     *           needs
+     * integrity - states whether the updates found can be verified to match the
+     *             current server state
+     * securityWorries - states whether the contents of a file will cause the
+     *                   client to do something the user might not want
+     */
     bool success = true;
+    bool integrity = true;
     bool securityWorries = false;
 
     // The comments here have the pre-refactor state names
@@ -318,22 +329,18 @@ int DownloadUpdates::downloadThreadWithThis()
         DownloadVerifier resource(file, url, fullPath, CACHE_REFRESH);
 
         if (resource.isSaneToDownload())
-        {
             success = dw.downloadSynchronous(&resource);
-        }
         else
-        {
-            success = false;
             securityWorries = true;
-        }
 
-        // Check to ensure that resources2.text exists, since download wasn't
-        // successful.
-        if (!success && !securityWorries)
+        // If resources2.txt exists, the client has nothing to be worried about
+        if (!securityWorries)
             securityWorries = !resource.fileExists();
 
         if (!securityWorries)
             success = parseResourcesFile();
+
+        integrity = success;
     }
 
     /* UPDATE_NEWS:      Download news.txt file. */
@@ -341,15 +348,16 @@ int DownloadUpdates::downloadThreadWithThis()
     {
         std::string file = "news.txt";
         std::string url = mUpdateHost + "/" + file;
-        std::string fullPath = getUpdatesDirFullPath() + file;
-        DownloadVerifier resource(file, url, fullPath, CACHE_REFRESH);
-        bool updatedNews = false;
+        std::string newsPath = getUpdatesDirFullPath() + file;
+        DownloadVerifier resource(file, url, newsPath, CACHE_REFRESH);
+        bool newsAvailable = false; // used instead of success, as not having
+                                    // news isn't a critical error
 
         if (resource.isSaneToDownload())
         {
             // Don't download the news file if user has already canceled.
             if (!mUserCancel)
-                updatedNews = dw.downloadSynchronous(&resource);
+                newsAvailable = dw.downloadSynchronous(&resource);
         }
         else
         {
@@ -358,18 +366,13 @@ int DownloadUpdates::downloadThreadWithThis()
 
         mFilesComplete++;
 
-        if (mListener)
-        {
-            mLines.clear();
+        // Display news to user; append all warnings later with mLines.insert()
+        if (newsAvailable)
+            mLines = loadTextFile(newsPath);
+        else
+            mLines.push_back(_("##0  No news has been provided on this server."));
 
-            // Display news to user, with warning at start
-            if (updatedNews)
-                mLines = loadTextFile(fullPath);
-            else
-                mLines.push_back(_("##0  No news has been provided on this server."));
-
-            mListener->downloadTextUpdate(mLines);
-        }
+        mListener->downloadTextUpdate(mLines);
     }
 
     /* UPDATE_RESOURCES: Download .zip files named in resources2.txt. */
@@ -426,7 +429,9 @@ int DownloadUpdates::downloadThreadWithThis()
             securityWorries = (status == CHECK_FAILURE);
     }
 
-    bool filesVerified = success;
+    // Take file verification into account for integrity
+    if (integrity)
+        integrity = success;
 
     success = addUpdatesToResman();
 
@@ -434,21 +439,26 @@ int DownloadUpdates::downloadThreadWithThis()
     {
         if (success)
         {
-            if (!filesVerified)
-                stateManager->setState(UPDATE_ERROR_STATE);
-            else
-                mListener->downloadComplete();
+            mListener->downloadComplete();
+
+            if (!integrity)
+            {
+                stateManager->handleWarning(_("Unable to verify that your "
+                                              "current data matches the data on "
+                                              "the server. Would you like to try "
+                                              "redownloading again?"),
+                                              UPDATE_STATE, LOADDATA_STATE);
+            }
         }
         else
         {
-            // These blocks are really UI, probably better in updatewindow.cpp
             if (securityWorries)
             {
                 // This gives the user a nice prompt informing them that the update
                 // downloading has failed, and gives them a chance to see why it failed.
                 stateManager->handleException(_("An update failed a security check, "
-                                                "see log for details. If this persists,"
-                                                " report this issue with your log file "
+                                                "see log for details. If this persists, "
+                                                "report this issue with your log file "
                                                 "on the forums."), QUIT_STATE);
             }
             else if (mFailedResources.size() > 0)
@@ -473,30 +483,26 @@ int DownloadUpdates::downloadThreadWithThis()
                     }
                 }
 
-                mLines.clear();
                 // TODO: This particular line probably should be handled through
                 //       gettext's plurals functionality. Either come up with a
                 //       better way of phrasing this that won't require using
                 //       plurals, or implement plurals in the gettext wrapper.
-                mLines.push_back(strprintf(_("##1  The file(s) %s "), files.c_str()));
-                mLines.push_back(_("##1  are currently unavailable online."));
-                mLines.push_back(_("##1  Please notify the server administrator of"));
-                mLines.push_back(_("##1  this issue."));
-                mListener->downloadTextUpdate(mLines);
+                stateManager->handleException(strprintf(_("The file(s) %s are "
+                    "currently unavailable online. Please notify the server "
+                    "administrator of this issue."), files.c_str()), QUIT_STATE);
             }
             else
             {
-                mLines.clear();
-                mLines.push_back(_("##1  The update process is incomplete."));
-                mLines.push_back(_("##1  It is strongly recommended that"));
-                mLines.push_back(_("##1  you try again later"));
-                mListener->downloadTextUpdate(mLines);
+                stateManager->handleWarning("Updating incomplete, and unable to "
+                                            "safely use existing files. Would "
+                                            "you like to try redownloading "
+                                            "again?", UPDATE_STATE);
             }
             mListener->downloadFailed();
         }
     }
 
-    /* UPDATE_COMPLETE:  Waiting for user to press "play" or "quit". */
+    /* UPDATE_COMPLETE:  Waiting for user to press "play". */
 
     mThread = NULL;
     return 0;

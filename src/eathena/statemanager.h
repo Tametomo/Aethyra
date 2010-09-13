@@ -32,13 +32,13 @@
  */
 enum State {
     ERROR_STATE,
+    WARNING_STATE,
     START_STATE,
     LOGIN_STATE,
     REGISTER_STATE,
     LOGINSERV_CONNECT_STATE,
     SERVER_SELECT_STATE,
     UPDATE_STATE,
-    UPDATE_ERROR_STATE,
     LOADDATA_STATE,
     CHARSERV_CONNECT_STATE,
     CHAR_SELECT_STATE,
@@ -87,8 +87,6 @@ class StateManager
          */
         void setState(const State state);
 
-        void nextState();
-
         /**
          * Handles all repetitive state logic.
          */
@@ -98,7 +96,16 @@ class StateManager
          * Alerts the user when an error has occured, and then changes the
          * program's state to the specified, new state.
          */
-        void handleException(const std::string &mes, State returnState);
+        void handleException(const std::string &mes, State returnState = QUIT_STATE);
+
+        /**
+         * Works a lot like handleException, except that these can be recovered
+         * from. So, instead of providing the user with an OK dialog, it
+         * provides them with a confirmation dialog which lets them decide
+         * whether to recover from it or not.
+         */
+        void handleWarning(const std::string &mes, State nextState,
+                           State failState = LOGOUT_STATE);
 
         /**
          * Whether the program is in a game session or not.
@@ -111,10 +118,8 @@ class StateManager
         bool isExiting() { return (mState == EXIT_STATE); }
 
         void promptForQuit();
-
     private:
         State mState;
-        State mNextState;
 
         LockedArray<LocalPlayer*> mCharInfo;
 
