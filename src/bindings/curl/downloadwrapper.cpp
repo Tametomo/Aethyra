@@ -23,6 +23,7 @@
  */
 
 #include <cctype>
+#include <limits>
 
 #include <curl/curl.h>
 
@@ -180,6 +181,24 @@ bool DownloadWrapper::downloadSynchronous(DownloadVerifier* resource)
 
                 attempts++;
                 continue;
+            }
+
+            int httpCode = 0;
+            curl_easy_getinfo (mCurl, CURLINFO_RESPONSE_CODE, &httpCode);
+
+            // Handle all cases except for finding the download as an
+            // unreachable state for now. TODO: Handle other response codes, if
+            // appropriate.
+            if (httpCode != 202)
+            {
+                attempts = INT_MAX;
+                logger->log("%s is currently unavailable online.",
+                            resource->getName().c_str());
+
+                // This is to avoid sending the wrong pointer, should the 
+                // resource change before being accessed
+                mListener->downloadUnreachable(*resource, httpCode);
+                break;
             }
 
             if (pHeaders)

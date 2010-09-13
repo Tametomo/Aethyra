@@ -42,6 +42,13 @@ public:
      */
     virtual int downloadProgress(DownloadVerifier* resource, double downloaded,
                                  double size) = 0;
+
+    /**
+     * Notifies the listener that the current download is unreachable for one
+     * reason or another, and allows it to act on such events if it chooses to
+     * do so.
+     */
+    virtual void downloadUnreachable(DownloadVerifier& resource, int httpCode) = 0;
 };
 
 class DownloadWrapper

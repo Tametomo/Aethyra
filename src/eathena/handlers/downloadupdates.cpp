@@ -467,6 +467,41 @@ int DownloadUpdates::downloadThreadWithThis()
     return 0;
 }
 
+void DownloadUpdates::downloadUnreachable(DownloadVerifier& resource,
+                                          int httpCode)
+{
+    mFailedResources.push_back(resource);
+    std::string files;
+
+    for (size_t i = 0; i < mFailedResources.size(); i++)
+    {
+        if (i == (mFailedResources.size() - 1) && mFailedResources.size() > 1)
+        {
+
+            files.append(_("and"));
+            files.append(" ");
+        }
+
+        files.append(mFailedResources[i].getName());
+
+        if (i != (mFailedResources.size() - 1) && mFailedResources.size() > 1)
+        {
+            files.append(", ");
+        }
+    }
+
+    mLines.clear();
+    // TODO: This particular line probably should be handled through gettext's
+    //       plurals functionality. Either come up with a better way of phrasing
+    //       this that won't require using plurals, or implement plurals in
+    //       the gettext wrapper.
+    mLines.push_back(strprintf(_("##1  The file(s) %s "), files.c_str()));
+    mLines.push_back(_("##1  are currently unavailable online."));
+    mLines.push_back(_("##1  Please notify the server administrator of"));
+    mLines.push_back(_("##1  this issue."));
+    mListener->downloadTextUpdate(mLines);
+}
+
 int DownloadUpdates::downloadProgress(DownloadVerifier* resource,
                                       double downloaded, double size)
 {

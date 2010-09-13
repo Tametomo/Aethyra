@@ -75,6 +75,9 @@ public:
     int downloadProgress(DownloadVerifier* resource, double downloaded,
                          double size);
 
+    
+    void downloadUnreachable(DownloadVerifier& resource, int httpCode);
+
     /**
      * The user has press the cancel button (or whatever
      * represents this in the UI).
@@ -145,6 +148,9 @@ private:
 
     /** List of files to download. */
     std::vector<DownloadVerifier*> mResources;
+
+    /** List of files that failed to download */
+    std::vector<DownloadVerifier> mFailedResources;
 
     /** Lines to write to the updater listener */
     std::vector<std::string> mLines;
