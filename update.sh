@@ -41,19 +41,22 @@ if [ -e $SCRIPT_PATH/.git ]; then
     # NOTE: Developers who use this script in their development branches should
     #       change this from the read-only address to the push address to ensure
     #       that they can still push after using this script
-    git remote set-url origin git://github.com/Tametomo/Aethyra.git;
+    git remote set-url origin git://github.com/Aethyra/Client.git;
     # Issue the git update command
     git pull;
-    # Run the autobuild script. Do not check for dependencies by default, since
-    # this should be an uncommon occurrance. TODO: Should this be run with a -D
-    # by default?
-    ./autobuild.sh;
+    # Run the autobuild script. Do not check for dependencies if we can see that
+    # aethyra has been compiled before.
+    if [ -e $SCRIPT_PATH/src/aethyra ]; then
+        ./autobuild.sh;
+    else
+        ./autobuild.sh -D;
+    fi
     echo "Aethyra has been updated."
 else
     # Make this directory a git repo
     git init;
     # Link the newly created git repo to the official Aethyra repository
-    git remote add origin git://github.com/Tametomo/Aethyra.git;
+    git remote add origin git://github.com/Aethyra/Client.git;
     # Start tracking the origin remote
     git fetch origin;
     # Link the origin remote to the master branch
