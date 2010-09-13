@@ -198,6 +198,10 @@ bool DownloadWrapper::downloadSynchronous(DownloadVerifier* resource)
                 // This is to avoid sending the wrong pointer, should the 
                 // resource change before being accessed
                 mListener->downloadUnreachable(*resource, httpCode);
+
+                // Ensure we don't leave failed fragments around
+                fclose(outfile);
+                ::remove(downloadPath.c_str());
                 break;
             }
 
