@@ -76,7 +76,6 @@ DownloadUpdates::DownloadUpdates(const std::string &updateHost,
     mUpdateHost(updateHost),
     mUpdatesDir(""),
     mUserCancel(false),
-    mKnownError(false),
     mFilesComplete(0),
     mListener(listener)
 {
@@ -331,9 +330,7 @@ int DownloadUpdates::downloadThreadWithThis()
         // Check to ensure that resources2.text exists, since download wasn't
         // successful.
         if (!success && !securityWorries)
-        {
             securityWorries = !resource.fileExists();
-        }
 
         if (!securityWorries)
             success = parseResourcesFile();
@@ -361,10 +358,16 @@ int DownloadUpdates::downloadThreadWithThis()
 
         mFilesComplete++;
 
-        if (updatedNews && mListener)
+        if (mListener)
         {
+            mLines.clear();
+
             // Display news to user, with warning at start
-            mLines = loadTextFile(fullPath);
+            if (updatedNews)
+                mLines = loadTextFile(fullPath);
+            else
+                mLines.push_back(_("##0  No news has been provided on this server."));
+
             mListener->downloadTextUpdate(mLines);
         }
     }
@@ -423,25 +426,6 @@ int DownloadUpdates::downloadThreadWithThis()
             securityWorries = (status == CHECK_FAILURE);
     }
 
-    if (securityWorries && mListener)
-    {
-        // This gives the user a nice prompt informing them that the update
-        // downloading has failed, and gives them a chance to see why it failed.
-        stateManager->handleException(_("An update failed a security check, "
-                                        "see log for details. If this persists,"
-                                        " report this issue with your log file "
-                                        "on the forums."), QUIT_STATE);
-        mThread = NULL;
-        return 0;
-    }
-
-    if (!success && mListener)
-    {
-
-
-        //continue, as it can still load any files that have downloaded
-        //(this (!success) case includes the user pressing "cancel")
-    }
     bool filesVerified = success;
 
     success = addUpdatesToResman();
@@ -457,16 +441,57 @@ int DownloadUpdates::downloadThreadWithThis()
         }
         else
         {
-            if (!mKnownError)
+            // These blocks are really UI, probably better in updatewindow.cpp
+            if (securityWorries)
             {
-                // This is really UI, probably better in updatewindow.cpp
+                // This gives the user a nice prompt informing them that the update
+                // downloading has failed, and gives them a chance to see why it failed.
+                stateManager->handleException(_("An update failed a security check, "
+                                                "see log for details. If this persists,"
+                                                " report this issue with your log file "
+                                                "on the forums."), QUIT_STATE);
+            }
+            else if (mFailedResources.size() > 0)
+            {
+                std::string files;
+
+                for (size_t i = 0; i < mFailedResources.size(); i++)
+                {
+                    if (i == (mFailedResources.size() - 1) &&
+                        mFailedResources.size() > 1)
+                    {
+                        files.append(_("and"));
+                        files.append(" ");
+                    }
+
+                    files.append(mFailedResources[i].getName());
+
+                    if (i != (mFailedResources.size() - 1) &&
+                        mFailedResources.size() > 1)
+                    {
+                        files.append(", ");
+                    }
+                }
+
+                mLines.clear();
+                // TODO: This particular line probably should be handled through
+                //       gettext's plurals functionality. Either come up with a
+                //       better way of phrasing this that won't require using
+                //       plurals, or implement plurals in the gettext wrapper.
+                mLines.push_back(strprintf(_("##1  The file(s) %s "), files.c_str()));
+                mLines.push_back(_("##1  are currently unavailable online."));
+                mLines.push_back(_("##1  Please notify the server administrator of"));
+                mLines.push_back(_("##1  this issue."));
+                mListener->downloadTextUpdate(mLines);
+            }
+            else
+            {
                 mLines.clear();
                 mLines.push_back(_("##1  The update process is incomplete."));
                 mLines.push_back(_("##1  It is strongly recommended that"));
                 mLines.push_back(_("##1  you try again later"));
                 mListener->downloadTextUpdate(mLines);
             }
-
             mListener->downloadFailed();
         }
     }
@@ -481,37 +506,6 @@ void DownloadUpdates::downloadUnreachable(DownloadVerifier& resource,
                                           int httpCode)
 {
     mFailedResources.push_back(resource);
-    std::string files;
-
-    for (size_t i = 0; i < mFailedResources.size(); i++)
-    {
-        if (i == (mFailedResources.size() - 1) && mFailedResources.size() > 1)
-        {
-
-            files.append(_("and"));
-            files.append(" ");
-        }
-
-        files.append(mFailedResources[i].getName());
-
-        if (i != (mFailedResources.size() - 1) && mFailedResources.size() > 1)
-        {
-            files.append(", ");
-        }
-    }
-
-    mLines.clear();
-    // TODO: This particular line probably should be handled through gettext's
-    //       plurals functionality. Either come up with a better way of phrasing
-    //       this that won't require using plurals, or implement plurals in
-    //       the gettext wrapper.
-    mLines.push_back(strprintf(_("##1  The file(s) %s "), files.c_str()));
-    mLines.push_back(_("##1  are currently unavailable online."));
-    mLines.push_back(_("##1  Please notify the server administrator of"));
-    mLines.push_back(_("##1  this issue."));
-    mListener->downloadTextUpdate(mLines);
-
-    mKnownError = true;
 }
 
 int DownloadUpdates::downloadProgress(DownloadVerifier* resource,

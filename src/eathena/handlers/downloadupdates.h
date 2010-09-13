@@ -143,9 +143,6 @@ private:
     /** Flag that show if the user has canceled the update. */
     bool mUserCancel;
 
-    /** Whether the cause of the update failure is known already or not */
-    bool mKnownError;
-
     /** Number of files completely downloaded, for the progress bar. */
     int mFilesComplete;
 
