@@ -189,7 +189,7 @@ bool DownloadWrapper::downloadSynchronous(DownloadVerifier* resource)
             // Handle all cases except for finding the download as an
             // unreachable state for now. TODO: Handle other response codes, if
             // appropriate.
-            if (httpCode != 202)
+            if ((httpCode != 200) && (httpCode != 202))
             {
                 attempts = INT_MAX;
                 logger->log("%s is currently unavailable online.",
