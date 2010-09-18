@@ -192,8 +192,8 @@ bool DownloadWrapper::downloadSynchronous(DownloadVerifier* resource)
             if ((httpCode != 200) && (httpCode != 202))
             {
                 attempts = INT_MAX;
-                logger->log("%s is currently unavailable online.",
-                            resource->getName().c_str());
+                logger->log("%s is currently unavailable online. HTTP status "
+                            "code %d", resource->getName().c_str(), httpCode);
 
                 // This is to avoid sending the wrong pointer, should the 
                 // resource change before being accessed
