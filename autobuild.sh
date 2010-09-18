@@ -21,6 +21,7 @@ isDebianBased='/etc/debian_version'
 isFedoraBased='/etc/fedora-release'
 numberOfCPUs="`cat /proc/cpuinfo | grep processor | wc -l`"
 checkDependencies='false';
+skipConfiguration='false';
 toolchain='gnu';
 runTest='false';
 
@@ -76,14 +77,16 @@ check_dependencies()
 # Uses the gnu makefile toolchain for building
 use_gnu_toolchain()
 {
-    echo "Generating build information using aclocal, autoheader, automake and autoconf."
-
     # Regenerate configuration files
-    autoreconf -i
-    echo
-    echo "Now configuring Aethyra"
+    if [ "$skipConfiguration" = 'false' ];then
+        echo "Generating build information using aclocal, autoheader, automake and autoconf."
+        autoreconf -i
 
-    ./configure
+        echo
+        echo "Now configuring Aethyra"
+        ./configure
+    fi
+
     finish_install
 }
 
@@ -133,13 +136,15 @@ get_options()
 {
     local opt=''
 
-    while getopts "cCdDhHtT:" opt
+    while getopts "cCdDhHsStT:" opt
     do
         # If you add any new options here, please add them to get_help() also
         case $opt in
             C|c) toolchain='cmake'
                 ;;
             D|d) checkDependencies='true'
+                ;;
+            S|s) skipConfiguration='true'
                 ;;
             T|t) runTest='true'
                 ;;
@@ -166,6 +171,7 @@ get_help()
     echo "    -c -C: Use CMake toolchain"
     echo "    -d -D: Checks to see if you have all needed dependencies."
     echo "    -h,-H: Displays this help file"
+    echo "    -s,-S: Skip configuration (only for gnu toolchain)"
     echo "    -t,-T: Test the currently installed build"
     exit 1;
 }
