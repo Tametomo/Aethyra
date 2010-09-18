@@ -255,6 +255,9 @@ void ProgressBar::draw(gcn::Graphics *graphics)
 
 void ProgressBar::setProgress(const float progress)
 {
+    if (mThrobber)
+        toggleThrobbing(false);
+
     if (progress < 0.0f)
         mProgressToGo = 0.0;
     else if (progress > 1.0f)

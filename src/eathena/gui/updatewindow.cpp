@@ -193,7 +193,6 @@ void UpdaterWindow::logic()
             mLabel->setCaption(mNewLabelCaption);
             mLabel->adjustSize();
 
-            mProgressBar->toggleThrobbing(false);
             mProgressBar->setProgress(mNewProgress);
 
             switch (labelState)
