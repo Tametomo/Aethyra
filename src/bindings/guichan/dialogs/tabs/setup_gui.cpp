@@ -56,7 +56,7 @@
 
 Setup_Gui::Setup_Gui():
     mFullScreenEnabled(config.getValue("screen", false)),
-    mOpenGLEnabled(config.getValue("opengl", USE_OPENGL)),
+    mOpenGLEnabled(config.getValue("opengl", 0)),
     mCustomCursorEnabled(config.getValue("customcursor", true)),
     mOpacity(config.getValue("guialpha", 0.8)),
     mMouseOpacity(config.getValue("mousealpha", 0.7)),

@@ -257,7 +257,8 @@ void Engine::initWindow()
 #endif
 
 #ifdef USE_OPENGL
-    bool useOpenGL = !options.noOpenGL && (config.getValue("opengl", 1) == 1);
+    options.promptForGraphicsMode = !config.keyExists("opengl");
+    bool useOpenGL = !options.noOpenGL && (config.getValue("opengl", 0) == 1);
 
     // Setup image loading for the right image format
     Image::setLoadAsOpenGL(useOpenGL);

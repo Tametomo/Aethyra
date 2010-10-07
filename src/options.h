@@ -37,7 +37,8 @@ struct Options
         printVersion(false),
         skipUpdate(false),
         chooseDefault(false),
-        noOpenGL(false)
+        noOpenGL(false),
+        promptForGraphicsMode(false)
     {};
 
     bool printHelp;
@@ -45,6 +46,7 @@ struct Options
     bool skipUpdate;
     bool chooseDefault;
     bool noOpenGL;
+    bool promptForGraphicsMode;
     std::string username;
     std::string password;
     std::string playername;

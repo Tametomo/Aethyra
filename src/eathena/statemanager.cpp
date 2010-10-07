@@ -54,6 +54,7 @@
 #include "../bindings/guichan/dialogs/confirmdialog.h"
 #include "../bindings/guichan/dialogs/helpdialog.h"
 #include "../bindings/guichan/dialogs/okdialog.h"
+#include "../bindings/guichan/dialogs/selectiondialog.h"
 #include "../bindings/guichan/dialogs/setupdialog.h"
 
 #include "../bindings/guichan/widgets/desktop.h"
@@ -70,6 +71,8 @@
 #include "../core/utils/gettext.h"
 #include "../core/utils/stringutils.h"
 
+#include "../../config.h"
+
 LoginData loginData;
 Desktop *desktop = NULL;
 Game *game = NULL;
@@ -79,6 +82,7 @@ HelpDialog *helpDialog = NULL;
 ConfirmDialog *exitConfirm = NULL;
 ConfirmDialog *warningDialog = NULL;
 OkDialog *errorDialog = NULL;
+SelectionDialog *selectionDialog = NULL;
 Setup* setupWindow = NULL;
 
 Palette *guiPalette = NULL;
@@ -135,6 +139,23 @@ class ErrorListener : public gcn::ActionListener
         stateManager->setState(mNextState);
     }
 } errorListener;
+
+class SelectionListener : public gcn::ActionListener
+{
+    void action(const gcn::ActionEvent &event)
+    {
+        selectionDialog = NULL;
+        config.setValue("opengl", event.getId() == "opengl");
+
+        if (event.getId() == "sdl")
+            stateManager->setState(LOGIN_STATE);
+        else if (event.getId() == "opengl")
+            stateManager->handleWarning(_("Change won't take effect until you "
+                                          "restart the client. Would you like "
+                                          "to quit now?"), QUIT_STATE,
+                                          LOGIN_STATE);
+    }
+} selectionListener;
 
 StateManager::StateManager() :
     mState(EXIT_STATE),
@@ -226,7 +247,26 @@ void StateManager::setState(const State state)
 
             sound.playMusic("Magick - Real.ogg");
 
-            setState(LOGIN_STATE);
+#ifdef USE_OPENGL
+            if (options.promptForGraphicsMode)
+                setState(MODE_SELECTION_STATE);
+            else
+#endif
+                setState(LOGIN_STATE);
+            break;
+
+        case MODE_SELECTION_STATE:
+            logger->log("State: MODE_SELECTION");
+
+            selectionDialog = new SelectionDialog(_("Welcome to Aethyra"),
+                                                  _("You haven't selected a "
+                                                    "graphical mode to use yet. "
+                                                    "Which mode would you like "
+                                                    "to use?"), NULL, false);
+            selectionDialog->addOption("sdl", "SDL");
+            selectionDialog->addOption("opengl", "OpenGL");
+            selectionDialog->addActionListener(&selectionListener);
+            selectionDialog->requestMoveToTop();
             break;
 
         case LOGIN_STATE:

@@ -17,31 +17,28 @@
 					<Add option="-DNOGDI" />
 					<Add option="-DUSE_OPENGL" />
 					<Add option="-DWIN32" />
-					<Add directory="resources\include\SDL" />
-					<Add directory="resources\include" />
+					<Add directory="include\SDL" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,-u,_WinMain@16" />
-					<Add library="curl.dll" />
+					<Add library="curl" />
 					<Add library="guichan" />
 					<Add library="intl" />
 					<Add library="mingw32" />
 					<Add library="opengl32" />
 					<Add library="physfs" />
-					<Add library="png12.dll" />
+					<Add library="png" />
 					<Add library="SDLmain" />
-					<Add library="SDL.dll" />
+					<Add library="SDL" />
 					<Add library="SDL_gfx" />
 					<Add library="SDL_image" />
 					<Add library="SDL_mixer" />
 					<Add library="SDL_net" />
 					<Add library="SDL_ttf" />
-					<Add library="ws2_32" />
-					<Add library="winmm" />
-					<Add library="wsock32" />
-					<Add library="xml2.dll" />
-					<Add library="z.dll" />
-					<Add directory="resources\lib" />
+					<Add library="xml2" />
+					<Add library="z" />
+					<Add directory="lib" />
 				</Linker>
 			</Target>
 			<Target title="unix">
@@ -132,6 +129,8 @@
 		<Unit filename="src\bindings\guichan\dialogs\okdialog.h" />
 		<Unit filename="src\bindings\guichan\dialogs\helpdialog.cpp" />
 		<Unit filename="src\bindings\guichan\dialogs\helpdialog.h" />
+		<Unit filename="src\bindings\guichan\dialogs\selectiondialog.cpp" />
+		<Unit filename="src\bindings\guichan\dialogs\selectiondialog.h" />
 		<Unit filename="src\bindings\guichan\dialogs\setupdialog.cpp" />
 		<Unit filename="src\bindings\guichan\dialogs\setupdialog.h" />
 		<Unit filename="src\bindings\guichan\dialogs\textinputdialog.cpp" />

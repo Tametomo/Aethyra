@@ -38,6 +38,8 @@ aethyra_SOURCES = \
 	      bindings/guichan/dialogs/listdialog.h \
 	      bindings/guichan/dialogs/okdialog.cpp \
 	      bindings/guichan/dialogs/okdialog.h \
+	      bindings/guichan/dialogs/selectiondialog.cpp \
+	      bindings/guichan/dialogs/selectiondialog.h \
 	      bindings/guichan/dialogs/setupdialog.cpp \
 	      bindings/guichan/dialogs/setupdialog.h \
 	      bindings/guichan/dialogs/textinputdialog.cpp \
