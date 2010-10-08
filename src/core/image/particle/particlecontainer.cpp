@@ -79,9 +79,10 @@ void ParticleList::removeLocally(Particle *particle)
         if (*it == particle)
         {
             (*it)->kill();
-            // FIXME: cppcheck reports that this is a dangerous delete.
-            mElements.erase(it);
+            it = mElements.erase(it);
         }
+        else
+            it++;
     }
 }
 
