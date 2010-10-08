@@ -27,8 +27,6 @@
 
 #include "../../bindings/guichan/widgets/container.h"
 
-#include "../../core/configlistener.h"
-
 #include "../../core/map/position.h"
 
 class Being;
@@ -47,8 +45,7 @@ class PopupMenu;
  * of it such as NPC messages, which are positioned using map pixel
  * coordinates.
  */
-class Viewport : public Container, public gcn::MouseListener,
-                 public ConfigListener
+class Viewport : public Container, public gcn::MouseListener
 {
     public:
         /**
@@ -125,11 +122,6 @@ class Viewport : public Container, public gcn::MouseListener,
         void closePopupMenu();
 
         /**
-         * A relevant config option changed.
-         */
-        void optionChanged(const std::string &name);
-
-        /**
          * Returns camera x offset in pixels.
          */
         int getCameraX() const { return (int) mPixelViewX; }
@@ -159,10 +151,10 @@ class Viewport : public Container, public gcn::MouseListener,
         std::string mMapName;
 
         int mLastTick;
-        int mScrollRadius;
-        int mScrollLaziness;
-        int mScrollCenterOffsetX;
-        int mScrollCenterOffsetY;
+        float mScrollRadius;
+        float mScrollLaziness;
+        float mScrollWidthOffset;    /**< In # of tiles */
+        float mScrollHeightOffset;   /**< In # of tiles */
         float mPixelViewX;           /**< Current viewpoint in pixels. */
         float mPixelViewY;           /**< Current viewpoint in pixels. */
         int mTileViewX;              /**< Current viewpoint in tiles. */

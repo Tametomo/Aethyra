@@ -72,13 +72,46 @@ Viewport::Viewport():
     setOpaque(false);
     addMouseListener(this);
 
-    mScrollLaziness = config.getValue("ScrollLaziness", 16);
-    mScrollRadius = config.getValue("ScrollRadius", 0);
-    mScrollCenterOffsetX = config.getValue("ScrollCenterOffsetX", 0);
-    mScrollCenterOffsetY = config.getValue("ScrollCenterOffsetY", 0);
+    // Convert older keys, they are now deprecated and will be removed at a
+    // later date
+    if (config.keyExists("ScrollLaziness"))
+    {
+         float laziness = (float) config.getValue("ScrollLaziness", 16);
+         laziness = laziness / 32.0f;
+         config.setValue("TileScrollLaziness%", laziness);
+         config.removeValue("ScrollLaziness");
+    }
 
-    config.addListener("ScrollLaziness", this);
-    config.addListener("ScrollRadius", this);
+    if (config.keyExists("ScrollRadius"))
+    {
+         float radius = (float) config.getValue("ScrollRadius", 0);
+         radius = radius / 32.0f;
+         config.setValue("TileScrollRadius%", radius);
+         config.removeValue("ScrollRadius");
+    }
+
+    if (config.keyExists("ScrollCenterOffsetX"))
+    {
+         float offset = (float) config.getValue("ScrollCenterOffsetX", 0);
+         offset = offset / 32.0f;
+         config.setValue("TileWidthScrollOffset", offset);
+         config.removeValue("ScrollCenterOffsetX");
+    }
+
+    if (config.keyExists("ScrollCenterOffsetY"))
+    {
+         float offset = (float) config.getValue("ScrollCenterOffsetY", 0);
+         offset = offset / 32.0f;
+         config.setValue("TileHeightScrollOffset", offset);
+         config.removeValue("ScrollCenterOffsetY");
+    }
+
+    // All of these keys are measured in # of tiles, not pixels, in order to
+    // keep the same effect across different map tile widths and heights.
+    mScrollLaziness = config.getValue("TileScrollLaziness%", 0.5f);
+    mScrollRadius = config.getValue("TileScrollRadius%", 0.0f);
+    mScrollWidthOffset = config.getValue("TileWidthScrollOffset", 0.0f);
+    mScrollHeightOffset = config.getValue("TileHeightScrollOffset", 0.0f);
 
     mPopupMenu = new PopupMenu(UNKNOWN, this);
 
@@ -126,8 +159,10 @@ void Viewport::draw(gcn::Graphics *graphics)
         lastTick = tick_time;
 
     // Calculate viewpoint
-    int midTileX = (g->getWidth() + mScrollCenterOffsetX) / tileWidth / 2;
-    int midTileY = (g->getHeight() + mScrollCenterOffsetY) / tileHeight / 2;
+    const int widthOffset = (int) (mScrollWidthOffset * (float) tileWidth);
+    const int heightOffset = (int) (mScrollWidthOffset * (float) tileWidth);
+    int midTileX = (g->getWidth() + widthOffset) / tileWidth / 2;
+    int midTileY = (g->getHeight() + heightOffset) / tileHeight / 2;
 
     int player_x = (player_node->mX - midTileX) * tileWidth +
                     player_node->getXOffset();
@@ -137,17 +172,12 @@ void Viewport::draw(gcn::Graphics *graphics)
     if (mScrollLaziness < 1)
         mScrollLaziness = 1; // Avoids division by zero
 
-    // These are for backwards compatibility reasons
-    // TODO: Change the variables to use, and make the defaults a float
-    //       percentage.
-    const int xScrollLaziness = (int) (((float) mScrollLaziness / 32.0f) *
-                               ((float) tileWidth));
-    const int yScrollLaziness = (int) (((float) mScrollLaziness / 32.0f) *
-                               ((float) tileHeight));
-    const int xScrollRadius = (int) (((float) mScrollRadius / 32.0f) *
-                             ((float) tileWidth));
-    const int yScrollRadius = (int) (((float) mScrollRadius / 32.0f) *
-                             ((float) tileHeight));
+    // Calculate the x and y laziness and radii
+    const int xScrollLaziness = (int) (mScrollLaziness * (float) tileWidth);
+    const int yScrollLaziness = (int) (mScrollLaziness * (float) tileHeight);
+    const int xScrollRadius = (int) (mScrollRadius * (float) tileWidth);
+    const int yScrollRadius = (int) (mScrollRadius *(float) tileHeight);
+
     // Apply lazy scrolling
     while (lastTick < tick_time)
     {
@@ -413,12 +443,6 @@ void Viewport::closePopupMenu()
 {
     gcn::ActionEvent actionEvent(this, "cancel");
     mPopupMenu->action(actionEvent);
-}
-
-void Viewport::optionChanged(const std::string &name)
-{
-    mScrollLaziness = config.getValue("ScrollLaziness", 16);
-    mScrollRadius = config.getValue("ScrollRadius", 0);
 }
 
 bool Viewport::changeMap(const std::string &path)
