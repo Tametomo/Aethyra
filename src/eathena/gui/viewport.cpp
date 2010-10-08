@@ -117,44 +117,59 @@ void Viewport::draw(gcn::Graphics *graphics)
 
     Graphics *g = static_cast<Graphics*>(graphics);
 
+    // Cache these two values, since we'll be using them a lot
+    const int tileWidth = mCurrentMap->getTileWidth();
+    const int tileHeight = mCurrentMap->getTileHeight();
+
     // Avoid freaking out when tick_time overflows
     if (tick_time < lastTick)
         lastTick = tick_time;
 
     // Calculate viewpoint
-    int midTileX = (g->getWidth() + mScrollCenterOffsetX) / 32 / 2;
-    int midTileY = (g->getHeight() + mScrollCenterOffsetY) / 32 / 2;
+    int midTileX = (g->getWidth() + mScrollCenterOffsetX) / tileWidth / 2;
+    int midTileY = (g->getHeight() + mScrollCenterOffsetY) / tileHeight / 2;
 
-    int player_x = (player_node->mX - midTileX) * 32 +
+    int player_x = (player_node->mX - midTileX) * tileWidth +
                     player_node->getXOffset();
-    int player_y = (player_node->mY - midTileY) * 32 +
+    int player_y = (player_node->mY - midTileY) * tileHeight +
                     player_node->getYOffset();
 
     if (mScrollLaziness < 1)
         mScrollLaziness = 1; // Avoids division by zero
 
+    // These are for backwards compatibility reasons
+    // TODO: Change the variables to use, and make the defaults a float
+    //       percentage.
+    const int xScrollLaziness = (int) (((float) mScrollLaziness / 32.0f) *
+                               ((float) tileWidth));
+    const int yScrollLaziness = (int) (((float) mScrollLaziness / 32.0f) *
+                               ((float) tileHeight));
+    const int xScrollRadius = (int) (((float) mScrollRadius / 32.0f) *
+                             ((float) tileWidth));
+    const int yScrollRadius = (int) (((float) mScrollRadius / 32.0f) *
+                             ((float) tileHeight));
     // Apply lazy scrolling
     while (lastTick < tick_time)
     {
-        if (player_x > mPixelViewX + mScrollRadius)
+        if (player_x > mPixelViewX + xScrollRadius)
         {
-            mPixelViewX += (player_x - mPixelViewX - mScrollRadius) /
-                            mScrollLaziness;
+            mPixelViewX += (player_x - mPixelViewX - xScrollRadius) /
+                            xScrollLaziness;
         }
-        if (player_x < mPixelViewX - mScrollRadius)
+        if (player_x < mPixelViewX - xScrollRadius)
         {
-            mPixelViewX += (player_x - mPixelViewX + mScrollRadius) /
-                            mScrollLaziness;
+            mPixelViewX += (player_x - mPixelViewX + xScrollRadius) /
+                            xScrollLaziness;
         }
-        if (player_y > mPixelViewY + mScrollRadius)
+        if (player_y > mPixelViewY + yScrollRadius)
         {
-            mPixelViewY += (player_y - mPixelViewY - mScrollRadius) /
-                            mScrollLaziness;
+            mPixelViewY += (player_y - mPixelViewY - yScrollRadius) /
+                            yScrollLaziness;
         }
-        if (player_y < mPixelViewY - mScrollRadius)
+        if (player_y < mPixelViewY - yScrollRadius)
         {
-            mPixelViewY += (player_y - mPixelViewY + mScrollRadius) /
-                            mScrollLaziness;
+            mPixelViewY += (player_y - mPixelViewY + yScrollRadius) /
+                            yScrollLaziness;
         }
         lastTick++;
     }
@@ -170,8 +185,8 @@ void Viewport::draw(gcn::Graphics *graphics)
     };
 
     // Don't move camera so that the end of the map is on screen
-    const int viewXmax = (mCurrentMap->getWidth() * 32) - g->getWidth();
-    const int viewYmax = (mCurrentMap->getHeight() * 32) - g->getHeight();
+    const int viewXmax = (mCurrentMap->getWidth() * tileWidth) - g->getWidth();
+    const int viewYmax = (mCurrentMap->getHeight() * tileHeight) - g->getHeight();
 
     if (mCurrentMap)
     {
@@ -185,8 +200,8 @@ void Viewport::draw(gcn::Graphics *graphics)
             mPixelViewY = viewYmax;
     }
 
-    mTileViewX = (int) (mPixelViewX + 16) / 32;
-    mTileViewY = (int) (mPixelViewY + 16) / 32;
+    mTileViewX = (int) (mPixelViewX + (tileWidth / 2)) / tileWidth;
+    mTileViewY = (int) (mPixelViewY + (tileHeight / 2)) / tileHeight;
 
     // Draw tiles and sprites
     if (mCurrentMap)
@@ -200,8 +215,8 @@ void Viewport::draw(gcn::Graphics *graphics)
             // Get the current mouse position
             const int mouseX = gui->getMouseX();
             const int mouseY = gui->getMouseY();
-            const int mouseTileX = mouseX / 32 + mTileViewX;
-            const int mouseTileY = mouseY / 32 + mTileViewY;
+            const int mouseTileX = mouseX / tileWidth + mTileViewX;
+            const int mouseTileY = mouseY / tileHeight + mTileViewY;
 
             Path debugPath = mCurrentMap->findPath(player_node->mX, player_node->mY,
                                             mouseTileX, mouseTileY);
@@ -209,12 +224,14 @@ void Viewport::draw(gcn::Graphics *graphics)
             g->setColor(gcn::Color(255, 0, 0));
             for (PathIterator i = debugPath.begin(); i != debugPath.end(); i++)
             {
-                const int squareX = i->x * 32 - (int) mPixelViewX + 12;
-                const int squareY = i->y * 32 - (int) mPixelViewY + 12;
+                const int squareX = i->x * tileWidth - (int) mPixelViewX + 
+                                    (tileWidth / 2) - 4;
+                const int squareY = i->y * tileHeight - (int) mPixelViewY +
+                                    (tileHeight / 2) - 4;
 
                 g->fillRectangle(gcn::Rectangle(squareX, squareY, 8, 8));
                 g->drawText(toString(mCurrentMap->getMetaTile(i->x, i->y)->Gcost),
-                                   squareX + 4, squareY + 12,
+                                   squareX + 4, squareY + (tileHeight / 2) - 4,
                                    gcn::Graphics::CENTER);
             }
         }
@@ -249,6 +266,8 @@ void Viewport::logic()
 
     const int mouseX = gui->getMouseX();
     const int mouseY = gui->getMouseY();
+    const int tileWidth = mCurrentMap->getTileWidth();
+    const int tileHeight = mCurrentMap->getTileHeight();
     const Uint8 button = gui->getButtonState();
 
     if (!mCurrentMap || !player_node)
@@ -257,8 +276,8 @@ void Viewport::logic()
     if (mPlayerFollowMouse && button & SDL_BUTTON(1) &&
         mWalkTime != player_node->mWalkTime)
     {
-        player_node->setDestination(mouseX / 32 + mTileViewX,
-                                    mouseY / 32 + mTileViewY);
+        player_node->setDestination(mouseX / tileWidth + mTileViewX,
+                                    mouseY / tileHeight + mTileViewY);
         mWalkTime = player_node->mWalkTime;
     }
 }
@@ -274,8 +293,10 @@ void Viewport::mousePressed(gcn::MouseEvent &event)
 
     mPlayerFollowMouse = false;
 
-    const int tilex = event.getX() / 32 + mTileViewX;
-    const int tiley = event.getY() / 32 + mTileViewY;
+    const int tileWidth = mCurrentMap->getTileWidth();
+    const int tileHeight = mCurrentMap->getTileHeight();
+    const int tilex = event.getX() / tileWidth + mTileViewX;
+    const int tiley = event.getY() / tileHeight + mTileViewY;
     const int x = (int)((float) event.getX() + mPixelViewX);
     const int y = (int)((float) event.getY() + mPixelViewY);
 
@@ -361,8 +382,10 @@ void Viewport::mouseDragged(gcn::MouseEvent &event)
 
     if (mPlayerFollowMouse && mWalkTime == player_node->mWalkTime)
     {
-        int destX = event.getX() / 32 + mTileViewX;
-        int destY = event.getY() / 32 + mTileViewY;
+        const int tileWidth = mCurrentMap->getTileWidth();
+        const int tileHeight = mCurrentMap->getTileHeight();
+        int destX = event.getX() / tileWidth + mTileViewX;
+        int destY = event.getY() / tileHeight + mTileViewY;
         player_node->setDestination(destX, destY);
     }
 }
@@ -394,8 +417,8 @@ void Viewport::closePopupMenu()
 
 void Viewport::optionChanged(const std::string &name)
 {
-    mScrollLaziness = config.getValue("ScrollLaziness", 32);
-    mScrollRadius = config.getValue("ScrollRadius", 32);
+    mScrollLaziness = config.getValue("ScrollLaziness", 16);
+    mScrollRadius = config.getValue("ScrollRadius", 0);
 }
 
 bool Viewport::changeMap(const std::string &path)

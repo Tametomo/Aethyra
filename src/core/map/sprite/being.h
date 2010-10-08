@@ -136,7 +136,13 @@ class Being : public Sprite
         /**
          * Directions, to be used as bitmask values
          */
-        enum { DOWN = 1, LEFT = 2, UP = 4, RIGHT = 8 };
+        enum Direction
+        {
+            DOWN = 1,
+            LEFT = 2,
+            UP = 4,
+            RIGHT = 8
+        };
 
         Uint16 mJob;          /**< Job (player job, npc, monster, ) */
         Uint16 mX, mY;        /**< Tile coordinates */
@@ -350,12 +356,12 @@ class Being : public Sprite
         /**
          * Get the current X pixel offset.
          */
-        const int getXOffset() const { return getOffset(LEFT, RIGHT); }
+        const int getXOffset() const;
 
         /**
          * Get the current Y pixel offset.
          */
-        const int getYOffset() const { return getOffset(UP, DOWN); }
+        const int getYOffset() const;
 
         /**
          * Returns the horizontal size of the current base sprite of the being
@@ -440,11 +446,6 @@ class Being : public Sprite
         ParticleList mChildParticleEffects;
 
     private:
-        /**
-         * Calculates the offset in the given directions.
-         * If walking in direction 'neg' the value is negated.
-         */
-        const int getOffset(const char &pos, const char &neg) const;
 
         // Speech Bubble components
         SpeechBubble *mSpeechBubble;

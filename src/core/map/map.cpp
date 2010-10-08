@@ -104,9 +104,11 @@ void TileAnimation::update(const int ticks)
 }
 
 MapLayer::MapLayer(const int x, const int y, const int width, const int height,
+                   const int tileWidth, const int tileHeight,
                    const bool isFringeLayer, const bool isVisible):
     mX(x), mY(y),
     mWidth(width), mHeight(height),
+    mTileWidth(tileWidth), mTileHeight(tileHeight),
     mIsFringeLayer(isFringeLayer),
     mIsVisible(isVisible)
 {
@@ -158,7 +160,8 @@ void MapLayer::draw(Graphics *graphics, int startX, int startY,
         // tiles have been drawn
         if (mIsFringeLayer)
         {
-            while (si != sprites.end() && (*si)->getPixelY() <= y * 32 - 32)
+            while (si != sprites.end() &&
+                  (*si)->getPixelY() <= y * mTileHeight - mTileHeight)
             {
                 (*si)->draw(graphics, -scrollX, -scrollY);
                 si++;
@@ -170,8 +173,9 @@ void MapLayer::draw(Graphics *graphics, int startX, int startY,
             Image *img = getTile(x, y);
             if (img)
             {
-                const int px = (x + mX) * 32 - scrollX;
-                const int py = (y + mY) * 32 - scrollY + 32 - img->getHeight();
+                const int px = (x + mX) * mTileWidth - scrollX;
+                const int py = (y + mY) * mTileHeight - scrollY + mTileHeight -
+                               img->getHeight();
                 graphics->drawImage(img, px, py);
             }
         }

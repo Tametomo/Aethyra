@@ -38,6 +38,8 @@
 
 #include "../../core/log.h"
 
+#include "../../core/map/map.h"
+
 #include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/dtor.h"
@@ -405,9 +407,11 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
 
                     if (target)
                     {
-                        viewport->showPopup(target->mX * 32 -
-                                            viewport->getCameraX() + 16,
-                                            target->mY * 32 -
+                        Map *map = viewport->getMap();
+                        viewport->showPopup(target->mX * map->getTileWidth() -
+                                            viewport->getCameraX() +
+                                           (map->getTileWidth() / 2),
+                                            target->mY * map->getTileHeight() -
                                             viewport->getCameraY(), target);
                     }
                     used = true;

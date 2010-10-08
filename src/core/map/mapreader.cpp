@@ -221,6 +221,8 @@ void MapReader::readLayer(const xmlNodePtr &node, Map *map)
     // Layers are not necessarily the same size as the map
     const int w = XML::getProperty(node, "width", map->getWidth());
     const int h = XML::getProperty(node, "height", map->getHeight());
+    const int tw = XML::getProperty(node, "tilewidth", map->getTileWidth());
+    const int th = XML::getProperty(node, "tileheight", map->getTileHeight());
     const int offsetX = XML::getProperty(node, "x", 0);
     const int offsetY = XML::getProperty(node, "y", 0);
     std::string name = XML::getProperty(node, "name", "");
@@ -234,7 +236,8 @@ void MapReader::readLayer(const xmlNodePtr &node, Map *map)
 
     if (!isCollisionLayer)
     {
-        layer = new MapLayer(offsetX, offsetY, w, h, isFringeLayer, isVisible);
+        layer = new MapLayer(offsetX, offsetY, w, h, tw, th, isFringeLayer,
+                             isVisible);
         map->addLayer(layer);
     }
 

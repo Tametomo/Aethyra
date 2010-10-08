@@ -121,7 +121,7 @@ void BeingBox::draw(gcn::Graphics *graphics)
         // Draw being
         int x, y, bs;
         bs = getFrameSize();
-        x = getWidth() / 2 - 16 + bs;
+        x = (getWidth() - (mBeing->getWidth() / 2)) / 2 + bs;
         y = getHeight() / 2 + bs;
         for (int i = 0; i < Being::VECTOREND_SPRITE; i++)
         {

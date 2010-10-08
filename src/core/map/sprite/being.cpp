@@ -65,12 +65,6 @@
 
 int Being::mNumberOfHairstyles = 1;
 
-static const int X_SPEECH_OFFSET = 18;
-static const int Y_SPEECH_OFFSET = 60;
-
-static const int DEFAULT_WIDTH = 32;
-static const int DEFAULT_HEIGHT = 32;
-
 Being::Being(const int id, const int job, Map *map):
     mJob(job),
     mX(0), mY(0),
@@ -419,8 +413,8 @@ void Being::logic()
     int oldPy = mPy;
 
     // Update pixel coordinates
-    mPx = mX * 32 + getXOffset();
-    mPy = mY * 32 + getYOffset();
+    mPx = mX * mMap->getTileWidth() + getXOffset();
+    mPy = mY * mMap->getTileHeight() + getYOffset();
 
     if (mPx != oldPx || mPy != oldPy)
         updateCoords();
@@ -443,7 +437,8 @@ void Being::logic()
     }
 
     // Update particle effects
-    mChildParticleEffects.moveTo((float) mPx + 16.0f, (float) mPy + 32.0f);
+    mChildParticleEffects.moveTo((float) mPx + ((float) mMap->getTileWidth() / 2),
+                                 (float) mPy + ((float) mMap->getTileHeight()));
 }
 
 void Being::draw(Graphics *graphics, const int offsetX,
@@ -469,7 +464,7 @@ void Being::drawEmotion(Graphics *graphics, const int offsetX,
         return;
 
     const int px = mPx - offsetX;
-    const int py = mPy - offsetY - 64;
+    const int py = mPy - offsetY - getHeight();
     const int emotionIndex = mEmotion - 1;
     const AnimatedSprite *sprite = EmoteDB::getAnimation(emotionIndex);
 
@@ -492,8 +487,8 @@ void Being::drawSpeech(const int offsetX, const int offsetY)
 
         const bool hasCaption = (mSpeechBubble->getCaption() != "");
         const bool showName = (speech == NAME_IN_BUBBLE);
-        const int width = 16;
-        const int height = getHeight() - 32;
+        const int width = mMap->getTileWidth() / 2;
+        const int height = getHeight() - mMap->getTileHeight();
 
         if (mOldSpeech != mSpeech || mText)
         {
@@ -517,7 +512,7 @@ void Being::drawSpeech(const int offsetX, const int offsetY)
     else if (mSpeechTime > 0 && speech == TEXT_OVERHEAD)
     {
         if (mSpeech == mOldSpeech && mText)
-            mText->adviseXY(mPx + X_SPEECH_OFFSET, mPy - Y_SPEECH_OFFSET);
+            mText->adviseXY(mPx + ((getHeight() + 4) / 2), mPy - getHeight() - 4);
         else
         {
             // don't introduce a memory leak
@@ -528,8 +523,8 @@ void Being::drawSpeech(const int offsetX, const int offsetY)
 
             mOldSpeech = mSpeech;
 
-            mText = new Text(mSpeech, mPx + X_SPEECH_OFFSET, mPy - Y_SPEECH_OFFSET,
-                             gcn::Graphics::CENTER,
+            mText = new Text(mSpeech, mPx + ((getHeight() + 4) / 2), mPy -
+                             getHeight() - 4, gcn::Graphics::CENTER,
                              &guiPalette->getColor(Palette::PARTICLE));
         }
     }
@@ -556,21 +551,43 @@ void Being::setWalkSpeed(const Uint16 &speed)
     mWalkSpeed = speed > 0 ? speed <= 1000 ? speed : 1000 : 1;
 }
 
-const int Being::getOffset(const char &pos, const char &neg) const
+const int Being::getXOffset() const
 {
     // Check whether we're walking in the requested direction
-    if (mAction != WALK || !(mDirection & (pos | neg)))
+    if (mAction != WALK || !(mDirection & (LEFT | RIGHT)))
         return 0;
 
-    int offset = (get_elapsed_time(mWalkTime) * 32) / mWalkSpeed;
+    int offset = (get_elapsed_time(mWalkTime) * mMap->getTileWidth()) /
+                 mWalkSpeed;
 
     // We calculate the offset _from_ the _target_ location
-    offset -= 32;
+    offset -= mMap->getTileWidth();
     if (offset > 0)
         offset = 0;
 
     // Going into negative direction? Invert the offset.
-    if (mDirection & pos)
+    if (mDirection & LEFT)
+        offset = -offset;
+
+    return offset;
+}
+
+const int Being::getYOffset() const
+{
+    // Check whether we're walking in the requested direction
+    if (mAction != WALK || !(mDirection & (UP | DOWN)))
+        return 0;
+
+    int offset = (get_elapsed_time(mWalkTime) * mMap->getTileHeight()) /
+                 mWalkSpeed;
+
+    // We calculate the offset _from_ the _target_ location
+    offset -= mMap->getTileHeight();
+    if (offset > 0)
+        offset = 0;
+
+    // Going into negative direction? Invert the offset.
+    if (mDirection & UP)
         offset = -offset;
 
     return offset;
@@ -578,18 +595,30 @@ const int Being::getOffset(const char &pos, const char &neg) const
 
 const int Being::getWidth() const
 {
-    if (AnimatedSprite *base = mSprites[BASE_SPRITE])
-        return std::max(base->getWidth(), DEFAULT_WIDTH);
+    AnimatedSprite *base = mSprites[BASE_SPRITE];
+
+    if (mMap && base)
+        return std::max(base->getWidth(), mMap->getTileWidth());
+    else if (mMap)
+        return mMap->getTileWidth();
+    else if (!mMap && base)
+        return std::max(base->getWidth(), 1);
     else
-        return DEFAULT_WIDTH;
+        return 1;
 }
 
 const int Being::getHeight() const
 {
-    if (AnimatedSprite *base = mSprites[BASE_SPRITE])
-        return std::max(base->getHeight(), DEFAULT_HEIGHT);
+    AnimatedSprite *base = mSprites[BASE_SPRITE];
+
+    if (mMap && base)
+        return std::max(base->getHeight(), mMap->getTileHeight());
+    else if (mMap)
+        return mMap->getTileHeight();
+    else if (!mMap && base)
+        return std::max(base->getHeight(), 1);
     else
-        return DEFAULT_HEIGHT;
+        return 1;
 }
 
 void Being::setTargetAnimation(SimpleAnimation* animation)

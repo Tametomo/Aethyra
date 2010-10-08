@@ -98,6 +98,7 @@ class MapLayer
          * There can be only one fringe layer per map.
          */
         MapLayer(const int x, const int y, const int width, const int height,
+                 const int tileWidth, const int tileHeight,
                  const bool isFringeLayer, const bool isVisible = true);
 
         /**
@@ -135,6 +136,7 @@ class MapLayer
     private:
         int mX, mY;
         int mWidth, mHeight;
+        int mTileWidth, mTileHeight;
         bool mIsFringeLayer;    /**< Whether the sprites are drawn. */
         bool mIsVisible;
         Image **mTiles;
