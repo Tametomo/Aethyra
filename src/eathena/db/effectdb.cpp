@@ -57,8 +57,6 @@ void EffectDB::load()
 
     for_each_xml_child_node(node, root)
     {
-        //int id;
-
         if (xmlStrEqual(node->name, BAD_CAST "effect"))
         {
             EffectDescription ed;

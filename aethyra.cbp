@@ -14,7 +14,6 @@
 				<Compiler>
 					<Add option="-DCODEBLOCKS" />
 					<Add option="-DENABLE_NLS" />
-					<Add option="-DNOGDI" />
 					<Add option="-DUSE_OPENGL" />
 					<Add option="-DWIN32" />
 					<Add directory="include\SDL" />
@@ -24,6 +23,7 @@
 					<Add option="-Wl,-u,_WinMain@16" />
 					<Add library="curl" />
 					<Add library="guichan" />
+					<Add library="iconv" />
 					<Add library="intl" />
 					<Add library="mingw32" />
 					<Add library="opengl32" />

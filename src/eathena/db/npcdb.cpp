@@ -22,10 +22,13 @@
 
 #include "npcdb.h"
 
+#include "../statemanager.h"
+
 #include "../../core/log.h"
 
 #include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
+#include "../../core/utils/stringutils.h"
 #include "../../core/utils/xml.h"
 
 namespace
@@ -51,7 +54,12 @@ void NPCDB::load()
     const xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "npcs"))
+    {
         logger->error(_("NPC Database: Error while loading npcs.xml!"));
+        stateManager->handleException(strprintf(_("Unable to load %s database"),
+                                                _("NPC")), LOGOUT_STATE);
+        return;
+    }
 
     //iterate <npc>s
     for_each_xml_child_node(npcNode, rootNode)

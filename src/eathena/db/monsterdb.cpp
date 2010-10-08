@@ -23,10 +23,13 @@
 #include "monsterdb.h"
 #include "monsterinfo.h"
 
+#include "../statemanager.h"
+
 #include "../../core/log.h"
 
 #include "../../core/utils/dtor.h"
 #include "../../core/utils/gettext.h"
+#include "../../core/utils/stringutils.h"
 #include "../../core/utils/xml.h"
 
 namespace
@@ -50,7 +53,12 @@ void MonsterDB::load()
     const xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "monsters"))
+    {
         logger->error("Monster Database: Error while loading monster.xml!");
+        stateManager->handleException(strprintf(_("Unable to load %s database"),
+                                                _("Mob")), LOGOUT_STATE);
+        return;
+    }
 
     //iterate <monster>s
     for_each_xml_child_node(monsterNode, rootNode)

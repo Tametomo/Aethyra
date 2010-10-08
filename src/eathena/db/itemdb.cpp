@@ -26,6 +26,8 @@
 
 #include "itemdb.h"
 
+#include "../statemanager.h"
+
 #include "../../core/log.h"
 
 #include "../../core/utils/dtor.h"
@@ -68,7 +70,12 @@ void ItemDB::load()
     const xmlNodePtr rootNode = doc.rootNode();
 
     if (!rootNode || !xmlStrEqual(rootNode->name, BAD_CAST "items"))
+    {
         logger->error("ItemDB: Error while loading items.xml!");
+        stateManager->handleException(strprintf(_("Unable to load %s database"),
+                                                _("Item")), LOGOUT_STATE);
+        return;
+    }
 
     for_each_xml_child_node(node, rootNode)
     {
