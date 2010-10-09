@@ -31,11 +31,11 @@
 
 class ModeListModel;
 
-class Setup_Gui : public SetupTabContainer, public gcn::ActionListener
+class Setup_Display : public SetupTabContainer, public gcn::ActionListener
 {
     public:
-        Setup_Gui();
-        ~Setup_Gui();
+        Setup_Display();
+        ~Setup_Display();
 
         void apply();
         void cancel();

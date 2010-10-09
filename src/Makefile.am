@@ -48,8 +48,8 @@ aethyra_SOURCES = \
 	      bindings/guichan/dialogs/tabs/setup_audio.h \
 	      bindings/guichan/dialogs/tabs/setup_colors.cpp \
 	      bindings/guichan/dialogs/tabs/setup_colors.h \
-	      bindings/guichan/dialogs/tabs/setup_gui.cpp \
-	      bindings/guichan/dialogs/tabs/setup_gui.h \
+	      bindings/guichan/dialogs/tabs/setup_display.cpp \
+	      bindings/guichan/dialogs/tabs/setup_display.h \
 	      bindings/guichan/dialogs/tabs/setup_input.cpp \
 	      bindings/guichan/dialogs/tabs/setup_input.h \
 	      bindings/guichan/handlers/focushandler.cpp \

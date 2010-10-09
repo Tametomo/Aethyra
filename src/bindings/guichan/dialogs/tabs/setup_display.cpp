@@ -22,7 +22,7 @@
 
 #include <string>
 
-#include "setup_gui.h"
+#include "setup_display.h"
 
 #include "../okdialog.h"
 
@@ -54,7 +54,7 @@
 #include "../../../../../config.h"
 #endif
 
-Setup_Gui::Setup_Gui():
+Setup_Display::Setup_Display():
     mFullScreenEnabled(config.getValue("screen", false)),
     mOpenGLEnabled(config.getValue("opengl", 0)),
     mCustomCursorEnabled(config.getValue("customcursor", true)),
@@ -76,7 +76,7 @@ Setup_Gui::Setup_Gui():
     mFontSizeSlider(new Slider(8, 14)),
     mFontSizeLabel(new Label())
 {
-    setName(_("GUI"));
+    setName(_("Display"));
 
     mScrollArea = new ScrollArea(mModeList);
     mScrollArea->setHorizontalScrollPolicy(gcn::ScrollArea::SHOW_NEVER);
@@ -128,12 +128,12 @@ Setup_Gui::Setup_Gui():
     setDimension(gcn::Rectangle(0, 0, 325, 200));
 }
 
-Setup_Gui::~Setup_Gui()
+Setup_Display::~Setup_Display()
 {
     delete mModeListModel;
 }
 
-void Setup_Gui::fontChanged()
+void Setup_Display::fontChanged()
 {
     SetupTabContainer::fontChanged();
 
@@ -166,7 +166,7 @@ void Setup_Gui::fontChanged()
     restoreFocus();
 }
 
-void Setup_Gui::apply()
+void Setup_Display::apply()
 {
     const std::string mode = mModeListModel->getElementAt(mModeList->getSelected());
 
@@ -249,7 +249,7 @@ void Setup_Gui::apply()
     mFontSize = config.getValue("fontSize", 11);
 }
 
-void Setup_Gui::cancel()
+void Setup_Display::cancel()
 {
     gui->resize(mScreenWidth, mScreenHeight);
 
@@ -279,7 +279,7 @@ void Setup_Gui::cancel()
     config.setValue("mousealpha", mMouseOpacity);
 }
 
-void Setup_Gui::action(const gcn::ActionEvent &event)
+void Setup_Display::action(const gcn::ActionEvent &event)
 {
     if (event.getId() == "videomode")
     {

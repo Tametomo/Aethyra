@@ -139,8 +139,8 @@
 		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_audio.h" />
 		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_colors.cpp" />
 		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_colors.h" />
-		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_gui.cpp" />
-		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_gui.h" />
+		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_display.cpp" />
+		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_display.h" />
 		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_input.cpp" />
 		<Unit filename="src\bindings\guichan\dialogs\tabs\setup_input.h" />
 		<Unit filename="src\bindings\guichan\handlers\focushandler.cpp" />
