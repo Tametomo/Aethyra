@@ -90,14 +90,23 @@ class TabConfigListener : public ConfigListener
 };
 
 Tab::Tab() :
-    gcn::Tab(),
-    mTabColor(&guiPalette->getColor(Palette::TEXT))
+    gcn::BasicContainer(),
+    mTabColor(&guiPalette->getColor(Palette::TEXT)),
+    mHighlighted(false),
+    mHasMouse(false),
+    mTabbedArea(NULL)
 {
     init();
 }
 
 Tab::~Tab()
 {
+    if (mTabbedArea)
+        mTabbedArea->removeTab(this);
+
+    remove(mLabel);
+    destroy(mLabel);
+
     mInstances--;
 
     if (mInstances == 0)
@@ -110,11 +119,23 @@ Tab::~Tab()
     }
 }
 
+void Tab::adjustSize()
+{
+    setSize(mLabel->getWidth() + 8, mLabel->getHeight() + 8);
+
+    if (mTabbedArea != NULL)
+        mTabbedArea->adjustTabPositions();
+}
+
 void Tab::init()
 {
     setFocusable(false);
     setFrameSize(0);
     mHighlighted = false;
+    mLabel = new Label();
+    mLabel->setPosition(4, 4);
+    add(mLabel);
+    addMouseListener(this);
 
     if (mInstances == 0)
     {
@@ -190,6 +211,13 @@ void Tab::draw(gcn::Graphics *graphics)
     drawChildren(graphics);
 }
 
+void Tab::setCaption(const std::string& caption)
+{
+    mLabel->setCaption(caption);
+    mLabel->adjustSize();
+    adjustSize();
+}
+
 void Tab::setTabColor(const gcn::Color *color)
 {
     mTabColor = color;
@@ -202,8 +230,18 @@ void Tab::setHighlighted(bool high)
 
 void Tab::fontChanged()
 {
-    gcn::Tab::fontChanged();
+    gcn::BasicContainer::fontChanged();
 
     mLabel->adjustSize();
     adjustSize();
+}
+
+void Tab::mouseEntered(gcn::MouseEvent& mouseEvent)
+{
+    mHasMouse = true;
+}
+
+void Tab::mouseExited(gcn::MouseEvent& mouseEvent)
+{
+    mHasMouse = false;
 }

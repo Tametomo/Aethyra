@@ -63,11 +63,10 @@ Setup::Setup():
     mTabs.push_back(new Setup_Input());
     mTabs.push_back(new Setup_Colors());
 
-    for (std::list<SetupTabContainer*>::iterator i = mTabs.begin(),
-         i_end = mTabs.end(); i != i_end; ++i)
+    for (std::list<SetupTabContainer*>::iterator tab = mTabs.begin(),
+         tab_end = mTabs.end(); tab != tab_end; ++tab)
     {
-        SetupTabContainer *tab = *i;
-        mPanel->addTab(tab->getName(), tab);
+        mPanel->addTab((*tab)->getName(), *tab);
     }
 
     for (int i = 0; buttonNames[i] != NULL; ++i)
@@ -118,7 +117,7 @@ void Setup::addTab(SetupTabContainer *tab)
 
 void Setup::removeTab(SetupTabContainer *tab)
 {
-    gcn::Tab* tabToDelete = mPanel->getTab(tab->getName());
+    Tab* tabToDelete = mPanel->getTab(tab->getName());
     mPanel->removeTab(tabToDelete);
 
     for (std::list<SetupTabContainer*>::iterator i = mTabs.begin(),

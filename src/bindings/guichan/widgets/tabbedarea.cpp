@@ -1,9 +1,9 @@
 /*
  *  Aethyra
- *  Copyright (C) 2008  The Mana World Development Team
+ *  Copyright (c) 2004 - 2008 Olof Naessén and Per Larsson
+ *  Copyright (C) 2010  Aethyra Development Team
  *
- *  This file is part of Aethyra based on original code
- *  from The Mana World.
+ *  This file is part of Aethyra.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,8 +22,7 @@
 
 #include <guichan/focushandler.hpp>
 
-#include <guichan/widgets/container.hpp>
-
+#include "container.h"
 #include "tab.h"
 #include "tabbedarea.h"
 
@@ -34,9 +33,20 @@
 #include "../../../core/utils/dtor.h"
 
 TabbedArea::TabbedArea() :
-    gcn::TabbedArea()
+    Container(),
+    mSelectedTab(NULL)
 {
+    setFocusable(true);
+    addKeyListener(this);
+    addMouseListener(this);
+
+    mTabContainer = new Container();
+    mTabContainer->setOpaque(false);
+    mWidgetContainer = new Container();
     mWidgetContainer->setOpaque(false);
+
+    add(mTabContainer);
+    add(mWidgetContainer);
 
     mProtFocusListener = new ProtectedFocusListener();
 
@@ -50,6 +60,9 @@ TabbedArea::TabbedArea() :
 
 TabbedArea::~TabbedArea()
 {
+    mTabContainer->clear(); // Avoid deleting tabs which this class didn't create
+    mWidgetContainer->clear();
+
     if (mFocusHandler && mFocusHandler->isFocused(this))
         mFocusHandler->focusNone();
 
@@ -57,45 +70,14 @@ TabbedArea::~TabbedArea()
     destroy(mProtFocusListener);
 }
 
-int TabbedArea::getNumberOfTabs()
+void TabbedArea::logic()
 {
-    return mTabs.size();
-}
-
-gcn::Tab* TabbedArea::getTab(const std::string &name)
-{
-    TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end();
-    while (itr != itr_end)
-    {
-        if ((*itr).first->getCaption() == name)
-            return static_cast<Tab*>((*itr).first);
-
-        ++itr;
-    }
-    return NULL;
-}
-
-void TabbedArea::draw(gcn::Graphics *graphics)
-{
-    if (mTabs.empty())
+    if (!isVisible())
         return;
 
-    drawChildren(graphics);
+    gcn::BasicContainer::logic();
 }
 
-gcn::Widget* TabbedArea::getWidget(const std::string &name)
-{
-    TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end();
-    while (itr != itr_end)
-    {
-        if ((*itr).first->getCaption() == name)
-            return (*itr).second;
-
-        ++itr;
-    }
-
-    return NULL;
-}
 
 void TabbedArea::addTab(const std::string &caption, gcn::Widget *widget)
 {
@@ -121,49 +103,204 @@ void TabbedArea::addTab(Tab *tab, gcn::Widget *widget)
     adjustSize();
 }
 
-void TabbedArea::removeTab(gcn::Tab *tab)
+void TabbedArea::removeTab(Tab *tab)
 {
-    mDeathList.push_back(tab);
-
-    int tabIndexToBeSelected = - 1;
-
-    if (tab == mSelectedTab)
-    {
-        int index = getSelectedTabIndex();
-
-        if (index == (int)mTabs.size() - 1 && mTabs.size() >= 2)
-            tabIndexToBeSelected = index--;
-        else if (index == (int)mTabs.size() - 1 && mTabs.size() == 1)
-            tabIndexToBeSelected = -1;
-        else
-            tabIndexToBeSelected = index;
-    }
-
-    if (tabIndexToBeSelected == -1)
-    {
-        mSelectedTab = NULL;
-        mWidgetContainer->clear();
-    }
-    else
-        setSelectedTab(tabIndexToBeSelected);
-}
-
-void TabbedArea::logic()
-{
-    for (std::list<gcn::Tab*>::iterator i = mDeathList.begin();
-         i != mDeathList.end(); i++)
-    {
-        gcn::TabbedArea::removeTab(*i);
-    }
-
-    mDeathList.clear();
-
-    if (!isVisible())
+    // If the tab isn't contained in this tabbed area, ignore the removal
+    // request
+    if (!contains(tab))
         return;
 
-    gcn::TabbedArea::logic();
+    // Ensure that we only permanently delete tabs which we created locally
+    std::list<Tab*>::iterator itr = mTabsToDelete.begin(),
+                              itr_end = mTabsToDelete.end();
+    while (itr != itr_end)
+    {
+        if (*itr == tab)
+        {
+            mTabContainer->scheduleDelete(tab);
+            break;
+        }
 
-    logicChildren();
+        ++itr;
+    }
+
+    // Change the selected tab if the tab to be deleted is currently selected
+    TabContainer::iterator tabItr = getTabIterator(tab);
+    if (tab == mSelectedTab)
+    {
+        if (tabItr != mTabs.end())
+        {
+            setSelectedTab((*(++tabItr)).first);
+            --tabItr;
+        }
+        else if (mTabs.size() > 1)
+            setSelectedTab((*(--mTabs.end())).first);
+        else
+            setSelectedTab(NULL);
+    }
+
+    tabItr = mTabs.erase(tabItr);
+}
+
+void TabbedArea::setSelectedTab(Tab* tab)
+{
+    if (mSelectedTab)
+        mWidgetContainer->remove(getWidget(mSelectedTab->getCaption()));
+
+    // Check if the tab is in this tabbed area
+    if (contains(tab))
+        mSelectedTab = tab;
+
+    if (mSelectedTab)
+        mWidgetContainer->add(getWidget(mSelectedTab->getCaption()));
+}
+
+Tab* TabbedArea::getTab(const std::string &name)
+{
+    TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end();
+    while (itr != itr_end)
+    {
+        if (itr->first->getCaption() == name)
+            return itr->first;
+
+        ++itr;
+    }
+    return NULL;
+}
+
+gcn::Widget* TabbedArea::getWidget(const std::string &name)
+{
+    TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end();
+    while (itr != itr_end)
+    {
+        if (itr->first->getCaption() == name)
+            return itr->second;
+
+        ++itr;
+    }
+
+    return NULL;
+}
+
+void TabbedArea::draw(gcn::Graphics *graphics)
+{
+    if (mTabs.empty())
+        return;
+
+    drawChildren(graphics);
+}
+
+bool TabbedArea::contains(Tab *tab)
+{
+    TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end();
+    bool contained = false;
+
+    while (itr != itr_end)
+    {
+        if (itr->first == tab)
+        {
+            contained = true;
+            break;
+        }
+
+        ++itr;
+    }
+
+    return contained;
+}
+
+void TabbedArea::setWidth(int width)
+{
+    // This may seem odd, but we want the TabbedArea to adjust
+    // it's size properly before we call Widget::setWidth as
+    // Widget::setWidth might distribute a resize event.
+    gcn::Rectangle dim = mDimension;
+    mDimension.width = width;
+    adjustSize();
+    mDimension = dim;
+    gcn::Widget::setWidth(width);
+}
+
+void TabbedArea::setHeight(int height)
+{
+    // This may seem odd, but we want the TabbedArea to adjust
+    // it's size properly before we call Widget::setHeight as
+    // Widget::setHeight might distribute a resize event.
+    gcn::Rectangle dim = mDimension;
+    mDimension.height = height;
+    mDimension = dim;
+    gcn::Widget::setHeight(height);
+}
+
+void TabbedArea::setSize(int width, int height)
+{
+    // This may seem odd, but we want the TabbedArea to adjust
+    // it's size properly before we call Widget::setSize as
+    // Widget::setSize might distribute a resize event.
+    gcn::Rectangle dim = mDimension;
+    mDimension.width = width;
+    mDimension.height = height;
+    adjustSize();
+    mDimension = dim;
+    gcn::Widget::setSize(width, height);
+}
+
+void TabbedArea::setDimension(const gcn::Rectangle& dimension)
+{
+    // This may seem odd, but we want the TabbedArea to adjust
+    // it's size properly before we call Widget::setDimension as
+    // Widget::setDimension might distribute a resize event.
+    gcn::Rectangle dim = mDimension;
+    mDimension = dimension;
+    adjustSize();
+    mDimension = dim;
+    gcn::Widget::setDimension(dimension);      
+}
+
+void TabbedArea::fontChanged()
+{
+    gcn::BasicContainer::fontChanged();
+
+    adjustTabPositions();
+    adjustSize();
+}
+
+void TabbedArea::action(const gcn::ActionEvent& actionEvent)
+{
+    gcn::Widget* source = actionEvent.getSource();
+    Tab* tab = dynamic_cast<Tab*>(source);
+
+    if (tab != NULL)
+        setSelectedTab(tab);
+}
+
+void TabbedArea::keyPressed(gcn::KeyEvent& keyEvent)
+{
+    if (keyEvent.isConsumed() || !isFocused())
+        return;
+
+    if (keyEvent.getKey().getValue() == Key::LEFT)
+    {
+        TabContainer::iterator index = getTabIterator(mSelectedTab);
+
+        if (index != mTabs.begin())
+            setSelectedTab((--index)->first);
+        else
+            setSelectedTab((--mTabs.end())->first);
+
+        keyEvent.consume();
+    }
+    else if (keyEvent.getKey().getValue() == Key::RIGHT)
+    {
+        TabContainer::iterator index = getTabIterator(mSelectedTab);
+
+        if (index != (--mTabs.end()))
+            setSelectedTab((++index)->first);
+        else
+            setSelectedTab(mTabs.begin()->first);
+
+        keyEvent.consume();
+    }
 }
 
 void TabbedArea::mousePressed(gcn::MouseEvent &mouseEvent)
@@ -175,7 +312,7 @@ void TabbedArea::mousePressed(gcn::MouseEvent &mouseEvent)
     {
         gcn::Widget* widget = mTabContainer->getWidgetAt(mouseEvent.getX(),
                                                          mouseEvent.getY());
-        gcn::Tab* tab = dynamic_cast<gcn::Tab*>(widget);
+        Tab* tab = dynamic_cast<Tab*>(widget);
 
         if (tab != NULL)
         {
@@ -185,41 +322,63 @@ void TabbedArea::mousePressed(gcn::MouseEvent &mouseEvent)
     }
 }
 
-void TabbedArea::keyPressed(gcn::KeyEvent& keyEvent)
+TabbedArea::TabContainer::iterator TabbedArea::getTabIterator(Tab *tab)
 {
-    if (keyEvent.isConsumed() || !isFocused())
-        return;
+    TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end(),
+                           itr_ret = itr_end;
 
-    if (keyEvent.getKey().getValue() == Key::LEFT)
+    while (itr != itr_end)
     {
-        int index = getSelectedTabIndex();
-        index--;
+        if (itr->first == tab)
+        {
+            itr_ret = itr;
+            break;
+        }
 
-        if (index < 0)
-            setSelectedTab(mTabs[mTabs.size() - 1].first);
-        else
-            setSelectedTab(mTabs[index].first);
-
-        keyEvent.consume();
+        ++itr;
     }
-    else if (keyEvent.getKey().getValue() == Key::RIGHT)
+
+    return itr;
+}
+
+int TabbedArea::getMaxTabHeight()
+{
+    int maxTabHeight = 0;
+
+    TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end();
+    while (itr != itr_end)
     {
-        int index = getSelectedTabIndex();
-        index++;
+        if (itr->first->getHeight() > maxTabHeight)
+            maxTabHeight = itr->first->getHeight();
 
-        if (index >= (int) mTabs.size())
-            setSelectedTab(mTabs[0].first);
-        else
-            setSelectedTab(mTabs[index].first);
+        ++itr;
+    }
 
-        keyEvent.consume();
+    return maxTabHeight;
+}
+
+void TabbedArea::adjustSize()
+{
+    int maxTabHeight = getMaxTabHeight();
+
+    mTabContainer->setSize(getWidth() - 2, maxTabHeight);
+    mWidgetContainer->setPosition(1, maxTabHeight + 1);
+    mWidgetContainer->setSize(getWidth() - 2, getHeight() - maxTabHeight - 2);
+}
+
+void TabbedArea::adjustTabPositions()
+{
+    int maxTabHeight = getMaxTabHeight();
+    int x = 0;
+
+    TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end();
+    while (itr != itr_end)
+    {
+         Tab* tab = itr->first;
+         tab->setPosition(x, maxTabHeight - tab->getHeight());
+         x += tab->getWidth();
+
+         itr++;
     }
 }
 
-void TabbedArea::fontChanged()
-{
-    gcn::TabbedArea::fontChanged();
-
-    adjustTabPositions();
-    adjustSize();
-}

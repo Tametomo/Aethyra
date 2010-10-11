@@ -23,15 +23,20 @@
 #ifndef TAB_H
 #define TAB_H
 
-#include <guichan/widgets/tab.hpp>
+#include <guichan/basiccontainer.hpp>
+#include <guichan/mouselistener.hpp>
+
+#include "label.h"
 
 class ImageRect;
+class TabbedArea;
 class TabConfigListener;
 
 /**
- * A tab, the same as the guichan tab in 0.8, but extended to allow transparancy
+ * A tab, the same as the guichan tab in 0.8, but extended to allow
+ * transparancy, and to use our TabbedArea
  */
-class Tab : public gcn::Tab
+class Tab : public gcn::BasicContainer, public gcn::MouseListener
 {
     public:
         friend class TabConfigListener;
@@ -44,7 +49,33 @@ class Tab : public gcn::Tab
         /**
          * Destructor.
          */
-        ~Tab();
+        virtual ~Tab();
+
+        /**
+         * Adjusts the size of the tab to fit the caption. If this tab was
+         * added to a TabbedArea, it will also adjust the tab positions.
+         */
+        void adjustSize();
+
+        /**
+         * Sets the tabbed area for the tab.
+         */
+        void setTabbedArea(TabbedArea* tabbedArea) { mTabbedArea = tabbedArea; }
+
+        /**
+         * Gets the tabbed area the tab is a part of.
+         */
+        TabbedArea* getTabbedArea() const { return mTabbedArea; }
+
+        /**
+         * Sets the caption of the tab.
+         */
+        void setCaption(const std::string& caption);
+
+        /**
+         * Gets the caption of the tab.
+         */
+        const std::string& getCaption() const { return mLabel->getCaption(); }
 
         /**
          * Draw the tabbed area.
@@ -63,6 +94,12 @@ class Tab : public gcn::Tab
 
         void fontChanged();
 
+        // Inherited from MouseListener
+
+        virtual void mouseEntered(gcn::MouseEvent& mouseEvent);
+
+        virtual void mouseExited(gcn::MouseEvent& mouseEvent);
+
     protected:
         static float mAlpha;
         static TabConfigListener *mConfigListener;
@@ -76,6 +113,10 @@ class Tab : public gcn::Tab
 
         const gcn::Color *mTabColor;
         bool mHighlighted;
+        bool mHasMouse;
+
+        gcn::Label* mLabel;
+        TabbedArea* mTabbedArea;
 };
 
 #endif
