@@ -223,10 +223,8 @@ void Network::flush()
     if (!mOutSize || mState != CONNECTED)
         return;
 
-    int ret;
-
     mMutex.lock();
-    ret = SDLNet_TCP_Send(mSocket, mOutBuffer, mOutSize);
+    int ret = SDLNet_TCP_Send(mSocket, mOutBuffer, mOutSize);
 
     if (ret < (int) mOutSize)
         setError(strprintf("Error in SDLNet_TCP_Send(): %s", SDLNet_GetError()));
@@ -349,73 +347,76 @@ void Network::receive()
     if (SDLNet_TCP_AddSocket(set, mSocket) == -1)
         setError(strprintf("Error in SDLNet_AddSocket(): %s", SDLNet_GetError()));
 
+    // TODO Try to get this to block all the time while still being able
+    // to escape the loop
     while (mState == CONNECTED)
-    {
-        // TODO Try to get this to block all the time while still being able
-        // to escape the loop
-        int numReady = SDLNet_CheckSockets(set, ((Uint32)500));
-        int ret;
-        switch (numReady)
-        {
-            case -1:
-                setError("Error: SDLNet_CheckSockets");
-                // FALLTHROUGH
-            case 0:
-                break;
-
-            case 1:
-                // Receive data from the socket
-                mMutex.lock();
-                ret = SDLNet_TCP_Recv(mSocket, mInBuffer + mInSize, BUFFER_SIZE - mInSize);
-
-                if (!ret)
-                {
-                    // We got disconnected
-                    mState = IDLE;
-                    logger->log("Disconnected.");
-                }
-                else if (ret < 0)
-                {
-                    setError(strprintf("Error in SDLNet_TCP_Recv(): %s",
-                                       SDLNet_GetError()));
-                }
-                else
-                {
-                    mInSize += ret;
-                    if (mToSkip)
-                    {
-                        if (mInSize >= mToSkip)
-                        {
-                            mInSize -= mToSkip;
-                            memmove(mInBuffer, mInBuffer + mToSkip, mInSize);
-                            mToSkip = 0;
-                        }
-                        else
-                        {
-                            mToSkip -= mInSize;
-                            mInSize = 0;
-                        }
-                    }
-                }
-                mMutex.unlock();
-                break;
-
-            default:
-                // more than one socket is ready..
-                // this should not happen since we only listen once socket.
-                std::stringstream errorStream;
-                errorStream << strprintf("Error in SDLNet_TCP_Recv(), %d "
-                                         "sockets are ready: %s", numReady,
-                                         SDLNet_GetError());
-                setError(errorStream.str());
-                break;
-        }
-    }
+        realReceive(set);
 
     if (SDLNet_TCP_DelSocket(set, mSocket) == -1)
         logger->log("Error in SDLNet_DelSocket(): %s", SDLNet_GetError());
 
     SDLNet_FreeSocketSet(set);
+}
+
+void Network::realReceive(SDLNet_SocketSet &set)
+{
+    int numReady = SDLNet_CheckSockets(set, ((Uint32)500));
+    int ret;
+    switch (numReady)
+    {
+        case -1:
+            setError("Error: SDLNet_CheckSockets");
+            // FALLTHROUGH
+        case 0:
+            break;
+
+        case 1:
+            // Receive data from the socket
+            mMutex.lock();
+            ret = SDLNet_TCP_Recv(mSocket, mInBuffer + mInSize, BUFFER_SIZE - mInSize);
+
+            if (!ret)
+            {
+                // We got disconnected
+                mState = IDLE;
+                logger->log("Disconnected.");
+            }
+            else if (ret < 0)
+            {
+                setError(strprintf("Error in SDLNet_TCP_Recv(): %s",
+                                   SDLNet_GetError()));
+            }
+            else
+            {
+                mInSize += ret;
+                if (mToSkip)
+                {
+                    if (mInSize >= mToSkip)
+                    {
+                        mInSize -= mToSkip;
+                        memmove(mInBuffer, mInBuffer + mToSkip, mInSize);
+                        mToSkip = 0;
+                    }
+                    else
+                    {
+                        mToSkip -= mInSize;
+                        mInSize = 0;
+                    }
+                }
+            }
+            mMutex.unlock();
+            break;
+
+        default:
+            // more than one socket is ready..
+            // this should not happen since we only listen once socket.
+            std::stringstream errorStream;
+            errorStream << strprintf("Error in SDLNet_TCP_Recv(), %d "
+                                     "sockets are ready: %s", numReady,
+                                     SDLNet_GetError());
+            setError(errorStream.str());
+            break;
+    }
 }
 
 void Network::setError(const std::string &error)

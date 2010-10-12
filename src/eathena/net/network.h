@@ -102,6 +102,8 @@ class Network
 
         void receive();
 
+        void realReceive(SDLNet_SocketSet &set);
+
         TCPsocket mSocket;
 
         std::string mAddress;
