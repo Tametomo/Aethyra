@@ -113,6 +113,9 @@ bool DownloadUpdates::addUpdatesToResman()
 {
     mMutex.lock();
 
+    if (mResources.empty())
+        parseResourcesFile();
+
     ResourceManager *resman = ResourceManager::getInstance();
     bool success = true;
 
@@ -459,7 +462,7 @@ int DownloadUpdates::downloadThreadWithThis()
                 stateManager->handleException(_("An update failed a security check, "
                                                 "see log for details. If this persists, "
                                                 "report this issue with your log file "
-                                                "on the forums."), QUIT_STATE);
+                                                "on the forums."), LOGOUT_STATE);
             }
             else if (mFailedResources.size() > 0)
             {
@@ -489,7 +492,7 @@ int DownloadUpdates::downloadThreadWithThis()
                 //       plurals, or implement plurals in the gettext wrapper.
                 stateManager->handleException(strprintf(_("The file(s) %s are "
                     "currently unavailable online. Please notify the server "
-                    "administrator of this issue."), files.c_str()), QUIT_STATE);
+                    "administrator of this issue."), files.c_str()), LOGOUT_STATE);
             }
             else
             {

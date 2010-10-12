@@ -212,8 +212,11 @@ Window* Desktop::getCurrentDialog()
 
 void Desktop::removeCurrentDialog()
 {
-    windowContainer->scheduleDelete(currentDialog);
-    currentDialog = NULL;
+    if (currentDialog)
+    {
+        windowContainer->scheduleDelete(currentDialog);
+        currentDialog = NULL;
+    }
 }
 
 void Desktop::resetProgressBar()

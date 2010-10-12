@@ -328,7 +328,6 @@ void StateManager::setState(const State state)
         case UPDATE_STATE:
             {
                 logger->log("State: UPDATE");
-                desktop->resetProgressBar();
 
                 const std::string &updateHost = (!options.updateHost.empty() ?
                                                   options.updateHost :
@@ -336,6 +335,7 @@ void StateManager::setState(const State state)
 
                 if (!options.skipUpdate)
                 {
+                    desktop->resetProgressBar();
                     desktop->changeCurrentDialog(new UpdaterWindow(updateHost));
                 }
                 else
