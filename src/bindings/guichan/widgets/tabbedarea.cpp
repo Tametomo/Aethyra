@@ -60,6 +60,15 @@ TabbedArea::TabbedArea() :
 
 TabbedArea::~TabbedArea()
 {
+    std::list<Tab*>::iterator itr = mTabsToDelete.begin(),
+                              itr_end = mTabsToDelete.end();
+    while (itr != itr_end)
+    {
+        (*itr)->setTabbedArea(NULL);
+        ++itr;
+    }
+
+    delete_all(mTabsToDelete);
     mTabContainer->clear(); // Avoid deleting tabs which this class didn't create
     mWidgetContainer->clear();
 
