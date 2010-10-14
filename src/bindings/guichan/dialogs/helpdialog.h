@@ -23,8 +23,6 @@
 #ifndef HELP_H
 #define HELP_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../handlers/linkhandler.h"
 
 #include "../widgets/window.h"
@@ -34,19 +32,13 @@ class RichTextBox;
 /**
  * The help dialog.
  */
-class HelpDialog : public Window, public LinkHandler,
-                   public gcn::ActionListener
+class HelpDialog : public Window, public LinkHandler
 {
     public:
         /**
          * Constructor.
          */
         HelpDialog();
-
-        /**
-         * Called when receiving actions from the widgets.
-         */
-        void action(const gcn::ActionEvent &event);
 
         /**
          * Handles link action.

@@ -25,8 +25,6 @@
 
 #include <list>
 
-#include <guichan/actionlistener.hpp>
-
 #include "../widgets/window.h"
 
 class SetupTabContainer;
@@ -44,7 +42,7 @@ class TabbedArea;
  *
  * \ingroup GUI
  */
-class Setup : public Window, public gcn::ActionListener
+class Setup : public Window
 {
     public:
         Setup();

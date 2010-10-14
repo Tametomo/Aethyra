@@ -264,6 +264,8 @@ void EquipmentWindow::draw(gcn::Graphics *graphics)
 
 void EquipmentWindow::action(const gcn::ActionEvent &event)
 {
+    Window::action(event);
+
     Item* item = mItems->getSelectedItem();
 
     if (!item && mSelected > -1)

@@ -178,6 +178,8 @@ void InventoryWindow::distributeValueChangedEvent()
 
 void InventoryWindow::action(const gcn::ActionEvent &event)
 {
+    Window::action(event);
+
     if (event.getId() == "shortcuts")
     {
         itemShortcutWindow->setVisible(!itemShortcutWindow->isVisible());

@@ -246,7 +246,7 @@ void TradeWindow::valueChanged(const gcn::SelectionEvent &event)
 
 void TradeWindow::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == "cancel")
+    if (event.getId() == "cancel" || event.getId() == "close")
     {
         close();
     }

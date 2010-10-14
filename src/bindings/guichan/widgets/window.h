@@ -23,6 +23,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include <guichan/actionlistener.hpp>
 #include <guichan/widgetlistener.hpp>
 
 #include <guichan/widgets/window.hpp>
@@ -31,6 +32,7 @@
 #include "../guichanfwd.h"
 
 class ContainerPlacer;
+class ImageButton;
 class Layout;
 class LayoutCell;
 class ResizeGrip;
@@ -43,7 +45,8 @@ class SkinLoader;
  *
  * \ingroup GUI
  */
-class Window : public gcn::Window, public gcn::WidgetListener
+class Window : public gcn::Window, public gcn::WidgetListener,
+               public gcn::ActionListener
 {
     public:
         /**
@@ -141,6 +144,11 @@ class Window : public gcn::Window, public gcn::WidgetListener
          */
         virtual void widgetHidden(const gcn::Event& event);
         virtual void widgetShown(const gcn::Event& event);
+
+        /**
+         * Called when receiving actions from the widgets.
+         */
+        virtual void action(const gcn::ActionEvent &event);
 
         /**
          * Sets whether or not the window has a close button.
@@ -354,8 +362,15 @@ class Window : public gcn::Window, public gcn::WidgetListener
          */
         virtual void fontChanged();
 
-        // Restores focus back to the widget that had it if a clear() took it
-        // away.
+        /**
+         * Overridden to allow for the close button to get events as well.
+         */
+        virtual gcn::Widget *getWidgetAt(int x, int y);
+
+        /**
+         * Restores focus back to the widget that had it if a clear() took it
+         * away.
+         */
         static void restoreFocus();
 
     protected:
@@ -385,13 +400,13 @@ class Window : public gcn::Window, public gcn::WidgetListener
         int getResizeHandles(gcn::MouseEvent &event);
 
         ResizeGrip *mGrip;            /**< Resize grip */
+        ImageButton *mClose;          /**< Close button */
         Window *mParent;              /**< The parent window */
         Layout *mLayout;              /**< Layout handler */
         std::string mWindowName;      /**< Name of the window */
         std::string mDefaultSkinPath; /**< Default skin path for this window */
         bool mShowTitle;              /**< Window has a title bar */
         bool mModal;                  /**< Window is modal */
-        bool mCloseButton;            /**< Window has a close button */
         bool mDefaultVisible;         /**< Default visibility */
         bool mSaveVisibility;         /**< If the windo saves visibility */
         int mMinWinWidth;             /**< Minimum window width */

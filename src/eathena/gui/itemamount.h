@@ -23,8 +23,6 @@
 #ifndef ITEM_AMOUNT_WINDOW_H
 #define ITEM_AMOUNT_WINDOW_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../../bindings/guichan/widgets/window.h"
 
 class Icon;
@@ -42,7 +40,7 @@ class ItemPopup;
  *
  * \ingroup Interface
  */
-class ItemAmountWindow : public Window, public gcn::ActionListener
+class ItemAmountWindow : public Window
 {
     public:
         /**

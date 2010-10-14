@@ -22,7 +22,6 @@
 #ifndef EMOTEWINDOW_H
 #define EMOTEWINDOW_H
 
-#include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
 #include "../../bindings/guichan/widgets/window.h"
@@ -34,8 +33,7 @@ class EmoteContainer;
  *
  * \ingroup Interface
  */
-class EmoteWindow : public Window, public gcn::ActionListener,
-                    public gcn::SelectionListener
+class EmoteWindow : public Window, public gcn::SelectionListener
 {
     public:
         /**

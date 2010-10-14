@@ -23,7 +23,6 @@
 #ifndef SELL_H
 #define SELL_H
 
-#include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
 #include "../../bindings/guichan/widgets/window.h"
@@ -37,7 +36,7 @@ class ShopListModel;
  *
  * \ingroup Interface
  */
-class SellDialog : public Window, gcn::ActionListener, gcn::SelectionListener
+class SellDialog : public Window, public gcn::SelectionListener
 {
     public:
         /**

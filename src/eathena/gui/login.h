@@ -26,7 +26,6 @@
 #include <string>
 #include <vector>
 
-#include <guichan/actionlistener.hpp>
 #include <guichan/keylistener.hpp>
 #include <guichan/listmodel.hpp>
 #include <guichan/selectionlistener.hpp>
@@ -38,8 +37,8 @@
  *
  * \ingroup Interface
  */
-class LoginDialog : public Window, public gcn::ActionListener,
-                    public gcn::KeyListener, public gcn::SelectionListener
+class LoginDialog : public Window, public gcn::KeyListener,
+                    public gcn::SelectionListener
 {
     public:
         /**

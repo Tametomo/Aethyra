@@ -24,8 +24,6 @@
 #ifndef _UPDATERWINDOW_H
 #define _UPDATERWINDOW_H
 
-#include <guichan/actionlistener.hpp>
-
 #include <string>
 #include <vector>
 
@@ -56,8 +54,7 @@ struct SDL_Thread;
  *
  * \ingroup GUI
  */
-class UpdaterWindow : public Window, public gcn::ActionListener,
-                      public UpdaterListener
+class UpdaterWindow : public Window, public UpdaterListener
 {
     public:
         /**

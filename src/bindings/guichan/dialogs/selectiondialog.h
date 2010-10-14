@@ -24,8 +24,6 @@
 
 #include <vector>
 
-#include <guichan/actionlistener.hpp>
-
 #include "../widgets/window.h"
 
 class RadioButton;
@@ -36,7 +34,7 @@ class TextBox;
  *
  * \ingroup GUI
  */
-class SelectionDialog : public Window, public gcn::ActionListener
+class SelectionDialog : public Window
 {
     public:
         /**

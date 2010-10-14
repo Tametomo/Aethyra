@@ -106,5 +106,10 @@ void ConfirmDialog::action(const gcn::ActionEvent &event)
 
     // Can we receive anything else anyway?
     if (event.getId() == "yes" || event.getId() == "no")
+    {
         close();
+        return;
+    }
+
+    Window::action(event);
 }

@@ -136,7 +136,7 @@ void CharCreateDialog::action(const gcn::ActionEvent &event)
                          "Your name needs to be at least 4 characters.", this);
         }
     }
-    else if (event.getId() == "cancel")
+    else if (event.getId() == "cancel" || event.getId() == "close")
         close();
     else if (event.getId() == "nextcolor")
         mPlayer->setHairStyle(mPlayer->getHairStyle(),

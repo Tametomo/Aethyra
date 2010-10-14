@@ -23,8 +23,6 @@
 #ifndef DEBUGWINDOW_H
 #define DEBUGWINDOW_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../../bindings/guichan/widgets/window.h"
 
 /**

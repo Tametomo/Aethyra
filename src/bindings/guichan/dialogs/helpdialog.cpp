@@ -78,12 +78,6 @@ void HelpDialog::fontChanged()
     restoreFocus();
 }
 
-void HelpDialog::action(const gcn::ActionEvent &event)
-{
-    if (event.getId() == "close")
-        close();
-}
-
 void HelpDialog::handleLink(const std::string& link)
 {
     std::string helpFile = link;

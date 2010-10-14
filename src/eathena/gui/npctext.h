@@ -25,8 +25,6 @@
 
 #include <string>
 
-#include <guichan/actionlistener.hpp>
-
 #include "../../bindings/guichan/widgets/window.h"
 
 class TextBox;
@@ -36,7 +34,7 @@ class TextBox;
  *
  * \ingroup Interface
  */
-class NpcTextDialog : public Window, public gcn::ActionListener
+class NpcTextDialog : public Window
 {
     public:
         /**

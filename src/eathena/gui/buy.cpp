@@ -145,7 +145,7 @@ void BuyDialog::addItem(int id, int price)
 
 void BuyDialog::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == "quit")
+    if (event.getId() == "quit" || event.getId() == "close")
     {
         close();
         return;

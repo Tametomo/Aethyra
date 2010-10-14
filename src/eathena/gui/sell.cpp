@@ -143,7 +143,7 @@ void SellDialog::addItem(const Item *item, int price)
 
 void SellDialog::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == "quit")
+    if (event.getId() == "quit" || event.getId() == "close")
     {
         close();
         return;

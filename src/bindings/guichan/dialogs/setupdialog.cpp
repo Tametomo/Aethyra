@@ -138,7 +138,7 @@ void Setup::action(const gcn::ActionEvent &event)
         setVisible(false);
         for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTabContainer::apply));
     }
-    else if (event.getId() == "Cancel")
+    else if (event.getId() == "Cancel" || event.getId() == "close")
     {
         setVisible(false);
         for_each(mTabs.begin(), mTabs.end(), std::mem_fun(&SetupTabContainer::cancel));

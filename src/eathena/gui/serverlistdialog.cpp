@@ -51,7 +51,7 @@ void ServerListDialog::action(const gcn::ActionEvent &event)
 
         stateManager->setState(UPDATE_STATE);
     }
-    else if (event.getId() == "cancel")
+    else if (event.getId() == "cancel" || event.getId() == "close")
         stateManager->setState(LOGIN_STATE);
 }
 

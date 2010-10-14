@@ -23,8 +23,6 @@
 #ifndef _CHAR_SELECT_H
 #define _CHAR_SELECT_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../../bindings/guichan/widgets/window.h"
 
 #include "../../core/map/sprite/being.h"
@@ -44,7 +42,7 @@ class LockedArray;
  *
  * \ingroup Interface
  */
-class CharSelectDialog : public Window, public gcn::ActionListener
+class CharSelectDialog : public Window
 {
     public:
         friend class CharDeleteConfirm;

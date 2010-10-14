@@ -25,8 +25,6 @@
 
 #include <vector>
 
-#include <guichan/actionlistener.hpp>
-
 #include "../../bindings/guichan/widgets/window.h"
 
 /**
@@ -34,7 +32,7 @@
  *
  * \ingroup Interface
  */
-class BuySellDialog : public Window, public gcn::ActionListener
+class BuySellDialog : public Window
 {
     public:
         /**

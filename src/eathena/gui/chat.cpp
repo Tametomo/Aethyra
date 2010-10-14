@@ -338,6 +338,8 @@ void ChatWindow::chatLog(CHATSKILL act)
 
 void ChatWindow::action(const gcn::ActionEvent & event)
 {
+    Window::action(event);
+
     if (event.getId() == "chatinput")
     {
         std::string message = mChatInput->getText();

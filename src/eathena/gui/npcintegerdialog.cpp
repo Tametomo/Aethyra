@@ -89,6 +89,8 @@ void NpcIntegerDialog::reset()
 
 void NpcIntegerDialog::action(const gcn::ActionEvent &event)
 {
+    Window::action(event);
+
     if (!(event.getId() == "reset" || event.getId() == "cancel" ||
           event.getId() == "ok"))
         return;

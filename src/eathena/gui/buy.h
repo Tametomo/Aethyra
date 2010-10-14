@@ -23,7 +23,6 @@
 #ifndef BUY_H
 #define BUY_H
 
-#include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
 #include <SDL_types.h>
@@ -39,8 +38,7 @@ class ListBox;
  *
  * \ingroup Interface
  */
-class BuyDialog : public Window, public gcn::ActionListener,
-                  public gcn::SelectionListener
+class BuyDialog : public Window, public gcn::SelectionListener
 {
     public:
         /**

@@ -22,8 +22,6 @@
 #ifndef TEXT_INPUT_DIALOG_H
 #define TEXT_INPUT_DIALOG_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../widgets/window.h"
 
 /**
@@ -31,7 +29,7 @@
  *
  * \ingroup Interface
  */
-class TextInputDialog : public Window, public gcn::ActionListener
+class TextInputDialog : public Window
 {
     public:
         /**

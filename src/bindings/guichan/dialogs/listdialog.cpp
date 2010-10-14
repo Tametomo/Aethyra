@@ -101,9 +101,10 @@ void ListDialog::reset()
 
 void ListDialog::action(const gcn::ActionEvent &event)
 {
+    Window::action(event);
+
     // Proxy events to our listeners
     ActionListenerIterator i;
-
     for (i = mActionListeners.begin(); i != mActionListeners.end(); ++i)
         (*i)->action(event);
 }

@@ -27,6 +27,7 @@
 #include <guichan/font.hpp>
 
 #include "container.h"
+#include "imagebutton.h"
 #include "resizegrip.h"
 #include "window.h"
 
@@ -52,13 +53,13 @@ Window::Window(const std::string& caption, bool modal, Window *parent,
     gcn::Window(caption),
     mOldVisibility(false),
     mGrip(NULL),
+    mClose(NULL),
     mParent(parent),
     mLayout(NULL),
     mWindowName("window"),
     mDefaultSkinPath(skin),
     mShowTitle(true),
     mModal(modal),
-    mCloseButton(false),
     mDefaultVisible(visible),
     mSaveVisibility(true),
     mMinWinWidth(100),
@@ -105,6 +106,7 @@ Window::~Window()
     saveWindowState();
 
     destroy(mLayout);
+    destroy(mClose);
 
     while (!mWidgets.empty())
     {
@@ -144,15 +146,15 @@ void Window::draw(gcn::Graphics *graphics)
         g->drawText(getCaption(), 7, 5, gcn::Graphics::LEFT);
     }
 
-    // Draw Close Button
-    if (mCloseButton)
-    {
-        g->drawImage(mSkin->getCloseImage(), getWidth() -
-                     mSkin->getCloseImage()->getWidth() - getPadding(),
-                     getPadding());
-    }
-
     drawChildren(graphics);
+
+    // Draw Close Button
+    if (mClose)
+    {
+        graphics->pushClipArea(mClose->getDimension());
+        mClose->draw(graphics);
+        graphics->popClipArea();
+    }
 }
 
 void Window::setContentSize(int width, int height)
@@ -216,31 +218,29 @@ void Window::getRelativeOffset(ImageRect::ImagePosition position, int &x, int &y
     switch (position)
     {
         case ImageRect::UPPER_CENTER:
+        case ImageRect::CENTER:
+        case ImageRect::LOWER_CENTER:
             x += (conWidth - width) / 2;
             break;
         case ImageRect::UPPER_RIGHT:
-            x += conWidth - width;
-            break;
-        case ImageRect::LEFT:
-            y += (conHeight - height) / 2;
-            break;
-        case ImageRect::CENTER:
-            x += (conWidth - width) / 2;
-            y += (conHeight - height) / 2;
-            break;
         case ImageRect::RIGHT:
+        case ImageRect::LOWER_RIGHT:
             x += conWidth - width;
+            break;
+        default:
+            break;
+    }
+
+    switch (position)
+    {
+        case ImageRect::LEFT:
+        case ImageRect::CENTER:
+        case ImageRect::RIGHT:
             y += (conHeight - height) / 2;
             break;
         case ImageRect::LOWER_LEFT:
-            y += conHeight - height;
-            break;
         case ImageRect::LOWER_CENTER:
-            x += (conWidth - width) / 2;
-            y += conHeight - height;
-            break;
         case ImageRect::LOWER_RIGHT:
-            x += conWidth - width;
             y += conHeight - height;
             break;
         default:
@@ -342,6 +342,14 @@ void Window::setResizable(bool r)
     }
 }
 
+gcn::Widget *Window::getWidgetAt(int x, int y)
+{
+    if (mClose->getDimension().isPointInRect(x, y))
+        return mClose;
+
+    gcn::BasicContainer::getWidgetAt(x, y);
+}
+
 void Window::widgetResized(const gcn::Event &event)
 {
     const gcn::Rectangle area = getChildrenArea();
@@ -349,6 +357,10 @@ void Window::widgetResized(const gcn::Event &event)
     if (mGrip)
         mGrip->setPosition(getWidth() - mGrip->getWidth() - area.x,
                            getHeight() - mGrip->getHeight() - area.y);
+
+    if (mClose)
+        mClose->setPosition(getWidth() - getPadding() - mClose->getWidth(),
+                            getPadding());
 
     refreshLayout();
 }
@@ -400,9 +412,33 @@ void Window::widgetHidden(const gcn::Event& event)
     mouseExited(mouseEvent);
 }
 
+void Window::action(const gcn::ActionEvent &event)
+{
+    if (mClose && event.getId() == "close")
+        close();
+}
+
 void Window::setCloseButton(bool flag)
 {
-    mCloseButton = flag;
+    if ((bool) mClose == flag)
+        return;
+
+    if (flag)
+    {
+        mClose = new ImageButton(mSkin->getCloseImage(), "close", this);
+        mClose->setX(getWidth() - getPadding() - mClose->getWidth());
+        mClose->setY(getPadding());
+
+        // This is basically the same as a BasicContainer::add(), which wasn't
+        // used so that we can ignore the child container dimensions.
+        mClose->_setParent(this);
+        mClose->_setFocusHandler(_getFocusHandler());
+    }
+    else
+    {
+        remove(mClose);
+        destroy(mClose);
+    }
 }
 
 bool Window::isResizable()
@@ -431,22 +467,6 @@ void Window::mousePressed(gcn::MouseEvent &event)
 
     if (event.getButton() == gcn::MouseEvent::LEFT)
     {
-        const int x = event.getX();
-        const int y = event.getY();
-
-        // Handle close button
-        if (mCloseButton)
-        {
-            gcn::Rectangle closeButtonRect(
-                getWidth() - mSkin->getCloseImage()->getWidth() - getPadding(),
-                getPadding(),
-                mSkin->getCloseImage()->getWidth(),
-                mSkin->getCloseImage()->getHeight());
-
-            if (closeButtonRect.isPointInRect(x, y))
-                close();
-        }
-
         // Handle window resizing
         mouseResize = getResizeHandles(event);
 
@@ -797,6 +817,12 @@ void Window::clear()
     // Restore the resize grip
     if (mGrip)
         add(mGrip);
+
+    if (mClose)
+    {
+        mClose->_setParent(this);
+        mClose->_setFocusHandler(_getFocusHandler());        
+    }
 
     if (mLayout)
         destroy(mLayout);

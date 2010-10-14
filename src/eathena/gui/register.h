@@ -25,7 +25,6 @@
 
 #include <string>
 
-#include <guichan/actionlistener.hpp>
 #include <guichan/keylistener.hpp>
 
 #include "../../bindings/guichan/widgets/window.h"
@@ -49,8 +48,7 @@ enum {
  *
  * \ingroup Interface
  */
-class RegisterDialog : public Window, public gcn::ActionListener,
-                       public gcn::KeyListener
+class RegisterDialog : public Window, public gcn::KeyListener
 {
     public:
         /**

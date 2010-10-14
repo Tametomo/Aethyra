@@ -23,8 +23,6 @@
 #ifndef STATUS_H
 #define STATUS_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../../bindings/guichan/widgets/window.h"
 
 class LocalPlayer;
@@ -35,7 +33,7 @@ class ProgressBar;
  *
  * \ingroup Interface
  */
-class StatusWindow : public Window, public gcn::ActionListener
+class StatusWindow : public Window
 {
     public:
         /**

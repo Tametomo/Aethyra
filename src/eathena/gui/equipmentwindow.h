@@ -22,7 +22,6 @@
 #ifndef EQUIPMENT_WINDOW_H
 #define EQUIPMENT_WINDOW_H
 
-#include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
 #include "../../bindings/guichan/widgets/window.h"
@@ -43,9 +42,7 @@ class PopupMenu;
  *
  * \ingroup Interface
  */
-class EquipmentWindow : public Window,
-                        public gcn::ActionListener,
-                        public gcn::SelectionListener
+class EquipmentWindow : public Window, public gcn::SelectionListener
 {
     public:
         friend class EquipmentConfigListener;

@@ -23,8 +23,6 @@
 #ifndef OK_DIALOG_H
 #define OK_DIALOG_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../widgets/window.h"
 
 class TextBox;
@@ -34,7 +32,7 @@ class TextBox;
  *
  * \ingroup GUI
  */
-class OkDialog : public Window, public gcn::ActionListener
+class OkDialog : public Window
 {
     public:
         /**

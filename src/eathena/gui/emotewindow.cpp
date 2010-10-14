@@ -83,6 +83,8 @@ void EmoteWindow::fontChanged()
 
 void EmoteWindow::action(const gcn::ActionEvent &event)
 {
+    Window::action(event);
+
     if (event.getId() == "use" || event.getId() == "default")
     {
         int emote = mEmotes->getSelectedEmote();

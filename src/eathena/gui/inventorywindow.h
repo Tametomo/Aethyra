@@ -23,7 +23,6 @@
 #ifndef INVENTORYWINDOW_H
 #define INVENTORYWINDOW_H
 
-#include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
 #include "../structs/inventory.h"
@@ -39,8 +38,7 @@ class ProgressBar;
  *
  * \ingroup Interface
  */
-class InventoryWindow : public Window, public gcn::ActionListener,
-                        public gcn::SelectionListener
+class InventoryWindow : public Window, public gcn::SelectionListener
 {
     public:
         /**

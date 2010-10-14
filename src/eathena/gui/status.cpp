@@ -281,6 +281,8 @@ void StatusWindow::draw(gcn::Graphics *g)
 
 void StatusWindow::action(const gcn::ActionEvent &event)
 {
+    Window::action(event);
+
     // Stats Part
     if (event.getId().length() == 3)
     {

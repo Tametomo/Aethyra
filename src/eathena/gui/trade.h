@@ -25,7 +25,6 @@
 
 #include <memory>
 
-#include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
 #include "../../bindings/guichan/widgets/window.h"
@@ -41,7 +40,7 @@ class ScrollArea;
  *
  * \ingroup Interface
  */
-class TradeWindow : public Window, gcn::ActionListener, gcn::SelectionListener
+class TradeWindow : public Window, public gcn::SelectionListener
 {
     public:
         /**

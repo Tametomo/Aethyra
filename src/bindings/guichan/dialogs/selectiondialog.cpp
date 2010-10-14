@@ -128,7 +128,10 @@ void SelectionDialog::action(const gcn::ActionEvent &event)
             }
         }
         close();
+        return;
     }
+
+    Window::action(event);
 }
 
 void SelectionDialog::addOption(std::string key, std::string label)

@@ -22,7 +22,6 @@
 #ifndef STORAGEWINDOW_H
 #define STORAGEWINDOW_H
 
-#include <guichan/actionlistener.hpp>
 #include <guichan/selectionlistener.hpp>
 
 #include "../structs/inventory.h"
@@ -39,7 +38,7 @@ class TextBox;
  *
  * \ingroup Interface
  */
-class StorageWindow : public Window, gcn::ActionListener, gcn::SelectionListener
+class StorageWindow : public Window, public gcn::SelectionListener
 {
     public:
         /**

@@ -23,8 +23,6 @@
 #ifndef CONFIRM_DIALOG_H
 #define CONFIRM_DIALOG_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../widgets/window.h"
 
 class TextBox;
@@ -34,7 +32,7 @@ class TextBox;
  *
  * \ingroup GUI
  */
-class ConfirmDialog : public Window, public gcn::ActionListener
+class ConfirmDialog : public Window
 {
     public:
         /**

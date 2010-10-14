@@ -23,8 +23,6 @@
 #ifndef GUI_NPCINTEGERDIALOG_H
 #define GUI_NPCINTEGERDIALOG_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../../bindings/guichan/widgets/window.h"
 
 class IntTextField;
@@ -34,7 +32,7 @@ class IntTextField;
  *
  * \ingroup Interface
  */
-class NpcIntegerDialog : public Window, public gcn::ActionListener
+class NpcIntegerDialog : public Window
 {
     public:
         /**

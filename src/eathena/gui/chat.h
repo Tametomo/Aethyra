@@ -25,8 +25,6 @@
 
 #include <string>
 
-#include <guichan/actionlistener.hpp>
-
 #include "../../bindings/guichan/widgets/window.h"
 
 class ChatInput;
@@ -99,7 +97,7 @@ struct CHATSKILL
  *
  * \ingroup Interface
  */
-class ChatWindow : public Window, public gcn::ActionListener
+class ChatWindow : public Window
 {
     public:
         /**

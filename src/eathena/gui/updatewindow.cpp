@@ -153,7 +153,7 @@ void UpdaterWindow::downloadTextUpdate(const std::vector<std::string>& news)
 
 void UpdaterWindow::action(const gcn::ActionEvent &event)
 {
-    if (event.getId() == "cancel")
+    if (event.getId() == "cancel" || event.getId() == "close")
     {
         mLogic->userCancelled();
     }

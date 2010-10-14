@@ -23,8 +23,6 @@
 #ifndef SLOT_SELECTION_WINDOW_H
 #define ITEM_AMOUNT_WINDOW_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../../bindings/guichan/widgets/window.h"
 
 #define ITEM_SHORTCUT  1
@@ -36,7 +34,7 @@
  *
  * \ingroup Interface
  */
-class SlotSelectionWindow : public Window, public gcn::ActionListener
+class SlotSelectionWindow : public Window
 {
     public:
         /**

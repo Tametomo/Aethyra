@@ -23,8 +23,6 @@
 #ifndef _CHAR_CREATE_H
 #define _CHAR_CREATE_H
 
-#include <guichan/actionlistener.hpp>
-
 #include "../../bindings/guichan/widgets/window.h"
 
 #include "../../core/map/sprite/being.h"
@@ -37,7 +35,7 @@ class Player;
  *
  * \ingroup GUI
  */
-class CharCreateDialog : public Window, public gcn::ActionListener
+class CharCreateDialog : public Window
 {
     public:
         /**

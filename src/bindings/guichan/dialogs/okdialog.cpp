@@ -101,5 +101,10 @@ void OkDialog::action(const gcn::ActionEvent &event)
 
     // Can we receive anything else anyway?
     if (event.getId() == "ok")
+    {
         close();
+        return;
+    }
+
+    Window::action(event);
 }

@@ -25,7 +25,6 @@
 
 #include <vector>
 
-#include <guichan/actionlistener.hpp>
 #include <guichan/listmodel.hpp>
 
 #include "../widgets/window.h"
@@ -35,8 +34,7 @@
  *
  * \ingroup Interface
  */
-class ListDialog : public Window, public gcn::ActionListener,
-                   public gcn::ListModel
+class ListDialog : public Window, public gcn::ListModel
 {
     public:
         /**
