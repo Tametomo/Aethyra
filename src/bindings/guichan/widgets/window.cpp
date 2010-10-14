@@ -344,10 +344,11 @@ void Window::setResizable(bool r)
 
 gcn::Widget *Window::getWidgetAt(int x, int y)
 {
-    if (mClose->getDimension().isPointInRect(x, y))
+    if (mClose && mClose->getDimension().isPointInRect(x, y))
         return mClose;
 
-    gcn::BasicContainer::getWidgetAt(x, y);
+    Widget *widget = gcn::BasicContainer::getWidgetAt(x, y);
+    return widget;
 }
 
 void Window::widgetResized(const gcn::Event &event)
@@ -436,7 +437,8 @@ void Window::setCloseButton(bool flag)
     }
     else
     {
-        remove(mClose);
+        mClose->_setFocusHandler(NULL);
+        mClose->_setParent(NULL);
         destroy(mClose);
     }
 }
@@ -800,9 +802,7 @@ void Window::fontChanged()
 {
     std::list<Widget*>::iterator iter;
     for (iter = mWidgets.begin(); iter != mWidgets.end(); ++iter)
-    {
         (*iter)->fontChanged();
-    }
 
     if (!getCaption().empty())
         setTitleBarHeight(getFont()->getHeight() + 10);
