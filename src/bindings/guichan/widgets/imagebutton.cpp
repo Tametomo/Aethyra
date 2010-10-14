@@ -37,11 +37,7 @@ ImageButton::ImageButton(const std::string &image,
 {
     mImage = ResourceManager::getInstance()->getImage(image);
 
-    if (mImage)
-        setSize(mImage->getWidth() + 2 * mPadding, mImage->getHeight() + 2 * mPadding);
-    else
-        setSize(2 * mPadding, 2 * mPadding);
-
+    adjustSize();
     setActionEventId(actionEventId);
 
     if (listener)
@@ -56,13 +52,9 @@ ImageButton::ImageButton(Image *image, const std::string &actionEventId,
     mImage = image;
 
     if (mImage)
-    {
         mImage->incRef();
-        setSize(mImage->getWidth() + 2 * mPadding, mImage->getHeight() + 2 * mPadding);
-    }
-    else
-        setSize(2 * mPadding, 2 * mPadding);
 
+    adjustSize();
     setActionEventId(actionEventId);
 
     if (listener)
@@ -83,12 +75,9 @@ void ImageButton::changeImage(Image *image)
     mImage = image;
 
     if (mImage)
-    {
         mImage->incRef();
-        setSize(mImage->getWidth() + 2 * mPadding, mImage->getHeight() + 2 * mPadding);
-    }
-    else
-        setSize(2 * mPadding, 2 * mPadding);
+
+    adjustSize();
 }
 
 void ImageButton::changeImage(const std::string &image)
@@ -97,11 +86,7 @@ void ImageButton::changeImage(const std::string &image)
         mImage->decRef();
 
     mImage = ResourceManager::getInstance()->getImage(image);
-
-    if (mImage)
-        setSize(mImage->getWidth() + 2 * mPadding, mImage->getHeight() + 2 * mPadding);
-    else
-        setSize(2 * mPadding, 2 * mPadding);
+    adjustSize();
 }
 
 void ImageButton::draw(gcn::Graphics *graphics)
@@ -120,13 +105,11 @@ void ImageButton::draw(gcn::Graphics *graphics)
     static_cast<Graphics*>(graphics)->drawImage(mImage, x, y);
 }
 
-void ImageButton::fontChanged()
+void ImageButton::adjustSize()
 {
-    Button::fontChanged();
+    const int imageWidth = (mImage ? mImage->getWidth() : 0) + 2 * mPadding;
+    const int imageHeight = (mImage ? mImage->getHeight() : 0) + 2 * mPadding;
 
-    const int imageWidth = mImage->getWidth() + 2 * mPadding;
-    const int imageHeight = mImage->getHeight() + 2 * mPadding;
-
-    setWidth(getWidth() > imageWidth ? getWidth() : imageWidth);
-    setHeight(getHeight() > imageHeight ? getHeight() : imageHeight);
+    setWidth(imageWidth);
+    setHeight(imageHeight);
 }

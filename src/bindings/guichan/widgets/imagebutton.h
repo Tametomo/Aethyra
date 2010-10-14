@@ -69,7 +69,15 @@ class ImageButton : public Button
          */
         void draw(gcn::Graphics *graphics);
 
-        virtual void fontChanged();
+        /**
+         * Adjusts the button to the minimum size for this image.
+         */
+        void adjustSize();
+
+        /**
+         * Override this to do nothing, since there are no fonts used.
+         */
+        void fontChanged() {};
     private:
         Image* mImage;         /**< Image to display on the button */
         int mPadding;
