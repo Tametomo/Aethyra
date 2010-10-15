@@ -60,11 +60,10 @@ TabbedArea::TabbedArea() :
 
 TabbedArea::~TabbedArea()
 {
-    std::list<Tab*>::iterator itr = mTabsToDelete.begin(),
-                              itr_end = mTabsToDelete.end();
+    TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end();
     while (itr != itr_end)
     {
-        (*itr)->setTabbedArea(NULL);
+        itr->first->setTabbedArea(NULL);
         ++itr;
     }
 
