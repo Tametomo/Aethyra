@@ -29,6 +29,49 @@
 
 #include "../../core/log.h"
 
+#include "../../core/utils/gettext.h"
+
+/** should always be zero if failed */
+#define SKILL_FAILED      0x00
+
+/** job dependend identifiers (?)  */
+#define SKILL_BASIC       0x0001
+#define SKILL_WARP        0x001b
+#define SKILL_STEAL       0x0032
+#define SKILL_ENVENOM     0x0034
+
+/** basic skills identifiers       */
+#define BSKILL_TRADE      0x0000
+#define BSKILL_EMOTE      0x0001
+#define BSKILL_SIT        0x0002
+#define BSKILL_CREATECHAT 0x0003
+#define BSKILL_JOINPARTY  0x0004
+#define BSKILL_SHOUT      0x0005
+#define BSKILL_PK         0x0006 // ??
+#define BSKILL_SETALLIGN  0x0007 // ??
+
+/** reasons why action failed      */
+#define RFAIL_SKILLDEP    0x00
+#define RFAIL_INSUFHP     0x01
+#define RFAIL_INSUFSP     0x02
+#define RFAIL_NOMEMO      0x03
+#define RFAIL_SKILLDELAY  0x04
+#define RFAIL_ZENY        0x05
+#define RFAIL_WEAPON      0x06
+#define RFAIL_REDGEM      0x07
+#define RFAIL_BLUEGEM     0x08
+#define RFAIL_OVERWEIGHT  0x09
+#define RFAIL_GENERIC     0x0a
+
+struct CHATSKILL
+{
+    short skill;
+    short bskill;
+    short unused;
+    char success;
+    char reason;
+};
+
 SkillHandler::SkillHandler()
 {
     static const Uint16 _messages[] = {
@@ -63,12 +106,10 @@ void SkillHandler::handleMessage(MessageIn *msg)
 
                 if (level != 0 || up != 0)
                 {
-                    if (skillDialog->hasSkill(skillId)) {
+                    if (skillDialog->hasSkill(skillId))
                         skillDialog->setSkill(skillId, level, sp);
-                    }
-                    else {
+                    else
                         skillDialog->addSkill(skillId, level, sp);
-                    }
                 }
             }
             skillDialog->update();
@@ -78,17 +119,95 @@ void SkillHandler::handleMessage(MessageIn *msg)
             // Action failed (ex. sit because you have not reached the
             // right level)
             CHATSKILL action;
+            std::string message;
             action.skill   = msg->readInt16();
             action.bskill  = msg->readInt16();
             action.unused  = msg->readInt16(); // unknown
             action.success = msg->readInt8();
             action.reason  = msg->readInt8();
-            if (action.success != SKILL_FAILED &&
-                action.bskill == BSKILL_EMOTE)
-            {
+            if (action.success != SKILL_FAILED && action.bskill == BSKILL_EMOTE)
                 logger->log("Action: %d/%d", action.bskill, action.success);
+
+            if (action.success == SKILL_FAILED && action.skill == SKILL_BASIC)
+            {
+                switch (action.bskill)
+                {
+                    case BSKILL_TRADE:
+                        message = _("Trade failed!");
+                        break;
+                    case BSKILL_EMOTE:
+                        message = _("Emote failed!");
+                        break;
+                    case BSKILL_SIT:
+                        message = _("Sit failed!");
+                        break;
+                    case BSKILL_CREATECHAT:
+                        message = _("Chat creating failed!");
+                        break;
+                    case BSKILL_JOINPARTY:
+                        message = _("Could not join party!");
+                        break;
+                    case BSKILL_SHOUT:
+                        message = _("Cannot shout!");
+                        break;
+                }
+
+                message += " ";
+
+                switch (action.reason)
+                {
+                    case RFAIL_SKILLDEP:
+                        message += _("You have not yet reached a high enough lvl!");
+                        break;
+                    case RFAIL_INSUFHP:
+                        message += _("Insufficient HP!");
+                        break;
+                    case RFAIL_INSUFSP:
+                        message += _("Insufficient SP!");
+                        break;
+                    case RFAIL_NOMEMO:
+                        message += _("You have no memos!");
+                        break;
+                    case RFAIL_SKILLDELAY:
+                        message += _("You cannot do that right now!");
+                        break;
+                    case RFAIL_ZENY:
+                        message += _("Seems you need more GP... ;-)");
+                        break;
+                    case RFAIL_WEAPON:
+                        message += _("You cannot use this skill with that kind of weapon!");
+                        break;
+                    case RFAIL_REDGEM:
+                        message += _("You need another red gem!");
+                        break;
+                    case RFAIL_BLUEGEM:
+                        message += _("You need another blue gem!");
+                        break;
+                    case RFAIL_OVERWEIGHT:
+                        message += _("You're carrying to much to do this!");
+                        break;
+                    default:
+                        message += _("Huh? What's that?");
+                        break;
+                }
             }
-            chatWindow->chatLog(action);
+            else
+            {
+                switch (action.skill)
+                {
+                    case SKILL_WARP :
+                        message = _("Warp failed...");
+                        break;
+                    case SKILL_STEAL :
+                        message = _("Could not steal anything...");
+                        break;
+                    case SKILL_ENVENOM :
+                        message = _("Poison had no effect...");
+                        break;
+                }
+            }
+
+            chatWindow->chatLog(message, BY_SERVER);
             break;
     }
 }

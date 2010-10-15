@@ -1,6 +1,7 @@
 /*
  *  Aethyra
  *  Copyright (C) 2004  The Mana World Development Team
+ *  Copyright (C) 2008  Aethyra Development Team
  *
  *  This file is part of Aethyra based on original code
  *  from The Mana World.
@@ -331,11 +332,6 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
     mRecorder->record(line.substr(3));
 }
 
-void ChatWindow::chatLog(CHATSKILL act)
-{
-    chatLog(const_msg(act), BY_SERVER);
-}
-
 void ChatWindow::action(const gcn::ActionEvent & event)
 {
     Window::action(event);
@@ -607,33 +603,6 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
         party(msg, rest);
         return;
     }
-    else if (command == "cast")
-    {
-        /*
-         * This will eventually be replaced by a GUI, so
-         * we don't need to get too sophisticated
-         */
-        if (msg == "heal")
-        {
-            MessageOut outMsg(0x03f3);
-            outMsg.writeInt16(0x01);
-            outMsg.writeInt32(0);
-            outMsg.writeInt8(0);
-            outMsg.writeInt8(0);
-            outMsg.writeString("", 24);
-        }
-        else if (msg == "gather")
-        {
-            MessageOut outMsg(0x03f3);
-            outMsg.writeInt16(0x02);
-            outMsg.writeInt32(0);
-            outMsg.writeInt8(0);
-            outMsg.writeInt8(0);
-            outMsg.writeString("", 24);
-        }
-        else
-            chatLog(_("No such spell!"), BY_SERVER);
-    }
     else if (command == "present")
     {
         const Beings &beings = beingManager->getAll();
@@ -696,91 +665,6 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
     {
         chatLog(_("Unknown command."), BY_SERVER);
     }
-}
-
-std::string ChatWindow::const_msg(CHATSKILL act)
-{
-    std::string msg;
-    if (act.success == SKILL_FAILED && act.skill == SKILL_BASIC)
-    {
-        switch (act.bskill)
-        {
-            case BSKILL_TRADE:
-                msg = _("Trade failed!");
-                break;
-            case BSKILL_EMOTE:
-                msg = _("Emote failed!");
-                break;
-            case BSKILL_SIT:
-                msg = _("Sit failed!");
-                break;
-            case BSKILL_CREATECHAT:
-                msg = _("Chat creating failed!");
-                break;
-            case BSKILL_JOINPARTY:
-                msg = _("Could not join party!");
-                break;
-            case BSKILL_SHOUT:
-                msg = _("Cannot shout!");
-                break;
-        }
-
-        msg += " ";
-
-        switch (act.reason)
-        {
-            case RFAIL_SKILLDEP:
-                msg += _("You have not yet reached a high enough lvl!");
-                break;
-            case RFAIL_INSUFHP:
-                msg += _("Insufficient HP!");
-                break;
-            case RFAIL_INSUFSP:
-                msg += _("Insufficient SP!");
-                break;
-            case RFAIL_NOMEMO:
-                msg += _("You have no memos!");
-                break;
-            case RFAIL_SKILLDELAY:
-                msg += _("You cannot do that right now!");
-                break;
-            case RFAIL_ZENY:
-                msg += _("Seems you need more GP... ;-)");
-                break;
-            case RFAIL_WEAPON:
-                msg += _("You cannot use this skill with that kind of weapon!");
-                break;
-            case RFAIL_REDGEM:
-                msg += _("You need another red gem!");
-                break;
-            case RFAIL_BLUEGEM:
-                msg += _("You need another blue gem!");
-                break;
-            case RFAIL_OVERWEIGHT:
-                msg += _("You're carrying to much to do this!");
-                break;
-            default:
-                msg += _("Huh? What's that?");
-                break;
-        }
-    }
-    else
-    {
-        switch (act.skill)
-        {
-            case SKILL_WARP :
-                msg = _("Warp failed...");
-                break;
-            case SKILL_STEAL :
-                msg = _("Could not steal anything...");
-                break;
-            case SKILL_ENVENOM :
-                msg = _("Poison had no effect...");
-                break;
-        }
-    }
-
-    return msg;
 }
 
 void ChatWindow::scroll(int amount)
