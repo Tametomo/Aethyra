@@ -80,6 +80,11 @@ namespace XML
     double getFloatProperty(xmlNodePtr node, const char *name, double def);
 
     /**
+     * Gets a boolean property from an xmlNodePtr.
+     */
+    bool getBoolProperty(xmlNodePtr node, const char *name, bool def);
+
+    /**
      * Gets a string property from an xmlNodePtr.
      */
     std::string getProperty(xmlNodePtr node, const char *name, const std::string &def);

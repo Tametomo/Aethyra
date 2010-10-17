@@ -40,22 +40,14 @@ TextParticle::TextParticle(Map *map, const std::string &text,
 void TextParticle::draw(Graphics *graphics, const int offsetX,
                         const int offsetY) const
 {
-    if (!mAlive)
+    if (!isAlive())
         return;
 
     const int screenX = (int) mPos.x + offsetX;
     const int screenY = (int) mPos.y - (int) mPos.z + offsetY;
 
-    float alpha = mAlpha * 255.0f;
-
-    if (mLifetimeLeft > -1 && mLifetimeLeft < mFadeOut)
-        alpha = alpha * mLifetimeLeft / mFadeOut;
-
-    if (mLifetimePast < mFadeIn)
-        alpha = alpha * mLifetimePast / mFadeIn;
-
     gcn::Color color = *mColor;
-    color.a = (int) alpha;
+    color.a = (int) (getCurrentAlpha() * 255);
 
     TextRenderer::renderText(graphics, mText, screenX, screenY,
                              gcn::Graphics::CENTER, color, mTextFont, mOutline,

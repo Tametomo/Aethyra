@@ -20,6 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "stringutils.h"
 #include "xml.h"
 
 #include "../log.h"
@@ -84,6 +85,20 @@ namespace XML
         if (prop)
         {
             ret = atof((char*)prop);
+            xmlFree(prop);
+        }
+
+        return ret;
+    }
+
+    bool getBoolProperty(xmlNodePtr node, const char* name, bool def)
+    {
+        bool ret = def;
+
+        xmlChar *prop = xmlGetProp(node, BAD_CAST name);
+        if (prop)
+        {
+            ret = getBoolFromString((char*) prop, def);
             xmlFree(prop);
         }
 

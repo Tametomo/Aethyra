@@ -57,14 +57,15 @@ const float Particle::PARTICLE_SKY = 800.0f;
 bool Particle::enabled = true;
 
 Particle::Particle(Map *map):
-    mAlive(true),
+    mAlpha(1.0f),
     mLifetimeLeft(-1),
     mLifetimePast(0),
     mFadeOut(0),
     mFadeIn(0),
-    mAlpha(1.0f),
+    mAlive(ALIVE),
     mAutoDelete(true),
     mMap(map),
+    mDeathEffectConditions(0x00),
     mGravity(0.0f),
     mRandomness(0),
     mBounce(0.0f),
@@ -88,6 +89,7 @@ Particle::~Particle()
 
     // Delete child emitters and child particles
     clear();
+    // Update particle count
     Particle::particleCount--;
 }
 
@@ -106,12 +108,12 @@ bool Particle::update()
     if (!mMap)
         return false;
 
-    if (mLifetimeLeft == 0)
-        mAlive = false;
+    if (mLifetimeLeft == 0 && mAlive == ALIVE)
+        mAlive = DEAD_TIMEOUT;
 
     const Vector oldPos = mPos;
 
-    if (mAlive)
+    if (mAlive == ALIVE)
     {
         //calculate particle movement
         if (mMomentum != 1.0f)
@@ -142,7 +144,7 @@ bool Particle::update()
             if (invHypotenuse)
             {
                 if (mInvDieDistance > 0.0f && invHypotenuse > mInvDieDistance)
-                    mAlive = false;
+                    mAlive = DEAD_IMPACT;
 
                 const float accFactor = invHypotenuse * mAcceleration;
                 mVelocity -= dist * accFactor;
@@ -172,7 +174,7 @@ bool Particle::update()
 
         mLifetimePast++;
 
-        if (mPos.z > PARTICLE_SKY || mPos.z < 0.0f)
+        if (mPos.z < 0.0f)
         {
             if (mBounce > 0.0f)
             {
@@ -182,8 +184,12 @@ bool Particle::update()
             }
             else
             {
-                mAlive = false;
+                mAlive = DEAD_FLOOR;
             }
+        }
+        else if (mPos.z > PARTICLE_SKY)
+        {
+            mAlive = DEAD_SKY;
         }
 
         // Update child emitters
@@ -201,6 +207,17 @@ bool Particle::update()
                 }
             }
         }
+    }
+
+    // create death effect when the particle died
+    if (mAlive != ALIVE && mAlive != DEAD_LONG_AGO)
+    {
+        if ((mAlive & mDeathEffectConditions) > 0x00 && !mDeathEffect.empty())
+        {
+            Particle* deathEffect = particleEngine->addEffect(mDeathEffect, 0, 0);
+            deathEffect->moveBy(mPos);
+        }
+            mAlive = DEAD_LONG_AGO;
     }
 
     Vector change = mPos - oldPos;
@@ -226,7 +243,7 @@ bool Particle::update()
         }
     }
 
-    return (mAlive || !mChildParticles.empty() || !mAutoDelete);
+    return (mAlive == ALIVE || !mChildParticles.empty() || !mAutoDelete);
 }
 
 void Particle::moveBy(const Vector &change)
@@ -321,13 +338,31 @@ Particle* Particle::addEffect(const std::string &particleEffectFile,
         // Look for additional emitters for this particle
         for_each_xml_child_node(emitterNode, effectChildNode)
         {
-            if (!xmlStrEqual(emitterNode->name, BAD_CAST "emitter"))
-                continue;
+            if (xmlStrEqual(emitterNode->name, BAD_CAST "emitter"))
+            {
+                ParticleEmitter *newEmitter;
+                newEmitter = new ParticleEmitter(emitterNode, newParticle, mMap,
+                                                 rotation);
+                newParticle->addEmitter(newEmitter);
+            }
+            else if (xmlStrEqual(emitterNode->name, BAD_CAST "deatheffect"))
+            {
+                std::string deathEffect = (const char*)emitterNode->xmlChildrenNode->content;
+                char deathEffectConditions = 0x00;
 
-            ParticleEmitter *newEmitter;
-            newEmitter = new ParticleEmitter(emitterNode, newParticle, mMap,
-                                             rotation);
-            newParticle->addEmitter(newEmitter);
+                if (XML::getBoolProperty(emitterNode, "on-floor", true))
+                    deathEffectConditions += Particle::DEAD_FLOOR;
+                if (XML::getBoolProperty(emitterNode, "on-sky", true))
+                    deathEffectConditions += Particle::DEAD_SKY;
+                if (XML::getBoolProperty(emitterNode, "on-other", false))
+                    deathEffectConditions += Particle::DEAD_OTHER;
+                if (XML::getBoolProperty(emitterNode, "on-impact", true))
+                    deathEffectConditions += Particle::DEAD_IMPACT;
+                if (XML::getBoolProperty(emitterNode, "on-timeout", true))
+                    deathEffectConditions += Particle::DEAD_TIMEOUT;
+
+                newParticle->setDeathEffect(deathEffect, deathEffectConditions);
+            }
         }
 
         mChildParticles.push_back(newParticle);
@@ -372,6 +407,19 @@ Particle *Particle::addTextRiseFadeOutEffect(const std::string &text,
     mChildParticles.push_back(newParticle);
 
     return newParticle;
+}
+
+float Particle::getCurrentAlpha() const
+{
+    float alpha = mAlpha;
+
+    if (mLifetimeLeft > -1 && mLifetimeLeft < mFadeOut)
+        alpha *= (float) mLifetimeLeft / (float) mFadeOut;
+
+    if (mLifetimePast < mFadeIn)
+        alpha *= (float)mLifetimePast / (float)mFadeIn;
+
+    return alpha;
 }
 
 void Particle::setMap(Map *map)

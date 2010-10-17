@@ -94,3 +94,15 @@ std::string strprintf(char const *format, ...)
     return res;
 }
 
+bool getBoolFromString(const std::string &text, bool def)
+{
+    std::string a = text;
+    toLower(trim(a));
+    if (a == "true" || a == "1" || a == "on" || a == "yes" || a == "y")
+        return true;
+    if (a == "false" || a == "0" || a == "off" || a == "no" || a == "n")
+        return false;
+    else
+        return def;
+}
+

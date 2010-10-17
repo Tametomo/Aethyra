@@ -47,6 +47,17 @@ typedef Emitters::iterator EmitterIterator;
 class Particle : public Sprite
 {
     public:
+        enum AliveStatus
+        {
+            ALIVE = 0,
+            DEAD_TIMEOUT = 1,
+            DEAD_FLOOR = 2,
+            DEAD_SKY = 4,
+            DEAD_IMPACT = 8,
+            DEAD_OTHER = 16,
+            DEAD_LONG_AGO = 128
+        };
+
         static const float PARTICLE_SKY; /**< Maximum Z position of particles */
         static int fastPhysics;          /**< Mode of squareroot calculation */
         static int particleCount;        /**< Current number of particles */
@@ -171,9 +182,18 @@ class Particle : public Sprite
         void setFadeIn(const int fadeIn) { mFadeIn = fadeIn; }
 
         /**
+         * Calculates the current alpha transparency taking current fade status
+         * into account
+         */
+        float getCurrentAlpha() const;
+
+        /**
          * Sets the alpha value of the particle
          */
         void setAlpha(const float alpha) { mAlpha = alpha; }
+
+        virtual void setDeathEffect(const std::string &effectFile, char conditions)
+        { mDeathEffect = effectFile; mDeathEffectConditions = conditions; }
 
         /**
          * Sets the sprite iterator of the particle on the current map to make
@@ -235,17 +255,17 @@ class Particle : public Sprite
          */
         void setDieDistance(const float dist) { mInvDieDistance = 1.0f / dist; }
 
-        const bool isAlive() { return mAlive; }
+        bool isAlive() const { return mAlive == ALIVE; }
 
         /**
          * Determines whether the particle and its children are all dead
          */
-        const bool isExtinct() { return !isAlive() && mChildParticles.empty(); }
+        bool isExtinct() const { return !isAlive() && mChildParticles.empty(); }
 
         /**
          * Manually marks the particle for deletion.
          */
-        void kill() { mAlive = false; mAutoDelete = true; }
+        void kill() { mAlive = DEAD_OTHER; mAutoDelete = true; }
 
         /**
          * After calling this function the particle will only request
@@ -259,8 +279,8 @@ class Particle : public Sprite
         void changeParticleDetailLevel(const int value);
 
     protected:
-        bool mAlive;                /**< Is the particle supposed to be drawn
-                                         and updated?*/
+        float mAlpha;               /**< Opacity of the graphical representation
+                                         of the particle */
         Vector mPos;                /**< Position in pixels relative to map. */
         int mLifetimeLeft;          /**< Lifetime left in game ticks*/
         int mLifetimePast;          /**< Age of the particle in game ticks*/
@@ -268,9 +288,11 @@ class Particle : public Sprite
                                          fading out begins*/
         int mFadeIn;                /**< Age in game ticks where fading in is
                                          finished*/
-        float mAlpha;               /**< Opacity of the graphical representation
-                                         of the particle */
+        Vector mVelocity;           /**< Speed in pixels per game-tick. */
 
+    private:
+        AliveStatus mAlive;         /**< Is the particle supposed to be drawn
+                                         and updated?*/
         // generic properties
         bool mAutoDelete;           /**< May the particle request its deletion
                                          by the parent particle? */
@@ -281,9 +303,12 @@ class Particle : public Sprite
         Emitters mChildEmitters;    /**< List of child emitters. */
         Particles mChildParticles;  /**< List of particles controlled by this
                                          particle */
+        std::string mDeathEffect;   /**< Particle effect file to be spawned when
+                                         the particle dies */
+        char mDeathEffectConditions;/**< Bitfield of death conditions which
+                                         trigger spawning of the death particle */
 
         // dynamic particle
-        Vector mVelocity;           /**< Speed in pixels per game-tick. */
         float mGravity;             /**< Downward acceleration in pixels per
                                          game-tick. */
         int mRandomness;            /**< amount of random vector change */

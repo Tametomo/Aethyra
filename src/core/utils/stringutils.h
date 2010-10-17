@@ -85,4 +85,12 @@ std::string strprintf(char const *, ...)
 #endif
 ;
 
+/**
+ * Returns a bool value depending on the given string value.
+ *
+ * @param text the string used to get the bool value
+ * @return a boolean value..
+ */
+bool getBoolFromString(const std::string &text, bool def = false);
+
 #endif // UTILS_STRINGUTILS_H
