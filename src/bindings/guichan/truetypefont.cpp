@@ -63,13 +63,13 @@ class TextChunk
             sdlCol.r = color.r;
             sdlCol.g = color.g;
 
-            SDL_Surface *surface = TTF_RenderUTF8_Blended(
-                    font, text.c_str(), sdlCol);
+            SDL_Surface *surface = TTF_RenderUTF8_Blended(font, text.c_str(),
+                                                          sdlCol);
 
             if (!surface)
             {
-                throw "Rendering font to surface failed: " +
-                    std::string(TTF_GetError());
+                img = NULL;
+                return;
             }
 
             img = Image::load(surface);
@@ -166,8 +166,11 @@ void TrueTypeFont::drawString(gcn::Graphics *graphics,
         cache.front().generate(mFont);
     }
 
-    cache.front().img->setAlpha(alpha);
-    g->drawImage(cache.front().img, x, y);
+    if (cache.front().img)
+    {
+        cache.front().img->setAlpha(alpha);
+        g->drawImage(cache.front().img, x, y);
+    }
 }
 
 int TrueTypeFont::getWidth(const std::string& text) const
@@ -179,7 +182,7 @@ int TrueTypeFont::getWidth(const std::string& text) const
             // Raise priority: move it to front
             // Assumption is that TTF::draw will be called next
             cache.splice(cache.begin(), cache, i);
-            return i->img->getWidth();
+            return (i->img ? i->img->getWidth() : 0);
         }
     }
 
