@@ -64,6 +64,7 @@ static TabData const data[TAB_COUNT] = {
 };
 
 ImageRect Tab::tabImg[TAB_COUNT];
+Image* Tab::mCloseButton = NULL;
 
 class TabConfigListener : public ConfigListener
 {
@@ -89,51 +90,20 @@ class TabConfigListener : public ConfigListener
         Tab *mTab;
 };
 
-Tab::Tab() :
+Tab::Tab(const std::string &caption, bool closeable) :
     gcn::BasicContainer(),
     mTabColor(&guiPalette->getColor(Palette::TEXT)),
+    mCloseable(closeable),
     mHighlighted(false),
     mHasMouse(false),
     mTabbedArea(NULL)
 {
-    init();
-}
-
-Tab::~Tab()
-{
-    if (mTabbedArea)
-        mTabbedArea->removeTab(this);
-
-    remove(mLabel);
-    destroy(mLabel);
-
-    mInstances--;
-
-    if (mInstances == 0)
-    {
-        config.removeListener("guialpha", mConfigListener);
-        destroy(mConfigListener);
-
-        for (int mode = 0; mode < TAB_COUNT; mode++)
-            for_each(tabImg[mode].grid, tabImg[mode].grid + 9, dtor<Image*>());
-    }
-}
-
-void Tab::adjustSize()
-{
-    setSize(mLabel->getWidth() + 8, mLabel->getHeight() + 8);
-
-    if (mTabbedArea != NULL)
-        mTabbedArea->adjustTabPositions();
-}
-
-void Tab::init()
-{
     setFocusable(false);
     setFrameSize(0);
     mHighlighted = false;
-    mLabel = new Label();
+    mLabel = new Label(caption);
     mLabel->setPosition(4, 4);
+    adjustSize();
     add(mLabel);
     addMouseListener(this);
 
@@ -165,11 +135,52 @@ void Tab::init()
             }
             tab[mode]->decRef();
         }
+        mCloseButton = resman->getImage("graphics/gui/close_button.png");
 
         mConfigListener = new TabConfigListener(this);
         config.addListener("guialpha", mConfigListener);
     }
     mInstances++;
+}
+
+Tab::~Tab()
+{
+    if (mTabbedArea)
+        mTabbedArea->removeTab(this);
+
+    remove(mLabel);
+    destroy(mLabel);
+
+    mInstances--;
+
+    if (mInstances == 0)
+    {
+        config.removeListener("guialpha", mConfigListener);
+        destroy(mConfigListener);
+
+        for (int mode = 0; mode < TAB_COUNT; mode++)
+            for_each(tabImg[mode].grid, tabImg[mode].grid + 9, dtor<Image*>());
+
+        mCloseButton->decRef();
+    }
+}
+
+void Tab::adjustSize()
+{
+    int width = mLabel->getWidth() + 8;
+    int height = mLabel->getHeight() + 8;
+
+    if (mCloseable && mCloseButton)
+    {
+        width = width + mCloseButton->getWidth() - 4;
+        height = height > mCloseButton->getHeight() ? height :
+                 mCloseButton->getHeight();
+    }
+
+    setSize(width, height);
+
+    if (mTabbedArea != NULL)
+        mTabbedArea->adjustTabPositions();
 }
 
 void Tab::draw(gcn::Graphics *graphics)
@@ -207,6 +218,13 @@ void Tab::draw(gcn::Graphics *graphics)
                                                getHeight() - 8));
     }
 
+    // draw close button
+    if (isCloseable())
+    {
+        Graphics *g = static_cast<Graphics*>(graphics);
+        g->drawImage(mCloseButton, getWidth() - mCloseButton->getWidth() - 2, 2);
+    }
+
     // draw label
     drawChildren(graphics);
 }
@@ -236,6 +254,12 @@ void Tab::fontChanged()
     adjustSize();
 }
 
+void Tab::close()
+{
+    if (mTabbedArea)
+        mTabbedArea->removeTab(this);
+}
+
 void Tab::mouseEntered(gcn::MouseEvent& mouseEvent)
 {
     mHasMouse = true;
@@ -244,4 +268,23 @@ void Tab::mouseEntered(gcn::MouseEvent& mouseEvent)
 void Tab::mouseExited(gcn::MouseEvent& mouseEvent)
 {
     mHasMouse = false;
+}
+
+void Tab::mousePressed(gcn::MouseEvent &event)
+{
+    if (event.getButton() == gcn::MouseEvent::LEFT)
+    {
+        const int x = event.getX();
+        const int y = event.getY();
+
+        // Handle close button
+        if (mCloseable)
+        {
+            gcn::Rectangle closeButtonRect(getWidth() - mCloseButton->getWidth() - 2,
+                2, mCloseButton->getWidth(), mCloseButton->getHeight());
+
+            if (closeButtonRect.isPointInRect(x, y))
+                close();
+        }
+    }
 }

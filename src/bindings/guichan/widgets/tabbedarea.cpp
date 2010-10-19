@@ -89,8 +89,7 @@ void TabbedArea::logic()
 
 void TabbedArea::addTab(const std::string &caption, gcn::Widget *widget)
 {
-    Tab* tab = new Tab();
-    tab->setCaption(caption);
+    Tab* tab = new Tab(caption);
     mTabsToDelete.push_back(tab);
 
     addTab(tab, widget);
@@ -126,6 +125,9 @@ void TabbedArea::removeTab(Tab *tab)
         if (*itr == tab)
         {
             mTabContainer->scheduleDelete(tab);
+            mTabsToDelete.remove(*itr); // Remove the tab from the to
+                                        // delete list, since the container
+                                        // is taking care of this
             break;
         }
 
@@ -148,6 +150,9 @@ void TabbedArea::removeTab(Tab *tab)
     }
 
     tabItr = mTabs.erase(tabItr);
+
+    // Fix tab positioning
+    fontChanged();
 }
 
 void TabbedArea::setSelectedTab(Tab* tab)

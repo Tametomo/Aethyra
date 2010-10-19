@@ -28,6 +28,7 @@
 
 #include "label.h"
 
+class Image;
 class ImageRect;
 class TabbedArea;
 class TabConfigListener;
@@ -44,7 +45,7 @@ class Tab : public gcn::BasicContainer, public gcn::MouseListener
         /**
          * Constructor.
          */
-        Tab();
+        Tab(const std::string &caption = "", bool closeable = false);
 
         /**
          * Destructor.
@@ -92,26 +93,39 @@ class Tab : public gcn::BasicContainer, public gcn::MouseListener
          */
         void setHighlighted(bool high);
 
+        bool isHighlighted() const { return mHighlighted; }
+
+        void setCloseable(bool close) { mCloseable = close; }
+
+        bool isCloseable() const { return mCloseable; }
+
         void fontChanged();
+
+        /**
+         * Removes a tab from a TabbedArea
+         *
+         * NOTE: If the TabbedArea didn't create this tab, you are responsible
+         *       for its destruction.
+         */
+        void close();
 
         // Inherited from MouseListener
 
         virtual void mouseEntered(gcn::MouseEvent& mouseEvent);
-
         virtual void mouseExited(gcn::MouseEvent& mouseEvent);
+        virtual void mousePressed(gcn::MouseEvent& mouseEvent);
 
     protected:
         static float mAlpha;
         static TabConfigListener *mConfigListener;
 
     private:
-        /** Load images if no other instances exist yet */
-        void init();
-
         static ImageRect tabImg[4];    /**< Tab state graphics */
+        static Image *mCloseButton;    /**< Tab close graphic */
         static int mInstances;         /**< Number of tab instances */
 
         const gcn::Color *mTabColor;
+        bool mCloseable;
         bool mHighlighted;
         bool mHasMouse;
 
