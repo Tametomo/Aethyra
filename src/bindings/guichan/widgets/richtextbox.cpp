@@ -276,7 +276,11 @@ void RichTextBox::sanitizeText(std::string &text)
     while (start != std::string::npos)
     {
         text.insert(start, "#");
-        start = text.find("##", start + 2);
+
+        while (text.at(start) == '#')
+            start++;
+
+        start = text.find("##", start);
     }
 }
 
@@ -414,8 +418,6 @@ void RichTextBox::calculateTextLayout()
         for (std::string::size_type start = 0, end = std::string::npos;
              start != end; start = end, end = std::string::npos)
         {
-            int escape = 0;
-
             // Wrapped line continuation shall be indented.
             if (wrapped)
             {
@@ -491,13 +493,12 @@ void RichTextBox::calculateTextLayout()
                                 break;
                             case '#':
                                 {
-                                    while (start < row.size() &&
-                                           row[start] == '#')
+                                    while (end < row.size() &&
+                                           row[end] == '#')
                                     {
-                                        start++;
-                                        escape++;
+                                        ++end;
                                     }
-                                    start -= 3;
+                                    start -= 2;
                                 } 
                                 break;
                             default :
@@ -510,12 +511,6 @@ void RichTextBox::calculateTextLayout()
                     if (start == row.size())
                         break;
                 }
-            }
-
-            if (escape > 0)
-            {
-                start -= escape - 1;
-                end += escape;
             }
 
             std::string::size_type len = end == std::string::npos ? end :
