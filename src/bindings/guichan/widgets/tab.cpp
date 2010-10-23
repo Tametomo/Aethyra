@@ -103,7 +103,6 @@ Tab::Tab(const std::string &caption, bool closeable) :
     mHighlighted = false;
     mLabel = new Label(caption);
     mLabel->setPosition(4, 4);
-    adjustSize();
     add(mLabel);
     addMouseListener(this);
 
@@ -140,6 +139,7 @@ Tab::Tab(const std::string &caption, bool closeable) :
         mConfigListener = new TabConfigListener(this);
         config.addListener("guialpha", mConfigListener);
     }
+    adjustSize();
     mInstances++;
 }
 
@@ -236,14 +236,10 @@ void Tab::setCaption(const std::string& caption)
     adjustSize();
 }
 
-void Tab::setTabColor(const gcn::Color *color)
+void Tab::setCloseable(bool close)
 {
-    mTabColor = color;
-}
-
-void Tab::setHighlighted(bool high)
-{
-    mHighlighted = high;
+    mCloseable = close;
+    adjustSize();
 }
 
 void Tab::fontChanged()
@@ -258,16 +254,6 @@ void Tab::close()
 {
     if (mTabbedArea)
         mTabbedArea->removeTab(this);
-}
-
-void Tab::mouseEntered(gcn::MouseEvent& mouseEvent)
-{
-    mHasMouse = true;
-}
-
-void Tab::mouseExited(gcn::MouseEvent& mouseEvent)
-{
-    mHasMouse = false;
 }
 
 void Tab::mousePressed(gcn::MouseEvent &event)

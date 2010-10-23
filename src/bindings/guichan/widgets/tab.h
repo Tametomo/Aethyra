@@ -86,16 +86,16 @@ class Tab : public gcn::BasicContainer, public gcn::MouseListener
         /**
          * Changes the color the default tab text uses.
          */
-        void setTabColor(const gcn::Color *color);
+        void setTabColor(const gcn::Color *color) { mTabColor = color; }
 
         /**
          * Set tab highlighted
          */
-        void setHighlighted(bool high);
+        void setHighlighted(bool high) { mHighlighted = high; }
 
         bool isHighlighted() const { return mHighlighted; }
 
-        void setCloseable(bool close) { mCloseable = close; }
+        void setCloseable(bool close);
 
         bool isCloseable() const { return mCloseable; }
 
@@ -111,8 +111,8 @@ class Tab : public gcn::BasicContainer, public gcn::MouseListener
 
         // Inherited from MouseListener
 
-        virtual void mouseEntered(gcn::MouseEvent& mouseEvent);
-        virtual void mouseExited(gcn::MouseEvent& mouseEvent);
+        virtual void mouseEntered(gcn::MouseEvent& mouseEvent) { mHasMouse = true; }
+        virtual void mouseExited(gcn::MouseEvent& mouseEvent) { mHasMouse = false; }
         virtual void mousePressed(gcn::MouseEvent& mouseEvent);
 
     protected:
