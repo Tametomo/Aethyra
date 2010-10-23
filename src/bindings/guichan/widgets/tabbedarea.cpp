@@ -32,11 +32,12 @@
 
 #include "../../../core/utils/dtor.h"
 
-TabbedArea::TabbedArea() :
+TabbedArea::TabbedArea(bool hide) :
     Container(),
+    mHideWhenOneTab(hide),
     mSelectedTab(NULL)
 {
-    setFocusable(true);
+    setFocusable(false);
     addKeyListener(this);
     addMouseListener(this);
 
@@ -87,12 +88,17 @@ void TabbedArea::logic()
 }
 
 
-void TabbedArea::addTab(const std::string &caption, gcn::Widget *widget)
+Tab *TabbedArea::addTab(const std::string &caption, gcn::Widget *widget,
+                        bool closeable)
 {
-    Tab* tab = new Tab(caption);
+    Tab* tab = new Tab(caption, closeable);
     mTabsToDelete.push_back(tab);
 
+    if (mHideWhenOneTab)
+        setFocusable(mTabs.size() != 1);
+
     addTab(tab, widget);
+    return tab;
 }
 
 void TabbedArea::addTab(Tab *tab, gcn::Widget *widget)
@@ -102,6 +108,9 @@ void TabbedArea::addTab(Tab *tab, gcn::Widget *widget)
 
     mTabContainer->add(tab);
     mTabs.push_back(std::pair<Tab*, gcn::Widget*>(tab, widget));
+
+    if (mHideWhenOneTab)
+        setFocusable(mTabs.size() != 1);
 
     if (!mSelectedTab)
         setSelectedTab(tab);
@@ -151,6 +160,8 @@ void TabbedArea::removeTab(Tab *tab)
 
     tabItr = mTabs.erase(tabItr);
 
+    setFocusable(mHideWhenOneTab ? mTabs.size() > 1 : !mTabs.empty());
+
     // Fix tab positioning
     fontChanged();
 }
@@ -165,7 +176,10 @@ void TabbedArea::setSelectedTab(Tab* tab)
         mSelectedTab = tab;
 
     if (mSelectedTab)
+    {
         mWidgetContainer->add(getWidget(mSelectedTab->getCaption()));
+        mSelectedTab->setHighlighted(false);
+    }
 }
 
 Tab* TabbedArea::getTab(const std::string &name)
@@ -220,6 +234,12 @@ bool TabbedArea::contains(Tab *tab)
     }
 
     return contained;
+}
+
+void TabbedArea::hideWhenOneTab(bool hide)
+{
+    mHideWhenOneTab = hide;
+    setFocusable(hide ? mTabs.size() > 1 : !mTabs.empty());
 }
 
 void TabbedArea::setWidth(int width)
@@ -356,6 +376,9 @@ TabbedArea::TabContainer::iterator TabbedArea::getTabIterator(Tab *tab)
 
 int TabbedArea::getMaxTabHeight()
 {
+    if (mHideWhenOneTab && mTabs.size() == 1)
+        return 0;
+
     int maxTabHeight = 0;
 
     TabContainer::iterator itr = mTabs.begin(), itr_end = mTabs.end();

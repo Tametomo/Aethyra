@@ -52,7 +52,7 @@ class TabbedArea : public Container, public gcn::ActionListener,
         /**
          * Constructor.
          */
-        TabbedArea();
+        TabbedArea(bool hideWhenOneTab = true);
 
         virtual ~TabbedArea();
 
@@ -62,14 +62,19 @@ class TabbedArea : public Container, public gcn::ActionListener,
         void logic();
 
         /**
-         * Add a tab
+         * Create a tab through the tabbed area.
+         *
          * @param caption The Caption to display
          * @param widget The widget to show when tab is selected
+         * @param closeable Whether the tab should be closeable or not
+         * @return The tab created
          */
-        void addTab(const std::string &caption, gcn::Widget *widget);
+        Tab *addTab(const std::string &caption, gcn::Widget *widget,
+                    bool closeable = false);
 
         /**
-         * Add a tab
+         * Add an existing tab to the tabbed area.
+         *
          * @param tab The tab
          * @param widget The widget to display
          */
@@ -118,6 +123,12 @@ class TabbedArea : public Container, public gcn::ActionListener,
          * Whether the tab is in this tab container or not
          */
         bool contains(Tab *tab);
+
+        /**
+         * Enables/disables whether the tabbed area should hide itself when only
+         * one tab is available.
+         */
+        void hideWhenOneTab(bool hide);
 
         /**
          * Draw the tabbed area.
@@ -174,6 +185,8 @@ class TabbedArea : public Container, public gcn::ActionListener,
          * Adjusts the positions of the tabs.
          */
         void adjustTabPositions();
+
+        bool mHideWhenOneTab;
 
         ProtectedFocusListener *mProtFocusListener;
         Container* mTabContainer;
