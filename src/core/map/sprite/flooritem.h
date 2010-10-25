@@ -27,10 +27,11 @@
 
 #include "sprite.h"
 
+#include "../map.h"
+
 class Graphics;
 class Image;
 class Item;
-class Map;
 
 typedef std::list<Sprite*> Sprites;
 
@@ -82,7 +83,7 @@ class FloorItem : public Sprite
          *
          * @see Sprite::getPixelY()
          */
-        const int getPixelY() const { return mY * 32; }
+        const int getPixelY() const { return mY * mMap->getTileHeight(); }
 
         /**
          * Draws this floor item to the given graphics context.

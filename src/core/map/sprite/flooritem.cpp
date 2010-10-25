@@ -22,8 +22,6 @@
 
 #include "flooritem.h"
 
-#include "../map.h"
-
 #include "../../image/image.h"
 
 #include "../../utils/dtor.h"

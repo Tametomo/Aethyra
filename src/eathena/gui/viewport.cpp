@@ -445,6 +445,12 @@ void Viewport::closePopupMenu()
     mPopupMenu->action(actionEvent);
 }
 
+void Viewport::scrollBy(int x, int y)
+{
+    mPixelViewX += (float) (x * mCurrentMap->getTileWidth());
+    mPixelViewY += (float) (y * mCurrentMap->getTileHeight());
+}
+
 bool Viewport::changeMap(const std::string &path)
 {
     // Clean up floor items, beings and particles

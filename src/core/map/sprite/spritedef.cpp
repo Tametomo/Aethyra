@@ -25,6 +25,7 @@
 #include "action.h"
 #include "spritedef.h"
 
+#include "../../log.h"
 #include "../../resourcemanager.h"
 
 #include "../../image/animation.h"
@@ -32,9 +33,7 @@
 #include "../../image/image.h"
 #include "../../image/imageset.h"
 
-#include "../../../core/log.h"
-
-#include "../../../core/utils/xml.h"
+#include "../../utils/xml.h"
 
 Action* SpriteDef::getAction(const SpriteAction &action) const
 {
@@ -194,6 +193,9 @@ void SpriteDef::loadAnimation(const xmlNodePtr &animationNode,
     for_each_xml_child_node(frameNode, animationNode)
     {
         const int delay = XML::getProperty(frameNode, "delay", 0);
+        // TODO: This needs to be made independent of the map class.
+        //       This will require reworking coordinates so that these will
+        //       always be 0, or calculating these manually if placed on a map.
         int offsetX = XML::getProperty(frameNode, "offsetX", 0);
         int offsetY = XML::getProperty(frameNode, "offsetY", 0);
         offsetY -= imageSet->getHeight() - 32;

@@ -34,6 +34,8 @@
 #include "../../log.h"
 #include "../../resourcemanager.h"
 
+#include "../../map/map.h"
+
 #define SIN45 0.707106781f
 #define DEG_RAD_FACTOR 0.017453293f
 
@@ -176,8 +178,8 @@ ParticleEmitter::ParticleEmitter(const xmlNodePtr &emitterNode, Particle *target
                 int delay = XML::getProperty(frameNode, "delay", 0);
                 int offsetX = XML::getProperty(frameNode, "offsetX", 0);
                 int offsetY = XML::getProperty(frameNode, "offsetY", 0);
-                offsetY -= imageset->getHeight() - 32;
-                offsetX -= imageset->getWidth() / 2 - 16;
+                offsetY -= imageset->getHeight() - mMap->getTileHeight();
+                offsetX -= (imageset->getWidth() - mMap->getTileWidth()) / 2;
 
                 if (xmlStrEqual(frameNode->name, BAD_CAST "frame"))
                 {
@@ -242,8 +244,8 @@ ParticleEmitter::ParticleEmitter(const xmlNodePtr &emitterNode, Particle *target
                 int delay = XML::getProperty(frameNode, "delay", 0);
                 int offsetX = XML::getProperty(frameNode, "offsetX", 0);
                 int offsetY = XML::getProperty(frameNode, "offsetY", 0);
-                offsetY -= imageset->getHeight() - 32;
-                offsetX -= imageset->getWidth() / 2 - 16;
+                offsetY -= imageset->getHeight() - mMap->getTileHeight();
+                offsetX -= (imageset->getWidth() - mMap->getTileWidth()) / 2;
 
                 if (xmlStrEqual(frameNode->name, BAD_CAST "frame"))
                 {

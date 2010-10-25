@@ -103,14 +103,16 @@ void DebugWindow::logic()
     if (!viewport)
         return;
 
+    Map *currentMap = viewport->getMap();
+
     // Get the current mouse position
-    const int mouseTileX = (gui->getMouseX() + viewport->getCameraX()) / 32;
-    const int mouseTileY = (gui->getMouseY() + viewport->getCameraY()) / 32;
+    const int mouseTileX = (gui->getMouseX() + viewport->getCameraX()) /
+                            currentMap->getTileWidth();
+    const int mouseTileY = (gui->getMouseY() + viewport->getCameraY()) /
+                            currentMap->getTileHeight();
 
     mTileMouseLabel->setCaption(strprintf(_("Cursor: (%d, %d)"), mouseTileX,
                                             mouseTileY));
-
-    Map *currentMap = viewport->getMap();
 
     if (currentMap)
     {

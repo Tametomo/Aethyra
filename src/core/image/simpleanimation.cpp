@@ -57,6 +57,9 @@ SimpleAnimation::SimpleAnimation(xmlNodePtr animationNode):
          frameNode = frameNode->next)
     {
         const int delay = XML::getProperty(frameNode, "delay", 0);
+        // TODO: This needs to be made independent of the map class.
+        //       This will require reworking coordinates so that these will
+        //       always be 0, or calculating these manually if placed on a map.
         const int offsetX = XML::getProperty(frameNode, "offsetX", 0) - 
                             imageset->getHeight() - 32;
         const int offsetY = XML::getProperty(frameNode, "offsetY", 0) -

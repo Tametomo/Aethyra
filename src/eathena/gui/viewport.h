@@ -132,9 +132,9 @@ class Viewport : public Container, public gcn::MouseListener
         int getCameraY() const { return (int) mPixelViewY; }
 
         /**
-         * Changes viewpoint by relative pixel coordinates.
+         * Changes viewpoint by tile coordinates.
          */
-        void scrollBy(float x, float y) { mPixelViewX += x; mPixelViewY += y; }
+        void scrollBy(int x, int y);
 
         /**
          * Sets the currently active map.
