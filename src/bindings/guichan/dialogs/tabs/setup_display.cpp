@@ -240,7 +240,11 @@ void Setup_Display::apply()
 
     // We sync old and new values at apply time
     mFullScreenEnabled = config.getValue("screen", false);
+#ifdef USE_OPENGL
     mOpenGLEnabled = config.getValue("opengl", USE_OPENGL);
+#else
+    mOpenGLEnabled = false;
+#endif
     mCustomCursorEnabled = config.getValue("customcursor", true);
     mOpacity = config.getValue("guialpha", 0.8);
     mMouseOpacity = config.getValue("mousealpha", 0.7);

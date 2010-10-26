@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifdef USE_OPENGL
+
 #include <cassert>
 #include <SDL.h>
 
@@ -32,8 +34,6 @@
 #include "../../../core/log.h"
 
 #include "../../../core/image/image.h"
-
-#ifdef USE_OPENGL
 
 #ifndef GL_TEXTURE_RECTANGLE_ARB
 #define GL_TEXTURE_RECTANGLE_ARB 0x84F5
