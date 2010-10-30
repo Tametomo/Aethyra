@@ -198,16 +198,16 @@ void PlayerHandler::handleMessage(MessageIn *msg)
 
                 current_npc = 0;
 
-                float scrollOffsetX = 0.0f;
-                float scrollOffsetY = 0.0f;
+                int scrollOffsetX = 0;
+                int scrollOffsetY = 0;
 
                 /* Scroll if neccessary */
                 if (!nearby
                     || (abs(x - player_node->mX) > MAP_TELEPORT_SCROLL_DISTANCE)
                     || (abs(y - player_node->mY) > MAP_TELEPORT_SCROLL_DISTANCE))
                 {
-                    scrollOffsetX = (x - player_node->mX) * 32;
-                    scrollOffsetY = (y - player_node->mY) * 32;
+                    scrollOffsetX = x - player_node->mX;
+                    scrollOffsetY = y - player_node->mY;
                 }
 
                 player_node->setAction(Being::STAND);
@@ -215,8 +215,8 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                 player_node->mX = x;
                 player_node->mY = y;
 
-                logger->log("Adjust scrolling by %d:%d", (int) scrollOffsetX,
-                           (int) scrollOffsetY);
+                logger->log("Adjust scrolling by (%d, %d) tiles", scrollOffsetX,
+                            scrollOffsetY);
 
                 viewport->scrollBy(scrollOffsetX, scrollOffsetY);
             }
