@@ -122,9 +122,10 @@ class RichTextBox : public gcn::Widget, public gcn::MouseListener,
 
         /**
          * Escapes color text strings, so that they aren't parsed in the
-         * RichTextBox.
+         * RichTextBox. Escape designates how many #'s we should allow before
+         * escaping them.
          */
-        void sanitizeText(std::string &text);
+        void sanitizeText(std::string &text, int escape = 2);
 
         /**
          * RichTextBox modes.

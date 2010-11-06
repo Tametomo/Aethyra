@@ -154,9 +154,6 @@ void Being::setSpeech(const std::string &text, const int time)
 {
     mSpeech = text;
 
-    // Trim whitespace
-    trim(mSpeech);
-
     // check for links
     std::string::size_type start = mSpeech.find('[');
     std::string::size_type end = mSpeech.find(']', start);
@@ -202,6 +199,26 @@ void Being::setSpeech(const std::string &text, const int time)
         start = mSpeech.find('[', start + 1);
         end = mSpeech.find(']', start);
     }
+
+    if (config.getValue("ChatColorInjection", true))
+    {
+        start = mSpeech.find("##");
+        end = start;
+        while (end != std::string::npos && mSpeech.size() > start + 2)
+        {
+            while (end < mSpeech.size() && mSpeech[end] == '#')
+                end++;
+
+            if (mSpeech[start + 2] != '#')
+                mSpeech.erase(start, 3);
+
+            start = mSpeech.find("##", end + 1);
+            end = start;
+        }
+    }
+
+    // Trim whitespace
+    trim(mSpeech);
 
     if (!mSpeech.empty())
         mSpeechTime = time <= SPEECH_MAX_TIME ? time : SPEECH_MAX_TIME;
@@ -474,6 +491,10 @@ void Being::drawEmotion(Graphics *graphics, const int offsetX,
 
 void Being::drawSpeech(const int offsetX, const int offsetY)
 {
+    // No sense setting the speech when there's nothing to set
+    if (mSpeech.empty())
+        return;
+
     const int px = mPx - offsetX;
     const int py = mPy - offsetY;
     const int speech = config.getValue("speech", NAME_IN_BUBBLE);

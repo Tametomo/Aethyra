@@ -95,6 +95,9 @@ ChatWindow::ChatWindow():
     mTextOutput = new RichTextBox(RichTextBox::AUTO_WRAP);
     mTextOutput->setOpaque(false);
     mTextOutput->setMaxRow(config.getValue("ChatLogLength", 128));
+    mTextOutput->setWidth(150); // Keep from unneccessary wraps when text is
+                                // sent to this before being completely
+                                // initialized.
     mTextOutput->setLinkHandler(mItemLinkHandler);
 
     mScrollArea = new ScrollArea(mTextOutput);
@@ -267,9 +270,31 @@ void ChatWindow::chatLog(std::string line, int own, bool ignoreRecord)
 
     // Remove any special formatting that players might do to their nicknames.
     mTextOutput->sanitizeText(tmp.nick);
+    mTextOutput->sanitizeText(tmp.text, mColorInjection ? 3 : 2);
 
-    if (!mColorInjection)
-        mTextOutput->sanitizeText(tmp.text);
+    // If we are allowing for color injection, ensure we don't print out empty
+    // lines in the chat window.
+    if (mColorInjection)
+    {
+        std::string sanitizedText = tmp.text;
+        std::string::size_type start = sanitizedText.find("##");
+        std::string::size_type end = start;
+        while (end != std::string::npos && sanitizedText.size() > start + 2)
+        {
+            while (end < sanitizedText.size() && sanitizedText[end] == '#')
+                end++;
+
+            if (sanitizedText[start + 2] != '#')
+                sanitizedText.erase(start, 3);
+
+            start = sanitizedText.find("##", end + 1);
+            end = start;
+        }
+        trim(sanitizedText);
+
+        if (sanitizedText.empty())
+            return;
+    }
 
     if (tmp.nick.empty() && tmp.text.substr(0, 17) == "Visible GM status")
         player_node->setGM();

@@ -269,18 +269,19 @@ void RichTextBox::clearRows()
     mSelectedLink = -1;
 }
 
-void RichTextBox::sanitizeText(std::string &text)
+void RichTextBox::sanitizeText(std::string &text, int escape)
 {
-    std::string::size_type start = text.find("##", 0);
+    std::string escapeString(escape, '#');
+    std::string::size_type start = text.find(escapeString);
 
     while (start != std::string::npos)
     {
         text.insert(start, "#");
 
-        while (text.at(start) == '#')
+        while (text.size() > start && text.at(start) == '#')
             start++;
 
-        start = text.find("##", start);
+        start = text.find(escapeString, start);
     }
 }
 
@@ -498,6 +499,10 @@ void RichTextBox::calculateTextLayout()
                                     {
                                         ++end;
                                     }
+
+                                    if (end == row.size())
+                                        end = std::string::npos;
+
                                     start -= 2;
                                 } 
                                 break;
@@ -515,7 +520,7 @@ void RichTextBox::calculateTextLayout()
 
             std::string::size_type len = end == std::string::npos ? end :
                                                                     end - start;
-            std::string part = (start == end) ? "" : row.substr(start, len);
+            std::string part = row.substr(start, len);
 
             // Auto wrap mode
             if (mMode == AUTO_WRAP && (x + font->getWidth(part) + 10) >
