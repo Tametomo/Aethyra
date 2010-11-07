@@ -80,6 +80,8 @@ MenuBar::MenuBar():
 
 void MenuBar::adaptToNewSize()
 {
+    Popup::adaptToNewSize();
+
     int x = 0, h = 0;
 
     for (size_t i = 0; i < buttons.size(); i++)

@@ -62,6 +62,7 @@ Window::Window(const std::string& caption, bool modal, Window *parent,
     mModal(modal),
     mDefaultVisible(visible),
     mSaveVisibility(true),
+    mHasMaxDimensions(false),
     mMinWinWidth(100),
     mMinWinHeight(40),
     mMaxWinWidth(graphics->getWidth()),
@@ -300,6 +301,12 @@ void Window::saveRelativeLocation(const int x, const int y)
 void Window::adaptToNewSize()
 {
     setLocationRelativeTo(mPosition, mOffsetX, mOffsetY);
+
+    if (!mHasMaxDimensions)
+    {
+        mMaxWinWidth = graphics->getWidth();
+        mMaxWinHeight = graphics->getHeight();
+    }
 }
 
 void Window::setMinWidth(int width)
@@ -316,11 +323,13 @@ void Window::setMinHeight(int height)
 void Window::setMaxWidth(int width)
 {
     mMaxWinWidth = width;
+    mHasMaxDimensions = true;
 }
 
 void Window::setMaxHeight(int height)
 {
     mMaxWinHeight = height;
+    mHasMaxDimensions = true;
 }
 
 void Window::setResizable(bool r)

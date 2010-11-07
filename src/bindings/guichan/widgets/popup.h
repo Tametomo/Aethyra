@@ -175,7 +175,7 @@ class Popup : public Container
          * Allows for child popup classes to reposition themselves on resize if
          * necessary.
          */
-        virtual void adaptToNewSize() {}
+        virtual void adaptToNewSize();
 
         // Inherited from BasicContainer
 
@@ -187,6 +187,8 @@ class Popup : public Container
     private:
         gcn::Container *mParentContainer;
 
+        bool mHasMaxDimensions;       /**< Whether the popup has a maximum
+                                           width or height */
         std::string mPopupName;       /**< Name of the popup */
         std::string mDefaultSkinPath; /**< Default skin path for this popup */
         int mMinWidth;                /**< Minimum popup width */

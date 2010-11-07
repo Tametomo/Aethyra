@@ -31,6 +31,7 @@
 Popup::Popup(const std::string &name, const std::string &skin,
              gcn::Container *parent):
     mParentContainer(parent),
+    mHasMaxDimensions(false),
     mPopupName(name),
     mDefaultSkinPath(skin),
     mMaxWidth(graphics->getWidth()),
@@ -165,10 +166,20 @@ void Popup::setMinHeight(int height)
 void Popup::setMaxWidth(int width)
 {
     mMaxWidth = width;
+    mHasMaxDimensions = true;
 }
 
 void Popup::setMaxHeight(int height)
 {
     mMaxHeight = height;
+    mHasMaxDimensions = true;
 }
 
+void Popup::adaptToNewSize()
+{
+    if (!mHasMaxDimensions)
+    {
+        mMaxWidth = graphics->getWidth();
+        mMaxHeight = graphics->getHeight();
+    }
+}

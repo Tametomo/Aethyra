@@ -408,7 +408,9 @@ class Window : public gcn::Window, public gcn::WidgetListener,
         bool mShowTitle;              /**< Window has a title bar */
         bool mModal;                  /**< Window is modal */
         bool mDefaultVisible;         /**< Default visibility */
-        bool mSaveVisibility;         /**< If the windo saves visibility */
+        bool mSaveVisibility;         /**< If the window saves visibility */
+        bool mHasMaxDimensions;       /**< Whether the window has a maximum
+                                           width or height */
         int mMinWinWidth;             /**< Minimum window width */
         int mMinWinHeight;            /**< Minimum window height */
         int mMaxWinWidth;             /**< Maximum window width */
