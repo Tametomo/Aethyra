@@ -65,6 +65,6 @@ Item* FloorItem::getItem() const
 void FloorItem::draw(Graphics *graphics, const int offsetX,
                      const int offsetY) const
 {
-    graphics->drawImage(mItem->getImage(), mX * mMap->getWidth() + offsetX,
-                        mY * mMap->getHeight() + offsetY);
+    graphics->drawImage(mItem->getImage(), mX * mMap->getTileWidth() + offsetX,
+                        mY * mMap->getTileHeight() + offsetY);
 }
