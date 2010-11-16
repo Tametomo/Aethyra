@@ -49,6 +49,8 @@ class SimpleAnimation
 
         ~SimpleAnimation();
 
+        Frame *getFrame() { return mCurrentFrame; }
+
         void setFrame(unsigned int frame);
 
         int getLength();

@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <guichan/font.hpp>
+
 #include <cassert>
 #include <cmath>
 
@@ -227,12 +229,12 @@ void Being::setSpeech(const std::string &text, const int time)
 void Being::takeDamage(const Being *attacker, const int amount,
                        const AttackType &type)
 {
-    gcn::Font *font;
+    gcn::Font *font = gui->getInfoParticleFont();
     std::string damage = amount ? toString(amount) : type == FLEE ?
             "dodge" : "miss";
     const gcn::Color* color;
-
-    font = gui->getInfoParticleFont();
+    const int width = mPx + mMap->getTileWidth() / 2;
+    const int height = mPy + mMap->getTileHeight() / 2;
 
     // Selecting the right color
     if (type == CRITICAL || type == FLEE)
@@ -252,12 +254,12 @@ void Being::takeDamage(const Being *attacker, const int amount,
         color = &guiPalette->getColor(Palette::HIT_MONSTER_PLAYER);
 
     if (amount > 0 && type == CRITICAL)
-        particleEngine->addTextSplashEffect("crit!", mPx + 16, mPy + 16,
-                                            color, font, true);
+        particleEngine->addTextSplashEffect("crit!", width, height, color, font,
+                                            true);
 
     // Show damage number
-    particleEngine->addTextSplashEffect(damage, mPx + 16, mPy + 16,
-                                        color, font, true);
+    particleEngine->addTextSplashEffect(damage, width, height, color, font,
+                                        true);
 }
 
 void Being::handleAttack(Being *victim, const int damage,
@@ -277,6 +279,9 @@ void Being::setMap(Map *map)
         mMap->removeSprite(mSpriteIterator);
 
     mMap = map;
+
+    // Readjust the name position, in case the map uses different tile sizes
+    setName(mName);
 
     // Add sprite to potential new map
     if (mMap)
@@ -433,7 +438,7 @@ void Being::logic()
     mPx = mX * mMap->getTileWidth() + getXOffset();
     mPy = mY * mMap->getTileHeight() + getYOffset();
 
-    if (mPx != oldPx || mPy != oldPy)
+    if (mMap && (mPx != oldPx || mPy != oldPy))
         updateCoords();
 
     if (mEmotion != 0)
@@ -461,11 +466,13 @@ void Being::logic()
 void Being::draw(Graphics *graphics, const int offsetX,
                  const int offsetY) const
 {
-    int px = mPx + offsetX;
-    int py = mPy + offsetY;
+    const int widthOffset = mMap ? mMap->getTileWidth() / 2 : 0;
+    const int heightOffset = mMap ? mMap->getTileHeight() / 2 : 0;
+    const int px = mPx + offsetX;
+    const int py = mPy + offsetY;
 
     if (mUsedTargetCursor != NULL)
-        mUsedTargetCursor->draw(graphics, px, py);
+        mUsedTargetCursor->draw(graphics, px + widthOffset, py + heightOffset);
 
     for (int i = 0; i < VECTOREND_SPRITE; i++)
     {
@@ -498,6 +505,9 @@ void Being::drawSpeech(const int offsetX, const int offsetY)
     const int px = mPx - offsetX;
     const int py = mPy - offsetY;
     const int speech = config.getValue("speech", NAME_IN_BUBBLE);
+    const int width = mMap->getTileWidth() / 2;
+    const int height = getHeight() - mMap->getTileHeight();
+    gcn::Font *font = gui->getBoldFont();
 
     // Draw speech above this being
     if (mSpeechTime > 0 && (speech == NAME_IN_BUBBLE ||
@@ -508,8 +518,6 @@ void Being::drawSpeech(const int offsetX, const int offsetY)
 
         const bool hasCaption = (mSpeechBubble->getCaption() != "");
         const bool showName = (speech == NAME_IN_BUBBLE);
-        const int width = mMap->getTileWidth() / 2;
-        const int height = getHeight() - mMap->getTileHeight();
 
         if (mOldSpeech != mSpeech || mText)
         {
@@ -527,13 +535,13 @@ void Being::drawSpeech(const int offsetX, const int offsetY)
             mSpeechBubble->adjustSize();
 
         mSpeechBubble->setPosition(px + width - (mSpeechBubble->getWidth() / 2), 
-                                   py - height - (mSpeechBubble->getHeight()));
+                                   py - height - mSpeechBubble->getHeight());
         mSpeechBubble->setVisible(true);
     }
     else if (mSpeechTime > 0 && speech == TEXT_OVERHEAD)
     {
         if (mSpeech == mOldSpeech && mText)
-            mText->adviseXY(mPx + ((getHeight() + 4) / 2), mPy - getHeight() - 4);
+            mText->adviseXY(mPx + width, mPy - 4 - font->getHeight() - height);
         else
         {
             // don't introduce a memory leak
@@ -544,8 +552,8 @@ void Being::drawSpeech(const int offsetX, const int offsetY)
 
             mOldSpeech = mSpeech;
 
-            mText = new Text(mSpeech, mPx + ((getHeight() + 4) / 2), mPy -
-                             getHeight() - 4, gcn::Graphics::CENTER,
+            mText = new Text(mSpeech, mPx + width, mPy - 4 - font->getHeight() -
+                             height, gcn::Graphics::CENTER,
                              &guiPalette->getColor(Palette::PARTICLE));
         }
     }
@@ -646,6 +654,7 @@ void Being::setTargetAnimation(SimpleAnimation* animation)
 {
     mUsedTargetCursor = animation;
     mUsedTargetCursor->reset();
+    updateCoords();
 }
 
 void Being::load()

@@ -25,8 +25,11 @@
 
 #include "../../image/particle/particle.h"
 
+#include "../../../bindings/guichan/gui.h"
 #include "../../../bindings/guichan/palette.h"
 #include "../../../bindings/guichan/text.h"
+
+#include "../../../core/map/map.h"
 
 #include "../../../core/utils/dtor.h"
 
@@ -41,9 +44,6 @@
 
 bool NPC::mTalking = false;
 int current_npc = 0;
-
-static const int NAME_X_OFFSET = 15;
-static const int NAME_Y_OFFSET = 30;
 
 NPC::NPC(const int id, const int job, Map *map):
     Player(id, job, map)
@@ -96,11 +96,17 @@ void NPC::refreshParticleEffects()
 
 void NPC::setName(const std::string &name)
 {
-    const std::string displayName = name.substr(0, name.find('#', 0));
+    std::string displayName = name.substr(0, name.find('#', 0));
+    std::string::size_type iter = name.find(" (NPC)");
+
+    if (iter != std::string::npos)
+        displayName.erase(iter);
 
     destroy(mName);
-    mName = new Text(displayName, mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET,
-                     gcn::Graphics::CENTER, &guiPalette->getColor(Palette::NPC));
+    if (mMap)
+        mName = new Text(displayName, mPx + mMap->getTileWidth() / 2,
+                         mPy + getHeight() / 2, gcn::Graphics::CENTER,
+                         &guiPalette->getColor(Palette::NPC));
     Being::setName(displayName + " (NPC)");
 }
 
@@ -135,5 +141,6 @@ void NPC::talk()
 void NPC::updateCoords()
 {
     if (mName)
-        mName->adviseXY(mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET);
+        mName->adviseXY(mPx + (getWidth() - mMap->getTileWidth()) / 2, mPy +
+                        getHeight() / 2);
 }

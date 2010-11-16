@@ -32,14 +32,13 @@
 #include "../../../bindings/guichan/palette.h"
 #include "../../../bindings/guichan/text.h"
 
+#include "../../../core/map/map.h"
+
 #include "../../../core/utils/dtor.h"
 #include "../../../core/utils/gettext.h"
 
 #include "../../../eathena/db/colordb.h"
 #include "../../../eathena/db/itemdb.h"
-
-static const int NAME_X_OFFSET = 15;
-static const int NAME_Y_OFFSET = 30;
 
 Player::Player(const int id, const int job, Map *map):
     Being(id, job, map),
@@ -86,22 +85,27 @@ void Player::setName(const std::string &name)
 {
     destroy(mName);
 
-    if (mIsGM)
+    if (mMap)
     {
-        mNameColor = &guiPalette->getColor(Palette::GM);
-        /// TRANSLATORS: GM as in Game Master
-        std::string gmName = strprintf("%s%s%s%s", "(", _("GM"), ") ", name.c_str());
-        mName = new FlashText(gmName, mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET,
-                              gcn::Graphics::CENTER,
-                              &guiPalette->getColor(Palette::GM_NAME));
-    }
-    else
-    {
-        mNameColor = &guiPalette->getColor(Palette::PLAYER);
-        mName = new FlashText(name, mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET,
-                              gcn::Graphics::CENTER, (this == player_node) ?
-                              &guiPalette->getColor(Palette::SELF) :
-                              &guiPalette->getColor(Palette::PC));
+        if (mIsGM)
+        {
+            mNameColor = &guiPalette->getColor(Palette::GM);
+            /// TRANSLATORS: GM as in Game Master
+            std::string gmName = strprintf("%s%s%s%s", "(", _("GM"), ") ",
+                                           name.c_str());
+            mName = new FlashText(gmName, mPx + mMap->getTileWidth() / 2, mPy +
+                                  getHeight() / 2, gcn::Graphics::CENTER,
+                                  &guiPalette->getColor(Palette::GM_NAME));
+        }
+        else
+        {
+            mNameColor = &guiPalette->getColor(Palette::PLAYER);
+            mName = new FlashText(name, mPx + mMap->getTileWidth() / 2,
+                                  mPy + getHeight() / 2, gcn::Graphics::CENTER,
+                                 (this == player_node) ?
+                                  &guiPalette->getColor(Palette::SELF) :
+                                  &guiPalette->getColor(Palette::PC));
+        }
     }
     Being::setName(name);
 }
@@ -254,6 +258,6 @@ void Player::setSprite(const int slot, const int id, const std::string &color)
 void Player::updateCoords()
 {
     if (mName)
-        mName->adviseXY(mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET);
+        mName->adviseXY(mPx + mMap->getTileWidth() / 2, mPy + getHeight() / 2);
 }
 

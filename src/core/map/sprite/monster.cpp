@@ -32,13 +32,16 @@
 
 #include "../../../bindings/sdl/sound.h"
 
+#include "../../../core/image/animation.h"
+#include "../../../core/image/image.h"
+#include "../../../core/image/simpleanimation.h"
+
+#include "../../../core/map/map.h"
+
 #include "../../../core/utils/dtor.h"
 
 #include "../../../eathena/db/monsterdb.h"
 #include "../../../eathena/db/monsterinfo.h"
-
-static const int NAME_X_OFFSET = 16;
-static const int NAME_Y_OFFSET = 16;
 
 Monster::Monster(const int id, const Uint16 &job, Map *map):
     Being(id, job, map),
@@ -203,17 +206,26 @@ void Monster::showName(const bool show)
 {
     destroy(mText);
 
-    if (show)
+    if (mMap && mUsedTargetCursor && show)
     {
-        mText = new Text(getInfo().getName(), mPx + NAME_X_OFFSET,
-                         mPy + NAME_Y_OFFSET - getHeight(),
-                         gcn::Graphics::CENTER,
+        const int height = mUsedTargetCursor->getFrame()->image->getHeight();
+        mText = new Text(getInfo().getName(), mPx + mMap->getTileWidth() / 2,
+                         mPy + height, gcn::Graphics::CENTER,
                          &guiPalette->getColor(Palette::MONSTER));
+        updateCoords();
     }
 }
 
 void Monster::updateCoords()
 {
-    if (mText)
-        mText->adviseXY(mPx + NAME_X_OFFSET, mPy + NAME_Y_OFFSET - getHeight());
+    if (mUsedTargetCursor)
+    {
+        if (!mText)
+            showName(true);
+
+        const int height = mUsedTargetCursor->getFrame()->image->getHeight();
+        mText->adviseXY(mPx + mMap->getTileWidth() / 2, mPy + height);
+    }
+    else
+        showName(false);
 }

@@ -445,13 +445,11 @@ class Being : public Sprite
         std::vector<std::string> mSpriteColors;
         ParticleList mChildParticleEffects;
 
-    private:
-
-        // Speech Bubble components
-        SpeechBubble *mSpeechBubble;
-
         // Target cursor being used
         SimpleAnimation* mUsedTargetCursor;
+    private:
+        // Speech Bubble components
+        SpeechBubble *mSpeechBubble;
 };
 
 #endif

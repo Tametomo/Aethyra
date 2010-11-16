@@ -60,9 +60,6 @@
 
 LocalPlayer *player_node = NULL;
 
-static const int NAME_X_OFFSET = 15;
-static const int NAME_Y_OFFSET = 30;
-
 LocalPlayer::LocalPlayer(const Uint32 &id, const Uint16 &job, Map *map):
     Player(id, job, map),
     mCharId(0),
@@ -581,9 +578,11 @@ void LocalPlayer::setXp(const int xp)
     if (mMap && xp > mXp)
     {
         const std::string text = toString(xp - mXp) + " xp";
+        const int width = mPx + mMap->getTileWidth() / 2;
+        const int height = mPy - mMap->getTileHeight() / 2;
 
         // Show XP number
-        particleEngine->addTextRiseFadeOutEffect(text, mPx + 16, mPy - 16,
+        particleEngine->addTextRiseFadeOutEffect(text, width, height,
                 &guiPalette->getColor(Palette::EXP_INFO),
                 gui->getInfoParticleFont(), true);
     }
@@ -594,9 +593,13 @@ void LocalPlayer::pickedUp(const std::string &item)
 {
     // Show pickup notification
     if (mMap)
-        particleEngine->addTextRiseFadeOutEffect(item, mPx + 16, mPy - 16,
+    {
+        const int width = mPx + mMap->getTileWidth() / 2;
+        const int height = mPy - mMap->getTileHeight() / 2;
+        particleEngine->addTextRiseFadeOutEffect(item, width, height,
                 &guiPalette->getColor(Palette::PICKUP_INFO),
                 gui->getInfoParticleFont (), true);
+    }
 }
 
 bool LocalPlayer::withinAttackRange(Being *target)
@@ -647,8 +650,8 @@ void LocalPlayer::loadTargetCursor(const std::string &filename,
     for (unsigned int i = 0; i < currentImageSet->size(); ++i)
     {
         anim->addFrame(currentImageSet->get(i), 75,
-                      (16 - (currentImageSet->getWidth() / 2)),
-                      (16 - (currentImageSet->getHeight() / 2)));
+                       -currentImageSet->getWidth() / 2,
+                       -currentImageSet->getHeight() / 2);
     }
 
     SimpleAnimation *currentCursor = new SimpleAnimation(anim);
