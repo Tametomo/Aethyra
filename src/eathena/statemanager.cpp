@@ -71,7 +71,7 @@
 #include "../core/utils/gettext.h"
 #include "../core/utils/stringutils.h"
 
-#include "../../config.h"
+#include "../main.h"
 
 LoginData loginData;
 Desktop *desktop = NULL;
