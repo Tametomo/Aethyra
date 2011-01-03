@@ -27,6 +27,8 @@
 
 #include "../../bindings/guichan/widgets/progressbar.h"
 
+#include "../../core/configuration.h"
+
 #include "../../core/map/sprite/localplayer.h"
 
 #include "../../core/utils/stringutils.h"
@@ -35,6 +37,10 @@ MiniStatusWindow::MiniStatusWindow():
     Popup("MiniStatus")
 {
     setVisible(true);
+
+    const int precision = config.getValue("experiencePrecision", 2);
+    mPrecision = "%2." + (precision > 0 ? strprintf("%d", precision) : "0") +
+                 "f";
 
     mHpBar = new ProgressBar(0.0f, 100, 20, gcn::Color(223, 32, 32));
     mHpBar->addColor(230, 171, 34);
@@ -85,7 +91,7 @@ void MiniStatusWindow::update()
     mHpBar->adjustHeight();
     mMpBar->setText(toString(player_node->mMp));
     mMpBar->adjustHeight();
-    mXpBar->setText(strprintf("%2.2f", 100 * xp) + "%");
+    mXpBar->setText(strprintf(mPrecision.c_str(), 100 * xp) + "%");
     mXpBar->adjustHeight();
 
     // Displays the number of monsters to next lvl

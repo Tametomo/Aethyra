@@ -52,6 +52,8 @@ class MiniStatusWindow : public Popup
         ProgressBar *mHpBar;
         ProgressBar *mMpBar;
         ProgressBar *mXpBar;
+
+        std::string mPrecision;
 };
 
 #endif
