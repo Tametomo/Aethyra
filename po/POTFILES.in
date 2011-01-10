@@ -1,6 +1,5 @@
 # List of source files which contain translatable strings.
 
-src/bindings/curl/downloadwrapper.cpp
 src/bindings/guichan/graphics.cpp
 src/bindings/guichan/gui.cpp
 src/bindings/guichan/inputmanager.cpp
@@ -9,15 +8,16 @@ src/bindings/guichan/dialogs/confirmdialog.cpp
 src/bindings/guichan/dialogs/helpdialog.cpp
 src/bindings/guichan/dialogs/listdialog.cpp
 src/bindings/guichan/dialogs/okdialog.cpp
+src/bindings/guichan/dialogs/selectiondialog.cpp
 src/bindings/guichan/dialogs/setupdialog.cpp
 src/bindings/guichan/dialogs/textinputdialog.cpp
 src/bindings/guichan/dialogs/tabs/setup_audio.cpp
 src/bindings/guichan/dialogs/tabs/setup_colors.cpp
-src/bindings/guichan/dialogs/tabs/setup_gui.cpp
+src/bindings/guichan/dialogs/tabs/setup_display.cpp
 src/bindings/guichan/dialogs/tabs/setup_input.cpp
 src/bindings/guichan/widgets/desktop.cpp
 src/bindings/sdl/keyboardconfig.cpp
-src/bindings/update/downloadupdates.cpp
+src/bindings/zlib/adler32.cpp
 src/core/recorder.cpp
 src/core/map/sprite/being.cpp
 src/core/map/sprite/player.cpp
@@ -68,6 +68,7 @@ src/eathena/net/loginhandler.cpp
 src/eathena/net/maploginhandler.cpp
 src/eathena/net/network.cpp
 src/eathena/net/playerhandler.cpp
+src/eathena/net/skillhandler.cpp
 src/eathena/net/tradehandler.cpp
 src/engine.cpp
 src/main.cpp

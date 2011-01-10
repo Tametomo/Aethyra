@@ -7,44 +7,40 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aethyra\n"
 "Report-Msgid-Bugs-To: irarice@gmail.com\n"
-"POT-Creation-Date: 2010-02-05 20:17-0700\n"
-"PO-Revision-Date: 2010-01-20 23:25+0000\n"
-"Last-Translator: Tatsukichi <artit91@gmail.com>\n"
+"POT-Creation-Date: 2011-01-10 11:05-0700\n"
+"PO-Revision-Date: 2010-05-31 13:17+0000\n"
+"Last-Translator: Robert Roth <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-06 03:04+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-01-10 17:46+0000\n"
+"X-Generator: Launchpad (build 12161)\n"
 
-#: src/bindings/curl/downloadwrapper.cpp:259
+#: src/bindings/guichan/graphics.cpp:197
 #, c-format
-msgid "Checksum for file %s failed: (%lx/%lx)"
+msgid "Screenshot saved to %s"
 msgstr ""
 
-#: src/bindings/guichan/graphics.cpp:185
-msgid "Screenshot saved to ~/"
-msgstr "Képernyőt mentettük a ~/ helyre"
-
-#: src/bindings/guichan/graphics.cpp:192
+#: src/bindings/guichan/graphics.cpp:203
 msgid "Saving screenshot failed!"
 msgstr "Hiba a képernyő mentése során!"
 
 #: src/bindings/guichan/gui.cpp:250
-#, fuzzy
 msgid "Switching resolutions"
-msgstr "A képernyő felbontása megváltozott"
+msgstr ""
 
 #: src/bindings/guichan/gui.cpp:251
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:192
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:196
 msgid "Restart needed for changes to take effect."
 msgstr "A változások érvénybe lépéséhez a program újraindítása szükséges."
 
-#: src/bindings/guichan/inputmanager.cpp:454
+#: src/bindings/guichan/inputmanager.cpp:462
 msgid "Ignoring incoming trade requests"
 msgstr "Kereskedési kérelmek elutasítása"
 
-#: src/bindings/guichan/inputmanager.cpp:461
+#: src/bindings/guichan/inputmanager.cpp:469
 msgid "Accepting incoming trade requests"
 msgstr "Kereskedési kérelmek elfogadása"
 
@@ -88,7 +84,7 @@ msgstr "A tárgy használatban van"
 msgid "Chat"
 msgstr "Chat"
 
-#: src/bindings/guichan/palette.cpp:93 src/core/map/sprite/player.cpp:93
+#: src/bindings/guichan/palette.cpp:93 src/core/map/sprite/player.cpp:94
 msgid "GM"
 msgstr "GM"
 
@@ -158,7 +154,7 @@ msgstr ""
 
 #: src/bindings/guichan/palette.cpp:112
 msgid "Usable"
-msgstr ""
+msgstr "Használható"
 
 #: src/bindings/guichan/palette.cpp:113
 msgid "Shirt"
@@ -182,11 +178,11 @@ msgstr "2 kezes fegyverek"
 
 #: src/bindings/guichan/palette.cpp:118
 msgid "Shield"
-msgstr ""
+msgstr "Pajzs"
 
 #: src/bindings/guichan/palette.cpp:119
 msgid "Ring"
-msgstr ""
+msgstr "Gyűrű"
 
 #: src/bindings/guichan/palette.cpp:120
 msgid "Arms"
@@ -244,9 +240,10 @@ msgstr "Bezár"
 
 #: src/bindings/guichan/dialogs/listdialog.cpp:50
 #: src/bindings/guichan/dialogs/okdialog.cpp:44
+#: src/bindings/guichan/dialogs/selectiondialog.cpp:51
 #: src/bindings/guichan/dialogs/textinputdialog.cpp:41
 #: src/eathena/gui/charselect.cpp:102 src/eathena/gui/itemamount.cpp:84
-#: src/eathena/gui/login.cpp:75 src/eathena/gui/npcintegerdialog.cpp:45
+#: src/eathena/gui/login.cpp:70 src/eathena/gui/npcintegerdialog.cpp:45
 #: src/eathena/gui/npctext.cpp:56 src/eathena/gui/slotselection.cpp:71
 #: src/eathena/gui/trade.cpp:67 src/eathena/gui/trade.cpp:174
 msgid "OK"
@@ -257,10 +254,10 @@ msgstr "Ok"
 #: src/bindings/guichan/dialogs/textinputdialog.cpp:42
 #: src/eathena/gui/buysell.cpp:37 src/eathena/gui/charcreate.cpp:70
 #: src/eathena/gui/charselect.cpp:103 src/eathena/gui/itemamount.cpp:85
-#: src/eathena/gui/login.cpp:76 src/eathena/gui/npcintegerdialog.cpp:46
+#: src/eathena/gui/login.cpp:71 src/eathena/gui/npcintegerdialog.cpp:46
 #: src/eathena/gui/popupmenu.cpp:408 src/eathena/gui/register.cpp:92
 #: src/eathena/gui/slotselection.cpp:72 src/eathena/gui/trade.cpp:68
-#: src/eathena/gui/updatewindow.cpp:68
+#: src/eathena/gui/updatewindow.cpp:65
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -344,67 +341,67 @@ msgstr "Zöld: "
 msgid "Blue: "
 msgstr "Kék: "
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:68
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:68
 msgid "Full screen"
 msgstr "Teljes képernyő"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:69
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:69
 msgid "OpenGL"
 msgstr "OpenGL"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:70
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:70
 msgid "Custom cursor"
 msgstr "Egyéni kurzor"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:73
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:73
 msgid "FPS Limit:"
 msgstr "FPS Limit:"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:80
-msgid "GUI"
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:79
+msgid "Display"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:86
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:85
 msgid "Gui opacity"
 msgstr "Menük áttetszősége"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:87
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:86
 msgid "Mouse opacity"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:88
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:88
 msgid "Font size"
 msgstr "Betűméret"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:121
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:268
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:317
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:120
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:276
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:326
 #, c-format
 msgid "%d Point"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:191
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:195
 msgid "Switching to full screen"
 msgstr "Átállás teljes képernyőre"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:200
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:204
 #, c-format
 msgid "Failed to switch to %s mode and restoration of old mode also failed!"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:206
 msgid "windowed"
 msgstr "ablakban"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:203
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:207
 msgid "fullscreen"
 msgstr "teljes képernyőn"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:217
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:221
 msgid "Changing OpenGL"
 msgstr "OpenGL átállítása"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:218
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:222
 msgid "Applying change to OpenGL requires restart."
 msgstr "A változások érvénybe lépéséhez a program újraindítása szükséges."
 
@@ -602,9 +599,8 @@ msgstr "Csevej Felfele Görgetése"
 msgid "Scroll Chat Down"
 msgstr "Csevej Lefele Görgetése"
 
-#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/statemanager.cpp:420
+#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/statemanager.cpp:515
 #: src/eathena/gui/buy.cpp:73 src/eathena/gui/sell.cpp:73
-#: src/eathena/gui/updatewindow.cpp:143
 msgid "Quit"
 msgstr "Kilépés"
 
@@ -625,32 +621,10 @@ msgid ""
 "behaviour."
 msgstr ""
 
-#: src/bindings/update/downloadupdates.cpp:172
-#, fuzzy, c-format
-msgid "Invalid update host: %s"
-msgstr "Helytelen frissítési kiszolgáló: "
-
-#: src/bindings/update/downloadupdates.cpp:209
-msgid "Error creating updates directory!"
-msgstr "Hiba a frissítési könyvtár létrehozása közben!"
-
-#: src/bindings/update/downloadupdates.cpp:363
-msgid ""
-"An update failed a security check, see log for details. If this persists, "
-"report this issue with your log file on the forums."
+#: src/bindings/zlib/adler32.cpp:66
+#, c-format
+msgid "Checksum for file %s failed: (%lx/%lx)"
 msgstr ""
-
-#: src/bindings/update/downloadupdates.cpp:376
-msgid "##1  The update process is incomplete."
-msgstr "##1 A frissítési folyamat befejezetlen"
-
-#: src/bindings/update/downloadupdates.cpp:377
-msgid "##1  It is strongly recommended that"
-msgstr "##1 Erősen ajánljuk, hogy"
-
-#: src/bindings/update/downloadupdates.cpp:378
-msgid "##1  you try again later"
-msgstr "##1 próbáld meg később"
 
 #: src/core/recorder.cpp:68
 msgid "Finishing recording."
@@ -672,8 +646,8 @@ msgstr "Rögzítés megkezdése..."
 msgid "Failed to start recording."
 msgstr "Sikertelen rögzítés."
 
-#: src/core/map/sprite/being.cpp:220 src/eathena/db/itemdb.cpp:62
-#: src/eathena/gui/chat.cpp:312
+#: src/core/map/sprite/being.cpp:187 src/eathena/db/itemdb.cpp:64
+#: src/eathena/gui/chat.cpp:338
 msgid "Unknown item"
 msgstr "Ismeretlen tárgy"
 
@@ -687,87 +661,75 @@ msgstr ""
 
 #: src/core/utils/metric.h:46
 msgid "atto"
-msgstr ""
+msgstr "atto"
 
 #: src/core/utils/metric.h:47
-msgid "fempto"
+msgid "femto"
 msgstr ""
 
 #: src/core/utils/metric.h:48
 msgid "pico"
-msgstr ""
+msgstr "piko"
 
 #: src/core/utils/metric.h:49
 msgid "nano"
-msgstr ""
+msgstr "nano"
 
 #: src/core/utils/metric.h:50
 msgid "micro"
-msgstr ""
+msgstr "mikro"
 
 #: src/core/utils/metric.h:51
 msgid "milli"
-msgstr ""
+msgstr "milli"
 
 #: src/core/utils/metric.h:52
-#, fuzzy
 msgid "centi"
-msgstr "Előzmény:"
+msgstr "centi"
 
 #: src/core/utils/metric.h:53
 msgid "deci"
-msgstr ""
+msgstr "deci"
 
 #: src/core/utils/metric.h:55
 msgid "deca"
-msgstr ""
+msgstr "deka"
 
 #: src/core/utils/metric.h:56
 msgid "hecto"
-msgstr ""
+msgstr "hekto"
 
 #: src/core/utils/metric.h:57
-#, fuzzy
 msgid "kilo"
-msgstr "Képességek"
+msgstr "kilo"
 
 #: src/core/utils/metric.h:58
 msgid "mega"
-msgstr ""
+msgstr "mega"
 
 #: src/core/utils/metric.h:59
 msgid "giga"
-msgstr ""
+msgstr "giga"
 
 #: src/core/utils/metric.h:60
 msgid "tera"
-msgstr ""
+msgstr "tera"
 
 #: src/core/utils/metric.h:61
 msgid "peta"
-msgstr ""
+msgstr "peta"
 
 #: src/core/utils/metric.h:62
 msgid "exa"
-msgstr ""
+msgstr "exa"
 
 #: src/core/utils/metric.h:63
 msgid "zetta"
-msgstr ""
+msgstr "zetta"
 
 #: src/core/utils/metric.h:64
-#, fuzzy
 msgid "yotta"
-msgstr "Összes"
-
-#: src/eathena/maploader.cpp:93
-msgid "Could not load map"
-msgstr "Nem lehet betölteni a térképet"
-
-#: src/eathena/maploader.cpp:94
-#, c-format
-msgid "Error while loading %s"
-msgstr "Hiba %s betöltése közben"
+msgstr "yotta"
 
 #: src/eathena/party.cpp:52
 msgid "Not yet implemented!"
@@ -896,42 +858,81 @@ msgstr ""
 msgid "Type /help party for a list of options."
 msgstr ""
 
-#: src/eathena/statemanager.cpp:183 src/eathena/gui/register.cpp:226
+#: src/eathena/statemanager.cpp:153
+msgid ""
+"Change won't take effect until you restart the client. Would you like to "
+"quit now?"
+msgstr ""
+
+#: src/eathena/statemanager.cpp:225 src/eathena/gui/register.cpp:226
 msgid "Error"
 msgstr "Hiba"
 
-#: src/eathena/statemanager.cpp:219
+#: src/eathena/statemanager.cpp:235
+msgid "Warning"
+msgstr ""
+
+#: src/eathena/statemanager.cpp:261
+msgid "Welcome to Aethyra"
+msgstr ""
+
+#: src/eathena/statemanager.cpp:262
+msgid ""
+"You haven't selected a graphical mode to use yet. Which mode would you like "
+"to use?"
+msgstr ""
+
+#: src/eathena/statemanager.cpp:292
 msgid "Connecting to account server..."
 msgstr "Csatlakozás a fiók szerverhez..."
 
-#: src/eathena/statemanager.cpp:294
+#: src/eathena/statemanager.cpp:376
 msgid "Connecting to character server..."
 msgstr "Csatlakozás a karakter szerverhez...."
 
-#: src/eathena/statemanager.cpp:321
+#: src/eathena/statemanager.cpp:403
 msgid "Connecting to map server..."
 msgstr "Csatlakozás a térkép szerverhez...."
 
-#: src/eathena/statemanager.cpp:368
+#: src/eathena/statemanager.cpp:450
 msgid "Unknown program state. Exiting."
-msgstr ""
+msgstr "Ismeretlen program állapot. Kilépés."
 
-#: src/eathena/statemanager.cpp:393
+#: src/eathena/statemanager.cpp:475
 msgid "Got disconnected from server!"
 msgstr "Lekapcsolódtál a szerverről!"
 
-#: src/eathena/statemanager.cpp:421
+#: src/eathena/statemanager.cpp:516
 msgid "Are you sure you want to quit?"
 msgstr "Biztos, hogy ki szeretne lépni?"
 
-#: src/eathena/db/itemdb.cpp:103 src/eathena/db/monsterdb.cpp:45
-#: src/eathena/db/monsterdb.cpp:63
+#: src/eathena/db/itemdb.cpp:75 src/eathena/db/monsterdb.cpp:58
+#: src/eathena/db/npcdb.cpp:59
+#, c-format
+msgid "Unable to load %s database"
+msgstr ""
+
+#: src/eathena/db/itemdb.cpp:76
+msgid "Item"
+msgstr ""
+
+#: src/eathena/db/itemdb.cpp:110 src/eathena/db/monsterdb.cpp:48
+#: src/eathena/db/monsterdb.cpp:71
 msgid "unnamed"
 msgstr "Névtelen"
 
-#: src/eathena/db/npcdb.cpp:54
+#: src/eathena/db/monsterdb.cpp:59
+msgid "Mob"
+msgstr ""
+
+#: src/eathena/db/npcdb.cpp:58
 msgid "NPC Database: Error while loading npcs.xml!"
 msgstr ""
+
+#: src/eathena/db/npcdb.cpp:60 src/eathena/gui/npclistdialog.cpp:37
+#: src/eathena/gui/npctext.cpp:41
+msgid "NPC"
+msgstr "Gépjátékos"
 
 #: src/eathena/gui/buy.cpp:46 src/eathena/gui/buy.cpp:72
 #: src/eathena/gui/buysell.cpp:35
@@ -975,7 +976,7 @@ msgstr "Üzlet"
 msgid "Create Character"
 msgstr "Karakter létrehozása"
 
-#: src/eathena/gui/charcreate.cpp:62 src/eathena/gui/login.cpp:51
+#: src/eathena/gui/charcreate.cpp:62 src/eathena/gui/login.cpp:50
 #: src/eathena/gui/register.cpp:77
 msgid "Name:"
 msgstr "Név:"
@@ -1002,7 +1003,7 @@ msgstr "Biztos hogy ki akarod törölni ezt a karaktert?"
 
 #: src/eathena/gui/charselect.cpp:83
 msgid "Select Character"
-msgstr ""
+msgstr "Karakter kiválasztása"
 
 #: src/eathena/gui/charselect.cpp:94 src/eathena/gui/charselect.cpp:187
 #: src/eathena/gui/charselect.cpp:201
@@ -1043,7 +1044,7 @@ msgstr "Új"
 #: src/eathena/gui/charselect.cpp:190
 #, c-format
 msgid "Gold: %d"
-msgstr ""
+msgstr "Arany: %d"
 
 #: src/eathena/gui/charselect.cpp:193
 #: src/eathena/gui/tabs/setup_players.cpp:79
@@ -1055,316 +1056,232 @@ msgstr "Törlés"
 msgid "Money: %s"
 msgstr "Pénz: %s"
 
-#: src/eathena/gui/chat.cpp:86
+#: src/eathena/gui/chat.cpp:87
 msgid "File name to record to:"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:218
+#: src/eathena/gui/chat.cpp:222
 msgid "Global announcement: "
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:223
+#: src/eathena/gui/chat.cpp:227
 #, c-format
 msgid "Global announcement from %s: "
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:237 src/eathena/gui/login.cpp:53
+#: src/eathena/gui/chat.cpp:241 src/eathena/gui/login.cpp:52
 #: src/eathena/gui/register.cpp:80
 msgid "Server:"
 msgstr "Szerver:"
 
-#: src/eathena/gui/chat.cpp:247
+#: src/eathena/gui/chat.cpp:251
 #, c-format
 msgid "%s whispers: "
 msgstr "%s mondja: "
 
-#: src/eathena/gui/chat.cpp:411
+#: src/eathena/gui/chat.cpp:434
 msgid "Stop Recording"
-msgstr ""
+msgstr "A felvétel leállítása"
 
-#: src/eathena/gui/chat.cpp:412
+#: src/eathena/gui/chat.cpp:435
 msgid "Start Recording"
-msgstr ""
+msgstr "Felvétel indítása"
 
-#: src/eathena/gui/chat.cpp:457
+#: src/eathena/gui/chat.cpp:480
 #, c-format
 msgid "Whispering to %s: %s"
 msgstr "Üzenet %s számára: %s"
 
-#: src/eathena/gui/chat.cpp:480
+#: src/eathena/gui/chat.cpp:503
 msgid "Trying to send a blank party message."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:561
+#: src/eathena/gui/chat.cpp:585
 msgid "Return toggles chat."
 msgstr "Az enter megnyitja a bevitelt."
 
-#: src/eathena/gui/chat.cpp:562
+#: src/eathena/gui/chat.cpp:586
 msgid "Message closes chat."
 msgstr "Az üzenet bezárja a bevitelt."
 
-#: src/eathena/gui/chat.cpp:570
+#: src/eathena/gui/chat.cpp:594
 msgid "Return now toggles chat."
 msgstr "Az enter mostantól megnyitja a bevitelt."
 
-#: src/eathena/gui/chat.cpp:577
+#: src/eathena/gui/chat.cpp:601
 msgid "Message now closes chat."
 msgstr "Az üzenet mostantól bezárja a bevitelt."
 
-#: src/eathena/gui/chat.cpp:582
+#: src/eathena/gui/chat.cpp:606
 msgid ""
 "Options to /toggle are \"yes\", \"no\", \"true\", \"false\", \"1\", \"0\"."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:589
+#: src/eathena/gui/chat.cpp:613
 msgid "Unknown party command... Type \"/help\" party for more information."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:632
-msgid "No such spell!"
-msgstr ""
-
-#: src/eathena/gui/chat.cpp:654
+#: src/eathena/gui/chat.cpp:651
 #, c-format
 msgid "%u players are present."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:668
+#: src/eathena/gui/chat.cpp:665
 #, c-format
 msgid "Present: %s; %s"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:670
+#: src/eathena/gui/chat.cpp:667
 msgid "Attendance written to record log."
 msgstr "A látogatottság rögzíve lessz."
 
-#: src/eathena/gui/chat.cpp:674
+#: src/eathena/gui/chat.cpp:671
 msgid "Present: "
 msgstr "Közel van: "
 
-#: src/eathena/gui/chat.cpp:690 src/main.cpp:80
+#: src/eathena/gui/chat.cpp:687 src/main.cpp:89
 #, c-format
 msgid "Aethyra - Version %s"
-msgstr ""
+msgstr "Aethyra - Verzió %s"
 
-#: src/eathena/gui/chat.cpp:694 src/eathena/gui/chat.cpp:988
+#: src/eathena/gui/chat.cpp:691 src/eathena/gui/chat.cpp:900
 msgid "Unknown command."
 msgstr "Ismeretlen parancs."
 
-#: src/eathena/gui/chat.cpp:706
-msgid "Trade failed!"
-msgstr "Üzlet sikertelen!"
-
-#: src/eathena/gui/chat.cpp:709
-msgid "Emote failed!"
-msgstr "Hangulatjel küldése sikertelen!"
-
-#: src/eathena/gui/chat.cpp:712
-msgid "Sit failed!"
-msgstr "Ülés sikertelen!"
-
-#: src/eathena/gui/chat.cpp:715
-msgid "Chat creating failed!"
-msgstr "Beszélgetés létrehozása sikertelen."
-
-#: src/eathena/gui/chat.cpp:718
-msgid "Could not join party!"
-msgstr "Nem tudsz csatlakozni a csapatba."
-
-#: src/eathena/gui/chat.cpp:721
-msgid "Cannot shout!"
-msgstr "Nem tudsz ordítani!"
-
-#: src/eathena/gui/chat.cpp:730
-msgid "You have not yet reached a high enough lvl!"
-msgstr "Nem érted még el a megfelelő szintet!"
-
-#: src/eathena/gui/chat.cpp:733
-msgid "Insufficient HP!"
-msgstr "Kevés az életed!"
-
-#: src/eathena/gui/chat.cpp:736
-msgid "Insufficient SP!"
-msgstr "Kimerültél."
-
-#: src/eathena/gui/chat.cpp:739
-msgid "You have no memos!"
-msgstr "Nincs feljegyzésed."
-
-#: src/eathena/gui/chat.cpp:742
-msgid "You cannot do that right now!"
-msgstr "Most nem csinálhatod!"
-
-#: src/eathena/gui/chat.cpp:745
-msgid "Seems you need more GP... ;-)"
-msgstr ""
-
-#: src/eathena/gui/chat.cpp:748
-msgid "You cannot use this skill with that kind of weapon!"
-msgstr "Ezzel a fegyverrel nem tudod ezt a képességet használni!"
-
-#: src/eathena/gui/chat.cpp:751
-msgid "You need another red gem!"
-msgstr "Egy másik piros kőre van szükséged!"
-
-#: src/eathena/gui/chat.cpp:754
-msgid "You need another blue gem!"
-msgstr "Egy másik kék kőre van szükséged!"
-
-#: src/eathena/gui/chat.cpp:757
-msgid "You're carrying to much to do this!"
-msgstr "Túl sok dolgot cipelsz, hogy ezt csináld!"
-
-#: src/eathena/gui/chat.cpp:760
-msgid "Huh? What's that?"
-msgstr "Huh? Mi volt ez?"
-
-#: src/eathena/gui/chat.cpp:769
-msgid "Warp failed..."
-msgstr "Teleport sikertelen..."
-
-#: src/eathena/gui/chat.cpp:772
-msgid "Could not steal anything..."
-msgstr "Nem tudsz semmit ellopni..."
-
-#: src/eathena/gui/chat.cpp:775
-msgid "Poison had no effect..."
-msgstr "A méregnek nem volt hatása..."
-
-#: src/eathena/gui/chat.cpp:853
+#: src/eathena/gui/chat.cpp:765
 #, c-format
 msgid "The current party prefix is %s."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:857
+#: src/eathena/gui/chat.cpp:769
 msgid "Party prefix must be one character long."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:861
+#: src/eathena/gui/chat.cpp:773
 msgid "Cannot use a '/' as the prefix."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:865
+#: src/eathena/gui/chat.cpp:777
 #, c-format
 msgid "Changing prefix to %s."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:876
+#: src/eathena/gui/chat.cpp:788
 msgid "-- Help --"
 msgstr "-- Segítség --"
 
-#: src/eathena/gui/chat.cpp:879
+#: src/eathena/gui/chat.cpp:791
 msgid "/announce: Global announcement (GM only)."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:880
+#: src/eathena/gui/chat.cpp:792
 msgid "/clear: Clears this window."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:881
+#: src/eathena/gui/chat.cpp:793
 msgid "/help: Display this help."
-msgstr ""
+msgstr "/help: Megjeleníti ezt a súgót."
 
-#: src/eathena/gui/chat.cpp:882
+#: src/eathena/gui/chat.cpp:794
 msgid "/me <message>: Tell something about yourself."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:883
+#: src/eathena/gui/chat.cpp:795
 msgid "/msg <nick> <message>: Alternate form for /whisper."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:885
+#: src/eathena/gui/chat.cpp:797
 msgid "/party <command> <params>: Party commands."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:886
+#: src/eathena/gui/chat.cpp:798
 msgid "/present: Get list of players present."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:887
+#: src/eathena/gui/chat.cpp:799
 msgid "/record <filename>: Start recording the chat to an external file."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:889
+#: src/eathena/gui/chat.cpp:801
 msgid "/toggle: Determine whether <return> toggles the chat log."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:891
+#: src/eathena/gui/chat.cpp:803
 msgid "/version: Displays the client version"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:892
+#: src/eathena/gui/chat.cpp:804
 msgid "/w <nick> <message>: Short form for /whisper."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:893
+#: src/eathena/gui/chat.cpp:805
 msgid "/where: Display map name."
-msgstr ""
+msgstr "/where: Pályanév megjelenítése"
 
-#: src/eathena/gui/chat.cpp:894
+#: src/eathena/gui/chat.cpp:806
 msgid "/whisper <nick> <message>: Sends a private <message> to <nick>."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:896
+#: src/eathena/gui/chat.cpp:808
 msgid "/who: Display number of online users."
-msgstr ""
+msgstr "/who: Online felhasználók megjelenítése."
 
-#: src/eathena/gui/chat.cpp:897
+#: src/eathena/gui/chat.cpp:809
 msgid "For more information, type /help <command>."
 msgstr "További információhoz gépeld be a /help <parancsnév> parancsot."
 
-#: src/eathena/gui/chat.cpp:901
+#: src/eathena/gui/chat.cpp:813
 msgid "Command: /announce <msg>."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:902
+#: src/eathena/gui/chat.cpp:814
 msgid "*** only available to a GM ***"
 msgstr "*** csak GM-nek elérhető ***"
 
-#: src/eathena/gui/chat.cpp:903
+#: src/eathena/gui/chat.cpp:815
 msgid "This command sends the message <msg> to all players currently online."
 msgstr ""
 "Ez a parancs az <üzenet>-en belül megadott szöveget elküldi az összes "
 "elérhető játékosnak."
 
-#: src/eathena/gui/chat.cpp:908
+#: src/eathena/gui/chat.cpp:820
 msgid "Command: /clear"
 msgstr "Parancs: /clear"
 
-#: src/eathena/gui/chat.cpp:909
+#: src/eathena/gui/chat.cpp:821
 msgid "This command clears the chat log of previous chat."
 msgstr "Törli a beszélgetés panel tartalmát."
 
-#: src/eathena/gui/chat.cpp:914
+#: src/eathena/gui/chat.cpp:826
 msgid "Command: /help"
 msgstr "Parancs: /help"
 
-#: src/eathena/gui/chat.cpp:915
+#: src/eathena/gui/chat.cpp:827
 msgid "This command displays a list of all commands available."
 msgstr "Ez a parancs az elérhető parancsokat listázza."
 
-#: src/eathena/gui/chat.cpp:917
+#: src/eathena/gui/chat.cpp:829
 msgid "Command: /help <command>"
 msgstr "Parancs: /help <parancsnév>"
 
-#: src/eathena/gui/chat.cpp:918
+#: src/eathena/gui/chat.cpp:830
 msgid "This command displays help on <command>."
 msgstr ""
 "Ez a parancs segítséget nyújt a <parancsnév> alatt megadott parancshoz."
 
-#: src/eathena/gui/chat.cpp:922
+#: src/eathena/gui/chat.cpp:834
 msgid "Command: /me <msg>"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:923
+#: src/eathena/gui/chat.cpp:835
 msgid "This command tell others you are (doing) <msg>."
 msgstr "Ezzel a paranccsal az állapotodat jelzed. Megjelenés: Név <üzenet>"
 
-#: src/eathena/gui/chat.cpp:932
+#: src/eathena/gui/chat.cpp:844
 msgid "Command: /present"
 msgstr "Parancs: /present"
 
-#: src/eathena/gui/chat.cpp:933
+#: src/eathena/gui/chat.cpp:845
 msgid ""
 "This command gets a list of players within hearing and sends it to either "
 "the record log if recording, or the chat log otherwise."
@@ -1372,130 +1289,131 @@ msgstr ""
 "Ez a parancs megmutatja a \"hallható\" játékosok nevét és fájlba is rögzíti, "
 "ha éppen rögzítjük a beszélgetést."
 
-#: src/eathena/gui/chat.cpp:939
+#: src/eathena/gui/chat.cpp:851
 msgid "Command: /record <filename>"
 msgstr "parancs: /record <fájlnév>"
 
-#: src/eathena/gui/chat.cpp:940
+#: src/eathena/gui/chat.cpp:852
 msgid "This command starts recording the chat log to the file <filename>."
 msgstr ""
 "Ez a parancs elkezdi felvenni a beszélgetést a <fájlnév> alatt megadott "
 "fájlba."
 
-#: src/eathena/gui/chat.cpp:942
+#: src/eathena/gui/chat.cpp:854
 msgid "Command: /record"
 msgstr "Parancs: /record"
 
-#: src/eathena/gui/chat.cpp:943
+#: src/eathena/gui/chat.cpp:855
 msgid "This command finishes a recording session."
 msgstr "Befejezi a beszélgetés rögzítését."
 
-#: src/eathena/gui/chat.cpp:947
+#: src/eathena/gui/chat.cpp:859
 msgid "Command: /toggle <state>"
 msgstr "Parancs: /toggle <állás>"
 
-#: src/eathena/gui/chat.cpp:948
+#: src/eathena/gui/chat.cpp:860
 msgid ""
 "This command sets whether the return key should toggle the chat log, or "
 "whether the chat log turns off automatically."
 msgstr "Ez a parancs beállítja az enter billentyű használatát a játékban."
 
-#: src/eathena/gui/chat.cpp:951
+#: src/eathena/gui/chat.cpp:863
 msgid ""
-"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or \"0"
-"\", \"no\", \"false\" to turn the toggle off."
+"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or "
+"\"0\", \"no\", \"false\" to turn the toggle off."
 msgstr ""
 "<állás> lehet \"1\", \"yes\", \"true\" ha ki akarod kapcsolni a chat input "
 "automatikus eltűnését, \"0\", \"no\", \"false\"  ha nem."
 
-#: src/eathena/gui/chat.cpp:954
+#: src/eathena/gui/chat.cpp:866
 msgid "Command: /toggle"
 msgstr "Parancs: /toggle"
 
-#: src/eathena/gui/chat.cpp:955
+#: src/eathena/gui/chat.cpp:867
 msgid "This command displays the return toggle status."
 msgstr "A /toggle jelenlegi állását mutatja meg."
 
-#: src/eathena/gui/chat.cpp:960
+#: src/eathena/gui/chat.cpp:872
 msgid "Command: /version"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:961
+#: src/eathena/gui/chat.cpp:873
 msgid "This command displays the current client version you are using."
 msgstr ""
+"Ez a parancs megjeleníti az általad jelenleg használt kliens verzióját."
 
-#: src/eathena/gui/chat.cpp:966
+#: src/eathena/gui/chat.cpp:878
 msgid "Command: /where"
 msgstr "Parancs: /where"
 
-#: src/eathena/gui/chat.cpp:967
+#: src/eathena/gui/chat.cpp:879
 msgid "This command displays the name of the current map."
 msgstr "Ez a parancs megmutatja az aktuális térkép nevét."
 
-#: src/eathena/gui/chat.cpp:972
+#: src/eathena/gui/chat.cpp:884
 msgid "Command: /msg <nick> <msg>"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:973
+#: src/eathena/gui/chat.cpp:885
 msgid "Command: /whisper <nick> <msg>"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:974
+#: src/eathena/gui/chat.cpp:886
 msgid "Command: /w <nick> <msg>"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:975
+#: src/eathena/gui/chat.cpp:887
 msgid "This command sends the message <msg> to <nick>."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:977
+#: src/eathena/gui/chat.cpp:889
 msgid "If the <nick> has spaces in it, enclose it in double quotes (\")."
 msgstr ""
 "Ha a <név> alatt megadott név szóközt tartalmaz idézőjelbe kell tenni. (\")."
 
-#: src/eathena/gui/chat.cpp:982
+#: src/eathena/gui/chat.cpp:894
 msgid "Command: /who"
 msgstr "Parancs: /who"
 
-#: src/eathena/gui/chat.cpp:983
+#: src/eathena/gui/chat.cpp:895
 msgid "This command displays the number of players currently online."
 msgstr "Ez a parancs megmutatja az online játékosok számát."
 
-#: src/eathena/gui/chat.cpp:989
+#: src/eathena/gui/chat.cpp:901
 msgid "Type /help for a list of commands."
 msgstr "Parancsok listája: /help"
 
-#: src/eathena/gui/debugwindow.cpp:43
+#: src/eathena/gui/debugwindow.cpp:41
 msgid "Debug"
 msgstr ""
 
-#: src/eathena/gui/debugwindow.cpp:52 src/eathena/gui/debugwindow.cpp:101
+#: src/eathena/gui/debugwindow.cpp:50 src/eathena/gui/debugwindow.cpp:99
 #, c-format
 msgid "%d FPS"
-msgstr ""
+msgstr "%d FPS"
 
-#: src/eathena/gui/debugwindow.cpp:53 src/eathena/gui/debugwindow.cpp:102
+#: src/eathena/gui/debugwindow.cpp:51 src/eathena/gui/debugwindow.cpp:100
 #, c-format
 msgid "Music: %s"
-msgstr ""
+msgstr "Zene: %s"
 
-#: src/eathena/gui/debugwindow.cpp:54 src/eathena/gui/debugwindow.cpp:121
+#: src/eathena/gui/debugwindow.cpp:52 src/eathena/gui/debugwindow.cpp:121
 #, c-format
 msgid "Map: %s"
-msgstr ""
+msgstr "Térkép: %s"
 
-#: src/eathena/gui/debugwindow.cpp:55 src/eathena/gui/debugwindow.cpp:119
+#: src/eathena/gui/debugwindow.cpp:53 src/eathena/gui/debugwindow.cpp:119
 #, c-format
 msgid "Minimap: %s"
-msgstr ""
+msgstr "Minitérkép: %s"
 
-#: src/eathena/gui/debugwindow.cpp:56 src/eathena/gui/debugwindow.cpp:67
-#: src/eathena/gui/debugwindow.cpp:112
+#: src/eathena/gui/debugwindow.cpp:54 src/eathena/gui/debugwindow.cpp:65
+#: src/eathena/gui/debugwindow.cpp:114
 #, c-format
 msgid "Cursor: (%d, %d)"
-msgstr ""
+msgstr "Kurzor: (%d, %d)"
 
-#: src/eathena/gui/debugwindow.cpp:57 src/eathena/gui/debugwindow.cpp:68
+#: src/eathena/gui/debugwindow.cpp:55 src/eathena/gui/debugwindow.cpp:66
 #: src/eathena/gui/debugwindow.cpp:125
 #, c-format
 msgid "Particle count: %d"
@@ -1506,27 +1424,27 @@ msgid "Emote"
 msgstr ""
 
 #: src/eathena/gui/emotewindow.cpp:52 src/eathena/gui/inventorywindow.cpp:76
-#: src/eathena/gui/inventorywindow.cpp:260 src/eathena/gui/popupmenu.cpp:303
+#: src/eathena/gui/inventorywindow.cpp:262 src/eathena/gui/popupmenu.cpp:303
 #: src/eathena/gui/popupmenu.cpp:402 src/eathena/gui/skill.cpp:66
 msgid "Use"
 msgstr "Bevet"
 
 #: src/eathena/gui/emotewindow.cpp:58 src/eathena/gui/inventorywindow.cpp:82
 msgid "Shortcuts"
-msgstr ""
+msgstr "Parancsikonok"
 
 #: src/eathena/gui/equipmentwindow.cpp:96 src/eathena/gui/menubar.cpp:62
 msgid "Equipment"
 msgstr "Felszerelés"
 
 #: src/eathena/gui/equipmentwindow.cpp:138
-#: src/eathena/gui/equipmentwindow.cpp:433
-#: src/eathena/gui/inventorywindow.cpp:260 src/eathena/gui/popupmenu.cpp:300
+#: src/eathena/gui/equipmentwindow.cpp:435
+#: src/eathena/gui/inventorywindow.cpp:262 src/eathena/gui/popupmenu.cpp:300
 msgid "Equip"
 msgstr "Használ"
 
-#: src/eathena/gui/equipmentwindow.cpp:433
-#: src/eathena/gui/inventorywindow.cpp:259 src/eathena/gui/popupmenu.cpp:298
+#: src/eathena/gui/equipmentwindow.cpp:435
+#: src/eathena/gui/inventorywindow.cpp:261 src/eathena/gui/popupmenu.cpp:298
 msgid "Unequip"
 msgstr "Nem használ"
 
@@ -1568,7 +1486,7 @@ msgstr ""
 
 #: src/eathena/gui/itemamount.cpp:95
 msgid "trade"
-msgstr ""
+msgstr "kereskedés"
 
 #: src/eathena/gui/itemamount.cpp:99
 msgid "drop"
@@ -1591,27 +1509,27 @@ msgstr ""
 msgid "grams"
 msgstr ""
 
-#: src/eathena/gui/login.cpp:49
+#: src/eathena/gui/login.cpp:48
 msgid "Login"
 msgstr "Belépés"
 
-#: src/eathena/gui/login.cpp:52 src/eathena/gui/register.cpp:78
+#: src/eathena/gui/login.cpp:51 src/eathena/gui/register.cpp:78
 msgid "Password:"
 msgstr "Jelszó:"
 
-#: src/eathena/gui/login.cpp:54 src/eathena/gui/register.cpp:81
+#: src/eathena/gui/login.cpp:53 src/eathena/gui/register.cpp:81
 msgid "Port:"
 msgstr "Port:"
 
-#: src/eathena/gui/login.cpp:55
+#: src/eathena/gui/login.cpp:54
 msgid "Recent:"
 msgstr "Előzmény:"
 
-#: src/eathena/gui/login.cpp:74
+#: src/eathena/gui/login.cpp:69
 msgid "Keep"
 msgstr ""
 
-#: src/eathena/gui/login.cpp:77 src/eathena/gui/register.cpp:74
+#: src/eathena/gui/login.cpp:72 src/eathena/gui/register.cpp:74
 #: src/eathena/gui/register.cpp:91
 msgid "Register"
 msgstr "Regisztráció"
@@ -1636,10 +1554,6 @@ msgstr ""
 #: src/eathena/gui/npcintegerdialog.cpp:47
 msgid "Reset"
 msgstr "Alaphelyzet"
-
-#: src/eathena/gui/npclistdialog.cpp:37 src/eathena/gui/npctext.cpp:41
-msgid "NPC"
-msgstr "Gépjátékos"
 
 #: src/eathena/gui/popupmenu.cpp:315
 msgid "Add to Item Shortcuts"
@@ -1678,7 +1592,7 @@ msgstr ""
 #: src/eathena/gui/popupmenu.cpp:352 src/eathena/gui/popupmenu.cpp:390
 #, c-format
 msgid "Attack %s"
-msgstr ""
+msgstr "Támadás %s"
 
 #: src/eathena/gui/popupmenu.cpp:359
 #, c-format
@@ -1693,7 +1607,7 @@ msgstr ""
 #: src/eathena/gui/popupmenu.cpp:363
 #, c-format
 msgid "Ignore %s"
-msgstr ""
+msgstr "Kihagyás %s"
 
 #: src/eathena/gui/popupmenu.cpp:367
 #, c-format
@@ -1886,31 +1800,42 @@ msgstr ""
 msgid "You give:"
 msgstr "Adott tárgyak:"
 
-#: src/eathena/gui/updatewindow.cpp:56
+#: src/eathena/gui/updatewindow.cpp:51
 msgid "Updating..."
 msgstr "Frissítés…"
 
-#: src/eathena/gui/updatewindow.cpp:63
+#: src/eathena/gui/updatewindow.cpp:58
 msgid "Connecting..."
 msgstr "Csatlakozás…"
 
-#: src/eathena/gui/updatewindow.cpp:111
-#, fuzzy
+#: src/eathena/gui/updatewindow.cpp:106
 msgid "Update Complete"
-msgstr "Sikeres üzlet."
+msgstr ""
 
-#: src/eathena/gui/updatewindow.cpp:121
-#, fuzzy
+#: src/eathena/gui/updatewindow.cpp:116
 msgid "Update Failed"
-msgstr "Üzlet sikertelen!"
+msgstr "Frissítés Sikertelen"
 
-#: src/eathena/gui/updatewindow.cpp:136
+#: src/eathena/gui/updatewindow.cpp:126
+msgid "Verifying Files"
+msgstr ""
+
+#: src/eathena/gui/updatewindow.cpp:141
 msgid "Play"
 msgstr "Játék"
 
-#: src/eathena/gui/updatewindow.cpp:181
+#: src/eathena/gui/updatewindow.cpp:175
 msgid "Total Progress"
-msgstr ""
+msgstr "Teljes Folyamat"
+
+#: src/eathena/gui/viewport.cpp:485
+msgid "Could not load map"
+msgstr "Nem lehet betölteni a térképet"
+
+#: src/eathena/gui/viewport.cpp:486
+#, c-format
+msgid "Error while loading %s"
+msgstr "Hiba %s betöltése közben"
 
 #: src/eathena/gui/tabs/setup_game.cpp:48
 msgid "Show name"
@@ -2039,55 +1964,55 @@ msgstr "Öröm volt veled üzletet kötni!"
 msgid "Unable to sell."
 msgstr "Nem tudod eladni."
 
-#: src/eathena/net/charserverhandler.cpp:79
+#: src/eathena/net/charserverhandler.cpp:78
 msgid "Authentication failed."
-msgstr ""
+msgstr "Hitelesítés sikertelen."
 
-#: src/eathena/net/charserverhandler.cpp:82
+#: src/eathena/net/charserverhandler.cpp:81
 msgid "Map server(s) offline."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:85
+#: src/eathena/net/charserverhandler.cpp:84
 msgid "This account is already logged in."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:88
+#: src/eathena/net/charserverhandler.cpp:87
 msgid "Speed hack detected."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:91
+#: src/eathena/net/charserverhandler.cpp:90
 msgid "Duplicated login."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:94
+#: src/eathena/net/charserverhandler.cpp:93
 msgid "Unknown connection error."
-msgstr ""
+msgstr "Ismeretlen kapcsolódási hiba."
 
-#: src/eathena/net/charserverhandler.cpp:125
+#: src/eathena/net/charserverhandler.cpp:124
 msgid "Access denied."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:128
+#: src/eathena/net/charserverhandler.cpp:127
 msgid "Cannot use this ID."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:131
+#: src/eathena/net/charserverhandler.cpp:130
 msgid "Unknown failure to select character."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:154
+#: src/eathena/net/charserverhandler.cpp:153
 msgid "Failed to create character. Most likely the name is already taken."
 msgstr "Nem tudod létrehozni a karaktert. Valószínű a neve használatban van."
 
-#: src/eathena/net/charserverhandler.cpp:168
+#: src/eathena/net/charserverhandler.cpp:167
 msgid "Info"
 msgstr "Infó"
 
-#: src/eathena/net/charserverhandler.cpp:168
+#: src/eathena/net/charserverhandler.cpp:167
 msgid "Character deleted."
 msgstr "Karakter törölve."
 
-#: src/eathena/net/charserverhandler.cpp:173
+#: src/eathena/net/charserverhandler.cpp:172
 msgid "Failed to delete character."
 msgstr "Karakter törlése sikertelen."
 
@@ -2102,11 +2027,11 @@ msgstr "A privát üzenet nem lett elküldve, mert le lettél tiltva."
 #: src/eathena/net/chathandler.cpp:160
 #, c-format
 msgid "Online users: %d"
-msgstr ""
+msgstr "Online felhasználók: %d"
 
 #: src/eathena/net/chathandler.cpp:167
 msgid "MVP player"
-msgstr ""
+msgstr "MVP lejátszó"
 
 #: src/eathena/net/equipmenthandler.cpp:110
 msgid "Unable to equip."
@@ -2123,52 +2048,52 @@ msgstr "Nem tudod felvenni a tárgyat."
 #: src/eathena/net/inventoryhandler.cpp:172
 #, c-format
 msgid "You picked up %s [%s]."
-msgstr ""
+msgstr "Felvetted ezt %s [%s]."
 
 #: src/eathena/net/inventoryhandler.cpp:219
 msgid "Failed to use item."
 msgstr "Nem tudod bevetni a tárgyat."
 
-#: src/eathena/net/loginhandler.cpp:67 src/eathena/net/maploginhandler.cpp:69
+#: src/eathena/net/loginhandler.cpp:66 src/eathena/net/maploginhandler.cpp:69
 msgid "Authentication failed"
 msgstr "Azonosítás sikertelen"
 
-#: src/eathena/net/loginhandler.cpp:70
+#: src/eathena/net/loginhandler.cpp:69
 msgid "No servers available"
 msgstr "Nincs elérhető szerver"
 
-#: src/eathena/net/loginhandler.cpp:73 src/eathena/net/maploginhandler.cpp:72
+#: src/eathena/net/loginhandler.cpp:72 src/eathena/net/maploginhandler.cpp:72
 msgid "This account is already logged in"
 msgstr "Ez a fiók már be van lépve"
 
-#: src/eathena/net/loginhandler.cpp:76 src/eathena/net/maploginhandler.cpp:75
+#: src/eathena/net/loginhandler.cpp:75 src/eathena/net/maploginhandler.cpp:75
 msgid "Unknown connection error"
 msgstr "Ismeretlen kapcsolati hiba"
 
-#: src/eathena/net/loginhandler.cpp:132
+#: src/eathena/net/loginhandler.cpp:131
 msgid "Unregistered ID"
 msgstr "Az ID nincs regisztrálva"
 
-#: src/eathena/net/loginhandler.cpp:135
+#: src/eathena/net/loginhandler.cpp:134
 msgid "Wrong password"
 msgstr "Hibás jelszó"
 
-#: src/eathena/net/loginhandler.cpp:138
+#: src/eathena/net/loginhandler.cpp:137
 msgid "Account expired"
 msgstr "A fiók lejárt"
 
-#: src/eathena/net/loginhandler.cpp:141
+#: src/eathena/net/loginhandler.cpp:140
 msgid "Rejected from server"
 msgstr "Visszautasított a szerver"
 
-#: src/eathena/net/loginhandler.cpp:144
+#: src/eathena/net/loginhandler.cpp:143
 msgid ""
 "You have been permanently banned from the game. Please contact the GM Team."
 msgstr ""
 "Véglegesen kitiltottak a szerverről. Kérlek vedd fel a kapcsolatot a GM "
 "csapattal."
 
-#: src/eathena/net/loginhandler.cpp:148
+#: src/eathena/net/loginhandler.cpp:147
 #, c-format
 msgid ""
 "You have been temporarily banned from the game until %s.\n"
@@ -2177,45 +2102,45 @@ msgstr ""
 "Ki vagy tiltva a szerverről hátralévő idő a feloldásig %s\n"
 "Kérlek vedd fel a kapcsolatot a GM csapattal."
 
-#: src/eathena/net/loginhandler.cpp:154
+#: src/eathena/net/loginhandler.cpp:153
 msgid "This user name is already taken"
 msgstr "Ez a felhasználónév már foglalt."
 
-#: src/eathena/net/loginhandler.cpp:157
+#: src/eathena/net/loginhandler.cpp:156
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
 
-#: src/eathena/net/network.cpp:209
+#: src/eathena/net/network.cpp:207
 msgid ""
 "Packet length too short. Please report this error to the server you are "
 "connecting to."
 msgstr ""
 
-#: src/eathena/net/playerhandler.cpp:107
+#: src/eathena/net/playerhandler.cpp:104
 msgid "You are dead."
 msgstr "Meghaltál."
 
-#: src/eathena/net/playerhandler.cpp:108
+#: src/eathena/net/playerhandler.cpp:105
 msgid "We regret to inform you that your character was killed in battle."
 msgstr "A karaktered elvérzett a csatában."
 
-#: src/eathena/net/playerhandler.cpp:110
+#: src/eathena/net/playerhandler.cpp:107
 msgid "You are not that alive anymore."
 msgstr "Nem vagy már az élők sorában."
 
-#: src/eathena/net/playerhandler.cpp:111
+#: src/eathena/net/playerhandler.cpp:108
 msgid "The cold hands of the grim reaper are grabbing for your soul."
 msgstr "A kaszás eljött érted, hogy elvigye a lelked."
 
-#: src/eathena/net/playerhandler.cpp:112
+#: src/eathena/net/playerhandler.cpp:109
 msgid "Game Over!"
 msgstr "Vége a játéknak!"
 
-#: src/eathena/net/playerhandler.cpp:113
+#: src/eathena/net/playerhandler.cpp:110
 msgid "Insert coin to continue"
 msgstr ""
 
-#: src/eathena/net/playerhandler.cpp:114
+#: src/eathena/net/playerhandler.cpp:111
 msgid ""
 "No, kids. Your character did not really die. It... err... went to a better "
 "place."
@@ -2223,7 +2148,7 @@ msgstr ""
 "Nem, gyerekek. A karakter nem meghalt, ..ööö... hanem egy szebb világba "
 "került."
 
-#: src/eathena/net/playerhandler.cpp:116
+#: src/eathena/net/playerhandler.cpp:113
 msgid ""
 "Your plan of breaking your enemies weapon by bashing it with your throat "
 "failed."
@@ -2231,102 +2156,182 @@ msgstr ""
 "A tervet, amiben a torkoddal támadsz az ellenség kardjába sikertelennek "
 "bizonyult."
 
-#: src/eathena/net/playerhandler.cpp:118
+#: src/eathena/net/playerhandler.cpp:115
 msgid "I guess this did not run too well."
 msgstr "Úgy látszik nem futottál túl gyorsan."
 
-#: src/eathena/net/playerhandler.cpp:120
+#: src/eathena/net/playerhandler.cpp:117
 msgid "Do you want your possessions identified?"
 msgstr "Meg akarod bánni a bűneid?"
 
-#: src/eathena/net/playerhandler.cpp:122
+#: src/eathena/net/playerhandler.cpp:119
 msgid "Sadly, no trace of you was ever found..."
 msgstr "Kövesd a fényt az alagút végén."
 
-#: src/eathena/net/playerhandler.cpp:124
+#: src/eathena/net/playerhandler.cpp:121
 msgid "Annihilated."
 msgstr "Megöltek."
 
-#: src/eathena/net/playerhandler.cpp:126
+#: src/eathena/net/playerhandler.cpp:123
 msgid "Looks like you got your head handed to you."
 msgstr "Kezedbe adták a fejed."
 
-#: src/eathena/net/playerhandler.cpp:128
+#: src/eathena/net/playerhandler.cpp:125
 msgid ""
 "You screwed up again, dump your body down the tubes and get you another one."
 msgstr "Sikolyok közepette kerültél a másvilágra."
 
-#: src/eathena/net/playerhandler.cpp:131
+#: src/eathena/net/playerhandler.cpp:128
 msgid "You're not dead yet. You're just resting."
 msgstr "Nem haltál meg...csak alszol..."
 
-#: src/eathena/net/playerhandler.cpp:132
+#: src/eathena/net/playerhandler.cpp:129
 msgid "You are no more."
 msgstr "Nem létezel többé."
 
-#: src/eathena/net/playerhandler.cpp:133
+#: src/eathena/net/playerhandler.cpp:130
 msgid "You have ceased to be."
 msgstr "Megszüntél létezni."
 
-#: src/eathena/net/playerhandler.cpp:134
+#: src/eathena/net/playerhandler.cpp:131
 msgid "You've expired and gone to meet your maker."
 msgstr "Véged és elindultál találkozni a készítőddel."
 
-#: src/eathena/net/playerhandler.cpp:135
+#: src/eathena/net/playerhandler.cpp:132
 msgid "You're a stiff."
 msgstr "Hulla vagy."
 
-#: src/eathena/net/playerhandler.cpp:136
+#: src/eathena/net/playerhandler.cpp:133
 msgid "Bereft of life, you rest in peace."
 msgstr "Megfosztottak az életedtől. Nyugodj békében."
 
-#: src/eathena/net/playerhandler.cpp:137
+#: src/eathena/net/playerhandler.cpp:134
 msgid "If you weren't so animated, you'd be pushing up the daisies."
 msgstr "Szép vagy mikor alszol..."
 
-#: src/eathena/net/playerhandler.cpp:138
+#: src/eathena/net/playerhandler.cpp:135
 msgid "Your metabolic processes are now history."
 msgstr "Történelem vagy."
 
-#: src/eathena/net/playerhandler.cpp:139
+#: src/eathena/net/playerhandler.cpp:136
 msgid "You're off the twig."
 msgstr "Elég gallyul nézel ki."
 
-#: src/eathena/net/playerhandler.cpp:140
+#: src/eathena/net/playerhandler.cpp:137
 msgid "You've kicked the bucket."
 msgstr "Feldobtad a talpad."
 
-#: src/eathena/net/playerhandler.cpp:141
+#: src/eathena/net/playerhandler.cpp:138
 msgid ""
 "You've shuffled off your mortal coil, run down the curtain and joined the "
 "bleedin' choir invisibile."
 msgstr "Megfulladtál a saját véredben."
 
-#: src/eathena/net/playerhandler.cpp:143
+#: src/eathena/net/playerhandler.cpp:140
 msgid "You are an ex-player."
 msgstr "Ex-játékos lettél."
 
-#: src/eathena/net/playerhandler.cpp:144
+#: src/eathena/net/playerhandler.cpp:141
 msgid "You're pining for the fjords."
 msgstr "Az örök búzamezőkön kaszálgatsz."
 
-#: src/eathena/net/playerhandler.cpp:255 src/eathena/net/playerhandler.cpp:278
+#: src/eathena/net/playerhandler.cpp:250 src/eathena/net/playerhandler.cpp:273
 msgid "Message"
 msgstr "Üzenet"
 
-#: src/eathena/net/playerhandler.cpp:256
+#: src/eathena/net/playerhandler.cpp:251
 msgid ""
 "You are carrying more than half your weight. You are unable to regain health."
 msgstr "Több tárgy van nálad mint a súlyod fele. Nem töltődik az életed."
 
-#: src/eathena/net/playerhandler.cpp:301
+#: src/eathena/net/playerhandler.cpp:296
 #, c-format
 msgid "You picked up %d GP"
 msgstr ""
 
-#: src/eathena/net/playerhandler.cpp:387
+#: src/eathena/net/playerhandler.cpp:382
 msgid "Equip arrows first."
 msgstr "Előbb tegyél be nyílvesszőt."
+
+#: src/eathena/net/skillhandler.cpp:136
+msgid "Trade failed!"
+msgstr "Üzlet sikertelen!"
+
+#: src/eathena/net/skillhandler.cpp:139
+msgid "Emote failed!"
+msgstr "Hangulatjel küldése sikertelen!"
+
+#: src/eathena/net/skillhandler.cpp:142
+msgid "Sit failed!"
+msgstr "Ülés sikertelen!"
+
+#: src/eathena/net/skillhandler.cpp:145
+msgid "Chat creating failed!"
+msgstr "Beszélgetés létrehozása sikertelen."
+
+#: src/eathena/net/skillhandler.cpp:148
+msgid "Could not join party!"
+msgstr "Nem tudsz csatlakozni a csapatba."
+
+#: src/eathena/net/skillhandler.cpp:151
+msgid "Cannot shout!"
+msgstr "Nem tudsz ordítani!"
+
+#: src/eathena/net/skillhandler.cpp:160
+msgid "You have not yet reached a high enough lvl!"
+msgstr "Nem érted még el a megfelelő szintet!"
+
+#: src/eathena/net/skillhandler.cpp:163
+msgid "Insufficient HP!"
+msgstr "Kevés az életed!"
+
+#: src/eathena/net/skillhandler.cpp:166
+msgid "Insufficient SP!"
+msgstr "Kimerültél."
+
+#: src/eathena/net/skillhandler.cpp:169
+msgid "You have no memos!"
+msgstr "Nincs feljegyzésed."
+
+#: src/eathena/net/skillhandler.cpp:172
+msgid "You cannot do that right now!"
+msgstr "Most nem csinálhatod!"
+
+#: src/eathena/net/skillhandler.cpp:175
+msgid "Seems you need more GP... ;-)"
+msgstr ""
+
+#: src/eathena/net/skillhandler.cpp:178
+msgid "You cannot use this skill with that kind of weapon!"
+msgstr "Ezzel a fegyverrel nem tudod ezt a képességet használni!"
+
+#: src/eathena/net/skillhandler.cpp:181
+msgid "You need another red gem!"
+msgstr "Egy másik piros kőre van szükséged!"
+
+#: src/eathena/net/skillhandler.cpp:184
+msgid "You need another blue gem!"
+msgstr "Egy másik kék kőre van szükséged!"
+
+#: src/eathena/net/skillhandler.cpp:187
+msgid "You're carrying to much to do this!"
+msgstr "Túl sok dolgot cipelsz, hogy ezt csináld!"
+
+#: src/eathena/net/skillhandler.cpp:190
+msgid "Huh? What's that?"
+msgstr "Huh? Mi volt ez?"
+
+#: src/eathena/net/skillhandler.cpp:199
+msgid "Warp failed..."
+msgstr "Teleport sikertelen..."
+
+#: src/eathena/net/skillhandler.cpp:202
+msgid "Could not steal anything..."
+msgstr "Nem tudsz semmit ellopni..."
+
+#: src/eathena/net/skillhandler.cpp:205
+msgid "Poison had no effect..."
+msgstr "A méregnek nem volt hatása..."
 
 #: src/eathena/net/tradehandler.cpp:103
 msgid "Request for Trade"
@@ -2383,122 +2388,181 @@ msgstr "Az üzlet megszakadt."
 msgid "Trade completed."
 msgstr "Sikeres üzlet."
 
-#: src/engine.cpp:115
-#, c-format
-msgid "%s can't be created, but it doesn't exist! Exiting."
-msgstr ""
-
-#: src/engine.cpp:130
+#: src/engine.cpp:164
 #, c-format
 msgid "Could not initialize SDL: %s"
 msgstr ""
 
-#: src/engine.cpp:141
+#: src/engine.cpp:178
 #, c-format
 msgid "%s couldn't be set as home directory! Exiting."
 msgstr ""
 
-#: src/engine.cpp:158
+#: src/engine.cpp:195
 msgid "Can't find Resources directory!\n"
 msgstr ""
 
-#: src/engine.cpp:310
+#: src/engine.cpp:281
 #, c-format
 msgid "Couldn't set %dx%dx%d video mode: %s"
 msgstr ""
 
+#: src/engine.cpp:324
+#, c-format
+msgid "%s can't be created, but it doesn't exist! Exiting."
+msgstr ""
+
 #: src/main.cpp:45
 msgid "Options: "
-msgstr ""
+msgstr "Opciók: "
 
 #: src/main.cpp:46
-msgid "  -C --configfile\t: Configuration file to use"
-msgstr "  -C --configfile\t: Konfigurációs fájl használata"
-
-#: src/main.cpp:47
-msgid "  -d --data\t\t: Directory to load game data from"
-msgstr "  -d --data\t\t: Könyvtár ahonnan betöltöd a játékot"
-
-#: src/main.cpp:49
-msgid "  -D --default\t\t: Bypass the login process with default settings"
+msgid "Configuration file to use"
 msgstr ""
 
-#: src/main.cpp:51
-msgid "  -h --help\t\t: Display this help"
-msgstr "  -h --help\t\t: Megmutatja ezt a súgót"
+#: src/main.cpp:48
+msgid "Directory to load game data from"
+msgstr ""
+
+#: src/main.cpp:50
+msgid "Bypass the login process with default settings"
+msgstr ""
 
 #: src/main.cpp:52
-msgid "  -H --updatehost\t: Use this update host"
-msgstr "  -H --updatehost\t: A frissítési szerver kijelölésére használjuk"
+msgid "Display this help"
+msgstr ""
 
 #: src/main.cpp:53
-msgid "  -p --playername\t: Login with this player"
+msgid "Use this update host"
 msgstr ""
-
-#: src/main.cpp:54
-msgid "  -P --password\t\t: Login with this password"
-msgstr "  -P --password\t\t: Bejelentkezés ezzel a jelszóval"
 
 #: src/main.cpp:55
-msgid "  -u --skipupdate\t: Skip the update downloads"
-msgstr "  -u --skipupdate\t:  Frissítés átugrása"
+msgid "Login with this player"
+msgstr ""
 
-#: src/main.cpp:56
-msgid "  -U --username\t\t: Login with this username"
-msgstr "  -U --username\t\t: Bejelentkezés ezzel a felhasználónévvel"
+#: src/main.cpp:57
+msgid "Login with this password"
+msgstr ""
 
-#: src/main.cpp:58
-msgid "  -O --no-opengl\t: Disable OpenGL for this session"
-msgstr "  -O --no-opengl\t: OpenGL kikapcsolása erre az időszakra"
+#: src/main.cpp:59
+msgid "Skip the update downloads"
+msgstr ""
 
 #: src/main.cpp:61
-msgid "  -O --no-opengl\t: Default (OpenGL has been disabled at build time)"
+msgid "Login with this username"
 msgstr ""
 
-#: src/main.cpp:64
-msgid "  -v --version\t\t: Display the version"
-msgstr "  -v --version\t\t: Megmutatja a verziót"
-
-#: src/main.cpp:66
-msgid "Report bugs at: http://www.aethyra.org/mantis"
+#: src/main.cpp:65
+msgid "Disable OpenGL for this session"
 msgstr ""
 
-#: src/main.cpp:68
-msgid "Homepage: http://www.aethyra.org"
-msgstr ""
-
-#: src/main.cpp:69
-msgid "Forums: http://www.aethyra.org/forums"
+#: src/main.cpp:67
+msgid "Default (OpenGL has been disabled at build time)"
 msgstr ""
 
 #: src/main.cpp:70
-msgid "IRC: irc.freenode.net\tChannel: #aethyra"
+msgid "Display the version"
 msgstr ""
 
-#: src/main.cpp:82
-msgid "\tCopyright (C) 2008-2009  Aethyra Development Team"
+#: src/main.cpp:72
+#, c-format
+msgid "Report bugs at: %s"
 msgstr ""
 
-#: src/main.cpp:84
+#: src/main.cpp:74
+#, c-format
+msgid "Homepage: %s"
+msgstr ""
+
+#: src/main.cpp:76
+#, c-format
+msgid "Forums: %s"
+msgstr ""
+
+#: src/main.cpp:78
+#, c-format
+msgid "IRC: %s\tChannel: %s"
+msgstr ""
+
+#: src/main.cpp:91
+#, c-format
+msgid "\tCopyright (C) %s  Aethyra Development Team"
+msgstr ""
+
+#: src/main.cpp:94
 msgid ""
 "License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl2."
 "html>"
 msgstr ""
 
-#: src/main.cpp:86
+#: src/main.cpp:96
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
 
-#: src/main.cpp:88
+#: src/main.cpp:98
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: src/main.cpp:155
+#: src/main.cpp:165
 msgid "--no-opengl is set by default (OpenGL has been disabled at build time)"
 msgstr ""
+
+#~ msgid "GUI"
+#~ msgstr "Kezelőfelület"
+
+#~ msgid "Error creating updates directory!"
+#~ msgstr "Hiba a frissítési könyvtár létrehozása közben!"
+
+#~ msgid "##1  The update process is incomplete."
+#~ msgstr "##1 A frissítési folyamat befejezetlen"
+
+#~ msgid "##1  It is strongly recommended that"
+#~ msgstr "##1 Erősen ajánljuk, hogy"
+
+#~ msgid "##1  you try again later"
+#~ msgstr "##1 próbáld meg később"
+
+#~ msgid "Screenshot saved to ~/"
+#~ msgstr "Képernyőt mentettük a ~/ helyre"
+
+#~ msgid "Screen resolution changed"
+#~ msgstr "A képernyő felbontása megváltozott"
 
 #~ msgid "Restart your client for the change to take effect."
 #~ msgstr "A változások érvénybe lépéséhez a program újraindítása szükséges."
 
+#~ msgid "Invalid update host: "
+#~ msgstr "Helytelen frissítési kiszolgáló: "
+
 #~ msgid "Network Error"
 #~ msgstr "Hálózati hiba"
+
+#~ msgid "  -C --configfile\t: Configuration file to use"
+#~ msgstr "  -C --configfile\t: Konfigurációs fájl használata"
+
+#~ msgid "  -d --data\t\t: Directory to load game data from"
+#~ msgstr "  -d --data\t\t: Könyvtár ahonnan betöltöd a játékot"
+
+#~ msgid "  -h --help\t\t: Display this help"
+#~ msgstr "  -h --help\t\t: Megmutatja ezt a súgót"
+
+#~ msgid "  -H --updatehost\t: Use this update host"
+#~ msgstr "  -H --updatehost\t: A frissítési szerver kijelölésére használjuk"
+
+#~ msgid "  -P --password\t\t: Login with this password"
+#~ msgstr "  -P --password\t\t: Bejelentkezés ezzel a jelszóval"
+
+#~ msgid "  -u --skipupdate\t: Skip the update downloads"
+#~ msgstr "  -u --skipupdate\t:  Frissítés átugrása"
+
+#~ msgid "  -U --username\t\t: Login with this username"
+#~ msgstr "  -U --username\t\t: Bejelentkezés ezzel a felhasználónévvel"
+
+#~ msgid "  -O --no-opengl\t: Disable OpenGL for this session"
+#~ msgstr "  -O --no-opengl\t: OpenGL kikapcsolása erre az időszakra"
+
+#~ msgid "  -v --version\t\t: Display the version"
+#~ msgstr "  -v --version\t\t: Megmutatja a verziót"
+
+#~ msgid "Forums: http://www.aethyra.org/forums"
+#~ msgstr "Fórumok: http://www.aethyra.org/forums"

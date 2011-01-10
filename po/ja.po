@@ -7,46 +7,42 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aethyra\n"
 "Report-Msgid-Bugs-To: irarice@gmail.com\n"
-"POT-Creation-Date: 2010-02-05 20:17-0700\n"
-"PO-Revision-Date: 2010-01-29 14:05+0000\n"
+"POT-Creation-Date: 2011-01-10 11:05-0700\n"
+"PO-Revision-Date: 2010-08-05 10:46+0000\n"
 "Last-Translator: swimmy <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-06 03:04+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-01-10 17:46+0000\n"
+"X-Generator: Launchpad (build 12161)\n"
 
-#: src/bindings/curl/downloadwrapper.cpp:259
+#: src/bindings/guichan/graphics.cpp:197
 #, c-format
-msgid "Checksum for file %s failed: (%lx/%lx)"
+msgid "Screenshot saved to %s"
 msgstr ""
 
-#: src/bindings/guichan/graphics.cpp:185
-msgid "Screenshot saved to ~/"
-msgstr "~/にスクリーンショットを保存しました。"
-
-#: src/bindings/guichan/graphics.cpp:192
+#: src/bindings/guichan/graphics.cpp:203
 msgid "Saving screenshot failed!"
-msgstr "スクリーンショットを保存することに失敗しました！"
+msgstr "スクリーンショットの保存に失敗しました！"
 
 #: src/bindings/guichan/gui.cpp:250
-#, fuzzy
 msgid "Switching resolutions"
-msgstr "スクリーンの解像度が変わりました。"
+msgstr "解像度を変更"
 
 #: src/bindings/guichan/gui.cpp:251
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:192
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:196
 msgid "Restart needed for changes to take effect."
-msgstr "影響させるために再起動してください。"
+msgstr "設定変更のため、再起動をしてください。"
 
-#: src/bindings/guichan/inputmanager.cpp:454
+#: src/bindings/guichan/inputmanager.cpp:462
 msgid "Ignoring incoming trade requests"
-msgstr "相手からくるトレードの要求を無視します。"
+msgstr "他人からのトレードリクエストを無視します。"
 
-#: src/bindings/guichan/inputmanager.cpp:461
+#: src/bindings/guichan/inputmanager.cpp:469
 msgid "Accepting incoming trade requests"
-msgstr "相手からくるトレードの要求を受け入れます。"
+msgstr "他人からのトレードリクエストを受け入れます。"
 
 #: src/bindings/guichan/palette.cpp:80 src/eathena/gui/tabs/setup_game.cpp:223
 msgid "Text"
@@ -58,7 +54,7 @@ msgstr "文字の影"
 
 #: src/bindings/guichan/palette.cpp:82
 msgid "Text Outline"
-msgstr "文字の外線"
+msgstr "文字の輪郭"
 
 #: src/bindings/guichan/palette.cpp:83
 msgid "Progress Bar Labels"
@@ -82,13 +78,13 @@ msgstr "アイテムが買えない"
 
 #: src/bindings/guichan/palette.cpp:90
 msgid "Item is equipped"
-msgstr "アイテムが装備されている"
+msgstr "既に装備されている"
 
 #: src/bindings/guichan/palette.cpp:92
 msgid "Chat"
 msgstr "チャット"
 
-#: src/bindings/guichan/palette.cpp:93 src/core/map/sprite/player.cpp:93
+#: src/bindings/guichan/palette.cpp:93 src/core/map/sprite/player.cpp:94
 msgid "GM"
 msgstr "ゲームマスター"
 
@@ -114,7 +110,7 @@ msgstr "サーバ"
 
 #: src/bindings/guichan/palette.cpp:99
 msgid "Logger"
-msgstr "ログするもの"
+msgstr "ロガー"
 
 #: src/bindings/guichan/palette.cpp:100
 msgid "Hyperlink"
@@ -138,11 +134,11 @@ msgstr "GMの名前"
 
 #: src/bindings/guichan/palette.cpp:106
 msgid "NPCs"
-msgstr "NPCたち"
+msgstr "NPC"
 
 #: src/bindings/guichan/palette.cpp:107
 msgid "Monsters"
-msgstr "怪物たち"
+msgstr "モンスター"
 
 #: src/bindings/guichan/palette.cpp:109
 msgid "Unknown Item Type"
@@ -190,7 +186,7 @@ msgstr "指輪"
 
 #: src/bindings/guichan/palette.cpp:120
 msgid "Arms"
-msgstr "腕につけるアイテム"
+msgstr "腕パーツ"
 
 #: src/bindings/guichan/palette.cpp:121
 msgid "Ammo"
@@ -202,7 +198,7 @@ msgstr "特有の効果"
 
 #: src/bindings/guichan/palette.cpp:124
 msgid "Pickup Notification"
-msgstr "拾い物通知"
+msgstr "収集通知"
 
 #: src/bindings/guichan/palette.cpp:125
 msgid "Exp Notification"
@@ -244,9 +240,10 @@ msgstr "閉じる"
 
 #: src/bindings/guichan/dialogs/listdialog.cpp:50
 #: src/bindings/guichan/dialogs/okdialog.cpp:44
+#: src/bindings/guichan/dialogs/selectiondialog.cpp:51
 #: src/bindings/guichan/dialogs/textinputdialog.cpp:41
 #: src/eathena/gui/charselect.cpp:102 src/eathena/gui/itemamount.cpp:84
-#: src/eathena/gui/login.cpp:75 src/eathena/gui/npcintegerdialog.cpp:45
+#: src/eathena/gui/login.cpp:70 src/eathena/gui/npcintegerdialog.cpp:45
 #: src/eathena/gui/npctext.cpp:56 src/eathena/gui/slotselection.cpp:71
 #: src/eathena/gui/trade.cpp:67 src/eathena/gui/trade.cpp:174
 msgid "OK"
@@ -257,12 +254,12 @@ msgstr "OK"
 #: src/bindings/guichan/dialogs/textinputdialog.cpp:42
 #: src/eathena/gui/buysell.cpp:37 src/eathena/gui/charcreate.cpp:70
 #: src/eathena/gui/charselect.cpp:103 src/eathena/gui/itemamount.cpp:85
-#: src/eathena/gui/login.cpp:76 src/eathena/gui/npcintegerdialog.cpp:46
+#: src/eathena/gui/login.cpp:71 src/eathena/gui/npcintegerdialog.cpp:46
 #: src/eathena/gui/popupmenu.cpp:408 src/eathena/gui/register.cpp:92
 #: src/eathena/gui/slotselection.cpp:72 src/eathena/gui/trade.cpp:68
-#: src/eathena/gui/updatewindow.cpp:68
+#: src/eathena/gui/updatewindow.cpp:65
 msgid "Cancel"
-msgstr "取消"
+msgstr "キャンセル"
 
 #: src/bindings/guichan/dialogs/setupdialog.cpp:46
 #: src/bindings/guichan/widgets/desktop.cpp:86 src/eathena/gui/menubar.cpp:66
@@ -275,15 +272,15 @@ msgstr "ウィンドウをリセットする"
 
 #: src/bindings/guichan/dialogs/setupdialog.cpp:55
 msgid "Apply"
-msgstr "適用する"
+msgstr "適用"
 
 #: src/bindings/guichan/dialogs/tabs/setup_audio.cpp:46
 msgid "Sound"
-msgstr "音声"
+msgstr "サウンド"
 
 #: src/bindings/guichan/dialogs/tabs/setup_audio.cpp:50
 msgid "Audio"
-msgstr "音声"
+msgstr "オーディオ"
 
 #: src/bindings/guichan/dialogs/tabs/setup_audio.cpp:59
 msgid "Sfx volume"
@@ -295,7 +292,7 @@ msgstr "音楽の音量"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:44
 msgid "This is what the color looks like"
-msgstr "これがその色がどのように見えるかです。"
+msgstr "これがその色の例です。"
 
 #: src/bindings/guichan/dialogs/tabs/setup_colors.cpp:49
 msgid "Colors"
@@ -344,67 +341,67 @@ msgstr "緑色: "
 msgid "Blue: "
 msgstr "青色: "
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:68
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:68
 msgid "Full screen"
-msgstr "全画面"
+msgstr "フルスクリーン"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:69
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:69
 msgid "OpenGL"
 msgstr "OpenGL"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:70
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:70
 msgid "Custom cursor"
 msgstr "カスタムカーソル"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:73
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:73
 msgid "FPS Limit:"
+msgstr "FPS限界値:"
+
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:79
+msgid "Display"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:80
-msgid "GUI"
-msgstr ""
-
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:86
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:85
 msgid "Gui opacity"
-msgstr ""
+msgstr "GUIの透明度"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:87
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:86
 msgid "Mouse opacity"
-msgstr ""
+msgstr "マウスの透明度"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:88
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:88
 msgid "Font size"
-msgstr "フォントのサイズ"
+msgstr "フォントサイズ"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:121
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:268
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:317
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:120
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:276
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:326
 #, c-format
 msgid "%d Point"
 msgstr "%d ポイント"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:191
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:195
 msgid "Switching to full screen"
-msgstr "全画面へと切り替えます"
+msgstr "フルスクリーンへと切り替えます"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:200
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:204
 #, c-format
 msgid "Failed to switch to %s mode and restoration of old mode also failed!"
 msgstr ""
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:202
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:206
 msgid "windowed"
-msgstr ""
+msgstr "ウィンドウ内"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:203
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:207
 msgid "fullscreen"
-msgstr "全画面"
+msgstr "フルスクリーン"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:217
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:221
 msgid "Changing OpenGL"
 msgstr "OpenGLを変える"
 
-#: src/bindings/guichan/dialogs/tabs/setup_gui.cpp:218
+#: src/bindings/guichan/dialogs/tabs/setup_display.cpp:222
 msgid "Applying change to OpenGL requires restart."
 msgstr "OpenGLを変えるためには再起動が必要となります。"
 
@@ -424,7 +421,7 @@ msgstr "変化させる"
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:55
 msgid "Input"
-msgstr ""
+msgstr "インプット"
 
 #: src/bindings/guichan/dialogs/tabs/setup_input.cpp:69
 msgid "Assign"
@@ -602,9 +599,8 @@ msgstr "チャットを上にスクロールする"
 msgid "Scroll Chat Down"
 msgstr "チャットを下にスクロールする"
 
-#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/statemanager.cpp:420
+#: src/bindings/sdl/keyboardconfig.cpp:102 src/eathena/statemanager.cpp:515
 #: src/eathena/gui/buy.cpp:73 src/eathena/gui/sell.cpp:73
-#: src/eathena/gui/updatewindow.cpp:143
 msgid "Quit"
 msgstr "終了"
 
@@ -616,7 +612,7 @@ msgstr ""
 
 #: src/bindings/sdl/keyboardconfig.cpp:178
 msgid "Key Conflict(s) Detected."
-msgstr ""
+msgstr "キーが重複しています。"
 
 #: src/bindings/sdl/keyboardconfig.cpp:179
 #, c-format
@@ -624,33 +620,13 @@ msgid ""
 "%s and %s keys overlap. Resolve them, or gameplay may result in strange "
 "behaviour."
 msgstr ""
+"%sと%sキーが重なっています。　解決しないと、ゲームプレイは奇妙な調子になりま"
+"す。"
 
-#: src/bindings/update/downloadupdates.cpp:172
-#, fuzzy, c-format
-msgid "Invalid update host: %s"
-msgstr "無効なアップデートホスト: "
-
-#: src/bindings/update/downloadupdates.cpp:209
-msgid "Error creating updates directory!"
+#: src/bindings/zlib/adler32.cpp:66
+#, c-format
+msgid "Checksum for file %s failed: (%lx/%lx)"
 msgstr ""
-
-#: src/bindings/update/downloadupdates.cpp:363
-msgid ""
-"An update failed a security check, see log for details. If this persists, "
-"report this issue with your log file on the forums."
-msgstr ""
-
-#: src/bindings/update/downloadupdates.cpp:376
-msgid "##1  The update process is incomplete."
-msgstr "アップデートは完了していません"
-
-#: src/bindings/update/downloadupdates.cpp:377
-msgid "##1  It is strongly recommended that"
-msgstr "強く推奨されます"
-
-#: src/bindings/update/downloadupdates.cpp:378
-msgid "##1  you try again later"
-msgstr "もう一度後でやってみることを"
 
 #: src/core/recorder.cpp:68
 msgid "Finishing recording."
@@ -672,8 +648,8 @@ msgstr "記録を始めます…。"
 msgid "Failed to start recording."
 msgstr "記録を始めるのに失敗しました。"
 
-#: src/core/map/sprite/being.cpp:220 src/eathena/db/itemdb.cpp:62
-#: src/eathena/gui/chat.cpp:312
+#: src/core/map/sprite/being.cpp:187 src/eathena/db/itemdb.cpp:64
+#: src/eathena/gui/chat.cpp:338
 msgid "Unknown item"
 msgstr "不明なアイテム"
 
@@ -690,7 +666,7 @@ msgid "atto"
 msgstr ""
 
 #: src/core/utils/metric.h:47
-msgid "fempto"
+msgid "femto"
 msgstr ""
 
 #: src/core/utils/metric.h:48
@@ -710,9 +686,8 @@ msgid "milli"
 msgstr ""
 
 #: src/core/utils/metric.h:52
-#, fuzzy
 msgid "centi"
-msgstr "最近使った:"
+msgstr ""
 
 #: src/core/utils/metric.h:53
 msgid "deci"
@@ -727,9 +702,8 @@ msgid "hecto"
 msgstr ""
 
 #: src/core/utils/metric.h:57
-#, fuzzy
 msgid "kilo"
-msgstr "技能"
+msgstr ""
 
 #: src/core/utils/metric.h:58
 msgid "mega"
@@ -740,9 +714,8 @@ msgid "giga"
 msgstr ""
 
 #: src/core/utils/metric.h:60
-#, fuzzy
 msgid "tera"
-msgstr "交換"
+msgstr ""
 
 #: src/core/utils/metric.h:61
 msgid "peta"
@@ -757,26 +730,16 @@ msgid "zetta"
 msgstr ""
 
 #: src/core/utils/metric.h:64
-#, fuzzy
 msgid "yotta"
-msgstr "合計"
-
-#: src/eathena/maploader.cpp:93
-msgid "Could not load map"
-msgstr "マップをロードすることが出来ませんでした。"
-
-#: src/eathena/maploader.cpp:94
-#, c-format
-msgid "Error while loading %s"
-msgstr "%sをロードしている間にエラーが起きました。"
+msgstr ""
 
 #: src/eathena/party.cpp:52
 msgid "Not yet implemented!"
-msgstr ""
+msgstr "まだ実行していません！"
 
 #: src/eathena/party.cpp:60
 msgid "Party command not known."
-msgstr "知られていないパーティコマンドです。"
+msgstr "不明のいパーティコマンドです。"
 
 #: src/eathena/party.cpp:66
 msgid "Party name is missing."
@@ -811,7 +774,7 @@ msgstr "%sは今やあなたのパーティのメンバーです。"
 
 #: src/eathena/party.cpp:119
 msgid "You can't have a blank party name!"
-msgstr "空のパーティーネームのパーティを作ることはできません！"
+msgstr "空の名前のパーティを作ることはできません！"
 
 #: src/eathena/party.cpp:124
 msgid "Invite to party"
@@ -837,7 +800,7 @@ msgstr ""
 
 #: src/eathena/party.cpp:166
 msgid "where <command> can be one of:"
-msgstr "<コマンド>の場所はこれらのうちの一つです:"
+msgstr "<コマンド>はこれらのうちの一つです:"
 
 #: src/eathena/party.cpp:171
 msgid "This command implements the partying function."
@@ -857,7 +820,7 @@ msgstr "コマンド: /party create (パーティネーム)"
 
 #: src/eathena/party.cpp:180
 msgid "These commands create a new party <party-name>."
-msgstr ""
+msgstr "これらのコマンドは入力した名前のパーティを作ります。"
 
 #: src/eathena/party.cpp:185
 msgid "Command: /party prefix <prefix-char>"
@@ -887,7 +850,7 @@ msgstr "コマンド: /party leave"
 
 #: src/eathena/party.cpp:199
 msgid "This command causes the player to leave the party."
-msgstr "このコマンドはプレイヤーを立ち去らせます。"
+msgstr "このコマンドはプレイヤーを追い出します。"
 
 #: src/eathena/party.cpp:204
 msgid "Unknown /party command."
@@ -895,44 +858,83 @@ msgstr "不明のパーティコマンドです。"
 
 #: src/eathena/party.cpp:205
 msgid "Type /help party for a list of options."
+msgstr "/help partyと入力することによってオプションのリストを表示します。"
+
+#: src/eathena/statemanager.cpp:153
+msgid ""
+"Change won't take effect until you restart the client. Would you like to "
+"quit now?"
 msgstr ""
 
-#: src/eathena/statemanager.cpp:183 src/eathena/gui/register.cpp:226
+#: src/eathena/statemanager.cpp:225 src/eathena/gui/register.cpp:226
 msgid "Error"
 msgstr "エラー"
 
-#: src/eathena/statemanager.cpp:219
+#: src/eathena/statemanager.cpp:235
+msgid "Warning"
+msgstr ""
+
+#: src/eathena/statemanager.cpp:261
+msgid "Welcome to Aethyra"
+msgstr ""
+
+#: src/eathena/statemanager.cpp:262
+msgid ""
+"You haven't selected a graphical mode to use yet. Which mode would you like "
+"to use?"
+msgstr ""
+
+#: src/eathena/statemanager.cpp:292
 msgid "Connecting to account server..."
 msgstr "アカウントサーバーに接続しています…"
 
-#: src/eathena/statemanager.cpp:294
+#: src/eathena/statemanager.cpp:376
 msgid "Connecting to character server..."
 msgstr "キャラクターサーバーに接続しています…"
 
-#: src/eathena/statemanager.cpp:321
+#: src/eathena/statemanager.cpp:403
 msgid "Connecting to map server..."
 msgstr "地図サーバーに接続しています…"
 
-#: src/eathena/statemanager.cpp:368
+#: src/eathena/statemanager.cpp:450
 msgid "Unknown program state. Exiting."
 msgstr ""
 
-#: src/eathena/statemanager.cpp:393
+#: src/eathena/statemanager.cpp:475
 msgid "Got disconnected from server!"
 msgstr "サーバーから切断されました！"
 
-#: src/eathena/statemanager.cpp:421
+#: src/eathena/statemanager.cpp:516
 msgid "Are you sure you want to quit?"
 msgstr "本当に終了してもよろしいですか?"
 
-#: src/eathena/db/itemdb.cpp:103 src/eathena/db/monsterdb.cpp:45
-#: src/eathena/db/monsterdb.cpp:63
+#: src/eathena/db/itemdb.cpp:75 src/eathena/db/monsterdb.cpp:58
+#: src/eathena/db/npcdb.cpp:59
+#, c-format
+msgid "Unable to load %s database"
+msgstr ""
+
+#: src/eathena/db/itemdb.cpp:76
+msgid "Item"
+msgstr ""
+
+#: src/eathena/db/itemdb.cpp:110 src/eathena/db/monsterdb.cpp:48
+#: src/eathena/db/monsterdb.cpp:71
 msgid "unnamed"
 msgstr "名前なし"
 
-#: src/eathena/db/npcdb.cpp:54
+#: src/eathena/db/monsterdb.cpp:59
+msgid "Mob"
+msgstr ""
+
+#: src/eathena/db/npcdb.cpp:58
 msgid "NPC Database: Error while loading npcs.xml!"
 msgstr "NPC データーベース: npc.xmlをロードしている間にエラーが起こりました！"
+
+#: src/eathena/db/npcdb.cpp:60 src/eathena/gui/npclistdialog.cpp:37
+#: src/eathena/gui/npctext.cpp:41
+msgid "NPC"
+msgstr "NPC"
 
 #: src/eathena/gui/buy.cpp:46 src/eathena/gui/buy.cpp:72
 #: src/eathena/gui/buysell.cpp:35
@@ -947,14 +949,14 @@ msgstr "価格: %d GP / 合計: %d GP"
 
 #: src/eathena/gui/buy.cpp:74 src/eathena/gui/sell.cpp:74
 msgid "Max"
-msgstr "最大値"
+msgstr "最大"
 
 #: src/eathena/gui/buy.cpp:75 src/eathena/gui/buy.cpp:217
 #: src/eathena/gui/buy.cpp:237 src/eathena/gui/sell.cpp:75
 #: src/eathena/gui/sell.cpp:245 src/eathena/gui/sell.cpp:261
 #, c-format
 msgid "Description: %s"
-msgstr "名状: %s"
+msgstr "詳細: %s"
 
 #: src/eathena/gui/buy.cpp:76 src/eathena/gui/buy.cpp:219
 #: src/eathena/gui/buy.cpp:238 src/eathena/gui/sell.cpp:76
@@ -976,7 +978,7 @@ msgstr "店"
 msgid "Create Character"
 msgstr "キャラを作成"
 
-#: src/eathena/gui/charcreate.cpp:62 src/eathena/gui/login.cpp:51
+#: src/eathena/gui/charcreate.cpp:62 src/eathena/gui/login.cpp:50
 #: src/eathena/gui/register.cpp:77
 msgid "Name:"
 msgstr "名前:"
@@ -1022,7 +1024,7 @@ msgstr "レベル: %d"
 #: src/eathena/gui/charselect.cpp:203
 #, c-format
 msgid "Job Level: %d"
-msgstr "仕事レベル: %d"
+msgstr "ジョブレベル: %d"
 
 #: src/eathena/gui/charselect.cpp:97
 #, c-format
@@ -1031,11 +1033,11 @@ msgstr "GP: %d"
 
 #: src/eathena/gui/charselect.cpp:99
 msgid "Previous"
-msgstr "前へ"
+msgstr "前"
 
 #: src/eathena/gui/charselect.cpp:100
 msgid "Next"
-msgstr "次へ"
+msgstr "次"
 
 #: src/eathena/gui/charselect.cpp:101 src/eathena/gui/charselect.cpp:205
 msgid "New"
@@ -1056,318 +1058,235 @@ msgstr "削除"
 msgid "Money: %s"
 msgstr "GP:%s"
 
-#: src/eathena/gui/chat.cpp:86
+#: src/eathena/gui/chat.cpp:87
 msgid "File name to record to:"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:218
+#: src/eathena/gui/chat.cpp:222
 msgid "Global announcement: "
 msgstr "アナウンス: "
 
-#: src/eathena/gui/chat.cpp:223
+#: src/eathena/gui/chat.cpp:227
 #, c-format
 msgid "Global announcement from %s: "
 msgstr "%sからのアナウンス: "
 
-#: src/eathena/gui/chat.cpp:237 src/eathena/gui/login.cpp:53
+#: src/eathena/gui/chat.cpp:241 src/eathena/gui/login.cpp:52
 #: src/eathena/gui/register.cpp:80
 msgid "Server:"
 msgstr "サーバ:"
 
-#: src/eathena/gui/chat.cpp:247
+#: src/eathena/gui/chat.cpp:251
 #, c-format
 msgid "%s whispers: "
-msgstr "%sのプライベートメッセージ: "
+msgstr "%sからのPM: "
 
-#: src/eathena/gui/chat.cpp:411
+#: src/eathena/gui/chat.cpp:434
 msgid "Stop Recording"
 msgstr "記録するのを止める"
 
-#: src/eathena/gui/chat.cpp:412
+#: src/eathena/gui/chat.cpp:435
 msgid "Start Recording"
-msgstr "記録するのを始める"
-
-#: src/eathena/gui/chat.cpp:457
-#, c-format
-msgid "Whispering to %s: %s"
-msgstr "%sにメッセージを送っています: %s"
+msgstr "記録開始"
 
 #: src/eathena/gui/chat.cpp:480
+#, c-format
+msgid "Whispering to %s: %s"
+msgstr "%sに送信中： %s"
+
+#: src/eathena/gui/chat.cpp:503
 msgid "Trying to send a blank party message."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:561
+#: src/eathena/gui/chat.cpp:585
 msgid "Return toggles chat."
 msgstr "リターンはチャットを留めておきます。"
 
-#: src/eathena/gui/chat.cpp:562
+#: src/eathena/gui/chat.cpp:586
 msgid "Message closes chat."
 msgstr "メッセージはチャットを閉じます。"
 
-#: src/eathena/gui/chat.cpp:570
+#: src/eathena/gui/chat.cpp:594
 msgid "Return now toggles chat."
 msgstr "リターンはこれからチャットを留めておきます。"
 
-#: src/eathena/gui/chat.cpp:577
+#: src/eathena/gui/chat.cpp:601
 msgid "Message now closes chat."
 msgstr "メッセージはこれからチャットを閉じます。"
 
-#: src/eathena/gui/chat.cpp:582
+#: src/eathena/gui/chat.cpp:606
 msgid ""
 "Options to /toggle are \"yes\", \"no\", \"true\", \"false\", \"1\", \"0\"."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:589
+#: src/eathena/gui/chat.cpp:613
 msgid "Unknown party command... Type \"/help\" party for more information."
 msgstr ""
-"不明のパーティコマンドです。。。「/help party」と入力することによってより多く"
-"の情報を入手できます。"
+"不明のパーティコマンドです…「/help party」と入力することによってより多くの情"
+"報を入手できます。"
 
-#: src/eathena/gui/chat.cpp:632
-msgid "No such spell!"
-msgstr ""
-
-#: src/eathena/gui/chat.cpp:654
+#: src/eathena/gui/chat.cpp:651
 #, c-format
 msgid "%u players are present."
 msgstr "%u人のプレイヤーがいます。"
 
-#: src/eathena/gui/chat.cpp:668
+#: src/eathena/gui/chat.cpp:665
 #, c-format
 msgid "Present: %s; %s"
-msgstr "出席している人: %s; %s"
+msgstr "出席者: %s; %s"
 
-#: src/eathena/gui/chat.cpp:670
+#: src/eathena/gui/chat.cpp:667
 msgid "Attendance written to record log."
-msgstr "いる人は記録ログに書かれました。"
+msgstr "出席者は記録ログに書かれました。"
 
-#: src/eathena/gui/chat.cpp:674
+#: src/eathena/gui/chat.cpp:671
 msgid "Present: "
-msgstr "出席している: "
+msgstr "出席者： "
 
-#: src/eathena/gui/chat.cpp:690 src/main.cpp:80
+#: src/eathena/gui/chat.cpp:687 src/main.cpp:89
 #, c-format
 msgid "Aethyra - Version %s"
 msgstr "Aethyra - バージョン %s"
 
-#: src/eathena/gui/chat.cpp:694 src/eathena/gui/chat.cpp:988
+#: src/eathena/gui/chat.cpp:691 src/eathena/gui/chat.cpp:900
 msgid "Unknown command."
 msgstr "不明なコマンド"
 
-#: src/eathena/gui/chat.cpp:706
-msgid "Trade failed!"
-msgstr "交換に失敗しました！"
-
-#: src/eathena/gui/chat.cpp:709
-msgid "Emote failed!"
-msgstr "表情を出すことに失敗しました！"
-
-#: src/eathena/gui/chat.cpp:712
-msgid "Sit failed!"
-msgstr "座ることに失敗しました！"
-
-#: src/eathena/gui/chat.cpp:715
-msgid "Chat creating failed!"
-msgstr "チャットを作ることに失敗しました！"
-
-#: src/eathena/gui/chat.cpp:718
-msgid "Could not join party!"
-msgstr "パーティに参加できません！"
-
-#: src/eathena/gui/chat.cpp:721
-msgid "Cannot shout!"
-msgstr "叫べません！"
-
-#: src/eathena/gui/chat.cpp:730
-msgid "You have not yet reached a high enough lvl!"
-msgstr "あなたは十分高いレベルにまだ達していません！"
-
-#: src/eathena/gui/chat.cpp:733
-msgid "Insufficient HP!"
-msgstr "HP不足です！"
-
-#: src/eathena/gui/chat.cpp:736
-msgid "Insufficient SP!"
-msgstr "SP不足です！"
-
-#: src/eathena/gui/chat.cpp:739
-msgid "You have no memos!"
-msgstr ""
-
-#: src/eathena/gui/chat.cpp:742
-msgid "You cannot do that right now!"
-msgstr "あなたは今それをすることは出来ません！"
-
-#: src/eathena/gui/chat.cpp:745
-msgid "Seems you need more GP... ;-)"
-msgstr "あなたはもう少し多くのお金が必要なようです。。。　;-)"
-
-#: src/eathena/gui/chat.cpp:748
-msgid "You cannot use this skill with that kind of weapon!"
-msgstr "このスキルをその武器とでは使うことが出来ません！"
-
-#: src/eathena/gui/chat.cpp:751
-msgid "You need another red gem!"
-msgstr ""
-
-#: src/eathena/gui/chat.cpp:754
-msgid "You need another blue gem!"
-msgstr ""
-
-#: src/eathena/gui/chat.cpp:757
-msgid "You're carrying to much to do this!"
-msgstr "あなたはこれをするにはとても多く持ちすぎています！"
-
-#: src/eathena/gui/chat.cpp:760
-msgid "Huh? What's that?"
-msgstr "うん？何それ？"
-
-#: src/eathena/gui/chat.cpp:769
-msgid "Warp failed..."
-msgstr "ワープに失敗しました…。"
-
-#: src/eathena/gui/chat.cpp:772
-msgid "Could not steal anything..."
-msgstr "何も盗めませんでした…。"
-
-#: src/eathena/gui/chat.cpp:775
-msgid "Poison had no effect..."
-msgstr "毒は何も影響しませんでした…。"
-
-#: src/eathena/gui/chat.cpp:853
+#: src/eathena/gui/chat.cpp:765
 #, c-format
 msgid "The current party prefix is %s."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:857
+#: src/eathena/gui/chat.cpp:769
 msgid "Party prefix must be one character long."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:861
+#: src/eathena/gui/chat.cpp:773
 msgid "Cannot use a '/' as the prefix."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:865
+#: src/eathena/gui/chat.cpp:777
 #, c-format
 msgid "Changing prefix to %s."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:876
+#: src/eathena/gui/chat.cpp:788
 msgid "-- Help --"
 msgstr "-ヘルプ-"
 
-#: src/eathena/gui/chat.cpp:879
+#: src/eathena/gui/chat.cpp:791
 msgid "/announce: Global announcement (GM only)."
-msgstr "/announce: GMに限りアナウンスをすることができる。"
+msgstr "/announce: GMに限りアナウンスをすることができます。"
 
-#: src/eathena/gui/chat.cpp:880
+#: src/eathena/gui/chat.cpp:792
 msgid "/clear: Clears this window."
 msgstr "/clear: このウィンドウをきれいにします。"
 
-#: src/eathena/gui/chat.cpp:881
+#: src/eathena/gui/chat.cpp:793
 msgid "/help: Display this help."
 msgstr "/help: このヘルプを表示します。"
 
-#: src/eathena/gui/chat.cpp:882
+#: src/eathena/gui/chat.cpp:794
 msgid "/me <message>: Tell something about yourself."
-msgstr "/me <メッセージ> であなたについてのことを伝えます。"
+msgstr "/me <メッセージ>: あなたについてのことを伝えます。"
 
-#: src/eathena/gui/chat.cpp:883
+#: src/eathena/gui/chat.cpp:795
 msgid "/msg <nick> <message>: Alternate form for /whisper."
 msgstr "/msg <ニックネーム> <メッセージ> は/whisper の代わりの形です。"
 
-#: src/eathena/gui/chat.cpp:885
+#: src/eathena/gui/chat.cpp:797
 msgid "/party <command> <params>: Party commands."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:886
+#: src/eathena/gui/chat.cpp:798
 msgid "/present: Get list of players present."
-msgstr ""
+msgstr "/present: 出席者のリストを表示します。"
 
-#: src/eathena/gui/chat.cpp:887
+#: src/eathena/gui/chat.cpp:799
 msgid "/record <filename>: Start recording the chat to an external file."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:889
+#: src/eathena/gui/chat.cpp:801
 msgid "/toggle: Determine whether <return> toggles the chat log."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:891
+#: src/eathena/gui/chat.cpp:803
 msgid "/version: Displays the client version"
-msgstr ""
+msgstr "/version: アプリケーションのバージョンを表示します。"
 
-#: src/eathena/gui/chat.cpp:892
+#: src/eathena/gui/chat.cpp:804
 msgid "/w <nick> <message>: Short form for /whisper."
-msgstr ""
+msgstr "/w <ニックネーム> <メッセージ>: /whisperの略です。"
 
-#: src/eathena/gui/chat.cpp:893
+#: src/eathena/gui/chat.cpp:805
 msgid "/where: Display map name."
-msgstr "/where で地図の名前を表示します。"
+msgstr "/where: 地図の名前を表示します。"
 
-#: src/eathena/gui/chat.cpp:894
+#: src/eathena/gui/chat.cpp:806
 msgid "/whisper <nick> <message>: Sends a private <message> to <nick>."
 msgstr ""
+"/whisper <ニックネーム> <メッセージ>: プライベートメッセージを相手に送りま"
+"す。"
 
-#: src/eathena/gui/chat.cpp:896
+#: src/eathena/gui/chat.cpp:808
 msgid "/who: Display number of online users."
-msgstr ""
+msgstr "/who: オンラインユーザーの数を表示します。"
 
-#: src/eathena/gui/chat.cpp:897
+#: src/eathena/gui/chat.cpp:809
 msgid "For more information, type /help <command>."
 msgstr "もっと情報を得たい場合は、/help (コマンド）と入力してください。"
 
-#: src/eathena/gui/chat.cpp:901
+#: src/eathena/gui/chat.cpp:813
 msgid "Command: /announce <msg>."
-msgstr ""
+msgstr "コマンド: /announce <メッセージ>."
 
-#: src/eathena/gui/chat.cpp:902
+#: src/eathena/gui/chat.cpp:814
 msgid "*** only available to a GM ***"
 msgstr "*** GMに限り有効 ***"
 
-#: src/eathena/gui/chat.cpp:903
+#: src/eathena/gui/chat.cpp:815
 msgid "This command sends the message <msg> to all players currently online."
 msgstr ""
 "このコマンドは入力したメッセージをそのときオンライン状態であるプレイヤーに送"
 "ります。"
 
-#: src/eathena/gui/chat.cpp:908
+#: src/eathena/gui/chat.cpp:820
 msgid "Command: /clear"
 msgstr "コマンド: /clear"
 
-#: src/eathena/gui/chat.cpp:909
+#: src/eathena/gui/chat.cpp:821
 msgid "This command clears the chat log of previous chat."
 msgstr "このコマンドはそれまでのログを消します。"
 
-#: src/eathena/gui/chat.cpp:914
+#: src/eathena/gui/chat.cpp:826
 msgid "Command: /help"
 msgstr "コマンド: /help"
 
-#: src/eathena/gui/chat.cpp:915
+#: src/eathena/gui/chat.cpp:827
 msgid "This command displays a list of all commands available."
 msgstr "このコマンドは有効なすべてのコマンドを表示します。"
 
-#: src/eathena/gui/chat.cpp:917
+#: src/eathena/gui/chat.cpp:829
 msgid "Command: /help <command>"
 msgstr "コマンド: /help (コマンド）"
 
-#: src/eathena/gui/chat.cpp:918
+#: src/eathena/gui/chat.cpp:830
 msgid "This command displays help on <command>."
 msgstr "このコマンドは入力したコマンドのヘルプを表示します。"
 
-#: src/eathena/gui/chat.cpp:922
+#: src/eathena/gui/chat.cpp:834
 msgid "Command: /me <msg>"
-msgstr ""
+msgstr "コマンド: /me <メッセージ>"
 
-#: src/eathena/gui/chat.cpp:923
+#: src/eathena/gui/chat.cpp:835
 msgid "This command tell others you are (doing) <msg>."
-msgstr ""
-"このコマンドは他の人にあなたが（メッセージ）状態であることを知らせます。"
+msgstr "このコマンドでは、他の人に入力した状態であることを教えます。"
 
-#: src/eathena/gui/chat.cpp:932
+#: src/eathena/gui/chat.cpp:844
 msgid "Command: /present"
 msgstr "コマンド: /present"
 
-#: src/eathena/gui/chat.cpp:933
+#: src/eathena/gui/chat.cpp:845
 msgid ""
 "This command gets a list of players within hearing and sends it to either "
 "the record log if recording, or the chat log otherwise."
@@ -1375,27 +1294,27 @@ msgstr ""
 "このコマンドは見えている範囲内にいるプレイヤーのリストを得て、記録しているな"
 "ら記録ログに、そうでなければチャットログに送られます。"
 
-#: src/eathena/gui/chat.cpp:939
+#: src/eathena/gui/chat.cpp:851
 msgid "Command: /record <filename>"
 msgstr "コマンド: /record （ファイルの名前)"
 
-#: src/eathena/gui/chat.cpp:940
+#: src/eathena/gui/chat.cpp:852
 msgid "This command starts recording the chat log to the file <filename>."
 msgstr "このコマンドは入力したファイルにチャットのログを記録し始めます。"
 
-#: src/eathena/gui/chat.cpp:942
+#: src/eathena/gui/chat.cpp:854
 msgid "Command: /record"
 msgstr "コマンド: /record"
 
-#: src/eathena/gui/chat.cpp:943
+#: src/eathena/gui/chat.cpp:855
 msgid "This command finishes a recording session."
 msgstr "このコマンドは記録するセッションを終了させます。"
 
-#: src/eathena/gui/chat.cpp:947
+#: src/eathena/gui/chat.cpp:859
 msgid "Command: /toggle <state>"
 msgstr "コマンド: /toggle <状態>"
 
-#: src/eathena/gui/chat.cpp:948
+#: src/eathena/gui/chat.cpp:860
 msgid ""
 "This command sets whether the return key should toggle the chat log, or "
 "whether the chat log turns off automatically."
@@ -1403,102 +1322,103 @@ msgstr ""
 "このコマンドはリターンキーがチャットログを留めておくか、もしくはチャットログ"
 "が自動的に終わるかどうかを設定します。"
 
-#: src/eathena/gui/chat.cpp:951
+#: src/eathena/gui/chat.cpp:863
 msgid ""
-"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or \"0"
-"\", \"no\", \"false\" to turn the toggle off."
+"<state> can be one of \"1\", \"yes\", \"true\" to turn the toggle on, or "
+"\"0\", \"no\", \"false\" to turn the toggle off."
 msgstr ""
 "<状態>の部分は切り替えをオンにするには\"1\",\"yes\",\"true\"のどれか一つを、"
 "オフにするには\"0\",\"no\",\"false\"のどれかにしてください。"
 
-#: src/eathena/gui/chat.cpp:954
+#: src/eathena/gui/chat.cpp:866
 msgid "Command: /toggle"
 msgstr "コマンド: /toggle"
 
-#: src/eathena/gui/chat.cpp:955
+#: src/eathena/gui/chat.cpp:867
 msgid "This command displays the return toggle status."
 msgstr "このコマンドはスイッチの状態を表示します。"
 
-#: src/eathena/gui/chat.cpp:960
+#: src/eathena/gui/chat.cpp:872
 msgid "Command: /version"
-msgstr ""
+msgstr "コマンド: /version"
 
-#: src/eathena/gui/chat.cpp:961
+#: src/eathena/gui/chat.cpp:873
 msgid "This command displays the current client version you are using."
 msgstr ""
+"このコマンドはあなたが使っているアプリケーションのバージョンを表示します。"
 
-#: src/eathena/gui/chat.cpp:966
+#: src/eathena/gui/chat.cpp:878
 msgid "Command: /where"
 msgstr "コマンド: /where"
 
-#: src/eathena/gui/chat.cpp:967
+#: src/eathena/gui/chat.cpp:879
 msgid "This command displays the name of the current map."
 msgstr "このコマンドは現在いる地点のマップの名前を表示します。"
 
-#: src/eathena/gui/chat.cpp:972
+#: src/eathena/gui/chat.cpp:884
 msgid "Command: /msg <nick> <msg>"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:973
+#: src/eathena/gui/chat.cpp:885
 msgid "Command: /whisper <nick> <msg>"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:974
+#: src/eathena/gui/chat.cpp:886
 msgid "Command: /w <nick> <msg>"
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:975
+#: src/eathena/gui/chat.cpp:887
 msgid "This command sends the message <msg> to <nick>."
 msgstr ""
 
-#: src/eathena/gui/chat.cpp:977
+#: src/eathena/gui/chat.cpp:889
 msgid "If the <nick> has spaces in it, enclose it in double quotes (\")."
 msgstr ""
 "もし入力するニックネームにスペースが入っているならば、\"で囲ってください。"
 
-#: src/eathena/gui/chat.cpp:982
+#: src/eathena/gui/chat.cpp:894
 msgid "Command: /who"
 msgstr "コマンド: /who"
 
-#: src/eathena/gui/chat.cpp:983
+#: src/eathena/gui/chat.cpp:895
 msgid "This command displays the number of players currently online."
 msgstr "このコマンドは現在オンライン状態であるプレイヤーの数を表示します。"
 
-#: src/eathena/gui/chat.cpp:989
+#: src/eathena/gui/chat.cpp:901
 msgid "Type /help for a list of commands."
 msgstr "/help と入力するとコマンドのリストが出ます。"
 
-#: src/eathena/gui/debugwindow.cpp:43
+#: src/eathena/gui/debugwindow.cpp:41
 msgid "Debug"
 msgstr ""
 
-#: src/eathena/gui/debugwindow.cpp:52 src/eathena/gui/debugwindow.cpp:101
+#: src/eathena/gui/debugwindow.cpp:50 src/eathena/gui/debugwindow.cpp:99
 #, c-format
 msgid "%d FPS"
 msgstr ""
 
-#: src/eathena/gui/debugwindow.cpp:53 src/eathena/gui/debugwindow.cpp:102
+#: src/eathena/gui/debugwindow.cpp:51 src/eathena/gui/debugwindow.cpp:100
 #, c-format
 msgid "Music: %s"
 msgstr ""
 
-#: src/eathena/gui/debugwindow.cpp:54 src/eathena/gui/debugwindow.cpp:121
+#: src/eathena/gui/debugwindow.cpp:52 src/eathena/gui/debugwindow.cpp:121
 #, c-format
 msgid "Map: %s"
 msgstr ""
 
-#: src/eathena/gui/debugwindow.cpp:55 src/eathena/gui/debugwindow.cpp:119
+#: src/eathena/gui/debugwindow.cpp:53 src/eathena/gui/debugwindow.cpp:119
 #, c-format
 msgid "Minimap: %s"
 msgstr ""
 
-#: src/eathena/gui/debugwindow.cpp:56 src/eathena/gui/debugwindow.cpp:67
-#: src/eathena/gui/debugwindow.cpp:112
+#: src/eathena/gui/debugwindow.cpp:54 src/eathena/gui/debugwindow.cpp:65
+#: src/eathena/gui/debugwindow.cpp:114
 #, c-format
 msgid "Cursor: (%d, %d)"
 msgstr ""
 
-#: src/eathena/gui/debugwindow.cpp:57 src/eathena/gui/debugwindow.cpp:68
+#: src/eathena/gui/debugwindow.cpp:55 src/eathena/gui/debugwindow.cpp:66
 #: src/eathena/gui/debugwindow.cpp:125
 #, c-format
 msgid "Particle count: %d"
@@ -1509,7 +1429,7 @@ msgid "Emote"
 msgstr "表情"
 
 #: src/eathena/gui/emotewindow.cpp:52 src/eathena/gui/inventorywindow.cpp:76
-#: src/eathena/gui/inventorywindow.cpp:260 src/eathena/gui/popupmenu.cpp:303
+#: src/eathena/gui/inventorywindow.cpp:262 src/eathena/gui/popupmenu.cpp:303
 #: src/eathena/gui/popupmenu.cpp:402 src/eathena/gui/skill.cpp:66
 msgid "Use"
 msgstr "使う"
@@ -1523,13 +1443,13 @@ msgid "Equipment"
 msgstr "装備"
 
 #: src/eathena/gui/equipmentwindow.cpp:138
-#: src/eathena/gui/equipmentwindow.cpp:433
-#: src/eathena/gui/inventorywindow.cpp:260 src/eathena/gui/popupmenu.cpp:300
+#: src/eathena/gui/equipmentwindow.cpp:435
+#: src/eathena/gui/inventorywindow.cpp:262 src/eathena/gui/popupmenu.cpp:300
 msgid "Equip"
 msgstr "装備する"
 
-#: src/eathena/gui/equipmentwindow.cpp:433
-#: src/eathena/gui/inventorywindow.cpp:259 src/eathena/gui/popupmenu.cpp:298
+#: src/eathena/gui/equipmentwindow.cpp:435
+#: src/eathena/gui/inventorywindow.cpp:261 src/eathena/gui/popupmenu.cpp:298
 msgid "Unequip"
 msgstr "外す"
 
@@ -1594,27 +1514,27 @@ msgstr ""
 msgid "grams"
 msgstr ""
 
-#: src/eathena/gui/login.cpp:49
+#: src/eathena/gui/login.cpp:48
 msgid "Login"
 msgstr "ログイン"
 
-#: src/eathena/gui/login.cpp:52 src/eathena/gui/register.cpp:78
+#: src/eathena/gui/login.cpp:51 src/eathena/gui/register.cpp:78
 msgid "Password:"
 msgstr "パスワード:"
 
-#: src/eathena/gui/login.cpp:54 src/eathena/gui/register.cpp:81
+#: src/eathena/gui/login.cpp:53 src/eathena/gui/register.cpp:81
 msgid "Port:"
 msgstr "ポート:"
 
-#: src/eathena/gui/login.cpp:55
+#: src/eathena/gui/login.cpp:54
 msgid "Recent:"
 msgstr "最近使った:"
 
-#: src/eathena/gui/login.cpp:74
+#: src/eathena/gui/login.cpp:69
 msgid "Keep"
 msgstr "保持する"
 
-#: src/eathena/gui/login.cpp:77 src/eathena/gui/register.cpp:74
+#: src/eathena/gui/login.cpp:72 src/eathena/gui/register.cpp:74
 #: src/eathena/gui/register.cpp:91
 msgid "Register"
 msgstr "登録する"
@@ -1639,10 +1559,6 @@ msgstr ""
 #: src/eathena/gui/npcintegerdialog.cpp:47
 msgid "Reset"
 msgstr "元に戻す"
-
-#: src/eathena/gui/npclistdialog.cpp:37 src/eathena/gui/npctext.cpp:41
-msgid "NPC"
-msgstr "NPC"
 
 #: src/eathena/gui/popupmenu.cpp:315
 msgid "Add to Item Shortcuts"
@@ -1889,31 +1805,42 @@ msgstr "あなたは%dGPを得ました。"
 msgid "You give:"
 msgstr "あなたがあげる物:"
 
-#: src/eathena/gui/updatewindow.cpp:56
+#: src/eathena/gui/updatewindow.cpp:51
 msgid "Updating..."
 msgstr "更新しています..."
 
-#: src/eathena/gui/updatewindow.cpp:63
+#: src/eathena/gui/updatewindow.cpp:58
 msgid "Connecting..."
 msgstr "接続しています..."
 
-#: src/eathena/gui/updatewindow.cpp:111
-#, fuzzy
+#: src/eathena/gui/updatewindow.cpp:106
 msgid "Update Complete"
-msgstr "交換は完了しました。"
+msgstr ""
 
-#: src/eathena/gui/updatewindow.cpp:121
-#, fuzzy
+#: src/eathena/gui/updatewindow.cpp:116
 msgid "Update Failed"
-msgstr "交換に失敗しました！"
+msgstr ""
 
-#: src/eathena/gui/updatewindow.cpp:136
+#: src/eathena/gui/updatewindow.cpp:126
+msgid "Verifying Files"
+msgstr ""
+
+#: src/eathena/gui/updatewindow.cpp:141
 msgid "Play"
 msgstr "プレイ"
 
-#: src/eathena/gui/updatewindow.cpp:181
+#: src/eathena/gui/updatewindow.cpp:175
 msgid "Total Progress"
 msgstr ""
+
+#: src/eathena/gui/viewport.cpp:485
+msgid "Could not load map"
+msgstr "マップをロードすることが出来ませんでした。"
+
+#: src/eathena/gui/viewport.cpp:486
+#, c-format
+msgid "Error while loading %s"
+msgstr "%sをロードしている間にエラーが起きました。"
 
 #: src/eathena/gui/tabs/setup_game.cpp:48
 msgid "Show name"
@@ -2042,56 +1969,56 @@ msgstr "売ってくれてありがとう。"
 msgid "Unable to sell."
 msgstr "売ることが出来ません。"
 
-#: src/eathena/net/charserverhandler.cpp:79
+#: src/eathena/net/charserverhandler.cpp:78
 msgid "Authentication failed."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:82
+#: src/eathena/net/charserverhandler.cpp:81
 msgid "Map server(s) offline."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:85
+#: src/eathena/net/charserverhandler.cpp:84
 msgid "This account is already logged in."
 msgstr "このアカウントは既にログインされています。"
 
-#: src/eathena/net/charserverhandler.cpp:88
+#: src/eathena/net/charserverhandler.cpp:87
 msgid "Speed hack detected."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:91
+#: src/eathena/net/charserverhandler.cpp:90
 msgid "Duplicated login."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:94
+#: src/eathena/net/charserverhandler.cpp:93
 msgid "Unknown connection error."
 msgstr "不明な接続エラーです。"
 
-#: src/eathena/net/charserverhandler.cpp:125
+#: src/eathena/net/charserverhandler.cpp:124
 msgid "Access denied."
 msgstr "アクセスが拒否されました。"
 
-#: src/eathena/net/charserverhandler.cpp:128
+#: src/eathena/net/charserverhandler.cpp:127
 msgid "Cannot use this ID."
 msgstr "このIDを使うことはできません。"
 
-#: src/eathena/net/charserverhandler.cpp:131
+#: src/eathena/net/charserverhandler.cpp:130
 msgid "Unknown failure to select character."
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:154
+#: src/eathena/net/charserverhandler.cpp:153
 msgid "Failed to create character. Most likely the name is already taken."
 msgstr ""
 "キャラクターを作ることに失敗しました。似ている名前が既に作られています。"
 
-#: src/eathena/net/charserverhandler.cpp:168
+#: src/eathena/net/charserverhandler.cpp:167
 msgid "Info"
 msgstr ""
 
-#: src/eathena/net/charserverhandler.cpp:168
+#: src/eathena/net/charserverhandler.cpp:167
 msgid "Character deleted."
 msgstr "キャラクターを削除しました。"
 
-#: src/eathena/net/charserverhandler.cpp:173
+#: src/eathena/net/charserverhandler.cpp:172
 msgid "Failed to delete character."
 msgstr "キャラクターを削除するのに失敗しました。"
 
@@ -2136,45 +2063,45 @@ msgstr ""
 msgid "Failed to use item."
 msgstr "アイテムを使うのに失敗しました。"
 
-#: src/eathena/net/loginhandler.cpp:67 src/eathena/net/maploginhandler.cpp:69
+#: src/eathena/net/loginhandler.cpp:66 src/eathena/net/maploginhandler.cpp:69
 msgid "Authentication failed"
 msgstr "認証に失敗しました"
 
-#: src/eathena/net/loginhandler.cpp:70
+#: src/eathena/net/loginhandler.cpp:69
 msgid "No servers available"
 msgstr "どのサーバーも利用可能ではありません。"
 
-#: src/eathena/net/loginhandler.cpp:73 src/eathena/net/maploginhandler.cpp:72
+#: src/eathena/net/loginhandler.cpp:72 src/eathena/net/maploginhandler.cpp:72
 msgid "This account is already logged in"
 msgstr "このアカウントは既にログインされています。"
 
-#: src/eathena/net/loginhandler.cpp:76 src/eathena/net/maploginhandler.cpp:75
+#: src/eathena/net/loginhandler.cpp:75 src/eathena/net/maploginhandler.cpp:75
 msgid "Unknown connection error"
 msgstr "不明の接続エラー"
 
-#: src/eathena/net/loginhandler.cpp:132
+#: src/eathena/net/loginhandler.cpp:131
 msgid "Unregistered ID"
 msgstr "登録されていないIDです"
 
-#: src/eathena/net/loginhandler.cpp:135
+#: src/eathena/net/loginhandler.cpp:134
 msgid "Wrong password"
 msgstr "パスワードが違います"
 
-#: src/eathena/net/loginhandler.cpp:138
+#: src/eathena/net/loginhandler.cpp:137
 msgid "Account expired"
 msgstr "アカウントの有効期限が切れています。"
 
-#: src/eathena/net/loginhandler.cpp:141
+#: src/eathena/net/loginhandler.cpp:140
 msgid "Rejected from server"
 msgstr "サーバーから拒否されました。"
 
-#: src/eathena/net/loginhandler.cpp:144
+#: src/eathena/net/loginhandler.cpp:143
 msgid ""
 "You have been permanently banned from the game. Please contact the GM Team."
 msgstr ""
 "あなたは永久にゲームから閉め出されています。ゲームマスターと会ってください。"
 
-#: src/eathena/net/loginhandler.cpp:148
+#: src/eathena/net/loginhandler.cpp:147
 #, c-format
 msgid ""
 "You have been temporarily banned from the game until %s.\n"
@@ -2183,46 +2110,46 @@ msgstr ""
 "あなたは%sまでゲームから閉め出されています。\n"
 "ゲームマスターとフォーラム経由で会ってください。"
 
-#: src/eathena/net/loginhandler.cpp:154
+#: src/eathena/net/loginhandler.cpp:153
 msgid "This user name is already taken"
 msgstr "このユーザーネームは既に作られています。"
 
-#: src/eathena/net/loginhandler.cpp:157
+#: src/eathena/net/loginhandler.cpp:156
 msgid "Unknown error"
 msgstr "不明のエラー"
 
-#: src/eathena/net/network.cpp:209
+#: src/eathena/net/network.cpp:207
 msgid ""
 "Packet length too short. Please report this error to the server you are "
 "connecting to."
 msgstr ""
 
-#: src/eathena/net/playerhandler.cpp:107
+#: src/eathena/net/playerhandler.cpp:104
 msgid "You are dead."
 msgstr "あなたは死にました。"
 
-#: src/eathena/net/playerhandler.cpp:108
+#: src/eathena/net/playerhandler.cpp:105
 msgid "We regret to inform you that your character was killed in battle."
 msgstr ""
 "私たちは残念ながらあなたのキャラクターが戦闘で殺されたことをお知らせします。"
 
-#: src/eathena/net/playerhandler.cpp:110
+#: src/eathena/net/playerhandler.cpp:107
 msgid "You are not that alive anymore."
 msgstr "あなたはこれ以上生きていません。"
 
-#: src/eathena/net/playerhandler.cpp:111
+#: src/eathena/net/playerhandler.cpp:108
 msgid "The cold hands of the grim reaper are grabbing for your soul."
 msgstr "死神の冷たい手はあなたの魂をつかんでいきました。"
 
-#: src/eathena/net/playerhandler.cpp:112
+#: src/eathena/net/playerhandler.cpp:109
 msgid "Game Over!"
 msgstr "ゲームオーバー!"
 
-#: src/eathena/net/playerhandler.cpp:113
+#: src/eathena/net/playerhandler.cpp:110
 msgid "Insert coin to continue"
 msgstr "続けるにはコインを入れてください。"
 
-#: src/eathena/net/playerhandler.cpp:114
+#: src/eathena/net/playerhandler.cpp:111
 msgid ""
 "No, kids. Your character did not really die. It... err... went to a better "
 "place."
@@ -2230,111 +2157,191 @@ msgstr ""
 "いいえ、子供たちよ…、あなたのキャラクターは本当は死んでいません…。…ううん、よ"
 "り良い場所へ行ったのです。"
 
-#: src/eathena/net/playerhandler.cpp:116
+#: src/eathena/net/playerhandler.cpp:113
 msgid ""
 "Your plan of breaking your enemies weapon by bashing it with your throat "
 "failed."
 msgstr ""
 
-#: src/eathena/net/playerhandler.cpp:118
+#: src/eathena/net/playerhandler.cpp:115
 msgid "I guess this did not run too well."
 msgstr "あまりうまくいきませんでしたね。"
 
-#: src/eathena/net/playerhandler.cpp:120
+#: src/eathena/net/playerhandler.cpp:117
 msgid "Do you want your possessions identified?"
 msgstr "あなたの持ち物を確認しますか？"
 
-#: src/eathena/net/playerhandler.cpp:122
+#: src/eathena/net/playerhandler.cpp:119
 msgid "Sadly, no trace of you was ever found..."
 msgstr "悲しいことに、あなたの痕跡でさえ見つかりませんでした…。"
 
-#: src/eathena/net/playerhandler.cpp:124
+#: src/eathena/net/playerhandler.cpp:121
 msgid "Annihilated."
 msgstr "全滅しました。"
 
-#: src/eathena/net/playerhandler.cpp:126
+#: src/eathena/net/playerhandler.cpp:123
 msgid "Looks like you got your head handed to you."
 msgstr "あなたの頭はあなたへ渡されたようです。"
 
-#: src/eathena/net/playerhandler.cpp:128
+#: src/eathena/net/playerhandler.cpp:125
 msgid ""
 "You screwed up again, dump your body down the tubes and get you another one."
 msgstr ""
 
-#: src/eathena/net/playerhandler.cpp:131
+#: src/eathena/net/playerhandler.cpp:128
 msgid "You're not dead yet. You're just resting."
 msgstr "あなたはまだ死んでいません。ただ休んでいるだけです。"
 
-#: src/eathena/net/playerhandler.cpp:132
+#: src/eathena/net/playerhandler.cpp:129
 msgid "You are no more."
 msgstr "あなたはもういません。"
 
-#: src/eathena/net/playerhandler.cpp:133
+#: src/eathena/net/playerhandler.cpp:130
 msgid "You have ceased to be."
 msgstr "あなたは存在することを止めた。"
 
-#: src/eathena/net/playerhandler.cpp:134
+#: src/eathena/net/playerhandler.cpp:131
 msgid "You've expired and gone to meet your maker."
 msgstr "あなたは息を引き取り、あなたを作った人へ逢いに行ってしまいました。"
 
-#: src/eathena/net/playerhandler.cpp:135
+#: src/eathena/net/playerhandler.cpp:132
 msgid "You're a stiff."
 msgstr "あなたは死体です。"
 
-#: src/eathena/net/playerhandler.cpp:136
+#: src/eathena/net/playerhandler.cpp:133
 msgid "Bereft of life, you rest in peace."
 msgstr "命を失い、天国に行きました。"
 
-#: src/eathena/net/playerhandler.cpp:137
+#: src/eathena/net/playerhandler.cpp:134
 msgid "If you weren't so animated, you'd be pushing up the daisies."
 msgstr ""
 "もしあなたがそんなにも生気に満ちていなかったならば、死んで葬られていたでしょ"
 "う。"
 
-#: src/eathena/net/playerhandler.cpp:138
+#: src/eathena/net/playerhandler.cpp:135
 msgid "Your metabolic processes are now history."
 msgstr "あなたのがんばりは今や歴史となりました。"
 
-#: src/eathena/net/playerhandler.cpp:139
+#: src/eathena/net/playerhandler.cpp:136
 msgid "You're off the twig."
 msgstr "あなたはくたばりました。"
 
-#: src/eathena/net/playerhandler.cpp:140
+#: src/eathena/net/playerhandler.cpp:137
 msgid "You've kicked the bucket."
 msgstr "あなたは死んでしまいました。"
 
-#: src/eathena/net/playerhandler.cpp:141
+#: src/eathena/net/playerhandler.cpp:138
 msgid ""
 "You've shuffled off your mortal coil, run down the curtain and joined the "
 "bleedin' choir invisibile."
 msgstr ""
 
-#: src/eathena/net/playerhandler.cpp:143
+#: src/eathena/net/playerhandler.cpp:140
 msgid "You are an ex-player."
 msgstr "あなたは元-選手です。"
 
-#: src/eathena/net/playerhandler.cpp:144
+#: src/eathena/net/playerhandler.cpp:141
 msgid "You're pining for the fjords."
 msgstr ""
 
-#: src/eathena/net/playerhandler.cpp:255 src/eathena/net/playerhandler.cpp:278
+#: src/eathena/net/playerhandler.cpp:250 src/eathena/net/playerhandler.cpp:273
 msgid "Message"
 msgstr ""
 
-#: src/eathena/net/playerhandler.cpp:256
+#: src/eathena/net/playerhandler.cpp:251
 msgid ""
 "You are carrying more than half your weight. You are unable to regain health."
 msgstr ""
 "あなたはあなたの体重の半分以上持っています。体力を回復することが出来ません。"
 
-#: src/eathena/net/playerhandler.cpp:301
+#: src/eathena/net/playerhandler.cpp:296
 #, c-format
 msgid "You picked up %d GP"
 msgstr "あなたは%dGP拾いました。"
 
-#: src/eathena/net/playerhandler.cpp:387
+#: src/eathena/net/playerhandler.cpp:382
 msgid "Equip arrows first."
 msgstr "矢を先に装備してください。"
+
+#: src/eathena/net/skillhandler.cpp:136
+msgid "Trade failed!"
+msgstr "交換に失敗しました！"
+
+#: src/eathena/net/skillhandler.cpp:139
+msgid "Emote failed!"
+msgstr "表情を出すことに失敗しました！"
+
+#: src/eathena/net/skillhandler.cpp:142
+msgid "Sit failed!"
+msgstr "座ることに失敗しました！"
+
+#: src/eathena/net/skillhandler.cpp:145
+msgid "Chat creating failed!"
+msgstr "チャットを作ることに失敗しました！"
+
+#: src/eathena/net/skillhandler.cpp:148
+msgid "Could not join party!"
+msgstr "パーティに参加できません！"
+
+#: src/eathena/net/skillhandler.cpp:151
+msgid "Cannot shout!"
+msgstr "叫べません！"
+
+#: src/eathena/net/skillhandler.cpp:160
+msgid "You have not yet reached a high enough lvl!"
+msgstr "あなたは十分高いレベルにまだ達していません！"
+
+#: src/eathena/net/skillhandler.cpp:163
+msgid "Insufficient HP!"
+msgstr "HP不足です！"
+
+#: src/eathena/net/skillhandler.cpp:166
+msgid "Insufficient SP!"
+msgstr "SP不足です！"
+
+#: src/eathena/net/skillhandler.cpp:169
+msgid "You have no memos!"
+msgstr "メモはありません！"
+
+#: src/eathena/net/skillhandler.cpp:172
+msgid "You cannot do that right now!"
+msgstr "あなたは今それをすることは出来ません！"
+
+#: src/eathena/net/skillhandler.cpp:175
+msgid "Seems you need more GP... ;-)"
+msgstr "もう少し多くのお金が必要なようです…　;-)"
+
+#: src/eathena/net/skillhandler.cpp:178
+msgid "You cannot use this skill with that kind of weapon!"
+msgstr "このスキルをその武器とでは使うことが出来ません！"
+
+#: src/eathena/net/skillhandler.cpp:181
+msgid "You need another red gem!"
+msgstr "もう一つの赤宝石が必要です！"
+
+#: src/eathena/net/skillhandler.cpp:184
+msgid "You need another blue gem!"
+msgstr "もう一つの青宝石が必要です！"
+
+#: src/eathena/net/skillhandler.cpp:187
+msgid "You're carrying to much to do this!"
+msgstr "あなたはこれをするにはとても多く持ちすぎています！"
+
+#: src/eathena/net/skillhandler.cpp:190
+msgid "Huh? What's that?"
+msgstr "うん？何それ？"
+
+#: src/eathena/net/skillhandler.cpp:199
+msgid "Warp failed..."
+msgstr "ワープに失敗しました…。"
+
+#: src/eathena/net/skillhandler.cpp:202
+msgid "Could not steal anything..."
+msgstr "何も盗めませんでした…。"
+
+#: src/eathena/net/skillhandler.cpp:205
+msgid "Poison had no effect..."
+msgstr "毒は何も影響しませんでした…。"
 
 #: src/eathena/net/tradehandler.cpp:103
 msgid "Request for Trade"
@@ -2393,28 +2400,28 @@ msgstr "交換は中止されました。"
 msgid "Trade completed."
 msgstr "交換は完了しました。"
 
-#: src/engine.cpp:115
-#, c-format
-msgid "%s can't be created, but it doesn't exist! Exiting."
-msgstr ""
-
-#: src/engine.cpp:130
+#: src/engine.cpp:164
 #, c-format
 msgid "Could not initialize SDL: %s"
 msgstr ""
 
-#: src/engine.cpp:141
+#: src/engine.cpp:178
 #, c-format
 msgid "%s couldn't be set as home directory! Exiting."
 msgstr ""
 
-#: src/engine.cpp:158
+#: src/engine.cpp:195
 msgid "Can't find Resources directory!\n"
 msgstr ""
 
-#: src/engine.cpp:310
+#: src/engine.cpp:281
 #, c-format
 msgid "Couldn't set %dx%dx%d video mode: %s"
+msgstr ""
+
+#: src/engine.cpp:324
+#, c-format
+msgid "%s can't be created, but it doesn't exist! Exiting."
 msgstr ""
 
 #: src/main.cpp:45
@@ -2422,99 +2429,113 @@ msgid "Options: "
 msgstr ""
 
 #: src/main.cpp:46
-msgid "  -C --configfile\t: Configuration file to use"
+msgid "Configuration file to use"
 msgstr ""
 
-#: src/main.cpp:47
-msgid "  -d --data\t\t: Directory to load game data from"
+#: src/main.cpp:48
+msgid "Directory to load game data from"
 msgstr ""
 
-#: src/main.cpp:49
-msgid "  -D --default\t\t: Bypass the login process with default settings"
-msgstr ""
-
-#: src/main.cpp:51
-msgid "  -h --help\t\t: Display this help"
+#: src/main.cpp:50
+msgid "Bypass the login process with default settings"
 msgstr ""
 
 #: src/main.cpp:52
-msgid "  -H --updatehost\t: Use this update host"
+msgid "Display this help"
 msgstr ""
 
 #: src/main.cpp:53
-msgid "  -p --playername\t: Login with this player"
-msgstr ""
-
-#: src/main.cpp:54
-msgid "  -P --password\t\t: Login with this password"
+msgid "Use this update host"
 msgstr ""
 
 #: src/main.cpp:55
-msgid "  -u --skipupdate\t: Skip the update downloads"
+msgid "Login with this player"
 msgstr ""
 
-#: src/main.cpp:56
-msgid "  -U --username\t\t: Login with this username"
+#: src/main.cpp:57
+msgid "Login with this password"
 msgstr ""
 
-#: src/main.cpp:58
-msgid "  -O --no-opengl\t: Disable OpenGL for this session"
+#: src/main.cpp:59
+msgid "Skip the update downloads"
 msgstr ""
 
 #: src/main.cpp:61
-msgid "  -O --no-opengl\t: Default (OpenGL has been disabled at build time)"
+msgid "Login with this username"
 msgstr ""
 
-#: src/main.cpp:64
-msgid "  -v --version\t\t: Display the version"
+#: src/main.cpp:65
+msgid "Disable OpenGL for this session"
 msgstr ""
 
-#: src/main.cpp:66
-msgid "Report bugs at: http://www.aethyra.org/mantis"
-msgstr "バグはここに報告してください: http://www.aethyra.org/mantis"
-
-#: src/main.cpp:68
-msgid "Homepage: http://www.aethyra.org"
-msgstr "ホームページ: http://www.aethyra.org"
-
-#: src/main.cpp:69
-msgid "Forums: http://www.aethyra.org/forums"
-msgstr "フォーラム: http://www.aethyra.org/forums"
+#: src/main.cpp:67
+msgid "Default (OpenGL has been disabled at build time)"
+msgstr ""
 
 #: src/main.cpp:70
-msgid "IRC: irc.freenode.net\tChannel: #aethyra"
-msgstr "IRC: irc.freenode.net\tチャンネルl: #aethyra"
+msgid "Display the version"
+msgstr ""
 
-#: src/main.cpp:82
-msgid "\tCopyright (C) 2008-2009  Aethyra Development Team"
-msgstr "\tCopyright (C) 2008-2009  Aethyra Development Team"
+#: src/main.cpp:72
+#, c-format
+msgid "Report bugs at: %s"
+msgstr ""
 
-#: src/main.cpp:84
+#: src/main.cpp:74
+#, c-format
+msgid "Homepage: %s"
+msgstr ""
+
+#: src/main.cpp:76
+#, c-format
+msgid "Forums: %s"
+msgstr ""
+
+#: src/main.cpp:78
+#, c-format
+msgid "IRC: %s\tChannel: %s"
+msgstr ""
+
+#: src/main.cpp:91
+#, c-format
+msgid "\tCopyright (C) %s  Aethyra Development Team"
+msgstr ""
+
+#: src/main.cpp:94
 msgid ""
 "License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl2."
 "html>"
 msgstr ""
 
-#: src/main.cpp:86
+#: src/main.cpp:96
 msgid "This is free software: you are free to change and redistribute it."
 msgstr "これは無料のソフトウェアです。変えることも再分配することも可能です。"
 
-#: src/main.cpp:88
+#: src/main.cpp:98
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: src/main.cpp:155
+#: src/main.cpp:165
 msgid "--no-opengl is set by default (OpenGL has been disabled at build time)"
 msgstr ""
 
-#~ msgid "Restart your client for the change to take effect."
-#~ msgstr "影響させるためにアプリケーションを再起動してください。"
+#~ msgid "GUI"
+#~ msgstr "GUI"
 
-#~ msgid "Network Error"
-#~ msgstr "ネットワークエラー"
+#~ msgid "Invalid update host: %s"
+#~ msgstr "無効のアップデートホスト: %s"
 
-#~ msgid "use"
-#~ msgstr "使う"
+#~ msgid "Error creating updates directory!"
+#~ msgstr "更新フォルダの作成エラー"
+
+#~ msgid "##1  The update process is incomplete."
+#~ msgstr "##1  アップデートは完了していません。"
+
+#~ msgid "##1  It is strongly recommended that"
+#~ msgstr "##1 強く推奨されます。"
+
+#~ msgid "##1  you try again later"
+#~ msgstr "##1 もう一度後でやってみることを"
 
 #~ msgid "Ok"
 #~ msgstr "了解"
@@ -2540,5 +2561,41 @@ msgstr ""
 #~ msgid "Charisma:"
 #~ msgstr "魅力:"
 
+#~ msgid "Screenshot saved to ~/"
+#~ msgstr "~/にスクリーンショットを保存しました。"
+
+#~ msgid "Screen resolution changed"
+#~ msgstr "スクリーンの解像度が変わりました。"
+
+#~ msgid "Restart your client for the change to take effect."
+#~ msgstr "影響させるためにアプリケーションを再起動してください。"
+
+#~ msgid "Network Error"
+#~ msgstr "ネットワークエラー"
+
 #~ msgid "Weight: %d grams"
 #~ msgstr "重さ: %dグラム"
+
+#~ msgid "use"
+#~ msgstr "使う"
+
+#~ msgid "Invalid update host: "
+#~ msgstr "無効なアップデートホスト: "
+
+#~ msgid "These commands create a new party <party-name."
+#~ msgstr "これらのコマンドは入力した名前のパーティを作ります。"
+
+#~ msgid "Homepage: http://www.aethyra.org"
+#~ msgstr "ホームページ: http://www.aethyra.org"
+
+#~ msgid "Report bugs at: http://www.aethyra.org/mantis"
+#~ msgstr "バグはここに報告してください: http://www.aethyra.org/mantis"
+
+#~ msgid "Forums: http://www.aethyra.org/forums"
+#~ msgstr "フォーラム: http://www.aethyra.org/forums"
+
+#~ msgid "IRC: irc.freenode.net\tChannel: #aethyra"
+#~ msgstr "IRC: irc.freenode.net\tチャンネルl: #aethyra"
+
+#~ msgid "\tCopyright (C) 2008-2009  Aethyra Development Team"
+#~ msgstr "\tCopyright (C) 2008-2009  Aethyra Development Team"

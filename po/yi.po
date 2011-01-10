@@ -1,16 +1,16 @@
-# Hebrew translation for aethyra
-# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# Yiddish translation for aethyra
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
 # This file is distributed under the same license as the aethyra package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: aethyra\n"
-"Report-Msgid-Bugs-To: irarice@gmail.com\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-07-10 09:04+0000\n"
-"PO-Revision-Date: 2010-06-23 16:09+0000\n"
-"Last-Translator: Yaron <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew <he@li.org>\n"
+"PO-Revision-Date: 2010-01-09 21:27+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Yiddish <yi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,7 +29,7 @@ msgstr ""
 
 #: ../src/bindings/guichan/graphics.cpp:203
 msgid "Saving screenshot failed!"
-msgstr "שמירת תמונת־מסך נכשלה"
+msgstr ""
 
 #: ../src/bindings/guichan/gui.cpp:250
 msgid "Switching resolutions"
@@ -38,211 +38,211 @@ msgstr ""
 #: ../src/bindings/guichan/gui.cpp:251
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:196
 msgid "Restart needed for changes to take effect."
-msgstr "נדרש איתחול כדי שהשינויים יהיו ברי-תוקף."
+msgstr ""
 
 #: ../src/bindings/guichan/inputmanager.cpp:458
 msgid "Ignoring incoming trade requests"
-msgstr "מתעלם מהצעות סחר נכנסות"
+msgstr ""
 
 #: ../src/bindings/guichan/inputmanager.cpp:465
 msgid "Accepting incoming trade requests"
-msgstr "מאשר הצעות סחר נכנסות"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:80
 #: ../src/eathena/gui/tabs/setup_game.cpp:223
 msgid "Text"
-msgstr "טקסט"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:81
 msgid "Text Shadow"
-msgstr "הצללת טקסט"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:82
 msgid "Text Outline"
-msgstr "מתאר הטקסט"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:83
 msgid "Progress Bar Labels"
-msgstr "תוויות סרגל התקדמות"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:85
 msgid "Background"
-msgstr "רקע"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:87
 msgid "Highlight"
-msgstr "הדגשה"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:88
 msgid "Tab Highlight"
-msgstr "לשונית הדגשה"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:89
 msgid "Item too expensive"
-msgstr "החפץ יקר מדי"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:90
 msgid "Item is equipped"
-msgstr "החפץ בשימוש"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:92
 msgid "Chat"
-msgstr "צ'אט"
+msgstr ""
 
 #. / TRANSLATORS: GM as in Game Master
 #: ../src/bindings/guichan/palette.cpp:93 ../src/core/map/sprite/player.cpp:93
 msgid "GM"
-msgstr "מנהל המשחק"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:94
 msgid "Player"
-msgstr "שחקן"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:95
 msgid "Whisper"
-msgstr "לחישה"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:96
 msgid "Is"
-msgstr "הוא"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:97
 msgid "Party"
-msgstr "חבורה"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:98
 msgid "Server"
-msgstr "שרת"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:99
 msgid "Logger"
-msgstr "רישום"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:100
 msgid "Hyperlink"
-msgstr "היפר קישור"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:102
 msgid "Being"
-msgstr "נהיה"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:103
 msgid "Other Player's Names"
-msgstr "שמות של שחקנים אחרים"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:104
 msgid "Own Name"
-msgstr "השם שלך"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:105
 msgid "GM Names"
-msgstr "שמות המנהלים"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:106
 msgid "NPCs"
-msgstr "דמויות"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:107
 msgid "Monsters"
-msgstr "מפלצות"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:109
 msgid "Unknown Item Type"
-msgstr "סוג חפץ לא ידוע"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:110
 msgid "Generic"
-msgstr "כללי"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:111
 msgid "Hat"
-msgstr "כובע"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:112
 msgid "Usable"
-msgstr "שמיש"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:113
 msgid "Shirt"
-msgstr "חולצה"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:114
 msgid "1 Handed Weapons"
-msgstr "נשקים ליד אחת"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:115
 msgid "Pants"
-msgstr "מכנסיים"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:116
 msgid "Shoes"
-msgstr "נעליים"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:117
 msgid "2 Handed Weapons"
-msgstr "נשקים לשתי ידיים"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:118
 msgid "Shield"
-msgstr "מגן"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:119
 msgid "Ring"
-msgstr "טבעת"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:120
 msgid "Arms"
-msgstr "ידיים"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:121
 msgid "Ammo"
-msgstr "תחמושת"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:123
 msgid "Particle Effects"
-msgstr "אפקטים חלקיים"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:124
 msgid "Pickup Notification"
-msgstr "הודעה על לקיחה"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:125
 msgid "Exp Notification"
-msgstr "הודעה על נק' נסיון"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:127
 msgid "Player hits Monster"
-msgstr "משתמש מכה מפלצת"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:129
 msgid "Monster hits Player"
-msgstr "משתמש מכה משתמש"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:130
 msgid "Critical Hit"
-msgstr "מכה קריטית"
+msgstr ""
 
 #: ../src/bindings/guichan/palette.cpp:131
 msgid "Misses"
-msgstr "פספוס"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/confirmdialog.cpp:44
 msgid "Yes"
-msgstr "כן"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/confirmdialog.cpp:45
 msgid "No"
-msgstr "לא"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/helpdialog.cpp:36
 #: ../src/bindings/guichan/dialogs/helpdialog.cpp:41
 msgid "Help"
-msgstr "עזרה"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/helpdialog.cpp:51
 #: ../src/eathena/gui/storagewindow.cpp:69
 msgid "Close"
-msgstr "סגור"
+msgstr ""
 
 #. Buttons
 #: ../src/bindings/guichan/dialogs/listdialog.cpp:50
@@ -253,7 +253,7 @@ msgstr "סגור"
 #: ../src/eathena/gui/npctext.cpp:56 ../src/eathena/gui/slotselection.cpp:71
 #: ../src/eathena/gui/trade.cpp:67 ../src/eathena/gui/trade.cpp:174
 msgid "OK"
-msgstr "אישור"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/listdialog.cpp:51
 #: ../src/bindings/guichan/dialogs/setupdialog.cpp:55
@@ -265,120 +265,120 @@ msgstr "אישור"
 #: ../src/eathena/gui/slotselection.cpp:72 ../src/eathena/gui/trade.cpp:68
 #: ../src/eathena/gui/updatewindow.cpp:65
 msgid "Cancel"
-msgstr "ביטול"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/setupdialog.cpp:46
 #: ../src/bindings/guichan/widgets/desktop.cpp:86
 #: ../src/eathena/gui/menubar.cpp:66
 msgid "Setup"
-msgstr "הגדרות"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/setupdialog.cpp:55
 msgid "Reset Windows"
-msgstr "אתחל חלונות"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/setupdialog.cpp:55
 msgid "Apply"
-msgstr "אשר"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_audio.cpp:46
 msgid "Sound"
-msgstr "צליל"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_audio.cpp:50
 msgid "Audio"
-msgstr "שמע"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_audio.cpp:59
 msgid "Sfx volume"
-msgstr "עוצמת SFX"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_audio.cpp:60
 msgid "Music volume"
-msgstr "עוצמת מוזיקה"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:44
 msgid "This is what the color looks like"
-msgstr "כך הצבע נראה"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:49
 msgid "Colors"
-msgstr "צבעים"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:70
 msgid "Type: "
-msgstr "סוג "
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:82
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:416
 msgid "Static"
-msgstr "סטטי"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:84
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:85
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:419
 msgid "Pulse"
-msgstr "פעימה"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:86
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:87
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:422
 msgid "Rainbow"
-msgstr "קשת בענן"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:88
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:89
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:425
 msgid "Spectrum"
-msgstr "מינסרה"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:93
 msgid "Delay: "
-msgstr "עיכוב: "
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:110
 msgid "Red: "
-msgstr "אדום: "
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:127
 msgid "Green: "
-msgstr "ירוק: "
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_colors.cpp:144
 msgid "Blue: "
-msgstr "כחול: "
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:68
 msgid "Full screen"
-msgstr "מסך מלא"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:69
 msgid "OpenGL"
-msgstr "‏OpenGL"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:70
 msgid "Custom cursor"
-msgstr "סמן-עכבר מותאם"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:73
 msgid "FPS Limit:"
-msgstr "הגבלת FPS:"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:79
 msgid "GUI"
-msgstr "GUI"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:85
 msgid "Gui opacity"
-msgstr "אטימות Gui"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:86
 msgid "Mouse opacity"
-msgstr "אטימות העכבר"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:88
 msgid "Font size"
-msgstr "גודל הגופן"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:120
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:272
@@ -389,7 +389,7 @@ msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:195
 msgid "Switching to full screen"
-msgstr "מחליף למסך מלא"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:204
 #, c-format
@@ -398,74 +398,74 @@ msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:206
 msgid "windowed"
-msgstr "בחלון"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:207
 msgid "fullscreen"
-msgstr "מסך מלא"
+msgstr ""
 
 #. OpenGL can currently only be changed by restarting, notify user.
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:221
 msgid "Changing OpenGL"
-msgstr "משנה OpenGL"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_gui.cpp:222
 msgid "Applying change to OpenGL requires restart."
-msgstr "אישור שינויים עבור OpenGL דורש איתחול."
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_input.cpp:48
 #: ../src/bindings/guichan/dialogs/tabs/setup_input.cpp:169
 msgid "Press the button to start calibration"
-msgstr "לחץ על הכפתור בכדי להתחיל בכיול"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_input.cpp:49
 msgid "Enable joystick"
-msgstr "אפשר ג'ויסטיק"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_input.cpp:51
 #: ../src/bindings/guichan/dialogs/tabs/setup_input.cpp:168
 msgid "Calibrate"
-msgstr "כייל"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_input.cpp:55
 msgid "Input"
-msgstr "קלט"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_input.cpp:69
 msgid "Assign"
-msgstr "הקצה"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_input.cpp:73
 msgid "Default"
-msgstr "ברירת מחדל"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_input.cpp:176
 msgid "Stop"
-msgstr "עצור"
+msgstr ""
 
 #: ../src/bindings/guichan/dialogs/tabs/setup_input.cpp:177
 msgid "Rotate the stick"
-msgstr "סובב את המקל"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:46
 msgid "Move Up"
-msgstr "העברה מעלה"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:47
 msgid "Move Down"
-msgstr "העברה מטה"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:48
 msgid "Move Left"
-msgstr "הזז שמאלה"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:49
 msgid "Move Right"
-msgstr "הזז ימינה"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:50
 msgid "Attack"
-msgstr "תקוף"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:51
 msgid "Meta Key"
@@ -473,95 +473,95 @@ msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:52
 msgid "Stop Attack"
-msgstr "הפסק לתקוף"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:53
 msgid "Target Monster"
-msgstr "כוון למפלצת"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:54
 msgid "Target NPC"
-msgstr "כוון לדמות"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:55
 msgid "Target Player"
-msgstr "כוון לשחקן"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:56
 msgid "Being Menu"
-msgstr "התפריט ברגע"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:57
 msgid "Pickup"
-msgstr "הרם"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:58
 msgid "Hide Windows"
-msgstr "הסתר חלונות"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:59
 msgid "Sit"
-msgstr "שב"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:60
 msgid "Screenshot"
-msgstr "צילום מסך"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:61
 msgid "Enable/Disable Trading"
-msgstr "אפשר/בטל מסחר"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:62
 msgid "Find Path to Mouse"
-msgstr "מצא נתיב לעכבר"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:63
 msgid "Chat Window"
-msgstr "חלון שיחה"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:64
 msgid "Debug Window"
-msgstr "חלון ניפוי"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:65
 msgid "Emote Window"
-msgstr "Emote חלון"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:66
 msgid "Emote Shortcut Window"
-msgstr "חלון קיצור־דרך לרגישון"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:67
 msgid "Equipment Window"
-msgstr "חלון לבוש"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:68
 msgid "Help Window"
-msgstr "חלון עזרה"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:69
 msgid "Inventory Window"
-msgstr "חלון ציוד"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:70
 msgid "Item Shortcut Window"
-msgstr "חלון קיצור־דרך לחפץ"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:71
 msgid "Minimap Window"
-msgstr "חלון מיני מפה"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:72
 msgid "Setup Window"
-msgstr "חלון הגדרות"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:73
 msgid "Skill Window"
-msgstr "חלון כישורים"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:74
 msgid "Status Window"
-msgstr "חלון מצב"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:75
 #: ../src/bindings/sdl/keyboardconfig.cpp:76
@@ -577,7 +577,7 @@ msgstr "חלון מצב"
 #: ../src/bindings/sdl/keyboardconfig.cpp:86
 #, c-format
 msgid "Emote Shortcut %d"
-msgstr "קיצור־דרך לריגשון %d"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:87
 #: ../src/bindings/sdl/keyboardconfig.cpp:88
@@ -593,25 +593,25 @@ msgstr "קיצור־דרך לריגשון %d"
 #: ../src/bindings/sdl/keyboardconfig.cpp:98
 #, c-format
 msgid "Item Shortcut %d"
-msgstr "קיצור־דרך לחפץ %d"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:99
 msgid "Toggle Chat"
-msgstr "סגירת הצ'אט"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:100
 msgid "Scroll Chat Up"
-msgstr "גלול שיחה למעלה"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:101
 msgid "Scroll Chat Down"
-msgstr "גלול שיחה למטה"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:102
 #: ../src/eathena/statemanager.cpp:459 ../src/eathena/gui/buy.cpp:73
 #: ../src/eathena/gui/sell.cpp:73 ../src/eathena/gui/updatewindow.cpp:148
 msgid "Quit"
-msgstr "יציאה"
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:103
 #: ../src/bindings/sdl/keyboardconfig.cpp:104
@@ -621,7 +621,7 @@ msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:178
 msgid "Key Conflict(s) Detected."
-msgstr "נמצאו קונפליקטי מקשים."
+msgstr ""
 
 #: ../src/bindings/sdl/keyboardconfig.cpp:179
 #, c-format
@@ -637,7 +637,7 @@ msgstr ""
 
 #: ../src/bindings/update/downloadupdates.cpp:244
 msgid "Error creating updates directory!"
-msgstr "שגיאה ביצירת ספריית העדכונים!"
+msgstr ""
 
 #. This gives the user a nice prompt informing them that the update
 #. downloading has failed, and gives them a chance to see why it failed.
@@ -649,15 +649,15 @@ msgstr ""
 
 #: ../src/bindings/update/downloadupdates.cpp:455
 msgid "##1  The update process is incomplete."
-msgstr "##1  תהליך העדכון לא תם."
+msgstr ""
 
 #: ../src/bindings/update/downloadupdates.cpp:456
 msgid "##1  It is strongly recommended that"
-msgstr "##1  מומלץ ביותר שתנסה שוב מאוחר יותר"
+msgstr ""
 
 #: ../src/bindings/update/downloadupdates.cpp:457
 msgid "##1  you try again later"
-msgstr "-"
+msgstr ""
 
 #. 
 #. * Message should go after mStream is closed so that it isn't
@@ -665,15 +665,15 @@ msgstr "-"
 #. 
 #: ../src/core/recorder.cpp:68
 msgid "Finishing recording."
-msgstr "מסיים להקליט."
+msgstr ""
 
 #: ../src/core/recorder.cpp:71
 msgid "Not currently recording."
-msgstr "אינו מקליט כרגע."
+msgstr ""
 
 #: ../src/core/recorder.cpp:74
 msgid "Already recording."
-msgstr "כבר מקליט."
+msgstr ""
 
 #. 
 #. * Message should go before mStream is opened so that it isn't
@@ -681,16 +681,16 @@ msgstr "כבר מקליט."
 #. 
 #: ../src/core/recorder.cpp:81
 msgid "Starting to record..."
-msgstr "מתחיל להקליט..."
+msgstr ""
 
 #: ../src/core/recorder.cpp:95
 msgid "Failed to start recording."
-msgstr "שגיאה בהתחלת ההקלטה."
+msgstr ""
 
 #: ../src/core/map/sprite/being.cpp:194 ../src/eathena/db/itemdb.cpp:62
 #: ../src/eathena/gui/chat.cpp:312
 msgid "Unknown item"
-msgstr "חפץ לא ידוע"
+msgstr ""
 
 #: ../src/core/utils/metric.h:44
 msgid "yocto"
@@ -774,42 +774,42 @@ msgstr ""
 
 #: ../src/eathena/party.cpp:52
 msgid "Not yet implemented!"
-msgstr "עדיין לא יושם!"
+msgstr ""
 
 #: ../src/eathena/party.cpp:60
 msgid "Party command not known."
-msgstr "מפלגת חבורה לא ידוע."
+msgstr ""
 
 #: ../src/eathena/party.cpp:66
 msgid "Party name is missing."
-msgstr "שם חבורה חסר."
+msgstr ""
 
 #: ../src/eathena/party.cpp:78
 msgid "Left party."
-msgstr "עזבו חבורה"
+msgstr ""
 
 #: ../src/eathena/party.cpp:86
 msgid "Party successfully created."
-msgstr "חבורה נוצרה בהצלחה."
+msgstr ""
 
 #: ../src/eathena/party.cpp:90
 msgid "Could not create party."
-msgstr "לא היה ניתן ליצור חבורה."
+msgstr ""
 
 #: ../src/eathena/party.cpp:98
 #, c-format
 msgid "%s is already a member of a party."
-msgstr "%s כבר חבר בחבורה."
+msgstr ""
 
 #: ../src/eathena/party.cpp:102
 #, c-format
 msgid "%s refused your invitation."
-msgstr "%s דחה את הזמנתך."
+msgstr ""
 
 #: ../src/eathena/party.cpp:106
 #, c-format
 msgid "%s is now a member of your party."
-msgstr "%s הצטרף לחבורה."
+msgstr ""
 
 #: ../src/eathena/party.cpp:119
 msgid "You can't have a blank party name!"
@@ -827,7 +827,7 @@ msgstr ""
 #: ../src/eathena/party.cpp:142
 #, c-format
 msgid "%s has left your party."
-msgstr "%s עזב את החבורה שלך."
+msgstr ""
 
 #: ../src/eathena/party.cpp:153
 msgid "Party chat received, but being is not a player"
@@ -889,7 +889,7 @@ msgstr ""
 
 #: ../src/eathena/party.cpp:199
 msgid "This command causes the player to leave the party."
-msgstr "פקודה זו גורמת לשחקן לעזוב את החבורה."
+msgstr ""
 
 #: ../src/eathena/party.cpp:204
 msgid "Unknown /party command."
@@ -901,7 +901,7 @@ msgstr ""
 
 #: ../src/eathena/statemanager.cpp:202 ../src/eathena/gui/register.cpp:226
 msgid "Error"
-msgstr "שגיאה"
+msgstr ""
 
 #: ../src/eathena/statemanager.cpp:240
 msgid "Connecting to account server..."
@@ -929,16 +929,16 @@ msgstr ""
 
 #: ../src/eathena/statemanager.cpp:432
 msgid "Got disconnected from server!"
-msgstr "נותקת מהשרת!"
+msgstr ""
 
 #: ../src/eathena/statemanager.cpp:460
 msgid "Are you sure you want to quit?"
-msgstr "האם ברצונכם לצאת מהתוכנה?"
+msgstr ""
 
 #: ../src/eathena/db/itemdb.cpp:103 ../src/eathena/db/monsterdb.cpp:45
 #: ../src/eathena/db/monsterdb.cpp:63
 msgid "unnamed"
-msgstr "ללא שם"
+msgstr ""
 
 #: ../src/eathena/db/npcdb.cpp:54
 msgid "NPC Database: Error while loading npcs.xml!"
@@ -947,79 +947,79 @@ msgstr ""
 #: ../src/eathena/gui/buy.cpp:46 ../src/eathena/gui/buy.cpp:72
 #: ../src/eathena/gui/buysell.cpp:35
 msgid "Buy"
-msgstr "קנה"
+msgstr ""
 
 #: ../src/eathena/gui/buy.cpp:70 ../src/eathena/gui/buy.cpp:252
 #: ../src/eathena/gui/sell.cpp:70 ../src/eathena/gui/sell.cpp:276
 #, c-format
 msgid "Price: %d GP / Total: %d GP"
-msgstr "מחיר: %d זהב / סה\"כ %d זהב"
+msgstr ""
 
 #: ../src/eathena/gui/buy.cpp:74 ../src/eathena/gui/sell.cpp:74
 msgid "Max"
-msgstr "מקסימום"
+msgstr ""
 
 #: ../src/eathena/gui/buy.cpp:75 ../src/eathena/gui/buy.cpp:217
 #: ../src/eathena/gui/buy.cpp:237 ../src/eathena/gui/sell.cpp:75
 #: ../src/eathena/gui/sell.cpp:245 ../src/eathena/gui/sell.cpp:261
 #, c-format
 msgid "Description: %s"
-msgstr "תיאור: %s"
+msgstr ""
 
 #: ../src/eathena/gui/buy.cpp:76 ../src/eathena/gui/buy.cpp:219
 #: ../src/eathena/gui/buy.cpp:238 ../src/eathena/gui/sell.cpp:76
 #: ../src/eathena/gui/sell.cpp:247 ../src/eathena/gui/sell.cpp:262
 #, c-format
 msgid "Effect: %s"
-msgstr "השפעה: %s"
+msgstr ""
 
 #: ../src/eathena/gui/buysell.cpp:36 ../src/eathena/gui/sell.cpp:46
 #: ../src/eathena/gui/sell.cpp:72
 msgid "Sell"
-msgstr "מכר"
+msgstr ""
 
 #: ../src/eathena/gui/buysell.cpp:42
 msgid "Shop"
-msgstr "חנות"
+msgstr ""
 
 #: ../src/eathena/gui/charcreate.cpp:50
 msgid "Create Character"
-msgstr "צור שחקן"
+msgstr ""
 
 #: ../src/eathena/gui/charcreate.cpp:62 ../src/eathena/gui/login.cpp:51
 #: ../src/eathena/gui/register.cpp:77
 msgid "Name:"
-msgstr "שם:"
+msgstr ""
 
 #: ../src/eathena/gui/charcreate.cpp:65
 msgid "Hair Color:"
-msgstr "צבע שיער:"
+msgstr ""
 
 #: ../src/eathena/gui/charcreate.cpp:68
 msgid "Hair Style:"
-msgstr "תיספורת:"
+msgstr ""
 
 #: ../src/eathena/gui/charcreate.cpp:69
 msgid "Create"
-msgstr "צור"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:66
 msgid "Confirm Character Delete"
-msgstr "אשר מחיקת שחקן"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:67
 msgid "Are you sure you want to delete this character?"
-msgstr "האם אתה בטוח כי ברצונך למחוק את השחקן?"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:83
 msgid "Select Character"
-msgstr "בחר שחקן"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:94 ../src/eathena/gui/charselect.cpp:187
 #: ../src/eathena/gui/charselect.cpp:201
 #, c-format
 msgid "Name: %s"
-msgstr "שם: %s"
+msgstr ""
 
 #. ----------------------
 #. Status Part
@@ -1031,30 +1031,30 @@ msgstr "שם: %s"
 #: ../src/eathena/gui/status.cpp:187
 #, c-format
 msgid "Level: %d"
-msgstr "רמה: %d"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:96 ../src/eathena/gui/charselect.cpp:189
 #: ../src/eathena/gui/charselect.cpp:203
 #, c-format
 msgid "Job Level: %d"
-msgstr "רמת עבודה: %d"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:97
 #, c-format
 msgid "Money: %d"
-msgstr "זהב: %d"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:99
 msgid "Previous"
-msgstr "הקודם"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:100
 msgid "Next"
-msgstr "הבא"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:101 ../src/eathena/gui/charselect.cpp:205
 msgid "New"
-msgstr "חדש"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:190
 #, c-format
@@ -1064,12 +1064,12 @@ msgstr ""
 #: ../src/eathena/gui/charselect.cpp:193
 #: ../src/eathena/gui/tabs/setup_players.cpp:79
 msgid "Delete"
-msgstr "מחק"
+msgstr ""
 
 #: ../src/eathena/gui/charselect.cpp:204
 #, c-format
 msgid "Money: %s"
-msgstr "כסף: %s"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:86
 msgid "File name to record to:"
@@ -1087,7 +1087,7 @@ msgstr ""
 #: ../src/eathena/gui/chat.cpp:237 ../src/eathena/gui/login.cpp:53
 #: ../src/eathena/gui/register.cpp:80
 msgid "Server:"
-msgstr "שרת:"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:247
 #, c-format
@@ -1121,11 +1121,11 @@ msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:571
 msgid "Return now toggles chat."
-msgstr "מקש האנטר כעת סוגר את תיבת הטקסט."
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:578
 msgid "Message now closes chat."
-msgstr "ההודעה כעת סוגרת את תיבת הטקסט."
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:583
 msgid ""
@@ -1152,11 +1152,11 @@ msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:671
 msgid "Attendance written to record log."
-msgstr "מקליט שמות נוכחים לרישום."
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:675
 msgid "Present: "
-msgstr "נוכחים: "
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:691 ../src/main.cpp:89
 #, c-format
@@ -1165,35 +1165,35 @@ msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:695 ../src/eathena/gui/chat.cpp:989
 msgid "Unknown command."
-msgstr "פקודה לא ידועה."
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:707
 msgid "Trade failed!"
-msgstr "המסחר נכשל!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:710
 msgid "Emote failed!"
-msgstr "הבעה נכשלה!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:713
 msgid "Sit failed!"
-msgstr "הישיבה נכשלה!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:716
 msgid "Chat creating failed!"
-msgstr "יצירת שיחה נכשלה!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:719
 msgid "Could not join party!"
-msgstr "לא היה ניתן להצטרף קבוצה!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:722
 msgid "Cannot shout!"
-msgstr "לא ניתן לצעוק!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:731
 msgid "You have not yet reached a high enough lvl!"
-msgstr "לא הגעת לרמה גבוהה מספיק!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:734
 msgid "Insufficient HP!"
@@ -1205,47 +1205,47 @@ msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:740
 msgid "You have no memos!"
-msgstr "אין תזכירים!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:743
 msgid "You cannot do that right now!"
-msgstr "אינך יכול לעשות זאת כרגע!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:746
 msgid "Seems you need more GP... ;-)"
-msgstr "נראה שאתה צריך יותר זהב ... ;-)"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:749
 msgid "You cannot use this skill with that kind of weapon!"
-msgstr "אינך יכול להשתמש בכישור עם נשק זה!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:752
 msgid "You need another red gem!"
-msgstr "אתה צריך עוד אבן אדומה!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:755
 msgid "You need another blue gem!"
-msgstr "אתה צריך עוד אבן כחולה!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:758
 msgid "You're carrying to much to do this!"
-msgstr "אתה סוחב יותר מדי בכדי לעשות זאת!"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:761
 msgid "Huh? What's that?"
-msgstr "הא? מה זה?"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:770
 msgid "Warp failed..."
-msgstr "הפיתול נכשל...."
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:773
 msgid "Could not steal anything..."
-msgstr "לא היה ניתן לגנוב דבר..."
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:776
 msgid "Poison had no effect..."
-msgstr "לרעל לא הייתה כל השפעה..."
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:854
 #, c-format
@@ -1267,7 +1267,7 @@ msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:877
 msgid "-- Help --"
-msgstr "-- עזרה --"
+msgstr ""
 
 #: ../src/eathena/gui/chat.cpp:880
 msgid "/announce: Global announcement (GM only)."
@@ -1520,7 +1520,7 @@ msgstr ""
 #: ../src/eathena/gui/popupmenu.cpp:303 ../src/eathena/gui/popupmenu.cpp:402
 #: ../src/eathena/gui/skill.cpp:66
 msgid "Use"
-msgstr "השתמש"
+msgstr ""
 
 #: ../src/eathena/gui/emotewindow.cpp:58
 #: ../src/eathena/gui/inventorywindow.cpp:82
@@ -1529,24 +1529,24 @@ msgstr ""
 
 #: ../src/eathena/gui/equipmentwindow.cpp:96 ../src/eathena/gui/menubar.cpp:62
 msgid "Equipment"
-msgstr "ציוד"
+msgstr ""
 
 #: ../src/eathena/gui/equipmentwindow.cpp:138
 #: ../src/eathena/gui/equipmentwindow.cpp:433
 #: ../src/eathena/gui/inventorywindow.cpp:260
 #: ../src/eathena/gui/popupmenu.cpp:300
 msgid "Equip"
-msgstr "החזק"
+msgstr ""
 
 #: ../src/eathena/gui/equipmentwindow.cpp:433
 #: ../src/eathena/gui/inventorywindow.cpp:259
 #: ../src/eathena/gui/popupmenu.cpp:298
 msgid "Unequip"
-msgstr "הורד"
+msgstr ""
 
 #: ../src/eathena/gui/inventorywindow.cpp:58 ../src/eathena/gui/menubar.cpp:63
 msgid "Inventory"
-msgstr "ציוד"
+msgstr ""
 
 #: ../src/eathena/gui/inventorywindow.cpp:68
 #: ../src/eathena/gui/popupmenu.cpp:309 ../src/eathena/gui/trade.cpp:54
@@ -1562,7 +1562,7 @@ msgstr ""
 #: ../src/eathena/gui/inventorywindow.cpp:79
 #: ../src/eathena/gui/popupmenu.cpp:305
 msgid "Drop"
-msgstr "השלך"
+msgstr ""
 
 #: ../src/eathena/gui/inventorywindow.cpp:94
 msgid "Slots: "
@@ -1613,15 +1613,15 @@ msgstr ""
 
 #: ../src/eathena/gui/login.cpp:49
 msgid "Login"
-msgstr "התחברות"
+msgstr ""
 
 #: ../src/eathena/gui/login.cpp:52 ../src/eathena/gui/register.cpp:78
 msgid "Password:"
-msgstr "סיסמה:"
+msgstr ""
 
 #: ../src/eathena/gui/login.cpp:54 ../src/eathena/gui/register.cpp:81
 msgid "Port:"
-msgstr "פורט:"
+msgstr ""
 
 #: ../src/eathena/gui/login.cpp:55
 msgid "Recent:"
@@ -1634,15 +1634,15 @@ msgstr ""
 #: ../src/eathena/gui/login.cpp:75 ../src/eathena/gui/register.cpp:74
 #: ../src/eathena/gui/register.cpp:91
 msgid "Register"
-msgstr "הרשם"
+msgstr ""
 
 #: ../src/eathena/gui/menubar.cpp:61
 msgid "Status"
-msgstr "מצב"
+msgstr ""
 
 #: ../src/eathena/gui/menubar.cpp:64 ../src/eathena/gui/skill.cpp:46
 msgid "Skills"
-msgstr "כישורים"
+msgstr ""
 
 #: ../src/eathena/gui/minimap.cpp:52 ../src/eathena/gui/minimap.cpp:131
 msgid "Map"
@@ -1659,7 +1659,7 @@ msgstr ""
 
 #: ../src/eathena/gui/npclistdialog.cpp:37 ../src/eathena/gui/npctext.cpp:41
 msgid "NPC"
-msgstr "NPC"
+msgstr ""
 
 #: ../src/eathena/gui/popupmenu.cpp:315
 msgid "Add to Item Shortcuts"
@@ -1743,40 +1743,40 @@ msgstr ""
 
 #: ../src/eathena/gui/register.cpp:79
 msgid "Confirm:"
-msgstr "אשר:"
+msgstr ""
 
 #: ../src/eathena/gui/register.cpp:89
 msgid "Male"
-msgstr "זכר"
+msgstr ""
 
 #: ../src/eathena/gui/register.cpp:90
 msgid "Female"
-msgstr "נקבה"
+msgstr ""
 
 #: ../src/eathena/gui/register.cpp:175
 #, c-format
 msgid "The username needs to be at least %d characters long."
-msgstr "שם המשתמש חייב להכיל לפחות %d תוים."
+msgstr ""
 
 #: ../src/eathena/gui/register.cpp:183
 #, c-format
 msgid "The username needs to be less than %d characters long."
-msgstr "שם המשתמש חייב להכיל פחות מ-%d תוים."
+msgstr ""
 
 #: ../src/eathena/gui/register.cpp:191
 #, c-format
 msgid "The password needs to be at least %d characters long."
-msgstr "הסיסמה חייבת להכיל לפחות %d תוים."
+msgstr ""
 
 #: ../src/eathena/gui/register.cpp:199
 #, c-format
 msgid "The password needs to be less than %d characters long."
-msgstr "הסיסמה חייבת להכיל פחות מ-%d תוים."
+msgstr ""
 
 #. Password does not match with the confirmation one
 #: ../src/eathena/gui/register.cpp:206
 msgid "Passwords do not match."
-msgstr "הסיסמאות אינן תואמות."
+msgstr ""
 
 #: ../src/eathena/gui/serverlistdialog.cpp:36
 msgid "Select Server"
@@ -1913,11 +1913,11 @@ msgstr ""
 #: ../src/eathena/gui/trade.cpp:179
 #, c-format
 msgid "You get %d GP."
-msgstr "אתה מקבל %d זהב."
+msgstr ""
 
 #: ../src/eathena/gui/trade.cpp:83
 msgid "You give:"
-msgstr "אתה נותן:"
+msgstr ""
 
 #: ../src/eathena/gui/updatewindow.cpp:51
 msgid "Updating..."
@@ -1925,7 +1925,7 @@ msgstr ""
 
 #: ../src/eathena/gui/updatewindow.cpp:58
 msgid "Connecting..."
-msgstr "מתחבר..."
+msgstr ""
 
 #: ../src/eathena/gui/updatewindow.cpp:106
 msgid "Update Complete"
@@ -1949,12 +1949,12 @@ msgstr ""
 
 #: ../src/eathena/gui/viewport.cpp:432
 msgid "Could not load map"
-msgstr "לא ניתן לטעון את המפה"
+msgstr ""
 
 #: ../src/eathena/gui/viewport.cpp:433
 #, c-format
 msgid "Error while loading %s"
-msgstr "שגיאה בעת טעינת %s"
+msgstr ""
 
 #: ../src/eathena/gui/tabs/setup_game.cpp:48
 msgid "Show name"
@@ -1982,7 +1982,7 @@ msgstr ""
 
 #: ../src/eathena/gui/tabs/setup_game.cpp:72
 msgid "Ambient FX"
-msgstr "אופף FX"
+msgstr ""
 
 #: ../src/eathena/gui/tabs/setup_game.cpp:73
 msgid "Particle detail"
@@ -2003,17 +2003,17 @@ msgstr ""
 #: ../src/eathena/gui/tabs/setup_game.cpp:241
 #: ../src/eathena/gui/tabs/setup_game.cpp:259
 msgid "off"
-msgstr "כבוי"
+msgstr ""
 
 #: ../src/eathena/gui/tabs/setup_game.cpp:244
 #: ../src/eathena/gui/tabs/setup_game.cpp:262
 msgid "low"
-msgstr "נמוך"
+msgstr ""
 
 #: ../src/eathena/gui/tabs/setup_game.cpp:247
 #: ../src/eathena/gui/tabs/setup_game.cpp:268
 msgid "high"
-msgstr "גבוה"
+msgstr ""
 
 #: ../src/eathena/gui/tabs/setup_game.cpp:265
 msgid "medium"
@@ -2556,123 +2556,3 @@ msgstr ""
 msgid ""
 "--no-opengl is set by default (OpenGL has been disabled at build time)"
 msgstr ""
-
-#~ msgid "Ok"
-#~ msgstr "אישור"
-
-#~ msgid "Select amount of items to drop."
-#~ msgstr "בחר כמות חפצים להשליך."
-
-#~ msgid "MiniMap"
-#~ msgstr "מיני-מפה"
-
-#~ msgid "@@talk|Talk To NPC@@"
-#~ msgstr "@@talk|דבר אל NPC@@"
-
-#~ msgid "@@cancel|Cancel@@"
-#~ msgstr "@@cancel|ביטול@@"
-
-#~ msgid "@@use|Equip@@"
-#~ msgstr "@@use|החזק@@"
-
-#~ msgid "@@use|Use@@"
-#~ msgstr "@@use|Use@@"
-
-#~ msgid "@@drop|Drop@@"
-#~ msgstr "@@drop|השלך@@"
-
-#~ msgid "Video"
-#~ msgstr "וידאו"
-
-#~ msgid "Joystick"
-#~ msgstr "ג'ויסטיק"
-
-#~ msgid "Keyboard"
-#~ msgstr "מקלדת"
-
-#~ msgid "Scroll radius"
-#~ msgstr "תווך גלילה"
-
-#~ msgid "Scroll laziness"
-#~ msgstr "עצלנות גלילה"
-
-#~ msgid "Add"
-#~ msgstr "הוסף"
-
-#~ msgid "@@description|Description@@"
-#~ msgstr "@@description|תיאור@@"
-
-#~ msgid "Remember Username"
-#~ msgstr "זכור שם משתמש"
-
-#~ msgid "Account and Character Management"
-#~ msgstr "ניהול משתמש ושחקן"
-
-#~ msgid "Change Email Address"
-#~ msgstr "שנה כתובת דואר אלקטרוני"
-
-#~ msgid "Willpower:"
-#~ msgstr "כח רצון:"
-
-#~ msgid "Please distribute %d points"
-#~ msgstr "אנא חלק %d נקודות"
-
-#~ msgid "Character stats OK"
-#~ msgstr "נתוני שחקן - אישור"
-
-#~ msgid "Please remove %d points"
-#~ msgstr "אנא הסר %d נקודות"
-
-#~ msgid "Guilds"
-#~ msgstr "גילדות"
-
-#~ msgid "@@split|Split@@"
-#~ msgstr "@@split|פצל@@"
-
-#~ msgid "Switch character"
-#~ msgstr "החלף שחקן"
-
-#~ msgid "Email:"
-#~ msgstr "דוא\"ל:"
-
-#~ msgid "Choose your Mana World Server"
-#~ msgstr "בחר את שרת ה-Mana World"
-
-#~ msgid "Please type both the address and the port of a server."
-#~ msgstr "אנא הכנס גם את כתובת וגם את פורט השרת."
-
-#~ msgid "Propose trade"
-#~ msgstr "מציע לחור"
-
-#~ msgid "Confirm trade"
-#~ msgstr "אשר מסחר"
-
-#~ msgid "Change"
-#~ msgstr "שנה"
-
-#~ msgid "HP %+d"
-#~ msgstr "HP %+d"
-
-#~ msgid "MP %+d"
-#~ msgstr "MP %+d"
-
-#~ msgid "Screenshot saved to ~/"
-#~ msgstr "תמונת־מסך נשמרה במיקום ~/"
-
-#~ msgid "Restart your client for the change to take effect."
-#~ msgstr "טען מחדש כדי שהשינוי יחול."
-
-#~ msgid "Emote Meta Key"
-#~ msgstr "Emote מטא קי"
-
-#~ msgid "Resolve them, or gameplay may result in strange behavior."
-#~ msgstr "לפתור אותן, או משחק עלולה לגרום להתנהגות מוזרה."
-
-#~ msgid "Invalid update host: "
-#~ msgstr "שרת עדכון פגום: "
-
-#~ msgid "Network Error"
-#~ msgstr "שגיאת רשת"
-
-#~ msgid "Screen resolution changed"
-#~ msgstr "רזולוציית מסך השתנה"
