@@ -101,7 +101,7 @@ void Logger::log(const char *log_text, ...)
         std::cout << timeStr.str() << buf << std::endl;
 
     if (chatWindow && mLogToChatWindow)
-        chatWindow->chatLog(buf, BY_LOGGER);
+        chatWindow->chatLog(buf, Palette::LOGGER);
 
     // Delete temporary buffer
     delete[] buf;

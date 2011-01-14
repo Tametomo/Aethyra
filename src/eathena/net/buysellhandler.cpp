@@ -99,7 +99,8 @@ void BuySellHandler::handleMessage(MessageIn *msg)
                     int value = msg->readInt32();
                     msg->readInt32();  // OCvalue
 
-                    Item *item = player_node->getInventory()->getItem(index - INVENTORY_OFFSET);
+                    Item *item = player_node->getInventory()->getItem(index -
+                                                              INVENTORY_OFFSET);
 
                     if (item && !(item->isEquipped()))
                         sellDialog->addItem(item, value);
@@ -108,7 +109,7 @@ void BuySellHandler::handleMessage(MessageIn *msg)
             }
             else
             {
-                chatWindow->chatLog(_("Nothing to sell."), BY_SERVER);
+                chatWindow->chatLog(_("Nothing to sell."));
                 current_npc = 0;
             }
             break;
@@ -116,22 +117,22 @@ void BuySellHandler::handleMessage(MessageIn *msg)
         case SMSG_NPC_BUY_RESPONSE:
             if (msg->readInt8() == 0)
             {
-                chatWindow->chatLog(_("Thanks for buying."), BY_SERVER);
+                chatWindow->chatLog(_("Thanks for buying."));
             }
             else
             {
                 // Reset player money since buy dialog already assumed purchase
                 // would go fine
                 buyDialog->setMoney(player_node->mGp);
-                chatWindow->chatLog(_("Unable to buy."), BY_SERVER);
+                chatWindow->chatLog(_("Unable to buy."));
             }
             break;
 
         case SMSG_NPC_SELL_RESPONSE:
             if (msg->readInt8() == 0)
-                chatWindow->chatLog(_("Thanks for selling."), BY_SERVER);
+                chatWindow->chatLog(_("Thanks for selling."));
             else
-                chatWindow->chatLog(_("Unable to sell."), BY_SERVER);
+                chatWindow->chatLog(_("Unable to sell."));
             break;
     }
 }

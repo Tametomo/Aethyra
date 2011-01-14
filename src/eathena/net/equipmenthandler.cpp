@@ -107,7 +107,7 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
 
             if (!type)
             {
-                chatWindow->chatLog(_("Unable to equip."), BY_SERVER);
+                chatWindow->chatLog(_("Unable to equip."));
                 break;
             }
 
@@ -150,7 +150,7 @@ void EquipmentHandler::handleMessage(MessageIn *msg)
 
             if (!type)
             {
-                chatWindow->chatLog(_("Unable to unequip."), BY_SERVER);
+                chatWindow->chatLog(_("Unable to unequip."));
                 break;
             }
 

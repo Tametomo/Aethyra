@@ -235,7 +235,7 @@ void Setup_Colors::valueChanged(const gcn::SelectionEvent &event)
     const int delay = guiPalette->getGradientDelay(type);
 
     std::string msg;
-    const char ch = guiPalette->getColorChar(type);
+    const std::string markup = guiPalette->getColorMarkup(type);
 
     mPreview->clearRows();
     mPreviewBox->setContent(mTextPreview);
@@ -295,10 +295,10 @@ void Setup_Colors::valueChanged(const gcn::SelectionEvent &event)
             mPreviewBox->setContent(mPreview);
             mPreview->clearRows();
 
-            if (ch == '<')
+            if (markup.compare("##<") == 0)
                 msg = toString("@@|") + rawmsg + "@@";
             else
-                msg = "##" + toString(ch) + rawmsg;
+                msg = markup + rawmsg;
 
             mPreview->addRow(msg);
             break;
@@ -337,6 +337,7 @@ void Setup_Colors::valueChanged(const gcn::SelectionEvent &event)
             mTextPreview->setFont(gui->getBoldFont());
             mTextPreview->setTextColor(col);
         case Palette::TYPE_COUNT:
+        default:
             break;
     }
 

@@ -439,13 +439,13 @@ void RichTextBox::calculateTextLayout()
                 // Check for color change in format "##x", x = [L,P,0..9]
                 if (row.find("##", start) == start && row.size() > start + 2)
                 {
-                    const char c = row.at(start + 2);
+                    const std::string &markup = row.substr(start, 3);
                     bool valid;
-                    const gcn::Color col = guiPalette->getColor(c, valid);
+                    const gcn::Color col = guiPalette->getColor(markup, valid);
 
-                    if (c == '>')
+                    if (markup.compare("##>") == 0)
                         selColor = prevColor;
-                    else if (c == '<')
+                    else if (markup.compare("##<") == 0)
                     {
                         const int size = font->getWidth(mLinks[link].caption) + 1;
                         mLinks[link].x1 = x;
@@ -460,56 +460,38 @@ void RichTextBox::calculateTextLayout()
                         selColor = col;
                     else
                     {
-                        switch (c)
+                        if (markup.compare("##1") == 0)
+                            selColor = RED;
+                        else if (markup.compare("##2") == 0)
+                            selColor = GREEN;
+                        else if (markup.compare("##3") == 0)
+                            selColor = BLUE;
+                        else if (markup.compare("##4") == 0)
+                            selColor = ORANGE;
+                        else if (markup.compare("##5") == 0)
+                            selColor = YELLOW;
+                        else if (markup.compare("##6") == 0)
+                            selColor = PINK;
+                        else if (markup.compare("##7") == 0)
+                            selColor = PURPLE;
+                        else if (markup.compare("##8") == 0)
+                            selColor = GRAY;
+                        else if (markup.compare("##9") == 0)
+                            selColor = BROWN;
+                        else if (markup.compare("##0") == 0)
+                            selColor = BLACK;
+                        else if (markup.compare("###") == 0)
                         {
-                            case '1':
-                                selColor = RED;
-                                break;
-                            case '2':
-                                selColor = GREEN;
-                                break;
-                            case '3':
-                                selColor = BLUE;
-                                break;
-                            case '4':
-                                selColor = ORANGE;
-                                break;
-                            case '5':
-                                selColor = YELLOW;
-                                break;
-                            case '6':
-                                selColor = PINK;
-                                break;
-                            case '7':
-                                selColor = PURPLE;
-                                break;
-                            case '8':
-                                selColor = GRAY;
-                                break;
-                            case '9':
-                                selColor = BROWN;
-                                break;
-                            case '0':
-                                selColor = BLACK;
-                                break;
-                            case '#':
-                                {
-                                    while (end < row.size() &&
-                                           row[end] == '#')
-                                    {
-                                        ++end;
-                                    }
+                            while (end < row.size() && row[end] == '#')
+                                ++end;
 
-                                    if (end == row.size())
-                                        end = std::string::npos;
+                            if (end == row.size())
+                                end = std::string::npos;
 
-                                    start -= 2;
-                                } 
-                                break;
-                            default :
-                                selColor = textColor;
-                                break;
+                            start -= 2;
                         }
+                        else
+                            selColor = textColor;
                     }
                     start += 3;
 

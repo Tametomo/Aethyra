@@ -461,14 +461,14 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                             {
                                 chatWindow->chatLog(_("Ignoring incoming "
                                                       "trade requests"),
-                                                      BY_SERVER);
+                                                      Palette::SERVER);
                                 deflt &= ~PlayerRelation::TRADE;
                             }
                             else
                             {
                                 chatWindow->chatLog(_("Accepting incoming "
                                                       "trade requests"),
-                                                      BY_SERVER);
+                                                      Palette::SERVER);
                                 deflt |= PlayerRelation::TRADE;
                             }
 

@@ -28,8 +28,6 @@
 #include "../beingmanager.h"
 #include "../party.h"
 
-#include "../gui/chat.h"
-
 PartyHandler::PartyHandler(Party *party) : mParty(party)
 {
     static const Uint16 _messages[] = {

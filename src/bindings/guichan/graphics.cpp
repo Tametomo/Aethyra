@@ -195,12 +195,12 @@ void saveScreenshot()
     {
         if (chatWindow)
             chatWindow->chatLog(strprintf(_("Screenshot saved to %s"),
-                                filename.str().c_str()), BY_LOGGER);
+                                filename.str().c_str()), Palette::LOGGER);
     }
     else
     {
         if (chatWindow)
-            chatWindow->chatLog(_("Saving screenshot failed!"), BY_LOGGER);
+            chatWindow->chatLog(_("Saving screenshot failed!"), Palette::LOGGER);
 
         logger->log("Error: could not save screenshot.");
     }

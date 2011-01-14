@@ -84,20 +84,20 @@ Palette::Palette() :
 
     addColor(BACKGROUND, 0xffffff, STATIC, _("Background"));
 
-    addColor(HIGHLIGHT, 0xebc873, STATIC, _("Highlight"), 'H');
+    addColor(HIGHLIGHT, 0xebc873, STATIC, _("Highlight"), "##H");
     addColor(TAB_HIGHLIGHT, 0xff0000, PULSE, indent + _("Tab Highlight"));
     addColor(SHOP_WARNING, 0x910000, STATIC, indent + _("Item too expensive"));
     addColor(ITEM_EQUIPPED, 0x000091, STATIC, indent + _("Item is equipped"));
 
-    addColor(CHAT, 0x000000, STATIC, _("Chat"), 'C');
-    addColor(GM, 0xff0000, STATIC, indent + _("GM"), 'G');
-    addColor(PLAYER, 0x1fa052, STATIC, indent + _("Player"), 'Y');
-    addColor(WHISPER, 0x0000ff, STATIC, indent + _("Whisper"), 'W');
-    addColor(IS, 0xa08527, STATIC, indent + _("Is"), 'I');
-    addColor(PARTY, 0xff00d8, STATIC, indent + _("Party"), 'P');
-    addColor(SERVER, 0x8415e2, STATIC, indent + _("Server"), 'S');
-    addColor(LOGGER, 0x404040, STATIC, indent + _("Logger"), 'L');
-    addColor(HYPERLINK, 0xe50d0d, STATIC, indent + _("Hyperlink"), '<');
+    addColor(CHAT, 0x000000, STATIC, _("Chat"), "##C");
+    addColor(GM, 0xff0000, STATIC, indent + _("GM"), "##G");
+    addColor(PLAYER, 0x1fa052, STATIC, indent + _("Player"), "##Y");
+    addColor(WHISPER, 0x0000ff, STATIC, indent + _("Whisper"), "##W");
+    addColor(IS, 0xa08527, STATIC, indent + _("Is"), "##I");
+    addColor(PARTY, 0xff00d8, STATIC, indent + _("Party"), "##P");
+    addColor(SERVER, 0x8415e2, STATIC, indent + _("Server"), "##S");
+    addColor(LOGGER, 0x404040, STATIC, indent + _("Logger"), "##L");
+    addColor(HYPERLINK, 0xe50d0d, STATIC, indent + _("Hyperlink"), "##<");
 
     addColor(BEING, 0xffffff, STATIC, _("Being"));
     addColor(PC, 0xffffff, STATIC, indent + _("Other Player's Names"));
@@ -152,12 +152,12 @@ Palette::~Palette()
     }
 }
 
-const gcn::Color& Palette::getColor(char c, bool &valid)
+const gcn::Color& Palette::getColor(const std::string &markup, bool &valid)
  {
     for (ColVector::const_iterator col = mColVector.begin(),
          colEnd = mColVector.end(); col != colEnd; ++col)
     {
-        if (col->ch == c)
+        if (col->markup.compare(markup) == 0)
         {
             valid = true;
             return col->color;
@@ -249,7 +249,7 @@ void Palette::rollback()
 
 void Palette::addColor(Palette::ColorType type, int rgb,
                        Palette::GradientType grad, const std::string &text,
-                       char c, int delay)
+                       std::string markup, int delay)
 {
     const std::string &configName = ColorTypeNames[type];
     char buffer[20];
@@ -264,7 +264,7 @@ void Palette::addColor(Palette::ColorType type, int rgb,
     gcn::Color trueCol = rgbValue;
     grad = (GradientType) config.getValue(configName + "Gradient", grad);
     delay = (int) config.getValue(configName + "Delay", delay);
-    mColVector[type].set(type, trueCol, grad, text, c, delay);
+    mColVector[type].set(type, trueCol, grad, text, markup, delay);
 
     if (grad != STATIC)
         mGradVector.push_back(&mColVector[type]);

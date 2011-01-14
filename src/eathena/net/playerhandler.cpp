@@ -294,7 +294,7 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                         if (player_node->mGp > curGp)
                             chatWindow->chatLog(strprintf(
                                 _("You picked up %d GP"),
-                                player_node->mGp - curGp), BY_SERVER);
+                                player_node->mGp - curGp));
                     }
                     break;
                 case 0x0016:
@@ -379,8 +379,7 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                 switch (type)
                 {
                     case 0:
-                        chatWindow->chatLog(_("Equip arrows first."),
-                                             BY_SERVER);
+                        chatWindow->chatLog(_("Equip arrows first."));
                         break;
                     default:
                         logger->log("0x013b: Unhandled message %i", type);

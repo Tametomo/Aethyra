@@ -26,6 +26,8 @@
 
 #include <string>
 
+#include "../../bindings/guichan/palette.h"
+
 #include "../../bindings/guichan/widgets/window.h"
 
 class ChatInput;
@@ -38,17 +40,6 @@ class RichTextBox;
 class ScrollArea;
 class TextInputDialog;
 class ToolTip;
-
-#define BY_GM         0   // those should be self-explanatory =)
-#define BY_PLAYER     1
-#define BY_OTHER      2
-#define BY_SERVER     3
-#define BY_PARTY      4
-
-#define ACT_WHISPER   5   // getting whispered at
-#define ACT_IS        6   // equivalent to "/me" on IRC
-
-#define BY_LOGGER     7
 
 #define DEFAULT_CHAT_WINDOW_SCROLL 7 // 1 means `1/8th of the window size'.
 
@@ -81,7 +72,8 @@ class ChatWindow : public Window
          * @param line Text message.
          * @parem own  Type of message (usually the owner-type).
          */
-        void chatLog(std::string line, int own, bool ignoreRecord = false);
+        void chatLog(std::string line, Palette::ColorType own = Palette::SERVER,
+                     bool ignoreRecord = false);
 
         /**
          * Performs action.
@@ -170,14 +162,6 @@ class ChatWindow : public Window
                               // color tags.
 
         void whisper(const std::string &nick, std::string msg);
-
-        /** One item in the chat log */
-        struct CHATLOG
-        {
-            std::string nick;
-            std::string text;
-            int own;
-        };
 
         ChatInput *mChatInput;      /**< Input box for typing chat messages */
         RichTextBox *mTextOutput;   /**< Text box for displaying chat history */

@@ -128,7 +128,7 @@ class Palette : public gcn::ListModel
          *
          * @return the requested color or Palette::BLACK
          */
-        const gcn::Color& getColor(char c, bool &valid);
+        const gcn::Color& getColor(const std::string &markup, bool &valid);
 
         /**
          * Gets the color associated with the type. Sets the alpha channel
@@ -196,13 +196,13 @@ class Palette : public gcn::ListModel
             { return mColVector[type].delay; }
 
         /**
-        * Get the character used by the specified color.
+        * Get the markup used by the specified color.
         *
         * @param type the color type of the color
         *
-        * @return the color char of the color with the given index
+        * @return the markup of the color with the given index
         */
-        inline char getColorChar(ColorType type) { return mColVector[type].ch; }
+        inline std::string getColorMarkup(ColorType type) { return mColVector[type].markup; }
 
         /**
          * Sets the color for the specified type.
@@ -303,7 +303,7 @@ class Palette : public gcn::ListModel
             gcn::Color testColor;
             gcn::Color committedColor;
             std::string text;
-            char ch;
+            std::string markup;
             GradientType grad;
             GradientType committedGrad;
             int gradientIndex;
@@ -311,13 +311,13 @@ class Palette : public gcn::ListModel
             int committedDelay;
 
             void set(ColorType type, gcn::Color& color, GradientType grad,
-                     const std::string &text, char c, int delay)
+                     const std::string &text, std::string markup, int delay)
             {
                 ColorElem::type = type;
                 ColorElem::color = color;
                 ColorElem::testColor = color;
                 ColorElem::text = text;
-                ColorElem::ch = c;
+                ColorElem::markup = markup;
                 ColorElem::grad = grad;
                 ColorElem::delay = delay;
                 ColorElem::gradientIndex = rand();
@@ -342,7 +342,7 @@ class Palette : public gcn::ListModel
          * @param text identifier of color
          */
         void addColor(ColorType type, int rgb, GradientType grad,
-                      const std::string &text, char c = 0, 
+                      const std::string &text, std::string markup = "", 
                       int delay = GRADIENT_DELAY);
 
         /**

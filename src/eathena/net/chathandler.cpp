@@ -69,14 +69,14 @@ void ChatHandler::handleMessage(MessageIn *msg)
             switch (msg->readInt8())
             {
                 case 0x00:
-                    // comment out since we'll local echo in chat.cpp instead, then only report failures
-                    //chatWindow->chatLog("Whisper sent", BY_SERVER);
+                    // This is a success, so not necessary to report
+                    //chatWindow->chatLog(_("Whisper sent"));
                     break;
                 case 0x01:
-                    chatWindow->chatLog(_("Whisper could not be sent, user is offline."), BY_SERVER);
+                    chatWindow->chatLog(_("Whisper could not be sent, user is offline."));
                     break;
                 case 0x02:
-                    chatWindow->chatLog(_("Whisper could not be sent, ignored by user."), BY_SERVER);
+                    chatWindow->chatLog(_("Whisper could not be sent, ignored by user."));
                     break;
             }
             break;
@@ -94,9 +94,10 @@ void ChatHandler::handleMessage(MessageIn *msg)
                 chatMsg = nick + " : " + chatMsg;
 
             if (nick == SERVER_NAME)
-                chatWindow->chatLog(chatMsg, BY_SERVER);
-            else if (player_relations.hasPermission(nick, PlayerRelation::WHISPER))
-                chatWindow->chatLog(chatMsg, ACT_WHISPER);
+                chatWindow->chatLog(chatMsg);
+            else if (player_relations.hasPermission(nick,
+                                                    PlayerRelation::WHISPER))
+                chatWindow->chatLog(chatMsg, Palette::WHISPER);
 
             break;
 
@@ -112,19 +113,21 @@ void ChatHandler::handleMessage(MessageIn *msg)
             chatMsg = msg->readString(chatMsgLength);
 
             std::string::size_type pos = chatMsg.find(" : ", 0);
-            std::string sender_name = ((pos == std::string::npos)
-                                       ? ""
-                                       : chatMsg.substr(0, pos));
+            std::string sender_name = ((pos == std::string::npos) ? "" :
+                                        chatMsg.substr(0, pos));
 
-            // We use getIgnorePlayer instead of ignoringPlayer here because ignorePlayer' side
-            // effects are triggered right below for Being::IGNORE_SPEECH_FLOAT.
-            if (player_relations.checkPermissionSilently(sender_name, PlayerRelation::SPEECH_LOG))
-                chatWindow->chatLog(chatMsg, BY_OTHER);
+            // We use getIgnorePlayer instead of ignoringPlayer here because 
+            // ignorePlayer' side effects are triggered right below for
+            // Being::IGNORE_SPEECH_FLOAT.
+            if (player_relations.checkPermissionSilently(sender_name,
+                                                    PlayerRelation::SPEECH_LOG))
+                chatWindow->chatLog(chatMsg, Palette::PLAYER);
 
             chatMsg.erase(0, pos + 3);
             trim(chatMsg);
 
-            if (player_relations.hasPermission(sender_name, PlayerRelation::SPEECH_FLOAT))
+            if (player_relations.hasPermission(sender_name,
+                                               PlayerRelation::SPEECH_FLOAT))
                 being->setSpeech(chatMsg, SPEECH_TIME);
             break;
         }
@@ -142,7 +145,7 @@ void ChatHandler::handleMessage(MessageIn *msg)
 
             if (msg->getId() == SMSG_PLAYER_CHAT)
             {
-                chatWindow->chatLog(chatMsg, BY_PLAYER);
+                chatWindow->chatLog(chatMsg, Palette::CHAT);
 
                 if (pos != std::string::npos)
                     chatMsg.erase(0, pos + 3);
@@ -152,19 +155,19 @@ void ChatHandler::handleMessage(MessageIn *msg)
                 player_node->setSpeech(chatMsg, SPEECH_TIME);
             }
             else
-                chatWindow->chatLog(chatMsg, BY_GM);
+                chatWindow->chatLog(chatMsg, Palette::GM);
             break;
         }
 
         case SMSG_WHO_ANSWER:
             chatWindow->chatLog(strprintf(_("Online users: %d"),
-                                msg->readInt32()), BY_SERVER);
+                                msg->readInt32()));
             break;
 
         case 0x010c:
             // Display MVP player
             msg->readInt32(); // id
-            chatWindow->chatLog(_("MVP player"), BY_SERVER);
+            chatWindow->chatLog(_("MVP player"));
             break;
     }
 }

@@ -120,15 +120,15 @@ void TradeHandler::handleMessage(MessageIn *msg)
             {
                 case 0: // Too far away
                     chatWindow->chatLog(_("Trading isn't possible. Trade "
-                                          "partner is too far away."), BY_SERVER);
+                                          "partner is too far away."));
                     break;
                 case 1: // Character doesn't exist
                     chatWindow->chatLog(_("Trading isn't possible. Character "
-                                          "doesn't exist."), BY_SERVER);
+                                          "doesn't exist."));
                     break;
                 case 2: // Invite request check failed...
                     chatWindow->chatLog(_("Trade cancelled due to an unknown "
-                                          "reason."), BY_SERVER);
+                                          "reason."));
                     break;
                 case 3: // Trade accepted
                     tradeWindow->reset();
@@ -141,16 +141,14 @@ void TradeHandler::handleMessage(MessageIn *msg)
                                                        PlayerRelation::SPEECH_LOG))
                         chatWindow->chatLog(strprintf(_("Trade with %s "
                                                         "cancelled."),
-                                            tradePartnerName.c_str()),
-                                            BY_SERVER);
+                                            tradePartnerName.c_str()));
                     // otherwise ignore silently
 
                     tradeWindow->setVisible(false);
                     player_node->setTrading(false);
                     break;
                 default: // Shouldn't happen as well, but to be sure
-                    chatWindow->chatLog(_("Unhandled trade cancel packet."),
-                                          BY_SERVER);
+                    chatWindow->chatLog(_("Unhandled trade cancel packet."));
                     break;
             }
             break;
@@ -199,18 +197,16 @@ void TradeHandler::handleMessage(MessageIn *msg)
                     case 1:
                         // Add item failed - player overweighted
                         chatWindow->chatLog(_("Failed adding item. Trade "
-                                              "partner is over weighted."),
-                                              BY_SERVER);
+                                              "partner is over weighted."));
                         break;
                     case 2:
                          // Add item failed - player has no free slot
                          chatWindow->chatLog(_("Failed adding item. Trade "
-                                               "partner has no free slot."),
-                                               BY_SERVER);
+                                               "partner has no free slot."));
                          break;
                     default:
                         chatWindow->chatLog(_("Failed adding item for "
-                                              "unknown reason."), BY_SERVER);
+                                              "unknown reason."));
                         break;
                 }
             }
@@ -222,14 +218,14 @@ void TradeHandler::handleMessage(MessageIn *msg)
             break;
 
         case SMSG_TRADE_CANCEL:
-            chatWindow->chatLog(_("Trade canceled."), BY_SERVER);
+            chatWindow->chatLog(_("Trade canceled."));
             tradeWindow->setVisible(false);
             tradeWindow->reset();
             player_node->setTrading(false);
             break;
 
         case SMSG_TRADE_COMPLETE:
-            chatWindow->chatLog(_("Trade completed."), BY_SERVER);
+            chatWindow->chatLog(_("Trade completed."));
             tradeWindow->setVisible(false);
             tradeWindow->reset();
             player_node->setTrading(false);
