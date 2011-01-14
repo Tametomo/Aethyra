@@ -63,35 +63,33 @@ namespace XML
         return mDoc ? xmlDocGetRootElement(mDoc) : 0;
     }
 
-    int getProperty(xmlNodePtr node, const char* name, int def)
+    int getProperty(xmlNodePtr node, const char* name, const int def)
     {
-        int &ret = def;
-
         xmlChar *prop = xmlGetProp(node, BAD_CAST name);
         if (prop)
         {
-            ret = atoi((char*)prop);
+            int val = atoi((char*)prop);
             xmlFree(prop);
+            return val;
         }
 
-        return ret;
+        return def;
     }
 
-    double getFloatProperty(xmlNodePtr node, const char* name, double def)
+    double getFloatProperty(xmlNodePtr node, const char* name, const double def)
     {
-        double &ret = def;
-
         xmlChar *prop = xmlGetProp(node, BAD_CAST name);
         if (prop)
         {
-            ret = atof((char*)prop);
+            double val = atof((char*)prop);
             xmlFree(prop);
+            return val;
         }
 
-        return ret;
+        return def;
     }
 
-    bool getBoolProperty(xmlNodePtr node, const char* name, bool def)
+    bool getBoolProperty(xmlNodePtr node, const char* name, const bool def)
     {
         bool ret = def;
 

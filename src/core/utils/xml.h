@@ -72,17 +72,17 @@ namespace XML
     /**
      * Gets an integer property from an xmlNodePtr.
      */
-    int getProperty(xmlNodePtr node, const char *name, int def);
+    int getProperty(xmlNodePtr node, const char *name, const int def);
 
     /**
      * Gets an floating point property from an xmlNodePtr.
      */
-    double getFloatProperty(xmlNodePtr node, const char *name, double def);
+    double getFloatProperty(xmlNodePtr node, const char *name, const double def);
 
     /**
      * Gets a boolean property from an xmlNodePtr.
      */
-    bool getBoolProperty(xmlNodePtr node, const char *name, bool def);
+    bool getBoolProperty(xmlNodePtr node, const char *name, const bool def);
 
     /**
      * Gets a string property from an xmlNodePtr.
