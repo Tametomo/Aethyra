@@ -27,12 +27,13 @@
 #include <sstream>
 
 /**
- * Trims spaces off the end and the beginning of the given string.
+ * Trims characters off the end and the beginning of the given string.
  *
- * @param str the string to trim spaces off
+ * @param str the string to trim characters off
+ * @param token character to trim with
  * @return a reference to the trimmed string
  */
-std::string &trim(std::string &str);
+std::string &trim(std::string &str, char token = ' ');
 
 /**
  * Converts the given string to lower case.
@@ -41,6 +42,24 @@ std::string &trim(std::string &str);
  * @return a reference to the given string converted to lower case
  */
 std::string &toLower(std::string &str);
+
+/**
+ * Normalizes a string for comparison.
+ */
+std::string &normalize(std::string &str);
+
+/**
+ * Get the next token in a string sequence. If there are no quotes before the
+ * next whitespace in the string, this returns the next word. If there are
+ * quotes, it returns the contents of the quotes.
+ */
+std::string getToken(const std::string &str);
+
+/**
+ * Inverse of getToken. This returns everything but the next token in a string
+ * sequence.
+ */
+std::string stripToken(const std::string &str);
 
 /**
  * Converts an ascii hexidecimal string to an integer
@@ -86,11 +105,11 @@ std::string strprintf(char const *, ...)
 ;
 
 /**
- * Returns a bool value depending on the given string value.
+ * Returns a truth value depending on the given string value.
  *
  * @param text the string used to get the bool value
- * @return a boolean value..
+ * @return 1 if true, 0 if false, -1 if undefined
  */
-bool getBoolFromString(const std::string &text, bool def = false);
+int getStringTruthValue(const std::string &text);
 
 #endif // UTILS_STRINGUTILS_H

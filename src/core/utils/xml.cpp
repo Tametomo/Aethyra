@@ -91,16 +91,16 @@ namespace XML
 
     bool getBoolProperty(xmlNodePtr node, const char* name, const bool def)
     {
-        bool ret = def;
-
         xmlChar *prop = xmlGetProp(node, BAD_CAST name);
         if (prop)
         {
-            ret = getBoolFromString((char*) prop, def);
+            const int truth = getStringTruthValue((char*) prop);
             xmlFree(prop);
+            if (truth != -1)
+                return truth == 1;
         }
 
-        return ret;
+        return def;
     }
 
     std::string getProperty(xmlNodePtr node, const char *name, const std::string &def)

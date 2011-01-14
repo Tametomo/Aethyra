@@ -26,13 +26,13 @@
 #include <cstdarg>
 #include <cstdio>
 
-std::string &trim(std::string &str)
+std::string &trim(std::string &str, char token)
 {
-    std::string::size_type pos = str.find_last_not_of(' ');
+    std::string::size_type pos = str.find_last_not_of(token);
     if (pos != std::string::npos)
     {
         str.erase(pos + 1);
-        pos = str.find_first_not_of(' ');
+        pos = str.find_first_not_of(token);
 
         if (pos != std::string::npos)
             str.erase(0, pos);
@@ -49,6 +49,53 @@ std::string &toLower(std::string &str)
 {
     std::transform(str.begin(), str.end(), str.begin(), tolower);
     return str;
+}
+
+std::string &normalize(std::string &str)
+{
+    return toLower(trim(str));
+}
+
+std::string getToken(const std::string &str)
+{
+    std::string token = str;
+    trim(token);
+
+    std::string::size_type pos = str.find("\"", 1);
+    if (pos != std::string::npos && token.substr(0, 1) == "\"")
+    {
+        token = token.substr(1, pos - 1);
+        trim(token);
+    }
+    else
+    {
+        const std::string::size_type space = str.find(" ");
+        if (space != std::string::npos)
+            token = token.substr(0, space);
+    }
+
+    return token;
+}
+
+std::string stripToken(const std::string &str)
+{
+    std::string token = str;
+    trim(token);
+
+    std::string::size_type pos = str.find("\"", 1);
+    if (pos != std::string::npos && token.substr(0, 1) == "\"")
+    {
+        token = token.substr(pos);
+        trim(token);
+    }
+    else
+    {
+        const std::string::size_type space = str.find(" ");
+        if (space != std::string::npos)
+            token = token.substr(space);
+    }
+
+    return token;
 }
 
 unsigned int atox(const std::string &str)
@@ -94,15 +141,17 @@ std::string strprintf(char const *format, ...)
     return res;
 }
 
-bool getBoolFromString(const std::string &text, bool def)
+int getStringTruthValue(const std::string &text)
 {
     std::string a = text;
-    toLower(trim(a));
-    if (a == "true" || a == "1" || a == "on" || a == "yes" || a == "y")
-        return true;
-    if (a == "false" || a == "0" || a == "off" || a == "no" || a == "n")
-        return false;
+    a = getToken(normalize(a));
+    if (a.compare("t") == 0 || a.compare("true") == 0 || a.compare("1") == 0 ||
+        a.compare("on") == 0 || a.compare("yes") == 0 || a.compare("y") == 0)
+        return 1;
+    if (a.compare("f") == 0 || a.compare("false") == 0 || a.compare("0") == 0 ||
+        a.compare("off") == 0 || a.compare("no") == 0 || a.compare("n") == 0)
+        return 0;
     else
-        return def;
+        return -1;
 }
 

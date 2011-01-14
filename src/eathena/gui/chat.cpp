@@ -425,28 +425,13 @@ void ChatWindow::updateRecorder(const std::string &mes)
 
 void ChatWindow::whisper(const std::string &nick, std::string msg)
 {
-    std::string recvnick = "";
+    std::string recvnick = getToken(msg);
 
-    if (msg.substr(0, 1) == "\"")
-    {
-        const std::string::size_type pos = msg.find('"', 1);
-        if (pos != std::string::npos)
-        {
-            recvnick = msg.substr(1, pos - 1);
-            msg.erase(0, pos + 2);
-        }
-    }
-    else
-    {
-        const std::string::size_type pos = msg.find(" ");
-        if (pos != std::string::npos)
-        {
-            recvnick = msg.substr(0, pos);
-            msg.erase(0, pos + 1);
-        }
-    }
+    // Whispering to no one, so ignore it
+    if (recvnick.empty())
+        return;
 
-    trim(msg);
+    msg = stripToken(msg);
 
     std::string playerName = player_node->getName();
     std::string tempNick = recvnick;
@@ -572,16 +557,15 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
             return;
         }
 
-        msg = msg.substr(0, 1);
+        const int truth = getStringTruthValue(msg);
 
-        if (msg == "1" || msg == "y" || msg == "Y" || msg == "t" || msg == "T")
+        if (truth == 1)
         {
             chatLog(_("Return now toggles chat."), Palette::SYSTEM);
             mReturnToggles = true;
             return;
         }
-        else if (msg == "0" || msg == "n" || msg == "N" ||
-                 msg == "f" || msg == "F")
+        else if (truth == 0)
         {
             chatLog(_("Message now closes chat."), Palette::SYSTEM);
             mReturnToggles = false;
