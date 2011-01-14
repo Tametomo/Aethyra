@@ -485,7 +485,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
 
         if (length == 0)
         {
-            chatLog(_("Trying to send a blank party message."));
+            chatLog(_("Trying to send a blank party message."), Palette::SYSTEM);
             return;
         }
 
@@ -568,7 +568,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
         if (msg.empty())
         {
             chatLog(mReturnToggles ? _("Return toggles chat.") :
-                                     _("Message closes chat."));
+                                     _("Message closes chat."), Palette::SYSTEM);
             return;
         }
 
@@ -576,27 +576,27 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
 
         if (msg == "1" || msg == "y" || msg == "Y" || msg == "t" || msg == "T")
         {
-            chatLog(_("Return now toggles chat."));
+            chatLog(_("Return now toggles chat."), Palette::SYSTEM);
             mReturnToggles = true;
             return;
         }
         else if (msg == "0" || msg == "n" || msg == "N" ||
                  msg == "f" || msg == "F")
         {
-            chatLog(_("Message now closes chat."));
+            chatLog(_("Message now closes chat."), Palette::SYSTEM);
             mReturnToggles = false;
             return;
         }
         else
             chatLog(_("Options to /toggle are \"yes\", \"no\", \"true\", "
-                      "\"false\", \"1\", \"0\"."));
+                      "\"false\", \"1\", \"0\"."), Palette::SYSTEM);
     }
     else if (command == "party")
     {
         if (msg.empty())
         {
             chatLog(_("Unknown party command... Type \"/help\" party for more "
-                      "information."));
+                      "information."), Palette::SYSTEM);
             return;
         }
 
@@ -649,7 +649,7 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
 
             mRecorder->record(timeStr.str() + strprintf(_("Present: %s; %s"),
                              response.c_str(), cpc));
-            chatLog(_("Attendance written to record log."), Palette::SERVER,
+            chatLog(_("Attendance written to record log."), Palette::SYSTEM,
                     true);
         }
         else
@@ -670,11 +670,12 @@ void ChatWindow::chatSend(const std::string &nick, std::string msg)
 #else
         std::string version = "not defined.";
 #endif
-        chatLog(strprintf(_("Aethyra - Version %s"), version.c_str()));
+        chatLog(strprintf(_("Aethyra - Version %s"), version.c_str()),
+                Palette::SYSTEM);
     }
     else
     {
-        chatLog(_("Unknown command."));
+        chatLog(_("Unknown command."), Palette::SYSTEM);
     }
 }
 
@@ -749,18 +750,20 @@ void ChatWindow::party(const std::string &command, const std::string &rest)
             char temp[2] = ".";
             *temp = mPartyPrefix;
             chatLog(strprintf(_("The current party prefix is %s."),
-                                std::string(temp).c_str()));
+                                std::string(temp).c_str()), Palette::SYSTEM);
         }
         else if (rest.length() != 1)
-            chatLog(_("Party prefix must be one character long."));
+            chatLog(_("Party prefix must be one character long."),
+                    Palette::SYSTEM);
         else
         {
             if (rest == "/")
-                chatLog(_("Cannot use a '/' as the prefix."));
+                chatLog(_("Cannot use a '/' as the prefix."), Palette::SYSTEM);
             else
             {
                 mPartyPrefix = rest.at(0);
-                chatLog(strprintf(_("Changing prefix to %s."), rest.c_str()));
+                chatLog(strprintf(_("Changing prefix to %s."), rest.c_str()),
+                        Palette::SYSTEM);
             }
         }
     }

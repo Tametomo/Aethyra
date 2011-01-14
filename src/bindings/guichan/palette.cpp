@@ -95,6 +95,7 @@ Palette::Palette() :
     addColor(WHISPER, 0x0000ff, STATIC, indent + _("Whisper"), "##W");
     addColor(IS, 0xa08527, STATIC, indent + _("Is"), "##I");
     addColor(PARTY, 0xff00d8, STATIC, indent + _("Party"), "##P");
+    addColor(SYSTEM, 0x204840, STATIC, indent + _("System"), "##!");
     addColor(SERVER, 0x8415e2, STATIC, indent + _("Server"), "##S");
     addColor(LOGGER, 0x404040, STATIC, indent + _("Logger"), "##L");
     addColor(HYPERLINK, 0xe50d0d, STATIC, indent + _("Hyperlink"), "##<");
