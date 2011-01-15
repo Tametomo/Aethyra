@@ -47,12 +47,6 @@ namespace
 static void loadSpriteRef(ItemInfo *itemInfo, xmlNodePtr node);
 static void loadSoundRef(ItemInfo *itemInfo, xmlNodePtr node);
 
-static std::string normalized(const std::string &name)
-{
-    std::string normalized = name;
-    return toLower(trim(normalized));
-}
-
 void ItemDB::load()
 {
     if (mLoaded)
@@ -132,12 +126,11 @@ void ItemDB::load()
             mItemInfos[id] = itemInfo;
             if (!name.empty())
             {
-                const std::string &temp = normalized(name);
-
-                NamedItemInfoIterator itr = mNamedItemInfos.find(temp);
+                normalize(name);
+                NamedItemInfoIterator itr = mNamedItemInfos.find(name);
 
                 if (itr == mNamedItemInfos.end())
-                    mNamedItemInfos[temp] = itemInfo;
+                    mNamedItemInfos[name] = itemInfo;
                 else
                     logger->log("ItemDB: Duplicate name of item found item %d",
                                 id);
@@ -196,11 +189,12 @@ const ItemInfo& ItemDB::get(const std::string &name)
 {
     assert(mLoaded);
 
-    const NamedItemInfoIterator i = mNamedItemInfos.find(normalized(name));
+    std::string item = name;
+    const NamedItemInfoIterator i = mNamedItemInfos.find(normalize(item));
 
     if (i == mNamedItemInfos.end())
     {
-        logger->log("ItemDB: Error, unknown item name %s", name.c_str());
+        logger->log("ItemDB: Error, unknown item name \"%s\"", name.c_str());
         return *mUnknown;
     }
     else
