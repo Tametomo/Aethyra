@@ -182,16 +182,21 @@ void LocalPlayer::logic()
         setTarget(NULL);
     }
 
+    // If there's a goto target, attempt to go to it
+    if (mGoingToTarget)
+    {
+        if (withinAttackRange(mTarget))
+            mGoingToTarget = false;
+        else if (mTarget && !withinAttackRange(mTarget))
+            setDestination(mTarget->mX, mTarget->mY);
+    }
+
     if (mTarget)
     {
-        // Find whether target is in range
-        const int rangeX = abs(mTarget->mX - mX);
-        const int rangeY = abs(mTarget->mY - mY);
-        const int attackRange = getAttackRange();
-        const int inRange = rangeX > attackRange || rangeY > attackRange ? 1 : 0;
-
+        // Use appropriate target animation for in range/out of range
+        const bool inRange = withinAttackRange(mTarget);
         mTarget->setTargetAnimation(
-            mTargetCursor[inRange][mTarget->getTargetCursorSize()]);
+            mTargetCursor[(int) !inRange] [mTarget->getTargetCursorSize()]);
 
         if (mTarget->mAction == DEAD)
             stopAttack();
@@ -244,34 +249,20 @@ void LocalPlayer::setName(const std::string &name)
 
 void LocalPlayer::nextStep()
 {
-    if (mPath.empty())
-    {
-        if (mPickUpTarget)
-            pickUp(mPickUpTarget);
+    if (mPickUpTarget)
+        pickUp(mPickUpTarget);
 
-        if (mWalkingDir)
-            walk(mWalkingDir);
-    }
-
-    if (mGoingToTarget && mTarget && withinAttackRange(mTarget))
-    {
-        mAction = Being::STAND;
-        attack(mTarget, true);
-        mGoingToTarget = false;
-        mPath.clear();
-        return;
-    }
-    else if (mGoingToTarget && !mTarget)
-    {
-        mGoingToTarget = false;
-        mPath.clear();
-    }
+    if (mPath.empty() && mWalkingDir)
+        walk(mWalkingDir);
 
     Player::nextStep();
 }
 
 void LocalPlayer::equipItem(Item *item)
 {
+    if (!item)
+        return;
+
     MessageOut outMsg(CMSG_PLAYER_EQUIP);
     outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
     outMsg.writeInt16(0);
@@ -291,6 +282,9 @@ void LocalPlayer::unequipItem(Item *item)
 
 void LocalPlayer::useItem(Item *item)
 {
+    if (!item)
+        return;
+
     MessageOut outMsg(CMSG_PLAYER_INVENTORY_USE);
     outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
     outMsg.writeInt32(item->getId());
@@ -299,6 +293,9 @@ void LocalPlayer::useItem(Item *item)
 
 void LocalPlayer::dropItem(Item *item, const int quantity)
 {
+    if (!item)
+        return;
+
     // TODO: Fix wrong coordinates of drops
     MessageOut outMsg(CMSG_PLAYER_INVENTORY_DROP);
     outMsg.writeInt16(item->getInvIndex() + INVENTORY_OFFSET);
@@ -307,10 +304,13 @@ void LocalPlayer::dropItem(Item *item, const int quantity)
 
 void LocalPlayer::pickUp(FloorItem *item)
 {
-    int dx = item->getX() - mX;
-    int dy = item->getY() - mY;
+    if (!item)
+        return;
 
-    if (dx * dx + dy * dy < 4)
+    int dx = abs(item->getX() - mX);
+    int dy = abs(item->getY() - mY);
+
+    if (std::max(dx, dy) <= 1)
     {
         MessageOut outMsg(CMSG_ITEM_PICKUP);
         outMsg.writeInt32(item->getId());
@@ -486,6 +486,9 @@ void LocalPlayer::tradeReply(const bool accept)
 
 void LocalPlayer::trade(Being *being) const
 {
+    if (!being)
+        return;
+
     MessageOut outMsg(CMSG_TRADE_REQUEST);
     outMsg.writeInt32(being->getId());
 }
@@ -510,7 +513,7 @@ void LocalPlayer::attack(Being *target, const bool keep)
 
     // Must be standing and be within attack range to continue
     if (target->getType() != Being::NPC && (mAction != STAND ||
-        mAttackRange < abs(dist_x) || mAttackRange < abs(dist_y)))
+         !withinAttackRange(mTarget)))
         return;
 
     if (abs(dist_y) >= abs(dist_x))
@@ -604,15 +607,22 @@ void LocalPlayer::pickedUp(const std::string &item)
 
 bool LocalPlayer::withinAttackRange(Being *target)
 {
+    if (!target)
+        return false;
+
     const int dist_x = abs(target->mX - mX);
     const int dist_y = abs(target->mY - mY);
+    const int attack_range = getAttackRange();
 
-    return !(dist_x > getAttackRange() || dist_y > getAttackRange());
+    return !(dist_x > attack_range || dist_y > attack_range);
 }
 
 void LocalPlayer::setGotoTarget(Being *target)
 {
     setTarget(target);
+    if (!target)
+        return;
+
     mGoingToTarget = true;
     setDestination(target->mX, target->mY);
 }

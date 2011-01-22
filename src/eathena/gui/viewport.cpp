@@ -373,8 +373,7 @@ void Viewport::mousePressed(gcn::MouseEvent &event)
         {
             if (being->getType() == Being::NPC && NPC::mTalking == false)
                 static_cast<NPC*>(being)->talk();
-            else if (player_node->withinAttackRange(being) &&
-                     being->getType() != Being::NPC)
+            else if (being->getType() != Being::NPC)
             {
                 player_node->setGotoTarget(being);
                 player_node->attack(being, true);
