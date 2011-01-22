@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <algorithm>
+
 #include "flooritemmanager.h"
 
 #include "../core/map/sprite/flooritem.h"
@@ -75,4 +77,26 @@ FloorItem *FloorItemManager::findByCoordinates(const int x, const int y)
     }
 
     return NULL;
+}
+
+FloorItem *FloorItemManager::findNearestItem(const int x, const int y,
+                                             int maxdist)
+{
+    FloorItem *closestItem = NULL;
+    int dist = 0;
+
+    FloorItemIterator i;
+    for (i = mFloorItems.begin(); i != mFloorItems.end(); i++)
+    {
+        FloorItem *item = (*i);
+        int d = std::max(abs(item->getX() - x), abs(item->getY() - y));
+
+        if (d < maxdist && (d < dist || closestItem == NULL))
+        {
+            dist = d;
+            closestItem = item;
+        }
+    }
+
+    return closestItem;
 }

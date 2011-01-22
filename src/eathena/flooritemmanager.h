@@ -42,6 +42,7 @@ class FloorItemManager
 
         FloorItem* findById(const int id);
         FloorItem* findByCoordinates(const int x, const int y);
+        FloorItem *findNearestItem(const int x, const int y, int maxdist = 2);
 
     private:
         typedef std::list<FloorItem*> FloorItems;

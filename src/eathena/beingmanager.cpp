@@ -223,7 +223,7 @@ Being *BeingManager::findNearestLivingBeing(int x, int y, int maxdist,
     for (; itr != itr_end; ++itr)
     {
         Being *being = (*itr);
-        int d = abs(being->mX - x) + abs(being->mY - y);
+        int d = std::max(abs(being->mX - x), abs(being->mY - y));
 
         if ((being->getType() == type || (type == Being::UNKNOWN &&
              being->getType() != Being::WARP))
@@ -251,7 +251,7 @@ Being *BeingManager::findNearestLivingBeing(Being *aroundBeing, int maxdist,
          i != i_end; ++i)
     {
         Being *being = (*i);
-        int d = abs(being->mX - x) + abs(being->mY - y);
+        int d = std::max(abs(being->mX - x), abs(being->mY - y));
 
         if ((being->getType() == type || type == Being::UNKNOWN)
                 && (d < dist || closestBeing == NULL)   // it is closer

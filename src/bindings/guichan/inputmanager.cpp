@@ -424,23 +424,7 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                             Uint16 x = player_node->mX;
                             Uint16 y = player_node->mY;
                             FloorItem *item = floorItemManager->
-                                                  findByCoordinates(x, y);
-
-                            // If none below the player, try the tile in
-                            // front of the player
-                            if (!item)
-                            {
-                                if (player_node->getDirection() & Being::UP)
-                                    y--;
-                                if (player_node->getDirection() & Being::DOWN)
-                                    y++;
-                                if (player_node->getDirection() & Being::LEFT)
-                                    x--;
-                                if (player_node->getDirection() & Being::RIGHT)
-                                    x++;
-
-                                item = floorItemManager->findByCoordinates(x, y);
-                            }
+                                                  findNearestItem(x, y);
 
                             if (item)
                                 player_node->pickUp(item);
