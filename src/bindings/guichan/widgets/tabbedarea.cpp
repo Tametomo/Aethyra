@@ -312,7 +312,9 @@ void TabbedArea::keyPressed(gcn::KeyEvent& keyEvent)
     if (keyEvent.isConsumed() || !isFocused())
         return;
 
-    if (keyEvent.getKey().getValue() == Key::LEFT)
+    gcn::Key key = keyEvent.getKey();
+
+    if (key.getValue() == Key::LEFT)
     {
         TabContainer::iterator index = getTabIterator(mSelectedTab);
 
@@ -323,7 +325,7 @@ void TabbedArea::keyPressed(gcn::KeyEvent& keyEvent)
 
         keyEvent.consume();
     }
-    else if (keyEvent.getKey().getValue() == Key::RIGHT)
+    else if (key.getValue() == Key::RIGHT)
     {
         TabContainer::iterator index = getTabIterator(mSelectedTab);
 
@@ -331,6 +333,13 @@ void TabbedArea::keyPressed(gcn::KeyEvent& keyEvent)
             setSelectedTab((++index)->first);
         else
             setSelectedTab(mTabs.begin()->first);
+
+        keyEvent.consume();
+    }
+    else if (key.getValue() == Key::ENTER || key.getValue() == Key::SPACE)
+    {
+        if (mSelectedTab && mSelectedTab->isCloseable())
+            mSelectedTab->close();
 
         keyEvent.consume();
     }
