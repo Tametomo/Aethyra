@@ -23,6 +23,8 @@
 
 #include "effectdb.h"
 
+#include "../gui/viewport.h"
+
 #include "../../bindings/sdl/sound.h"
 
 #include "../../core/log.h"
@@ -63,6 +65,17 @@ void EffectDB::load()
             ed.id = XML::getProperty(node, "id", -1);
             ed.GFX = XML::getProperty(node, "particle", "");
             ed.SFX = XML::getProperty(node, "audio", "");
+            ed.ambient.type = ""; // since we test this, ensure it's initialized
+                                  // with something
+            if (xmlStrEqual(node->name, BAD_CAST "ambient"))
+            {
+                ed.ambient.type = XML::getProperty(node, "type", "");
+                ed.ambient.x = XML::getProperty(node, "x", 0.0f);
+                ed.ambient.y = XML::getProperty(node, "y", 0.0f);
+                ed.ambient.speedX = XML::getProperty(node, "speedx", 0.95f);
+                ed.ambient.speedY = XML::getProperty(node, "speedy", 0.95f);
+                ed.ambient.duration = XML::getProperty(node, "duration", 100);
+            }
             mEffects.push_back(ed);
         }
     }
@@ -87,6 +100,9 @@ bool EffectDB::trigger(const int id, Being* being)
         if ((*i).id == id)
         {
             rValue = true;
+
+            if ((*i).ambient.type.compare("quake") == 0)
+                viewport->shakeScreen((*i).ambient);
             if (!(*i).GFX.empty())
             {
                 Particle *selfFX;
@@ -111,6 +127,8 @@ bool EffectDB::trigger(const int id, const int x, const int y)
         {
             rValue = true;
 
+            if ((*i).ambient.type.compare("quake") == 0)
+                viewport->shakeScreen((*i).ambient);
             if (!(*i).GFX.empty())
                 particleEngine->addEffect((*i).GFX, x, y);
             if (!(*i).SFX.empty())

@@ -104,6 +104,8 @@ class Particle : public Sprite
 
         /**
          * Necessary for sorting with the other sprites.
+         *
+         * TODO: Get rid of the hardcoded offset carefully.
          */
         virtual const int getPixelY() const { return (int) (mPos.y + mPos.z) - 64; }
 

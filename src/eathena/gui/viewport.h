@@ -25,6 +25,8 @@
 
 #include <guichan/mouselistener.hpp>
 
+#include "../db/effectdb.h"
+
 #include "../../bindings/guichan/widgets/container.h"
 
 #include "../../core/map/position.h"
@@ -141,6 +143,21 @@ class Viewport : public Container, public gcn::MouseListener
          */
         bool changeMap(const std::string &mapName);
 
+        /**
+         * Makes the screen shake in a random direction
+         */
+        void shakeScreen(int intensity);
+
+        /**
+         * Makes the screen shake in a specific direction
+         */
+        void shakeScreen(AmbientEffect effect) { mShakeEffects.push_back(effect); }
+
+        /**
+         * Stops all active screen shake effects
+         */
+        void shakeScreenStop() { mShakeEffects.clear(); }
+
     private:
         /**
          * Sets the map displayed by the viewport.
@@ -160,6 +177,9 @@ class Viewport : public Container, public gcn::MouseListener
         int mTileViewX;              /**< Current viewpoint in tiles. */
         int mTileViewY;              /**< Current viewpoint in tiles. */
         bool mShowDebugPath;         /**< Show a path from player to pointer. */
+
+        typedef std::list<AmbientEffect> ShakeEffects;
+        ShakeEffects mShakeEffects;
 
         bool mPlayerFollowMouse;
         int mWalkTime;
