@@ -20,6 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <cmath>
+
 #include <guichan/actionevent.hpp>
 
 #include "minimap.h"
@@ -201,6 +203,22 @@ void Viewport::draw(gcn::Graphics *graphics)
             mPixelViewY += (player_y - mPixelViewY + yScrollRadius) /
                             yScrollLaziness;
         }
+
+        // manage shake effect
+        for (ShakeEffects::iterator i = mShakeEffects.begin();
+             i != mShakeEffects.end(); i++)
+        {
+            // apply the effect to viewport
+            mPixelViewX += i->x *= -i->speedX;
+            mPixelViewY += i->y *= -i->speedY;
+
+            // check death conditions
+            if (abs(i->x) + abs(i->y) < 1.0f || (i->duration > 0 &&
+                --i->duration == 0))
+            {
+                i = mShakeEffects.erase(i);
+            }
+        }
         lastTick++;
     }
 
@@ -288,6 +306,20 @@ void Viewport::draw(gcn::Graphics *graphics)
 
     drawChildren(g);
     mLastTick = tick_time;
+}
+
+void Viewport::shakeScreen(int intensity)
+{
+    AmbientEffect effect;
+    float direction = rand() % 628 / 100.0f; // random value between 0 and 2PI
+    effect.x = std::sin(direction) * intensity;
+    effect.y = std::cos(direction) * intensity;
+    effect.speedX = 0.95f;
+    effect.speedY = 0.95f;
+    effect.duration = 100;
+    effect.type = "quake"; // not really important, but included for
+                           // completeness
+    shakeScreen(effect);
 }
 
 void Viewport::logic()

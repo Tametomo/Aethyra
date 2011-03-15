@@ -29,9 +29,20 @@
 
 class Being;
 
+struct AmbientEffect
+{
+     float x;
+     float y;
+     float speedX;
+     float speedY;
+     unsigned duration;
+     std::string type;
+};
+
 struct EffectDescription
 {
      int id;
+     AmbientEffect ambient;
      std::string GFX;
      std::string SFX;
 };
@@ -51,14 +62,12 @@ namespace EffectDB
     void unload();
 
     /**
-     * Triggers a effect with the id, at
-     * the specified being.
+     * Triggers a effect with the id, at the specified being.
      */
     bool trigger(const int id, Being* being);
 
     /**
-     * Triggers a effect with the id, at
-     * the specified x and y coordinate.
+     * Triggers a effect with the id, at the specified x and y coordinate.
      */
     bool trigger(const int id, const int x, const int y);
 };
