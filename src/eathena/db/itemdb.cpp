@@ -20,8 +20,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <cassert>
-
 #include <libxml/tree.h>
 
 #include "itemdb.h"
@@ -172,7 +170,8 @@ void ItemDB::unload()
 
 const ItemInfo& ItemDB::get(const int id)
 {
-    assert(mLoaded);
+    if (!mLoaded)
+        load();
 
     const ItemInfoIterator i = mItemInfos.find(id);
 
@@ -187,7 +186,8 @@ const ItemInfo& ItemDB::get(const int id)
 
 const ItemInfo& ItemDB::get(const std::string &name)
 {
-    assert(mLoaded);
+    if (!mLoaded)
+        load();
 
     std::string item = name;
     const NamedItemInfoIterator i = mNamedItemInfos.find(normalize(item));
