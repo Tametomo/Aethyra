@@ -29,16 +29,37 @@
 
 #include "../../core/sound/soundeffect.h"
 
+/**
+* This will be set to true, when a music can be freed after a fade out
+* Currently used by fadeOutCallBack()
+*/
+static bool sFadingOutEnded = false;
+
+/**
+* Callback used at end of fadeout.
+* It is called by Mix_MusicFadeFinished().
+*/
+static void fadeOutCallBack()
+{
+    sFadingOutEnded = true;
+}
+
 Sound::Sound():
     mInstalled(false),
     mSfxVolume(100),
     mMusicVolume(60),
     mMusic(NULL)
 {
+    // This set up our callback function used to
+    // handle fade outs endings.
+    sFadingOutEnded = false;
+    Mix_HookMusicFinished(fadeOutCallBack);
 }
 
 Sound::~Sound()
 {
+    // Unlink the callback function.
+    Mix_HookMusicFinished(NULL);
 }
 
 void Sound::init()
@@ -118,11 +139,6 @@ void Sound::info()
     logger->log("Sound::info() Channels: %i", channels);
 }
 
-int Sound::getMaxVolume() const
-{
-    return MIX_MAX_VOLUME;
-}
-
 void Sound::setMusicVolume(int volume)
 {
     mMusicVolume = volume;
@@ -195,7 +211,7 @@ void Sound::stopMusic()
     }
 }
 
-void Sound::fadeInMusic(const std::string &path, int ms)
+void Sound::fadeInMusic(const std::string &path, const int ms)
 {
     mCurrentMusicFile = path;
 
@@ -208,7 +224,7 @@ void Sound::fadeInMusic(const std::string &path, int ms)
         Mix_FadeInMusic(mMusic, -1, ms); // Loop forever
 }
 
-void Sound::fadeOutMusic(int ms)
+void Sound::fadeOutMusic(const int ms)
 {
     if (!mInstalled)
         return;
@@ -218,8 +234,37 @@ void Sound::fadeOutMusic(int ms)
     if (mMusic)
     {
         Mix_FadeOutMusic(ms);
-        Mix_FreeMusic(mMusic);
-        mMusic = NULL;
+        // Note: The fadeOutCallBack handler will take care about freeing
+        // the music file at fade out ending.
+    }
+    else
+    {
+        sFadingOutEnded = true;
+    }
+}
+
+void Sound::fadeOutAndPlayMusic(const std::string &path, const int ms)
+{
+    mNextMusicPath = path;
+    fadeOutMusic(ms);
+}
+
+void Sound::logic()
+{
+    if (sFadingOutEnded)
+    {
+        if (mMusic)
+        {
+            Mix_FreeMusic(mMusic);
+            mMusic = NULL;
+        }
+        sFadingOutEnded = false;
+
+        if (!mNextMusicPath.empty())
+        {
+            playMusic(mNextMusicPath);
+            mNextMusicPath.clear();
+        }
     }
 }
 

@@ -533,7 +533,12 @@ bool Viewport::changeMap(const std::string &path)
     std::string newMusic = newMap ? newMap->getMusicFile() : "";
 
     if (newMusic != oldMusic)
-        sound.playMusic(newMusic);
+    {
+        if (newMusic.empty())
+            sound.fadeOutMusic();
+        else
+            sound.fadeOutAndPlayMusic(newMusic);
+    }
 
     if (mCurrentMap)
         destroy(mCurrentMap);

@@ -461,6 +461,8 @@ void StateManager::logic()
     inputManager->handleInput();
     gui->logic();
 
+    sound.logic();
+
     if (network)
     {
         Network::NetState netState = network->getState();
