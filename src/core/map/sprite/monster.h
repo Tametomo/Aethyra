@@ -31,7 +31,7 @@ class Text;
 class Monster : public Being
 {
     public:
-        Monster(const int id, const Uint16 &job, Map *map);
+        Monster(const int id, const uint16_t &job, Map *map);
 
         ~Monster();
 

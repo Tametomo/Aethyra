@@ -147,7 +147,7 @@ static const char *randomDeathMessage()
 
 PlayerHandler::PlayerHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_WALK_RESPONSE,
         SMSG_PLAYER_WARP,
         SMSG_PLAYER_STAT_UPDATE_1,
@@ -180,8 +180,8 @@ void PlayerHandler::handleMessage(MessageIn *msg)
             {
                 std::string mapPath = msg->readString(16);
                 bool nearby;
-                Uint16 x = msg->readInt16();
-                Uint16 y = msg->readInt16();
+                uint16_t x = msg->readInt16();
+                uint16_t y = msg->readInt16();
 
                 logger->log("Warping to %s (%d, %d)", mapPath.c_str(), x, y);
 
@@ -289,7 +289,7 @@ void PlayerHandler::handleMessage(MessageIn *msg)
                     break;
                 case 0x0014:
                     {
-                        Uint32 curGp = player_node->mGp;
+                        uint32_t curGp = player_node->mGp;
                         player_node->mGp = msg->readInt32();
                         if (player_node->mGp > curGp)
                             chatWindow->chatLog(strprintf(

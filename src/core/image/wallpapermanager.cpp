@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <cstring>
 #include <physfs.h>
+#include <stdint.h>
 
 #include "wallpapermanager.h"
 
@@ -41,8 +42,8 @@ namespace
 }
 
 struct wallpaper {
-    Uint16 width;
-    Uint16 height;
+    uint16_t width;
+    uint16_t height;
 };
 
 std::vector<struct wallpaper> wallpapers;

@@ -25,7 +25,7 @@
 
 #include <guichan/color.hpp>
 
-#include <SDL_types.h>
+#include <stdint.h>
 
 #include <string>
 #include <vector>
@@ -144,8 +144,8 @@ class Being : public Sprite
             RIGHT = 8
         };
 
-        Uint16 mJob;          /**< Job (player job, npc, monster, ) */
-        Uint16 mX, mY;        /**< Tile coordinates */
+        uint16_t mJob;          /**< Job (player job, npc, monster, ) */
+        uint16_t mX, mY;        /**< Tile coordinates */
         Action mAction;       /**< Action the being is performing */
         int mFrame;
         int mWalkTime;
@@ -178,7 +178,7 @@ class Being : public Sprite
         /**
          * Sets a new destination for this being to walk to.
          */
-        virtual void setDestination(const Uint16 &destX, const Uint16 &destY);
+        virtual void setDestination(const uint16_t &destX, const uint16_t &destY);
 
         /**
          * Puts a "speech balloon" above this being for the specified amount
@@ -286,12 +286,12 @@ class Being : public Sprite
         /**
          * Gets the walk speed.
          */
-        Uint16 getWalkSpeed() const { return mWalkSpeed; }
+        uint16_t getWalkSpeed() const { return mWalkSpeed; }
 
         /**
          * Sets the walk speed.
          */
-        void setWalkSpeed(const Uint16 &speed);
+        void setWalkSpeed(const uint16_t &speed);
 
         /**
          * Gets the sprite id.
@@ -316,12 +316,12 @@ class Being : public Sprite
         /**
          * Returns the current direction.
          */
-        Uint8 getDirection() const { return mDirection; }
+        uint8_t getDirection() const { return mDirection; }
 
         /**
          * Sets the current direction.
          */
-        virtual void setDirection(const Uint8 &direction);
+        virtual void setDirection(const uint8_t &direction);
 
         /**
          * Gets the current action.
@@ -394,7 +394,7 @@ class Being : public Sprite
          */
         void untarget() { mUsedTargetCursor = NULL; }
 
-        void setEmote(const Uint8 &emotion, const Uint8 &emote_time)
+        void setEmote(const uint8_t &emotion, const uint8_t &emote_time)
         {
             mEmotion = emotion;
             mEmotionTime = emote_time;
@@ -417,8 +417,8 @@ class Being : public Sprite
         virtual void updateCoords() {}
 
         int mId;                        /**< Unique sprite id */
-        Uint16 mWalkSpeed;              /**< Walking speed */
-        Uint8 mDirection;               /**< Facing direction */
+        uint16_t mWalkSpeed;              /**< Walking speed */
+        uint8_t mDirection;               /**< Facing direction */
         Map *mMap;                      /**< Map on which this being resides */
         std::string mName;              /**< Name of character */
         SpriteIterator mSpriteIterator;
@@ -432,7 +432,7 @@ class Being : public Sprite
         std::string mSpeech;
         std::string mOldSpeech;
         Text *mText;
-        Uint16 mHairStyle, mHairColor;
+        uint16_t mHairStyle, mHairColor;
         Gender mGender;
         int mPx, mPy;                   /**< Pixel coordinates */
 

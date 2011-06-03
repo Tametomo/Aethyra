@@ -37,35 +37,35 @@ MessageOut::MessageOut(short id):
     writeInt16(id);
 }
 
-void MessageOut::writeInt8(Sint8 value)
+void MessageOut::writeInt8(int8_t value)
 {
     mData[mPos] = value;
-    mPos += sizeof(Sint8);
-    network->mOutSize += sizeof(Sint8);
+    mPos += sizeof(int8_t);
+    network->mOutSize += sizeof(int8_t);
 }
 
-void MessageOut::writeInt16(Sint16 value)
+void MessageOut::writeInt16(int16_t value)
 {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    Sint16 swap = SDL_Swap16(value);
-    memcpy(mData + mPos, &swap, sizeof(Sint16));
+    int16_t swap = SDL_Swap16(value);
+    memcpy(mData + mPos, &swap, sizeof(int16_t));
 #else
-    memcpy(mData + mPos, &value, sizeof(Sint16));
+    memcpy(mData + mPos, &value, sizeof(int16_t));
 #endif
-    mPos += sizeof(Sint16);
-    network->mOutSize += sizeof(Sint16);
+    mPos += sizeof(int16_t);
+    network->mOutSize += sizeof(int16_t);
 }
 
-void MessageOut::writeInt32(Sint32 value)
+void MessageOut::writeInt32(int32_t value)
 {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    Sint32 swap = SDL_Swap32(value);
-    memcpy(mData + mPos, &swap, sizeof(Sint32));
+    int32_t swap = SDL_Swap32(value);
+    memcpy(mData + mPos, &swap, sizeof(int32_t));
 #else
-    memcpy(mData + mPos, &value, sizeof(Sint32));
+    memcpy(mData + mPos, &value, sizeof(int32_t));
 #endif
-    mPos += sizeof(Sint32);
-    network->mOutSize += sizeof(Sint32);
+    mPos += sizeof(int32_t);
+    network->mOutSize += sizeof(int32_t);
 }
 
 #define LOBYTE(w)  ((unsigned char)(w))
@@ -154,19 +154,19 @@ void MessageOut::writeString(const std::string &string, int length)
     }
 }
 
-MessageOut& operator<<(MessageOut &msg, const Sint8 &rhs)
+MessageOut& operator<<(MessageOut &msg, const int8_t &rhs)
 {
     msg.writeInt8(rhs);
     return msg;
 }
 
-MessageOut& operator<<(MessageOut &msg, const Sint16 &rhs)
+MessageOut& operator<<(MessageOut &msg, const int16_t &rhs)
 {
     msg.writeInt16(rhs);
     return msg;
 }
 
-MessageOut& operator<<(MessageOut &msg, const Sint32 &rhs)
+MessageOut& operator<<(MessageOut &msg, const int32_t &rhs)
 {
     msg.writeInt32(rhs);
     return msg;

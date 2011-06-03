@@ -21,7 +21,7 @@
  */
 
 #include <iostream>
-#include <SDL_types.h>
+#include <stdint.h>
 
 #include "beinghandler.h"
 #include "messagein.h"
@@ -45,7 +45,7 @@ const int EMOTION_TIME = 150;    /**< Duration of emotion icon */
 BeingHandler::BeingHandler(bool enableSync):
    mSync(enableSync)
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_BEING_VISIBLE,
         SMSG_BEING_MOVE,
         SMSG_BEING_MOVE2,
@@ -71,11 +71,11 @@ BeingHandler::BeingHandler(bool enableSync):
 void BeingHandler::handleMessage(MessageIn *msg)
 {
     int id;
-    Uint16 job, speed;
-    Uint16 headTop, headMid, headBottom;
-    Uint16 shoes, gloves, cape, misc1, misc2;
-    Uint16 weapon, shield;
-    Uint16 gmstatus;
+    uint16_t job, speed;
+    uint16_t headTop, headMid, headBottom;
+    uint16_t shoes, gloves, cape, misc1, misc2;
+    uint16_t weapon, shield;
+    uint16_t gmstatus;
     int param1;
     int type;
     Being *srcBeing, *dstBeing;
@@ -150,7 +150,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
 
             if (msg->getId() == SMSG_BEING_MOVE)
             {
-                Uint16 srcX, srcY, dstX, dstY;
+                uint16_t srcX, srcY, dstX, dstY;
                 msg->readCoordinatePair(srcX, srcY, dstX, dstY);
                 dstBeing->setAction(Being::STAND);
                 dstBeing->mX = srcX;
@@ -159,7 +159,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
             }
             else
             {
-                Uint8 dir;
+                uint8_t dir;
                 msg->readCoordinates(dstBeing->mX, dstBeing->mY, dir);
                 dstBeing->setDirection(dir);
             }
@@ -177,7 +177,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
              */
             dstBeing = beingManager->findBeing(msg->readInt32());
 
-            Uint16 srcX, srcY, dstX, dstY;
+            uint16_t srcX, srcY, dstX, dstY;
             msg->readCoordinatePair(srcX, srcY, dstX, dstY);
             msg->readInt32();  // Server tick
 
@@ -265,7 +265,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
 
         case SMSG_BEING_SELFEFFECT:
         {
-            id = (Uint32)msg->readInt32();
+            id = (uint32_t)msg->readInt32();
             if (!beingManager->findBeing(id))
                 break;
 
@@ -437,7 +437,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
 
             if (msg->getId() == SMSG_PLAYER_MOVE)
             {
-                Uint16 srcX, srcY, dstX, dstY;
+                uint16_t srcX, srcY, dstX, dstY;
                 msg->readCoordinatePair(srcX, srcY, dstX, dstY);
                 dstBeing->mX = srcX;
                 dstBeing->mY = srcY;
@@ -445,7 +445,7 @@ void BeingHandler::handleMessage(MessageIn *msg)
             }
             else
             {
-                Uint8 dir;
+                uint8_t dir;
                 msg->readCoordinates(dstBeing->mX, dstBeing->mY, dir);
                 dstBeing->setDirection(dir);
             }

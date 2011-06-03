@@ -20,7 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <SDL_types.h>
+#include <stdint.h>
 #include <string>
 
 #include "chathandler.h"
@@ -43,7 +43,7 @@
 
 ChatHandler::ChatHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_BEING_CHAT,
         SMSG_PLAYER_CHAT,
         SMSG_WHISPER,

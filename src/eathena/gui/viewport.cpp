@@ -330,7 +330,7 @@ void Viewport::logic()
     const int mouseY = gui->getMouseY();
     const int tileWidth = mCurrentMap->getTileWidth();
     const int tileHeight = mCurrentMap->getTileHeight();
-    const Uint8 button = gui->getButtonState();
+    const uint8_t button = gui->getButtonState();
 
     if (!mCurrentMap || !player_node)
         return;

@@ -43,7 +43,7 @@
 
 MapLoginHandler::MapLoginHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_CONNECTION_PROBLEM,
         SMSG_LOGIN_SUCCESS,
         0

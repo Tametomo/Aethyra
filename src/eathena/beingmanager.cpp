@@ -37,14 +37,14 @@ class FindBeingFunctor
     public:
         bool operator() (Being *being)
         {
-            Uint16 other_y = y + ((being->getType() == Being::NPC) ? 1 : 0);
+            uint16_t other_y = y + ((being->getType() == Being::NPC) ? 1 : 0);
             return (being->mX == x &&
                     (being->mY == y || being->mY == other_y) &&
                     being->mAction != Being::DEAD &&
                     (type == Being::UNKNOWN || being->getType() == type));
         }
 
-        Uint16 x, y;
+        uint16_t x, y;
         Being::Type type;
 } beingFinder;
 
@@ -79,7 +79,7 @@ void BeingManager::setPlayer(LocalPlayer *player)
     mBeings.push_back(player);
 }
 
-Being *BeingManager::createBeing(int id, Uint16 job)
+Being *BeingManager::createBeing(int id, uint16_t job)
 {
     Being *being;
 

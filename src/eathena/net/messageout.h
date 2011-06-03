@@ -24,16 +24,16 @@
 #define MESSAGEOUT_
 
 #include <iosfwd>
-#include <SDL_types.h>
+#include <stdint.h>
 
 /**
  * Used for building an outgoing message.
  */
 class MessageOut
 {
-    friend MessageOut& operator<<(MessageOut &msg, const Sint8 &rhs);
-    friend MessageOut& operator<<(MessageOut &msg, const Sint16 &rhs);
-    friend MessageOut& operator<<(MessageOut &msg, const Sint32 &rhs);
+    friend MessageOut& operator<<(MessageOut &msg, const int8_t &rhs);
+    friend MessageOut& operator<<(MessageOut &msg, const int16_t &rhs);
+    friend MessageOut& operator<<(MessageOut &msg, const int32_t &rhs);
 
     public:
         /**
@@ -41,9 +41,9 @@ class MessageOut
          */
         MessageOut(short id);
 
-        void writeInt8(Sint8 value);          /**< Writes a byte. */
-        void writeInt16(Sint16 value);        /**< Writes a short. */
-        void writeInt32(Sint32 value);          /**< Writes a long. */
+        void writeInt8(int8_t value);          /**< Writes a byte. */
+        void writeInt16(int16_t value);        /**< Writes a short. */
+        void writeInt32(int32_t value);          /**< Writes a long. */
 
         /**
          * Encodes coordinates and direction in 3 bytes. Used by eAthena.

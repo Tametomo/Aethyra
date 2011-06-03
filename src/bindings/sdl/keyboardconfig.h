@@ -23,8 +23,7 @@
 #ifndef KEYBOARDCONFIG_H
 #define KEYBOARDCONFIG_H
 
-#include <SDL_types.h>
-
+#include <stdint.h>
 #include <list>
 #include <string>
 #include <utility>
@@ -240,7 +239,7 @@ class KeyboardConfig
 
         KeyFunction mKey[KEY_TOTAL];   /**< Pointer to all the key data */
 
-        Uint8 *mActiveKeys;            /**< Stores a list of all the keys */
+        uint8_t *mActiveKeys;            /**< Stores a list of all the keys */
 };
 
 extern KeyboardConfig keyboard;

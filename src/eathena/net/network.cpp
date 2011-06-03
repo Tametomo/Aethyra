@@ -178,13 +178,13 @@ void Network::disconnect()
 
 void Network::registerHandler(MessageHandler *handler)
 {
-    for (const Uint16 *i = handler->handledMessages; *i; i++)
+    for (const uint16_t *i = handler->handledMessages; *i; i++)
         mMessageHandlers[*i] = handler;
 }
 
 void Network::unregisterHandler(MessageHandler *handler)
 {
-    for (const Uint16 *i = handler->handledMessages; *i; i++)
+    for (const uint16_t *i = handler->handledMessages; *i; i++)
         mMessageHandlers.erase(*i);
 }
 
@@ -360,7 +360,7 @@ void Network::receive()
 
 void Network::realReceive(SDLNet_SocketSet &set)
 {
-    int numReady = SDLNet_CheckSockets(set, ((Uint32)500));
+    int numReady = SDLNet_CheckSockets(set, ((uint32_t)500));
     int ret;
     switch (numReady)
     {
@@ -441,11 +441,11 @@ void Network::fatal(const std::string &error)
     clearHandlers();
 }
 
-Uint16 Network::readWord(int pos)
+uint16_t Network::readWord(int pos)
 {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    return SDL_Swap16((*(Uint16*)(mInBuffer+(pos))));
+    return SDL_Swap16((*(uint16_t*)(mInBuffer+(pos))));
 #else
-    return (*(Uint16*)(mInBuffer+(pos)));
+    return (*(uint16_t*)(mInBuffer+(pos)));
 #endif
 }

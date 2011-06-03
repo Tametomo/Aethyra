@@ -23,12 +23,11 @@
 #ifndef PROGRESSBAR_H
 #define PROGRESSBAR_H
 
+#include <stdint.h>
 #include <string>
 #include <vector>
 
 #include <guichan/widget.hpp>
-
-#include <SDL_types.h>
 
 #include "../guichanfwd.h"
 
@@ -75,7 +74,7 @@ class ProgressBar : public gcn::Widget
          *
          * This is an overloaded version added for convenience.
          */
-        void addColor(Uint8, Uint8 green, Uint8 blue);
+        void addColor(uint8_t, uint8_t green, uint8_t blue);
 
         /**
          * Sets the current progress.

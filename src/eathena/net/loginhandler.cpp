@@ -39,7 +39,7 @@ SERVER_INFO **server_info;
 
 LoginHandler::LoginHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_CONNECTION_PROBLEM,
         SMSG_UPDATE_HOST,
         0x0069,

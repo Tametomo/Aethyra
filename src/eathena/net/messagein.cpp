@@ -50,15 +50,15 @@ int MessageIn::readInt8()
 
 int MessageIn::readInt16()
 {
-    Sint16 value = -1;
+    int16_t value = -1;
     if (mPos + 2 <= mLength)
     {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-        Sint16 swap;
-        memcpy(&swap, mData + mPos, sizeof(Sint16));
+        int16_t swap;
+        memcpy(&swap, mData + mPos, sizeof(int16_t));
         value = SDL_Swap16(swap);
 #else
-        memcpy(&value, mData + mPos, sizeof(Sint16));
+        memcpy(&value, mData + mPos, sizeof(int16_t));
 #endif
     }
     mPos += 2;
@@ -67,27 +67,27 @@ int MessageIn::readInt16()
 
 int MessageIn::readInt32()
 {
-    Sint32 value = -1;
+    int32_t value = -1;
     if (mPos + 4 <= mLength)
     {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-        Sint32 swap;
-        memcpy(&swap, mData + mPos, sizeof(Sint32));
+        int32_t swap;
+        memcpy(&swap, mData + mPos, sizeof(int32_t));
         value = SDL_Swap32(swap);
 #else
-        memcpy(&value, mData + mPos, sizeof(Sint32));
+        memcpy(&value, mData + mPos, sizeof(int32_t));
 #endif
     }
     mPos += 4;
     return value;
 }
 
-void MessageIn::readCoordinates(Uint16 &x, Uint16 &y, Uint8 &direction)
+void MessageIn::readCoordinates(uint16_t &x, uint16_t &y, uint8_t &direction)
 {
     if (mPos + 3 <= mLength)
     {
         const char *data = mData + mPos;
-        Sint16 temp;
+        int16_t temp;
 
         temp = MAKEWORD(data[1] & 0x00c0, data[0] & 0x00ff);
         x = temp >> 6;
@@ -131,13 +131,13 @@ void MessageIn::readCoordinates(Uint16 &x, Uint16 &y, Uint8 &direction)
     mPos += 3;
 }
 
-void MessageIn::readCoordinatePair(Uint16 &srcX, Uint16 &srcY,
-                                   Uint16 &dstX, Uint16 &dstY)
+void MessageIn::readCoordinatePair(uint16_t &srcX, uint16_t &srcY,
+                                   uint16_t &dstX, uint16_t &dstY)
 {
     if (mPos + 5 <= mLength)
     {
         const char *data = mData + mPos;
-        Sint16 temp;
+        int16_t temp;
 
         temp = MAKEWORD(data[3], data[2] & 0x000f);
         dstX = temp >> 2;

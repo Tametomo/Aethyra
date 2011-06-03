@@ -30,7 +30,7 @@
 
 ItemHandler::ItemHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_ITEM_VISIBLE,
         SMSG_ITEM_DROPPED,
         SMSG_ITEM_REMOVE,
@@ -41,8 +41,8 @@ ItemHandler::ItemHandler()
 
 void ItemHandler::handleMessage(MessageIn *msg)
 {
-    Uint32 id;
-    Uint16 x, y;
+    uint32_t id;
+    uint16_t x, y;
     int itemId;
 
     switch (msg->getId())

@@ -25,7 +25,7 @@
 
 #include <guichan/selectionlistener.hpp>
 
-#include <SDL_types.h>
+#include <stdint.h>
 
 #include "../../bindings/guichan/widgets/window.h"
 
@@ -123,9 +123,9 @@ class BuyDialog : public Window, public gcn::SelectionListener
 
         ShopListModel *mShopListModel;
 
-        Uint32 mMoney;
-        Uint32 mAmountItems;
-        Uint32 mMaxItems;
+        uint32_t mMoney;
+        uint32_t mAmountItems;
+        uint32_t mMaxItems;
 };
 
 extern BuyDialog *buyDialog;

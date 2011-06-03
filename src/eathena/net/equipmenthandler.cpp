@@ -42,7 +42,7 @@ enum { debugEquipment = 1 };
 
 EquipmentHandler::EquipmentHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_PLAYER_EQUIPMENT,
         SMSG_PLAYER_EQUIP,
         SMSG_PLAYER_UNEQUIP,

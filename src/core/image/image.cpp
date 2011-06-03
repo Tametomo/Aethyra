@@ -40,7 +40,7 @@ int Image::mTextureType = 0;
 int Image::mTextureSize = 0;
 #endif
 
-Image::Image(SDL_Surface *image, Uint8* alphas):
+Image::Image(SDL_Surface *image, uint8_t* alphas):
     mStoredAlpha(alphas),
 #ifdef USE_OPENGL
     mGLImage(0),
@@ -119,8 +119,8 @@ Resource *Image::load(void *buffer, unsigned bufferSize, const Dye &dye)
     SDL_Surface *surf = SDL_ConvertSurface(tmpImage, &rgba, SDL_SWSURFACE);
     SDL_FreeSurface(tmpImage);
 
-    Uint32 *pixels = static_cast< Uint32 * >(surf->pixels);
-    for (Uint32 *p_end = pixels + surf->w * surf->h; pixels != p_end; ++pixels)
+    uint32_t *pixels = static_cast<uint32_t* >(surf->pixels);
+    for (uint32_t *p_end = pixels + surf->w * surf->h; pixels != p_end; ++pixels)
     {
         int alpha = *pixels & 255;
         if (!alpha)
@@ -167,7 +167,7 @@ Image *Image::load(SDL_Surface *tmpImage)
         SDL_SetAlpha(tmpImage, 0, SDL_ALPHA_OPAQUE);
 
         // Determine 32-bit masks based on byte order
-        Uint32 rmask, gmask, bmask, amask;
+        uint32_t rmask, gmask, bmask, amask;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
         rmask = 0xff000000;
         gmask = 0x00ff0000;
@@ -246,14 +246,14 @@ Image *Image::load(SDL_Surface *tmpImage)
 
     bool hasAlpha = false;
 
-    Uint8* imageAlphas = new Uint8[tmpImage->w * tmpImage->h];
+    uint8_t* imageAlphas = new uint8_t[tmpImage->w * tmpImage->h];
     if (tmpImage->format->BitsPerPixel == 32)
     {
         // Figure out whether the image uses its alpha layer
         for (int i = 0; i < tmpImage->w * tmpImage->h; ++i)
         {
-            Uint8 r, g, b, a;
-            SDL_GetRGBA(((Uint32*) tmpImage->pixels)[i],
+            uint8_t r, g, b, a;
+            SDL_GetRGBA(((uint32_t*) tmpImage->pixels)[i],
                           tmpImage->format, &r, &g, &b, &a);
 
             imageAlphas[i] = a;
@@ -315,21 +315,21 @@ Image* Image::resize(const int width, const int height)
     if (mImage)
     {
         SDL_Surface* scaledSurface = NULL;
-        Uint8* imageAlphas = NULL;
+        uint8_t* imageAlphas = NULL;
 
         const double scaleX = (double) width / (double) getWidth();
         const double scaleY = (double) height / (double) getHeight();
 
         scaledSurface = zoomSurface(mImage, scaleX, scaleY, 1);
 
-        imageAlphas = new Uint8[scaledSurface->w * scaledSurface->h];
+        imageAlphas = new uint8_t[scaledSurface->w * scaledSurface->h];
         if (scaledSurface->format->BitsPerPixel == 32)
         {
             // Recalculate the alpha layers
             for (int i = 0; i < scaledSurface->w * scaledSurface->h; ++i)
             {
-                Uint8 r, g, b, a;
-                SDL_GetRGBA(((Uint32*) scaledSurface->pixels)[i],
+                uint8_t r, g, b, a;
+                SDL_GetRGBA(((uint32_t*) scaledSurface->pixels)[i],
                               scaledSurface->format, &r, &g, &b, &a);
 
                 imageAlphas[i] = a;
@@ -374,14 +374,14 @@ void Image::setAlpha(float alpha)
         // Set the alpha value this image is drawn at, pixel by pixel
         for (int i = 0; i < mImage->w * mImage->h; i++)
         {
-            Uint8 r, g, b, a;
-            SDL_GetRGBA(((Uint32*) mImage->pixels)[i], mImage->format, &r, 
-                                                       &g, &b, &a);
+            uint8_t r, g, b, a;
+            SDL_GetRGBA(((uint32_t*) mImage->pixels)[i], mImage->format, &r, 
+                                                         &g, &b, &a);
 
-            a = (Uint8) (mStoredAlpha[i] * mAlpha);
+            a = (uint8_t) (mStoredAlpha[i] * mAlpha);
 
-            ((Uint32 *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format, r,
-                                                          g, b, a);
+            ((uint32_t *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format, r,
+                                                            g, b, a);
         }
 
         if (SDL_MUSTLOCK(mImage))
@@ -393,8 +393,8 @@ Image* Image::merge(Image* image, const int x, const int y)
 {
     SDL_Surface* surface = new SDL_Surface(*(image->mImage));
 
-    Uint32 surface_pix, cur_pix;
-    Uint8 r, g, b, a, p_r, p_g, p_b, p_a;
+    uint32_t surface_pix, cur_pix;
+    uint8_t r, g, b, a, p_r, p_g, p_b, p_a;
     double f_a, f_ca, f_pa;
     SDL_PixelFormat *current_fmt = mImage->format;
     SDL_PixelFormat *surface_fmt = surface->format;
@@ -419,43 +419,43 @@ Image* Image::merge(Image* image, const int x, const int y)
             surface_offset = offsetY * surface->w + offsetX;
 
             // Retrieving a pixel to merge
-            surface_pix = ((Uint32*) surface->pixels)[surface_offset];
-            cur_pix = ((Uint32*) mImage->pixels)[current_offset];
+            surface_pix = ((uint32_t*) surface->pixels)[surface_offset];
+            cur_pix = ((uint32_t*) mImage->pixels)[current_offset];
 
             // Retreiving each channel of the pixel using pixel format
-            r = (Uint8)(((surface_pix & surface_fmt->Rmask) >> 
-                          surface_fmt->Rshift) << surface_fmt->Rloss);
-            g = (Uint8)(((surface_pix & surface_fmt->Gmask) >>
-                          surface_fmt->Gshift) << surface_fmt->Gloss);
-            b = (Uint8)(((surface_pix & surface_fmt->Bmask) >>
-                          surface_fmt->Bshift) << surface_fmt->Bloss);
-            a = (Uint8)(((surface_pix & surface_fmt->Amask) >>
-                          surface_fmt->Ashift) << surface_fmt->Aloss);
+            r = (uint8_t)(((surface_pix & surface_fmt->Rmask) >> 
+                            surface_fmt->Rshift) << surface_fmt->Rloss);
+            g = (uint8_t)(((surface_pix & surface_fmt->Gmask) >>
+                            surface_fmt->Gshift) << surface_fmt->Gloss);
+            b = (uint8_t)(((surface_pix & surface_fmt->Bmask) >>
+                            surface_fmt->Bshift) << surface_fmt->Bloss);
+            a = (uint8_t)(((surface_pix & surface_fmt->Amask) >>
+                            surface_fmt->Ashift) << surface_fmt->Aloss);
 
             // Retreiving previous alpha value
-            p_a = (Uint8)(((cur_pix & current_fmt->Amask) >>
+            p_a = (uint8_t)(((cur_pix & current_fmt->Amask) >>
                             current_fmt->Ashift) << current_fmt->Aloss);
 
             // new pixel with no alpha or nothing on previous pixel
             if (a == SDL_ALPHA_OPAQUE || (p_a == 0 && a > 0))
-                ((Uint32 *)(surface->pixels))[current_offset] = 
+                ((uint32_t *)(surface->pixels))[current_offset] = 
                     SDL_MapRGBA(current_fmt, r, g, b, a);
             else if (a > 0) 
             { // alpha is lower => merge color with previous value
                 f_a = (double) a / 255.0;
                 f_ca = 1.0 - f_a;
                 f_pa = (double) p_a / 255.0;
-                p_r = (Uint8)(((cur_pix & current_fmt->Rmask) >> 
-                                current_fmt->Rshift) << current_fmt->Rloss);
-                p_g = (Uint8)(((cur_pix & current_fmt->Gmask) >>
-                                current_fmt->Gshift) << current_fmt->Gloss);
-                p_b = (Uint8)(((cur_pix & current_fmt->Bmask) >>
-                                current_fmt->Bshift) << current_fmt->Bloss);
-                r = (Uint8)((double) p_r * f_ca * f_pa + (double)r * f_a);
-                g = (Uint8)((double) p_g * f_ca * f_pa + (double)g * f_a);
-                b = (Uint8)((double) p_b * f_ca * f_pa + (double)b * f_a);
+                p_r = (uint8_t)(((cur_pix & current_fmt->Rmask) >> 
+                                  current_fmt->Rshift) << current_fmt->Rloss);
+                p_g = (uint8_t)(((cur_pix & current_fmt->Gmask) >>
+                                  current_fmt->Gshift) << current_fmt->Gloss);
+                p_b = (uint8_t)(((cur_pix & current_fmt->Bmask) >>
+                                  current_fmt->Bshift) << current_fmt->Bloss);
+                r = (uint8_t)((double) p_r * f_ca * f_pa + (double)r * f_a);
+                g = (uint8_t)((double) p_g * f_ca * f_pa + (double)g * f_a);
+                b = (uint8_t)((double) p_b * f_ca * f_pa + (double)b * f_a);
                 a = (a > p_a ? a : p_a);
-               ((Uint32 *)(surface->pixels))[current_offset] =
+               ((uint32_t *)(surface->pixels))[current_offset] =
                    SDL_MapRGBA(current_fmt, r, g, b, a);
             }
         }
@@ -574,14 +574,14 @@ void SubImage::setAlpha(float alpha)
             {
                 int i = (offsetY + mBounds.y) * mParent->getWidth() + offsetX +
                         mBounds.x;
-                Uint8 r, g, b, a;
-                SDL_GetRGBA(((Uint32*) mImage->pixels)[i], mImage->format, &r, 
-                                                           &g, &b, &a);
+                uint8_t r, g, b, a;
+                SDL_GetRGBA(((uint32_t*) mImage->pixels)[i], mImage->format, &r, 
+                            &g, &b, &a);
 
-                a = (Uint8) (mParent->mStoredAlpha[i] * mAlpha);
+                a = (uint8_t) (mParent->mStoredAlpha[i] * mAlpha);
 
-                ((Uint32 *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format, r,
-                                                              g, b, a);
+                ((uint32_t *)(mImage->pixels))[i] = SDL_MapRGBA(mImage->format,
+                                                                r, g, b, a);
             }
         }
         if (SDL_MUSTLOCK(mImage))

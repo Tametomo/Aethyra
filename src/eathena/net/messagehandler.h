@@ -23,14 +23,14 @@
 #ifndef NET_MESSAGEHANDLER_H
 #define NET_MESSAGEHANDLER_H
 
-#include <SDL_types.h>
+#include <stdint.h>
 
 class MessageIn;
 
 class MessageHandler
 {
     public:
-        const Uint16 *handledMessages;
+        const uint16_t *handledMessages;
 
         MessageHandler();
         virtual ~MessageHandler();

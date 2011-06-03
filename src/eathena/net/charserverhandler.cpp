@@ -44,7 +44,7 @@
 
 CharServerHandler::CharServerHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_CONNECTION_PROBLEM,
         0x006b,
         0x006c,

@@ -20,8 +20,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <SDL_types.h>
-
 #include "messagein.h"
 #include "npchandler.h"
 #include "protocol.h"
@@ -37,7 +35,7 @@
 
 NPCHandler::NPCHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_NPC_CHOICE,
         SMSG_NPC_MESSAGE,
         SMSG_NPC_NEXT,

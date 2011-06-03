@@ -67,7 +67,7 @@ static void printHelp()
               << _("Default (OpenGL has been disabled at build time)")
               << std::endl
 #endif
-              << "  -v --version\t\t:" << _("Display the version") << std::endl
+              << "  -v --version\t\t: " << _("Display the version") << std::endl
               << std::endl
               << strprintf(_("Report bugs at: %s"),
                              "http://www.aethyra.com/mantis") << std::endl

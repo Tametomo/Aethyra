@@ -96,7 +96,7 @@ class Network
 
         void fatal(const std::string &error);
 
-        Uint16 readWord(int pos);
+        uint16_t readWord(int pos);
 
         bool realConnect();
 
@@ -120,7 +120,7 @@ class Network
         SDL_Thread *mWorkerThread;
         Mutex mMutex;
 
-        typedef std::map<Uint16, MessageHandler*> MessageHandlers;
+        typedef std::map<uint16_t, MessageHandler*> MessageHandlers;
         typedef MessageHandlers::iterator MessageHandlerIterator;
         MessageHandlers mMessageHandlers;
 };

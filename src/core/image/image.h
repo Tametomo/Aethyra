@@ -175,7 +175,7 @@ class Image : public Resource
          * Returns the current alpha value at a given pixel. Used to compute
          * what the alpha value should be for a given pixel in SDL mode.
          */
-        Uint8* mStoredAlpha;
+        uint8_t* mStoredAlpha;
 
         /**
          * Constructor.
@@ -189,7 +189,7 @@ class Image : public Resource
          */
         static int powerOfTwo(const int input);
 #endif
-        Image(SDL_Surface *image, Uint8* alphas = NULL);
+        Image(SDL_Surface *image, uint8_t* alphas = NULL);
 
         SDL_Rect mBounds;
         bool mLoaded;

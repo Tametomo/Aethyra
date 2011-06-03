@@ -144,8 +144,8 @@ void InputManager::handleJoystickInput(const SDL_Event &event)
     }
     else if (player_node && player_node->mAction != Being::DEAD)
     {
-        const Uint16 x = player_node->mX;
-        const Uint16 y = player_node->mY;
+        const uint16_t x = player_node->mX;
+        const uint16_t y = player_node->mY;
 
         if (!keyboard.isKeyActive(keyboard.KEY_CLEAR_TARGET))
         {
@@ -353,8 +353,8 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
             if (player_node && player_node->mAction != Being::DEAD)
             {
                 Being *target = player_node->getTarget();
-                const Uint16 x = player_node->mX;
-                const Uint16 y = player_node->mY;
+                const uint16_t x = player_node->mX;
+                const uint16_t y = player_node->mY;
 
                 if (!keyboard.isKeyActive(keyboard.KEY_CLEAR_TARGET))
                 {
@@ -421,8 +421,8 @@ bool InputManager::handleKeyboardInput(const SDL_Event &event)
                 {
                     case KeyboardConfig::KEY_PICKUP:
                         {
-                            Uint16 x = player_node->mX;
-                            Uint16 y = player_node->mY;
+                            uint16_t x = player_node->mX;
+                            uint16_t y = player_node->mY;
                             FloorItem *item = floorItemManager->
                                                   findNearestItem(x, y);
 

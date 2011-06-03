@@ -53,7 +53,7 @@ class LocalPlayer : public Player
         /**
          * Constructor.
          */
-        LocalPlayer(const Uint32 &id, const Uint16 &job, Map *map);
+        LocalPlayer(const uint32_t &id, const uint16_t &job, Map *map);
 
         /**
          * Destructor.
@@ -68,7 +68,7 @@ class LocalPlayer : public Player
         /**
          * Sets the current direction.
          */
-        virtual void setDirection(const Uint8 &direction);
+        virtual void setDirection(const uint8_t &direction);
 
         /**
          * Adds a new step when walking before calling super. Also, when
@@ -169,7 +169,7 @@ class LocalPlayer : public Player
         /**
          * Sets a new destination for this being to walk to.
          */
-        virtual void setDestination(const Uint16 &x, const Uint16 &y);
+        virtual void setDestination(const uint16_t &x, const uint16_t &y);
 
         /**
          * Sets a new direction to keep walking in.
@@ -187,10 +187,10 @@ class LocalPlayer : public Player
         bool withinAttackRange(Being *target);
 
         void raiseAttribute(const Attribute &attr);
-        void raiseSkill(const Uint16 &skillId);
+        void raiseSkill(const uint16_t &skillId);
 
         void toggleSit();
-        void emote(const Uint8 &emotion);
+        void emote(const uint8_t &emotion);
 
         void revive();
 
@@ -226,27 +226,27 @@ class LocalPlayer : public Player
          */
         virtual void setMap(Map *map);
 
-        Uint32 mCharId;     /**< Used only during character selection. */
+        uint32_t mCharId;     /**< Used only during character selection. */
 
-        Uint32 mJobXp;
-        Uint16 mLevel;
-        Uint32 mJobLevel;
-        Uint32 mXpForNextLevel, mJobXpForNextLevel;
-        Uint16 mHp, mMaxHp, mMp, mMaxMp;
-        Uint32 mGp;
+        uint32_t mJobXp;
+        uint16_t mLevel;
+        uint32_t mJobLevel;
+        uint32_t mXpForNextLevel, mJobXpForNextLevel;
+        uint16_t mHp, mMaxHp, mMp, mMaxMp;
+        uint32_t mGp;
 
-        Uint16 mAttackRange;
+        uint16_t mAttackRange;
 
         int mTotalWeight, mMaxWeight;
 
-        Uint8 mAttr[6];
-        Uint8 mAttrUp[6];
+        uint8_t mAttr[6];
+        uint8_t mAttrUp[6];
 
         int ATK, MATK, DEF, MDEF, HIT, FLEE;
         int ATK_BONUS, MATK_BONUS, DEF_BONUS, MDEF_BONUS, FLEE_BONUS;
 
-        Uint16 mStatPoint, mSkillPoint;
-        Uint16 mStatsPointsToAttribute;
+        uint16_t mStatPoint, mSkillPoint;
+        uint16_t mStatsPointsToAttribute;
 
         bool mUpdateName;     /** Whether or not the name settings have changed */
 

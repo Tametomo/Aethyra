@@ -20,7 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <SDL_types.h>
+#include <stdint.h>
 
 #include "buysellhandler.h"
 #include "messagein.h"
@@ -43,7 +43,7 @@
 
 BuySellHandler::BuySellHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_NPC_BUY_SELL_CHOICE,
         SMSG_NPC_BUY,
         SMSG_NPC_SELL,

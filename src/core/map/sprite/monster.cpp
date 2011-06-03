@@ -43,7 +43,7 @@
 #include "../../../eathena/db/monsterdb.h"
 #include "../../../eathena/db/monsterinfo.h"
 
-Monster::Monster(const int id, const Uint16 &job, Map *map):
+Monster::Monster(const int id, const uint16_t &job, Map *map):
     Being(id, job, map),
     mText(0)
 {

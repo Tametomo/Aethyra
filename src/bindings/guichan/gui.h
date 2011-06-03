@@ -24,8 +24,9 @@
 #ifndef GUI_H
 #define GUI_H
 
+#include <stdint.h>
+
 #include <SDL_framerate.h>
-#include <SDL_types.h>
 
 #include <guichan/gui.hpp>
 
@@ -139,7 +140,7 @@ class Gui : public gcn::Gui
         /**
          * Returns the current mouse button state.
          */
-        const Uint8 &getButtonState() const { return mButtonState; }
+        const uint8_t &getButtonState() const { return mButtonState; }
 
         /**
          * Cursors are in graphic order from left to right.
@@ -195,7 +196,7 @@ class Gui : public gcn::Gui
                                                    pixels. */
         int mMouseY;                          /**< Current mouse Y position in
                                                    pixels. */
-        Uint8 mButtonState;                   /**< Current mouse button state */        
+        uint8_t mButtonState;                 /**< Current mouse button state */        
         int mMouseInactivityTimer;
         int mCursorType;
 

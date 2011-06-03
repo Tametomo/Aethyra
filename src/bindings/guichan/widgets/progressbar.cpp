@@ -271,7 +271,7 @@ void ProgressBar::addColor(const gcn::Color& color)
     mColors.push_back(color);
 }
 
-void ProgressBar::addColor(Uint8 red, Uint8 green, Uint8 blue)
+void ProgressBar::addColor(uint8_t red, uint8_t green, uint8_t blue)
 {
     mColors.push_back(gcn::Color(red, green, blue));
 }

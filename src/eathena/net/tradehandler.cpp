@@ -59,7 +59,7 @@ namespace {
 
 TradeHandler::TradeHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_TRADE_REQUEST,
         SMSG_TRADE_RESPONSE,
         SMSG_TRADE_ITEM_ADD,

@@ -56,7 +56,7 @@ class BeingManager
         /**
          * Create a being and add it to the list of beings.
          */
-        Being *createBeing(int id, Uint16 job);
+        Being *createBeing(int id, uint16_t job);
 
         /**
          * Remove a Being.

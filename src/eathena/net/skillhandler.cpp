@@ -74,7 +74,7 @@ struct CHATSKILL
 
 SkillHandler::SkillHandler()
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_PLAYER_SKILLS,
         SMSG_SKILL_FAILED,
         0

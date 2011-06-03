@@ -23,7 +23,7 @@
 #ifndef MESSAGEIN_
 #define MESSAGEIN_
 
-#include <SDL_types.h>
+#include <stdint.h>
 #include <string>
 
 /**
@@ -55,14 +55,14 @@ class MessageIn
          * Reads a special 3 byte block used by eAthena, containing x and y
          * coordinates and direction.
          */
-        void readCoordinates(Uint16 &x, Uint16 &y, Uint8 &direction);
+        void readCoordinates(uint16_t &x, uint16_t &y, uint8_t &direction);
 
         /**
          * Reads a special 5 byte block used by eAthena, containing a source
          * and destination coordinate pair.
          */
-        void readCoordinatePair(Uint16 &srcX, Uint16 &srcY,
-                                Uint16 &dstX, Uint16 &dstY);
+        void readCoordinatePair(uint16_t &srcX, uint16_t &srcY,
+                                uint16_t &dstX, uint16_t &dstY);
 
         /**
          * Skips a given number of bytes.

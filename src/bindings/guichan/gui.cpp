@@ -107,7 +107,7 @@ class GuiConfigListener : public ConfigListener
 /**
  * Advances game logic counter.
  */
-Uint32 nextTick(Uint32 interval, void *param)
+uint32_t nextTick(uint32_t interval, void *param)
 {
     tick_time++;
     if (tick_time == MAX_TIME)
@@ -119,7 +119,7 @@ Uint32 nextTick(Uint32 interval, void *param)
 /**
  * Updates fps.
  */
-Uint32 nextSecond(Uint32 interval, void *param)
+uint32_t nextSecond(uint32_t interval, void *param)
 {
     fps = frame;
     frame = 0;

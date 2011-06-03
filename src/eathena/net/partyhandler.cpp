@@ -30,7 +30,7 @@
 
 PartyHandler::PartyHandler(Party *party) : mParty(party)
 {
-    static const Uint16 _messages[] = {
+    static const uint16_t _messages[] = {
         SMSG_PARTY_CREATE,
         SMSG_PARTY_INFO,
         SMSG_PARTY_INVITE,

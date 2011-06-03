@@ -60,7 +60,7 @@
 
 LocalPlayer *player_node = NULL;
 
-LocalPlayer::LocalPlayer(const Uint32 &id, const Uint16 &job, Map *map):
+LocalPlayer::LocalPlayer(const uint32_t &id, const uint16_t &job, Map *map):
     Player(id, job, map),
     mCharId(0),
     mJobXp(0),
@@ -219,7 +219,7 @@ void LocalPlayer::setAction(const Action &action)
     Player::setAction(action);
 }
 
-void LocalPlayer::setDirection(const Uint8 &direction)
+void LocalPlayer::setDirection(const uint8_t &direction)
 {
     Being::setDirection(direction);
 
@@ -397,7 +397,7 @@ void LocalPlayer::setTarget(Being *target)
         static_cast<Monster *>(target)->showName(true);
 }
 
-void LocalPlayer::setDestination(const Uint16 &x, const Uint16 &y)
+void LocalPlayer::setDestination(const uint16_t &x, const uint16_t &y)
 {
     // Only send a new message to the server when destination changes
     if (x != mDestX || y != mDestY)
@@ -430,7 +430,7 @@ void LocalPlayer::raiseAttribute(const Attribute &attr)
     outMsg.writeInt8(1);
 }
 
-void LocalPlayer::raiseSkill(const Uint16 &skillId)
+void LocalPlayer::raiseSkill(const uint16_t &skillId)
 {
     if (mSkillPoint <= 0)
         return;
@@ -464,7 +464,7 @@ void LocalPlayer::toggleSit()
     outMsg.writeInt8(type);
 }
 
-void LocalPlayer::emote(const Uint8 &emotion)
+void LocalPlayer::emote(const uint8_t &emotion)
 {
     if (mLastAction != -1)
         return;

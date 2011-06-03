@@ -117,7 +117,7 @@ Being::~Being()
     destroy(mText);
 }
 
-void Being::setDestination(const Uint16 &destX, const Uint16 &destY)
+void Being::setDestination(const uint16_t &destX, const uint16_t &destY)
 {
     if (mMap)
         setPath(mMap->findPath(mX, mY, destX, destY));
@@ -344,7 +344,7 @@ void Being::setAction(const Action &action)
     }
 }
 
-void Being::setDirection(const Uint8 &direction)
+void Being::setDirection(const uint8_t &direction)
 {
     if (mDirection == direction)
         return;
@@ -575,7 +575,7 @@ Being::Type Being::getType() const
         return UNKNOWN;
 }
 
-void Being::setWalkSpeed(const Uint16 &speed)
+void Being::setWalkSpeed(const uint16_t &speed)
 {
     mWalkSpeed = speed > 0 ? speed <= 1000 ? speed : 1000 : 1;
 }
