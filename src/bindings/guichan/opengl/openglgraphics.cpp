@@ -311,6 +311,7 @@ SDL_Surface* OpenGLGraphics::getScreenshot()
 {
     int h = mTarget->h;
     int w = mTarget->w;
+    GLint pack = 1;
 
     SDL_Surface *screenshot = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 24,
                                                    0xff0000, 0x00ff00, 0x0000ff,
@@ -320,6 +321,7 @@ SDL_Surface* OpenGLGraphics::getScreenshot()
         SDL_LockSurface(screenshot);
 
     // Grap the pixel buffer and write it to the SDL surface
+    glGetIntegerv(GL_PACK_ALIGNMENT, &pack);
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
     glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, screenshot->pixels);
 
@@ -338,6 +340,8 @@ SDL_Surface* OpenGLGraphics::getScreenshot()
     }
 
     free(buf);
+
+    glPixelStorei(GL_PACK_ALIGNMENT, pack);
 
     if (SDL_MUSTLOCK(screenshot))
         SDL_UnlockSurface(screenshot);
