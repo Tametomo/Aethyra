@@ -44,6 +44,8 @@
 
 #include "../bindings/guichan/truetypefont.h"
 
+#include "../bindings/physfs/physfsrwops.h"
+
 ResourceManager *ResourceManager::instance = NULL;
 
 ResourceManager::ResourceManager()
@@ -214,7 +216,7 @@ std::string ResourceManager::getPath(const std::string &file)
         path = std::string(tmp) + "/" + file;
     // if not found in search path return the default path
     else
-        path = std::string(PKG_DATADIR) + std::string("data") + "/" + file;
+        path = PKG_DATADIR "data/" + file;
 
     return path;
 }
@@ -262,13 +264,16 @@ struct ResourceLoader
     static Resource *load(void *v)
     {
         ResourceLoader *l = static_cast< ResourceLoader * >(v);
-        int fileSize;
-        void *buffer = l->manager->loadFile(l->path, fileSize);
-        if (!buffer)
-            return NULL;
+        SDL_RWops *rw = PHYSFSRWOPS_openRead(l->path.c_str());
 
-        Resource *res = l->fun(buffer, fileSize);
-        free(buffer);
+        if (!rw)
+        {
+            logger->log("ResourceLoader::load(void*): File at %s returned \"%s\"",
+                        l->path.c_str(), SDL_GetError());
+            return NULL;
+        }
+
+        Resource *res = l->fun(rw);
         return res;
     }
 };
@@ -324,15 +329,13 @@ struct DyedImageLoader
             d = new Dye(path.substr(p + 1));
             path = path.substr(0, p);
         }
-
-        int fileSize;
-        void *buffer = l->manager->loadFile(path, fileSize);
-        if (!buffer)
+        SDL_RWops *rw = PHYSFSRWOPS_openRead(path.c_str());
+        if (!rw)
+        {
+            destroy(d);
             return NULL;
-
-        Resource *res = d ? Image::load(buffer, fileSize, *d)
-                          : Image::load(buffer, fileSize);
-        free(buffer);
+        }
+        Resource *res = d ? Image::load(rw, *d) : Image::load(rw);
         destroy(d);
         return res;
     }
@@ -535,16 +538,8 @@ std::vector<std::string> ResourceManager::loadTextFile(const std::string &fileNa
 
 SDL_Surface *ResourceManager::loadSDLSurface(const std::string& filename)
 {
-    int fileSize;
-    void *buffer = loadFile(filename, fileSize);
-    SDL_Surface *tmp = NULL;
-
-    if (buffer)
-    {
-        SDL_RWops *rw = SDL_RWFromMem(buffer, fileSize);
-        tmp = IMG_Load_RW(rw, 1);
-        ::free(buffer);
-    }
-
-    return tmp;
+    SDL_Surface *surface = NULL;
+    if (SDL_RWops *rw = PHYSFSRWOPS_openRead(filename.c_str()))
+        surface = IMG_Load_RW(rw, 1);
+    return surface;
 }

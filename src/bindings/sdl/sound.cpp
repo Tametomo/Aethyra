@@ -27,6 +27,7 @@
 #include "../../core/log.h"
 #include "../../core/resourcemanager.h"
 
+#include "../../core/sound/music.h"
 #include "../../core/sound/soundeffect.h"
 
 /**
@@ -155,45 +156,24 @@ void Sound::setSfxVolume(int volume)
         Mix_Volume(-1, mSfxVolume);
 }
 
-static Mix_Music* loadMusic(const std::string &filename)
+static Music *loadMusic(const std::string &filename)
 {
     ResourceManager *resman = ResourceManager::getInstance();
-    std::string path = resman->getPath("music/" + filename);
-
-    if (path.find(".zip/") != std::string::npos ||
-        path.find(".zip\\") != std::string::npos)
-    {
-        // Music file is a virtual file inside a zip archive - we have to copy
-        // it to a temporary physical file so that SDL_mixer can stream it.
-        logger->log("Loading music \"%s\" from temporary file tempMusic.ogg",
-                    path.c_str());
-
-        bool success = resman->copyFile("music/" + filename, "tempMusic.ogg");
-
-        if (success)
-            path = resman->getPath("tempMusic.ogg");
-        else
-            return NULL;
-    }
-    else
-        logger->log("Loading music \"%s\"", path.c_str());
-
-
-    Mix_Music *music = Mix_LoadMUS(path.c_str());
-
-    if (!music)
-        logger->log("Mix_LoadMUS() Error loading '%s': %s", path.c_str(),
-                    Mix_GetError());
-
-    return music;
+    return resman->getMusic("music/" + filename);
 }
 
 void Sound::playMusic(const std::string &filename)
 {
-    if (mCurrentMusicFile != "")
-        fadeOutMusic(1000);
+    mCurrentMusicFile = filename;
 
-    fadeInMusic(filename, 1000);
+    if (!mInstalled)
+        return;
+
+    haltMusic();
+
+    mMusic = loadMusic(filename);
+    if (mMusic)
+        mMusic->play();
 }
 
 void Sound::stopMusic()
@@ -203,29 +183,27 @@ void Sound::stopMusic()
 
     logger->log("Sound::stopMusic()");
 
-    if (mMusic)
-    {
-        Mix_HaltMusic();
-        Mix_FreeMusic(mMusic);
-        mMusic = NULL;
-    }
+    haltMusic();
 }
 
-void Sound::fadeInMusic(const std::string &path, const int ms)
+void Sound::fadeInMusic(const std::string &fileName, const int ms)
 {
-    mCurrentMusicFile = path;
+    mCurrentMusicFile = fileName;
 
     if (!mInstalled)
         return;
 
     haltMusic();
 
-    if ((mMusic = loadMusic(path.c_str())))
-        Mix_FadeInMusic(mMusic, -1, ms); // Loop forever
+    mMusic = loadMusic(fileName);
+    if (mMusic)
+        mMusic->play(-1, ms); // Play forever
 }
 
 void Sound::fadeOutMusic(const int ms)
 {
+    mCurrentMusicFile.clear();
+
     if (!mInstalled)
         return;
 
@@ -238,9 +216,7 @@ void Sound::fadeOutMusic(const int ms)
         // the music file at fade out ending.
     }
     else
-    {
         sFadingOutEnded = true;
-    }
 }
 
 void Sound::fadeOutAndPlayMusic(const std::string &path, const int ms)
@@ -255,7 +231,7 @@ void Sound::logic()
     {
         if (mMusic)
         {
-            Mix_FreeMusic(mMusic);
+            mMusic->decRef();
             mMusic = NULL;
         }
         sFadingOutEnded = false;
@@ -300,6 +276,6 @@ void Sound::haltMusic()
         return;
 
     Mix_HaltMusic();
-    Mix_FreeMusic(mMusic);
+    mMusic->decRef();
     mMusic = NULL;
 }

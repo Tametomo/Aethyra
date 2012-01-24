@@ -248,6 +248,8 @@ SET(SRCS
     bindings/guichan/widgets/tooltip.h
     bindings/guichan/widgets/window.cpp
     bindings/guichan/widgets/window.h
+    bindings/physfs/physfsrwops.c
+    bindings/physfs/physfsrwops.h
     bindings/sdl/joystick.cpp
     bindings/sdl/joystick.h
     bindings/sdl/keyboardconfig.cpp

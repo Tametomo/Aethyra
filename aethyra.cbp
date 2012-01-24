@@ -237,6 +237,10 @@
 		<Unit filename="src\bindings\guichan\widgets\tooltip.h" />
 		<Unit filename="src\bindings\guichan\widgets\window.cpp" />
 		<Unit filename="src\bindings\guichan\widgets\window.h" />
+		<Unit filename="src\bindings\physfs\physfsrwops.c" >
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\bindings\physfs\physfsrwops.h" />
 		<Unit filename="src\bindings\sdl\joystick.cpp" />
 		<Unit filename="src\bindings\sdl\joystick.h" />
 		<Unit filename="src\bindings\sdl\keyboardconfig.cpp" />

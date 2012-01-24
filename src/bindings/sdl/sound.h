@@ -30,6 +30,8 @@
 #endif
 #include <string>
 
+class Music;
+
 /** Sound engine
  *
  * \ingroup CORE
@@ -129,7 +131,7 @@ class Sound
         std::string mNextMusicPath;
 
         std::string mCurrentMusicFile;
-        Mix_Music *mMusic;
+        Music *mMusic;
 };
 
 extern Sound sound;
