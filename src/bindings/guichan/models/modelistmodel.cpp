@@ -56,3 +56,19 @@ ModeListModel::ModeListModel()
         }
     }
 }
+
+int ModeListModel::find(std::string mode)
+{
+    int index = -1;
+
+    for (std::vector<std::string>::iterator i = mVideoModes.begin();
+         i < mVideoModes.end(); i++)
+    {
+        index++;
+
+        if (mode.compare(*i) == 0)
+           return index;
+    }
+
+    return -1;
+}

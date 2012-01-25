@@ -87,7 +87,10 @@ Setup_Display::Setup_Display():
     mFpsLabel = new Label();
     mFontLabel = new Label(_("Font size"));
 
+    const std::string modeString = toString(mScreenWidth) + "x" +
+                                    toString(mScreenHeight);
     mModeList->setEnabled(true);
+    mModeList->setSelected(mModeListModel->find(modeString));
 
 #ifndef USE_OPENGL
     mOpenGLCheckBox->setEnabled(false);
@@ -180,7 +183,16 @@ void Setup_Display::apply()
 
     // Full screen changes
     bool fullscreen = mFsCheckBox->isSelected();
-    if (fullscreen != (config.getValue("screen", false) == 1))
+
+    if (mode.empty() && fullscreen)
+    {
+        mFsCheckBox->setSelected(false);
+        fullscreen = false;
+
+        new OkDialog(_("Can't switch to fullscreen"),
+                     _("Please choose a new resolution first."));
+    }
+    else if (fullscreen != (config.getValue("screen", false) == 1))
     {
         /* Currently, switching to fullscreen mode in windows with SDL or OpenGL
          * modes will lock up the screen and cause graphical flickers.
@@ -195,6 +207,7 @@ void Setup_Display::apply()
         new OkDialog(_("Switching to full screen"),
                      _("Restart needed for changes to take effect."));
 #else
+
         if (!graphics->setFullscreen(fullscreen))
         {
             fullscreen = !fullscreen;

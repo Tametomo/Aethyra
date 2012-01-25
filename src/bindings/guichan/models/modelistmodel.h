@@ -56,6 +56,11 @@ class ModeListModel : public gcn::ListModel
          */
         std::string getElementAt(int i) { return (i < 0 || i >= (int) mVideoModes.size()) ? "" : mVideoModes[i]; }
 
+        /**
+         * Finds a specific mode. -1 if not found.
+         */
+        int find(std::string mode);
+
     private:
         std::vector<std::string> mVideoModes;
 };

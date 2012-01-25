@@ -79,6 +79,8 @@ bool OpenGLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
 
     if (fs)
         displayFlags |= SDL_FULLSCREEN;
+    else
+        displayFlags |= SDL_RESIZABLE;
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 

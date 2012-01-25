@@ -113,10 +113,15 @@ void InputManager::handleInput()
         if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
             used = handleKeyboardInput(event);
             
-        if (event.type == SDL_JOYAXISMOTION || event.type == SDL_JOYBALLMOTION ||
-            event.type == SDL_JOYHATMOTION || event.type == SDL_JOYBUTTONDOWN ||
-            event.type == SDL_JOYBUTTONUP)
+        else if (event.type == SDL_JOYAXISMOTION ||
+                  event.type == SDL_JOYBALLMOTION ||
+                  event.type == SDL_JOYHATMOTION ||
+                  event.type == SDL_JOYBUTTONDOWN ||
+                  event.type == SDL_JOYBUTTONUP)
             handleJoystickInput(event);
+
+        else if (event.type == SDL_VIDEORESIZE)
+            gui->resize(event.resize.w, event.resize.h);
 
         // Quit event
         else if (event.type == SDL_QUIT)

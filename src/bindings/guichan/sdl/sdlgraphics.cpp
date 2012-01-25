@@ -176,6 +176,8 @@ bool SDLGraphics::setVideoMode(int w, int h, int bpp, bool fs, bool hwaccel)
 
     if (fs)
         displayFlags |= SDL_FULLSCREEN;
+    else
+        displayFlags |= SDL_RESIZABLE;
 
     if (hwaccel)
         displayFlags |= SDL_HWSURFACE | SDL_DOUBLEBUF;
