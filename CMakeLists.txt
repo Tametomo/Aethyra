@@ -30,6 +30,8 @@ ADD_SUBDIRECTORY(src)
 
 IF (GETTEXT_FOUND AND ENABLE_NLS)
     ADD_SUBDIRECTORY(po)
+ELSE (GETTEXT_FOUND AND ENABLE_NLS)
+    MESSAGE(STATUS "Gettext not found. Compilation will not generate translations.")
 ENDIF()
 
 INSTALL(FILES aethyra.desktop DESTINATION share/applications)
