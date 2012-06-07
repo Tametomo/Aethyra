@@ -33,6 +33,7 @@
 #include "../../image/image.h"
 #include "../../image/imageset.h"
 
+#include "../../utils/stringutils.h"
 #include "../../utils/xml.h"
 
 Action* SpriteDef::getAction(const SpriteAction &action) const
@@ -130,7 +131,8 @@ void SpriteDef::loadImageSet(const xmlNodePtr &node, const std::string &palettes
     ImageSet *imageSet = resman->getImageSet(imageSrc, width, height);
 
     if (!imageSet)
-        logger->error("Couldn't load imageset!");
+        logger->error(strprintf("Couldn't load imageset (%s)!",
+                                imageSrc.c_str()).c_str());
 
     mImageSets[name] = imageSet;
 }
