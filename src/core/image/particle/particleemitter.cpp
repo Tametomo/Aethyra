@@ -36,6 +36,8 @@
 
 #include "../../map/map.h"
 
+#include "../../utils/stringutils.h"
+
 #define SIN45 0.707106781f
 #define DEG_RAD_FACTOR 0.017453293f
 
@@ -233,10 +235,15 @@ ParticleEmitter::ParticleEmitter(const xmlNodePtr &emitterNode, Particle *target
         }
         else if (xmlStrEqual(propertyNode->name, BAD_CAST "animation"))
         {
+            std::string imagesetPath = XML::getProperty(propertyNode,
+                                                        "imageset", "");
             ImageSet *imageset = ResourceManager::getInstance()->getImageSet(
-                XML::getProperty(propertyNode, "imageset", ""),
-                XML::getProperty(propertyNode, "width", 0),
+                imagesetPath, XML::getProperty(propertyNode, "width", 0),
                 XML::getProperty(propertyNode, "height", 0));
+
+            if (!imageset)
+                logger->error(strprintf("Failed to load \"%s\"",
+                                        imagesetPath.c_str()));
 
             // Get animation frames
             for_each_xml_child_node(frameNode, propertyNode)
