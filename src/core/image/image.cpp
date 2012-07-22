@@ -36,6 +36,7 @@
 #include "../../bindings/guichan/opengl/openglgraphics.h"
 
 bool Image::mUseOpenGL = false;
+bool Image::mPowerOfTwoTextures = true;
 int Image::mTextureType = 0;
 int Image::mTextureSize = 0;
 #endif
@@ -483,7 +484,7 @@ void Image::setLoadAsOpenGL(const bool useOpenGL)
 int Image::powerOfTwo(const int input)
 {
     int value = 1;
-    if (mTextureType == GL_TEXTURE_2D)
+    if (mPowerOfTwoTextures)
     {
         while (value < input && value < mTextureSize)
             value <<= 1;

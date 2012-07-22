@@ -196,6 +196,7 @@ class Image : public Resource
         int mTexWidth, mTexHeight;
 
         static bool mUseOpenGL;
+        static bool mPowerOfTwoTextures;
         static int mTextureType;
         static int mTextureSize;
 #endif
