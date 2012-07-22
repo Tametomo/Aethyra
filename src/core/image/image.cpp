@@ -197,7 +197,7 @@ Image *Image::load(SDL_Surface *tmpImage)
         if (SDL_MUSTLOCK(tmpImage))
             SDL_LockSurface(tmpImage);
 
-        glTexImage2D(mTextureType, 0, 4, tmpImage->w, tmpImage->h,
+        glTexImage2D(mTextureType, 0, GL_RGBA8, tmpImage->w, tmpImage->h,
                      0, GL_RGBA, GL_UNSIGNED_BYTE, tmpImage->pixels);
 
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
