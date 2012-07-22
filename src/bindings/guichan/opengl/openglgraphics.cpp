@@ -147,8 +147,8 @@ static inline void drawQuad(Image *image, int srcX, int srcY, int dstX,
         GLint vert[] = { dstX, dstY, dstX + width, dstY,
                          dstX + width, dstY + height, dstX, dstY + height };
 
-        glVertexPointer(2, GL_FLOAT, 0, &vert);
-        glTexCoordPointer(2, GL_INT, 0, &tex);
+        glVertexPointer(2, GL_INT, 0, &vert);
+        glTexCoordPointer(2, GL_FLOAT, 0, &tex);
         glDrawArrays(GL_QUADS, 0, 4);
     }
     else
