@@ -279,8 +279,6 @@ void OpenGLGraphics::drawImagePattern(Image *image, int x, int y, int w, int h)
 
 void OpenGLGraphics::updateScreen()
 {
-    glFlush();
-    glFinish();
     SDL_GL_SwapBuffers();
 }
 
